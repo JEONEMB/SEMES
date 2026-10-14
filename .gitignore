@@ -38,3 +38,8 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# KSH ignore files
+.CLAUDE
+img
+specification
