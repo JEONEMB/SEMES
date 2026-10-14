@@ -10,4 +10,5 @@ cmake --build build --config Release
 .\build\Release\main.exe
 ```
 
-설치 항목, PowerShell 줄바꿈 명령, 빌드 초기화는 [Windows 개발환경 설정](docs/windows-setup.md)을 참고하세요.
+처음 설치하는 팀원은 설치 체크리스트부터 진행하세요. 전체 설치 과정, PowerShell 줄바꿈 명령, 빌드 초기화와 문제 해결은 [Windows 개발환경 설정](docs/windows-setup.md)을 참고하세요.
+
