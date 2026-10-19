@@ -13,4 +13,6 @@
 | [qr-stability/scripts/](qr-stability/scripts/) | 검증 재현·병렬 처리 스크립트 |
 | [validation-runs/](validation-runs/README.md) | Git에서 제외하는 로컬 실행 결과 |
 
-저장소 루트에는 실행 결과 이미지를 두지 않습니다. 보고서에 필요한 선별된 자료만 해당 보고서 디렉터리에서 추적합니다.`n- [Y·θ 공동 추정 개발 기준](y-theta/README.md)
+저장소 루트에는 실행 결과 이미지를 두지 않습니다. 보고서에 필요한 선별된 자료만 해당 보고서 디렉터리에서 추적합니다.
+
+- [Y·θ 공동 추정 개발 기준](y-theta/README.md)

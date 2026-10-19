@@ -37,3 +37,30 @@ Epic S15P31A507-2, Story S15P31A507-9. Jira에서 Task와 Story가 같은 계층
 - Evangelidis & Psarakis (2008), ECC: https://doi.org/10.1109/TPAMI.2008.113
 - Schreier et al. (2000), interpolation bias: https://doi.org/10.1117/1.1314593
 - Bornert et al. (2017), synthetic evaluation bias: https://doi.org/10.1016/j.optlaseng.2016.11.014
+
+## 구현 및 실행
+
+오프라인 연구 도구로 구현했다. 운영 alignment()의 NaN 반환은 검증된 보정/영점 연결 전까지 유지한다.
+
+```powershell
+cmake --build build --config Release
+python -m unittest discover -s tool/ytheta -p test_ytheta_model.py -v
+python tool/ytheta/run_ytheta.py --repo . --output docs/validation-runs/ytheta --collect --workers 4
+```
+
+Python 의존성: numpy, pandas. 영상 수집은 C++/OpenCV 3.4.15이며 프로세스당 OpenCV 스레드 1개, 기본 4프로세스. affine/homography 두 방법으로 281장씩 처리한다. 실패 상태는 CSV에 보존하고 실패 프레임은 성공 평가의 분모에서 숨기지 않는다.
+
+- include/direct_registration.hpp, src/direct_registration.cpp: accepted 대응점 RANSAC 초기화 → 원본 grayscale ECC. 현재 QR 영역 mask를 사용하며 Gaussian은 OpenCV ECC 기본 평활화다. ECC 상관 .95 미만, 좌표 불일치 5px 이상, QR 세 개 대응 부족은 실패한다. 이 임계값은 메트롤로지 합격 기준이 아니다.
+- tool/ytheta_collect.cpp: 기준 QR 내부 고정 가상 격자 45점에 측정 warp 적용. 격자는 하나의 warp에서 파생된 상관 측정이며 45개 독립 관측으로 불확실성을 줄여 계산하지 않는다.
+- tool/ytheta/ytheta_model.py: 카메라 중심 yaw, 고정 벽, D 생략 모델과 직접 다항 모델. 열 정규화·감쇠·backtracking Gauss–Newton, 원본 Jacobian을 SVD로 풀고 경계/수렴/조건수를 출력한다. y=[-2,2]mm, theta=[-1,1]deg는 데이터 범위에 따른 연구용 경계다.
+- tool/ytheta/run_ytheta.py: 두 nominal K 후보에서 깊이/벽 기울기 및 세션의 2D 이미지 절편을 학습. 세션별 실제 물리 영점을 복원했다고 주장하지 않는다. 직접 모델은 점별 세션 절편과 y,t,y²,t² 계수를 사용하므로 물리 모델보다 자유도가 크고 y*t는 학습되지 않는다. 매3번째 보류와 중앙 연속1/3 보류를 각각 독립 적합한다.
+
+저장 모델과 45×2 원본 영상 좌표 JSON을 사용한 추정:
+
+```powershell
+python tool/ytheta/ytheta_model.py model.json observation.json --session "Y+0"
+```
+
+session을 생략하면 모델 기준 영점을 사용하며 절대 기계 영점이 확인된 것은 아니다. 실사용 입력은 y/theta 라벨을 요구하지 않는다. session 옵션은 보정 시점 세션의 기준 차이를 적용하기 위한 것으로, 평가에서 실제 축을 추정기에 알려주는 제약으로 사용하지 않는다. 학습에 사용하지 않은 세션 보정은 지원하지 않는다.
+
+단위시험은 독립 3D 회전행렬 투영, 해석/중앙차분 Jacobian, 혼합 y/theta 16개 조합의 무잡음 복원, 잘못된 관측/세션 거부를 포함한다. 무잡음 모델 시험은 실제 영상 정확도 인증이 아니다. 보고서에는 정합 누락, 보류 RMSE, 두 축 동시 허용 오차 통과 수, 수렴·경계 도달·조건수, K 후보 민감도를 함께 기록한다.
