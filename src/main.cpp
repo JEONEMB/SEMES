@@ -1,6 +1,8 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
+#include "alignment.hpp"
+
 int main()
 {
     std::cout << "OpenCV version: "
@@ -18,6 +20,10 @@ int main()
         2
     );
 
+    Alignment_t alignment_result = alignment(image); // Example usage of the alignment function
+
+    std::cout << "Alignment result: y = " << alignment_result.y
+              << ", t = " << alignment_result.t << std::endl;
     cv::imshow("OpenCV Test", image);
     cv::waitKey(0);
 
