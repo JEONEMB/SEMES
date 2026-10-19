@@ -1,0 +1,1 @@
+model_jacobian_max=3.49236e-10 fourier_jacobian_max=5.89573e-11 convolution_identity_max=2.22045e-16 constrained_converged=1 nuisance_boundary_valid=1

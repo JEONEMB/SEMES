@@ -1,0 +1,31 @@
+{
+  "base_commit": "28f6759",
+  "branch": "refactor/shin/QR-Detection",
+  "committed": false,
+  "pushed": false,
+  "sha256": {
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\src\\alignment.cpp": "af86f1500106caf3aad4f5c4dbe46b99a294377b072fe2a44e2b1868799f2e13",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\src\\main.cpp": "3c7be526fc8214228b10f599b33f9784b3b9cf97b7f152b823120c264e641c1d",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\src\\pipeline_visualization.cpp": "381d2ea849db94df5fe47ba1caa1c1d921cf6470e1f51c75e5dc8953328d7178",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\src\\plate_detection.cpp": "263dbc975d5baf6448919c970aa048ab31134f2c2a72797c5a99ed465a7ec78e",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\src\\qrcodegen.cpp": "6ff22a6276887fc49eb9cbc131d1f12b2dd9da1afb07cf5c39e19a4186618abf",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\src\\qr_decode.cpp": "e4635c827e5e962e46380a9ab7178ef9bbfc8d5feea2f9ffe151fb9c7f50299e",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\src\\qr_features.cpp": "92f845b4f68be0ef2ac8dec2b3a72ab38cd50e06c6fe2f7d77f4c92ccceafca5",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\src\\qr_model.cpp": "4720e71f479a51190187ce1c0b727f80c5f4b34b43e415158745b171c87cf944",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\src\\qr_roi.cpp": "2b4ccb772bd431ee124559f184d91aaf1cbcb25365c61cca208a5e98da97e7d6",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\include\\alignment.hpp": "e7fc851fa22822021ada13bb8018d816fc06c71eeb30fff9b6c859b508dd5185",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\include\\pipeline_internal.hpp": "1c2ad322ae5382fa6b2749530a1afccb4e0748d470faa4ff5e7d7d422e67f11a",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\include\\pipeline_settings.hpp": "95bff89672073c381346ce8eed189c1a23a4473715c165119cc8169d654a5a84",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\include\\qr_refinement.hpp": "f7a8544337dbc02059542d22b27dda832c8b0213dfd73506e6f7d98cb3da9fbd",
+    "C:\\Users\\SSAFY\\Documents\\GitHub\\S15P31A507\\CMakeLists.txt": "ad2aa784ab728a7bc2f041face3bfa15d3e908ac2715d9f061b567e080f47072",
+    "analysis\\qr-subpixel\\package\\tool\\.gitignore": "35a9f3cae91bd8280533b41ac073393d5ec5a51ddb857ad3c837da7d2b9c82b6",
+    "analysis\\qr-subpixel\\package\\tool\\augment.cpp": "57583d90986f80a2603dad9d2cab4c107993ef07c7b633cf12f4096bd8913b40",
+    "analysis\\qr-subpixel\\package\\tool\\CMakeLists.txt": "2b35af1c0a2d07aae675bf1ef5f5b658435afe46949d50c8088634c145691e5e",
+    "analysis\\qr-subpixel\\package\\tool\\compare.cpp": "42e2b92c94b3ef3c9d603649a1455495ab1607553d832452d8c17f87385682b4",
+    "analysis\\qr-subpixel\\package\\tool\\evaluate.py": "53ae6ed29e60261c1d6889524bffb4adcc5fa242d0763fc1a8e6e9ce0f896506",
+    "analysis\\qr-subpixel\\package\\tool\\evaluate_pipeline.py": "f5eddceb8e38186c0c2a6a179aabe73c10dc776165054433442a5c1fb5bf34ba",
+    "analysis\\qr-subpixel\\package\\tool\\run.py": "f80f948abcb71e2b806ab5243ab990cc4a0ba5e75f7506a5ba485b5b8a8ad367",
+    "analysis\\qr-subpixel\\package\\tool\\test_refiners.cpp": "911254361017e0b8370bd98b18e2a15de267bc9401d4c4ed9ad6e3ea214f312c",
+    "analysis\\qr-subpixel\\package\\tool\\validate.cpp": "a9f422d39e56b439b88201cdfc44dea92c2317c0ae6e2e163895536ade588a9b"
+  }
+}

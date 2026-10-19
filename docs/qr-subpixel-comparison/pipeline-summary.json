@@ -1,0 +1,105 @@
+{
+  "fourier": {
+    "frames": 281,
+    "plate_success": 281,
+    "all_3_qr_decoded": 281,
+    "all_3_qr_features_valid": 281,
+    "qr_feature_success": 843,
+    "total_qr": 843,
+    "accepted_points": 34622,
+    "coordinate_difference_vs_experiment_median_px": 5.276044631547658e-05,
+    "coordinate_difference_vs_experiment_max_px": 0.00013624812952101086,
+    "holdout": {
+      "frames": 94,
+      "features_fitted": 123,
+      "all": {
+        "n": 94,
+        "success": 94,
+        "y_rmse": 0.23078041797882745,
+        "theta_rmse": 0.041131937990658514,
+        "joint_pass": 27,
+        "qr_theta_std_median": 0.07433301755172289,
+        "points_median": 122.0
+      },
+      "Y": {
+        "n": 28,
+        "success": 28,
+        "y_rmse": 0.25711694741385116,
+        "theta_rmse": 0.04591078247357802,
+        "joint_pass": 5,
+        "qr_theta_std_median": 0.11238457158465129,
+        "points_median": 122.0
+      },
+      "T": {
+        "n": 66,
+        "success": 66,
+        "y_rmse": 0.2186510653913042,
+        "theta_rmse": 0.03892771386077094,
+        "joint_pass": 22,
+        "qr_theta_std_median": 0.06976519445287571,
+        "points_median": 122.0
+      },
+      "selection_score": 6.784128104364158
+    },
+    "collection": {
+      "frames": 281,
+      "workers": 4,
+      "opencv_threads_per_worker": 1,
+      "seconds": 38.11029314994812,
+      "base_commit": "28f6759",
+      "initial_values": "fresh unchanged pipeline, no reuse of old fitted results"
+    }
+  },
+  "model": {
+    "frames": 281,
+    "plate_success": 281,
+    "all_3_qr_decoded": 281,
+    "all_3_qr_features_valid": 281,
+    "qr_feature_success": 843,
+    "total_qr": 843,
+    "accepted_points": 27507,
+    "coordinate_difference_vs_experiment_median_px": 5.3380631784195855e-05,
+    "coordinate_difference_vs_experiment_max_px": 0.005811764945875088,
+    "holdout": {
+      "frames": 94,
+      "features_fitted": 76,
+      "all": {
+        "n": 94,
+        "success": 94,
+        "y_rmse": 0.28857628466139396,
+        "theta_rmse": 0.05137538484152859,
+        "joint_pass": 23,
+        "qr_theta_std_median": 0.09129670650263119,
+        "points_median": 66.0
+      },
+      "Y": {
+        "n": 28,
+        "success": 28,
+        "y_rmse": 0.33811742439117437,
+        "theta_rmse": 0.060219806278830376,
+        "joint_pass": 2,
+        "qr_theta_std_median": 0.09902963302497066,
+        "points_median": 67.0
+      },
+      "T": {
+        "n": 66,
+        "success": 66,
+        "y_rmse": 0.2647730468845181,
+        "theta_rmse": 0.04712435737758925,
+        "joint_pass": 21,
+        "qr_theta_std_median": 0.08597458258818658,
+        "points_median": 66.0
+      },
+      "selection_score": 10.606876819331982
+    },
+    "collection": {
+      "frames": 281,
+      "workers": 4,
+      "opencv_threads_per_worker": 1,
+      "seconds": 40.88100719451904,
+      "base_commit": "28f6759",
+      "pipeline_mode": "model",
+      "initial_values": "fresh unchanged candidate projection; old cornerSubPix explicitly selected for comparison"
+    }
+  }
+}
