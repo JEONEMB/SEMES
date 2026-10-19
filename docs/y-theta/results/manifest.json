@@ -1,0 +1,26 @@
+{
+  "images": 281,
+  "workers": 4,
+  "opencv_threads_per_worker": 1,
+  "seconds": 167.1746086000021,
+  "sources": {
+    "src/direct_registration.cpp": "b59208de3bf49e9984db44a9b9349672d2f7ef0328f51f39b8b2c7921b60a46b",
+    "tool/ytheta_collect.cpp": "4b961963ff124f6e2cdbc976f6be4588ed67c7a842f0dff80a296acd1682951a",
+    "include/alignment.hpp": "6dd19ed9cdc852c8771bc3ad469a9cf6112bf8d8237433e1e8625c911b349cc0",
+    "src/qr_features.cpp": "a88980efa6a2bbd44bbeb1d215917a67ca19cc38f10f9b3ff67ff66a762316b1",
+    "src/qr_decode.cpp": "e4635c827e5e962e46380a9ab7178ef9bbfc8d5feea2f9ffe151fb9c7f50299e",
+    "src/qr_model.cpp": "4720e71f479a51190187ce1c0b727f80c5f4b34b43e415158745b171c87cf944",
+    "src/plate_detection.cpp": "263dbc975d5baf6448919c970aa048ab31134f2c2a72797c5a99ed465a7ec78e"
+  },
+  "analysis_sources": {
+    "tool\\ytheta\\evaluate_photometric.py": "c242ca44f7619a9426129511664e55b1a8371754a224ec5b4cec867422e8512c",
+    "tool\\ytheta\\photometric.py": "8802866731ba8e31e16aa6a9b2c2498a80464674495ae5109018c50fb658bc29",
+    "tool\\ytheta\\render_ytheta_report.py": "f66863aa541b4dfe4a0f63d429e0ec3ebfc3b5c98a83339c413085e5cace1e30",
+    "tool\\ytheta\\run_ytheta.py": "5f576775cb814c0f54dcd85e6e2fd51ca9f91307386419637a1fc80fe719d04a",
+    "tool\\ytheta\\test_photometric.py": "069224de60bcb85b75459b6958ffa557c2478b7a49494f09f4411b28da64f9ea",
+    "tool\\ytheta\\test_ytheta_model.py": "6e1a5254a3e0f74121735354feb2e889fd03b8a4daafc0e8d1316956ad5a896a",
+    "tool\\ytheta\\ytheta_model.py": "34681e1f5bafa8a70ead8d4bf2508ef78df56a128abceb0af6ee85fcf4f96c62"
+  },
+  "affine_self_registration_max_px": 0.0,
+  "homography_self_registration_max_px": 0.0
+}

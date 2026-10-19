@@ -64,3 +64,17 @@ python tool/ytheta/ytheta_model.py model.json observation.json --session "Y+0"
 session을 생략하면 모델 기준 영점을 사용하며 절대 기계 영점이 확인된 것은 아니다. 실사용 입력은 y/theta 라벨을 요구하지 않는다. session 옵션은 보정 시점 세션의 기준 차이를 적용하기 위한 것으로, 평가에서 실제 축을 추정기에 알려주는 제약으로 사용하지 않는다. 학습에 사용하지 않은 세션 보정은 지원하지 않는다.
 
 단위시험은 독립 3D 회전행렬 투영, 해석/중앙차분 Jacobian, 혼합 y/theta 16개 조합의 무잡음 복원, 잘못된 관측/세션 거부를 포함한다. 무잡음 모델 시험은 실제 영상 정확도 인증이 아니다. 보고서에는 정합 누락, 보류 RMSE, 두 축 동시 허용 오차 통과 수, 수렴·경계 도달·조건수, K 후보 민감도를 함께 기록한다.
+
+## 회전축 보정 및 통합 픽셀 잔차 비교
+
+물리 모델의 baseline은 회전축과 카메라 중심이 일치한다고 가정한다. physical_pivot 후보는 수평·깊이 방향 lever arm 두 값을 추가 보정한다. 회전축 거리의 추정값은 명목 K에 민감하므로 실측 회전축 위치로 간주하지 않는다. D를 생략한 비교 모델이며 최종 장비 보정이 아니다.
+
+photometric.py는 보정한 물리 변환을 원본 QR 픽셀에 직접 적용하는 통합 잔차 비교기다. 3px 간격의 고정 기준 픽셀 중 영상 gradient>15인 픽셀을 사용하고, cubic 보간과 선형 밝기·대비 계수 제거를 수행한다. ECC 기반 추정값을 초기값으로 주는 것이 필요하며 반복 QR 패턴에서 전역 수렴을 보장하지 않는다. y/theta의 강한 상관을 따라 초기값 주변 세 후보를 비교한다.
+
+```powershell
+python -m unittest discover -s tool/ytheta -p "test_*.py" -v
+python tool/ytheta/photometric.py model.json reference.bmp current.bmp --session "Y+0" --initial 0.1 0.02
+python tool/ytheta/evaluate_photometric.py --repo . --output docs/validation-runs/ytheta
+```
+
+마지막 명령은 physical_pivot_4285 interleaved 보류 목록의 각 세션에서 명목 위치순 첫·중간·마지막을 선택한 18장을 4프로세스로 평가한다. 명목 정답은 초기값에 사용하지 않으며 해당 영상 ECC 공동 추정값만 사용한다. 이것은 전수 photometric 검증이 아니다. 자세한 결과와 실패 한계는 results/report.md를 참조한다. Pillow가 추가로 필요하다.
