@@ -1,0 +1,108 @@
+{
+  "frames": 281,
+  "all_three_success": 240,
+  "all_three_rate": 0.8540925266903915,
+  "plate_success": 279,
+  "failure_slots": {
+    "ok": 797,
+    "decode": 40,
+    "plate": 6
+  },
+  "per_slot": {
+    "C": {
+      "valid": 247,
+      "total": 281,
+      "median_accepted": 32.0,
+      "p05_accepted": 29.0,
+      "min_accepted": 27
+    },
+    "L": {
+      "valid": 271,
+      "total": 281,
+      "median_accepted": 42.0,
+      "p05_accepted": 37.0,
+      "min_accepted": 35
+    },
+    "R": {
+      "valid": 279,
+      "total": 281,
+      "median_accepted": 38.0,
+      "p05_accepted": 32.9,
+      "min_accepted": 30
+    }
+  },
+  "per_axis": {
+    "T": {
+      "n": 200,
+      "all_three_success": 167
+    },
+    "Y": {
+      "n": 80,
+      "all_three_success": 72
+    },
+    "center": {
+      "n": 1,
+      "all_three_success": 1
+    }
+  },
+  "reference_features": 111,
+  "common_features_all3": {
+    "count": 240.0,
+    "mean": 102.6625,
+    "std": 3.811270722321947,
+    "min": 89.0,
+    "25%": 101.0,
+    "50%": 103.0,
+    "75%": 105.0,
+    "max": 111.0
+  },
+  "id_retention": {
+    "T": {
+      "median": 0.895,
+      "at_least_90pct": 55,
+      "at_least_80pct": 87
+    },
+    "Y": {
+      "median": 0.925,
+      "at_least_90pct": 70,
+      "at_least_80pct": 94
+    }
+  },
+  "accepted_quality": {
+    "shift": {
+      "0.5": 0.70378995815,
+      "0.95": 1.4555843723999997,
+      "0.99": 1.8336610148399999
+    },
+    "heldout_residual": {
+      "0.5": 0.3658441079,
+      "0.95": 0.790733879995,
+      "0.99": 0.9596504505219999
+    },
+    "eigenvalue": {
+      "0.5": 0.01659385208,
+      "0.95": 0.03435171749749999,
+      "0.99": 0.043898433780799995
+    },
+    "contrast": {
+      "0.5": 126.0,
+      "0.95": 136.5,
+      "0.99": 140.0
+    }
+  },
+  "relative_noise_proxy": {
+    "T": {
+      "count": 114,
+      "median": 0.2792352486301266,
+      "mean": 0.28261107543737557,
+      "max": 0.5991306029036372
+    },
+    "Y": {
+      "count": 55,
+      "median": 0.20823809536796317,
+      "mean": 0.21994688571234616,
+      "max": 0.2890852955945671
+    }
+  },
+  "vector_comparison_common_points": 76
+}
