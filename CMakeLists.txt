@@ -29,13 +29,3 @@ add_custom_command(TARGET main POST_BUILD
         "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
         "$<TARGET_FILE_DIR:main>"
 )
-# Offline direct-registration collector; original alignment API remains unchanged.
-set(YTHETA_SOURCES ${PROJECT_SOURCES})
-list(FILTER YTHETA_SOURCES EXCLUDE REGEX "/main.cpp$")
-add_executable(ytheta_collect tool/ytheta_collect.cpp ${YTHETA_SOURCES})
-target_include_directories(ytheta_collect PRIVATE ${PROJECT_SOURCE_DIR}/include)
-target_link_libraries(ytheta_collect PRIVATE ${OpenCV_LIBS})
-add_custom_command(TARGET ytheta_collect POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
-        "$<TARGET_FILE_DIR:ytheta_collect>")
