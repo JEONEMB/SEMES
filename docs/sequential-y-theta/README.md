@@ -74,3 +74,7 @@ python tool/sequential/sequential.py docs/sequential-y-theta/experimental_model.
 observation.json은 accepted 점의 {"FP11L:31":[u,v], ...} 원본 픽셀 좌표다. session을 생략하면 center 기준을 사용하며 미지 세션 영점 성능은 검증되지 않았다. experimental_model.json은 보고서 재현용 1차 blocked 모델이다. 보류 결과와 요약은 이 디렉터리, 전체 학습 모델/원시 좌표/worker 로그는 Git 제외 validation-runs/sequential에 있다.
 
 Jira: Epic S15P31A507-2, Story S15P31A507-9, 복원 Task23(2SP), 순차추정 Task24(5SP). 활성 sprint59016.
+
+## 후속 재평가
+
+기본 교점이 Fourier로 개선된 뒤 동일 순차 추정기를 다시 평가한 결과는 [Fourier 재평가](fourier-recheck/README.md)를 참조한다. 위 표는 개선 전 corner 기준이며 새 수치와 구분한다.
