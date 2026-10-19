@@ -41,3 +41,8 @@ Desktop.ini
 
 # data 폴더와 모든 하위 폴더의 BMP 이미지 제외
 /data/**/*.[bB][mM][pP]
+# Generated validation runs (curated report figures stay tracked)
+/docs/validation-runs/*
+!/docs/validation-runs/README.md
+/result_*.png
+/result_*.csv
