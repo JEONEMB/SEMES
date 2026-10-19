@@ -35,6 +35,8 @@ struct QrRoiResult {
     cv::Mat image; // Perspective-corrected crop used for decoding.
     std::string payload, featureStatus;
     bool decoded = false, modelMatched = false, featuresValid = false;
+    bool decodeUsedGaussian = false;
+    double decodeGaussianSigma = 0;
     double modelMismatch = 1;
     int moduleCount = 0;
     cv::Mat idealModules, decodedVisualization, candidateVisualization, featureVisualization;

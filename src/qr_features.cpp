@@ -94,6 +94,28 @@ void analyzeQrFeatures(const cv::Mat& source,const AlignmentOptions& options,QrR
             }
         }
     }
+    // Decode-only fallback. Never blur source or use this buffer for cornerSubPix.
+    cv::Mat gaussianDecodeInput;
+    if(qr.payload.empty()) for(double sigma:{0.6,0.9}) {
+        cv::Mat smoothed;cv::GaussianBlur(decodeGray,smoothed,{3,3},sigma);
+        for(int scale:{1,3}) {
+            cv::Mat retry;
+            if(scale==1) retry=smoothed;
+            else {
+                cv::resize(smoothed,retry,{},3,3,cv::INTER_LINEAR);
+                cv::copyMakeBorder(retry,retry,40,40,40,40,cv::BORDER_CONSTANT,cv::Scalar(255));
+            }
+            points.release();observed.release();
+            qr.payload=detector.detectAndDecode(retry,points,observed);
+            if(!qr.payload.empty()) {
+                decodeScale=scale;
+                decodeOffset=scale==1?cv::Point2f():cv::Point2f(-40.f/3,-40.f/3);
+                qr.decodeUsedGaussian=true;qr.decodeGaussianSigma=sigma;
+                gaussianDecodeInput=retry.clone();break;
+            }
+        }
+        if(!qr.payload.empty()) break;
+    }
     qr.decoded=!qr.payload.empty();
     qr.decodedVisualization=qr.image.clone();
     std::vector<cv::Point2f> decodedCorners;
@@ -103,6 +125,10 @@ void analyzeQrFeatures(const cv::Mat& source,const AlignmentOptions& options,QrR
         for(int i=0;i<4;++i) cv::line(qr.decodedVisualization,decodedCorners[i],decodedCorners[(i+1)%4],{0,255,0},1);
     }
     cv::putText(qr.decodedVisualization,qr.decoded?qr.payload:"DECODE FAILED",{4,18},cv::FONT_HERSHEY_SIMPLEX,.45,{0,0,255},1);
+    if(qr.decodeUsedGaussian) {
+        cv::putText(qr.decodedVisualization,"decode-only Gaussian",{4,qr.image.rows-6},cv::FONT_HERSHEY_SIMPLEX,.4,{0,0,255},1);
+        stage("_06_gaussian_input","6a - Decode-only Gaussian input (not used for subpixel)",gaussianDecodeInput);
+    }
     stage("_06_decode","6 - QR decode",qr.decodedVisualization);
     if(!qr.decoded||decodedCorners.size()!=4||observed.empty()) {qr.featureStatus="decode_failed";return;}
     qr.moduleCount=observed.rows;
