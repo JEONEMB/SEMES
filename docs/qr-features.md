@@ -2,8 +2,9 @@
 
 ```powershell
 cmake --build build --config Release
-.\build\Release\main.exe "data/SSAFY Test Image Set/center.bmp" --output "result"
-.\build\Release\main.exe "data/SSAFY Test Image Set/center.bmp" --output "result" --no-gui
+New-Item -ItemType Directory -Force docs/validation-runs/manual | Out-Null
+.\build\Release\main.exe "data/SSAFY Test Image Set/center.bmp" --output "docs/validation-runs/manual/result"
+.\build\Release\main.exe "data/SSAFY Test Image Set/center.bmp" --output "docs/validation-runs/manual/result" --no-gui
 ```
 
 ## 처리 순서
