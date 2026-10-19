@@ -190,6 +190,8 @@ Alignment_t alignment(cv::Mat& src, const AlignmentOptions& options,
             showStep("5 - QR crops: L / C / R",montage);
         }
     }
+    if(best>=0.65) for(int i=0;i<3;++i)
+        if(qrRois[i].valid) analyzeQrFeatures(image,options,qrRois[i],i);
     if(detection) {
         detection->found = best>=0.65;
         detection->score = best;

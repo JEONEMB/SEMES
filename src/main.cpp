@@ -30,6 +30,16 @@ int main(int argc, char** argv) {
             allCropsValid=allCropsValid && qr.valid;
         }
         if(!allCropsValid) return 3;
+        bool allFeaturesValid=true;
+        for(int i=0;i<3;++i) {
+            const auto& qr=detection.qrRois[i];
+            int accepted=0; for(const auto& f:qr.features) accepted+=f.accepted;
+            std::cout<<"QR "<<i<<" payload="<<qr.payload<<", modules="<<qr.moduleCount
+                     <<", model mismatch="<<qr.modelMismatch<<", accepted="<<accepted
+                     <<"/"<<qr.features.size()<<", status="<<qr.featureStatus<<"\n";
+            allFeaturesValid=allFeaturesValid && qr.featuresValid;
+        }
+        if(!allFeaturesValid) return 4;
         std::cout<<"Y/theta alignment errors are not estimated yet.\n";
         return 0;
     } catch(const cv::Exception& e) {
