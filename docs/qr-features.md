@@ -1,6 +1,4 @@
-# QR 모델 기반 특징점 추출
-
-## 실행
+# QR 고정 파이프라인 사용법
 
 ```powershell
 cmake --build build --config Release
@@ -8,38 +6,42 @@ cmake --build build --config Release
 .\build\Release\main.exe "data/SSAFY Test Image Set/center.bmp" --output "result" --no-gui
 ```
 
-기존 1~5단계 뒤에 QR별 L → C → R 순서로 6~9단계가 실행됩니다. 각 화면에서 키를 누르면 다음 화면으로 진행합니다.
+## 처리 순서
 
-- 06_decode: 디코딩 내용과 QR 외곽.
-- 07_model: 재생성한 이상적 QR과 체커보드형 교점 후보.
-- 08_candidates: ROI 위로 투영한 초기 후보(청록색).
-- 09_refined: 초기점(청록), 통과점(초록), 제외점(빨강), 보정 벡터(노랑). 보기 위해 3배 확대했으며 측정 좌표는 원본 영상 픽셀 단위입니다.
-- 10_features: 특징점별 CSV. 파일 접미사는 L/C/R입니다.
+1. Canny 에지 검출.
+2. 허프 직선 검출 후 같은 외곽선에 해당하는 조각 병합.
+3. 고정 조건으로 플레이트 사각형 한 번 선택.
+4. 플레이트 중점 기준 좌·중·우 QR ROI 생성.
+5. 각 ROI에 고정 전처리(Gaussian 3×3, sigma 0.6 → 2배 선형 확대 → 흰 여백 32px).
+6. 각 QR에 detectAndDecode 한 번 호출. 실패하면 실패 결과를 반환하며 다른 조건으로 재시도하지 않는다.
+7. 내용·버전·ECC·마스크·인코딩 모드를 고려해 이상적 모듈 패턴을 재생성하고 관측 패턴과 일치 확인.
+8. 모델의 체커보드형 교점 후보를 원본 영상에 투영하고 원본 그레이스케일에서 cornerSubPix로 정밀화.
+9. 국소 코너/명암/이동량 및 평가점을 제외한 재투영 잔차로 품질 확인.
 
-## 처리 원리
+원본 source는 디코딩 전처리에 의해 변경되지 않는다. 프레임마다 동일한 처리 순서를 사용한다. 잘못된 입력, 저장 오류, 검출 실패 판정은 남아 있다.
 
-OpenCV QRCodeDetector로 내용과 정규화된 모듈 행렬을 읽습니다. 실패 시 디코딩 입력만 확대/흰 테두리 추가 후 재시도합니다. C++ QR-Code-generator로 같은 내용·버전의 auto/byte 인코딩, 네 ECC 수준, 여덟 마스크를 비교합니다. 관측 모듈 행렬과의 불일치율 3% 이하이며 차선 후보보다 2%p 넘게 일치하는 패턴만 모델로 채택합니다. 관측 모듈 자체를 이상적 원본으로 취급하지 않습니다. 혼합 세그먼트/ECI 등 현재 재생성 범위로 맞출 수 없으면 명시적으로 실패하며, 인쇄 원본이 확보되면 해당 모듈 행렬을 등록하는 방식으로 확장하는 것이 좋습니다.
+## 소스 구성
 
-모델에서 대각선 흑백이 교차하는 교점만 후보로 사용하고, 모듈 좌표에 기반한 고정 ID를 부여합니다. ID는 QR 내용/모델과 함께 해석해야 합니다. 같은 색 모듈이 붙은 격자점은 후보가 아닙니다.
+| 파일 | 역할 |
+|---|---|
+| src/alignment.cpp | 입력 검증과 단계 연결 |
+| src/plate_detection.cpp | Canny·허프·직선 병합·사각형 평가 |
+| src/qr_roi.cpp | 플레이트 좌표계와 ROI 추출 |
+| src/qr_decode.cpp | 고정 전처리와 디코딩 1회 |
+| src/qr_model.cpp | 이상적 QR 모듈 모델 재생성·검증 |
+| src/qr_features.cpp | 후보 생성, 원본 영상 정밀화, 기하 검증 |
+| src/pipeline_visualization.cpp | 이미지 저장과 단계별 표시 공통 처리 |
+| include/pipeline_settings.hpp | 디코딩 및 선 병합 고정 설정 |
+| .clang-format | BSD/Allman, 4칸 들여쓰기, 중괄호 다음 줄 |
 
-디코더의 외곽으로 QR 모델→원본 영상 변환을 구하고, 원본 그레이스케일 영상에서 cornerSubPix를 수행합니다. 원근 보정 ROI는 decode/시각화에만 사용합니다. 윈도 반경은 모듈당 픽셀 수의 0.30배(정수 내림), 종료 기준은 40회/0.001px입니다. 종료 기준은 정확도 보장이 아닙니다.
+기존 alignment(image) 호출, AlignmentOptions 및 PlateDetectionResult 인터페이스는 유지한다. qrcodegen은 MIT 라이선스 외부 코드이므로 BSD 포매팅 대상에서 제외했다.
 
-## 결과 및 품질 검사
+## 시각화·결과
 
-`PlateDetectionResult.qrRois[i]`에서 payload, decoded, modelMatched, moduleCount, featuresValid, featureStatus와 features에 접근합니다. 각 QrFeature는 모델 좌표, 초기/정밀화된 원본 좌표, 이동량, 최소 고유값, 사분면 대비, leave-one-out 재투영 잔차, localAccepted/accepted를 제공합니다.
+키를 누르면 다음 단계로 진행한다. `_02_merged.png`는 병합된 선, `_06_decode_input_L/C/R.png`는 고정 디코딩 입력이다. 기존 에지, 허프, 플레이트, ROI, 이상적 모델, 후보, 정밀화 결과 및 특징점 CSV도 유지한다. decodeUsedGaussian은 이제 재시도 여부가 아니라 고정 디코딩 전처리에 Gaussian을 사용했음을 뜻한다. decodeGaussianSigma는 0.6이다.
 
-초기점 이동량 ≤ 모듈 피치×0.45, 최소 고유값 > 0.0001, 예상 흑백 사분면 대비 > 25를 국소 조건으로 사용합니다. 이후 RANSAC과 각 평가점을 제외하고 계산한 호모그래피로 잔차를 검사합니다. 잔차 한계는 max(0.75px, 모듈 피치×0.15)입니다. 최종 8개 이상이며 가로·세로 분포가 QR의 40% 이상이어야 featuresValid가 참입니다. 이 조건들은 초기 경험적 기준으로서 반복 촬영·알려진 이동을 통한 조정이 필요합니다. 점들 간 일관성은 절대 위치 정확도나 확률적 confidence와 다릅니다.
+QrRoiResult의 payload, modelMatched, featuresValid, features를 확인한다. 특징점 ID는 (QR 내용, 모듈 기반 ID)로 해석하며 accepted가 거짓인 좌표는 측정값으로 사용하지 않는다. 정렬 오차 y/t는 아직 계산하지 않으므로 NaN을 반환한다.
 
-실패/제외점의 잔차는 NaN일 수 있으며, accepted가 거짓인 refined 좌표는 측정값으로 사용하지 않습니다. QR의 내용/모델/후보 ID가 같은 점끼리 비교해야 합니다. 현재는 실제 Y/θ 정렬 오차를 계산하지 않습니다.
+종료 코드: 0=세 QR 특징점 처리 성공, 1=입력/저장 오류, 2=플레이트 검출 실패, 3=ROI 오류, 4=디코딩/모델/특징점 실패.
 
-종료 코드: 0=세 QR 특징점 처리 성공, 1=입력/저장 오류, 2=플레이트 검출 실패, 3=ROI 오류, 4=디코딩·모델 대응·특징점 품질 실패. GUI 키 입력은 별도 실행 확인이 필요합니다.
-
-## 외부 라이브러리
-
-Project Nayuki의 [QR-Code-generator](https://github.com/nayuki/QR-Code-generator) C++ 구현(MIT)을 src/qrcodegen.cpp 및 include/third_party/qrcodegen.hpp에 포함했습니다. 두 파일 상단에 원문 라이선스를 보존했습니다. 기존 CMake의 src/*.cpp 재귀 수집으로 자동 빌드되며 별도 설치는 필요 없습니다.
-
-## 추가된 검출 안정화와 검증
-
-플레이트는 >180px 가로선 조건으로 먼저 검출하고, 유효 사각형이 없으면 >100px로 재시도합니다. 기존 QR 디코딩 재시도가 모두 실패한 경우에만 3×3 Gaussian(sigma 0.6, 0.9)을 디코딩 복사본에 적용합니다. `decodeUsedGaussian`과 `decodeGaussianSigma`로 사용 여부를 확인하며, 성공한 Gaussian 입력은 `_06_gaussian_input_L/C/R.png`로 저장됩니다. cornerSubPix와 품질 평가는 원본 그레이스케일을 계속 사용합니다.
-
-[281장 전수 검증 보고서](qr-stability-report.md)에 조건별 성공률, 실패 영상과 ROI 비교, 특징점 유지율, 평균 이동 제거 후 요동, 원시 CSV 및 CPU 병렬 재현 절차를 정리했습니다.
+[고정 파이프라인 검증](qr-fixed-pipeline.md) · [이전 재시도 파이프라인 검증 이력](qr-stability-report.md)

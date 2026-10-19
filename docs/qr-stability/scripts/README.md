@@ -15,7 +15,7 @@ python docs/qr-stability/scripts/analyze_stability.py docs/qr-stability/data/fin
 ## 전수 검출 재실행
 
 1. `list_images.py`로 BMP 목록을 생성합니다.
-2. `evaluate.cpp`와 `src/alignment.cpp`, `src/qr_features.cpp`, `src/qrcodegen.cpp`를 프로젝트와 같은 C++17/OpenCV 환경에서 함께 컴파일합니다. `src/main.cpp`는 포함하지 않습니다. 헤더 경로는 `include`와 OpenCV include 디렉터리, 링크 라이브러리는 프로젝트와 동일합니다.
+2. `evaluate.cpp`와 `src/main.cpp`를 제외한 모든 `src/*.cpp`를 프로젝트와 같은 C++17/OpenCV 환경에서 함께 컴파일합니다. `src/main.cpp`는 포함하지 않습니다. 헤더 경로는 `include`와 OpenCV include 디렉터리, 링크 라이브러리는 프로젝트와 동일합니다.
 3. 수집기를 `evaluate.exe images.txt output_directory`로 실행합니다. 출력 폴더는 미리 생성합니다.
 4. 수집된 `frames.csv`, `qr_status.csv`, `points.csv`를 분석 스크립트에 전달합니다.
 

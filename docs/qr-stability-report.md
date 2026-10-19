@@ -1,5 +1,7 @@
 # QR 플레이트·특징점 검출 안정성 검증
 
+> 이 문서는 재시도 기반 구현의 검증 이력입니다. 현재 고정 파이프라인은 [후속 검증](qr-fixed-pipeline.md)을 참고하세요.
+
 검증일: 2026-10-19. 대상: `data/SSAFY Test Image Set`의 281장(center 1, Theta 200, Y 80). Windows / OpenCV 3.4.15 / C++17. 원본 이미지는 수정하지 않았다.
 
 ## 현재 판정
