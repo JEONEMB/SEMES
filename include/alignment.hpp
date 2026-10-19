@@ -12,9 +12,17 @@ struct Alignment_t
     error_t y = std::numeric_limits<double>::quiet_NaN();
     error_t t = std::numeric_limits<double>::quiet_NaN();
 };
+enum class QrRefinementMethod
+{
+    CornerSubPix,
+    ImageFormation,
+    Fourier
+};
 struct AlignmentOptions
 {
     bool visualize = true;
+    // Selected by local comparison; physical Y/theta accuracy is not certified.
+    QrRefinementMethod qrRefinement = QrRefinementMethod::Fourier;
     // Ratios in plate coordinates, relative to the plate center.
     // Initial layout estimated from supplied images; replace with measured layout if available.
     std::array<float, 3> qrCenterOffsetsX{{-0.265f, 0.f, 0.265f}};
@@ -30,6 +38,10 @@ struct QrFeature
     double shift = 0, minEigenvalue = 0, contrast = 0;
     double reprojectionError = std::numeric_limits<double>::quiet_NaN();
     bool localAccepted = false, accepted = false;
+    bool refinementConverged = false;
+    int refinementBoundaryMask = 0;
+    double refinementCondition = std::numeric_limits<double>::quiet_NaN();
+    double refinementResidual = std::numeric_limits<double>::quiet_NaN();
 };
 struct QrRoiResult
 {

@@ -5,7 +5,8 @@ int main(int argc, char **argv)
 {
     if (argc < 2)
     {
-        std::cerr << "Usage: main <image_path> [--output <prefix>] [--no-gui]\n";
+        std::cerr << "Usage: main <image_path> [--output <prefix>] [--no-gui] [--refinement "
+                     "corner|model|fourier]\n";
         return 1;
     }
     AlignmentOptions options;
@@ -15,6 +16,27 @@ int main(int argc, char **argv)
         if (arg == "--no-gui")
         {
             options.visualize = false;
+        }
+        else if (arg == "--refinement" && i + 1 < argc)
+        {
+            std::string method = argv[++i];
+            if (method == "corner")
+            {
+                options.qrRefinement = QrRefinementMethod::CornerSubPix;
+            }
+            else if (method == "model")
+            {
+                options.qrRefinement = QrRefinementMethod::ImageFormation;
+            }
+            else if (method == "fourier")
+            {
+                options.qrRefinement = QrRefinementMethod::Fourier;
+            }
+            else
+            {
+                std::cerr << "Unknown refinement method: " << method << "\n";
+                return 1;
+            }
         }
         else if (arg == "--output" && i + 1 < argc)
         {
