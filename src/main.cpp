@@ -21,6 +21,15 @@ int main(int argc, char** argv) {
         if(!detection.found) {std::cerr<<"QR plate not found\n";return 2;}
         std::cout<<"Plate detected. Boundary score: "<<detection.score<<"\n";
         for(const auto& point:detection.corners) std::cout<<point<<"\n";
+        std::cout<<"Plate center: "<<detection.center<<"\n";
+        bool allCropsValid=true;
+        for(int i=0;i<3;++i) {
+            const auto& qr=detection.qrRois[i];
+            std::cout<<"QR "<<i<<" center: "<<qr.center<<", valid: "<<qr.valid
+                     <<", crop: "<<qr.image.cols<<"x"<<qr.image.rows<<"\n";
+            allCropsValid=allCropsValid && qr.valid;
+        }
+        if(!allCropsValid) return 3;
         std::cout<<"Y/theta alignment errors are not estimated yet.\n";
         return 0;
     } catch(const cv::Exception& e) {
