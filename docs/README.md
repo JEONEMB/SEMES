@@ -14,3 +14,4 @@
 | [validation-runs/](validation-runs/README.md) | Git에서 제외하는 로컬 실행 결과 |
 
 저장소 루트에는 실행 결과 이미지를 두지 않습니다. 보고서에 필요한 선별된 자료만 해당 보고서 디렉터리에서 추적합니다.
+- [평균 제거 θ 선추정·Y 후보정](sequential-y-theta/README.md)
