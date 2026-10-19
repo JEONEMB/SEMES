@@ -75,7 +75,8 @@ Alignment_t alignment(cv::Mat& src, const AlignmentOptions& options,
         double angle=std::atan2(v.y,v.x)*180/CV_PI;
         while(angle<0) angle+=180;
         Line l{p,v,angle,length};
-        if(std::min(angle,180-angle)<8 && length>180*sx) horizontal.push_back(l);
+        // Keep fragmented plate borders; rectangle geometry and edge support still validate candidates.
+        if(std::min(angle,180-angle)<8 && length>100*sx) horizontal.push_back(l);
         if(std::abs(angle-90)<8 && length>50*sy) vertical.push_back(l);
     }
     save("_02_hough.png",hough);
@@ -90,11 +91,13 @@ Alignment_t alignment(cv::Mat& src, const AlignmentOptions& options,
     cv::bitwise_not(edges,inverse);
     cv::distanceTransform(inverse,distance,cv::DIST_L2,3);
     double best=-1;std::array<cv::Point2f,4> corners{};
-    for(size_t i=0;i<horizontal.size();++i) for(size_t j=i+1;j<horizontal.size();++j)
+    // Preserve existing successful fits. Use shorter segments only if the strict pass fails.
+    auto searchRectangle = [&](const std::vector<Line>& candidates) {
+    for(size_t i=0;i<candidates.size();++i) for(size_t j=i+1;j<candidates.size();++j)
     for(size_t k=0;k<vertical.size();++k) for(size_t l=k+1;l<vertical.size();++l) {
         std::array<cv::Point2f,4> q;
-        if(!intersect(horizontal[i],vertical[k],q[0]) || !intersect(horizontal[i],vertical[l],q[1]) ||
-           !intersect(horizontal[j],vertical[l],q[2]) || !intersect(horizontal[j],vertical[k],q[3])) continue;
+        if(!intersect(candidates[i],vertical[k],q[0]) || !intersect(candidates[i],vertical[l],q[1]) ||
+           !intersect(candidates[j],vertical[l],q[2]) || !intersect(candidates[j],vertical[k],q[3])) continue;
         double w1=cv::norm(q[1]-q[0])/sx,w2=cv::norm(q[2]-q[3])/sx;
         double h1=cv::norm(q[3]-q[0])/sy,h2=cv::norm(q[2]-q[1])/sy;
         // Size prior for the black plate surrounding all three QR labels.
@@ -118,6 +121,14 @@ Alignment_t alignment(cv::Mat& src, const AlignmentOptions& options,
         }
         if(samples) score+=0.4*contrast/(255*samples);
         if(score>best) {best=score;corners=q;}
+    }
+    };
+    std::vector<Line> strictHorizontal;
+    for(const auto& line:horizontal) if(line.length>180*sx) strictHorizontal.push_back(line);
+    searchRectangle(strictHorizontal);
+    if(best<0.65) {
+        std::cout<<"Retrying plate detection with horizontal segments >100px\n";
+        searchRectangle(horizontal);
     }
     std::cout<<"Best support: "<<best<<"\n";
     cv::Mat result=image.clone();
