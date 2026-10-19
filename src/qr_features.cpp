@@ -1,5 +1,6 @@
 #include "pipeline_internal.hpp"
 #include "pipeline_settings.hpp"
+#include "qr_refinement.hpp"
 #include <algorithm>
 #include <cmath>
 #include <fstream>
@@ -21,7 +22,7 @@ bool inBounds(const cv::Point2f &p, const cv::Mat &image, int margin = 0)
 } // namespace
 
 static void refineCandidates(QrRoiResult &qr, const cv::Mat &gray, const cv::Mat &quality,
-                             const cv::Mat &h, double pitch, int radius)
+                             const cv::Mat &h, double pitch, int radius, QrRefinementMethod method)
 {
     for (auto &f : qr.features)
     {
@@ -29,10 +30,46 @@ static void refineCandidates(QrRoiResult &qr, const cv::Mat &gray, const cv::Mat
         {
             continue;
         }
-        std::vector<cv::Point2f> point{f.initial};
-        cv::cornerSubPix(gray, point, {radius, radius}, {-1, -1},
-                         {cv::TermCriteria::COUNT | cv::TermCriteria::EPS, 40, 0.001});
-        f.refined = point[0];
+        if (method == QrRefinementMethod::CornerSubPix)
+        {
+            std::vector<cv::Point2f> point{f.initial};
+            cv::cornerSubPix(gray, point, {radius, radius}, {-1, -1},
+                             {cv::TermCriteria::COUNT | cv::TermCriteria::EPS, 40, 0.001});
+            f.refined = point[0];
+            f.refinementConverged = true; // OpenCV does not expose the termination reason.
+        }
+        else
+        {
+            subpixel::Fit fit;
+            if (method == QrRefinementMethod::ImageFormation)
+            {
+                auto origin = project(f.model, h);
+                auto dx = (project(f.model + cv::Point2f(.01f, 0), h) - origin) * 100;
+                auto dy = (project(f.model + cv::Point2f(0, .01f), h) - origin) * 100;
+                double a1 = std::atan2(dy.y, dy.x) - subpixel::pi / 2;
+                double a2 = std::atan2(dx.y, dx.x) + subpixel::pi / 2;
+                fit = subpixel::modelFit(subpixel::patch(gray, f.initial, 3), a1, a2, pitch * .45);
+            }
+            else
+            {
+                // Eq. (23) adaptation: subtract the fixed patch mean before fitting.
+                fit = subpixel::fourierFit(
+                    subpixel::patch(gray, f.initial,
+                                    alignment_detail::settings::FourierRefinementRadius),
+                    alignment_detail::settings::FourierRefinementAlpha,
+                    alignment_detail::settings::FourierRefinementDemean, pitch * .45);
+            }
+            f.refinementConverged = fit.converged;
+            f.refinementBoundaryMask = fit.boundaryMask;
+            f.refinementCondition = fit.condition;
+            f.refinementResidual = fit.rms;
+            f.refined = f.initial + cv::Point2f(float(fit.p.x), float(fit.p.y));
+            if (!fit.valid)
+            {
+                f.shift = cv::norm(f.refined - f.initial);
+                continue;
+            }
+        }
         f.shift = cv::norm(f.refined - f.initial);
         if (!inBounds(f.refined, gray, radius + 3))
         {
@@ -147,6 +184,10 @@ void analyzeQrFeatures(const cv::Mat &source, const AlignmentOptions &options, Q
     qr.modelMismatch = 1;
     qr.moduleCount = 0;
     const std::string label = std::string(1, "LCR"[index]);
+    const char *refinementName =
+        options.qrRefinement == QrRefinementMethod::CornerSubPix     ? "cornerSubPix"
+        : options.qrRefinement == QrRefinementMethod::ImageFormation ? "imageFormation"
+                                                                     : "fourierCentered";
     alignment_detail::StageWriter stage(options, label);
     alignment_detail::DecodeResult decoded;
     qr.decoded = alignment_detail::decodeQr(qr.image, decoded);
@@ -233,7 +274,7 @@ void analyzeQrFeatures(const cv::Mat &source, const AlignmentOptions &options, Q
     }
     stage("_07_model", "7 - Verified ideal QR and X-corner candidates", ideal);
     stage("_08_candidates", "8 - Projected candidates (cyan)", qr.candidateVisualization);
-    refineCandidates(qr, gray, quality, h, pitch, radius);
+    refineCandidates(qr, gray, quality, h, pitch, radius, options.qrRefinement);
     const int accepted = validateGeometry(qr, n, pitch);
     qr.featureVisualization = qr.image.clone();
     cv::resize(qr.featureVisualization, qr.featureVisualization, {}, 3, 3, cv::INTER_NEAREST);
@@ -281,14 +322,18 @@ void analyzeQrFeatures(const cv::Mat &source, const AlignmentOptions &options, Q
             CV_Error(cv::Error::StsError, "Cannot save feature CSV");
         }
         csv << "id,model_x,model_y,initial_x,initial_y,refined_x,refined_y,shift_px,min_eigenvalue,"
-               "contrast,heldout_residual_px,local_accepted,accepted\n";
+               "contrast,heldout_residual_px,local_accepted,accepted,refinement_converged,"
+               "refinement_boundary_mask,refinement_condition,refinement_residual,refinement_"
+               "method\n";
         csv.precision(10);
         for (const auto &f : qr.features)
         {
             csv << f.id << ',' << f.model.x << ',' << f.model.y << ',' << f.initial.x << ','
                 << f.initial.y << ',' << f.refined.x << ',' << f.refined.y << ',' << f.shift << ','
                 << f.minEigenvalue << ',' << f.contrast << ',' << f.reprojectionError << ','
-                << f.localAccepted << ',' << f.accepted << '\n';
+                << f.localAccepted << ',' << f.accepted << ',' << f.refinementConverged << ','
+                << f.refinementBoundaryMask << ',' << f.refinementCondition << ','
+                << f.refinementResidual << ',' << refinementName << '\n';
         }
     }
     std::cout << "QR " << label << ": " << qr.payload << ", model mismatch=" << qr.modelMismatch

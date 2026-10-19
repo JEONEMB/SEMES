@@ -4,6 +4,10 @@ namespace alignment_detail
 {
 namespace settings
 {
+// Selected on the development split; see docs/qr-subpixel-comparison/README.md.
+constexpr int FourierRefinementRadius = 5; // 11x11 original-image samples.
+constexpr double FourierRefinementAlpha = 2.4;
+constexpr bool FourierRefinementDemean = true;
 constexpr int DecodeScale = 2;
 constexpr int DecodeBorder = 32;
 constexpr int DecodeKernel = 3;
