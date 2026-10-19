@@ -38,3 +38,9 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# 원본 데이터: 받은 zip, 푼 BMP, 변환한 PNG 는 올리지 않음 (data/README.md, manifest.csv 만 추적)
+/data/raw/
+/data/bmp/
+/data/png/
+/data/tmp_*/
