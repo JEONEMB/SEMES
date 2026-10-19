@@ -67,17 +67,18 @@ def calibrate(frames, split, kind, fx):
     if any(not np.allclose(r['reference'],q) for r in frames): raise ValueError('reference grid changed')
     poses = np.array([[r['value'],0] if r['axis']=='Y' else [0,r['value']] for r in train])
     indices = np.array([groups.index(r['group']) for r in train])
-    if kind=='physical':
+    if kind.startswith('physical'):
+        npar = 5 if kind=='physical_pivot' else 3
         def residual(v):
-            prediction = physical(q, poses, v[:3], fx=fx)
-            return (prediction+v[3:].reshape(-1,2)[indices,None,:]-observed).ravel()
-        initial = np.r_[np.log(307.8),0.,0.,np.zeros(2*len(groups))]
+            prediction = physical(q, poses, v[:npar], fx=fx)
+            return (prediction+v[npar:].reshape(-1,2)[indices,None,:]-observed).ravel()
+        initial = np.r_[np.log(307.8),0.,0.,np.zeros(npar-3),np.zeros(2*len(groups))]
         fit = gauss_newton(residual, initial,
-            np.r_[np.log(150),-1.,-1.,np.full(2*len(groups),-20.)],
-            np.r_[np.log(600),1.,1.,np.full(2*len(groups),20.)], iterations=70)
-        model = dict(kind=kind, reference=q.tolist(), parameters=fit['x'][:3].tolist(),
+            np.r_[np.log(150),-1.,-1.,np.full(npar-3,-300.),np.full(2*len(groups),-20.)],
+            np.r_[np.log(600),1.,1.,np.full(npar-3,300.),np.full(2*len(groups),20.)], iterations=70)
+        model = dict(kind='physical', reference=q.tolist(), parameters=fit['x'][:npar].tolist(),
                      fx=fx, fy=4285.714285714,
-                     offsets={g:fit['x'][3+2*j:5+2*j].tolist() for j,g in enumerate(groups)},
+                     offsets={g:fit['x'][npar+2*j:npar+2+2*j].tolist() for j,g in enumerate(groups)},
                      training_residual_px=fit['rms'], calibration_converged=fit['converged'])
     else:
         X = np.array([[float(g==r['group']) for g in groups]+[y,t,y*y,t*t]
@@ -91,7 +92,7 @@ def calibrate(frames, split, kind, fx):
     model.update(split=split, calibration_reference='center image', bounds={'y_mm':[-2,2],'theta_deg':[-1,1]},
                  unobserved_mixed_term=True, real_mixed_validation=False,
                  assumptions=['fixed wall, camera parallel translation and yaw',
-                              'physical: pivot co-located, D omitted, fixed nominal K',
+                              ('physical: free pivot' if kind=='physical_pivot' else 'physical: co-located pivot')+', D omitted, fixed nominal K',
                               'session label known during heldout evaluation; offsets learned only from train'])
     rows=[]
     for frame in test:
@@ -110,7 +111,7 @@ def analyze(output):
         statuses=raw.groupby('path').first().status.value_counts().to_dict()
         report[method]={'statuses':statuses,'models':{}}
         for split in ['interleaved','blocked']:
-            for kind,fx in [('physical',4017.857142857),('physical',4285.714285714),('direct',0.)]:
+            for kind,fx in [('physical',4017.857142857),('physical',4285.714285714),('direct',0.),('physical_pivot',4017.857142857),('physical_pivot',4285.714285714)]:
                 label=f'{kind}_{int(fx)}_{split}'
                 model,pred=calibrate(frames,split,kind,fx)
                 (output/f'{method}_{label}.json').write_text(json.dumps(model,indent=2))
@@ -122,7 +123,7 @@ def analyze(output):
                         'joint_within_tolerance':int(((abs(g.y_error)<=.09)&(abs(g.theta_error)<=.09)).sum()),
                         'converged':int(g.converged.sum()),'boundary':int(g.at_boundary.sum()),
                         'median_condition':float(g.condition.median())}
-                if kind=='physical':stats['depth_mm']=float(np.exp(model['parameters'][0]));stats['plane_slopes']=model['parameters'][1:]
+                if kind.startswith('physical'):stats['depth_mm']=float(np.exp(model['parameters'][0]));stats['plane_slopes']=model['parameters'][1:3];stats['pivot_mm']=model['parameters'][3:]
                 report[method]['models'][label]=stats
                 print(method,label,json.dumps(stats),flush=True)
     (output/'evaluation_summary.json').write_text(json.dumps(report,indent=2))

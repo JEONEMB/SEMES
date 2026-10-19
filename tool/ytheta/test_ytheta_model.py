@@ -37,6 +37,19 @@ class GeometryTests(unittest.TestCase):
                 self.assertLess(abs(result['y_mm']-y), 1e-4)
                 self.assertLess(abs(result['theta_deg']-t), 1e-4)
 
+    def test_pivot_model(self):
+        p = self.p+[12., 40.]
+        for pose in [[0, 0], [.4, -.3]]:
+            numeric = jacobian(lambda x: physical(self.q, x, p), pose)
+            np.testing.assert_allclose(numeric, physical_pose_jacobian(self.q, pose, p), rtol=1e-5, atol=1e-6)
+            rays = np.c_[(self.q[:, 0]-1920)/self.model['fx'], (self.q[:, 1]-1080)/self.model['fy'], np.ones(len(self.q))]
+            xyz = rays*(300/(rays@np.array([.1, -.05, 1.])))[:, None]
+            a = np.deg2rad(pose[1]); R = np.array([[np.cos(a),0,np.sin(a)],[0,1,0],[-np.sin(a),0,np.cos(a)]])
+            lever = np.array([12.,0.,40.]); center = np.array([-pose[0],0,0])+R.T@lever-lever
+            target = (xyz-center)@R.T
+            expected=target[:,:2]/target[:,2,None]*[self.model['fx'],self.model['fy']]+[1920,1080]
+            np.testing.assert_allclose(physical(self.q,pose,p),expected,atol=1e-9)
+
     def test_reject_bad_observations(self):
         with self.assertRaises(ValueError): estimate(self.model, np.zeros((2, 2)))
         with self.assertRaises(ValueError): estimate(self.model, self.q, 'unknown')

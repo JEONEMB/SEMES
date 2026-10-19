@@ -54,8 +54,8 @@ def physical(points, pose, parameters, fx=4017.857142857, fy=4285.714285714):
     """Fixed wall; camera translates parallel to reference image x and yaws.
 
     Positive nominal motion signs follow this dataset's observed image motion.
-    Camera/pivot co-location is an explicit hypothesis, not a known fact.
-    parameters=(log depth, plane slope x, plane slope y). K principal point fixed.
+    Camera/pivot co-location is a baseline hypothesis; optional lever x/z is fitted.
+    parameters=(log depth, plane slope x, plane slope y[, lever x, lever z]). K principal point fixed.
     D is omitted in this baseline; residuals must justify any extension.
     """
     p = np.asarray(points, float); pose = np.asarray(pose, float)
@@ -64,7 +64,8 @@ def physical(points, pose, parameters, fx=4017.857142857, fy=4285.714285714):
     z = np.exp(parameters[0])/denominator
     X = rx*z + pose[..., 0, None]; Y = ry*z
     angle = np.deg2rad(pose[..., 1, None]); c = np.cos(angle); s = np.sin(angle)
-    xx = c*X+s*z; zz = -s*X+c*z
+    lx, lz = parameters[3:5] if len(parameters)>=5 else (0.,0.)
+    xx = c*X+s*z+(c-1)*lx+s*lz; zz = -s*X+c*z-s*lx+(c-1)*lz
     if np.any(zz <= 0) or np.any(denominator <= 0):
         raise ValueError('points behind camera or invalid plane')
     return np.stack([fx*xx/zz+1920., fy*Y/zz+1080.], axis=-1)
@@ -76,9 +77,10 @@ def physical_pose_jacobian(points, pose, parameters, fx=4017.857142857, fy=4285.
     z = np.exp(parameters[0])/(1.+parameters[1]*rx+parameters[2]*ry)
     X = rx*z+pose[0]; Y = ry*z
     t = np.deg2rad(pose[1]); c = np.cos(t); s = np.sin(t)
-    xx = c*X+s*z; zz = -s*X+c*z
+    lx, lz = parameters[3:5] if len(parameters)>=5 else (0.,0.)
+    xx = c*X+s*z+(c-1)*lx+s*lz; zz = -s*X+c*z-s*lx+(c-1)*lz
     dy = np.stack([fx*(c*zz+s*xx)/zz**2, fy*Y*s/zz**2], axis=-1)
-    dt = np.stack([fx*(zz**2+xx**2)/zz**2, fy*Y*xx/zz**2], axis=-1)*np.pi/180
+    dt = np.stack([fx*((zz+lz)*zz+xx*(xx+lx))/zz**2, fy*Y*(xx+lx)/zz**2], axis=-1)*np.pi/180
     return np.stack([dy, dt], axis=-1).reshape(-1, 2)
 
 
