@@ -1,31 +1,29 @@
 #include <iostream>
-#include <opencv2/opencv.hpp>
-
+#include <string>
 #include "alignment.hpp"
-
-int main()
-{
-    std::cout << "OpenCV version: "
-              << CV_VERSION << std::endl;
-
-    cv::Mat image(300, 500, CV_8UC3, cv::Scalar(255, 255, 255));
-
-    cv::putText(
-        image,
-        "OpenCV 3.4.15",
-        cv::Point(80, 150),
-        cv::FONT_HERSHEY_SIMPLEX,
-        1.0,
-        cv::Scalar(0, 0, 0),
-        2
-    );
-
-    Alignment_t alignment_result = alignment(image); // Example usage of the alignment function
-
-    std::cout << "Alignment result: y = " << alignment_result.y
-              << ", t = " << alignment_result.t << std::endl;
-    cv::imshow("OpenCV Test", image);
-    cv::waitKey(0);
-
-    return 0;
+int main(int argc, char** argv) {
+    if(argc<2) {
+        std::cerr << "Usage: main <image_path> [--output <prefix>] [--no-gui]\n";
+        return 1;
+    }
+    AlignmentOptions options;
+    for(int i=2;i<argc;++i) {
+        std::string arg=argv[i];
+        if(arg=="--no-gui") options.visualize=false;
+        else if(arg=="--output" && i+1<argc) options.outputPrefix=argv[++i];
+        else { std::cerr<<"Invalid or incomplete option: "<<arg<<"\n";return 1; }
+    }
+    try {
+        cv::Mat image=cv::imread(argv[1],cv::IMREAD_COLOR);
+        if(image.empty()) {std::cerr<<"Cannot read image: "<<argv[1]<<"\n";return 1;}
+        PlateDetectionResult detection;
+        alignment(image,options,&detection);
+        if(!detection.found) {std::cerr<<"QR plate not found\n";return 2;}
+        std::cout<<"Plate detected. Boundary score: "<<detection.score<<"\n";
+        for(const auto& point:detection.corners) std::cout<<point<<"\n";
+        std::cout<<"Y/theta alignment errors are not estimated yet.\n";
+        return 0;
+    } catch(const cv::Exception& e) {
+        std::cerr<<e.what()<<"\n";return 1;
+    }
 }
