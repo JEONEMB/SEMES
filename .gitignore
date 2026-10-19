@@ -38,3 +38,6 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# data 폴더와 모든 하위 폴더의 BMP 이미지 제외
+/data/**/*.[bB][mM][pP]
