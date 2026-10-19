@@ -46,3 +46,7 @@ Desktop.ini
 !/docs/validation-runs/README.md
 /result_*.png
 /result_*.csv
+
+# Python analysis cache
+__pycache__/
+*.pyc
