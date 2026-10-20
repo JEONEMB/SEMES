@@ -43,3 +43,9 @@ Desktop.ini
 .CLAUDE
 img
 specification
+
+# MFC (Visual Studio) build output
+x64/
+Debug/
+Release/
+*.aps
