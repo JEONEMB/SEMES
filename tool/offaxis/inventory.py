@@ -57,6 +57,8 @@ def run(root, output):
                          category=category, width=width, height=height, mode=mode,
                          y_actual=float(actual[0]) if len(actual) == 2 else None,
                          theta_actual=float(actual[1]) if len(actual) == 2 else None,
+                         sidecar_path=sidecar.relative_to(root).as_posix() if sidecar else None,
+                         sidecar_sha256=hashlib.sha256(sidecar.read_bytes()).hexdigest() if sidecar else None,
                          bytes=path.stat().st_size, mtime_ns=path.stat().st_mtime_ns,
                          sha256=digest.hexdigest()))
     if not rows:

@@ -60,7 +60,19 @@ def main():
     mask=np.array([(r.y,r.theta) in hold for r in df.itertuples()])
     xy=df[['refx','refy']].to_numpy();y=df.actual_y.to_numpy();t=df.actual_theta.to_numpy();z=df[['dx','dy']].to_numpy()
     scale=max(np.std(z),1.)
-    rows=[];models=[]
+    rows=[];models=[];comparisons=[]
+    for interaction in [False,True]:
+        errors_train=[];errors_test=[]
+        for slot,g in df.groupby('qr'):
+            idx=g.index.to_numpy();yy=y[idx];tt=t[idx]
+            X=np.column_stack([np.ones(len(g)),yy,tt,yy*yy,tt*tt]+([yy*tt] if interaction else []))
+            keep=~mask[idx]
+            coeff=np.linalg.lstsq(X[keep],z[idx][keep],rcond=None)[0]
+            error=X@coeff-z[idx]
+            errors_train.extend(error[keep].ravel());errors_test.extend(error[~keep].ravel())
+        comparisons.append(dict(model='quadratic_interaction' if interaction else 'quadratic_additive',
+             parameters=18 if interaction else 15,train_rmse_xy=float(np.sqrt(np.mean(np.square(errors_train)))),
+             holdout_rmse_xy=float(np.sqrt(np.mean(np.square(errors_test))))))
     # Focal-length profile shows sensitivity/degeneracy, rather than pretending K is known.
     for focal in [2000.,4500.,8000.]:
         def residual(p,selected):
@@ -84,12 +96,29 @@ def main():
             rows.append(dict(focal_fixed=focal,qr=r.qr,y=r.y,theta=r.theta,holdout=bool(mask[i]),
                 measured_dx=r.dx,measured_dy=r.dy,predicted_dx=pred[i,0],predicted_dy=pred[i,1],
                 residual_dx=r.dx-pred[i,0],residual_dy=r.dy-pred[i,1]))
+    best=min(models,key=lambda m:m['train_rmse_xy'])
+    free_initial=np.r_[best['parameters'],np.log(best['focal_fixed'])]
+    free=least_squares(lambda p:((predict(p[:6],xy[~mask],y[~mask],t[~mask],np.exp(p[6]))-z[~mask])/scale).ravel(),
+        free_initial,bounds=([-2,-2,-np.pi,-.1,-10,-10,np.log(1000)],[2,2,np.pi,.1,10,10,np.log(20000)]),
+        x_scale='jac',max_nfev=1000,ftol=1e-9,xtol=1e-9,gtol=1e-9)
+    focal=float(np.exp(free.x[6]));pred=predict(free.x[:6],xy,y,t,focal)
+    singular=np.linalg.svd(free.jac,compute_uv=False)
+    models.append(dict(focal_fitted=focal,parameters=free.x.tolist(),converged=bool(free.success),
+        train_rmse_xy=float(np.sqrt(np.mean((pred[~mask]-z[~mask])**2))),
+        holdout_rmse_xy=float(np.sqrt(np.mean((pred[mask]-z[mask])**2))),
+        jacobian_singular_values=singular.tolist(),jacobian_condition=float(singular[0]/max(singular[-1],1e-15)),
+        parameter_boundary=free.active_mask.tolist()))
+    for i,r in enumerate(df.itertuples()):
+        rows.append(dict(focal_fixed='free',qr=r.qr,y=r.y,theta=r.theta,holdout=bool(mask[i]),
+                measured_dx=r.dx,measured_dy=r.dy,predicted_dx=pred[i,0],predicted_dy=pred[i,1],
+                residual_dx=r.dx-pred[i,0],residual_dy=r.dy-pred[i,1]))
     pd.DataFrame(rows).to_csv(out/'physics_raw_residuals.csv',index=False)
     result=dict(axis_assumption='rotation axis normal to QR wall; Y tangent to wall',
       K_assumption='square pixels, fixed principal point (1920,1080), no lens distortion; focal-length profile',
       parameter_order=['normal_x_over_z','normal_y_over_z','tangent_direction_angle','translation_per_mm_over_plane_distance','pivot_tangent_a_over_distance','pivot_tangent_b_over_distance'],
       input='new-session mean ECC QR-center displacements versus sidecar coordinates minus new reference mean',
       train_coordinates=len(coordinates)-len(hold),holdout_coordinates=len(hold),models=models,
+      same_split_empirical=comparisons,
       limits=['QR centers only; not a dense feature calibration','theta degree units assumed',
               'camera-behind pivot normal component unobservable: (I-R)*(p+lambda*n)=(I-R)*p',
               'absolute distance, focal length, and pivot depth are not separately identified',

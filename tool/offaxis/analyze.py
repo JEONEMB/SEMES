@@ -103,14 +103,19 @@ def main():
             y=pose.y_nominal_mm.to_numpy();t=pose.theta_nominal_assumed_deg.to_numpy();z=pose[dim].to_numpy()
             for interaction in [False,True]:
                 X=np.column_stack([np.ones(len(y)),y,t,y*y,t*t]+([y*t] if interaction else []))
-                pred=[]
+                pred=[];jackknife=[]
                 for i in range(len(y)):
                     keep=np.arange(len(y))!=i
-                    pred.append(X[i]@np.linalg.lstsq(X[keep],z[keep],rcond=None)[0])
+                    cc=np.linalg.lstsq(X[keep],z[keep],rcond=None)[0]
+                    pred.append(X[i]@cc)
+                    if interaction:jackknife.append(cc[-1])
                 c=np.linalg.lstsq(X,z,rcond=None)[0]
                 validations.append(dict(method=method,qr=slot,dimension=dim,interaction=interaction,
                     n_coordinates=len(y),parameters=X.shape[1],train_rmse=rmse(z-X@c),loco_rmse=rmse(z-np.array(pred)),
-                    cross_coefficient=c[-1] if interaction else 0,design_condition=np.linalg.cond(X)))
+                    cross_coefficient=c[-1] if interaction else 0,design_condition=np.linalg.cond(X),
+                    cross_jackknife_se=float(np.sqrt((len(y)-1)*np.mean((np.array(jackknife)-np.mean(jackknife))**2))) if interaction else np.nan,
+                    cross_leave_one_min=min(jackknife) if interaction else np.nan,
+                    cross_leave_one_max=max(jackknife) if interaction else np.nan))
             for axis,fixed in [('y_nominal_mm','theta_nominal_assumed_deg'),('theta_nominal_assumed_deg','y_nominal_mm')]:
                 for constant,subset in pose.groupby(fixed):
                     subset=subset.sort_values(axis)
@@ -157,7 +162,17 @@ def main():
                    new_reference_offset_dx=refnew.dx,new_reference_offset_dy=refnew.dy,
                    residual_dx=r.dx-refnew.dx-pred[0],residual_dy=r.dy-refnew.dy-pred[1]))
     pd.DataFrame(point_residuals).to_csv(out/'additive_point_residuals.csv.gz',index=False,compression={'method':'gzip','mtime':0})
-    pd.DataFrame(point_axis).to_csv(out/'point_axis_sensitivity.csv',index=False)
+    point_axis=pd.DataFrame(point_axis)
+    point_axis.to_csv(out/'point_axis_sensitivity.csv',index=False)
+    fig,axes=plt.subplots(2,3,figsize=(13,6))
+    for row,axis in enumerate(['Y-only','theta-only']):
+        limits=point_axis[point_axis.axis==axis].dx_linear.quantile([.02,.98]).to_numpy()
+        for ax,slot in zip(axes[row],'LCR'):
+            g=point_axis[(point_axis.axis==axis)&(point_axis.qr==slot)]
+            sc=ax.scatter(g.reference_x,g.reference_y,c=g.dx_linear,s=8,cmap='viridis',vmin=limits[0],vmax=limits[1])
+            ax.invert_yaxis();ax.set(title=f'{axis} sensitivity, {slot}',xlabel='image x',ylabel='image y')
+            fig.colorbar(sc,ax=ax,label='px/mm' if axis=='Y-only' else 'px/degree assumed')
+    fig.tight_layout();fig.savefig(out/'feature_sensitivity.png',dpi=170);plt.close(fig)
     # Point repeat residuals and common frame residual: actual repeats only.
     mix=mix.copy()
     keys=['qr','id','y_nominal_mm','theta_nominal_assumed_deg']
@@ -184,15 +199,26 @@ def main():
     (out/'summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
     # Scatter only at measured coordinates: no rectangular surface fabrication.
     fig,axes=plt.subplots(2,3,figsize=(13,8),sharex=True,sharey=True)
+    color_limit=max(abs(res[res.dimension=='dx'].reference_corrected_residual).quantile(.99),1e-3)
     for row,method in enumerate(['corners630','ECC']):
         for ax,slot in zip(axes[row],'LCR'):
             r=res[(res.method==method)&(res.qr==slot)&(res.dimension=='dx')]
             g=r.groupby(['y','theta'],as_index=False).reference_corrected_residual.mean()
-            s=ax.scatter(g.y,g.theta,c=g.reference_corrected_residual,cmap='coolwarm',s=90)
+            s=ax.scatter(g.y,g.theta,c=g.reference_corrected_residual,cmap='coolwarm',s=90,vmin=-color_limit,vmax=color_limit)
             fig.colorbar(s,ax=ax,label='measured - additive (px)')
             ax.set(title=f'{method}, QR {slot}',xlabel='Y (mm)',ylabel='theta (degree assumed)')
     fig.suptitle('Reference-corrected residual at measured poses (theta > 1: extrapolation)')
     fig.tight_layout();fig.savefig(out/'coupling_sampled_residual.png',dpi=170);plt.close(fig)
+    fig=plt.figure(figsize=(12,5))
+    for j,method in enumerate(['corners630','ECC'],1):
+        ax=fig.add_subplot(1,2,j,projection='3d')
+        r=res[(res.method==method)&(res.dimension=='dx')]
+        g=r.groupby(['y','theta'],as_index=False).reference_corrected_residual.mean()
+        ax.plot_trisurf(g.y,g.theta,g.reference_corrected_residual,cmap='coolwarm',linewidth=.2,alpha=.75)
+        ax.scatter(g.y,g.theta,g.reference_corrected_residual,c='k',s=10)
+        ax.set(title=method,xlabel='Y (mm)',ylabel='theta (degree assumed)',zlabel='residual (px)')
+    fig.suptitle('Piecewise planar display inside measured hull; theta > 1 uses axis extrapolation')
+    fig.tight_layout();fig.savefig(out/'coupling_surface.png',dpi=170);plt.close(fig)
     fig,axes=plt.subplots(1,2,figsize=(12,4))
     for method in ['corners630','ECC']:
         r=repeat[(repeat.method==method)&(repeat.dimension=='dx')]
