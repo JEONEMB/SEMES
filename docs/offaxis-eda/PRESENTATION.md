@@ -1,5 +1,8 @@
 # 혼합 데이터 EDA 발표 자료
 
+사용자가 핵심으로 지정한 원본 6쪽 **0점 위치**의 수정본: [v3 PPT](zero-position-v3/SEMES_02_혼합데이터EDA_v3_0점위치.pptx), [표시식·수치·재현 안내](zero-position-v3/README.md).
+v2의 그룹별 기울기 제거 대신 공통 축 기울기를 제거한다. 신규 혼합축 주 그래프에는 두 축의 명령 이동 성분을 함께 제거하고 절편을 남기며, 다른 축 미제거 결과도 별도 제공한다.
+
 최신 결과: [원본 PPT 분석 방법 기준 24장 PowerPoint](ppt-method-v2/SEMES_02_혼합데이터EDA_동일방법_v2.pptx), [분석 정의와 CSV 안내](ppt-method-v2/README.md).
 v2는 θ를 degree(°)로 확정하고 원본 PPT의 고정 630점 전체 평균, center 한 장 기준, OLS 표본 σ와 그래프 형태로 재계산했다.
 아래 v1은 이전 결과로 보존한다.
