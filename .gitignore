@@ -38,3 +38,15 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# Raw acquisition inputs and local analysis scratch (curated results are tracked).
+/data/**/*.[bB][mM][pP]
+/data/**/*.txt
+/docs/offaxis-eda/smoke/
+/docs/offaxis-eda/raw/points.csv
+/docs/validation-runs/
+/tool/qr-subpixel/build/
+/tool/qr-subpixel/results/
+/tool/qr-subpixel/pipeline-*/
+__pycache__/
+*.pyc
