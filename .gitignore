@@ -49,4 +49,5 @@ Desktop.ini
 /tool/qr-subpixel/results/
 /tool/qr-subpixel/pipeline-*/
 __pycache__/
+/docs/offaxis-eda/ppt-method-v2/smoke/
 *.pyc

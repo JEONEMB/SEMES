@@ -71,7 +71,7 @@ def analyze(output,previous):
         if g.y_mm.nunique()<3:continue
         groups.append(dict(group=f'new_T={t:g}',scope='new',varying='y_mm',fixed_axis='theta_deg',fixed_value=t,paths=g.path.tolist()))
     (output/'groups.json').write_text(json.dumps(groups,indent=2),encoding='utf-8')
-    fits=[];frame_res=[];noise=[];point_res=[];steps=[]
+    fits=[];frame_res=[];noise=[];point_res=[];steps=[];ecc_noise=[]
     for group in groups:
         selected=means[means.path.isin(group['paths'])].copy()
         axis=group['varying'];meta={k:group[k] for k in ['group','scope','varying','fixed_axis','fixed_value']}
@@ -117,9 +117,22 @@ def analyze(output,previous):
                   x=g.x.iloc[0],y=g.y.iloc[0],sigma_dx=std(g.individual_dx),sigma_dy=std(g.individual_dy),
                   common_sigma_dx=std(common.common_dx),common_sigma_dy=std(common.common_dy)))
         residue['group']=group['group'];residue['scope']=group['scope'];point_res.append(residue)
+        # ECC's independent unit is one QR patch, not one corner.
+        eq=ec[ec.path.isin(group['paths'])]
+        patch_res=[]
+        for slot,g in eq.groupby('qr'):
+            X=np.column_stack([np.ones(len(g)),g[axis]])
+            c=np.linalg.lstsq(X,g[['dx','dy']],rcond=None)[0];r=g[['dx','dy']].to_numpy()-X@c
+            patch_res.append(pd.DataFrame(dict(path=g.path.to_numpy(),qr=slot,rx=r[:,0],ry=r[:,1])))
+        patch_res=pd.concat(patch_res)
+        for dim in ['rx','ry']:patch_res[dim+'_common']=patch_res.groupby('path')[dim].transform('mean')
+        for slot,g in patch_res.groupby('qr'):
+            ecc_noise.append(dict(**meta,qr=slot,sigma_dx=std(g.rx-g.rx_common),sigma_dy=std(g.ry-g.ry_common),
+                                  common_sigma_dx=std(g.rx_common),common_sigma_dy=std(g.ry_common)))
     fits=pd.DataFrame(fits);fits.to_csv(output/'linear_fits.csv',index=False)
     pd.DataFrame(frame_res).to_csv(output/'frame_linear_residuals.csv',index=False)
     noise=pd.DataFrame(noise);noise.to_csv(output/'point_noise.csv',index=False)
+    pd.DataFrame(ecc_noise).to_csv(output/'ecc_noise.csv',index=False)
     pd.concat(point_res,ignore_index=True).to_csv(output/'point_linear_residuals.csv.gz',index=False,compression={'method':'gzip','mtime':0})
     steps=pd.DataFrame(steps)
     nonfirst=steps[~steps.first_from_center]
