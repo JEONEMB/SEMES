@@ -1,5 +1,9 @@
 # 혼합 데이터 EDA 발표 자료
 
+최신 결과: [원본 PPT 분석 방법 기준 24장 PowerPoint](ppt-method-v2/SEMES_02_혼합데이터EDA_동일방법_v2.pptx), [분석 정의와 CSV 안내](ppt-method-v2/README.md).
+v2는 θ를 degree(°)로 확정하고 원본 PPT의 고정 630점 전체 평균, center 한 장 기준, OLS 표본 σ와 그래프 형태로 재계산했다.
+아래 v1은 이전 결과로 보존한다.
+
 [20장 PowerPoint](SEMES_02_혼합데이터EDA_정리본_v1.pptx)
 
 사용자가 제공한 SEMES_01_데이터EDA_정리본_v4.pptx의 크기·폰트·사진/그래프와 설명 표 구성을 따른 새 데이터 요약이다.
