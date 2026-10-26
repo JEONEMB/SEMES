@@ -49,3 +49,10 @@ x64/
 Debug/
 Release/
 *.aps
+
+# Python 가상환경·캐시 (의존성은 각 폴더의 requirements.txt 로 기록)
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
