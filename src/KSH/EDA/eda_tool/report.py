@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 
 from common import CENTER, FIGURES, RESULTS, TABLES, TOL_T_DEG, TOL_Y_UM, VIDEOS, rel, setup_matplotlib, write_csv
+from figure_guides import GUIDES, INTRO, wrap
 
 
 def summary_all_sets() -> pd.DataFrame:
@@ -95,16 +96,38 @@ def _text_page(pdf, plt, title: str, lines: list[str], size=13, png: Path | None
     plt.close(fig)
 
 
-def _img_page(pdf, plt, title: str, paths: list[Path], note: str = ""):
+def _intro_page(pdf, plt):
+    """그림 페이지 앞에 기호·특징 이름을 한 번 정리한다 (각 페이지 '보는 법'이 이를 전제로 함)."""
+    fig = plt.figure(figsize=(11.7, 8.3))
+    fig.text(0.05, 0.93, "이 PDF 보는 법", fontsize=20, weight="bold")
+    y = 0.86
+    for head, items in INTRO:
+        fig.text(0.05, y, head, fontsize=13, weight="bold", va="top"); y -= 0.04
+        for it in items:
+            for l in wrap("• " + it, 150):
+                fig.text(0.07, y, l, fontsize=11, va="top"); y -= 0.032
+        y -= 0.015
+    pdf.savefig(fig); plt.close(fig)
+
+
+def _img_page(pdf, plt, title: str, paths: list[Path], note: str = "", guide: str | None = None):
     paths = [p for p in paths if Path(p).exists()]
     if not paths:
         return
     n = len(paths)
     fig = plt.figure(figsize=(11.7, 8.3))
     fig.suptitle(title, fontsize=18, weight="bold", x=0.05, ha="left", y=0.97)
+    img_w = 0.64 if guide else 0.94           # 보는 법이 있으면 오른쪽 30 % 를 설명 칸으로 씀
     for i, p in enumerate(paths):
-        ax = fig.add_axes([0.03, 0.05 + (n - 1 - i) * 0.88 / n, 0.94, 0.86 / n])
+        ax = fig.add_axes([0.02, 0.05 + (n - 1 - i) * 0.88 / n, img_w, 0.86 / n])
         ax.imshow(plt.imread(str(p))); ax.axis("off")
+    if guide:
+        x0, y = 0.685, 0.90
+        fig.text(x0, y, "보는 법", fontsize=13, weight="bold", va="top"); y -= 0.045
+        for item in GUIDES[guide]:
+            for l in wrap(item, 46):
+                fig.text(x0, y, l, fontsize=9.5, va="top"); y -= 0.024
+            y -= 0.010
     if note:
         fig.text(0.05, 0.015, note, fontsize=11)
     pdf.savefig(fig); plt.close(fig)
@@ -139,22 +162,25 @@ def run_all(sets, no_video=False) -> dict:
         lines += [f"세트: " + ", ".join(f"{r.set_id} {r.n_images}장 ({r.capture_start[:10]})" for r in S.itertuples())]
         lines += [f"판정 기준: Θ ±{TOL_T_DEG}°, Y ±{TOL_Y_UM:.0f} µm (사진마다).  상세 해석은 EDA_보고서.md"]
         _text_page(pdf, plt, "QR Y·Θ 분리 데이터 EDA — 단계별 핵심 결론", lines, size=12, png=RESULTS / "EDA_보고서_요약.png")
-        _img_page(pdf, plt, "Stage 0  촬영 순서와 접근 방향", [FIGURES / f"s0_timeline_{t}.png" for t in tags])
-        _img_page(pdf, plt, "Stage 1  화질 추이", [FIGURES / f"s1_quality_trend_{tags[0]}.png", FIGURES / "s1_quality_trend_compare.png"])
-        _img_page(pdf, plt, "Stage 1  촬영 잡음과 반사", [p for t in tags for p in (FIGURES / f"s1_noise_map_{t}.png", FIGURES / f"s1_reflection_{t}.png")][:3])
-        _img_page(pdf, plt, "Stage 2  Y·Θ 분리도 순위", [FIGURES / "s2_separability_rank.png"])
-        _img_page(pdf, plt, "Stage 2  특징 vs 지령값 (같은 화면 이동 기준)", [FIGURES / "s2_feature_vs_cmd_1.png"])
-        _img_page(pdf, plt, "Stage 2  변위장 — Θ 는 U 자(원근), Y 는 평평", [FIGURES / "s2_flow_profile.png", FIGURES / "s2_paired_diff_Y+2mm.png"])
-        _img_page(pdf, plt, "Stage 2  패치별 변위장", [FIGURES / "s2_flow_compare.png"])
+        _intro_page(pdf, plt)
+        _img_page(pdf, plt, "Stage 0  촬영 순서와 접근 방향", [FIGURES / f"s0_timeline_{t}.png" for t in tags], guide="s0_timeline")
+        _img_page(pdf, plt, "Stage 1  화질 추이", [FIGURES / f"s1_quality_trend_{tags[0]}.png", FIGURES / "s1_quality_trend_compare.png"], guide="s1_trend")
+        noise = [p for t in tags for p in (FIGURES / f"s1_noise_map_{t}.png", FIGURES / f"s1_reflection_{t}.png") if p.exists()]
+        _img_page(pdf, plt, "Stage 1  촬영 잡음과 반사", noise[:3], guide="s1_noise")
+        _img_page(pdf, plt, "Stage 2  Y·Θ 분리도 순위", [FIGURES / "s2_separability_rank.png"], guide="s2_sep")
+        _img_page(pdf, plt, "Stage 2  특징 vs 지령값 (같은 화면 이동 기준)", [FIGURES / "s2_feature_vs_cmd_1.png"], guide="s2_feat")
+        _img_page(pdf, plt, "Stage 2  변위장 — Θ 는 U 자(원근), Y 는 평평", [FIGURES / "s2_flow_profile.png", FIGURES / "s2_paired_diff_Y+2mm.png"], guide="s2_flow")
+        _img_page(pdf, plt, "Stage 2  패치별 변위장", [FIGURES / "s2_flow_compare.png"], guide="s2_flow_map")
         for t in tags[1:]:
-            _img_page(pdf, plt, f"Stage 3  {t}: 1차 모델로 예측한 잔차", [FIGURES / f"s3_superposition_residuals_{t}.png"])
-            _img_page(pdf, plt, f"Stage 3  {t}: 범위", [FIGURES / f"s3_out_of_range_{t}.png"])
-        _img_page(pdf, plt, "Stage 3  세트별 원점 (C-2)", [FIGURES / "s3_center_compare.png"])
-        _img_page(pdf, plt, "Stage 4  접근 방향과 재이동", [FIGURES / "s4_backlash.png", FIGURES / "s4_reapproach.png"])
-        _img_page(pdf, plt, "Stage 4  장비 재위치 흩어짐 (참고, 평가 제외)", [FIGURES / "s4_label_uncertainty.png"])
+            _img_page(pdf, plt, f"Stage 3  {t}: 1차 모델로 예측한 잔차", [FIGURES / f"s3_superposition_residuals_{t}.png"], guide="s3_resid")
+            _img_page(pdf, plt, f"Stage 3  {t}: 범위", [FIGURES / f"s3_out_of_range_{t}.png"], guide="s3_range")
+        _img_page(pdf, plt, "Stage 3  세트별 원점 (C-2)", [FIGURES / "s3_center_compare.png"], guide="s3_center")
+        _img_page(pdf, plt, "Stage 4  접근 방향과 재이동 (참고, 평가 제외)", [FIGURES / "s4_backlash.png", FIGURES / "s4_reapproach.png"], guide="s4_dev")
+        _img_page(pdf, plt, "Stage 4  장비 재위치 흩어짐 (참고, 평가 제외)", [FIGURES / "s4_label_uncertainty.png"], guide="s4_unc")
         vids = sorted(VIDEOS.glob("*_sync*.mp4"))
         vids = [v for v in vids if "realtime" not in v.name]
         frames = _video_frames(vids[:3], times=(0.5,))
-        _img_page(pdf, plt, "영상 대표 프레임 (A-2 동기화판)", frames[:3],
-                  note="영상 파일: " + ", ".join(rel(v) for v in sorted(VIDEOS.glob("*.mp4")) if "realtime" not in v.name))
+        _img_page(pdf, plt, "영상 대표 프레임 (A-2 동기화판)", frames[:3], guide="frames",
+                  note=f"영상 파일: {rel(VIDEOS)}/ 의 MP4 {len(list(VIDEOS.glob('*.mp4')))}개 "
+                       "(_shooting = 촬영 과정, _quality = 화질 경고판, _sync = 동기화판, _realtime = 실제 시간 비율)")
     return {"pdf": str(pdf_path), "summary": str(RESULTS / "summary_all_sets.csv"), "pdf_mb": round(pdf_path.stat().st_size / 2**20, 1)}

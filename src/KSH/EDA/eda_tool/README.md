@@ -61,7 +61,7 @@ label_reference_csv: "src/KSH/.../parallax_set3.csv"       # (선택) 배경 시
 | 2 Y vs Θ | `stage2_features.py`, `qr_geom.py`, `center_def.py` | `tables\features.csv`, `linearity.csv`, `separability.csv`, `patch_flow.csv`, `center\center_definition.json`, `center_by_image.csv`, `figures\s2_*`, `qr_info_*`, `videos\*_sync_*` |
 | 3 혼합 이동 | `stage3_mixed.py` | `tables\superposition.csv`, `drift.csv`, `center\center_by_set.csv`, `figures\s3_*`, `videos\<2차>_sync.*` |
 | 4 라벨 | `stage4_labels.py` | `tables\label_check.csv`, `label_uncertainty.csv`, `figures\s4_*` |
-| 5 보고서 | `report.py` | `summary_all_sets.csv`, `EDA_보고서.pdf`, `EDA_보고서_요약.png` |
+| 5 보고서 | `report.py`, `figure_guides.py` (그림별 '보는 법' 문구) | `summary_all_sets.csv`, `EDA_보고서.pdf`, `EDA_보고서_요약.png` |
 
 영상은 GIF(가로 960 px, 20 MB 넘으면 720 px), MP4(균일 간격), `_realtime.mp4`(촬영 간격 비율) 세 가지입니다.
 
