@@ -8,7 +8,7 @@ QR 3개 플레이트 영상 세트를 단계별로 분석하고 보고서까지 
 ```powershell
 cd src\KSH\EDA
 python -m venv .venv
-.venv\Scripts\python -m pip install numpy opencv-python pandas matplotlib pyyaml pillow
+.venv\Scripts\python -m pip install -r requirements.txt   # 검증한 버전 고정 (src/KSH/EDA/requirements.txt)
 ```
 
 - MP4 영상은 시스템 `ffmpeg`(PATH)를 사용합니다. 없으면 GIF 만 만듭니다.
