@@ -1,0 +1,4 @@
+# EDA 툴 로컬 파일
+.venv/
+eda_results/cache/
+__pycache__/
