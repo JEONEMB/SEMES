@@ -72,10 +72,12 @@ def _key_lines(log: dict) -> list[str]:
     if (TABLES / "superposition.csv").exists():
         S = pd.read_csv(TABLES / "superposition.csv", encoding="utf-8-sig")
         w = S[S.feature == "w_diff_RL"].iloc[0]; c = S[S.feature == "curv"].iloc[0]
-        lines.append(f"Stage 3  날짜가 바뀌면 Θ 감도가 바뀜: 폭 차 {w.set1_aT:.3f}→{w.set2_aT:.3f} px/°, 곡률 {c.set1_aT:.2f}→{c.set2_aT:.2f} px/°")
+        # 2차 세트는 Θ ≥ 0 뿐이라 Θ·Θ² 계수가 섞임 → 참고값. 같은 선형 모델 비교는 보고서 4.2절
+        lines.append(f"Stage 3  (참고, Θ² 포함 모델) 폭 차 Θ 감도 {w.set1_aT:.3f}→{w.set2_aT:.3f} px/°, 곡률 {c.set1_aT:.2f}→{c.set2_aT:.2f} px/° "
+                     f"— 2차 세트 적합 불안정, 장비 조정 없음")
     if unc is not None:
         same = unc[unc.component.str.contains("통일")].iloc[0]; sess = unc[unc.component.str.contains("세션 간")].iloc[0]
-        lines.append(f"Stage 4  라벨 불확도(접근 방향 통일) Θ {same.T_deg:.4f}° ({same.T_pct_of_tol:.0f} %), Y {same.Y_um:.0f} µm ({same.Y_pct_of_tol:.0f} %); "
+        lines.append(f"Stage 4  (참고, 장비 오차라 평가 제외) 재위치 흩어짐 Θ {same.T_deg:.4f}° ({same.T_pct_of_tol:.0f} %), Y {same.Y_um:.0f} µm ({same.Y_pct_of_tol:.0f} %); "
                      f"세션 간 계통 Θ {sess.T_deg:+.4f}°, Y {sess.Y_um:+.0f} µm")
     return lines
 
@@ -149,7 +151,7 @@ def run_all(sets, no_video=False) -> dict:
             _img_page(pdf, plt, f"Stage 3  {t}: 범위", [FIGURES / f"s3_out_of_range_{t}.png"])
         _img_page(pdf, plt, "Stage 3  세트별 원점 (C-2)", [FIGURES / "s3_center_compare.png"])
         _img_page(pdf, plt, "Stage 4  접근 방향과 재이동", [FIGURES / "s4_backlash.png", FIGURES / "s4_reapproach.png"])
-        _img_page(pdf, plt, "Stage 4  라벨 불확도 (판정 기준 대비)", [FIGURES / "s4_label_uncertainty.png"])
+        _img_page(pdf, plt, "Stage 4  장비 재위치 흩어짐 (참고, 평가 제외)", [FIGURES / "s4_label_uncertainty.png"])
         vids = sorted(VIDEOS.glob("*_sync*.mp4"))
         vids = [v for v in vids if "realtime" not in v.name]
         frames = _video_frames(vids[:3], times=(0.5,))
