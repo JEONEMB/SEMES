@@ -1,5 +1,5 @@
 import numpy as np,json,sys
-from KSH.Hypothesis_2.H3_H7.python_prototype.code.phys import *
+from KSH.Hypothesis_3.H3_H7.python_prototype.code.phys import *
 D=np.load('corr.npz',allow_pickle=True); P0,Q,OK,names,info=D['P0'],D['Q'],D['OK'],list(D['names']),D['info']
 S,Yl,Tl=info[:,0].astype(int),info[:,1],info[:,2]
 C=json.load(open(sys.argv[1])); g=C['g']; X=plate_points(P0,g)
