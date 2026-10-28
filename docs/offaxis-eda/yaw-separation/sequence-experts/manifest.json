@@ -1,0 +1,26 @@
+{
+  "time_metadata": "filesystem mtime; user confirmed as sequence cue",
+  "gap_threshold_seconds": [
+    60,
+    120,
+    300
+  ],
+  "primary_gap_seconds": 120,
+  "threshold_selected_using_errors": false,
+  "coordinate_repetitions_kept_together": true,
+  "scopes": "within observed sequences; not held-out new-session generalization",
+  "primary_features": "L630 dx/dy; extraction unchanged",
+  "pool_fraction": 0.25,
+  "gate_uses_true_label": false,
+  "gate_uses_timestamp": false,
+  "metadata_oracle_uses_sequence_id": true,
+  "known_sequence_extrapolation_allowed": true,
+  "image_hard_gate_bounded": true,
+  "note": "Rank-1 experts only reconstruct their observed pose line; this is not unrestricted two-axis calibration.",
+  "source_sha256": {
+    "tool\\offaxis\\sequence_experts.py": "9da300bb34bd9ca47a879747c1d5d6f8553c48191984f5a851dbed3d9e04e6c7",
+    "tool\\offaxis\\yaw_identifiability.py": "14b02b33d9a2fea5cd82c06fb745a4a12a4acaf1828c255b3499d3e3c1c799b7",
+    "docs\\offaxis-eda\\ppt-method-v2\\frames.csv": "e4392e07801671b6e8530c4363dddfb81f6599c0bfebf03ca41fc27722d9d8c3",
+    "docs\\offaxis-eda\\ppt-method-v2\\points.csv.gz": "219cad2b8f6ea5b52f5492c1aacafa57f9cbf9140299df3f98ab033fd88a3c28"
+  }
+}

@@ -1,0 +1,32 @@
+      family                            model  images  unsupported_test_images  Y_rmse_ticks  yaw_rmse_ticks  both_within_tick
+shared_slope                   global_forward      98                       12     32.814412       29.233702          0.020408
+shared_slope                   known_sequence      98                       12      0.016187        0.199542          1.000000
+shared_slope                  image_hard_gate      98                       12      6.159781        5.611874          0.836735
+shared_slope             image_unbounded_gate      98                       12      6.703456        6.131360          0.826531
+shared_slope                 image_soft_blend      98                       12      8.743776        7.903431          0.438776
+shared_slope global_parameters_known_sequence      98                       12      0.239631        0.217945          1.000000
+ independent                   global_forward      98                       12     32.814412       29.233702          0.020408
+ independent                   known_sequence      98                       12      0.014985        0.183825          1.000000
+ independent                  image_hard_gate      98                       12      5.811576        5.265637          0.826531
+ independent             image_unbounded_gate      98                       12      6.258867        5.715588          0.816327
+ independent                 image_soft_blend      98                       12      8.690043        7.842830          0.438776
+ independent global_parameters_known_sequence      98                       12      0.239631        0.217945          1.000000
+   pooled_25                   global_forward      98                       12     32.814412       29.233702          0.020408
+   pooled_25                   known_sequence      98                       12      0.015104        0.185659          1.000000
+   pooled_25                  image_hard_gate      98                       12      6.171112        5.599011          0.816327
+   pooled_25             image_unbounded_gate      98                       12      6.575572        6.005189          0.816327
+   pooled_25                 image_soft_blend      98                       12      8.688923        7.844906          0.438776
+   pooled_25 global_parameters_known_sequence      98                       12      0.239631        0.217945          1.000000
+ gap_seconds  sequence  images  coordinates  pose_rank                           start_kst                             end_kst categories
+         120         1      20           20          1 2026-10-04 12:14:14.046766900+09:00 2026-10-04 12:18:18.614357200+09:00     Y-only
+         120         2      20           20          1 2026-10-04 12:20:56.421064800+09:00    2026-10-04 12:23:31.728358+09:00     Y-only
+         120         3     200          200          1 2026-10-04 12:26:30.905048400+09:00 2026-10-04 12:46:12.721380200+09:00 theta-only
+         120         4      20           20          1 2026-10-04 13:01:26.506881800+09:00 2026-10-04 13:04:10.202829100+09:00     Y-only
+         120         5      20           20          1 2026-10-04 13:09:00.634653500+09:00 2026-10-04 13:11:04.700089100+09:00     Y-only
+         120         8       9            3          1           2026-10-15 19:47:34+09:00           2026-10-15 19:54:08+09:00      mixed
+         120         9       3            1          0           2026-10-15 20:05:10+09:00           2026-10-15 20:06:10+09:00      mixed
+         120        10       6            2          1           2026-10-15 21:36:24+09:00           2026-10-15 21:39:04+09:00      mixed
+         120        11       3            1          0           2026-10-15 21:52:12+09:00           2026-10-15 21:53:40+09:00      mixed
+         120        12      12            4          1           2026-10-15 21:56:36+09:00           2026-10-15 22:02:16+09:00      mixed
+         120        13      12            4          1           2026-10-15 22:08:40+09:00           2026-10-15 22:14:08+09:00      mixed
+         120        14      12            4          1           2026-10-15 22:16:36+09:00           2026-10-15 22:21:08+09:00      mixed
