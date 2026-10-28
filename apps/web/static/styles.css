@@ -404,3 +404,15 @@ button { font: inherit; color: inherit; }
 }
 
 /* Input source buttons: name only (reason is in the tooltip) */
+.source-tabs button { padding: 12px 6px; }
+
+/* Desktop screens (>= 1200 CSS px) render at 80% so 100% browser zoom matches the reviewed 80% look (2026-10-28).
+   Heights that use vh are divided by the zoom so the service tab still fills the window. */
+@media (min-width: 1200px) {
+  html { zoom: 0.8; }
+}
+@media (min-width: 1200px) and (min-height: 600px) {
+  .panel[data-panel="service"] { height: calc(100vh / 0.8 - 65px); }
+}
+
+/* ---------- compact input card, steps fit without scrolling (2026-10-28 review) ---------- */
