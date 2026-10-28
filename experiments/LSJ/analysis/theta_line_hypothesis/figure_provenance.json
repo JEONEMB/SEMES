@@ -1,0 +1,12 @@
+{
+  "measurement_sha256": "2486e980c2ce772a31a46769c870f7a7b042ed3ad1547e7a178e6ed1414404b3",
+  "results_sha256": "2d89f4c8e889b3bcbcefd6c4bd0b9df921ae92fc949627fe4e7c3bd16fc0ed0d",
+  "script_sha256": "ccb5acb0f7cc07f130763ca9f36f08df0df94117ea825507efb2b2c942d50562",
+  "figures": [
+    "first_theta_all_lines",
+    "first_y_all_lines",
+    "theta_and_minimum_step",
+    "second_heldout_theta_errors"
+  ],
+  "scope": "Saved measured values plotted; no added registration. Error bars in minimum-step panels are observed 3-image ranges."
+}

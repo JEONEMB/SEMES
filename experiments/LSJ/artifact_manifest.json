@@ -1,0 +1,1191 @@
+{
+  "base_commit": "d64a62fb19daabf911b44620e84147bdb773e929",
+  "branch": "LSJ",
+  "files": [
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/analyze_batches.py",
+      "bytes": 9032,
+      "sha256": "4b9bf805b5a714198174960e30f9143dae4616658fc5760bbd2d243fca52523c",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\analyze_batches.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/analyze_images.py",
+      "bytes": 5834,
+      "sha256": "ab79c6b70d86f412af205ca5ee9ae98e8abcedb910e5b12819e72fb5db2fdad3",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\analyze_images.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/batch_diagnostics.png",
+      "bytes": 278673,
+      "sha256": "497e7e08c26a12fa3391886886b43c40250e8a7e41f894b054089658bcdc903c",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\batch_diagnostics.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/batch_summary.json",
+      "bytes": 63743,
+      "sha256": "ecf88c43f968aa6c17284462a47532b2e5b4982a27fcf8882b7fe7117852b1cc",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\batch_summary.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/check_geometry_scale.py",
+      "bytes": 7458,
+      "sha256": "24bc03cec347b787529b6de162b476c3d43ac04402f36f7c1e3d53e63a747d19",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\check_geometry_scale.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/check_perspective_sensitivity.py",
+      "bytes": 4145,
+      "sha256": "c6fb579d2675d6e76c8eecda0945208c75b4fa21a5f6e12e6f75b3b0cce3beab",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\check_perspective_sensitivity.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/consistency.png",
+      "bytes": 493674,
+      "sha256": "869d1352f9cdc93035fe3eb39ee5ec9563f494d676e93c3c01a1c051a5e31cb8",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\consistency.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/geometry_scale_check.json",
+      "bytes": 9371,
+      "sha256": "12968275a3bb3fe600ce5362da33fb0f428aea12b1ff4de1a5fb44c6a181d53d",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\geometry_scale_check.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/geometry_scale_check.png",
+      "bytes": 379418,
+      "sha256": "d3bd97d8f41487090d5621a71d8fcf51f14a82b9c526b8acdeaf906e33cd6310",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\geometry_scale_check.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/marker_reference.png",
+      "bytes": 212985,
+      "sha256": "01a1b51fd027b66cf18c5ddd1ecd38ebbffc69dea35285f11d2bb92d9f45349d",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\marker_reference.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/measurements.json",
+      "bytes": 2063800,
+      "sha256": "60b4322cc9679bc91af9c1a61f819273a2c2bcf03d83705451455e4f90b7943c",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\measurements.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/perspective_sensitivity.json",
+      "bytes": 20790,
+      "sha256": "878d23301d610facc012791025aa6a7140f2add6c64c206f572e81fdfb7466d0",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\perspective_sensitivity.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/summarize_results.py",
+      "bytes": 7254,
+      "sha256": "352910edef8ef41e6fbdde2d3852afca45f4132f647bded3d3291e675fcf6b44",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\summarize_results.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/analysis/initial_error/summary.json",
+      "bytes": 16779,
+      "sha256": "fc27472e58985c29e5983aaf2c62e00189400e2e7dcf5f49660687f1320af3be",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\summary.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/notes/1019.md",
+      "bytes": 10708,
+      "sha256": "a72dac342a678f7cbcd08b7d64fe70453c5dc8136c7f4addb4a4bd541b26c2b4",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\1019.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/notes/정규화 상관 기반 템플릿 매칭(NCC).md",
+      "bytes": 8497,
+      "sha256": "abd05cacee3895cf19066c8caf17a562830add580154962472fa1bf98389ff63",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\정규화 상관 기반 템플릿 매칭(NCC).md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/notes/아핀정합&호모그래피정합.md",
+      "bytes": 6967,
+      "sha256": "c07d8eda9da3ea5ee39e2379e4b7caf0f5bb44b47a34fe32c02700b8deacb82c",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\아핀정합&호모그래피정합.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-181",
+      "path": "experiments/LSJ/analysis/initial_error/capture_order.json",
+      "bytes": 193017,
+      "sha256": "b7561a628231df3a94821e8ffbe4f5365c02a0dd3b975f516d81b2d8f7ec1a1f",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\capture_order.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-181",
+      "path": "experiments/LSJ/analysis/initial_error/inspect_capture_order.py",
+      "bytes": 5867,
+      "sha256": "417aa9fce5a61aa55cc891c0038cc359663fb32b57fa4e303484574f412b6a98",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\inspect_capture_order.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-181",
+      "path": "experiments/LSJ/analysis/second_data_inspection/inspect_second_data.py",
+      "bytes": 7979,
+      "sha256": "f7689f5773de9c5fd9d473fe8f47ca819df718f95905c01b8f01f7c786e6546e",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\inspect_second_data.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-181",
+      "path": "experiments/LSJ/analysis/second_data_inspection/inventory.json",
+      "bytes": 60676,
+      "sha256": "5a239ff818af8eb1f714e08ca42218775f2d895bf2ffea5ed0289c25ee2c15cd",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\inventory.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-181",
+      "path": "experiments/LSJ/analysis/teammate_ppt_review/extracted_contents.json",
+      "bytes": 53568,
+      "sha256": "21314d9a0d8675aad8147b0519b37c7add3d73aef28d072e09605146330557f5",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\teammate_ppt_review\\extracted_contents.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/second_repeatability/analyze_repeats.py",
+      "bytes": 18295,
+      "sha256": "2fda2f9db08339c2e90cdd76c1479245b31869f230a5fd69493ed12f282cba66",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_repeatability\\analyze_repeats.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/second_repeatability/check_roi_sensitivity.py",
+      "bytes": 2707,
+      "sha256": "c3805473d6b25fb222b964aafdf66ae48738ae5d1a6bfbebf71f521376abe014",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_repeatability\\check_roi_sensitivity.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/second_repeatability/repeatability_comparison.png",
+      "bytes": 349740,
+      "sha256": "231d073c22200af08ef93ec8599e5b599318bf88f6742f6738b6a1a2c88930ef",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_repeatability\\repeatability_comparison.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/second_repeatability/repeatability_results.json",
+      "bytes": 373875,
+      "sha256": "fe0f34b4573651ada4d4e6137959ba3dd78510020aef2376fc5922ef5df5a2e9",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_repeatability\\repeatability_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/second_repeatability/roi_check.png",
+      "bytes": 1446767,
+      "sha256": "b4c6159d241a7d472e7e51b30e8fdac5d56c8aec1dacc94450f6479833a229db",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_repeatability\\roi_check.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/second_repeatability/roi_sensitivity.json",
+      "bytes": 66005,
+      "sha256": "ecfb7c18867a0a3d903eb644d8f516bc71a43a8ada76771590f88070dba44db8",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_repeatability\\roi_sensitivity.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/second_repeatability/smoke_results.json",
+      "bytes": 49175,
+      "sha256": "db15fe0178894b2f4a5526767d98036c0b4c74b942561e1548e25b5f6d78b864",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_repeatability\\smoke_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/method_explanation/build_figures.py",
+      "bytes": 8953,
+      "sha256": "8842f2e5e3fb19707aa1fe0e17e433fe407932070eb241997af262cfd3fedf37",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\method_explanation\\build_figures.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/method_explanation/ecc-explanation.png",
+      "bytes": 292925,
+      "sha256": "dbbaca644f9c8108d19ae24b56a93a4347622b797716e22ae901c1b13c6a2fff",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\method_explanation\\ecc-explanation.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/method_explanation/figure_provenance.json",
+      "bytes": 902,
+      "sha256": "d17a4ae3a302a08f028d64ee10dc452eec0020fa570344d1d8bd6607d259d322",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\method_explanation\\figure_provenance.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/method_explanation/phase-explanation.png",
+      "bytes": 223700,
+      "sha256": "d6c8b6068d5343b00b467e087cbcbfbd44fd737cc9fe37f6d66fd801c8287ef5",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\method_explanation\\phase-explanation.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/method_explanation/qr_1.png",
+      "bytes": 34039,
+      "sha256": "28913482286aa6e2fae9b38c8e928c01480d13695b35f07c04c9a938c676c949",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\method_explanation\\qr_1.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/analysis/method_explanation/qr_2.png",
+      "bytes": 34027,
+      "sha256": "490c8722a4e31d052fbc235028b22012354eaf750de321710cf4a61c5ac56e59",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\method_explanation\\qr_2.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/notes/1021.md",
+      "bytes": 2486,
+      "sha256": "b06c68e3b331c6c6407d1a6542aec70b56a29f8156ed304dd08a4503f5b6c6d8",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\1021.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/notes/평행이동ECC&서브픽셀위상상관분석.md",
+      "bytes": 7653,
+      "sha256": "771005cafd21d68104624525e969babf3f42501202af240b01c0eaf6446e40cb",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\평행이동ECC&서브픽셀위상상관분석.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/notes/평행이동ECC&서브픽셀위상상관분석_visual.html",
+      "bytes": 123869,
+      "sha256": "47af098db476e78dd75dea7cbc0ae38dc4d1a997f6819a914356355c629dd71d",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\평행이동ECC&서브픽셀위상상관분석_visual.html",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-183",
+      "path": "experiments/LSJ/analysis/increment_consistency/analyze_increments.py",
+      "bytes": 11193,
+      "sha256": "5ebd056aa86746a633c16640420afc02da1dfb133a6033bf7a65d8f679a2126b",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\increment_consistency\\analyze_increments.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-183",
+      "path": "experiments/LSJ/analysis/increment_consistency/direct_pair_check.json",
+      "bytes": 3037,
+      "sha256": "fa23c903fd888873378b1e4c84da25fd6265e3534cb0c150b2bb7bb453d0139c",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\increment_consistency\\direct_pair_check.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-183",
+      "path": "experiments/LSJ/analysis/increment_consistency/increment_comparison.png",
+      "bytes": 296038,
+      "sha256": "76dffb34fdc7a3da7b9e44e12c2b2f973e67f0b58c4155819b33d26db85e7446",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\increment_consistency\\increment_comparison.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-183",
+      "path": "experiments/LSJ/analysis/increment_consistency/increment_results.json",
+      "bytes": 671538,
+      "sha256": "8bd710098338bb2af2eba64797937cb640026ce40e9ee7bdec84f7705a3c7216",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\increment_consistency\\increment_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-183",
+      "path": "experiments/LSJ/analysis/increment_consistency/plot_increments.py",
+      "bytes": 3495,
+      "sha256": "becdefad92a53aca57908de729b89190dc77a954b92c11eca31435462e3fc7db",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\increment_consistency\\plot_increments.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-183",
+      "path": "experiments/LSJ/analysis/increment_consistency/second_measurements.json",
+      "bytes": 236898,
+      "sha256": "2932159bc0833b65114261ade6386020b99932c4128e6003b7f4848cd8cca4ab",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\increment_consistency\\second_measurements.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-183",
+      "path": "experiments/LSJ/notes/1022.md",
+      "bytes": 265,
+      "sha256": "81f3eee2c6d5b3b08faa06bffd77b546387126fc5b061e683417033315c06b8f",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\1022.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-184",
+      "path": "experiments/LSJ/analysis/axis_separability/analyze_separability.py",
+      "bytes": 12824,
+      "sha256": "36ba49fe01f5a7beb199f4aa01eb92acf221bc9217ff1c188cc086d1fa6ad956",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\axis_separability\\analyze_separability.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-184",
+      "path": "experiments/LSJ/analysis/axis_separability/separability_comparison.png",
+      "bytes": 174826,
+      "sha256": "b1620de22b2bc9e6a50a95b2e084c28788878f5a9995be77ef42e6de64aee3dd",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\axis_separability\\separability_comparison.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-184",
+      "path": "experiments/LSJ/analysis/axis_separability/separability_results.json",
+      "bytes": 201999,
+      "sha256": "3f29a54a0d8929cc4b323c26f9b941e682382d910a28cc2eb7c656d1f24b4a9a",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\axis_separability\\separability_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/capture_order_interactive.html",
+      "bytes": 64022,
+      "sha256": "a0ac73a54c032e99fcc74aa6872edb623c5565b4fc7fbbf06bb83d1cdc7e4812",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\capture_order_interactive.html",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/capture_order_template.html",
+      "bytes": 12107,
+      "sha256": "dc532cc1fc28d724709e1d1ed74be3567ed21d37442c2f4e5b41d96b97e123b7",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\capture_order_template.html",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/first_capture_order.png",
+      "bytes": 162591,
+      "sha256": "5e865279cf46684122bae51f4ad7287b2b2331c63065caad569fd9970cbae1ad",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\first_capture_order.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/first_capture_order.svg",
+      "bytes": 194824,
+      "sha256": "7800a2ae5518a8877c1d2a3ad070932b0bd14b0c7746739a55bb9bec27cd578a",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\first_capture_order.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/first_data_order.txt",
+      "bytes": 18203,
+      "sha256": "db49d9e1c758a222f96e857b79ba5bbf838c0998980f0db92fe8ad41c09fd4af",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\first_data_order.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/first_groups_2_to_7.txt",
+      "bytes": 29447,
+      "sha256": "0a128cf4f9d9c3ef7d3e72bd8cd0da62744198b499b2c8780d31a290c4c325e5",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\first_groups_2_to_7.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/first_groups_3_4_5.txt",
+      "bytes": 23160,
+      "sha256": "d40a68ee571e79dd0598c43f53b761844bbd8a960ccb07a6fbea87b870df8e3e",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\first_groups_3_4_5.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/plot_capture_order.py",
+      "bytes": 10567,
+      "sha256": "77da2785849705e0f69aba1d276cecfe7b74e1e22c2fec21869c5078e5d17ba8",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\plot_capture_order.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/plot_provenance.json",
+      "bytes": 631,
+      "sha256": "a69e63ed56e54fc6e2a28cf8c3117b1fa9996cc4fe9283149c6a425cec3157db",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\plot_provenance.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/second_capture_order.png",
+      "bytes": 197616,
+      "sha256": "ee15758fd5c6f765588a7497c402f10ccee876c7a33ec1066ff18c6ce96feb92",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\second_capture_order.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/second_capture_order.svg",
+      "bytes": 176658,
+      "sha256": "3d6b8c5b619c993bbd2473b064be55bb4832f10c3a4da543af5e0d15a8374444",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\second_capture_order.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/capture_metadata_order/second_data_order.txt",
+      "bytes": 12600,
+      "sha256": "14f28f9c665dfd337e5ad4da5fd5620edb04bfc8fc0455dfa9118263da20329d",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\capture_metadata_order\\second_data_order.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/second_chronological_motion/analyze_chronological.py",
+      "bytes": 17101,
+      "sha256": "b78b07f182a4fcdc2847af13006aa5837ba912e1d74bad5ecc356ff228e94868",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_chronological_motion\\analyze_chronological.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/second_chronological_motion/chronological_results.html",
+      "bytes": 22328,
+      "sha256": "98ac898225d8c8691f9a87eeb2b5271212310bed575b636d4b28eaf7988d1f06",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_chronological_motion\\chronological_results.html",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/second_chronological_motion/chronological_results.json",
+      "bytes": 428737,
+      "sha256": "473c90560f585318082d65b14ebc02edab29bdc674c1a85d63c7aa366fc9c12c",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_chronological_motion\\chronological_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/analysis/second_chronological_motion/chronological_results.txt",
+      "bytes": 15092,
+      "sha256": "5f8e1661946321cb23617da83c640574c2208f6798359c1975ae72736583ccad",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_chronological_motion\\chronological_results.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-186",
+      "path": "experiments/LSJ/analysis/first_zero_regions/infer_zero_regions.py",
+      "bytes": 18376,
+      "sha256": "a6e1f8cda3a6f381e18bb4602f998030bf31519af2a66c109515c7397f60a1c9",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_zero_regions\\infer_zero_regions.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-186",
+      "path": "experiments/LSJ/analysis/first_zero_regions/zero_region_candidates.png",
+      "bytes": 554329,
+      "sha256": "5b9ee9d916d59b13416f5049c2386817198e09ee2fdac9daa6a5f5fd674a16a1",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_zero_regions\\zero_region_candidates.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-186",
+      "path": "experiments/LSJ/analysis/first_zero_regions/zero_region_candidates.svg",
+      "bytes": 447552,
+      "sha256": "9c4a06bf05ae8a705170f0bebb077ed41422e07589d6736bc37f3250046f668a",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_zero_regions\\zero_region_candidates.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-186",
+      "path": "experiments/LSJ/analysis/first_zero_regions/zero_region_fit_process.png",
+      "bytes": 275849,
+      "sha256": "02e6e7f828984a39eed90497e7bf70eefa610352783a4a292ed64463318376ca",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_zero_regions\\zero_region_fit_process.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-186",
+      "path": "experiments/LSJ/analysis/first_zero_regions/zero_region_results.json",
+      "bytes": 723728,
+      "sha256": "7414e920bfa71f18ab45e46e058af04605da07dacfa5cd922e3a4c31e6f65ab8",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_zero_regions\\zero_region_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-186",
+      "path": "experiments/LSJ/analysis/first_zero_regions/zero_region_results.txt",
+      "bytes": 7252,
+      "sha256": "077c9c707c6ef73b9628cc2a8ff72ed89e50f28d51ec16d1d84199f158468a1c",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_zero_regions\\zero_region_results.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/first_y_slopes/estimate_y_slopes.py",
+      "bytes": 19232,
+      "sha256": "9e07f6382f4f6029dd7b270d8c4d3583da2d366dce6a413e9b72e88acbbeaa8e",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\estimate_y_slopes.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/first_y_slopes/recover_y_zero.py",
+      "bytes": 6508,
+      "sha256": "2ee20b25df35596e11bfae75fb64b49533fbfd5899478a68cdcaf01f8fd581ca",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\recover_y_zero.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/first_y_slopes/y_slope_diagnostics.png",
+      "bytes": 449502,
+      "sha256": "85fad6d7e7194e1b41e662f01a947804cdf6c7c7d4c81c8ee53a19463820064f",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_slope_diagnostics.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/first_y_slopes/y_slope_diagnostics.svg",
+      "bytes": 352674,
+      "sha256": "62694d0d9efcbe3de3568687ff350a14e1410f6578e37153e8a834caf01bc443",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_slope_diagnostics.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/first_y_slopes/y_slope_results.json",
+      "bytes": 135010,
+      "sha256": "92d321cd6e7904aef474b45375c3fdff74e78a245bf6dca22848a4e59f0155a1",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_slope_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/first_y_slopes/y_slope_results.txt",
+      "bytes": 10268,
+      "sha256": "731946489794815a0ea1f541efe25e8d0184038b7727ddffcb549a132635295e",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_slope_results.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/first_y_slopes/y_zero_candidates.json",
+      "bytes": 5929,
+      "sha256": "d405dd70a53254fbefb83c5953a6be643ef587963bdb8436b57d13520bd4cfcb",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_zero_candidates.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/first_y_slopes/y_zero_candidates.txt",
+      "bytes": 1912,
+      "sha256": "9765b1c03353fa2ba27c47c26666946c434200c3d827362ac4e68f12ffef2dd8",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_zero_candidates.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/y_zero_explanation/01_saved_candidates.png",
+      "bytes": 231953,
+      "sha256": "60316ac7c5525f7f2c1b54640bdbe302ce4f8a20d6758c88d1fc1bbd5f30e2a3",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\y_zero_explanation\\01_saved_candidates.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/y_zero_explanation/01_saved_candidates.svg",
+      "bytes": 46356,
+      "sha256": "b0f5f2aefcb8c1d5649a572321b45d0287563c917c38f7ebc53fa2aaec7e39db",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\y_zero_explanation\\01_saved_candidates.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/y_zero_explanation/02_interval_concept.png",
+      "bytes": 119170,
+      "sha256": "fbcf417dc2c0bce933ca28b2ca6a1433a5fd568088b9da314ffaddb057445af9",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\y_zero_explanation\\02_interval_concept.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/y_zero_explanation/02_interval_concept.svg",
+      "bytes": 15479,
+      "sha256": "a37dd25595a5a027505e14a857acf7d9f9e4acf9857b44d4df7070935a076082",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\y_zero_explanation\\02_interval_concept.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/y_zero_explanation/draw_explanation.py",
+      "bytes": 9440,
+      "sha256": "59f0d0ee07d264f1cbf2c91e665af20821a560f190399070aca8b8f62989359a",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\y_zero_explanation\\draw_explanation.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/analysis/y_zero_explanation/figure_provenance.json",
+      "bytes": 1853,
+      "sha256": "fe9e79015e2421e875ea5215817de7e091d262cd285123f7bd70e5b3767d4f5d",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\y_zero_explanation\\figure_provenance.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/notes/1027.md",
+      "bytes": 23017,
+      "sha256": "0d2aef96982f60296c06543143114b326dbb9192bfffefc60c0d838c8ecb5788",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\1027.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/analysis/zero_equivalence/center_range_rectangles_zoom.png",
+      "bytes": 255701,
+      "sha256": "1541314b18c82bfc012869724644e5ff96c8230b53c1956112968c02b8908024",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\center_range_rectangles_zoom.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/analysis/zero_equivalence/center_range_rectangles_zoom.svg",
+      "bytes": 198843,
+      "sha256": "7e29753e5afe23137fae88a21d016bad62a2f6cfe478b5352f7a86d94a991e05",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\center_range_rectangles_zoom.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/analysis/zero_equivalence/check_zero_equivalence.py",
+      "bytes": 19826,
+      "sha256": "eb6e1763b75bcafa88c3b705564759764c81c721bc950e4fac973ba4d4389a73",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\check_zero_equivalence.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/analysis/zero_equivalence/draw_range_rectangles.py",
+      "bytes": 10730,
+      "sha256": "08a04ac2b88f51b37dfc3eab4f234f34f434549cd8f2da56c9ec478c538da5f0",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\draw_range_rectangles.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/analysis/zero_equivalence/equivalence_report.txt",
+      "bytes": 7976,
+      "sha256": "5ff576d9005cfe63869ec04238ddb4779cb0a47010b19f32fe0c4478b0320c4f",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\equivalence_report.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/analysis/zero_equivalence/equivalence_results.json",
+      "bytes": 53972,
+      "sha256": "54dfb25a127b43b9797c6628ab851faec624a5a7b9b15f709edcc4f04dc6488b",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\equivalence_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/analysis/zero_equivalence/range_figures_provenance.json",
+      "bytes": 992,
+      "sha256": "e9e00ab4ba14b0b3f084312cb614091822a2a01f083ee236651ac5cc17391c8f",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\range_figures_provenance.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/analysis/zero_equivalence/six_run_range_rectangles.png",
+      "bytes": 354667,
+      "sha256": "a11b5f8702658c8d8e605c8d71c53c0bddcb35188b04b8d34d3a3e7f4a7dfc08",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\six_run_range_rectangles.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/analysis/zero_equivalence/six_run_range_rectangles.svg",
+      "bytes": 269017,
+      "sha256": "68a076e2ebcb0f4d943828166ad4b9a55a5240028a2af795e43db21a54545039",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\six_run_range_rectangles.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-189",
+      "path": "experiments/LSJ/analysis/reference_vs_zero_ranges/compare_references.py",
+      "bytes": 9827,
+      "sha256": "f88ef3886e673583e2d43748b754441e9b5a7746b972db3e1b6a28cdb1c0b6ba",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_vs_zero_ranges\\compare_references.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-189",
+      "path": "experiments/LSJ/analysis/reference_vs_zero_ranges/reference_comparison.json",
+      "bytes": 130136,
+      "sha256": "2696ed719800e00e636029cf118e5c1f1b94602b4ed7d596d60db62ffb2c2458",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_vs_zero_ranges\\reference_comparison.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-189",
+      "path": "experiments/LSJ/analysis/reference_vs_zero_ranges/reference_comparison.txt",
+      "bytes": 15463,
+      "sha256": "8b4c31a6b6d9041f3c222bf1b6613c1f0da621210c64c4fc26fa42ff99174fa0",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_vs_zero_ranges\\reference_comparison.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-190",
+      "path": "experiments/LSJ/analysis/zero_equivalence/exclude_group4.py",
+      "bytes": 10674,
+      "sha256": "247a24687ddd742a550d338e8fd2b0c4c5ddcaaa1edc6b0aec859d6b2919f364",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\exclude_group4.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-190",
+      "path": "experiments/LSJ/analysis/zero_equivalence/without_group4/equivalence_report.txt",
+      "bytes": 4732,
+      "sha256": "784106468be89d0c268e96332507d815700972b52131986e58996c40edf7073c",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\without_group4\\equivalence_report.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-190",
+      "path": "experiments/LSJ/analysis/zero_equivalence/without_group4/equivalence_results.json",
+      "bytes": 49461,
+      "sha256": "d0857c8d2da6ad8d8f673b7615f270136e952615501849f1b029e69bf8171c82",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\without_group4\\equivalence_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-191",
+      "path": "experiments/LSJ/notes/1019~23.md",
+      "bytes": 5823,
+      "sha256": "20c0392db33f1da5f1940c2b225b35b2190d4b90659437f3a5c763b4e57aebe2",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\1019~23.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-191",
+      "path": "experiments/LSJ/notes/23일_기업탐방 및 멘토미팅 결과 요약.md",
+      "bytes": 2635,
+      "sha256": "b8d1aec362bfce445583599c6af20a900d0fa2d26f0fe498d94d41e9417c17de",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\23일_기업탐방 및 멘토미팅 결과 요약.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-191",
+      "path": "experiments/LSJ/notes/23일_기업탐방 및 멘토미팅 결과 요약_3번 참고이미지.png",
+      "bytes": 2744754,
+      "sha256": "c97cfec200b607a3b77a71cde7b724f4faf4eaea3507179384181642f741c852",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\23일_기업탐방 및 멘토미팅 결과 요약_3번 참고이미지.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-191",
+      "path": "experiments/LSJ/notes/1028.md",
+      "bytes": 13069,
+      "sha256": "de77866e731e553f0e959248b754e1c9df64221a907e08bd75e87f0365956cd8",
+      "source": "C:\\Users\\SSAFY\\Desktop\\자율PJT진행과정\\1028.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-191",
+      "path": "experiments/LSJ/settings.historical.md",
+      "bytes": 11101,
+      "sha256": "6184bb96f78d86c678034b3748845818d2b2ee7c5ee5f2da053f2bbb0980d874",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\settings.md",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-191",
+      "path": "experiments/LSJ/process_model.html",
+      "bytes": 29179,
+      "sha256": "ce6516d7cbe2a31cde08ce4c2edb4f7e94ab96f3c3d3dd47231cef9ed3ac6506",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\매엽식 세정장비 3D 동작 모델.html",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/analyze_lines.py",
+      "bytes": 11840,
+      "sha256": "10d9af3f1f1875a5210c8535133c0183736d54f9257c97da1cef14c5077a080c",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\analyze_lines.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/figure_provenance.json",
+      "bytes": 549,
+      "sha256": "0233f5ebea34c8bfe8e7643afd652a23c18b2927f1dae09a403ef315e3f6ca17",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\figure_provenance.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/first_theta_all_lines.png",
+      "bytes": 677819,
+      "sha256": "565bea04a6e6ba95c844ae8605d30d38bf8a29faf08ceb4c09fa9225b7f800dd",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\first_theta_all_lines.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/first_theta_all_lines.svg",
+      "bytes": 520269,
+      "sha256": "b6df825613f8db32a25c5efc996e18b731ea6f4dde7802733bd432aa39b1ae81",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\first_theta_all_lines.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/first_y_all_lines.png",
+      "bytes": 588757,
+      "sha256": "6e8a2b9f0017fd2b0cded51a4b1b2fd5331941eafcb5e64727575a34df9dc873",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\first_y_all_lines.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/first_y_all_lines.svg",
+      "bytes": 276203,
+      "sha256": "723145f6203e232f00743f18ce2de42c4b1b050baf0f6a8c3d78647aff0f075d",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\first_y_all_lines.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/hypothesis_results.json",
+      "bytes": 2291779,
+      "sha256": "2d89f4c8e889b3bcbcefd6c4bd0b9df921ae92fc949627fe4e7c3bd16fc0ed0d",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\hypothesis_results.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/line_measurements.json",
+      "bytes": 18743252,
+      "sha256": "2486e980c2ce772a31a46769c870f7a7b042ed3ad1547e7a178e6ed1414404b3",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\line_measurements.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/measure_lines.py",
+      "bytes": 12304,
+      "sha256": "3fb65025bfe545608cb43415d71deb04921c4699db17a9c4bf8ba495537efce2",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\measure_lines.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/numerical_checks.json",
+      "bytes": 13175,
+      "sha256": "c102df39dc6d2b14abdd6baffdda990486d92f509202a1c84a80cdd200ac9ff1",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\numerical_checks.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/overlay_first_center.png",
+      "bytes": 1649804,
+      "sha256": "b429007e51ee9845a5105a0996c57a24096e7e4f8c3e6ff9d2b525894be9437b",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\overlay_first_center.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/present_results.py",
+      "bytes": 14023,
+      "sha256": "ccb5acb0f7cc07f130763ca9f36f08df0df94117ea825507efb2b2c942d50562",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\present_results.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/report.txt",
+      "bytes": 19178,
+      "sha256": "eeac7554468a152f319ed5a38e06d5dd7bc3043bfff8d1166dcd4c9754abf6ae",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\report.txt",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/second_heldout_theta_errors.png",
+      "bytes": 144072,
+      "sha256": "ec5e8ed80fe69cb25fd8abf3f4a9cd3f54025dae59dbd49df427fd037ff93673",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\second_heldout_theta_errors.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/second_heldout_theta_errors.svg",
+      "bytes": 50732,
+      "sha256": "f90af0813b90d725fa0c4223493a5de7f23fd0fba4cc7227a777dd6539c0d4b6",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\second_heldout_theta_errors.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/solver_crosscheck.json",
+      "bytes": 2790,
+      "sha256": "7797c82733032d9492d93adb29aa4f4aad58d31b26b125db882f02e4e9128383",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\solver_crosscheck.json",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/theta_and_minimum_step.png",
+      "bytes": 230906,
+      "sha256": "f0f8e1a5f1205b2ab9b8a28cd0234a43d2cfa317613f1a3450c86eb23bbcc0da",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\theta_and_minimum_step.png",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/theta_and_minimum_step.svg",
+      "bytes": 115153,
+      "sha256": "d6611a92a13574061f9264ed1f9bf8106b778024059ce27f579d9a45d149a9b2",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\theta_and_minimum_step.svg",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/verify_measurement.py",
+      "bytes": 4301,
+      "sha256": "b060d95cdc4db296c0a5ffdb0c76b767d65289e75a2c7aaf5b63fddbf48ee410",
+      "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\verify_measurement.py",
+      "copy_unchanged": true
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/reports/S15P31A507-180.md",
+      "bytes": 3534,
+      "sha256": "6b557eb2ed220f042ea8a962108efa57873210c19621b60a8c41e20980f30665",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-181",
+      "path": "experiments/LSJ/reports/S15P31A507-181.md",
+      "bytes": 2676,
+      "sha256": "fa3c15bd80967b05ba4c975a1c3a90c1c5db4149b0bf01749beb233af1834ef6",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-182",
+      "path": "experiments/LSJ/reports/S15P31A507-182.md",
+      "bytes": 3611,
+      "sha256": "c83c377ba8672bd75df2b08619d6d4fd46fd53a733d6c15dd098a0fe1eff48cc",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-183",
+      "path": "experiments/LSJ/reports/S15P31A507-183.md",
+      "bytes": 2535,
+      "sha256": "ef7ba4dea0183d229e4a7f2f730c0664355be1c01d0e10cccebf708a88ea1a02",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-184",
+      "path": "experiments/LSJ/reports/S15P31A507-184.md",
+      "bytes": 2008,
+      "sha256": "db5e40c7ee7677a7495d1efb9feecb0f0b6bf59fc919417ea638b6d20b03d5cb",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-185",
+      "path": "experiments/LSJ/reports/S15P31A507-185.md",
+      "bytes": 3342,
+      "sha256": "790b577b4d51b430714cea282a373503b8d73c94020861118b36bb58025c38d6",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-186",
+      "path": "experiments/LSJ/reports/S15P31A507-186.md",
+      "bytes": 2051,
+      "sha256": "53fecfed382515fd8fc4429355e4d3062d41ca14b21ce84976fe38cdf90c71fb",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-187",
+      "path": "experiments/LSJ/reports/S15P31A507-187.md",
+      "bytes": 3118,
+      "sha256": "27e3bec81a4b9635493a97eb9806ab26ef6b02ddb4b5f664623181c65a81fea2",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-188",
+      "path": "experiments/LSJ/reports/S15P31A507-188.md",
+      "bytes": 2830,
+      "sha256": "731582b438055ae7683649ab031351b13dd5b62367dd75febc56d615458e8434",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-189",
+      "path": "experiments/LSJ/reports/S15P31A507-189.md",
+      "bytes": 1990,
+      "sha256": "c88191bca30253ef3c440f607da5c842fb373b04a1a3b0a30b09748bc7a3b946",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-190",
+      "path": "experiments/LSJ/reports/S15P31A507-190.md",
+      "bytes": 2058,
+      "sha256": "e4293b5268bde0f25f8508c2c6f380731e2ad34b98553b9732e7d03ffc2a0c9b",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-191",
+      "path": "experiments/LSJ/reports/S15P31A507-191.md",
+      "bytes": 2644,
+      "sha256": "35cc8009319f4167e75d316ba96df56bc6c97c1c186ef50ca1b30a8c6e099a9c",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/reports/S15P31A507-192.md",
+      "bytes": 4444,
+      "sha256": "c37a991fa02fe8b829f0dfcc5a2acc962c41897c8c994e822a64efe68aadf4fa",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/README.md",
+      "bytes": 4939,
+      "sha256": "413ed6542d26879d4590f417b82bd56959cbdd495606a351b1ea3f0c62b39eeb",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/.gitignore",
+      "bytes": 235,
+      "sha256": "038d8cbcdbb29bc7e5a729c7c0b3104d2dcf43a800533cd37ace180ec522e49e",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/Links.example.md",
+      "bytes": 325,
+      "sha256": "62517ad058eb203037a3450ad373f75ac89233c6f1145678e950c8bb5f51b888",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/requirements-research.txt",
+      "bytes": 175,
+      "sha256": "5e6042ffe7e7cfb9a8b9c726a83c8eeddb8fa5c362a92a1bfbc8f688de9c4db4",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-191",
+      "path": "experiments/LSJ/CURRENT_CONTEXT.md",
+      "bytes": 3282,
+      "sha256": "c2f56110c42cdbac810e215c77e277c4d8d30f0513687b2c534005ece66c11d6",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-191",
+      "path": "experiments/LSJ/AGENTS.md",
+      "bytes": 1161,
+      "sha256": "43c2b92317486060f44fb3f30819d1acccbf8903e36f603802e23f6bbac9020f",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/analysis/theta_line_hypothesis/README.md",
+      "bytes": 713,
+      "sha256": "14bed43fd6f95adf502246c931df098a06765593407554c8ee00aa06af5a7172",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-192",
+      "path": "experiments/LSJ/jira_issue_map.yaml",
+      "bytes": 2473,
+      "sha256": "1c44f0d9e2c0eb3bbe0487131a94f8cfbd1544e33abad3c692481acfc8fa36be",
+      "source": null,
+      "copy_unchanged": false
+    },
+    {
+      "issue_key": "S15P31A507-180",
+      "path": "experiments/LSJ/.gitattributes",
+      "bytes": 85,
+      "sha256": "adcc0f1775c3985859bc7af1eaa9cf2d3c6da8f663abe7f167cddefc503c747c",
+      "source": null,
+      "copy_unchanged": false
+    }
+  ],
+  "excluded": [
+    "original BMP/ZIP/video/PPTX",
+    "extracted raw dataset",
+    "cache/build outputs",
+    "theta initial_quadratic results",
+    "duplicate theta QA/overlay images",
+    "PPT extracted raster images"
+  ],
+  "validation_scope": "source copy SHA256, Python AST, JSON/YAML parse; no image analysis or C++ performance test"
+}
