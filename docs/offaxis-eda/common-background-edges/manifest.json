@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-27",
+  "original_images_modified": false,
+  "reference_identity": "Detected automatically in new center1; soft image-based tracking prior in other frames",
+  "user_edges": "Upper groove and lower panel boundary on exposed left/right background; no central equipment edges",
+  "primary_comparison": "QR6 vs QR6_common_shared4",
+  "secondary_models": [
+    "QR6_common_segments8",
+    "QR6_common_quadratic6"
+  ],
+  "labels": "Second-data Actual record relative to valid new reference mean",
+  "outer_folds": 19,
+  "inner_folds": 18,
+  "repeated_coordinate_leakage": false,
+  "new_images_requested": false,
+  "source_sha256": {
+    "tool\\offaxis\\common_background_edges.py": "28589ffd7b7b14bbeffc9a4159d16b2a5f600d5d2c60aa681994c134131798d6",
+    "tool\\offaxis\\plate_edges.py": "11d57950b2875474a59ff5f56c837405b4ca7c4e0127930e41b9f2fd3c7ba165",
+    "docs\\offaxis-eda\\ppt-method-v2\\frames.csv": "e4392e07801671b6e8530c4363dddfb81f6599c0bfebf03ca41fc27722d9d8c3",
+    "docs\\offaxis-eda\\ppt-method-v2\\points.csv.gz": "219cad2b8f6ea5b52f5492c1aacafa57f9cbf9140299df3f98ab033fd88a3c28",
+    "docs\\offaxis-eda\\ppt-method-v2\\qr_displacements.csv": "b577d9c60e1f8237b6a523985dfe18ce7f444deea7089943434b718240ef519e",
+    "docs\\offaxis-eda\\common-background-edges\\edge_features.csv": "8591b666a4694d9176f34183bef0124325bbffbf7d76c6ffcb93c5587198bab0"
+  }
+}
