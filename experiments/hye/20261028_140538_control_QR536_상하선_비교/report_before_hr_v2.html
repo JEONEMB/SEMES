@@ -1,0 +1,34 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>control QR536 · 위/아래 선 비교</title>
+<style>body{font:16px/1.7 'Malgun Gothic',sans-serif;color:#182536;background:#f4f6f9;margin:0}main{max-width:1120px;margin:36px auto;background:white;padding:40px;border-radius:16px}h1{line-height:1.35;font-size:30px}h2{margin-top:32px;font-size:21px}.lead{font-size:19px}.tag{font-size:13px;color:#546378}.box{border-left:5px solid #246c9b;padding:12px 18px;background:#edf5fb}.warn{border-color:#c07820;background:#fff7eb}table{border-collapse:collapse;width:100%;font-size:14px;margin:16px 0}th,td{padding:10px;border-bottom:1px solid #dbe2e9;text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}th{background:#edf1f6}.best{background:#edf8f2}.muted{color:#526173;font-size:14px}.scroll{overflow-x:auto}a{color:#176696}code{background:#eef1f5;padding:2px 5px}details{margin-top:24px}summary{cursor:pointer;font-weight:bold}@media(max-width:700px){main{margin:0;padding:22px;border-radius:0}h1{font-size:25px}}@media print{body{background:white}main{margin:0;padding:10px}details{display:block}}</style>
+<main><p class="tag">2026-10-28 · C++17 / MSVC v141 / OpenCV 3.4.15 · 기존 최종 모듈 보존</p>
+<h1>2차 control에 가로선을 추가하면?</h1>
+<p class="lead"><strong>큰 Y 오차는 줄지만, 평균·보통 사진의 오차까지 모두 좋아지지는 않았습니다.</strong><br>양쪽 선은 계산 중앙값이 약1.75ms 늘었습니다. 선 추가 후보 중에는 아래 선만 사용하는 조건이 유리했습니다.</p>
+<div class="box">현재0.09 기준은 네 조건 모두280/280 통과입니다. 속도와 현재 통과율이 목표라면 기존 QR-only를 유지할 근거가 있습니다. 큰 오차 감소가 더 중요하면 아래 선을 후속 검증 후보로 볼 수 있습니다. 최종 코드는 교체하지 않았습니다.</div>
+<h2>1. 정확도 — 같은 고정4-fold</h2>
+<p class="muted">학습210장/시험70장씩4회, 전체280장. Y평균은 T=0인 Y80장, T평균은 Y=0인 T200장 기준입니다. 각 학습 fold 안에서만 회귀·공분산을 계산했습니다.</p>
+<div class="scroll"><table><thead><tr><th>관측 조건</th><th>Y평균</th><th>Y최대</th><th>T평균</th><th>T최대</th><th>0.09 동시 통과</th></tr></thead><tbody>
+<tr><td>QR만 · 기존 기준</td><td>0.00182690</td><td>0.03655023</td><td>0.00037628</td><td>0.00299340</td><td>280/280</td></tr>
+<tr><td>QR + 위 선</td><td>0.00216428</td><td>0.03579253</td><td>0.00032019</td><td>0.00249670</td><td>280/280</td></tr>
+<tr class="best"><td>QR + 아래 선</td><td><b>0.00162981</b></td><td><b>0.00902821</b></td><td>0.00030040</td><td><b>0.00166984</b></td><td>280/280</td></tr>
+<tr><td>QR + 위·아래 선</td><td>0.00184564</td><td>0.00979050</td><td><b>0.00029663</b></td><td>0.00179898</td><td>280/280</td></tr></tbody></table></div>
+<p>양쪽 선은 Y최대오차 <b>73.2% 감소</b>, Y평균오차는 <b>약1.0% 증가</b>했습니다. 아래 선은 Y평균10.8%·최대75.3% 감소했습니다. 축·부호 구분과0.09 통과 수는 네 조건이 같습니다.</p>
+<h2>2. 보통 사진과 큰 오차를 구분해야 합니다</h2>
+<div class="scroll"><table><thead><tr><th>조건</th><th>Y오차 중앙값</th><th>Y오차 p95</th><th>기존 최악 Y−0.80 사진</th></tr></thead><tbody>
+<tr><td>QR만</td><td><b>0.00098244</b></td><td>0.00484020</td><td>0.03655023</td></tr>
+<tr><td>QR + 위</td><td>0.00142782</td><td>0.00493343</td><td>0.03579253</td></tr>
+<tr><td>QR + 아래</td><td>0.00149636</td><td>0.00417378</td><td><b>0.00049010</b></td></tr>
+<tr><td>QR + 위·아래</td><td>0.00169546</td><td><b>0.00390920</b></td><td>0.00168956</td></tr></tbody></table></div>
+<div class="box warn">아래 선은 Y80장 중38장 개선/42장 악화, 양쪽 선은31장 개선/49장 악화입니다. 아래 선의 평균 개선에는 기존 최악1장의 개선이 크게 기여했습니다. 중앙값은 QR만이 가장 작았습니다. 선 추가가 모든 사진을 더 정확하게 만든 결과는 아닙니다.</div>
+<h2>3. 판단 시간 — 이미지를 메모리로 받은 뒤</h2>
+<div class="scroll"><table><thead><tr><th>조건</th><th>계산 중앙값</th><th>계산 p95</th><th>중앙값 증가</th><th>파일 읽기 포함 중앙값</th></tr></thead><tbody>
+<tr><td>QR만</td><td>38.83ms</td><td>67.89ms</td><td>—</td><td>176.95ms</td></tr>
+<tr><td>QR + 위</td><td>39.71ms</td><td>68.74ms</td><td>+0.88ms / 2.3%</td><td>177.76ms</td></tr>
+<tr><td>QR + 아래</td><td>39.68ms</td><td>68.77ms</td><td>+0.85ms / 2.2%</td><td>177.75ms</td></tr>
+<tr><td>QR + 위·아래</td><td>40.58ms</td><td>69.63ms</td><td>+1.75ms / 4.5%</td><td>178.55ms</td></tr></tbody></table></div>
+<p class="muted">Release·CPU1스레드. Y16/T16/다른 날짜16장, 총48장×3회=조건별144개 표본. 예열 후 위/아래·예측 호출 순서를 번갈아 실행했습니다. 공통 QR 시간에 조건별 선 측정·예측 시간을 더한 대응된 구성요소 측정입니다. 촬영·로봇 이동·통신 시간은 포함하지 않습니다.</p>
+<p class="muted">초기화는 QR342.11ms에 양쪽 선 약2.48ms가 한 번 추가됩니다. 기존 제어 주기의 실제 총 시간은 별도 측정이 필요합니다.</p>
+<h2>4. 다른 날짜·혼합 자세에서는?</h2>
+<p>20261020은 모든 조건이 <b>센터3/3, 혼합18/57, 전체21/60</b>으로 통과 수가 같습니다. 혼합 사진의 Y최대오차는 QR만1.72164 → 아래1.53653 / 양쪽2.77142였습니다. 양쪽 선이 혼합 자세 문제를 해결하지 못했습니다.</p>
+<p class="muted">이 control은 Y-or-T 모델입니다. 선을 추가해도 혼합 Y+T를 동시에 출력하는 모델로 바뀌지 않습니다. 해당 사진은 실제1차T 정렬 후 재촬영한2차 자료가 아닙니다.</p>
+<details open><summary>구현·보존과 평가 한계</summary><p>QR630점 추적→고정536점→P12는 기존 C++ 그대로 사용했습니다. 추가된 것은 허용된 위24/아래24개의 좁은 선 프로파일 관측과, 이를 결합한12/36/36/60차원 모델입니다. 모든 조건에 같은6후보2차식과 공분산 축소0.05를 적용했습니다. 결과를 보고 설정을 튜닝하지 않았습니다.</p><p>재학습 QR모델은 기존 최종 모델과 최대1.95×10⁻¹³, 원래 Python OOF와 최대2.67×10⁻¹⁰ 차이였습니다. 원래 final 소스·헤더·assets19개 파일의 해시가 모두 유지됐습니다.</p><p>기존 개발 자료를 이용한 비교이며, 독립 신규 사진·실제2차 이동·재촬영 성능을 검증한 결과는 아닙니다. 선이 추가되면 해당 선의 가시성과 정합 품질도 필요해집니다.</p></details>
+<p><a href="README.md">상세 설명·재실행 방법</a> · <a href="results_001/summary.csv">전체 평가 지표</a> · <a href="results_001/predictions.csv">사진별 예측</a> · <a href="results_001/timing_summary.csv">속도 지표</a> · <a href="results_001/verification.json">구현·보존 검사</a></p></main></html>
