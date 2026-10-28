@@ -1,0 +1,30 @@
+[
+  {
+    "Y_median": 0.0009824387706838245,
+    "Y_p95": 0.004840203080698452,
+    "condition": "QR_only",
+    "Y_mean_excluding_original_worst": 0.0013873599860635974,
+    "original_worst_error": 0.03655022895886062
+  },
+  {
+    "Y_median": 0.0014278167536546649,
+    "Y_p95": 0.0049334293199732124,
+    "condition": "QR_upper",
+    "Y_mean_excluding_original_worst": 0.001738603948793634,
+    "original_worst_error": 0.0357925341062022
+  },
+  {
+    "Y_median": 0.0014963582516979157,
+    "Y_p95": 0.0041737763894147805,
+    "condition": "QR_lower",
+    "Y_mean_excluding_original_worst": 0.0016442390692760725,
+    "original_worst_error": 0.0004901005445917539
+  },
+  {
+    "Y_median": 0.0016954564119110727,
+    "Y_p95": 0.003909200249290158,
+    "condition": "QR_both",
+    "Y_mean_excluding_original_worst": 0.0018476192575793869,
+    "original_worst_error": 0.0016895633757705308
+  }
+]
