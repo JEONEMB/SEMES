@@ -111,10 +111,28 @@ def load_scenario(path):
                 description=fs.getNode("description").string(), tol_y=fs.getNode("tolerance_y").real(),
                 tol_t=fs.getNode("tolerance_t").real(), steps=steps)
 
+# Simulated camera after a move: the nearest photo in all of data/clean (filename command values),
+# never the reference itself (it is the modules' assets/center.bmp, so it would compare to itself).
+REFERENCE_SHA = "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685"
+def load_pool():
+    import csv
+    pool = []
+    for d in sorted(os.listdir(os.path.join(DATA, "clean"))):
+        m = os.path.join(DATA, "clean", d, "_metadata", "manifest.csv")
+        if not os.path.isfile(m):
+            continue
+        for r in csv.DictReader(open(m, encoding="utf-8-sig")):
+            if r["sha256"] == REFERENCE_SHA:
+                continue
+            num = lambda s: float(s) if s else 0.0
+            pool.append(dict(image=f"clean/{d}/{r['relative_path']}", y=num(r["filename_Y_command"]), t=num(r["filename_T_command"])))
+    return sorted(pool, key=lambda p: p["image"])
+POOL = load_pool()
+
 def nearest(sc, y, t):
-    best = min(sc["steps"], key=lambda s: abs(s["y"] - y) / sc["tol_y"] + abs(s["t"] - t) / sc["tol_t"])
+    best = min(POOL, key=lambda s: abs(s["y"] - y) / sc["tol_y"] + abs(s["t"] - t) / sc["tol_t"])
     if abs(best["y"] - y) <= sc["tol_y"] and abs(best["t"] - t) <= sc["tol_t"]:
-        return best
+        return dict(best, label=f"재촬영 대체 사진 (명령 Y {best['y']:+.2f}, T {best['t']:+.2f})")
     return None
 
 def r4(v):
@@ -124,9 +142,9 @@ def run(sc):
     pose = dict(y=sc["steps"][0]["y"], t=sc["steps"][0]["t"])
     stage, records, result = "joint", [], None
     for i in range(RULES["max_iterations"]):
-        shot = nearest(sc, pose["y"], pose["t"])
+        shot = dict(sc["steps"][0], label="시나리오 시작 사진") if i == 0 else nearest(sc, pose["y"], pose["t"])
         if shot is None:
-            result = dict(status="failed", reason=f"시뮬레이션 자세 Y {pose['y']:+.4f}, T {pose['t']:+.4f} 근처에 준비된 사진이 없습니다")
+            result = dict(status="failed", reason=f"시뮬레이션 자세 Y {pose['y']:+.4f}, T {pose['t']:+.4f} 근처에 데이터 사진이 없습니다")
             break
         img = preview(shot["image"])
         e = estimate(stage, shot["image"])
