@@ -1,0 +1,3 @@
+# Frozen experiment sources, model assets and evidence carry SHA256 provenance.
+# Preserve their exact bytes across clones instead of applying core.autocrlf.
+experiments/** -text
