@@ -44,7 +44,8 @@ Desktop.ini
 /data/**/*.txt
 /docs/offaxis-eda/smoke/
 /docs/offaxis-eda/raw/points.csv
-/docs/validation-runs/
+/docs/validation-runs/*
+!/docs/validation-runs/README.md
 /tool/qr-subpixel/build/
 /tool/qr-subpixel/results/
 /tool/qr-subpixel/pipeline-*/
@@ -54,3 +55,6 @@ __pycache__/
 
 # Local analysis dependencies and plotting cache
 /.analysis_packages/
+# Root-level generated validation output
+/result_*.png
+/result_*.csv
