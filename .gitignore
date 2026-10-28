@@ -51,3 +51,6 @@ Desktop.ini
 __pycache__/
 /docs/offaxis-eda/ppt-method-v2/smoke/
 *.pyc
+
+# Local analysis dependencies and plotting cache
+/.analysis_packages/
