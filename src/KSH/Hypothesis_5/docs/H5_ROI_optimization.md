@@ -125,3 +125,14 @@
 1. 반복 보정 시뮬레이터로 Θ 1~2° 에서 출발해 허용 안에 수렴하는지 확인.
 2. 1차 범위(±1°) 밖 사진(±2°)이 있으면 외삽을 직접 확인.
 3. Windows Release 빌드로 처리 시간 재측정.
+
+## 9. 수정 기록 — Windows Debug 실행 중 "Iterations do not converge" 문구 (2026-10-28)
+- **원인** : 버전 차이로 결과가 달라진 것이 아닙니다. OpenCV **디버그 라이브러리**(opencv_world3415d)는 예외를 던지기 전에 오류 문구를 콘솔에 찍습니다(OPENCV_DUMP_ERRORS 기본값 켜짐). 리눅스 릴리스 라이브러리는 찍지 않습니다.
+- 해당 예외는 무늬가 약한 ROI 후보에서 ECC 가 수렴하지 못할 때 납니다. 코드가 원래 잡아서 "측정 실패(NaN)"로 처리하는 정상 경로입니다. 1차 280장 × 58곳 중 605건이며, 7개 후보(bracket_lower_05·06, door_panel_06·11, bottom_01, wall_08·10)에서만 났고, 이 후보들은 선택에서 자동 제외됩니다.
+- **재현** : 리눅스에서 OPENCV_DUMP_ERRORS=1 로 같은 문구를 재현했습니다.
+- **수정** :
+  - `m1::eccTranslation` 이 ECC 호출 동안만 `cv::redirectError` 로 문구 출력을 막고 실패 건수(`eccFailCount`)를 셉니다. 호출 뒤에는 원래 처리기로 되돌립니다.
+  - RESULT.md 에 실패 건수를 한 줄로 보고합니다.
+  - 설정 파일이 없을 때 FileStorage 가 찍던 "Can't open file" 문구도 존재 확인으로 없앴습니다.
+- **확인** : OPENCV_DUMP_ERRORS=1 로 M1 과 H5 를 처음부터 다시 측정했습니다. 문구 0건, m1_shifts·roi_meas·예측·선택 결과가 수정 전과 비트 단위로 같습니다.
+- 수정 전 파일 : `backup/code/m1_phase_ecc.v1.*.bak`, `roi_opt.v7_before_ecc_quiet.cpp.bak`
