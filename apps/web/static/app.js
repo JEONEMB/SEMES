@@ -105,46 +105,6 @@
     }
   }
 
-  // ---------- status cards ----------
-  function renderStatus() {
-    const sc = scenario(), s = step();
-    const e = s && s.estimate.ok ? s.estimate : null;
-    $("estY").textContent = e ? fmt(e.y) : "-";
-    $("estT").textContent = e ? fmt(e.t) : "-";
-    const note = $("estNote");
-    note.className = "stat-note";
-    if (!s) note.textContent = "실행 전";
-    else if (!e) { note.textContent = "측정 실패"; note.classList.add("is-fail"); }
-    else if (isCenter(e)) { note.textContent = "두 축 모두 기준 0.09 이내"; note.classList.add("is-pass"); }
-    else {
-      const out = [Math.abs(e.y) > TOL ? "Y" : null, Math.abs(e.t) > TOL ? "T" : null].filter(Boolean).join(", ");
-      note.textContent = `${out} 기준 0.09 밖`;
-      note.classList.add("is-fail");
-    }
-
-    const main = $("resultMain"), list = $("resultList");
-    main.className = "result-main";
-    list.replaceChildren();
-    const row = (k, v) => list.append(el("dt", null, k), el("dd", null, v));
-    if (finished() && state.current === sc.steps.length) {
-      const r = sc.result;
-      main.textContent = r.status === "done" ? "도착" : "중단";
-      main.classList.add(r.status === "done" ? "is-pass" : "is-fail");
-      row("단계", `${r.steps}`);
-      row("이동", `${r.moves}회`);
-      row("최종 자세", `Y ${fmt(r.final_pose.y)}  T ${fmt(r.final_pose.t)}`);
-      if (r.status !== "done") row("사유", r.reason);
-    } else if (s) {
-      main.textContent = "진행 중";
-      row("현재", `${s.index}단계  ${stageName(s.stage)}`);
-      row("판단", s.decision);
-    } else {
-      main.textContent = "대기";
-      row("시나리오", sc.category);
-      row("시작 자세", `Y ${fmt(sc.start.y, 2)}  T ${fmt(sc.start.t, 2)}`);
-    }
-  }
-
   // ---------- Y-T plane ----------
   function renderPlane() {
     const sc = scenario();
@@ -282,7 +242,6 @@
   function render() {
     renderScenarioList();
     renderViewer();
-    renderStatus();
     renderPlane();
     renderMotion();
     renderTimeline();
