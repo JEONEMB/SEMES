@@ -86,8 +86,28 @@
       </div>
     </section>
 
-    <aside class="col-side">
-      <article class="card">
+    <aside class="col-side col-analysis">
+      <article class="card plane-card">
+        <h2 class="card-title">Y-T 평면</h2>
+        <svg id="plane" viewBox="0 0 320 240" role="img" aria-label="자세 궤적"></svg>
+        <div class="legend">
+          <span><i class="lg lg-pose"></i>시뮬레이션 자세</span>
+          <span><i class="lg lg-est"></i>추정</span>
+          <span><i class="lg lg-tol"></i>기준 0.09</span>
+        </div>
+      </article>
+
+      <article class="card motion-card">
+        <h2 class="card-title">특징점 이동 성분</h2>
+        <svg id="motionField" role="img" aria-label="특징점 이동 벡터"></svg>
+        <p class="muted motion-legend" id="motionScale"></p>
+        <dl class="comp-grid" id="motionComps"></dl>
+        <p class="muted motion-note" id="motionNote"></p>
+      </article>
+    </aside>
+
+    <aside class="col-side col-steps">
+      <article class="card input-card">
         <h2 class="card-title">입력</h2>
         <div class="source-tabs" role="group" aria-label="입력 종류">
           <button disabled>카메라<span>미연결</span></button>
@@ -95,9 +115,6 @@
           <button disabled>시뮬레이션<span>증강 후</span></button>
         </div>
         <ul class="scenario-list" id="scenarioList"></ul>
-      </article>
-
-      <article class="card">
         <div class="controls">
           <button class="btn btn-primary" id="runBtn">실행</button>
           <button class="btn" id="stepBtn">한 단계</button>

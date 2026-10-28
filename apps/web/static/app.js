@@ -181,6 +181,65 @@
     if (!shown.length) add("circle", { cx: X(sc.start.y), cy: Y(sc.start.t), r: 5, fill: "#0b2a5b" });
   }
 
+  // ---------- feature-point motion components ----------
+  function renderMotion() {
+    const sc = scenario(), s = step();
+    const m = D.images[s ? s.frame.image : sc.steps[0].frame.image].motion;
+    const svg = $("motionField");
+    const ns = "http://www.w3.org/2000/svg";
+    const add = (tag, attrs) => {
+      const n = document.createElementNS(ns, tag);
+      Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+      svg.append(n);
+      return n;
+    };
+    // Points occupy the QR band only; frame the field on their bounding box.
+    const xs = m.field.map((p) => p[0]), ys = m.field.map((p) => p[1]);
+    const pad = 24, x0 = Math.min(...xs) - pad, y0 = Math.min(...ys) - pad;
+    const w = Math.max(...xs) - Math.min(...xs) + 2 * pad, h = Math.max(...ys) - Math.min(...ys) + 2 * pad;
+    svg.setAttribute("viewBox", `${x0} ${y0} ${w} ${h}`);
+    svg.replaceChildren();
+    // Translation dominates (Y and T both shift the image sideways), so it is drawn once as a bold
+    // arrow. Per-point arrows show only the fitted rotation + scale part (magnified); what is left
+    // after the fit is measurement noise and is reported as the residual instead of drawn.
+    const ok = m.field.filter((p) => p[4]);
+    const mx = ok.reduce((a, p) => a + p[0], 0) / ok.length, my = ok.reduce((a, p) => a + p[1], 0) / ok.length;
+    const rot = m.rotation_mrad / 1000, scl = m.scale_ppm / 1e6;
+    const part = m.field.map((p) => { const u = p[0] - mx, v = p[1] - my; return [p[0], p[1], -rot * v + scl * u, rot * u + scl * v, p[4]]; });
+    const maxPart = Math.max(1e-12, ...part.map((p) => Math.hypot(p[2], p[3])));
+    const k = 40 / maxPart;
+    part.forEach((p, i) => {
+      add("circle", { cx: p[0], cy: p[1], r: 3, fill: p[4] ? "#cfd6e2" : "#c62f3a" });
+      if (i % 7 === 0 && maxPart > 1e-6) add("line", { x1: p[0], y1: p[1], x2: p[0] + p[2] * k, y2: p[1] + p[3] * k, stroke: "#1d4ed8", "stroke-width": 3, "stroke-linecap": "round", opacity: 0.7 });
+    });
+    const tLen = Math.hypot(m.tx, m.ty);
+    if (tLen > 1e-3) {
+      const cxm = x0 + w / 2, cym = y0 + h / 2, L = Math.min(w, h) * 0.8;
+      const ex = cxm + (m.tx / tLen) * L / 2, ey = cym + (m.ty / tLen) * L / 2;
+      const sx = cxm - (m.tx / tLen) * L / 2, sy = cym - (m.ty / tLen) * L / 2;
+      add("line", { x1: sx, y1: sy, x2: ex, y2: ey, stroke: "#0b2a5b", "stroke-width": 9, "stroke-linecap": "round" });
+      const a = Math.atan2(m.ty, m.tx), hl = 34;
+      add("polygon", { points: `${ex + Math.cos(a) * 10},${ey + Math.sin(a) * 10} ${ex - Math.cos(a - 0.5) * hl},${ey - Math.sin(a - 0.5) * hl} ${ex - Math.cos(a + 0.5) * hl},${ey - Math.sin(a + 0.5) * hl}`, fill: "#0b2a5b" });
+    }
+    $("motionScale").textContent = tLen > 1e-3
+      ? `굵은 화살표  평행이동 방향
+파란 화살표  회전과 크기 성분 ×${k >= 100 ? Math.round(k).toLocaleString() : k.toFixed(0)}`
+      : "기준 사진과 같습니다";
+
+    const comps = $("motionComps");
+    comps.replaceChildren();
+    const row = (label, value, unit) => {
+      const d = el("div", "comp");
+      d.append(el("dt", null, label), el("dd", null, value), el("span", "comp-unit", unit));
+      comps.append(d);
+    };
+    row("평행이동 X", fmt(m.tx, 3), "px");
+    row("평행이동 Y", fmt(m.ty, 3), "px");
+    row("회전", fmt(m.rotation_mrad, 3), "mrad");
+    row("크기 변화", fmt(m.scale_ppm, 1), "ppm");
+    $("motionNote").textContent = `기준 사진 대비  유효 ${m.valid} / ${m.points}점  잔차 ${m.residual_px.toFixed(3)} px  근사 측정`;
+  }
+
   // ---------- timeline ----------
   function renderTimeline() {
     const sc = scenario();
@@ -225,6 +284,7 @@
     renderViewer();
     renderStatus();
     renderPlane();
+    renderMotion();
     renderTimeline();
     renderControls();
   }

@@ -327,3 +327,30 @@ button { font: inherit; color: inherit; }
 @container (max-width: 820px) { .qr-label { display: none; } }
 
 /* ---------- feature-point motion card ---------- */
+.motion-card svg { width: 100%; height: 96px; display: block; background: var(--bg); border-radius: 8px; }
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 0; }
+.comp { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 8px 10px; border-radius: 8px; background: var(--bg); }
+.comp dt { grid-column: 1 / -1; font-size: 11px; font-weight: 700; color: var(--muted); }
+.comp dd { margin: 0; font-size: 16px; font-weight: 700; }
+.comp-unit { font-size: 11px; color: var(--ink-2); }
+.motion-note { margin: 8px 0 0; white-space: pre-wrap; }
+@media (min-width: 1120px) and (min-height: 600px) {
+  .col-control .motion-card { flex: none; }
+  .col-control .plane-card svg { max-height: 150px; }
+}
+
+.controls-card { flex: none; }
+@media (min-width: 1120px) and (min-height: 600px) {
+  .col-control .plane-card svg { max-height: 130px; }
+  .col-control .plane-card .legend { margin-top: 2px; }
+  .comp { padding: 6px 10px; }
+  .comp dd { font-size: 15px; }
+}
+
+.motion-card .card-title { margin-bottom: 10px; }
+.motion-legend { margin: 6px 0 0; white-space: pre-line; line-height: 1.5; }
+@media (min-width: 1120px) and (min-height: 600px) {
+  .layout-service { grid-template-rows: minmax(0, 1fr); }
+}
+
+/* The strip under the photo keeps one height in every step, so the photo never resizes. */
