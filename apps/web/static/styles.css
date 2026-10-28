@@ -354,3 +354,10 @@ button { font: inherit; color: inherit; }
 }
 
 /* The strip under the photo keeps one height in every step, so the photo never resizes. */
+@media (min-width: 1120px) and (min-height: 600px) {
+  .col-view .status-row { height: 132px; }
+  .col-view .status-row .card { overflow: hidden; }
+  .col-view .result-list { grid-template-columns: auto 1fr auto 1fr; gap: 4px 12px; }
+}
+
+/* ---------- service layout v2 (2026-10-28 PPT review): photo | analysis | input + steps ---------- */
