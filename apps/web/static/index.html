@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SEMES Vision Alignment</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">SEMES</span>
+      <span class="brand-product">Vision Alignment</span>
+    </div>
+    <nav class="tabs" aria-label="메뉴">
+      <button class="tab is-active" aria-current="page">서비스</button>
+      <button class="tab" disabled>디지털 트윈<span class="tab-soon">준비 중</span></button>
+      <button class="tab" disabled>평가<span class="tab-soon">준비 중</span></button>
+      <button class="tab" disabled>보고서<span class="tab-soon">준비 중</span></button>
+    </nav>
+    <div class="topbar-right">
+      <span class="source-pill" id="sourcePill">시나리오 재생</span>
+    </div>
+  </header>
+
+  <section class="modelbar" aria-label="사용 모델">
+    <div class="model"><span class="model-kind">1차 joint</span><span class="model-name" id="jointModel"></span><span class="badge badge-adopted">채택</span></div>
+    <div class="model"><span class="model-kind">2차 control</span><span class="model-name" id="controlModel"></span><span class="badge badge-adopted">채택</span></div>
+    <button class="link-button" disabled title="후보 모델 선택은 준비 중입니다">모델 변경</button>
+  </section>
+
+  <main class="layout">
+    <section class="col-main">
+      <article class="card viewer-card">
+        <header class="card-head">
+          <div>
+            <h2 class="card-title">현재 사진</h2>
+            <p class="card-sub" id="frameSub"></p>
+          </div>
+          <div class="segmented" role="group" aria-label="보기">
+            <button data-view="qr" class="is-on">QR 확대</button>
+            <button data-view="full">전체</button>
+          </div>
+        </header>
+        <div class="viewer" id="viewer">
+          <img id="frameImg" alt="현재 입력 사진">
+          <div class="overlay" id="overlay"></div>
+          <div class="estimate-tag" id="estimateTag"></div>
+          <div class="plan-chip" id="planChip"></div>
+        </div>
+        <footer class="viewer-foot">
+          <span class="mono" id="framePath"></span>
+          <span class="muted">시나리오 재생 사진이며 실제 촬영이 아닙니다</span>
+        </footer>
+      </article>
+
+      <div class="status-row">
+        <article class="card stat-card">
+          <h3 class="stat-label">추정값</h3>
+          <div class="stat-values">
+            <div><span class="axis">Y</span><span class="num" id="estY">-</span></div>
+            <div><span class="axis">T</span><span class="num" id="estT">-</span></div>
+          </div>
+          <p class="stat-note" id="estNote">실행 전</p>
+        </article>
+        <article class="card stat-card plane-card">
+          <h3 class="stat-label">Y-T 평면</h3>
+          <svg id="plane" viewBox="0 0 320 200" role="img" aria-label="자세 궤적"></svg>
+          <div class="legend">
+            <span><i class="lg lg-pose"></i>시뮬레이션 자세</span>
+            <span><i class="lg lg-est"></i>추정</span>
+            <span><i class="lg lg-tol"></i>기준 0.09</span>
+          </div>
+        </article>
+        <article class="card stat-card">
+          <h3 class="stat-label">결론</h3>
+          <p class="result-main" id="resultMain">대기</p>
+          <dl class="result-list" id="resultList"></dl>
+        </article>
+      </div>
+    </section>
+
+    <aside class="col-side">
+      <article class="card">
+        <h2 class="card-title">입력</h2>
+        <div class="source-tabs" role="group" aria-label="입력 종류">
+          <button disabled>카메라<span>미연결</span></button>
+          <button class="is-on">시나리오<span>6개</span></button>
+          <button disabled>시뮬레이션<span>증강 후</span></button>
+        </div>
+        <ul class="scenario-list" id="scenarioList"></ul>
+      </article>
+
+      <article class="card">
+        <div class="controls">
+          <button class="btn btn-primary" id="runBtn">실행</button>
+          <button class="btn" id="stepBtn">한 단계</button>
+          <button class="btn btn-ghost" id="resetBtn">처음으로</button>
+        </div>
+      </article>
+
+      <article class="card timeline-card">
+        <header class="card-head">
+          <h2 class="card-title">단계</h2>
+          <span class="muted" id="stepCount"></span>
+        </header>
+        <ol class="timeline" id="timeline"></ol>
+      </article>
+    </aside>
+  </main>
+
+  <footer class="pagefoot" id="pageFoot"></footer>
+
+  <script src="demo/data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
