@@ -20,6 +20,8 @@
 | `docs/H5_ROI_optimization.md` | 수행 방법, 결과 표, 시행착오, 재검증, 오버엔지니어링 검토 |
 | `report/` | 쉬운 설명 HTML 보고서 (실제 사진으로 만든 영상 4편, Y–Θ 좌표 그래프, 과녁 그래프). `index.html` 을 웹 서버로 열기 (`data.json` 을 읽음) |
 | `results/verify/` | 통합 실행기 `verify all` 결과 (H4 M1~트랙 A, H5_roi) 와 콘솔 기록. 영상 프레임 PNG 는 빼고 mp4 만 `report/media/` 에. H4 결과는 단계별 실행과 완전히 같고, H5 는 1e-5 이내 (측정 캐시의 소수 자릿수 차이) |
+| `results/windows_debug_20261028/` | Visual Studio Debug 빌드로 `verify all` 을 실행한 결과 CSV·RESULT.md, 콘솔 원문(`run_all.log`), 정리와 리눅스 비교(`RUN_SUMMARY.md`) |
+| `config/roi_search.yml` | ROI 탐색 구역 설정 (VS 프로젝트가 처음 실행 때 만든 기본값) |
 | `figs/` | 한국어 ROI 그림과 그리는 스크립트 (C++ 결과 CSV 를 읽어 그리기만 함) |
 | `code/` | VS 프로젝트 `src` 와 같은 내용 (`roi/`, `report/` 추가, `yt/yt_model` 에 Θ² 선택, `yt_verify` 에 roi·media 단계) |
 | `audit/` | 독립 재검증 스크립트와 결과 (`audit_result.json`, `remeasure_result.txt`), 촬영 기록 사본 |
