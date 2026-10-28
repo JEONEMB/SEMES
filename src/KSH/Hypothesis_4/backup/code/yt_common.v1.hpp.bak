@@ -1,0 +1,114 @@
+﻿// =====================================================================================
+// yt_common.hpp — Y·Θ 분리 알고리즘 공통 도구
+//   데이터 목록·라벨, 영상 읽기, 측정 영역, 통계, CSV, 합성 시험용 푸리에 이동, 결과 기록
+//   OpenCV 3.4.15 API 만 사용 (C++17)
+// =====================================================================================
+#ifndef YT_COMMON_HPP
+#define YT_COMMON_HPP
+
+#include <opencv2/core.hpp>
+#include <chrono>
+#include <fstream>
+#include <map>
+#include <string>
+#include <vector>
+
+namespace yt {
+
+// ------------------------------------------------------------------ 데이터
+struct Sample {
+    std::string stem;      // 파일 이름 (확장자 제외)
+    std::string path;
+    double y_mm = 0.0;     // 라벨 Y (mm) = 정답
+    double t_deg = 0.0;    // 라벨 Θ (°) = 정답
+    int set_id = 1;        // 1 = 1차 (10/04), 2 = 2차 (10/15)
+    int shot = 0;          // 2차 세트 같은 자세 촬영 번호 (1~3), 1차는 0
+    bool is_ref = false;   // 기준 영상 (center, centerN)
+};
+
+// 파일 이름 → 라벨. 'T+0.01' 의 '.01' 을 확장자로 오인하지 않도록 확장자를 직접 떼고 호출
+bool parseLabel(const std::string& stem, Sample& s);
+// 폴더 안 .bmp / .png 전부 (하위 폴더 포함), 같은 이름은 한 번만
+std::vector<Sample> scanDataset(const std::string& dir);
+// 세트 기준 영상 이름 : 1차 = center, 2차 = center1
+std::string refStem(int set_id);
+const Sample* findStem(const std::vector<Sample>& ds, const std::string& stem);
+
+cv::Mat loadGray32(const std::string& path);   // CV_32F 회색 (실패 시 빈 Mat)
+
+// ------------------------------------------------------------------ 측정 영역 (기준 영상 좌표, Center_check landmarks)
+struct Region {
+    std::string name;
+    int group;          // 0 = 플레이트 QR, 1 = 위쪽 벽, 2 = 아래쪽 벽(door 쪽)
+    int cx, cy, hw;     // 중심, 반폭 (정사각형)
+};
+const std::vector<Region>& regions();
+int regionIndex(const std::string& name);
+extern const cv::Point2d kPlateCenter;   // 기준 영상 플레이트 중심 (1901.3, 1068.4)
+
+// ------------------------------------------------------------------ 통계
+struct Stat {
+    int n = 0;
+    double mean = 0, sd = 0, rms = 0, maxAbs = 0;
+    int pass = 0;   // |x| <= tol 개수
+};
+Stat stat(const std::vector<double>& v, double tol = 0.0);
+// 최소제곱 : A (n × k) x = b  → x (k)
+std::vector<double> lstsq(const std::vector<std::vector<double>>& A, const std::vector<double>& b);
+double r2(const std::vector<double>& y, const std::vector<double>& yhat);
+
+// ------------------------------------------------------------------ 합성 시험
+// 정확한 부분 화소 이동 (주파수 영역 위상 회전). 경계가 이어 붙여지므로 가장자리는 버리고 쓸 것
+cv::Mat fourierShift(const cv::Mat& src32, double dx, double dy);
+// 행마다 띠 제한(DFT) 보간으로 가로만 (1+eps) 배 늘리고 shift px 이동 (영상 가운데 기준) — 정확한 늘어남 합성
+cv::Mat fourierStretchX(const cv::Mat& src32, double eps, double shift);
+
+// ------------------------------------------------------------------ CSV 읽기 (첫 열 = stem 을 키로)
+using CsvTable = std::map<std::string, std::map<std::string, std::string>>;
+CsvTable readCsv(const std::string& path);
+double num(const CsvTable& t, const std::string& stem, const std::string& col);   // 없거나 빈 칸이면 NaN
+
+// ------------------------------------------------------------------ 출력
+void ensureDir(const std::string& dir);
+class Csv {
+public:
+    explicit Csv(const std::string& path);
+    Csv& operator<<(const std::string& s);
+    Csv& operator<<(double v);
+    Csv& operator<<(int v);
+    void endl();
+private:
+    std::ofstream f_;
+    bool first_ = true;
+};
+
+// 결과 보고 : 콘솔 + RESULT.md 에 같은 내용 기록
+class Report {
+public:
+    Report(const std::string& dir, const std::string& title);
+    ~Report();
+    void h(const std::string& s);                 // 소제목
+    void line(const std::string& s);              // 본문 한 줄
+    void check(const std::string& item, bool ok, const std::string& detail);  // 판정 항목
+    bool allOk() const { return ok_; }
+    void table(const std::vector<std::string>& header, const std::vector<std::vector<std::string>>& rows);
+private:
+    std::ofstream md_;
+    bool ok_ = true;
+};
+
+std::string fmt(const char* f, ...);
+
+class Timer {
+public:
+    Timer() : t0_(std::chrono::steady_clock::now()) {}
+    double ms() const {
+        return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - t0_).count();
+    }
+private:
+    std::chrono::steady_clock::time_point t0_;
+};
+
+} // namespace yt
+
+#endif

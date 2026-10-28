@@ -1,0 +1,218 @@
+﻿// =====================================================================================
+// m4_gabor.cpp — M4 구현 + 검증 (설명은 m4_gabor.hpp)
+// =====================================================================================
+#include "m4_gabor.hpp"
+
+#include <opencv2/imgproc.hpp>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+
+namespace yt {
+namespace m4 {
+
+namespace {
+const double kLambda = 12.0, kSx = 4.0, kSy = 6.0;
+const int kPad = 40;   // 필터 가장자리 여유 (px)
+
+void kernels(cv::Mat& kre, cv::Mat& kim, cv::Mat& ky) {
+    const int rx = int(3 * kSx), ry = int(3 * kSy);
+    kre.create(1, 2 * rx + 1, CV_32F); kim.create(1, 2 * rx + 1, CV_32F); ky.create(2 * ry + 1, 1, CV_32F);
+    double gsum = 0, mre = 0;
+    std::vector<double> g(2 * rx + 1);
+    for (int i = -rx; i <= rx; ++i) { g[i + rx] = std::exp(-i * i / (2 * kSx * kSx)); gsum += g[i + rx]; mre += g[i + rx] * std::cos(2 * CV_PI * i / kLambda); }
+    for (int i = -rx; i <= rx; ++i) {
+        // 실수부의 평균(DC)을 빼 밝기 오프셋에 둔감하게
+        kre.at<float>(0, i + rx) = float(g[i + rx] * (std::cos(2 * CV_PI * i / kLambda) - mre / gsum));
+        kim.at<float>(0, i + rx) = float(g[i + rx] * std::sin(2 * CV_PI * i / kLambda));
+    }
+    double ys = 0;
+    for (int j = -ry; j <= ry; ++j) { ky.at<float>(j + ry, 0) = float(std::exp(-j * j / (2 * kSy * kSy))); ys += ky.at<float>(j + ry, 0); }
+    ky /= ys;
+}
+
+void response(const cv::Mat& img, cv::Mat& re, cv::Mat& im) {
+    static cv::Mat kre, kim, ky;
+    if (kre.empty()) kernels(kre, kim, ky);
+    cv::sepFilter2D(img, re, CV_32F, kre, ky, cv::Point(-1, -1), 0, cv::BORDER_REFLECT);
+    cv::sepFilter2D(img, im, CV_32F, kim, ky, cv::Point(-1, -1), 0, cv::BORDER_REFLECT);
+}
+
+double median(std::vector<double>& v) {
+    if (v.empty()) return std::nan("");
+    const size_t m = v.size() / 2;
+    std::nth_element(v.begin(), v.begin() + m, v.end());
+    return v[m];
+}
+} // namespace
+
+BandResult measureBand(const cv::Mat& ref, const cv::Mat& cur, int x0, int x1, int y0, int y1, int gi, const int qrCx[3]) {
+    BandResult out;
+    out.x0 = x0;
+    const cv::Rect A(x0 - kPad, y0, x1 - x0 + 2 * kPad, y1 - y0), B = A + cv::Point(gi, 0);
+    if (A.x < 0 || B.x < 0 || A.x + A.width > ref.cols || B.x + B.width > cur.cols || A.y + A.height > ref.rows) return out;
+    cv::Mat r0, i0, r1, i1;
+    response(ref(A), r0, i0);
+    response(cur(B), r1, i1);
+    const int W = x1 - x0, H = y1 - y0;
+    // 응답 크기 문턱 (하위 40 %)
+    std::vector<float> amps;
+    amps.reserve(size_t(W) * H);
+    for (int y = 0; y < H; ++y)
+        for (int x = kPad; x < kPad + W; ++x) amps.push_back(std::hypot(r0.at<float>(y, x), i0.at<float>(y, x)));
+    std::vector<float> tmp = amps;
+    std::nth_element(tmp.begin(), tmp.begin() + tmp.size() * 2 / 5, tmp.end());
+    const float aTh = tmp[tmp.size() * 2 / 5];
+    const double k0 = 2 * CV_PI / kLambda;
+    out.col.assign(W, std::nan(""));
+    std::vector<double> colv;
+    for (int x = 0; x < W; ++x) {
+        colv.clear();
+        const int xx = x + kPad;
+        for (int y = 0; y < H; ++y) {
+            const double ar = r0.at<float>(y, xx), ai = i0.at<float>(y, xx);
+            if (std::hypot(ar, ai) < aTh) continue;
+            // 기준 위상 기울기 : arg(R(x+1)·conj(R(x−1))) / 2
+            const double pr = r0.at<float>(y, xx + 1), pi = i0.at<float>(y, xx + 1), mr = r0.at<float>(y, xx - 1), mi = i0.at<float>(y, xx - 1);
+            const double dphi = std::atan2(pi * mr - pr * mi, pr * mr + pi * mi) / 2.0;
+            if (std::abs(std::abs(dphi) - k0) > 0.3 * k0) continue;
+            // 현재 − 기준 위상
+            const double br = r1.at<float>(y, xx), bi = i1.at<float>(y, xx);
+            const double dp = std::atan2(bi * ar - br * ai, br * ar + bi * ai);
+            colv.push_back(-dp / dphi);
+        }
+        if (colv.size() >= 5) out.col[x] = median(colv) + gi;
+    }
+    for (int q = 0; q < 3; ++q) {
+        std::vector<std::vector<double>> Am;
+        std::vector<double> b;
+        for (int x = 0; x < W; ++x) {
+            const double X = x0 + x;
+            if (std::abs(X - qrCx[q]) >= 90 || !std::isfinite(out.col[x])) continue;
+            Am.push_back({1.0, (X - qrCx[q]) / 100.0});
+            b.push_back(out.col[x]);
+        }
+        if (b.size() < 40) return out;
+        const auto c = lstsq(Am, b);
+        out.q[q].t = c[0]; out.q[q].s = c[1]; out.q[q].n = int(b.size());
+    }
+    out.ok = true;
+    return out;
+}
+
+// =====================================================================================
+// 검증
+// =====================================================================================
+bool verify(const std::vector<Sample>& ds, const std::string& outDir, const std::string& m1Csv) {
+    Report rep(outDir, "M4 Gabor 국소 위상 — 검증 결과");
+    const Sample* refS = findStem(ds, "center");
+    if (!refS) { rep.check("기준 영상", false, "center 없음"); return false; }
+    const cv::Mat ref = loadGray32(refS->path);
+    const int qx[3] = {regions()[0].cx, regions()[1].cx, regions()[2].cx};
+    const int X0 = 1540, X1 = 2290, Y0 = 965, Y1 = 1165;
+
+    // 합성 시험용 띠 (가장자리 여유 포함)
+    const int P = 120;
+    const cv::Rect B(X0 - P, Y0, (X1 - X0) + 2 * P, Y1 - Y0);
+    const cv::Mat band = ref(B).clone();
+    const int lx[3] = {qx[0] - B.x, qx[1] - B.x, qx[2] - B.x};
+
+    rep.h("V4-1 합성 부분 화소 이동");
+    {
+        Csv csv(outDir + "/m4_synthetic_shift.csv");
+        csv << "dx_true" << "tL" << "tC" << "tR" << "sL" << "sC" << "sR";
+        csv.endl();
+        std::vector<double> et, es;
+        for (int i = 0; i <= 20; ++i) {
+            const double dx = 0.05 * i;
+            const cv::Mat sh = fourierShift(band, dx, 0.0);
+            const BandResult r = measureBand(band, sh, P, P + (X1 - X0), 0, Y1 - Y0, 0, lx);
+            csv << dx << r.q[0].t << r.q[1].t << r.q[2].t << r.q[0].s << r.q[1].s << r.q[2].s;
+            csv.endl();
+            for (int q = 0; q < 3; ++q) { et.push_back(r.q[q].t - dx); es.push_back(r.q[q].s); }
+        }
+        const Stat a = stat(et), b = stat(es);
+        rep.table({"항목", "RMS", "최대"}, {{"이동 t 오차 (px)", fmt("%.4f", a.rms), fmt("%.4f", a.maxAbs)},
+                                          {"기울기 s (정답 0, px/100px)", fmt("%.4f", b.rms), fmt("%.4f", b.maxAbs)}});
+        rep.check("이동 정확도", a.rms <= 0.01, fmt("t RMS %.4f px (≤ 0.01)", a.rms));
+        rep.check("가짜 기울기 없음", b.maxAbs <= 0.003, fmt("s 최대 %.4f px/100px (≤ 0.003 : Θ 0.01° 의 QR 신호 ≈ 0.0018)", b.maxAbs));
+    }
+
+    rep.h("V4-2 합성 늘어남 주입");
+    rep.line("띠 전체를 가로로 (1+ε) 배 늘림 → 모든 QR 의 기울기 s 는 100·ε 이 정답.");
+    {
+        Csv csv(outDir + "/m4_synthetic_stretch.csv");
+        csv << "eps" << "sL" << "sC" << "sR";
+        csv.endl();
+        std::vector<std::vector<std::string>> rows;
+        bool ok = true;
+        for (const double eps : {2e-4, 5e-4, 1e-3, -5e-4}) {
+            const cv::Mat st = fourierStretchX(band, eps, 0.3);
+            const BandResult r = measureBand(band, st, P, P + (X1 - X0), 0, Y1 - Y0, 0, lx);
+            csv << eps << r.q[0].s << r.q[1].s << r.q[2].s;
+            csv.endl();
+            const double want = 100 * eps;
+            double worst = 0;
+            for (int q = 0; q < 3; ++q) worst = std::max(worst, std::abs(r.q[q].s - want));
+            const bool o = worst <= 0.05 * std::abs(want) + 0.002;
+            ok = ok && o;
+            rows.push_back({fmt("%+.1e", eps), fmt("%+.4f", want), fmt("%+.4f / %+.4f / %+.4f", r.q[0].s, r.q[1].s, r.q[2].s), fmt("%.4f", worst), o ? "통과" : "미통과"});
+        }
+        rep.table({"ε", "정답 s", "측정 s (L / C / R)", "최대 오차", "판정"}, rows);
+        rep.check("늘어남 측정", ok, "|오차| ≤ 5 % + 0.002 px/100px");
+    }
+
+    rep.h("V4-3 실제 사진");
+    const CsvTable m1 = readCsv(m1Csv);
+    if (m1.empty()) { rep.check("M1 결과", false, "m1_shifts.csv 없음"); return false; }
+    std::vector<double> tT, dT, tY, dY, times;
+    int fails = 0;
+    {
+        Csv csv(outDir + "/m4_slopes.csv");
+        csv << "stem" << "set" << "shot" << "y_mm" << "t_deg" << "tL" << "tC" << "tR" << "sL" << "sC" << "sR" << "dS" << "ms";
+        csv.endl();
+        cv::Mat ref2;
+        int done = 0;
+        for (const auto& s : ds) {
+            if (s.stem == "center" || s.stem == "center1") continue;
+            const cv::Mat& R = s.set_id == 1 ? ref : (ref2.empty() ? (ref2 = loadGray32(findStem(ds, "center1")->path)) : ref2);
+            const cv::Mat cur = loadGray32(s.path);
+            const double plate = (num(m1, s.stem, "QR_L_dx") + num(m1, s.stem, "QR_C_dx") + num(m1, s.stem, "QR_R_dx")) / 3.0;
+            Timer t;
+            const BandResult r = measureBand(R, cur, X0, X1, Y0, Y1, int(std::lround(plate)), qx);
+            const double ms = t.ms();
+            if (!r.ok) { ++fails; continue; }
+            csv << s.stem << s.set_id << s.shot << s.y_mm << s.t_deg << r.q[0].t << r.q[1].t << r.q[2].t << r.q[0].s << r.q[1].s << r.q[2].s
+                << r.q[2].s - r.q[0].s << ms;
+            csv.endl();
+            times.push_back(ms);
+            if (s.set_id == 1) {
+                if (s.y_mm == 0) { tT.push_back(s.t_deg); dT.push_back(r.q[2].s - r.q[0].s); }
+                if (s.t_deg == 0) { tY.push_back(s.y_mm); dY.push_back(r.q[2].s - r.q[0].s); }
+            }
+            if (++done % 50 == 0) std::cout << "    " << done << " 장\n";
+        }
+    }
+    std::vector<std::vector<double>> A;
+    for (double t : tT) A.push_back({1.0, t, t * t});
+    const auto bT = lstsq(A, dT);
+    std::vector<double> res;
+    for (size_t i = 0; i < tT.size(); ++i) res.push_back(dT[i] - (bT[0] + bT[1] * tT[i] + bT[2] * tT[i] * tT[i]));
+    A.clear();
+    for (double y : tY) A.push_back({1.0, y});
+    const auto bY = lstsq(A, dY);
+    const Stat sr = stat(res), tm = stat(times);
+    // M2 결과(ε_R − ε_L 3.555e-3 /°)와 같은 물리량 : s 는 100 px 당 → 0.3555 /° 기대
+    rep.table({"항목", "값"},
+              {{"측정 / 실패", fmt("%d / %d", int(times.size()), fails)},
+               {"s_R − s_L 의 Θ 감도", fmt("%.4f px/100px /°  (잔차 σ %.4f)", bT[1], sr.sd)},
+               {"s_R − s_L 의 Y 감도", fmt("%.4f /mm", bY[1])},
+               {"처리 시간 / 장", fmt("평균 %.0f ms", tm.mean)}});
+    rep.check("실패 없음", fails == 0, fmt("%d", fails));
+    rep.check("원근 단서 감도 (M2 아핀 결과 0.356 /° 와 ±20 %)", std::abs(bT[1] - 0.3555) <= 0.071, fmt("%.4f /°", bT[1]));
+    rep.check("Y 에는 둔감", std::abs(bY[1]) <= 0.03, fmt("%.4f /mm (≤ 0.03)", bY[1]));
+    return rep.allOk();
+}
+
+} // namespace m4
+} // namespace yt

@@ -1,0 +1,20 @@
+QR_L sigma 0.0 선형   u_rms 0.0170 u_max 0.0245  ux_max 2.15e-05
+QR_L sigma 0.0 B-스플라인 3차 u_rms 0.0059 u_max 0.0086  ux_max 7.86e-06
+QR_L sigma 0.5 선형   u_rms 0.0134 u_max 0.0193  ux_max 1.95e-05
+QR_L sigma 0.5 B-스플라인 3차 u_rms 0.0037 u_max 0.0053  ux_max 4.81e-06
+QR_L sigma 0.7 선형   u_rms 0.0096 u_max 0.0139  ux_max 1.79e-05
+QR_L sigma 0.7 B-스플라인 3차 u_rms 0.0017 u_max 0.0024  ux_max 2.34e-06
+QR_L sigma 1.0 선형   u_rms 0.0062 u_max 0.0090  ux_max 1.78e-05
+QR_L sigma 1.0 B-스플라인 3차 u_rms 0.0006 u_max 0.0009  ux_max 1.05e-06
+QR_L sigma 1.4 선형   u_rms 0.0035 u_max 0.0052  ux_max 1.88e-05
+QR_L sigma 1.4 B-스플라인 3차 u_rms 0.0002 u_max 0.0003  ux_max 3.86e-07
+QR_R sigma 0.0 선형   u_rms 0.0172 u_max 0.0246  ux_max 1.98e-05
+QR_R sigma 0.0 B-스플라인 3차 u_rms 0.0059 u_max 0.0086  ux_max 1.02e-05
+QR_R sigma 0.5 선형   u_rms 0.0135 u_max 0.0193  ux_max 1.85e-05
+QR_R sigma 0.5 B-스플라인 3차 u_rms 0.0037 u_max 0.0053  ux_max 5.91e-06
+QR_R sigma 0.7 선형   u_rms 0.0097 u_max 0.0139  ux_max 1.73e-05
+QR_R sigma 0.7 B-스플라인 3차 u_rms 0.0017 u_max 0.0025  ux_max 2.48e-06
+QR_R sigma 1.0 선형   u_rms 0.0062 u_max 0.0089  ux_max 1.71e-05
+QR_R sigma 1.0 B-스플라인 3차 u_rms 0.0006 u_max 0.0009  ux_max 9.79e-07
+QR_R sigma 1.4 선형   u_rms 0.0035 u_max 0.0050  ux_max 1.81e-05
+QR_R sigma 1.4 B-스플라인 3차 u_rms 0.0002 u_max 0.0003  ux_max 3.55e-07

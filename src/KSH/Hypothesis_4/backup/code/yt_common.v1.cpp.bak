@@ -1,0 +1,293 @@
+﻿// =====================================================================================
+// yt_common.cpp — 공통 도구 구현
+// =====================================================================================
+#include "yt_common.hpp"
+
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
+#include <algorithm>
+#include <cctype>
+#include <cmath>
+#include <cstdarg>
+#include <cstdio>
+#include <filesystem>
+#include <iostream>
+#include <regex>
+#include <set>
+
+namespace fs = std::filesystem;
+
+namespace yt {
+
+const cv::Point2d kPlateCenter(1901.3, 1068.4);
+
+bool parseLabel(const std::string& stem, Sample& s) {
+    static const std::regex reCenter(R"(^center$)");
+    static const std::regex reCenterN(R"(^center(\d+)$)");
+    static const std::regex reMixed(R"(^Y([+-]?\d+(?:\.\d+)?)\s+T([+-]?\d+(?:\.\d+)?)\s*\((\d+)\)$)");
+    static const std::regex reY(R"(^Y([+-]?\d+(?:\.\d+)?)$)");
+    static const std::regex reT(R"(^T([+-]?\d+(?:\.\d+)?)$)");
+    std::smatch m;
+    s.stem = stem; s.y_mm = 0; s.t_deg = 0; s.shot = 0; s.is_ref = false;
+    if (std::regex_match(stem, m, reCenter)) { s.set_id = 1; s.is_ref = true; return true; }
+    if (std::regex_match(stem, m, reCenterN)) { s.set_id = 2; s.is_ref = true; s.shot = std::stoi(m[1].str()); return true; }
+    if (std::regex_match(stem, m, reMixed)) {
+        s.y_mm = std::stod(m[1].str()); s.t_deg = std::stod(m[2].str()); s.shot = std::stoi(m[3].str()); s.set_id = 2; return true;
+    }
+    if (std::regex_match(stem, m, reY)) { s.y_mm = std::stod(m[1].str()); s.set_id = 1; return true; }
+    if (std::regex_match(stem, m, reT)) { s.t_deg = std::stod(m[1].str()); s.set_id = 1; return true; }
+    return false;
+}
+
+std::vector<Sample> scanDataset(const std::string& dir) {
+    std::vector<Sample> out;
+    std::set<std::string> seen;
+    if (!fs::exists(dir)) return out;
+    for (const auto& f : fs::recursive_directory_iterator(dir)) {
+        if (!f.is_regular_file()) continue;
+        std::string name = f.path().filename().string();
+        std::string low = name;
+        std::transform(low.begin(), low.end(), low.begin(), [](unsigned char c) { return char(std::tolower(c)); });
+        if (low.size() < 5) continue;
+        const std::string ext = low.substr(low.size() - 4);
+        if (ext != ".bmp" && ext != ".png") continue;
+        const std::string stem = name.substr(0, name.size() - 4);
+        Sample s;
+        if (!parseLabel(stem, s) || seen.count(stem)) continue;
+        s.path = f.path().string();
+        seen.insert(stem);
+        out.push_back(s);
+    }
+    std::sort(out.begin(), out.end(), [](const Sample& a, const Sample& b) {
+        if (a.set_id != b.set_id) return a.set_id < b.set_id;
+        if (a.y_mm != b.y_mm) return a.y_mm < b.y_mm;
+        if (a.t_deg != b.t_deg) return a.t_deg < b.t_deg;
+        return a.stem < b.stem;
+    });
+    return out;
+}
+
+std::string refStem(int set_id) { return set_id == 1 ? "center" : "center1"; }
+
+const Sample* findStem(const std::vector<Sample>& ds, const std::string& stem) {
+    for (const auto& s : ds) if (s.stem == stem) return &s;
+    return nullptr;
+}
+
+cv::Mat loadGray32(const std::string& path) {
+    cv::Mat g = cv::imread(path, cv::IMREAD_GRAYSCALE), f;
+    if (g.empty()) return f;
+    g.convertTo(f, CV_32F);
+    return f;
+}
+
+const std::vector<Region>& regions() {
+    static const std::vector<Region> R = {
+        {"QR_L", 0, 1650, 1065, 110},  {"QR_C", 0, 1907, 1065, 110},  {"QR_R", 0, 2165, 1065, 110},
+        {"wall_U1", 1, 2483, 367, 60}, {"wall_U2", 1, 2483, 617, 60},
+        {"wall_W1", 2, 967, 1357, 60}, {"wall_W2", 2, 2867, 1357, 60},
+        {"wall_W3", 2, 1010, 1677, 60}, {"wall_W4", 2, 2820, 1683, 60},
+    };
+    return R;
+}
+
+int regionIndex(const std::string& name) {
+    const auto& R = regions();
+    for (size_t i = 0; i < R.size(); ++i) if (R[i].name == name) return int(i);
+    return -1;
+}
+
+Stat stat(const std::vector<double>& v, double tol) {
+    Stat s;
+    s.n = int(v.size());
+    if (!s.n) return s;
+    double sum = 0, sq = 0;
+    for (double x : v) { sum += x; sq += x * x; s.maxAbs = std::max(s.maxAbs, std::abs(x)); if (std::abs(x) <= tol) ++s.pass; }
+    s.mean = sum / s.n;
+    s.rms = std::sqrt(sq / s.n);
+    double var = 0;
+    for (double x : v) var += (x - s.mean) * (x - s.mean);
+    s.sd = s.n > 1 ? std::sqrt(var / (s.n - 1)) : 0.0;
+    return s;
+}
+
+std::vector<double> lstsq(const std::vector<std::vector<double>>& A, const std::vector<double>& b) {
+    const int n = int(A.size()), k = n ? int(A[0].size()) : 0;
+    cv::Mat M(n, k, CV_64F), B(n, 1, CV_64F), x;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < k; ++j) M.at<double>(i, j) = A[i][j];
+        B.at<double>(i) = b[i];
+    }
+    cv::solve(M, B, x, cv::DECOMP_SVD);
+    return std::vector<double>(x.begin<double>(), x.end<double>());
+}
+
+double r2(const std::vector<double>& y, const std::vector<double>& yhat) {
+    double m = 0;
+    for (double v : y) m += v;
+    m /= y.size();
+    double ss = 0, sr = 0;
+    for (size_t i = 0; i < y.size(); ++i) { ss += (y[i] - m) * (y[i] - m); sr += (y[i] - yhat[i]) * (y[i] - yhat[i]); }
+    return 1.0 - sr / ss;
+}
+
+cv::Mat fourierShift(const cv::Mat& src32, double dx, double dy) {
+    cv::Mat s64, F;
+    src32.convertTo(s64, CV_64F);
+    cv::dft(s64, F, cv::DFT_COMPLEX_OUTPUT);
+    const int h = F.rows, w = F.cols;
+    for (int y = 0; y < h; ++y) {
+        const double ky = (y <= h / 2 ? y : y - h) / double(h);
+        for (int x = 0; x < w; ++x) {
+            const double kx = (x <= w / 2 ? x : x - w) / double(w);
+            const double ph = -2.0 * CV_PI * (kx * dx + ky * dy);
+            cv::Vec2d& c = F.at<cv::Vec2d>(y, x);
+            const double re = c[0] * std::cos(ph) - c[1] * std::sin(ph);
+            const double im = c[0] * std::sin(ph) + c[1] * std::cos(ph);
+            c = cv::Vec2d(re, im);
+        }
+    }
+    cv::Mat out64, out32;
+    cv::dft(F, out64, cv::DFT_INVERSE | cv::DFT_REAL_OUTPUT | cv::DFT_SCALE);
+    out64.convertTo(out32, CV_32F);
+    return out32;
+}
+
+cv::Mat fourierStretchX(const cv::Mat& src32, double eps, double shift) {
+    const int H = src32.rows, N = src32.cols;
+    const double c = N / 2.0;
+    cv::Mat out(H, N, CV_32F);
+    std::vector<double> cr(N), ci(N);
+    for (int y = 0; y < H; ++y) {
+        cv::Mat row64, F;
+        src32.row(y).convertTo(row64, CV_64F);
+        cv::dft(row64, F, cv::DFT_COMPLEX_OUTPUT);
+        for (int k = 0; k < N; ++k) { cr[k] = F.at<cv::Vec2d>(0, k)[0]; ci[k] = F.at<cv::Vec2d>(0, k)[1]; }
+        for (int x = 0; x < N; ++x) {
+            const double X = c + (x - c - shift) / (1.0 + eps);   // 출력 x 가 가져올 원본 위치
+            // Σ_k C_k e^{i2πkX/N} (k = −N/2..N/2) — 실수 신호이므로 0 과 양의 k 만 쓰고 2 배 (나이퀴스트는 cos 로)
+            const double w = 2.0 * CV_PI * X / N;
+            double s = cr[0];
+            double er = std::cos(w), ei = std::sin(w), pr = 1.0, pi = 0.0;
+            const int kmax = (N - 1) / 2;
+            for (int k = 1; k <= kmax; ++k) {
+                const double nr = pr * er - pi * ei, ni = pr * ei + pi * er;
+                pr = nr; pi = ni;
+                s += 2.0 * (cr[k] * pr - ci[k] * pi);
+            }
+            if (N % 2 == 0) s += cr[N / 2] * std::cos(w * (N / 2));
+            out.at<float>(y, x) = float(s / N);
+        }
+    }
+    return out;
+}
+
+void ensureDir(const std::string& dir) { fs::create_directories(dir); }
+
+namespace {
+std::vector<std::string> splitCsv(const std::string& line) {
+    std::vector<std::string> out;
+    std::string cur;
+    bool q = false;
+    for (char c : line) {
+        if (c == '"') q = !q;
+        else if (c == ',' && !q) { out.push_back(cur); cur.clear(); }
+        else if (c != '\r') cur += c;
+    }
+    out.push_back(cur);
+    return out;
+}
+} // namespace
+
+CsvTable readCsv(const std::string& path) {
+    CsvTable t;
+    std::ifstream f(path);
+    std::string line;
+    if (!std::getline(f, line)) return t;
+    if (line.size() >= 3 && (unsigned char)line[0] == 0xEF) line = line.substr(3);
+    const auto head = splitCsv(line);
+    while (std::getline(f, line)) {
+        const auto v = splitCsv(line);
+        if (v.empty() || v[0].empty()) continue;
+        auto& row = t[v[0]];
+        for (size_t i = 1; i < head.size() && i < v.size(); ++i) row[head[i]] = v[i];
+    }
+    return t;
+}
+
+double num(const CsvTable& t, const std::string& stem, const std::string& col) {
+    const auto it = t.find(stem);
+    if (it == t.end()) return std::nan("");
+    const auto jt = it->second.find(col);
+    if (jt == it->second.end() || jt->second.empty()) return std::nan("");
+    return std::stod(jt->second);
+}
+
+Csv::Csv(const std::string& path) : f_(path) { f_ << "\xEF\xBB\xBF"; f_.precision(10); }
+Csv& Csv::operator<<(const std::string& s) {
+    if (!first_) f_ << ",";
+    const bool q = s.find(',') != std::string::npos;
+    f_ << (q ? "\"" + s + "\"" : s);
+    first_ = false;
+    return *this;
+}
+Csv& Csv::operator<<(double v) {
+    if (!first_) f_ << ",";
+    if (std::isfinite(v)) f_ << v;
+    first_ = false;
+    return *this;
+}
+Csv& Csv::operator<<(int v) {
+    if (!first_) f_ << ",";
+    f_ << v;
+    first_ = false;
+    return *this;
+}
+void Csv::endl() { f_ << "\n"; first_ = true; }
+
+std::string fmt(const char* f, ...) {
+    char b[1024];
+    va_list ap;
+    va_start(ap, f);
+    std::vsnprintf(b, sizeof(b), f, ap);
+    va_end(ap);
+    return b;
+}
+
+Report::Report(const std::string& dir, const std::string& title) {
+    ensureDir(dir);
+    md_.open(dir + "/RESULT.md");
+    md_ << "\xEF\xBB\xBF# " << title << "\n\n";
+    std::cout << "\n==== " << title << " ====\n";
+}
+Report::~Report() {
+    md_ << "\n**종합 판정 : " << (ok_ ? "통과" : "미통과") << "**\n";
+    std::cout << "  => 종합 판정 : " << (ok_ ? "통과" : "미통과") << "\n";
+}
+void Report::h(const std::string& s) { md_ << "\n## " << s << "\n\n"; std::cout << "\n[" << s << "]\n"; }
+void Report::line(const std::string& s) { md_ << s << "\n\n"; std::cout << "  " << s << "\n"; }
+void Report::check(const std::string& item, bool ok, const std::string& detail) {
+    ok_ = ok_ && ok;
+    md_ << "- " << (ok ? "✅ 통과" : "❌ 미통과") << " — **" << item << "** : " << detail << "\n";
+    std::cout << "  [" << (ok ? "통과" : "미통과") << "] " << item << " : " << detail << "\n";
+}
+void Report::table(const std::vector<std::string>& header, const std::vector<std::vector<std::string>>& rows) {
+    md_ << "|";
+    for (const auto& h : header) md_ << " " << h << " |";
+    md_ << "\n|";
+    for (size_t i = 0; i < header.size(); ++i) md_ << "---|";
+    md_ << "\n";
+    for (const auto& r : rows) {
+        md_ << "|";
+        for (const auto& c : r) md_ << " " << c << " |";
+        md_ << "\n";
+    }
+    md_ << "\n";
+    for (const auto& r : rows) {
+        std::cout << "   ";
+        for (const auto& c : r) std::cout << " " << c;
+        std::cout << "\n";
+    }
+}
+
+} // namespace yt
