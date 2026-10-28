@@ -113,9 +113,107 @@
   </main>
 
   <footer class="pagefoot" id="pageFoot"></footer>
+  </div>
+
+  <div class="panel" data-panel="eval" hidden>
+  <main class="layout layout-eval">
+    <aside class="col-side">
+      <article class="card">
+        <h2 class="card-title">결과 폴더</h2>
+        <p class="card-sub">benchmark.exe가 만든 폴더를 엽니다. evals 폴더를 고르면 안의 결과를 모두 불러옵니다</p>
+        <label class="btn btn-primary file-button">
+          결과 폴더 열기
+          <input type="file" id="evalPicker" webkitdirectory directory multiple hidden>
+        </label>
+        <ul class="result-files" id="evalResults"></ul>
+      </article>
+
+      <article class="card">
+        <h2 class="card-title">새 평가 실행</h2>
+        <p class="card-sub">평가할 사진 폴더 경로를 넣으면 실행 명령을 만듭니다</p>
+        <label class="field">
+          <span>사진 폴더</span>
+          <input type="text" id="evalPath" value="data\clean\clean_20261020" spellcheck="false">
+        </label>
+        <label class="field">
+          <span>모델</span>
+          <select id="evalWhich">
+            <option value="both">1차 joint + 2차 control</option>
+            <option value="joint">1차 joint만</option>
+            <option value="control">2차 control만</option>
+          </select>
+        </label>
+        <pre class="command" id="evalCommand"></pre>
+        <button class="btn" id="evalCopy">명령 복사</button>
+        <p class="muted run-note">저장소 루트의 PowerShell에서 실행합니다. 웹 서버가 연결되면 실행 버튼으로 바뀝니다</p>
+      </article>
+    </aside>
+
+    <section class="col-main" id="evalMain">
+      <article class="card empty-state" id="evalEmpty">
+        <h2 class="card-title">불러온 결과가 없습니다</h2>
+        <p class="card-sub">왼쪽에서 결과 폴더를 열어 주세요. 예: evals\20261028_1754_clean</p>
+      </article>
+      <div id="evalBody" hidden>
+        <article class="card">
+          <header class="card-head">
+            <div>
+              <h2 class="card-title" id="evalTitle"></h2>
+              <p class="card-sub" id="evalMeta"></p>
+            </div>
+            <div class="segmented" role="group" aria-label="모델" id="evalModule">
+              <button data-module="joint" class="is-on">1차 joint</button>
+              <button data-module="control">2차 control</button>
+            </div>
+          </header>
+          <p class="notice" id="evalNotice"></p>
+          <div class="kpis" id="evalKpis"></div>
+        </article>
+
+        <article class="card" id="evalCompareCard">
+          <header class="card-head">
+            <div>
+              <h2 class="card-title">결과 비교</h2>
+              <p class="card-sub">첫 번째 결과를 기준으로 차이를 표시합니다</p>
+            </div>
+          </header>
+          <div class="table-wrap"><table class="data-table" id="evalCompare"></table></div>
+        </article>
+
+        <div class="eval-grid">
+          <article class="card">
+            <h3 class="stat-label">조건별 통과</h3>
+            <div id="evalConditions"></div>
+          </article>
+          <article class="card">
+            <h3 class="stat-label">명령값과 추정값</h3>
+            <div class="scatter-pair">
+              <figure><svg id="scatterY" viewBox="0 0 260 220" role="img" aria-label="Y 명령값 대비 추정값"></svg><figcaption>Y</figcaption></figure>
+              <figure><svg id="scatterT" viewBox="0 0 260 220" role="img" aria-label="T 명령값 대비 추정값"></svg><figcaption>T</figcaption></figure>
+            </div>
+            <div class="legend">
+              <span><i class="lg lg-passdot"></i>두 축 0.09 이내</span>
+              <span><i class="lg lg-faildot"></i>기준 밖</span>
+              <span><i class="lg lg-tol"></i>대각선 ±0.09</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="card">
+          <header class="card-head">
+            <h2 class="card-title">오차가 큰 사진</h2>
+            <span class="muted" id="evalWorstNote"></span>
+          </header>
+          <div class="table-wrap"><table class="data-table" id="evalWorst"></table></div>
+        </article>
+      </div>
+    </section>
+  </main>
+  </div>
 
   <script src="demo/data.js"></script>
   <script src="shell.js"></script>
   <script src="app.js"></script>
+  <script src="eval.js"></script>
 </body>
 </html>
