@@ -29,11 +29,12 @@
   <section class="modelbar" aria-label="사용 모델">
     <div class="model"><span class="model-kind">1차 joint</span><span class="model-name" id="jointModel"></span><span class="badge badge-adopted">채택</span></div>
     <div class="model"><span class="model-kind">2차 control</span><span class="model-name" id="controlModel"></span><span class="badge badge-adopted">채택</span></div>
+    <span class="data-source" id="pageFoot"></span>
     <button class="link-button" disabled title="후보 모델 선택은 준비 중입니다">모델 변경</button>
   </section>
 
-  <main class="layout">
-    <section class="col-main">
+  <main class="layout layout-service">
+    <section class="col-main col-view">
       <article class="card viewer-card">
         <header class="card-head">
           <div>
@@ -45,11 +46,13 @@
             <button data-view="full">전체</button>
           </div>
         </header>
-        <div class="viewer" id="viewer">
-          <img id="frameImg" alt="현재 입력 사진">
-          <div class="overlay" id="overlay"></div>
-          <div class="estimate-tag" id="estimateTag"></div>
-          <div class="plan-chip" id="planChip"></div>
+        <div class="viewer-wrap">
+          <div class="viewer" id="viewer">
+            <img id="frameImg" alt="현재 입력 사진">
+            <div class="overlay" id="overlay"></div>
+            <div class="estimate-tag" id="estimateTag"></div>
+            <div class="plan-chip" id="planChip"></div>
+          </div>
         </div>
         <footer class="viewer-foot">
           <span class="mono" id="framePath"></span>
@@ -112,7 +115,6 @@
     </aside>
   </main>
 
-  <footer class="pagefoot" id="pageFoot"></footer>
   </div>
 
   <div class="panel" data-panel="eval" hidden>
