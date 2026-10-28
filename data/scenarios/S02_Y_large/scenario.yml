@@ -2,12 +2,13 @@
 ---
 # 시나리오: 이동하면 나올 사진을 미리 정해 둔 재생 입력. 실제 촬영이 아니다.
 # 사진은 data/ 기준 상대 경로. clean 사진을 복사하지 않고 가리키기만 한다.
-# next_image: nearest_pose = 이동 후 계산된 자세와 가장 가까운 단계의 사진을 다음 입력으로 쓴다.
-#   tolerance 안에 단계가 없으면 "재촬영 불가"로 중단한다.
+# 첫 단계 사진만 입력으로 쓰고, 이동 후 사진은 data/clean 전체에서 계산된 자세와 가장 가까운 사진을 고른다
+#   (next_image: nearest_clean_photo). 기준 사진 clean_20261014/center.bmp는 모듈 기준과 같은 파일이라 제외한다.
+#   tolerance 안에 사진이 없으면 "재촬영 불가"로 중단한다. 아래 2단계 이후는 예상 경로 기록이다.
 name: "S02_Y_large"
 category: "Y 크게"
 description: "Y만 틀어짐 (+1.50)"
-next_image: nearest_pose
+next_image: nearest_clean_photo
 tolerance_y: 0.025
 tolerance_t: 0.005
 steps:
@@ -18,4 +19,4 @@ steps:
   - label: "보정 후 (도착)"
     y: 0.00
     t: 0.00
-    image: "clean/clean_20261014/center.bmp"
+    image: "clean/clean_20261020/기준 위치/center1.bmp"
