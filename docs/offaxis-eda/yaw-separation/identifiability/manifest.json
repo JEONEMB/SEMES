@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-26",
+  "numerical_checks": {
+    "noiseless_two_axis_recovery": true,
+    "nuisance_projection_equivalence": true,
+    "woodbury_dense_max_difference": 4.163336342344337e-17
+  },
+  "features": "Fixed L630, all finite fits; no extraction changes",
+  "tick_Y_mm": 0.05,
+  "tick_yaw_deg": 0.01,
+  "axis_frames": 280,
+  "central_axis_frames": 60,
+  "repeat_frames": 57,
+  "repeat_coordinates": 19,
+  "repeat_degrees_of_freedom": 38,
+  "common_frame_motion_removed": false,
+  "covariance_shrinkage": 0.5,
+  "noise_covariance_crossfit": "held coordinate and all three repeats excluded",
+  "primary_pattern_uses_mixed": false,
+  "reference": "new center1 only; no mixed-label bias calibration",
+  "source_sha256": {
+    "docs\\offaxis-eda\\ppt-method-v2\\frames.csv": "e4392e07801671b6e8530c4363dddfb81f6599c0bfebf03ca41fc27722d9d8c3",
+    "docs\\offaxis-eda\\ppt-method-v2\\points.csv.gz": "219cad2b8f6ea5b52f5492c1aacafa57f9cbf9140299df3f98ab033fd88a3c28",
+    "tool\\offaxis\\yaw_identifiability.py": "14b02b33d9a2fea5cd82c06fb745a4a12a4acaf1828c255b3499d3e3c1c799b7",
+    "tool\\offaxis\\ppt_analysis.py": "d783e7d172264595b1ea253141bc4fe3199a3da314fd4a3a9472221b038740e2"
+  }
+}
