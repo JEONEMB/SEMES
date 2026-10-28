@@ -1,0 +1,24 @@
+{
+  "original_images_verified": 341,
+  "tick_sizes": [
+    0.05,
+    0.01
+  ],
+  "source_sha256": {
+    "docs\\offaxis-eda\\ppt-method-v2\\frames.csv": "e4392e07801671b6e8530c4363dddfb81f6599c0bfebf03ca41fc27722d9d8c3",
+    "docs\\offaxis-eda\\ppt-method-v2\\qr_displacements.csv": "b577d9c60e1f8237b6a523985dfe18ce7f444deea7089943434b718240ef519e",
+    "docs\\offaxis-eda\\refit-axis-split\\model.json": "f02e56b9418b7d9372801ba2dbe4bfec782be45f93ea2c0bfb0e324b42195b33",
+    "docs\\offaxis-eda\\refit-axis-split\\predictions_and_split.csv": "1448234b0572c84c95fcaa07b5456b83fe8301f0ce7366885d0e8d0a2abcb47b",
+    "docs\\offaxis-eda\\refit-model\\model.json": "a70a62667abb941242ce1d9759a9eb6fd8d117e32867897cd786a34184e50b15",
+    "docs\\offaxis-eda\\ecc-gauss-newton\\measurements.csv": "e5d977e3dbd47877f819c225700ed2974a818b11b1b29e642249fab6db8f094a",
+    "docs\\offaxis-eda\\ecc-gauss-newton\\models.json": "d8ba6ca45e5e3f704a78a049ac55d9348cf1f577a38c9ebf80e1c477e83d8d03",
+    "docs\\offaxis-eda\\ecc-gauss-newton\\coordinate_holdout.csv": "4e33ce8bca6fa3dd990958eaa95f575e5ade03dd010a49012bfc5c804874f5f4"
+  },
+  "analysis_source_sha256": "4c3fb218be473d4d526d5e088b2dd22740f11fc62742c8feb68b13faa595a07d",
+  "new_estimator_training": false,
+  "actual_trajectory_data": false,
+  "actuator_assumption": "q_next=q-command; independent exact axes",
+  "missing_requested_model": "local origin/chore/hw-merge ef01a82 alignment() is a zero-valued placeholder",
+  "remote_check": "ls-remote failed: could not resolve lab.ssafy.com",
+  "branch": "feature/offaxis-eda"
+}
