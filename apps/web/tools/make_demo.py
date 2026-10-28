@@ -38,6 +38,40 @@ def locate_qr(img):
         boxes.append(dict(x=x0 + loc[0], y=y0 + loc[1], w=w, h=h, ncc=round(float(score), 4)))
     return boxes
 
+# Feature-point motion: the 536 fixed QR points control uses (points.json selected=1).
+# Approximation for display: per-QR NCC shift + LK 15x15 on sigma 0.8 blur (control's GN refinement omitted).
+CROP = (1340, 800, 1130, 530)  # control tracker full_crop
+POINTS_JSON = os.path.join(REPO, "experiments", "hye", "00000_final_Y_T control", "assets", "points.json")
+_pts = [p for p in json.load(open(POINTS_JSON, encoding="utf-8"))["points"] if p[3] == 1]
+REF_PTS = np.array([[p[0], p[1]] for p in _pts], np.float32)
+REF_QR = np.array([int(p[2]) for p in _pts])
+cx, cy, cw, ch = CROP
+center_blur = cv2.GaussianBlur(center[cy:cy + ch, cx:cx + cw], (0, 0), 0.8)
+
+def feature_motion(img, boxes):
+    cur = cv2.GaussianBlur(img[cy:cy + ch, cx:cx + cw], (0, 0), 0.8)
+    p0 = (REF_PTS - [cx, cy]).astype(np.float32)
+    shift = np.array([[b["x"] - q[0], b["y"] - q[1]] for b, q in zip(boxes, QR_BOXES)], np.float32)
+    p1 = (p0 + shift[REF_QR]).astype(np.float32)
+    crit = (cv2.TERM_CRITERIA_COUNT | cv2.TERM_CRITERIA_EPS, 60, 1e-4)
+    p1, st, _ = cv2.calcOpticalFlowPyrLK(center_blur, cur, p0.reshape(-1, 1, 2), p1.reshape(-1, 1, 2), winSize=(15, 15), maxLevel=0, criteria=crit, flags=cv2.OPTFLOW_USE_INITIAL_FLOW)
+    back, st2, _ = cv2.calcOpticalFlowPyrLK(cur, center_blur, p1, p0.reshape(-1, 1, 2).copy(), winSize=(15, 15), maxLevel=0, criteria=crit, flags=cv2.OPTFLOW_USE_INITIAL_FLOW)
+    d = p1.reshape(-1, 2) - p0
+    valid = (st.ravel() == 1) & (st2.ravel() == 1) & (np.linalg.norm(back.reshape(-1, 2) - p0, axis=1) < 0.5)
+    # similarity fit on valid points: dx = tx - r*v + s*u, dy = ty + r*u + s*v (u, v from the point centroid)
+    c = REF_PTS[valid].mean(axis=0)
+    u, v = (REF_PTS[valid] - c).T
+    A = np.zeros((2 * valid.sum(), 4)); b = np.zeros(2 * valid.sum())
+    A[0::2] = np.c_[np.ones_like(u), np.zeros_like(u), -v, u]; b[0::2] = d[valid, 0]
+    A[1::2] = np.c_[np.zeros_like(u), np.ones_like(u), u, v]; b[1::2] = d[valid, 1]
+    sol, *_ = np.linalg.lstsq(A, b, rcond=None)
+    residual = np.sqrt(np.mean((A @ sol - b) ** 2))
+    return dict(
+        points=len(REF_PTS), valid=int(valid.sum()), crop=dict(x=cx, y=cy, w=cw, h=ch),
+        tx=round(float(sol[0]), 4), ty=round(float(sol[1]), 4), rotation_mrad=round(float(sol[2]) * 1000, 4),
+        scale_ppm=round(float(sol[3]) * 1e6, 1), residual_px=round(float(residual), 4),
+        field=[[round(float(x), 1), round(float(y), 1), round(float(a), 3), round(float(bb), 3), int(ok)] for (x, y), (a, bb), ok in zip(REF_PTS, d, valid)])
+
 image_cache = {}
 def preview(rel):
     if rel in image_cache:
@@ -49,7 +83,8 @@ def preview(rel):
     roi = img[ry:ry + rh, rx:rx + rw]
     cv2.imwrite(os.path.join(OUT, "img", f"{key}_full.jpg"), full, [cv2.IMWRITE_JPEG_QUALITY, 86])
     cv2.imwrite(os.path.join(OUT, "img", f"{key}_qr.jpg"), roi, [cv2.IMWRITE_JPEG_QUALITY, 90])
-    image_cache[rel] = dict(key=key, path=rel, full=f"demo/img/{key}_full.jpg", qr=f"demo/img/{key}_qr.jpg", qr_boxes=locate_qr(img))
+    boxes = locate_qr(img)
+    image_cache[rel] = dict(key=key, path=rel, full=f"demo/img/{key}_full.jpg", qr=f"demo/img/{key}_qr.jpg", qr_boxes=boxes, motion=feature_motion(img, boxes))
     return image_cache[rel]
 
 est_cache = {}
