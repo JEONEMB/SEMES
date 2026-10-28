@@ -1,0 +1,13 @@
+{
+  "start_commit": "9609e459dca006a0343414b760f9d909df2c5b7f",
+  "workers": 4,
+  "images": 281,
+  "source_sha256": {
+    "include/qr_refinement.hpp": "f7a8544337dbc02059542d22b27dda832c8b0213dfd73506e6f7d98cb3da9fbd",
+    "include/pipeline_settings.hpp": "479974a0625c27c15b036f41ff25cc0580a3c6f260865a8e927150bfc3f5b2b3",
+    "src/qr_features.cpp": "2381b23e435703a6b26b5b32fb68bea88659f960ab2eed29f7cf73c7a4ce90b9",
+    "tool/sequential/sequential.py": "a66779d65b85be2ae47e212c0c6d083d70eb22c6fc42b666d449223fbca2dfe3",
+    "tool/sequential/evaluate.py": "1a9b74e0dba5b9689b3bc503003adf005f7a25db3e726832b5f91db919afa718",
+    "tool/sequential/recheck_fourier.py": "fff3e41f64650512edeb7c63fa3b1e259dfd2af0a56134a5cc4af4b25f7e82ce"
+  }
+}
