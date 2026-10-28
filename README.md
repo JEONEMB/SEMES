@@ -78,6 +78,12 @@ ctest --test-dir build -C Release --output-on-failure
   "experiments/hye/00000_final_Y_T control/results/NEW_VALIDATION_DIRECTORY"
 ```
 
+사진 폴더 전체를 채점하려면 `benchmark.exe`를 씁니다. 결과는 웹 평가 탭([apps/web](apps/web/README.md))에서 엽니다.
+
+```powershell
+.\build\Release\benchmark.exe "data\clean" "evals\새_결과_폴더"
+```
+
 `ctest`는 공개 API를 검사합니다(초기화 누락, 잘못된 입력 거부, 원본 영상 불변 등). `validate_control`은 280장을 다시 측정해 원본 Python 결과와 비교합니다. 결과 폴더는 매번 새 이름으로 지정합니다.
 
 빌드 없이 기존 결과만 보려면 아래 파일을 엽니다.
