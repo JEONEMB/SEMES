@@ -1,0 +1,144 @@
+{
+  "purpose": "Nominal Y=0 horizontal QR tracking-region position candidates",
+  "sources": {
+    "slope_results": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_slope_results.json",
+      "sha256": "92d321cd6e7904aef474b45375c3fdff74e78a245bf6dca22848a4e59f0155a1"
+    },
+    "measurements": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\measurements.json",
+      "sha256": "60b4322cc9679bc91af9c1a61f819273a2c2bcf03d83705451455e4f90b7943c"
+    }
+  },
+  "method": {
+    "saved_fit": "u = a * (Y - Y_first) + c; u = dx - dx_first",
+    "absolute_image_fit": "x = a * Y + b",
+    "zero_formula": "b = reference_roi_center_x + dx_first + c - a * Y_first",
+    "coordinate": "Zero-based image x, positive to the right, pixels",
+    "metadata_role": "Existing acquisition groups/order only, not position or probability evidence"
+  },
+  "limitations": [
+    "Y=0 is the filename-label origin of each run, not a verified physical alignment origin.",
+    "These are tracked QR ROI-center x coordinates, not independently detected geometric QR centers.",
+    "No common target is selected by averaging runs with potentially different origins.",
+    "No theta calibration, vertical-coordinate fit, confidence interval, or acceptance test is performed."
+  ],
+  "candidates": [
+    {
+      "capture_group_number": 2,
+      "image_count": 20,
+      "label_start_mm": 0.1,
+      "label_end_mm": 2.0,
+      "markers": {
+        "L": {
+          "slope_px_per_nominal_mm": 14.352305508186676,
+          "x_at_nominal_y_zero_px": 1641.446074175021,
+          "offset_from_center_bmp_roi_x_px": -0.5539258249789327,
+          "rms_fit_residual_px": 0.018093732902262166,
+          "max_abs_fit_residual_px": 0.04215393381431731
+        },
+        "C": {
+          "slope_px_per_nominal_mm": 14.364361777917091,
+          "x_at_nominal_y_zero_px": 1899.4625901971,
+          "offset_from_center_bmp_roi_x_px": -0.5374098028999015,
+          "rms_fit_residual_px": 0.016484795422007387,
+          "max_abs_fit_residual_px": 0.04819438869992787
+        },
+        "R": {
+          "slope_px_per_nominal_mm": 14.36347691337856,
+          "x_at_nominal_y_zero_px": 2158.471034303234,
+          "offset_from_center_bmp_roi_x_px": -0.5289656967661358,
+          "rms_fit_residual_px": 0.016771841057710585,
+          "max_abs_fit_residual_px": 0.046091526415704465
+        }
+      }
+    },
+    {
+      "capture_group_number": 3,
+      "image_count": 20,
+      "label_start_mm": -0.1,
+      "label_end_mm": -2.0,
+      "markers": {
+        "L": {
+          "slope_px_per_nominal_mm": 14.385867373770537,
+          "x_at_nominal_y_zero_px": 1642.0944956125866,
+          "offset_from_center_bmp_roi_x_px": 0.09449561258657013,
+          "rms_fit_residual_px": 0.02329878419688106,
+          "max_abs_fit_residual_px": 0.039493307539608224
+        },
+        "C": {
+          "slope_px_per_nominal_mm": 14.39819961963544,
+          "x_at_nominal_y_zero_px": 1900.1138677797262,
+          "offset_from_center_bmp_roi_x_px": 0.11386777972620621,
+          "rms_fit_residual_px": 0.021428643691476755,
+          "max_abs_fit_residual_px": 0.04230530614432748
+        },
+        "R": {
+          "slope_px_per_nominal_mm": 14.392023325755037,
+          "x_at_nominal_y_zero_px": 2159.1201316574675,
+          "offset_from_center_bmp_roi_x_px": 0.120131657467482,
+          "rms_fit_residual_px": 0.020356994514149247,
+          "max_abs_fit_residual_px": 0.037121279424237486
+        }
+      }
+    },
+    {
+      "capture_group_number": 6,
+      "image_count": 20,
+      "label_start_mm": 0.05,
+      "label_end_mm": 1.95,
+      "markers": {
+        "L": {
+          "slope_px_per_nominal_mm": 14.378173033603522,
+          "x_at_nominal_y_zero_px": 1641.525474983332,
+          "offset_from_center_bmp_roi_x_px": -0.4745250166679398,
+          "rms_fit_residual_px": 0.01913289140186423,
+          "max_abs_fit_residual_px": 0.041791934728690805
+        },
+        "C": {
+          "slope_px_per_nominal_mm": 14.392832328030458,
+          "x_at_nominal_y_zero_px": 1899.550276503526,
+          "offset_from_center_bmp_roi_x_px": -0.44972349647400733,
+          "rms_fit_residual_px": 0.015141119047681425,
+          "max_abs_fit_residual_px": 0.03957712994421847
+        },
+        "R": {
+          "slope_px_per_nominal_mm": 14.392921223155035,
+          "x_at_nominal_y_zero_px": 2158.5758250064205,
+          "offset_from_center_bmp_roi_x_px": -0.4241749935795269,
+          "rms_fit_residual_px": 0.015011603613088738,
+          "max_abs_fit_residual_px": 0.034299482459260844
+        }
+      }
+    },
+    {
+      "capture_group_number": 7,
+      "image_count": 20,
+      "label_start_mm": -1.95,
+      "label_end_mm": -0.05,
+      "markers": {
+        "L": {
+          "slope_px_per_nominal_mm": 14.353736988623314,
+          "x_at_nominal_y_zero_px": 1641.5427446403787,
+          "offset_from_center_bmp_roi_x_px": -0.4572553596212856,
+          "rms_fit_residual_px": 0.03127435068566302,
+          "max_abs_fit_residual_px": 0.10912550757211825
+        },
+        "C": {
+          "slope_px_per_nominal_mm": 14.369078730878131,
+          "x_at_nominal_y_zero_px": 1899.5744875638047,
+          "offset_from_center_bmp_roi_x_px": -0.4255124361952767,
+          "rms_fit_residual_px": 0.032112308916986826,
+          "max_abs_fit_residual_px": 0.10797041724004508
+        },
+        "R": {
+          "slope_px_per_nominal_mm": 14.364955210461236,
+          "x_at_nominal_y_zero_px": 2158.5950133480997,
+          "offset_from_center_bmp_roi_x_px": -0.40498665190034444,
+          "rms_fit_residual_px": 0.03090252562162074,
+          "max_abs_fit_residual_px": 0.10447727985091149
+        }
+      }
+    }
+  ]
+}
