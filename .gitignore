@@ -52,9 +52,13 @@ Desktop.ini
 __pycache__/
 /docs/offaxis-eda/ppt-method-v2/smoke/
 *.pyc
-# Local analysis dependencies
-/.analysis_packages/
 
+# Local analysis dependencies and plotting cache
+/.analysis_packages/
 # Root-level generated validation output
 /result_*.png
 /result_*.csv
+
+# Python analysis cache
+__pycache__/
+*.pyc

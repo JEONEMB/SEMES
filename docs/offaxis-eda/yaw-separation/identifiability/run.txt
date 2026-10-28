@@ -1,0 +1,78 @@
+       calibration        feature             weighting  axis_training_frames  components  angle_deg  condition_number  Y_repeat_sigma_ticks  yaw_repeat_sigma_ticks  Y_one_tick_snr  yaw_one_tick_snr  Y_mixed_rmse_ticks  yaw_mixed_rmse_ticks  mixed_both_within_tick
+   full_axis_range      L630_full            unweighted                   280        1260   0.144317        799.167644              2.411880                2.235456        0.414614          0.447336            8.785012              7.802673                0.052632
+   full_axis_range      L630_full shrinkage_50_crossfit                   280        1260   0.144317        799.167644              1.873212                1.793444        0.533843          0.557586            7.424538              6.493901                0.140351
+   full_axis_range  L630_centered            unweighted                   280        1260  87.553430          1.315151              2.744681                2.073207        0.364341          0.482344           46.694584             44.164667                0.000000
+   full_axis_range  L630_centered shrinkage_50_crossfit                   280        1260  87.553430          1.315151              1.304397                1.532504        0.766638          0.652527           44.894905             92.180022                0.000000
+   full_axis_range three_QR_means            unweighted                   280           6   0.103783       1111.293241              3.106380                2.873929        0.321918          0.347956           15.826734             14.133764                0.000000
+   full_axis_range three_QR_means shrinkage_50_crossfit                   280           6   0.103783       1111.293241             20.130769               18.081349        0.049675          0.055306          140.740853            124.587006                0.000000
+   full_axis_range     frame_mean            unweighted                   280           2   0.029503       3909.271621             23.366167               20.977591        0.042797          0.047670          166.706493            147.844981                0.000000
+   full_axis_range     frame_mean shrinkage_50_crossfit                   280           2   0.029503       3909.271621             23.366167               20.977591        0.042797          0.047670          166.706493            147.844981                0.000000
+central_axis_range      L630_full            unweighted                    60        1260   0.776061        148.549755              2.640371                2.372129        0.378735          0.421562           10.322618              8.833211                0.105263
+central_axis_range      L630_full shrinkage_50_crossfit                    60        1260   0.776061        148.549755              0.314274                0.308512        3.181933          3.241361           10.040976              8.640676                0.368421
+central_axis_range  L630_centered            unweighted                    60        1260  77.964011          3.953625              2.501083                4.384058        0.399827          0.228099           14.384247             81.547501                0.000000
+central_axis_range  L630_centered shrinkage_50_crossfit                    60        1260  77.964011          3.953625              0.277300                0.729385        3.606206          1.371019           11.450833            106.078039                0.000000
+central_axis_range three_QR_means            unweighted                    60           6   0.175278        657.734046              2.525461                2.166594        0.395967          0.461554           22.345782             20.406563                0.000000
+central_axis_range three_QR_means shrinkage_50_crossfit                    60           6   0.175278        657.734046              6.186120                5.429918        0.161652          0.184165           51.928368             47.057225                0.000000
+central_axis_range     frame_mean            unweighted                    60           2   0.102392       1125.934300              6.776813                5.948005        0.147562          0.168124           57.868396             52.285965                0.000000
+central_axis_range     frame_mean shrinkage_50_crossfit                    60           2   0.102392       1125.934300              6.776813                5.948005        0.147562          0.168124           57.868396             52.285965                0.000000
+PRIMARY {
+  "pattern_angle_degrees": 0.14431726971837047,
+  "signed_cosine": 0.9999968277959302,
+  "singular_values": [
+    27.09546756796892,
+    0.03390461032917188
+  ],
+  "condition_number": 799.1676443087063,
+  "column_l2_px_per_tick": [
+    18.04176224457293,
+    20.215348806284798
+  ],
+  "repeat_sigma_ticks": [
+    2.4118797291579925,
+    2.2354557028946984
+  ],
+  "known_other_axis_repeat_sigma_ticks": [
+    0.23178942067811742,
+    0.2068726307243509
+  ],
+  "one_tick_snr": [
+    0.41461437231329457,
+    0.4473360839604636
+  ],
+  "unique": [
+    {
+      "axis": "Y",
+      "signal_l2_px": 0.04544375060662336,
+      "signal_rms_per_component_px": 0.0012802326392003112,
+      "noise_sd_on_unit_direction_px": 0.10960486090519486,
+      "one_tick_snr": 0.41461437231265624
+    },
+    {
+      "axis": "yaw",
+      "signal_l2_px": 0.05091859969804474,
+      "signal_rms_per_component_px": 0.001434469039320689,
+      "noise_sd_on_unit_direction_px": 0.11382627407818445,
+      "one_tick_snr": 0.44733608396133584
+    }
+  ],
+  "sigma_ticks_pose_bootstrap_05_95": [
+    [
+      1.8334337115051504,
+      1.7149463460639083
+    ],
+    [
+      2.974588483337547,
+      2.7602662612816484
+    ]
+  ],
+  "snr_pose_bootstrap_05_95": [
+    [
+      0.33618096873573045,
+      0.36228390835646374
+    ],
+    [
+      0.5454247052484223,
+      0.5831086219408488
+    ]
+  ]
+}
