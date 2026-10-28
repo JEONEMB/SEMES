@@ -361,3 +361,25 @@ button { font: inherit; color: inherit; }
 }
 
 /* ---------- service layout v2 (2026-10-28 PPT review): photo | analysis | input + steps ---------- */
+.layout-service { grid-template-columns: 1fr; }
+.layout-service .col-steps { grid-column: auto; }
+.estimate-tag { left: 20px; top: 18px; padding: 12px 18px; border-radius: 10px; gap: 18px; font-size: 15px; }
+.estimate-tag .num { font-size: 20px; font-weight: 800; }
+.estimate-tag .state { font-size: 15px; }
+.plan-chip { bottom: 24px; padding: 14px 30px; font-size: 17px; gap: 16px; }
+.plan-chip .sep { height: 18px; }
+.input-card .controls { margin-top: 14px; }
+.scenario-list { max-height: 240px; overflow-y: auto; }
+@media (min-width: 1120px) and (min-height: 600px) {
+  .layout-service { grid-template-columns: minmax(0, 1fr) 300px 300px; }
+  .col-view .viewer-card { flex: 1; }
+  .col-analysis .plane-card { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .col-analysis .plane-card svg { flex: 1; min-height: 0; width: 100%; height: 100%; max-height: none; }
+  .col-analysis .motion-card { flex: none; }
+  .col-analysis .motion-card svg { height: 120px; }
+  .col-steps .input-card { flex: none; display: block; }
+  .col-steps .scenario-list { max-height: 112px; }
+  .col-steps .timeline-card { flex: 1; min-height: 0; }
+}
+
+/* ---------- service layout v2 polish ---------- */
