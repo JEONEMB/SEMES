@@ -1,0 +1,1694 @@
+{
+  "method": {
+    "units": "native image pixels, target-minus-reference, x right/y down",
+    "ecc": "translation only; ZNCC integer initialization +/-12 px, max 200 iterations, epsilon 1e-8, Gaussian 5x5",
+    "phase": "phase-only cross spectrum; Gaussian 5x5, subtract mean, Hann; inverse DFT local grids 0.01 and 0.001 px",
+    "roi": "center1 white QR boxes plus 12 px, located per group using ZNCC +/-230 x and +/-20 y; fixed within each group",
+    "aggregation": "3 QR estimates retained individually; their arithmetic mean reports common apparent displacement",
+    "software": {
+      "cv2": "5.0.0",
+      "numpy": "2.5.1"
+    }
+  },
+  "summary": {
+    "condition_count": 1,
+    "image_count": 3,
+    "qr_pair_count": 9,
+    "phase_minus_ecc": {
+      "count": 9,
+      "mean_xy_px": [
+        0.009039955440494749,
+        -0.030834642615583205
+      ],
+      "rms_xy_px": [
+        0.028477459247122673,
+        0.032895497549257975
+      ],
+      "max_abs_xy_px": [
+        0.046338944673538204,
+        0.04655449610948562
+      ],
+      "rms_distance_px": 0.04350953279667308,
+      "max_distance_px": 0.051309084039031685
+    },
+    "min_ecc": 0.9996570470230434,
+    "partial_run": true,
+    "ecc_translation": {
+      "max_mean_three_qr_pair_distance_px": 0.0946329039412878,
+      "worst_condition": "기준 위치",
+      "max_qr_pair_distance_px": 0.10602545712577871,
+      "max_marker_closure_distance_px": 0.0012551235834137935
+    },
+    "phase_correlation": {
+      "max_mean_three_qr_pair_distance_px": 0.046595183346684145,
+      "worst_condition": "기준 위치",
+      "max_qr_pair_distance_px": 0.05478138369920936,
+      "max_marker_closure_distance_px": 0.001414213562373089
+    }
+  },
+  "groups": [
+    {
+      "condition": "기준 위치",
+      "is_reference": true,
+      "label_y_mm": 0.0,
+      "label_theta_degree": 0.0,
+      "recorded_actual": [
+        -1.3,
+        -1.669999
+      ],
+      "files": [
+        {
+          "file": "일부 데이터 추출/기준 위치/center1.bmp",
+          "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+          "archive_modified_time_no_timezone": "2026-10-15 19:33:08"
+        },
+        {
+          "file": "일부 데이터 추출/기준 위치/center2.bmp",
+          "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+          "archive_modified_time_no_timezone": "2026-10-15 19:43:08"
+        },
+        {
+          "file": "일부 데이터 추출/기준 위치/center3.bmp",
+          "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+          "archive_modified_time_no_timezone": "2026-10-15 21:54:26"
+        }
+      ],
+      "rois": {
+        "L": {
+          "xyxy": [
+            1537,
+            956,
+            1750,
+            1181
+          ],
+          "localization_zncc": 0.9999990463256836
+        },
+        "C": {
+          "xyxy": [
+            1795,
+            957,
+            2007,
+            1182
+          ],
+          "localization_zncc": 0.9999982118606567
+        },
+        "R": {
+          "xyxy": [
+            2053,
+            958,
+            2266,
+            1183
+          ],
+          "localization_zncc": 0.9999998211860657
+        }
+      },
+      "pairs": [
+        {
+          "i": 0,
+          "j": 1,
+          "file_a": "일부 데이터 추출/기준 위치/center1.bmp",
+          "file_b": "일부 데이터 추출/기준 위치/center2.bmp",
+          "regions": {
+            "L": {
+              "ecc_translation": {
+                "dx": -0.09733894467353821,
+                "dy": 0.042030077427625656,
+                "ecc": 0.9996570470230434,
+                "initial_zncc": 0.9973171353340149
+              },
+              "phase_correlation": {
+                "dx": -0.051000000000000004,
+                "dy": 0.02,
+                "phase_peak": 0.7146513493378831
+              },
+              "brightness_difference_dn": -0.17819509650493615
+            },
+            "C": {
+              "ecc_translation": {
+                "dx": -0.08178422600030899,
+                "dy": 0.036078643053770065,
+                "ecc": 0.9997772814964214,
+                "initial_zncc": 0.997984766960144
+              },
+              "phase_correlation": {
+                "dx": -0.039,
+                "dy": 0.015,
+                "phase_peak": 0.7126730127760478
+              },
+              "brightness_difference_dn": -0.17907756813417564
+            },
+            "R": {
+              "ecc_translation": {
+                "dx": -0.0665377750992775,
+                "dy": 0.029147502034902573,
+                "ecc": 0.9998079076190717,
+                "initial_zncc": 0.9982550740242004
+              },
+              "phase_correlation": {
+                "dx": -0.04,
+                "dy": 0.014,
+                "phase_peak": 0.7079431177698463
+              },
+              "brightness_difference_dn": -0.15326030255607748
+            }
+          }
+        },
+        {
+          "i": 0,
+          "j": 2,
+          "file_a": "일부 데이터 추출/기준 위치/center1.bmp",
+          "file_b": "일부 데이터 추출/기준 위치/center3.bmp",
+          "regions": {
+            "L": {
+              "ecc_translation": {
+                "dx": -0.04051607847213745,
+                "dy": 0.09061820060014725,
+                "ecc": 0.999696201389218,
+                "initial_zncc": 0.997560977935791
+              },
+              "phase_correlation": {
+                "dx": -0.022,
+                "dy": 0.045,
+                "phase_peak": 0.7182994010936744
+              },
+              "brightness_difference_dn": -0.39461658841938174
+            },
+            "C": {
+              "ecc_translation": {
+                "dx": -0.02838858589529991,
+                "dy": 0.08955449610948563,
+                "ecc": 0.9997558634549815,
+                "initial_zncc": 0.9977330565452576
+              },
+              "phase_correlation": {
+                "dx": -0.015,
+                "dy": 0.043000000000000003,
+                "phase_peak": 0.7095925436658826
+              },
+              "brightness_difference_dn": -0.370482180293493
+            },
+            "R": {
+              "ecc_translation": {
+                "dx": -0.018748577684164047,
+                "dy": 0.08985579758882523,
+                "ecc": 0.9997516797203801,
+                "initial_zncc": 0.997745931148529
+              },
+              "phase_correlation": {
+                "dx": -0.009000000000000001,
+                "dy": 0.044,
+                "phase_peak": 0.703341275930814
+              },
+              "brightness_difference_dn": -0.35878977569119286
+            }
+          }
+        },
+        {
+          "i": 1,
+          "j": 2,
+          "file_a": "일부 데이터 추출/기준 위치/center2.bmp",
+          "file_b": "일부 데이터 추출/기준 위치/center3.bmp",
+          "regions": {
+            "L": {
+              "ecc_translation": {
+                "dx": 0.05774081125855446,
+                "dy": 0.049444109201431274,
+                "ecc": 0.9997763985266689,
+                "initial_zncc": 0.9981746673583984
+              },
+              "phase_correlation": {
+                "dx": 0.028999999999999998,
+                "dy": 0.024999999999999998,
+                "phase_peak": 0.721477839944724
+              },
+              "brightness_difference_dn": -0.2164214919144456
+            },
+            "C": {
+              "ecc_translation": {
+                "dx": 0.05403418466448784,
+                "dy": 0.05429459363222122,
+                "ecc": 0.9998061994420375,
+                "initial_zncc": 0.9982734322547913
+              },
+              "phase_correlation": {
+                "dx": 0.024999999999999998,
+                "dy": 0.028999999999999998,
+                "phase_peak": 0.7147173541569596
+              },
+              "brightness_difference_dn": -0.19140461215931737
+            },
+            "R": {
+              "ecc_translation": {
+                "dx": 0.048179592937231064,
+                "dy": 0.06148836389183998,
+                "ecc": 0.9997933606378204,
+                "initial_zncc": 0.9981440305709839
+              },
+              "phase_correlation": {
+                "dx": 0.03,
+                "dy": 0.03,
+                "phase_peak": 0.7075650213915555
+              },
+              "brightness_difference_dn": -0.20552947313511538
+            }
+          }
+        }
+      ],
+      "summary": {
+        "ecc_translation": {
+          "markers": {
+            "L": {
+              "pair_displacements_xy_px": [
+                [
+                  -0.09733894467353821,
+                  0.042030077427625656
+                ],
+                [
+                  -0.04051607847213745,
+                  0.09061820060014725
+                ],
+                [
+                  0.05774081125855446,
+                  0.049444109201431274
+                ]
+              ],
+              "positions_relative_to_A_xy_px": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  -0.09733894467353821,
+                  0.042030077427625656
+                ],
+                [
+                  -0.04051607847213745,
+                  0.09061820060014725
+                ]
+              ],
+              "sample_std_xy_px_n3": [
+                0.04889659307876304,
+                0.04534863357369743
+              ],
+              "max_pair_distance_px": 0.10602545712577871,
+              "closure_xy_px": [
+                0.0009179450571537018,
+                0.0008559860289096832
+              ]
+            },
+            "C": {
+              "pair_displacements_xy_px": [
+                [
+                  -0.08178422600030899,
+                  0.036078643053770065
+                ],
+                [
+                  -0.02838858589529991,
+                  0.08955449610948563
+                ],
+                [
+                  0.05403418466448784,
+                  0.05429459363222122
+                ]
+              ],
+              "positions_relative_to_A_xy_px": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  -0.08178422600030899,
+                  0.036078643053770065
+                ],
+                [
+                  -0.02838858589529991,
+                  0.08955449610948563
+                ]
+              ],
+              "sample_std_xy_px_n3": [
+                0.041524422158989945,
+                0.04505800542645319
+              ],
+              "max_pair_distance_px": 0.09394636545688555,
+              "closure_xy_px": [
+                0.0006385445594787598,
+                0.000818740576505661
+              ]
+            },
+            "R": {
+              "pair_displacements_xy_px": [
+                [
+                  -0.0665377750992775,
+                  0.029147502034902573
+                ],
+                [
+                  -0.018748577684164047,
+                  0.08985579758882523
+                ],
+                [
+                  0.048179592937231064,
+                  0.06148836389183998
+                ]
+              ],
+              "positions_relative_to_A_xy_px": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  -0.0665377750992775,
+                  0.029147502034902573
+                ],
+                [
+                  -0.018748577684164047,
+                  0.08985579758882523
+                ]
+              ],
+              "sample_std_xy_px_n3": [
+                0.03430887171447508,
+                0.04584237192863717
+              ],
+              "max_pair_distance_px": 0.09179092289275156,
+              "closure_xy_px": [
+                0.00039039552211761475,
+                0.0007800683379173279
+              ]
+            }
+          },
+          "mean_three_qr_pair_displacements_xy_px": [
+            [
+              -0.0818869819243749,
+              0.035752074172099434
+            ],
+            [
+              -0.029217747350533802,
+              0.09000949809948604
+            ],
+            [
+              0.05331819628675779,
+              0.05507568890849749
+            ]
+          ],
+          "mean_three_qr_max_pair_distance_px": 0.0946329039412878,
+          "mean_three_qr_sample_std_xy_px_n3": [
+            0.04149940328791251,
+            0.04532068807760393
+          ],
+          "max_marker_closure_distance_px": 0.0012551235834137935
+        },
+        "phase_correlation": {
+          "markers": {
+            "L": {
+              "pair_displacements_xy_px": [
+                [
+                  -0.051000000000000004,
+                  0.02
+                ],
+                [
+                  -0.022,
+                  0.045
+                ],
+                [
+                  0.028999999999999998,
+                  0.024999999999999998
+                ]
+              ],
+              "positions_relative_to_A_xy_px": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  -0.051000000000000004,
+                  0.02
+                ],
+                [
+                  -0.022,
+                  0.045
+                ]
+              ],
+              "sample_std_xy_px_n3": [
+                0.02557994005726623,
+                0.02254624876411447
+              ],
+              "max_pair_distance_px": 0.05478138369920936,
+              "closure_xy_px": [
+                -6.938893903907228e-18,
+                0.0
+              ]
+            },
+            "C": {
+              "pair_displacements_xy_px": [
+                [
+                  -0.039,
+                  0.015
+                ],
+                [
+                  -0.015,
+                  0.043000000000000003
+                ],
+                [
+                  0.024999999999999998,
+                  0.028999999999999998
+                ]
+              ],
+              "positions_relative_to_A_xy_px": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  -0.039,
+                  0.015
+                ],
+                [
+                  -0.015,
+                  0.043000000000000003
+                ]
+              ],
+              "sample_std_xy_px_n3": [
+                0.019672315572906003,
+                0.02182506204649447
+              ],
+              "max_pair_distance_px": 0.0455411901469428,
+              "closure_xy_px": [
+                0.0009999999999999974,
+                0.000999999999999994
+              ]
+            },
+            "R": {
+              "pair_displacements_xy_px": [
+                [
+                  -0.04,
+                  0.014
+                ],
+                [
+                  -0.009000000000000001,
+                  0.044
+                ],
+                [
+                  0.03,
+                  0.03
+                ]
+              ],
+              "positions_relative_to_A_xy_px": [
+                [
+                  0.0,
+                  0.0
+                ],
+                [
+                  -0.04,
+                  0.014
+                ],
+                [
+                  -0.009000000000000001,
+                  0.044
+                ]
+              ],
+              "sample_std_xy_px_n3": [
+                0.02098412098071619,
+                0.022479620400116487
+              ],
+              "max_pair_distance_px": 0.04491102314577124,
+              "closure_xy_px": [
+                -0.0010000000000000009,
+                0.0
+              ]
+            }
+          },
+          "mean_three_qr_pair_displacements_xy_px": [
+            [
+              -0.043333333333333335,
+              0.016333333333333335
+            ],
+            [
+              -0.015333333333333332,
+              0.044000000000000004
+            ],
+            [
+              0.027999999999999997,
+              0.027999999999999997
+            ]
+          ],
+          "mean_three_qr_max_pair_distance_px": 0.046595183346684145,
+          "mean_three_qr_sample_std_xy_px_n3": [
+            0.0219730474630811,
+            0.022241935700466894
+          ],
+          "max_marker_closure_distance_px": 0.001414213562373089
+        },
+        "phase_minus_ecc": {
+          "count": 9,
+          "mean_xy_px": [
+            0.009039955440494749,
+            -0.030834642615583205
+          ],
+          "rms_xy_px": [
+            0.028477459247122673,
+            0.032895497549257975
+          ],
+          "max_abs_xy_px": [
+            0.046338944673538204,
+            0.04655449610948562
+          ],
+          "rms_distance_px": 0.04350953279667308,
+          "max_distance_px": 0.051309084039031685
+        }
+      }
+    }
+  ],
+  "synthetic_checks": {
+    "scope": "Numerical sign/sensitivity checks under a Fourier-shift image model, not physical calibration.",
+    "noise": "gain 1.02, offset 2 DN, Gaussian sigma 1 DN, uint8 quantization; fixed seed 20261021",
+    "summary": {
+      "shift_only": {
+        "ecc_translation": {
+          "count": 18,
+          "mean_xy_px": [
+            0.00350251134485007,
+            0.002153883518444164
+          ],
+          "rms_xy_px": [
+            0.004853750612704891,
+            0.0050114417135622095
+          ],
+          "max_abs_xy_px": [
+            0.008032131195068404,
+            0.007523608207702648
+          ],
+          "rms_distance_px": 0.006976635511388311,
+          "max_distance_px": 0.010816823122486665
+        },
+        "phase_correlation": {
+          "count": 18,
+          "mean_xy_px": [
+            -0.0001666666666666545,
+            0.00022222222222222242
+          ],
+          "rms_xy_px": [
+            0.0006236095644623044,
+            0.0005773502691896263
+          ],
+          "max_abs_xy_px": [
+            0.0020000000000000018,
+            0.0010000000000000009
+          ],
+          "rms_distance_px": 0.0008498365855987838,
+          "max_distance_px": 0.002236067977499792
+        }
+      },
+      "gain_offset_noise": {
+        "ecc_translation": {
+          "count": 18,
+          "mean_xy_px": [
+            0.0036575212627131975,
+            0.002111202202957224
+          ],
+          "rms_xy_px": [
+            0.004979829542031455,
+            0.004865821549556238
+          ],
+          "max_abs_xy_px": [
+            0.008539319038391113,
+            0.007676851749420177
+          ],
+          "rms_distance_px": 0.006962393383012417,
+          "max_distance_px": 0.010947229424154655
+        },
+        "phase_correlation": {
+          "count": 18,
+          "mean_xy_px": [
+            -0.0004999999999999878,
+            0.00022222222222222256
+          ],
+          "rms_xy_px": [
+            0.00143372087784043,
+            0.001452966314513559
+          ],
+          "max_abs_xy_px": [
+            0.0040000000000000036,
+            0.0030000000000000027
+          ],
+          "rms_distance_px": 0.0020412414523193105,
+          "max_distance_px": 0.004472135954999584
+        }
+      }
+    },
+    "trials": [
+      {
+        "source": "기준 위치/L",
+        "variant": "shift_only",
+        "known_dx": 0.0,
+        "known_dy": 0.0,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "ecc": 0.9999999686158312,
+            "initial_zncc": 0.9999999403953552
+          },
+          "phase_correlation": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "phase_peak": 0.7728534167970788
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0,
+            0.0
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.0,
+        "known_dy": 0.0,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.0004110617737751454,
+            "dy": -0.00029944151174277067,
+            "ecc": 0.9999819635393845,
+            "initial_zncc": 0.9998184442520142
+          },
+          "phase_correlation": {
+            "dx": -0.001,
+            "dy": -0.001,
+            "phase_peak": 0.7620058897433774
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0004110617737751454,
+            -0.00029944151174277067
+          ],
+          "phase_correlation": [
+            -0.001,
+            -0.001
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "shift_only",
+        "known_dx": 0.02,
+        "known_dy": -0.03,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.02156694605946541,
+            "dy": -0.03243463113903999,
+            "ecc": 0.9999805646886153,
+            "initial_zncc": 0.9997886419296265
+          },
+          "phase_correlation": {
+            "dx": 0.02,
+            "dy": -0.028999999999999998,
+            "phase_peak": 0.7716092150465138
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.001566946059465408,
+            -0.0024346311390399944
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.02,
+        "known_dy": -0.03,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.021640965715050697,
+            "dy": -0.03205566853284836,
+            "ecc": 0.999963732825926,
+            "initial_zncc": 0.9996210336685181
+          },
+          "phase_correlation": {
+            "dx": 0.018000000000000002,
+            "dy": -0.028999999999999998,
+            "phase_peak": 0.7620100473663252
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.001640965715050697,
+            -0.0020556685328483593
+          ],
+          "phase_correlation": [
+            -0.0019999999999999983,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "shift_only",
+        "known_dx": 0.05,
+        "known_dy": 0.07,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.05353492870926857,
+            "dy": 0.07488176971673965,
+            "ecc": 0.9998857694051013,
+            "initial_zncc": 0.9988402724266052
+          },
+          "phase_correlation": {
+            "dx": 0.05,
+            "dy": 0.07,
+            "phase_peak": 0.7718204634038369
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.003534928709268567,
+            0.004881769716739648
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.05,
+        "known_dy": 0.07,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.05360432341694832,
+            "dy": 0.07440993189811707,
+            "ecc": 0.9998663641216011,
+            "initial_zncc": 0.998672604560852
+          },
+          "phase_correlation": {
+            "dx": 0.051000000000000004,
+            "dy": 0.07,
+            "phase_peak": 0.7616723917346349
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0036043234169483157,
+            0.004409931898117059
+          ],
+          "phase_correlation": [
+            0.0010000000000000009,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "shift_only",
+        "known_dx": 0.25,
+        "known_dy": -0.4,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.25791066884994507,
+            "dy": -0.4040727913379669,
+            "ecc": 0.997664234008602,
+            "initial_zncc": 0.9673780798912048
+          },
+          "phase_correlation": {
+            "dx": 0.25,
+            "dy": -0.4,
+            "phase_peak": 0.7715383971552697
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.007910668849945068,
+            -0.004072791337966897
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.25,
+        "known_dy": -0.4,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.25783106684684753,
+            "dy": -0.4038606584072113,
+            "ecc": 0.9975664482558522,
+            "initial_zncc": 0.9672135710716248
+          },
+          "phase_correlation": {
+            "dx": 0.248,
+            "dy": -0.4,
+            "phase_peak": 0.7623327850676545
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.007831066846847534,
+            -0.0038606584072112815
+          ],
+          "phase_correlation": [
+            -0.0020000000000000018,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "shift_only",
+        "known_dx": 1.2,
+        "known_dy": -0.7,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 1.2080001831054688,
+            "dy": -0.6929565072059631,
+            "ecc": 0.9992664379076681,
+            "initial_zncc": 0.9801104664802551
+          },
+          "phase_correlation": {
+            "dx": 1.198,
+            "dy": -0.699,
+            "phase_peak": 0.7715433414235594
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.008000183105468794,
+            0.007043492794036821
+          ],
+          "phase_correlation": [
+            -0.0020000000000000018,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "gain_offset_noise",
+        "known_dx": 1.2,
+        "known_dy": -0.7,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 1.2082525491714478,
+            "dy": -0.692807137966156,
+            "ecc": 0.9992338835693665,
+            "initial_zncc": 0.9799366593360901
+          },
+          "phase_correlation": {
+            "dx": 1.199,
+            "dy": -0.698,
+            "phase_peak": 0.7616623896201538
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.008252549171447798,
+            0.00719286203384395
+          ],
+          "phase_correlation": [
+            -0.0009999999999998899,
+            0.0020000000000000018
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "shift_only",
+        "known_dx": -0.5,
+        "known_dy": 0.3,
+        "measurements": {
+          "ecc_translation": {
+            "dx": -0.500156581401825,
+            "dy": 0.3074674904346466,
+            "ecc": 0.9985282605403561,
+            "initial_zncc": 0.950204074382782
+          },
+          "phase_correlation": {
+            "dx": -0.5,
+            "dy": 0.3,
+            "phase_peak": 0.7712516696691398
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            -0.00015658140182495117,
+            0.0074674904346466175
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/L",
+        "variant": "gain_offset_noise",
+        "known_dx": -0.5,
+        "known_dy": 0.3,
+        "measurements": {
+          "ecc_translation": {
+            "dx": -0.4994930624961853,
+            "dy": 0.30694302916526794,
+            "ecc": 0.9954018846818877,
+            "initial_zncc": 0.950020968914032
+          },
+          "phase_correlation": {
+            "dx": -0.5,
+            "dy": 0.3,
+            "phase_peak": 0.7622672668931876
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0005069375038146973,
+            0.0069430291652679554
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "shift_only",
+        "known_dx": 0.0,
+        "known_dy": 0.0,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "ecc": 1.000000004642919,
+            "initial_zncc": 0.9999999403953552
+          },
+          "phase_correlation": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "phase_peak": 0.7635010482180293
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0,
+            0.0
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.0,
+        "known_dy": 0.0,
+        "measurements": {
+          "ecc_translation": {
+            "dx": -0.00043234083568677306,
+            "dy": -0.00010274685337208211,
+            "ecc": 0.9999836255834592,
+            "initial_zncc": 0.9998300075531006
+          },
+          "phase_correlation": {
+            "dx": -0.001,
+            "dy": 0.0,
+            "phase_peak": 0.752886620053132
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            -0.00043234083568677306,
+            -0.00010274685337208211
+          ],
+          "phase_correlation": [
+            -0.001,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "shift_only",
+        "known_dx": 0.02,
+        "known_dy": -0.03,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.02148832567036152,
+            "dy": -0.03221764788031578,
+            "ecc": 0.9999841302762452,
+            "initial_zncc": 0.9997909069061279
+          },
+          "phase_correlation": {
+            "dx": 0.02,
+            "dy": -0.028999999999999998,
+            "phase_peak": 0.7623505809652181
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0014883256703615184,
+            -0.0022176478803157817
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.02,
+        "known_dy": -0.03,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.021464530378580093,
+            "dy": -0.03245321661233902,
+            "ecc": 0.9999686790373971,
+            "initial_zncc": 0.9996292591094971
+          },
+          "phase_correlation": {
+            "dx": 0.019,
+            "dy": -0.031,
+            "phase_peak": 0.7524126570726495
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.001464530378580093,
+            -0.002453216612339021
+          ],
+          "phase_correlation": [
+            -0.0010000000000000009,
+            -0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "shift_only",
+        "known_dx": 0.05,
+        "known_dy": 0.07,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.05356277897953987,
+            "dy": 0.07474716007709503,
+            "ecc": 0.9999030680300005,
+            "initial_zncc": 0.998854398727417
+          },
+          "phase_correlation": {
+            "dx": 0.05,
+            "dy": 0.07,
+            "phase_peak": 0.7623144855902814
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0035627789795398684,
+            0.004747160077095025
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.05,
+        "known_dy": 0.07,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.05347452685236931,
+            "dy": 0.07497097551822662,
+            "ecc": 0.9998876164888019,
+            "initial_zncc": 0.998694658279419
+          },
+          "phase_correlation": {
+            "dx": 0.05,
+            "dy": 0.07100000000000001,
+            "phase_peak": 0.7535229313724597
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0034745268523693057,
+            0.004970975518226617
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "shift_only",
+        "known_dx": 0.25,
+        "known_dy": -0.4,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.2578336298465729,
+            "dy": -0.4040938913822174,
+            "ecc": 0.9981092530712369,
+            "initial_zncc": 0.9670340418815613
+          },
+          "phase_correlation": {
+            "dx": 0.25,
+            "dy": -0.4,
+            "phase_peak": 0.7623606622336747
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.007833629846572876,
+            -0.004093891382217385
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.25,
+        "known_dy": -0.4,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.2577465772628784,
+            "dy": -0.4039342403411865,
+            "ecc": 0.9980240003440362,
+            "initial_zncc": 0.9668879508972168
+          },
+          "phase_correlation": {
+            "dx": 0.251,
+            "dy": -0.399,
+            "phase_peak": 0.7532168039969503
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.007746577262878418,
+            -0.003934240341186501
+          ],
+          "phase_correlation": [
+            0.0010000000000000009,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "shift_only",
+        "known_dx": 1.2,
+        "known_dy": -0.7,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 1.2079061269760132,
+            "dy": -0.6930550932884216,
+            "ecc": 0.9993634704542909,
+            "initial_zncc": 0.9804214239120483
+          },
+          "phase_correlation": {
+            "dx": 1.199,
+            "dy": -0.699,
+            "phase_peak": 0.7615152828255974
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.007906126976013228,
+            0.006944906711578325
+          ],
+          "phase_correlation": [
+            -0.0009999999999998899,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "gain_offset_noise",
+        "known_dx": 1.2,
+        "known_dy": -0.7,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 1.2082270383834839,
+            "dy": -0.6932356357574463,
+            "ecc": 0.9993367669049343,
+            "initial_zncc": 0.9802570939064026
+          },
+          "phase_correlation": {
+            "dx": 1.2,
+            "dy": -0.699,
+            "phase_peak": 0.7523126984018811
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.008227038383483931,
+            0.0067643642425536665
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "shift_only",
+        "known_dx": -0.5,
+        "known_dy": 0.3,
+        "measurements": {
+          "ecc_translation": {
+            "dx": -0.5000476241111755,
+            "dy": 0.30752360820770264,
+            "ecc": 0.998717170659682,
+            "initial_zncc": 0.952306866645813
+          },
+          "phase_correlation": {
+            "dx": -0.5,
+            "dy": 0.299,
+            "phase_peak": 0.7624265688307368
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            -4.762411117553711e-05,
+            0.007523608207702648
+          ],
+          "phase_correlation": [
+            0.0,
+            -0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/C",
+        "variant": "gain_offset_noise",
+        "known_dx": -0.5,
+        "known_dy": 0.3,
+        "measurements": {
+          "ecc_translation": {
+            "dx": -0.49980950355529785,
+            "dy": 0.30691200494766235,
+            "ecc": 0.996879169012068,
+            "initial_zncc": 0.9521994590759277
+          },
+          "phase_correlation": {
+            "dx": -0.5,
+            "dy": 0.299,
+            "phase_peak": 0.7517232145329156
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.00019049644470214844,
+            0.006912004947662365
+          ],
+          "phase_correlation": [
+            0.0,
+            -0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "shift_only",
+        "known_dx": 0.0,
+        "known_dy": 0.0,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "ecc": 0.9999999501253467,
+            "initial_zncc": 1.0
+          },
+          "phase_correlation": {
+            "dx": 0.0,
+            "dy": 0.0,
+            "phase_peak": 0.761377151799687
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0,
+            0.0
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.0,
+        "known_dy": 0.0,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.00037016868009231985,
+            "dy": -0.00036682409700006247,
+            "ecc": 0.9999817751765955,
+            "initial_zncc": 0.9998135566711426
+          },
+          "phase_correlation": {
+            "dx": -0.001,
+            "dy": -0.002,
+            "phase_peak": 0.7510753792806452
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.00037016868009231985,
+            -0.00036682409700006247
+          ],
+          "phase_correlation": [
+            -0.001,
+            -0.002
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "shift_only",
+        "known_dx": 0.02,
+        "known_dy": -0.03,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.021733690053224564,
+            "dy": -0.032447900623083115,
+            "ecc": 0.9999839686616062,
+            "initial_zncc": 0.9997868537902832
+          },
+          "phase_correlation": {
+            "dx": 0.02,
+            "dy": -0.03,
+            "phase_peak": 0.7605710102582695
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0017336900532245632,
+            -0.0024479006230831157
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.02,
+        "known_dy": -0.03,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.02164713479578495,
+            "dy": -0.031842850148677826,
+            "ecc": 0.9999676241900726,
+            "initial_zncc": 0.9996138215065002
+          },
+          "phase_correlation": {
+            "dx": 0.02,
+            "dy": -0.033,
+            "phase_peak": 0.7514040710910508
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0016471347957849498,
+            -0.001842850148677827
+          ],
+          "phase_correlation": [
+            0.0,
+            -0.0030000000000000027
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "shift_only",
+        "known_dx": 0.05,
+        "known_dy": 0.07,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.05376322194933891,
+            "dy": 0.07486739009618759,
+            "ecc": 0.9999016475015415,
+            "initial_zncc": 0.998850405216217
+          },
+          "phase_correlation": {
+            "dx": 0.05,
+            "dy": 0.07,
+            "phase_peak": 0.7604670578706821
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.00376322194933891,
+            0.004867390096187585
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.05,
+        "known_dy": 0.07,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.0533662810921669,
+            "dy": 0.07498644292354584,
+            "ecc": 0.9998833190817059,
+            "initial_zncc": 0.9986791610717773
+          },
+          "phase_correlation": {
+            "dx": 0.051000000000000004,
+            "dy": 0.07100000000000001,
+            "phase_peak": 0.7506333620269245
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.003366281092166898,
+            0.004986442923545831
+          ],
+          "phase_correlation": [
+            0.0010000000000000009,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "shift_only",
+        "known_dx": 0.25,
+        "known_dy": -0.4,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.2578762471675873,
+            "dy": -0.4039820432662964,
+            "ecc": 0.9981411245424809,
+            "initial_zncc": 0.9665428400039673
+          },
+          "phase_correlation": {
+            "dx": 0.25,
+            "dy": -0.4,
+            "phase_peak": 0.7601074022277938
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.00787624716758728,
+            -0.0039820432662963645
+          ],
+          "phase_correlation": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "gain_offset_noise",
+        "known_dx": 0.25,
+        "known_dy": -0.4,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 0.2585393190383911,
+            "dy": -0.40375152230262756,
+            "ecc": 0.998048845594225,
+            "initial_zncc": 0.9663867950439453
+          },
+          "phase_correlation": {
+            "dx": 0.246,
+            "dy": -0.398,
+            "phase_peak": 0.7499577337031089
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.008539319038391113,
+            -0.0037515223026275413
+          ],
+          "phase_correlation": [
+            -0.0040000000000000036,
+            0.0020000000000000018
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "shift_only",
+        "known_dx": 1.2,
+        "known_dy": -0.7,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 1.2080321311950684,
+            "dy": -0.6927551031112671,
+            "ecc": 0.9993428069234399,
+            "initial_zncc": 0.9805493950843811
+          },
+          "phase_correlation": {
+            "dx": 1.199,
+            "dy": -0.699,
+            "phase_peak": 0.7595669817332632
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.008032131195068404,
+            0.007244896888732866
+          ],
+          "phase_correlation": [
+            -0.0009999999999998899,
+            0.0010000000000000009
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "gain_offset_noise",
+        "known_dx": 1.2,
+        "known_dy": -0.7,
+        "measurements": {
+          "ecc_translation": {
+            "dx": 1.2084437608718872,
+            "dy": -0.6931876540184021,
+            "ecc": 0.9993115302972138,
+            "initial_zncc": 0.9803818464279175
+          },
+          "phase_correlation": {
+            "dx": 1.199,
+            "dy": -0.697,
+            "phase_peak": 0.748880035971699
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.008443760871887251,
+            0.006812345981597856
+          ],
+          "phase_correlation": [
+            -0.0009999999999998899,
+            0.0030000000000000027
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "shift_only",
+        "known_dx": -0.5,
+        "known_dy": 0.3,
+        "measurements": {
+          "ecc_translation": {
+            "dx": -0.49995946884155273,
+            "dy": 0.30729809403419495,
+            "ecc": 0.9970788256288267,
+            "initial_zncc": 0.9520368576049805
+          },
+          "phase_correlation": {
+            "dx": -0.499,
+            "dy": 0.3,
+            "phase_peak": 0.7600209263459183
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            4.0531158447265625e-05,
+            0.007298094034194957
+          ],
+          "phase_correlation": [
+            0.0010000000000000009,
+            0.0
+          ]
+        }
+      },
+      {
+        "source": "기준 위치/R",
+        "variant": "gain_offset_noise",
+        "known_dx": -0.5,
+        "known_dy": 0.3,
+        "measurements": {
+          "ecc_translation": {
+            "dx": -0.4994490146636963,
+            "dy": 0.30767685174942017,
+            "ecc": 0.9969536390267767,
+            "initial_zncc": 0.9518263936042786
+          },
+          "phase_correlation": {
+            "dx": -0.498,
+            "dy": 0.3,
+            "phase_peak": 0.750611484925334
+          }
+        },
+        "errors_xy_px": {
+          "ecc_translation": [
+            0.0005509853363037109,
+            0.007676851749420177
+          ],
+          "phase_correlation": [
+            0.0020000000000000018,
+            0.0
+          ]
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "Three original images per group; the three pairs are not independent repeat captures.",
+    "Capture protocol and Actual-field provenance remain unspecified.",
+    "Both methods use the same image evidence and translation model; agreement does not establish physical accuracy.",
+    "Numerical 0.001 px phase grid is not a demonstrated 0.001 px accuracy.",
+    "No Y/theta physical inversion or pass/fail tolerance is applied.",
+    "The two methods do not test affine or perspective changes.",
+    "Synthetic trials test only the stated rendering/noise model and are not physical calibration."
+  ],
+  "elapsed_seconds": 3.1302933000260964
+}

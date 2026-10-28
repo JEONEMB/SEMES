@@ -1,0 +1,2781 @@
+{
+  "description": "Primary margin 12 px versus 6 and 20 px; four selected groups, all three pairs and QR markers.",
+  "selection": "reference; small-repeat variation; largest observed displacement; largest method difference",
+  "summary": {
+    "ecc_translation": {
+      "count": 72,
+      "mean_xy_px": [
+        1.8064340110868216e-05,
+        -8.446888437497869e-05
+      ],
+      "rms_xy_px": [
+        0.00012359014808862448,
+        0.00042125114253113965
+      ],
+      "max_abs_xy_px": [
+        0.00046834349632263184,
+        0.0017802491784095764
+      ],
+      "rms_distance_px": 0.0004390068903654688,
+      "max_distance_px": 0.001780323050015476
+    },
+    "phase_correlation": {
+      "count": 72,
+      "mean_xy_px": [
+        5.782411586589357e-19,
+        4.1666666666666984e-05
+      ],
+      "rms_xy_px": [
+        0.0019436506316151008,
+        0.0012638125740085915
+      ],
+      "max_abs_xy_px": [
+        0.008000000000000007,
+        0.005000000000000001
+      ],
+      "rms_distance_px": 0.0023184046238739265,
+      "max_distance_px": 0.008062257748298557
+    },
+    "primary_vs_changed_roi_count": 72
+  },
+  "per_condition": {
+    "Y+0.05 T+0.01": {
+      "ecc_translation": {
+        "count": 18,
+        "mean_xy_px": [
+          2.103705062634415e-05,
+          3.944125233425035e-06
+        ],
+        "rms_xy_px": [
+          7.394276075090912e-05,
+          0.0002839085158992051
+        ],
+        "max_abs_xy_px": [
+          0.00021916255354881287,
+          0.0007562153041362762
+        ],
+        "rms_distance_px": 0.0002933795788182187,
+        "max_distance_px": 0.0007861551669458683
+      },
+      "phase_correlation": {
+        "count": 18,
+        "mean_xy_px": [
+          -5.555555555555536e-05,
+          -0.0004999999999999999
+        ],
+        "rms_xy_px": [
+          0.00135400640077266,
+          0.0010801234497346433
+        ],
+        "max_abs_xy_px": [
+          0.003,
+          0.002000000000000001
+        ],
+        "rms_distance_px": 0.0017320508075688772,
+        "max_distance_px": 0.00316227766016838
+      }
+    },
+    "Y+0.10 T+0.10": {
+      "ecc_translation": {
+        "count": 18,
+        "mean_xy_px": [
+          -1.1209760689073139e-05,
+          -0.00010259551668746604
+        ],
+        "rms_xy_px": [
+          0.00013133712650913198,
+          0.0002495730614798015
+        ],
+        "max_abs_xy_px": [
+          0.00044924020767211914,
+          0.0007490161806344986
+        ],
+        "rms_distance_px": 0.0002820215484959909,
+        "max_distance_px": 0.0007530134958747185
+      },
+      "phase_correlation": {
+        "count": 18,
+        "mean_xy_px": [
+          0.0005000000000000006,
+          0.0003333333333333335
+        ],
+        "rms_xy_px": [
+          0.002857738033247043,
+          0.0017320508075688776
+        ],
+        "max_abs_xy_px": [
+          0.008000000000000007,
+          0.005000000000000001
+        ],
+        "rms_distance_px": 0.0033416562759605722,
+        "max_distance_px": 0.008062257748298557
+      }
+    },
+    "Y+0.50 T+2.00": {
+      "ecc_translation": {
+        "count": 18,
+        "mean_xy_px": [
+          2.6782146758503383e-05,
+          0.00014363263027108688
+        ],
+        "rms_xy_px": [
+          0.0001241233605518872,
+          0.00042119763558582063
+        ],
+        "max_abs_xy_px": [
+          0.00046834349632263184,
+          0.0013513526137103327
+        ],
+        "rms_distance_px": 0.0004391059745184294,
+        "max_distance_px": 0.0013513629091859293
+      },
+      "phase_correlation": {
+        "count": 18,
+        "mean_xy_px": [
+          -0.0006666666666666651,
+          0.00033333333333333343
+        ],
+        "rms_xy_px": [
+          0.0018856180831641257,
+          0.0011547005383792516
+        ],
+        "max_abs_xy_px": [
+          0.0040000000000000036,
+          0.003
+        ],
+        "rms_distance_px": 0.0022110831935702657,
+        "max_distance_px": 0.004472135954999582
+      }
+    },
+    "기준 위치": {
+      "ecc_translation": {
+        "count": 18,
+        "mean_xy_px": [
+          3.5647923747698464e-05,
+          -0.00038285677631696063
+        ],
+        "rms_xy_px": [
+          0.00015157347233746673,
+          0.0006241088796801296
+        ],
+        "max_abs_xy_px": [
+          0.0004540681838989258,
+          0.0017802491784095764
+        ],
+        "rms_distance_px": 0.0006422510499890391,
+        "max_distance_px": 0.001780323050015476
+      },
+      "phase_correlation": {
+        "count": 18,
+        "mean_xy_px": [
+          0.00022222222222222212,
+          9.637352644315595e-19
+        ],
+        "rms_xy_px": [
+          0.0012472191289246476,
+          0.0009428090415820628
+        ],
+        "max_abs_xy_px": [
+          0.0030000000000000027,
+          0.0020000000000000018
+        ],
+        "rms_distance_px": 0.001563471919941143,
+        "max_distance_px": 0.0031622776601683816
+      }
+    }
+  },
+  "records": [
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 1,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1543,
+        962,
+        1744,
+        1175
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.09741541743278503,
+          "dy": 0.04203253984451294,
+          "ecc": 0.9996622162089359,
+          "initial_zncc": 0.997470498085022
+        },
+        "phase_correlation": {
+          "dx": -0.05,
+          "dy": 0.019,
+          "phase_peak": 0.7195970544623009
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -7.647275924682617e-05,
+          2.462416887283325e-06
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          -0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 1,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1801,
+        963,
+        2001,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.08179473876953125,
+          "dy": 0.03603776544332504,
+          "ecc": 0.9997694009746781,
+          "initial_zncc": 0.9981251358985901
+        },
+        "phase_correlation": {
+          "dx": -0.04,
+          "dy": 0.014,
+          "phase_peak": 0.7114716454205702
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.0512769222259521e-05,
+          -4.087761044502258e-05
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          -0.0009999999999999992
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 1,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2059,
+        964,
+        2260,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.06655393540859222,
+          "dy": 0.029107199981808662,
+          "ecc": 0.9997979380079574,
+          "initial_zncc": 0.9983812570571899
+        },
+        "phase_correlation": {
+          "dx": -0.039,
+          "dy": 0.014,
+          "phase_peak": 0.7163373289967947
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.6160309314727783e-05,
+          -4.030205309391022e-05
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1543,
+        962,
+        1744,
+        1175
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.04055438190698624,
+          "dy": 0.09061862528324127,
+          "ecc": 0.9996993838898796,
+          "initial_zncc": 0.9977154731750488
+        },
+        "phase_correlation": {
+          "dx": -0.021,
+          "dy": 0.043000000000000003,
+          "phase_peak": 0.7217651304694034
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -3.83034348487854e-05,
+          4.246830940246582e-07
+        ],
+        "phase_correlation": [
+          0.0009999999999999974,
+          -0.001999999999999995
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1801,
+        963,
+        2001,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.028404144570231438,
+          "dy": 0.08948494493961334,
+          "ecc": 0.9997553892646636,
+          "initial_zncc": 0.9978939294815063
+        },
+        "phase_correlation": {
+          "dx": -0.014,
+          "dy": 0.043000000000000003,
+          "phase_peak": 0.7099546067958582
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.5558674931526184e-05,
+          -6.955116987228394e-05
+        ],
+        "phase_correlation": [
+          0.0009999999999999992,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2059,
+        964,
+        2260,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.018774278461933136,
+          "dy": 0.08983150124549866,
+          "ecc": 0.9997432237449195,
+          "initial_zncc": 0.9979167580604553
+        },
+        "phase_correlation": {
+          "dx": -0.01,
+          "dy": 0.044,
+          "phase_peak": 0.7105363086665786
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.5700777769088745e-05,
+          -2.4296343326568604e-05
+        ],
+        "phase_correlation": [
+          -0.0009999999999999992,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 1,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1543,
+        962,
+        1744,
+        1175
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.05777839943766594,
+          "dy": 0.0494513064622879,
+          "ecc": 0.9997688798907047,
+          "initial_zncc": 0.9982876777648926
+        },
+        "phase_correlation": {
+          "dx": 0.028999999999999998,
+          "dy": 0.026,
+          "phase_peak": 0.7245483849945781
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          3.758817911148071e-05,
+          7.197260856628418e-06
+        ],
+        "phase_correlation": [
+          0.0,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 1,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1801,
+        963,
+        2001,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.054028261452913284,
+          "dy": 0.054253950715065,
+          "ecc": 0.999797316953825,
+          "initial_zncc": 0.9983915090560913
+        },
+        "phase_correlation": {
+          "dx": 0.026,
+          "dy": 0.03,
+          "phase_peak": 0.7141075042797769
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -5.923211574554443e-06,
+          -4.064291715621948e-05
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 1,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2059,
+        964,
+        2260,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.04817788302898407,
+          "dy": 0.06150529533624649,
+          "ecc": 0.9997845560905768,
+          "initial_zncc": 0.9982897639274597
+        },
+        "phase_correlation": {
+          "dx": 0.028999999999999998,
+          "dy": 0.03,
+          "phase_peak": 0.7139948563744684
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.7099082469940186e-06,
+          1.69314444065094e-05
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 1,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1529,
+        948,
+        1758,
+        1189
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.09709732234477997,
+          "dy": 0.04124172031879425,
+          "ecc": 0.9995686923521558,
+          "initial_zncc": 0.9976599216461182
+        },
+        "phase_correlation": {
+          "dx": -0.052000000000000005,
+          "dy": 0.02,
+          "phase_peak": 0.7138692223895737
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          0.00024162232875823975,
+          -0.0007883571088314056
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 1,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1787,
+        949,
+        2015,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.08176220953464508,
+          "dy": 0.03502896800637245,
+          "ecc": 0.9997623947336394,
+          "initial_zncc": 0.9982462525367737
+        },
+        "phase_correlation": {
+          "dx": -0.04,
+          "dy": 0.015,
+          "phase_peak": 0.7086981273954795
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          2.2016465663909912e-05,
+          -0.0010496750473976135
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 1,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2045,
+        950,
+        2274,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.0666760802268982,
+          "dy": 0.029062310233712196,
+          "ecc": 0.9997997566946807,
+          "initial_zncc": 0.9984932541847229
+        },
+        "phase_correlation": {
+          "dx": -0.037,
+          "dy": 0.013000000000000001,
+          "phase_peak": 0.7080788090923299
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -0.00013830512762069702,
+          -8.519180119037628e-05
+        ],
+        "phase_correlation": [
+          0.0030000000000000027,
+          -0.0009999999999999992
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1529,
+        948,
+        1758,
+        1189
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.040062010288238525,
+          "dy": 0.08972644805908203,
+          "ecc": 0.999434463250368,
+          "initial_zncc": 0.9978603720664978
+        },
+        "phase_correlation": {
+          "dx": -0.02,
+          "dy": 0.046,
+          "phase_peak": 0.7174680479553245
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          0.0004540681838989258,
+          -0.0008917525410652161
+        ],
+        "phase_correlation": [
+          0.0019999999999999983,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1787,
+        949,
+        2015,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.028404803946614265,
+          "dy": 0.08777424693107605,
+          "ecc": 0.9995287357304221,
+          "initial_zncc": 0.9980676770210266
+        },
+        "phase_correlation": {
+          "dx": -0.014,
+          "dy": 0.043000000000000003,
+          "phase_peak": 0.7064647764752152
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.6218051314353943e-05,
+          -0.0017802491784095764
+        ],
+        "phase_correlation": [
+          0.0009999999999999992,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 0,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2045,
+        950,
+        2274,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.018840156495571136,
+          "dy": 0.0893474817276001,
+          "ecc": 0.9994707325364626,
+          "initial_zncc": 0.998073160648346
+        },
+        "phase_correlation": {
+          "dx": -0.009000000000000001,
+          "dy": 0.043000000000000003,
+          "phase_peak": 0.7033474768762418
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -9.157881140708923e-05,
+          -0.0005083158612251282
+        ],
+        "phase_correlation": [
+          0.0,
+          -0.000999999999999994
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 1,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1529,
+        948,
+        1758,
+        1189
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.05807233601808548,
+          "dy": 0.04923233017325401,
+          "ecc": 0.9997121677911883,
+          "initial_zncc": 0.9983757138252258
+        },
+        "phase_correlation": {
+          "dx": 0.028999999999999998,
+          "dy": 0.027,
+          "phase_peak": 0.7201884572258214
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          0.0003315247595310211,
+          -0.00021177902817726135
+        ],
+        "phase_correlation": [
+          0.0,
+          0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 1,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1787,
+        949,
+        2015,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.05401069298386574,
+          "dy": 0.05346004664897919,
+          "ecc": 0.9997342606648801,
+          "initial_zncc": 0.9984942674636841
+        },
+        "phase_correlation": {
+          "dx": 0.025,
+          "dy": 0.03,
+          "phase_peak": 0.7113554753990339
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.349168062210083e-05,
+          -0.0008345469832420349
+        ],
+        "phase_correlation": [
+          3.469446951953614e-18,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "기준 위치",
+      "i": 1,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2045,
+        950,
+        2274,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.04819437116384506,
+          "dy": 0.06093546375632286,
+          "ecc": 0.9996692880378374,
+          "initial_zncc": 0.9983993172645569
+        },
+        "phase_correlation": {
+          "dx": 0.027999999999999997,
+          "dy": 0.03,
+          "phase_peak": 0.7068972287883032
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          1.4778226613998413e-05,
+          -0.0005529001355171204
+        ],
+        "phase_correlation": [
+          -0.0020000000000000018,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 1,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1544,
+        962,
+        1745,
+        1175
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.006464038975536823,
+          "dy": -0.006090606562793255,
+          "ecc": 0.9998675928708893,
+          "initial_zncc": 0.9991118311882019
+        },
+        "phase_correlation": {
+          "dx": -0.002,
+          "dy": 0.0,
+          "phase_peak": 0.7368571465583132
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          1.6707926988601685e-06,
+          -8.276011794805527e-05
+        ],
+        "phase_correlation": [
+          0.001,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 1,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1802,
+        963,
+        2002,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.007283672224730253,
+          "dy": -0.010988040827214718,
+          "ecc": 0.9998919303662515,
+          "initial_zncc": 0.9992137551307678
+        },
+        "phase_correlation": {
+          "dx": -0.004,
+          "dy": -0.007,
+          "phase_peak": 0.7209379933803575
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          1.7136801034212112e-05,
+          -4.439894109964371e-05
+        ],
+        "phase_correlation": [
+          0.001,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 1,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2060,
+        964,
+        2261,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.005242063198238611,
+          "dy": -0.011757249012589455,
+          "ecc": 0.9998713293964814,
+          "initial_zncc": 0.9991077780723572
+        },
+        "phase_correlation": {
+          "dx": 0.002,
+          "dy": -0.007,
+          "phase_peak": 0.7279188658639306
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.2440217435359955e-06,
+          4.508066922426224e-05
+        ],
+        "phase_correlation": [
+          0.002,
+          0.002000000000000001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1544,
+        962,
+        1745,
+        1175
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.025179820135235786,
+          "dy": 0.0175239946693182,
+          "ecc": 0.9998558733073931,
+          "initial_zncc": 0.9989768862724304
+        },
+        "phase_correlation": {
+          "dx": -0.017,
+          "dy": 0.009000000000000001,
+          "phase_peak": 0.7335196011097463
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.7293339371681213e-05,
+          -2.0368024706840515e-05
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          -0.0019999999999999983
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1802,
+        963,
+        2002,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.018805021420121193,
+          "dy": 0.01565542444586754,
+          "ecc": 0.9998833956206586,
+          "initial_zncc": 0.9991670846939087
+        },
+        "phase_correlation": {
+          "dx": -0.006,
+          "dy": 0.006,
+          "phase_peak": 0.7227783764846291
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          3.505498170852661e-06,
+          -2.261437475681305e-05
+        ],
+        "phase_correlation": [
+          0.002,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2060,
+        964,
+        2261,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.01045594085007906,
+          "dy": 0.013205386698246002,
+          "ecc": 0.9998725857801202,
+          "initial_zncc": 0.9991044998168945
+        },
+        "phase_correlation": {
+          "dx": -0.006,
+          "dy": 0.007,
+          "phase_peak": 0.7271923406694162
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.114141196012497e-05,
+          4.775356501340866e-05
+        ],
+        "phase_correlation": [
+          -0.002,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 1,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1544,
+        962,
+        1745,
+        1175
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.018786700442433357,
+          "dy": 0.02355291321873665,
+          "ecc": 0.9998527359941113,
+          "initial_zncc": 0.9990004897117615
+        },
+        "phase_correlation": {
+          "dx": -0.014,
+          "dy": 0.009000000000000001,
+          "phase_peak": 0.7341413569499392
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.0851770639419556e-05,
+          6.465800106525421e-05
+        ],
+        "phase_correlation": [
+          0.0,
+          -0.0009999999999999992
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 1,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1802,
+        963,
+        2002,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.011591817252337933,
+          "dy": 0.02660231664776802,
+          "ecc": 0.9998739586738052,
+          "initial_zncc": 0.9991042017936707
+        },
+        "phase_correlation": {
+          "dx": -0.002,
+          "dy": 0.011,
+          "phase_peak": 0.7187319277088177
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.5282072126865387e-05,
+          2.4493783712387085e-05
+        ],
+        "phase_correlation": [
+          0.0,
+          -0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 1,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2060,
+        964,
+        2261,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.005210112314671278,
+          "dy": 0.02489287033677101,
+          "ecc": 0.9998672614818109,
+          "initial_zncc": 0.9990559220314026
+        },
+        "phase_correlation": {
+          "dx": -0.005,
+          "dy": 0.016,
+          "phase_peak": 0.7267986911252329
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          1.2400560081005096e-06,
+          9.441748261451721e-06
+        ],
+        "phase_correlation": [
+          -0.001,
+          -0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 1,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1530,
+        948,
+        1759,
+        1189
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.006431411951780319,
+          "dy": -0.00562243489548564,
+          "ecc": 0.9998845880929355,
+          "initial_zncc": 0.9991247653961182
+        },
+        "phase_correlation": {
+          "dx": -0.004,
+          "dy": 0.0,
+          "phase_peak": 0.7290392163530407
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          3.429781645536423e-05,
+          0.00038541154935956
+        ],
+        "phase_correlation": [
+          -0.001,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 1,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1788,
+        949,
+        2016,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.007285380735993385,
+          "dy": -0.010419978760182858,
+          "ecc": 0.9999058622631715,
+          "initial_zncc": 0.9992359280586243
+        },
+        "phase_correlation": {
+          "dx": -0.003,
+          "dy": -0.006,
+          "phase_peak": 0.7184977232567753
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          1.5428289771080017e-05,
+          0.0005236631259322166
+        ],
+        "phase_correlation": [
+          0.002,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 1,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2046,
+        950,
+        2275,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.005241846200078726,
+          "dy": -0.01152410451322794,
+          "ecc": 0.999891475906595,
+          "initial_zncc": 0.9991512894630432
+        },
+        "phase_correlation": {
+          "dx": 0.0,
+          "dy": -0.008,
+          "phase_peak": 0.7190512914062936
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.027023583650589e-06,
+          0.0002782251685857773
+        ],
+        "phase_correlation": [
+          0.0,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1530,
+        948,
+        1759,
+        1189
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.024933364242315292,
+          "dy": 0.017200736328959465,
+          "ecc": 0.9998627210506753,
+          "initial_zncc": 0.9989960789680481
+        },
+        "phase_correlation": {
+          "dx": -0.019,
+          "dy": 0.009000000000000001,
+          "phase_peak": 0.7251555832661412
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          0.00021916255354881287,
+          -0.00034362636506557465
+        ],
+        "phase_correlation": [
+          -0.0009999999999999974,
+          -0.0019999999999999983
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1788,
+        949,
+        2016,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.018820203840732574,
+          "dy": 0.01601576991379261,
+          "ecc": 0.9998925768121625,
+          "initial_zncc": 0.9991892576217651
+        },
+        "phase_correlation": {
+          "dx": -0.008,
+          "dy": 0.006,
+          "phase_peak": 0.720761459396477
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.167692244052887e-05,
+          0.00033773109316825867
+        ],
+        "phase_correlation": [
+          0.0,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 0,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2046,
+        950,
+        2275,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.01045991387218237,
+          "dy": 0.013264347799122334,
+          "ecc": 0.9998899551723088,
+          "initial_zncc": 0.9991422891616821
+        },
+        "phase_correlation": {
+          "dx": -0.005,
+          "dy": 0.007,
+          "phase_peak": 0.7194401752750064
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.51144340634346e-05,
+          0.00010671466588973999
+        ],
+        "phase_correlation": [
+          -0.001,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 1,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1530,
+        948,
+        1759,
+        1189
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.01856095716357231,
+          "dy": 0.022732039913535118,
+          "ecc": 0.9998547102875713,
+          "initial_zncc": 0.9990065693855286
+        },
+        "phase_correlation": {
+          "dx": -0.014,
+          "dy": 0.01,
+          "phase_peak": 0.7258351620440157
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          0.00021489150822162628,
+          -0.0007562153041362762
+        ],
+        "phase_correlation": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 1,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1788,
+        949,
+        2016,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.011606098152697086,
+          "dy": 0.026344528421759605,
+          "ecc": 0.9998734393085351,
+          "initial_zncc": 0.9991371631622314
+        },
+        "phase_correlation": {
+          "dx": -0.005,
+          "dy": 0.011,
+          "phase_peak": 0.7170260409600684
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.9562972486019135e-05,
+          -0.00023329444229602814
+        ],
+        "phase_correlation": [
+          -0.003,
+          -0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.05 T+0.01",
+      "i": 1,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2046,
+        950,
+        2275,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.005214824806898832,
+          "dy": 0.024634527042508125,
+          "ecc": 0.9998694277741984,
+          "initial_zncc": 0.9990941286087036
+        },
+        "phase_correlation": {
+          "dx": -0.005,
+          "dy": 0.016,
+          "phase_peak": 0.7193235388486581
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -3.4724362194538116e-06,
+          -0.0002489015460014343
+        ],
+        "phase_correlation": [
+          -0.001,
+          -0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 1,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1551,
+        962,
+        1752,
+        1175
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.5804358124732971,
+          "dy": -0.005008402746170759,
+          "ecc": 0.9989323103517671,
+          "initial_zncc": 0.9707854986190796
+        },
+        "phase_correlation": {
+          "dx": 0.549,
+          "dy": -0.001,
+          "phase_peak": 0.5437799430432351
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -6.216764450073242e-05,
+          7.041590288281441e-05
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 1,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1809,
+        963,
+        2009,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.5797647833824158,
+          "dy": -0.004766006488353014,
+          "ecc": 0.9990457486297628,
+          "initial_zncc": 0.9718155860900879
+        },
+        "phase_correlation": {
+          "dx": 0.546,
+          "dy": -0.01,
+          "phase_peak": 0.5389256964998442
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          1.2099742889404297e-05,
+          -9.131012484431267e-05
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.003000000000000001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 1,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2067,
+        964,
+        2268,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.5853392481803894,
+          "dy": -0.006737669929862022,
+          "ecc": 0.9990548414390152,
+          "initial_zncc": 0.9727184772491455
+        },
+        "phase_correlation": {
+          "dx": 0.541,
+          "dy": 0.004,
+          "phase_peak": 0.5415331820908027
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -3.17692756652832e-05,
+          8.750660344958305e-05
+        ],
+        "phase_correlation": [
+          -0.0030000000000000027,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1551,
+        962,
+        1752,
+        1175
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.01268674060702324,
+          "dy": -0.0016718019032850862,
+          "ecc": 0.9998721519868644,
+          "initial_zncc": 0.9990854859352112
+        },
+        "phase_correlation": {
+          "dx": 0.011,
+          "dy": -0.002,
+          "phase_peak": 0.7363648546960894
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          3.461446613073349e-05,
+          -1.6177305951714516e-05
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1809,
+        963,
+        2009,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.014306189492344856,
+          "dy": -0.0017612557858228683,
+          "ecc": 0.9998876763600835,
+          "initial_zncc": 0.9991902112960815
+        },
+        "phase_correlation": {
+          "dx": 0.01,
+          "dy": 0.004,
+          "phase_peak": 0.7184981110080959
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          6.383378058671951e-05,
+          -4.290975630283356e-05
+        ],
+        "phase_correlation": [
+          0.002,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2067,
+        964,
+        2268,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.01753990352153778,
+          "dy": -0.0018652573926374316,
+          "ecc": 0.9998700203856316,
+          "initial_zncc": 0.9990735650062561
+        },
+        "phase_correlation": {
+          "dx": 0.012,
+          "dy": 0.0,
+          "phase_peak": 0.7229085842649959
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          1.9470229744911194e-05,
+          -1.5532481484115124e-05
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 1,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1551,
+        962,
+        1752,
+        1175
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.5695730447769165,
+          "dy": 0.0034015143755823374,
+          "ecc": 0.9989598750091988,
+          "initial_zncc": 0.9694567322731018
+        },
+        "phase_correlation": {
+          "dx": -0.529,
+          "dy": 0.005,
+          "phase_peak": 0.5417151393187596
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -3.135204315185547e-05,
+          -6.830552592873573e-05
+        ],
+        "phase_correlation": [
+          0.0,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 1,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1809,
+        963,
+        2009,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.5672574043273926,
+          "dy": 0.002877775812521577,
+          "ecc": 0.9990606916126525,
+          "initial_zncc": 0.9705449938774109
+        },
+        "phase_correlation": {
+          "dx": -0.525,
+          "dy": 0.018000000000000002,
+          "phase_peak": 0.5429326804487131
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -9.363889694213867e-05,
+          -7.103942334651947e-05
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 1,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2067,
+        964,
+        2268,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.569789707660675,
+          "dy": 0.005027743987739086,
+          "ecc": 0.9990043331404359,
+          "initial_zncc": 0.971199095249176
+        },
+        "phase_correlation": {
+          "dx": -0.513,
+          "dy": -0.002,
+          "phase_peak": 0.5422223925834094
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -5.525350570678711e-05,
+          -1.68532133102417e-05
+        ],
+        "phase_correlation": [
+          0.008000000000000007,
+          0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 1,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1537,
+        948,
+        1766,
+        1189
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.58094722032547,
+          "dy": -0.005380352959036827,
+          "ecc": 0.9991528727930935,
+          "initial_zncc": 0.9731980562210083
+        },
+        "phase_correlation": {
+          "dx": 0.548,
+          "dy": 0.0,
+          "phase_peak": 0.541781726811737
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          0.00044924020767211914,
+          -0.0003015343099832535
+        ],
+        "phase_correlation": [
+          -0.0020000000000000018,
+          0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 1,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1795,
+        949,
+        2023,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.5797387361526489,
+          "dy": -0.00516160111874342,
+          "ecc": 0.9992796947159637,
+          "initial_zncc": 0.9738644361495972
+        },
+        "phase_correlation": {
+          "dx": 0.548,
+          "dy": -0.008,
+          "phase_peak": 0.5334874448464624
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.3947486877441406e-05,
+          -0.0004869047552347183
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          0.005000000000000001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 1,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2053,
+        950,
+        2282,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.5852935314178467,
+          "dy": -0.007574192713946104,
+          "ecc": 0.9993000071511838,
+          "initial_zncc": 0.9751405119895935
+        },
+        "phase_correlation": {
+          "dx": 0.541,
+          "dy": 0.004,
+          "phase_peak": 0.5363964236847754
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -7.748603820800781e-05,
+          -0.0007490161806344986
+        ],
+        "phase_correlation": [
+          -0.0030000000000000027,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1537,
+        948,
+        1766,
+        1189
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.01246681809425354,
+          "dy": -0.0015487342607229948,
+          "ecc": 0.9998898125042677,
+          "initial_zncc": 0.9991068840026855
+        },
+        "phase_correlation": {
+          "dx": 0.009000000000000001,
+          "dy": -0.002,
+          "phase_peak": 0.7286022905817889
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -0.0001853080466389656,
+          0.00010689033661037683
+        ],
+        "phase_correlation": [
+          -0.002999999999999999,
+          0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1795,
+        949,
+        2023,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.01415292639285326,
+          "dy": -0.001611658139154315,
+          "ecc": 0.9999048214754503,
+          "initial_zncc": 0.9992212057113647
+        },
+        "phase_correlation": {
+          "dx": 0.009000000000000001,
+          "dy": 0.003,
+          "phase_peak": 0.7173417006358761
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -8.942931890487671e-05,
+          0.0001066878903657198
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 0,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2053,
+        950,
+        2282,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.017413249239325523,
+          "dy": -0.0019610512536019087,
+          "ecc": 0.9998928188365925,
+          "initial_zncc": 0.9991165995597839
+        },
+        "phase_correlation": {
+          "dx": 0.011,
+          "dy": 0.002,
+          "phase_peak": 0.7148950851319897
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -0.00010718405246734619,
+          -0.00011132634244859219
+        ],
+        "phase_correlation": [
+          0.0,
+          0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 1,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1537,
+        948,
+        1766,
+        1189
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.5694339275360107,
+          "dy": 0.003153624478727579,
+          "ecc": 0.9991821133215185,
+          "initial_zncc": 0.972000241279602
+        },
+        "phase_correlation": {
+          "dx": -0.527,
+          "dy": 0.004,
+          "phase_peak": 0.5392997119419217
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          0.00010776519775390625,
+          -0.000316195422783494
+        ],
+        "phase_correlation": [
+          0.0020000000000000018,
+          -0.002
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 1,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1795,
+        949,
+        2023,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.5671920776367188,
+          "dy": 0.0031583134550601244,
+          "ecc": 0.9992964404271419,
+          "initial_zncc": 0.9726720452308655
+        },
+        "phase_correlation": {
+          "dx": -0.525,
+          "dy": 0.015,
+          "phase_peak": 0.5375228244869282
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.8312206268310547e-05,
+          0.00020949821919202805
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          -0.0020000000000000018
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.10 T+0.10",
+      "i": 1,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2053,
+        950,
+        2282,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.5698474049568176,
+          "dy": 0.004903983790427446,
+          "ecc": 0.9992612691899141,
+          "initial_zncc": 0.9737593531608582
+        },
+        "phase_correlation": {
+          "dx": -0.515,
+          "dy": -0.002,
+          "phase_peak": 0.5368757766545333
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -0.00011295080184936523,
+          -0.00014061341062188148
+        ],
+        "phase_correlation": [
+          0.006000000000000005,
+          0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 1,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1710,
+        963,
+        1911,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.3623724579811096,
+          "dy": 0.014830728992819786,
+          "ecc": 0.998189362907994,
+          "initial_zncc": 0.9803068041801453
+        },
+        "phase_correlation": {
+          "dx": 0.233,
+          "dy": 0.014,
+          "phase_peak": 0.6161471442701596
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.5987625122070312e-05,
+          5.401112139225006e-05
+        ],
+        "phase_correlation": [
+          -0.002999999999999975,
+          0.002
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 1,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1968,
+        963,
+        2168,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.35816702246665955,
+          "dy": 0.007723820395767689,
+          "ecc": 0.9984650299177816,
+          "initial_zncc": 0.9809580445289612
+        },
+        "phase_correlation": {
+          "dx": 0.269,
+          "dy": 0.012,
+          "phase_peak": 0.6003950396464895
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          3.3348798751831055e-05,
+          -5.633523687720299e-05
+        ],
+        "phase_correlation": [
+          0.0040000000000000036,
+          -0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 1,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2227,
+        964,
+        2428,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.3623475432395935,
+          "dy": -6.47889610263519e-05,
+          "ecc": 0.9984035088669203,
+          "initial_zncc": 0.9805753827095032
+        },
+        "phase_correlation": {
+          "dx": 0.242,
+          "dy": 0.0,
+          "phase_peak": 0.6071830838979677
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          2.041459083557129e-05,
+          1.6353980754502118e-05
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1710,
+        963,
+        1911,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.045595280826091766,
+          "dy": -0.002537334803491831,
+          "ecc": 0.9998416615657837,
+          "initial_zncc": 0.9988308548927307
+        },
+        "phase_correlation": {
+          "dx": 0.021,
+          "dy": 0.006,
+          "phase_peak": 0.7303711423919123
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          3.5509467124938965e-05,
+          5.505327135324478e-05
+        ],
+        "phase_correlation": [
+          -0.0009999999999999974,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1968,
+        963,
+        2168,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.04036504402756691,
+          "dy": -0.002689453773200512,
+          "ecc": 0.9998671676714755,
+          "initial_zncc": 0.9990068078041077
+        },
+        "phase_correlation": {
+          "dx": 0.016,
+          "dy": -0.001,
+          "phase_peak": 0.7166412257576995
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          4.1268765926361084e-05,
+          3.0267983675003052e-05
+        ],
+        "phase_correlation": [
+          0.0,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2227,
+        964,
+        2428,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.03511696308851242,
+          "dy": -0.006068453658372164,
+          "ecc": 0.9998568811296096,
+          "initial_zncc": 0.9989393949508667
+        },
+        "phase_correlation": {
+          "dx": 0.021,
+          "dy": -0.003,
+          "phase_peak": 0.7226200856488262
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          1.2278556823730469e-05,
+          -1.2158416211605072e-06
+        ],
+        "phase_correlation": [
+          -0.0009999999999999974,
+          -0.001
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 1,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 6,
+      "roi": [
+        1710,
+        963,
+        1911,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.320903480052948,
+          "dy": -0.01736735925078392,
+          "ecc": 0.9982285216896702,
+          "initial_zncc": 0.9842551946640015
+        },
+        "phase_correlation": {
+          "dx": -0.199,
+          "dy": -0.012,
+          "phase_peak": 0.6328682451554126
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.755356788635254e-05,
+          2.2118911147117615e-05
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 1,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 6,
+      "roi": [
+        1968,
+        963,
+        2168,
+        1176
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.32159146666526794,
+          "dy": -0.010545250959694386,
+          "ecc": 0.9986302382784823,
+          "initial_zncc": 0.9843926429748535
+        },
+        "phase_correlation": {
+          "dx": -0.229,
+          "dy": -0.01,
+          "phase_peak": 0.6138860012454653
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.753734588623047e-05,
+          -1.1922791600227356e-05
+        ],
+        "phase_correlation": [
+          -0.0040000000000000036,
+          0.002
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 1,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 6,
+      "roi": [
+        2227,
+        964,
+        2428,
+        1177
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.3306383490562439,
+          "dy": -0.006001773755997419,
+          "ecc": 0.9985872084929517,
+          "initial_zncc": 0.9836973547935486
+        },
+        "phase_correlation": {
+          "dx": -0.217,
+          "dy": -0.006,
+          "phase_peak": 0.6193953373215898
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.6003847122192383e-05,
+          -4.403339698910713e-05
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 1,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1696,
+        949,
+        1925,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.3628667891025543,
+          "dy": 0.014683590270578861,
+          "ecc": 0.9983247102941011,
+          "initial_zncc": 0.9820802211761475
+        },
+        "phase_correlation": {
+          "dx": 0.237,
+          "dy": 0.013000000000000001,
+          "phase_peak": 0.6103471907156299
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          0.00046834349632263184,
+          -9.312760084867477e-05
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 1,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1954,
+        949,
+        2182,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.358096718788147,
+          "dy": 0.007671475876122713,
+          "ecc": 0.9986004073036691,
+          "initial_zncc": 0.9825451970100403
+        },
+        "phase_correlation": {
+          "dx": 0.262,
+          "dy": 0.013000000000000001,
+          "phase_peak": 0.5981249777497527
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -3.695487976074219e-05,
+          -0.00010867975652217865
+        ],
+        "phase_correlation": [
+          -0.0030000000000000027,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 1,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2213,
+        950,
+        2442,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.36233240365982056,
+          "dy": 0.0012702096719294786,
+          "ecc": 0.9984845123683833,
+          "initial_zncc": 0.9821041822433472
+        },
+        "phase_correlation": {
+          "dx": 0.241,
+          "dy": 0.003,
+          "phase_peak": 0.5997402167624777
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          5.27501106262207e-06,
+          0.0013513526137103327
+        ],
+        "phase_correlation": [
+          -0.0020000000000000018,
+          0.003
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1696,
+        949,
+        1925,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.04555274173617363,
+          "dy": -0.0024668765254318714,
+          "ecc": 0.9998633763095531,
+          "initial_zncc": 0.9988754987716675
+        },
+        "phase_correlation": {
+          "dx": 0.022,
+          "dy": 0.006,
+          "phase_peak": 0.7239616919747663
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -7.029622793197632e-06,
+          0.0001255115494132042
+        ],
+        "phase_correlation": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1954,
+        949,
+        2182,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.04031176492571831,
+          "dy": -0.002405874663963914,
+          "ecc": 0.9998879510077744,
+          "initial_zncc": 0.9990450739860535
+        },
+        "phase_correlation": {
+          "dx": 0.015,
+          "dy": 0.0,
+          "phase_peak": 0.7158449750155044
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -1.2010335922241211e-05,
+          0.00031384709291160107
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 0,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2213,
+        950,
+        2442,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": 0.03507552295923233,
+          "dy": -0.005047147162258625,
+          "ecc": 0.9998772959627928,
+          "initial_zncc": 0.9989986419677734
+        },
+        "phase_correlation": {
+          "dx": 0.021,
+          "dy": -0.002,
+          "phase_peak": 0.7137448533458076
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -2.9161572456359863e-05,
+          0.0010200906544923782
+        ],
+        "phase_correlation": [
+          -0.0009999999999999974,
+          0.0
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 1,
+      "j": 2,
+      "marker": "L",
+      "margin_px": 20,
+      "roi": [
+        1696,
+        949,
+        1925,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.3207285404205322,
+          "dy": -0.017311494797468185,
+          "ecc": 0.9974145109195289,
+          "initial_zncc": 0.9857078194618225
+        },
+        "phase_correlation": {
+          "dx": -0.201,
+          "dy": -0.011,
+          "phase_peak": 0.6279865016032283
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          0.00015738606452941895,
+          7.798336446285248e-05
+        ],
+        "phase_correlation": [
+          -0.0010000000000000009,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 1,
+      "j": 2,
+      "marker": "C",
+      "margin_px": 20,
+      "roi": [
+        1954,
+        949,
+        2182,
+        1190
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.3215315341949463,
+          "dy": -0.010334190912544727,
+          "ecc": 0.9987383027405394,
+          "initial_zncc": 0.9856729507446289
+        },
+        "phase_correlation": {
+          "dx": -0.224,
+          "dy": -0.011,
+          "phase_peak": 0.6122715263932005
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          3.2395124435424805e-05,
+          0.00019913725554943085
+        ],
+        "phase_correlation": [
+          0.0010000000000000009,
+          0.0010000000000000009
+        ]
+      }
+    },
+    {
+      "condition": "Y+0.50 T+2.00",
+      "i": 1,
+      "j": 2,
+      "marker": "R",
+      "margin_px": 20,
+      "roi": [
+        2213,
+        950,
+        2442,
+        1191
+      ],
+      "measurements": {
+        "ecc_translation": {
+          "dx": -0.3307742476463318,
+          "dy": -0.006322766188532114,
+          "ecc": 0.9987073641756962,
+          "initial_zncc": 0.9850099086761475
+        },
+        "phase_correlation": {
+          "dx": -0.216,
+          "dy": -0.007,
+          "phase_peak": 0.6106116762314023
+        }
+      },
+      "difference_from_primary_xy_px": {
+        "ecc_translation": [
+          -0.000151902437210083,
+          -0.0003650258295238018
+        ],
+        "phase_correlation": [
+          0.0,
+          -0.001
+        ]
+      }
+    }
+  ]
+}
