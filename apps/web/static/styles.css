@@ -416,3 +416,23 @@ button { font: inherit; color: inherit; }
 }
 
 /* ---------- compact input card, steps fit without scrolling (2026-10-28 review) ---------- */
+.source-tabs { margin: 10px 0 8px; gap: 6px; }
+.source-tabs button { padding: 7px 4px; font-size: 12px; border-radius: 8px; }
+.scenario-list { gap: 2px; }
+.scenario-list button { padding: 7px 10px; border-radius: 8px; align-items: center; }
+.sc-cat { font-size: 13px; }
+.input-card .controls { margin-top: 10px; }
+.input-card .btn { padding: 8px 0; font-size: 13px; border-radius: 8px; }
+.timeline { gap: 6px; }
+.tl-item { padding: 9px 10px; gap: 0 10px; grid-template-columns: 24px 1fr; border-radius: 10px; }
+.tl-num { width: 24px; height: 24px; font-size: 11px; }
+.tl-stage { font-size: 12.5px; line-height: 1.35; }
+.tl-est { font-size: 12px; margin-top: 1px; line-height: 1.35; }
+.tl-decision { font-size: 11.5px; margin-top: 2px; line-height: 1.35; }
+.tl-cmd { font-size: 11.5px; margin-top: 1px; line-height: 1.35; }
+@media (min-width: 1120px) and (min-height: 600px) {
+  .col-steps .scenario-list { max-height: 96px; }
+  .col-steps .input-card { padding: 14px 16px; }
+  .col-steps .timeline-card { padding: 14px 16px; }
+  .col-steps .timeline-card .card-head { margin-bottom: 8px; }
+}

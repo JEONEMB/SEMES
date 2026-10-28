@@ -35,12 +35,15 @@
       const b = el("button", i === state.sc ? "is-on" : "");
       b.append(el("span", "sc-cat", sc.category));
       b.append(el("span", "sc-start", `Y ${fmt(sc.start.y, 2)}  T ${fmt(sc.start.t, 2)}`));
-      b.append(el("span", "sc-id", sc.id));
+      b.title = `${sc.id}  ${sc.description}`;
       b.addEventListener("click", () => selectScenario(i));
       const li = el("li");
       li.append(b);
       ul.append(li);
     });
+    // Keep the chosen scenario visible inside the short list.
+    const on = ul.querySelector("button.is-on");
+    if (on) ul.scrollTop = on.parentElement.offsetTop - ul.offsetTop - (ul.clientHeight - on.offsetHeight) / 2;
   }
 
   // ---------- viewer ----------
