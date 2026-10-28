@@ -1,0 +1,16 @@
+{
+  "sources": [
+    "analysis/initial_error/capture_order.json",
+    "analysis/second_data_inspection/inventory.json"
+  ],
+  "first_count": 281,
+  "second_count": 60,
+  "coordinates": "filename labels, not measured image displacements or independently measured robot poses",
+  "first_unlabelled_axis": "displayed as nominal zero; actual zero return unknown",
+  "time_sources": [
+    "original filesystem modification time, KST",
+    "ZIP BMP modification time, timezone unspecified"
+  ],
+  "connections": "chronological recorded positions, not actual intermediate robot paths",
+  "image_analysis_performed": false
+}
