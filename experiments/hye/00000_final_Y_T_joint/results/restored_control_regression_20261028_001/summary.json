@@ -1,0 +1,9 @@
+{
+  "passed": 341,
+  "n": 341,
+  "baseline": "results/native_20261028_001/predictions.csv",
+  "max_difference_T": 0.0,
+  "scope": "Frozen full341 model reapplication, not OOF337/341 or independent evaluation",
+  "purpose": "Verify QR536 control replacement and library separation do not change joint estimates",
+  "max_difference_Y": 0.0
+}
