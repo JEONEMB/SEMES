@@ -1,0 +1,568 @@
+﻿// =====================================================================================
+// roi_opt.cpp — 최적 ROI 학습 구현 (설명은 roi_opt.hpp)
+// =====================================================================================
+#include "roi_opt.hpp"
+#include "../yt/m1_phase_ecc.hpp"
+#include "../yt/yt_model.hpp"
+
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <map>
+#include <numeric>
+
+namespace yt {
+namespace roi {
+
+// ------------------------------------------------------------------ 설정
+SearchConfig loadOrCreateConfig(const std::string& path) {
+    SearchConfig c;
+    cv::FileStorage in(path, cv::FileStorage::READ);
+    if (in.isOpened()) {
+        for (const auto& z : in["zones"]) {
+            Zone q;
+            q.name = (std::string)z["name"];
+            q.box = cv::Rect((int)z["x"], (int)z["y"], (int)z["w"], (int)z["h"]);
+            q.topK = (int)z["topK"];
+            c.zones.push_back(q);
+        }
+        for (const auto& e : in["exclude"]) c.exclude.push_back(cv::Rect((int)e["x"], (int)e["y"], (int)e["w"], (int)e["h"]));
+        c.hw = (int)in["hw"]; c.step = (int)in["step"]; c.nmsDist = (int)in["nmsDist"]; c.margin = (int)in["margin"];
+        c.maxSelect = (int)in["maxSelect"]; c.minGain = (double)in["minGain"]; if (!in["beam"].empty()) c.beam = (int)in["beam"];
+        c.tolY_um = (double)in["tolY_um"]; c.tolT_deg = (double)in["tolT_deg"];
+        if (!c.zones.empty()) return c;
+    }
+    // 기본값 : 기준 영상(center) 좌표. 앞쪽 구역이 우선, 'wall' 은 나머지 전부
+    c.zones = {{"door", cv::Rect(0, 1830, 3840, 330), 10},
+               {"protrusion_upper", cv::Rect(1420, 440, 1020, 460), 8},
+               {"protrusion_lower", cv::Rect(1460, 1180, 880, 660), 8},
+               {"wall", cv::Rect(0, 0, 3840, 2160), 16}};
+    c.exclude = {cv::Rect(1480, 930, 880, 260)};
+    ensureDir(path.substr(0, path.find_last_of("/\\")));
+    cv::FileStorage out(path, cv::FileStorage::WRITE);
+    out << "zones" << "[";
+    for (const auto& z : c.zones)
+        out << "{" << "name" << z.name << "x" << z.box.x << "y" << z.box.y << "w" << z.box.width << "h" << z.box.height << "topK" << z.topK << "}";
+    out << "]" << "exclude" << "[";
+    for (const auto& e : c.exclude) out << "{" << "x" << e.x << "y" << e.y << "w" << e.width << "h" << e.height << "}";
+    out << "]";
+    out << "hw" << c.hw << "step" << c.step << "nmsDist" << c.nmsDist << "margin" << c.margin << "maxSelect" << c.maxSelect
+        << "minGain" << c.minGain << "beam" << c.beam << "tolY_um" << c.tolY_um << "tolT_deg" << c.tolT_deg;
+    return c;
+}
+
+// ------------------------------------------------------------------ 후보
+std::vector<Cand> makeCandidates(const cv::Mat& ref32, const SearchConfig& cfg) {
+    cv::Mat eig, integ;
+    cv::cornerMinEigenVal(ref32, eig, 5, 3);
+    cv::integral(eig, integ, CV_64F);
+    auto meanIn = [&](const cv::Rect& r) {
+        const double s = integ.at<double>(r.y + r.height, r.x + r.width) - integ.at<double>(r.y, r.x + r.width) -
+                         integ.at<double>(r.y + r.height, r.x) + integ.at<double>(r.y, r.x);
+        return s / r.area();
+    };
+    const int hw = cfg.hw, W = ref32.cols, H = ref32.rows, my = 2 * hw + 20;
+    std::map<std::string, std::vector<Cand>> byZone;
+    for (int y = my; y <= H - my; y += cfg.step)
+        for (int x = cfg.margin; x <= W - cfg.margin; x += cfg.step) {
+            const cv::Rect p(x - hw, y - hw, 2 * hw, 2 * hw);
+            bool bad = false;
+            for (const auto& e : cfg.exclude) if ((p & e).area() > 0) bad = true;
+            if (bad) continue;
+            std::string zone;
+            for (const auto& z : cfg.zones) if (z.box.contains(cv::Point(x, y))) { zone = z.name; break; }
+            if (zone.empty()) continue;
+            byZone[zone].push_back({"", zone, x, y, hw, meanIn(p)});
+        }
+    std::vector<Cand> out;
+    // 기존 벽 ROI (트랙 B) 는 항상 후보에 포함 — 비교 기준
+    for (const auto& r : regions())
+        if (r.group != 0) {
+            std::string zone = "wall";
+            for (const auto& z : cfg.zones) if (z.box.contains(cv::Point(r.cx, r.cy))) { zone = z.name; break; }
+            out.push_back({r.name, zone, r.cx, r.cy, r.hw, meanIn(cv::Rect(r.cx - r.hw, r.cy - r.hw, 2 * r.hw, 2 * r.hw))});
+        }
+    for (const auto& z : cfg.zones) {
+        auto v = byZone[z.name];
+        std::sort(v.begin(), v.end(), [](const Cand& a, const Cand& b) { return a.score > b.score; });
+        int n = 0;
+        std::vector<Cand> kept;
+        for (const auto& c : v) {
+            if (n >= z.topK) break;
+            bool nearOther = false;
+            for (const auto& k : kept) if (std::hypot(k.cx - c.cx, k.cy - c.cy) < cfg.nmsDist) nearOther = true;
+            for (const auto& k : out) if (std::hypot(k.cx - c.cx, k.cy - c.cy) < cfg.nmsDist) nearOther = true;
+            if (nearOther) continue;
+            Cand q = c;
+            q.name = fmt("%s_%02d", z.name.c_str(), ++n);
+            kept.push_back(q);
+        }
+        out.insert(out.end(), kept.begin(), kept.end());
+    }
+    return out;
+}
+
+bool firstSession(const Sample& s) {
+    if (s.set_id != 1) return false;
+    if (s.is_ref || s.y_mm == 0) return true;                        // center, Θ 스윕
+    const double k = s.y_mm * 10.0;
+    return std::abs(k - std::round(k)) < 1e-6;                       // Y 0.1 mm 배수
+}
+
+namespace {
+bool gQuad = true;   // Θ² 항 사용 여부 (verify 에서 교차검증으로 결정)
+PoseModel mk() { PoseModel m; m.quadTheta = gQuad; return m; }
+// ------------------------------------------------------------------ 측정
+struct Meas {
+    const Sample* smp = nullptr;
+    double s = std::nan("");          // QR 3개 평균 dx
+    std::vector<double> dx, cc;       // 후보별
+    double ms = 0;
+};
+
+Meas measure(const cv::Mat& ref, const cv::Mat& cur, const std::vector<Cand>& cands, const std::vector<int>& which) {
+    Timer t;
+    Meas m;
+    const cv::Point2d g = m1::coarseShift(ref, cur, cv::Point(int(kPlateCenter.x), int(kPlateCenter.y)), cv::Size(900, 400));
+    double sum = 0;
+    int n = 0;
+    for (int q = 0; q < 3; ++q) {
+        const m1::Shift r = m1::measureRegion(ref, cur, regions()[q], g, false);
+        if (r.ok) { sum += r.d.x; ++n; }
+    }
+    m.s = n == 3 ? sum / 3 : std::nan("");
+    m.dx.assign(cands.size(), std::nan(""));
+    m.cc.assign(cands.size(), std::nan(""));
+    for (int k : which) {
+        const Region rg{cands[k].name, 1, cands[k].cx, cands[k].cy, cands[k].hw};
+        const m1::Shift r = m1::measureRegion(ref, cur, rg, g, true);
+        if (r.ok) { m.dx[k] = r.d.x; m.cc[k] = r.cc; }
+    }
+    m.ms = t.ms();
+    return m;
+}
+
+// 특징 : s 와 '선택 ROI 들의 평균 이동' 과의 차 (시차 1개). 기존 트랙 B (아래 벽 4곳 평균) 는 이 형태의 한 경우
+std::vector<double> feat(const Meas& m, const std::vector<int>& S) {
+    double a = 0;
+    for (int k : S) a += m.dx[k];
+    return {m.s, S.empty() ? std::nan("") : m.s - a / S.size()};
+}
+// 기존 트랙 B : d = s − 아래 벽 4곳 평균
+std::vector<double> featBaseline(const Meas& m, const std::vector<int>& walls) {
+    double a = 0;
+    int n = 0;
+    for (int k : walls) if (std::isfinite(m.dx[k])) { a += m.dx[k]; ++n; }
+    return {m.s, n ? m.s - a / n : std::nan("")};
+}
+
+std::vector<Obs> toObs(const std::vector<Meas>& v, const std::function<std::vector<double>(const Meas&)>& f) {
+    std::vector<Obs> o;
+    for (const auto& m : v) {
+        Obs x;
+        x.stem = m.smp->stem; x.y = m.smp->y_mm; x.t = m.smp->t_deg; x.set = m.smp->set_id; x.shot = m.smp->shot;
+        x.f = f(m);
+        o.push_back(x);
+    }
+    return o;
+}
+
+// 블록 교차검증 : 스윕마다 라벨 순으로 이어진 묶음을 통째로 빼고 학습 → 그 묶음 예측
+std::vector<int> blockFolds(const std::vector<Meas>& v) {
+    std::vector<int> fold(v.size(), 0), iy, it;
+    for (size_t i = 0; i < v.size(); ++i) (v[i].smp->t_deg == 0 ? iy : it).push_back(int(i));
+    auto assign = [&](std::vector<int>& idx, int nb, int base, bool byY) {
+        std::sort(idx.begin(), idx.end(), [&](int a, int b) { return byY ? v[a].smp->y_mm < v[b].smp->y_mm : v[a].smp->t_deg < v[b].smp->t_deg; });
+        for (size_t j = 0; j < idx.size(); ++j) fold[idx[j]] = base + int(j * nb / idx.size());
+    };
+    assign(iy, 4, 0, true);
+    assign(it, 10, 4, false);
+    return fold;
+}
+
+struct CvRes { double J = 1e9, rmsT = 0, rmsY = 0; int passBoth = 0, n = 0; std::vector<Est> est; };
+CvRes crossVal(const std::vector<Obs>& obs, const std::vector<int>& fold, const SearchConfig& cfg) {
+    CvRes r;
+    const int nf = *std::max_element(fold.begin(), fold.end()) + 1;
+    r.est.resize(obs.size());
+    for (int f = 0; f < nf; ++f) {
+        std::vector<Obs> tr;
+        for (size_t i = 0; i < obs.size(); ++i) if (fold[i] != f) tr.push_back(obs[i]);
+        PoseModel m = mk();
+        const bool ok = m.fit(tr);
+        for (size_t i = 0; i < obs.size(); ++i)
+            if (fold[i] == f) {
+                Est e;
+                e.stem = obs[i].stem; e.y = obs[i].y; e.t = obs[i].t; e.set = obs[i].set;
+                e.ok = ok && m.invert(obs[i].f, e.ye, e.te);
+                r.est[i] = e;
+            }
+    }
+    double sj = 0, st = 0, sy = 0;
+    for (const auto& e : r.est) {
+        if (!e.ok) { r.J = 1e9; return r; }
+        const double eY = (e.ye - e.y) * 1000.0, eT = e.te - e.t;
+        sj += (eY / cfg.tolY_um) * (eY / cfg.tolY_um) + (eT / cfg.tolT_deg) * (eT / cfg.tolT_deg);
+        st += eT * eT; sy += eY * eY;
+        if (std::abs(eY) <= cfg.tolY_um && std::abs(eT) <= cfg.tolT_deg) ++r.passBoth;
+        ++r.n;
+    }
+    r.J = std::sqrt(sj / r.n);
+    r.rmsT = std::sqrt(st / r.n);
+    r.rmsY = std::sqrt(sy / r.n);
+    return r;
+}
+
+bool allFinite(const Meas& m, const std::vector<int>& S) {
+    if (!std::isfinite(m.s)) return false;
+    for (int k : S) if (!std::isfinite(m.dx[k])) return false;
+    return true;
+}
+
+std::string cvRow(const CvRes& c) {
+    return fmt("J %.3f | Θ RMS %.4f° | Y RMS %.1f µm | 둘 다 허용 안 %d/%d", c.J, c.rmsT, c.rmsY, c.passBoth, c.n);
+}
+
+void writePred(const std::string& path, const std::vector<Est>& e, const std::vector<std::string>& tags, const SearchConfig& cfg) {
+    Csv c(path);
+    c << "stem" << "group" << "y_mm" << "t_deg" << "y_est" << "t_est" << "err_y_um" << "err_t_deg" << "in_tol";
+    c.endl();
+    for (size_t i = 0; i < e.size(); ++i) {
+        const auto& x = e[i];
+        if (!x.ok) continue;
+        const double ey = (x.ye - x.y) * 1000, et = x.te - x.t;
+        c << x.stem << (i < tags.size() ? tags[i] : std::string("")) << x.y << x.t << x.ye << x.te << ey << et
+          << int(std::abs(ey) <= cfg.tolY_um && std::abs(et) <= cfg.tolT_deg);
+        c.endl();
+    }
+}
+
+std::string set2Group(double t) {
+    if (t <= 0.2 + 1e-9) return "theta<=0.2";
+    if (std::abs(t - 1.0) < 1e-6) return "theta=1";
+    return "theta=2";
+}
+} // namespace
+
+// =====================================================================================
+bool verify(const std::vector<Sample>& ds, const std::string& outDir, const std::string& cfgPath) {
+    Report rep(outDir, "H5 최적 ROI 학습 — 결과");
+    const SearchConfig cfg = loadOrCreateConfig(cfgPath);
+    const Sample* r1 = findStem(ds, refStem(1));
+    const Sample* r2 = findStem(ds, refStem(2));
+    if (!r1 || !r2) { rep.check("기준 영상", false, "center / center1 없음"); return false; }
+    const cv::Mat ref1 = loadGray32(r1->path), ref2 = loadGray32(r2->path);
+
+    // ---------------- 후보
+    const std::vector<Cand> cands = makeCandidates(ref1, cfg);
+    std::vector<int> all(cands.size());
+    std::iota(all.begin(), all.end(), 0);
+    std::vector<int> baseWalls;
+    for (size_t k = 0; k < cands.size(); ++k)
+        if (cands[k].name.rfind("wall_W", 0) == 0) baseWalls.push_back(int(k));
+    rep.h("1. ROI 후보");
+    {
+        std::map<std::string, int> cnt;
+        for (const auto& c : cands) cnt[c.zone]++;
+        std::string s;
+        for (const auto& kv : cnt) s += fmt("%s %d개  ", kv.first.c_str(), kv.second);
+        rep.line(fmt("후보 %d개 (반폭 %d px) : ", int(cands.size()), cfg.hw) + s + "— 기존 벽 ROI 6개 포함. 구역 설정 : " + cfgPath);
+    }
+
+    // ---------------- 1차 측정 (선택에는 첫 번째 측정만, 두 번째 측정은 중심 검증용으로만 측정)
+    std::vector<Meas> T1, B2;
+    Timer tAll;
+    // 측정 캐시 : 후보 목록이 같으면 다시 재지 않음 (roi_meas_set1.csv)
+    const std::string cachePath = outDir + "/roi_meas_set1.csv";
+    const CsvTable cache = readCsv(cachePath);
+    bool useCache = !cache.empty();
+    if (useCache)
+        for (const auto& c : cands) if (!cache.begin()->second.count(c.name + "_dx")) useCache = false;
+    for (const auto& s : ds) {
+        if (s.set_id != 1 || s.is_ref) continue;
+        Meas m;
+        if (useCache && cache.count(s.stem)) {
+            m.s = num(cache, s.stem, "s");
+            m.dx.resize(cands.size()); m.cc.resize(cands.size());
+            for (size_t k = 0; k < cands.size(); ++k) { m.dx[k] = num(cache, s.stem, cands[k].name + "_dx"); m.cc[k] = num(cache, s.stem, cands[k].name + "_cc"); }
+        } else {
+            const cv::Mat cur = loadGray32(s.path);
+            m = measure(ref1, cur, cands, all);
+        }
+        m.smp = &s;
+        (firstSession(s) ? T1 : B2).push_back(m);
+    }
+    if (!useCache) {
+        Csv c(cachePath);
+        c << "stem" << "s";
+        for (const auto& q : cands) c << q.name + "_dx" << q.name + "_cc";
+        c.endl();
+        for (const auto* v : {&T1, &B2})
+            for (const auto& m : *v) {
+                c << m.smp->stem << m.s;
+                for (size_t k = 0; k < cands.size(); ++k) c << m.dx[k] << m.cc[k];
+                c.endl();
+            }
+    }
+    std::cout << "  1차 측정 " << T1.size() + B2.size() << " 장, " << tAll.ms() / 1000 << " 초\n";
+    rep.line(fmt("1차 첫 번째 측정 %d장 (Y 0.1 mm 배수 + Θ 스윕), 두 번째 측정 %d장 (Y 0.05 홀수 값, 약 48분 뒤)", int(T1.size()), int(B2.size())));
+
+    rep.h("1-1. 모델 형태");
+    const auto foldsMF = blockFolds(T1);
+    // 모델 형태 (Θ² 항 유무) : 기존 트랙 B 특징으로 1차 첫 번째 측정 블록 교차검증 → J 가 작은 쪽
+    {
+        gQuad = true;
+        const CvRes q = crossVal(toObs(T1, [&](const Meas& m) { return featBaseline(m, baseWalls); }), foldsMF, cfg);
+        gQuad = false;
+        const CvRes l = crossVal(toObs(T1, [&](const Meas& m) { return featBaseline(m, baseWalls); }), foldsMF, cfg);
+        gQuad = q.J < l.J;
+        rep.line("모델 형태 비교 (기존 트랙 B 특징, 같은 블록 교차검증) — Θ² 포함 : " + cvRow(q) + " / Θ² 없음 : " + cvRow(l) +
+                 (gQuad ? " → Θ² 포함 채택" : " → Θ² 없음(직선) 채택"));
+    }
+    // ---------------- 후보별 통계 (첫 번째 측정)
+    {
+        Csv c(outDir + "/roi_candidates.csv");
+        c << "name" << "zone" << "cx" << "cy" << "hw" << "texture" << "ok" << "cc_min" << "dY_px_per_mm" << "dT_px_per_deg" << "sigma_px"
+          << "snr_per_0p01deg" << "cv_J_alone";
+        c.endl();
+        PoseModel ms = mk();
+        ms.fit(toObs(T1, [](const Meas& m) { return std::vector<double>{m.s, m.s}; }));
+        const double aS = ms.coef()[0][1], bS = ms.coef()[0][2];
+        const auto folds = blockFolds(T1);
+        for (size_t k = 0; k < cands.size(); ++k) {
+            int ok = 0;
+            double ccMin = 1;
+            for (const auto& m : T1) if (std::isfinite(m.dx[k])) { ++ok; ccMin = std::min(ccMin, m.cc[k]); }
+            std::vector<Meas> v;
+            for (const auto& m : T1) if (allFinite(m, {int(k)})) v.push_back(m);
+            double aD = 0, bD = 0, sg = 0, snr = 0, J = 1e9;
+            if (v.size() >= 0.9 * T1.size()) {
+                const std::vector<int> S{int(k)};
+                PoseModel pm = mk();
+                pm.fit(toObs(v, [&](const Meas& m) { return feat(m, S); }));
+                aD = pm.coef()[1][1]; bD = pm.coef()[1][2]; sg = pm.sigma()[1];
+                snr = std::abs(bD - aD * bS / aS) * 0.01 / sg;
+                if (v.size() == T1.size()) J = crossVal(toObs(T1, [&](const Meas& m) { return feat(m, S); }), folds, cfg).J;
+            }
+            c << cands[k].name << cands[k].zone << cands[k].cx << cands[k].cy << cands[k].hw << cands[k].score << ok << ccMin << aD << bD << sg << snr << J;
+            c.endl();
+        }
+    }
+
+    // ---------------- 전진 선택 (첫 번째 측정, 블록 교차검증)
+    rep.h("2. ROI 묶음 선택 (1차 첫 번째 측정만, 14개 블록 교차검증, 빔 탐색)");
+    const auto folds = blockFolds(T1);
+    std::vector<int> usable;
+    for (size_t k = 0; k < cands.size(); ++k) {
+        bool ok = true;
+        for (const auto& m : T1) if (!std::isfinite(m.dx[k])) ok = false;
+        if (ok) usable.push_back(int(k));
+    }
+    const CvRes base = crossVal(toObs(T1, [&](const Meas& m) { return featBaseline(m, baseWalls); }), folds, cfg);
+    rep.line("기존 트랙 B (s, 아래 벽 4곳 평균 시차) 같은 교차검증 : " + cvRow(base));
+    std::vector<int> S;
+    CvRes cur;
+    {
+        Csv c(outDir + "/roi_selection_steps.csv");
+        c << "size" << "best_set" << "unused" << "J" << "theta_rms_deg" << "y_rms_um" << "pass_both" << "n";
+        c.endl();
+        std::vector<std::vector<std::string>> rows;
+        // 빔 탐색 (폭 cfg.beam) : 단순 전진 선택은 첫 선택에 갇힐 수 있어 크기마다 상위 몇 묶음을 함께 키움
+        struct Node { std::vector<int> S; CvRes r; };
+        std::vector<Node> beam{{{}, CvRes{}}};
+        for (int step = 1; step <= cfg.maxSelect; ++step) {
+            std::vector<Node> next;
+            for (const auto& nd : beam)
+                for (int k : usable) {
+                    if (std::find(nd.S.begin(), nd.S.end(), k) != nd.S.end()) continue;
+                    auto S2 = nd.S;
+                    S2.push_back(k);
+                    std::sort(S2.begin(), S2.end());
+                    bool dup = false;
+                    for (const auto& q : next) if (q.S == S2) dup = true;
+                    if (dup) continue;
+                    next.push_back({S2, crossVal(toObs(T1, [&](const Meas& m) { return feat(m, S2); }), folds, cfg)});
+                }
+            std::sort(next.begin(), next.end(), [](const Node& x, const Node& y) { return x.r.J < y.r.J; });
+            if (next.size() > size_t(cfg.beam)) next.resize(cfg.beam);
+            const Node& b = next.front();
+            const bool accept = S.empty() || b.r.J <= cur.J * (1.0 - cfg.minGain);
+            std::string names;
+            for (int k : b.S) names += cands[k].name + " ";
+            c << step << names << "" << b.r.J << b.r.rmsT << b.r.rmsY << b.r.passBoth << b.r.n;
+            c.endl();
+            rows.push_back({fmt("%d", step), names, fmt("%.3f", b.r.J), fmt("%.4f", b.r.rmsT), fmt("%.1f", b.r.rmsY), fmt("%d/%d", b.r.passBoth, b.r.n),
+                            accept ? "채택" : fmt("중단 (개선 %.1f %% < %.0f %%)", 100 * (1 - b.r.J / cur.J), 100 * cfg.minGain)});
+            if (!accept) break;
+            S = b.S;
+            cur = b.r;
+            beam = next;
+        }
+        rep.table({"크기", "가장 좋은 묶음", "J", "Θ RMS (°)", "Y RMS (µm)", "둘 다 허용 안", "결정"}, rows);
+    }
+    std::string sel;
+    for (int k : S) sel += cands[k].name + " ";
+    rep.line("선택된 ROI : " + sel + "(+ QR 3개 평균 s)");
+    rep.line("선택 결과 교차검증 : " + cvRow(cur) + fmt(" — 기존 대비 J %.1f %% 감소", 100 * (1 - cur.J / base.J)));
+    rep.line("주의 : 같은 데이터로 고르고 같은 데이터로 교차검증했으므로 이 수치는 낙관적. 공정한 판정은 4절 (2차 세트).");
+    {
+        std::vector<std::string> tags(cur.est.size(), "train_cv");
+        writePred(outDir + "/pred_train_cv.csv", cur.est, tags, cfg);
+    }
+
+    // ---------------- 중심 일치 검증 (사전 기준 : 평균 치우침 ≤ 허용의 1/4)
+    rep.h("3. 1차 두 번째 측정(Y 0.05 홀수 값)의 중심 어긋남");
+    bool useB2 = false;
+    {
+        // (a) 스윕별 영점 값 : 0 근처 직선 맞춤의 절편 (기준 center 대비, px)
+        auto icpt = [&](const std::vector<Meas>& v, bool byY, int sign, int fi) {
+            std::vector<std::vector<double>> A;
+            std::vector<double> b;
+            for (const auto& m : v) {
+                const double x = byY ? m.smp->y_mm : m.smp->t_deg;
+                if ((byY ? m.smp->t_deg != 0 : m.smp->y_mm != 0) || x == 0) continue;
+                if (std::abs(x) > (byY ? 0.5 : 0.1) || (sign && x * sign < 0)) continue;
+                const auto f = fi == 0 ? std::vector<double>{m.s} : featBaseline(m, baseWalls);
+                const double val = fi == 0 ? f[0] : f[1];
+                if (!std::isfinite(val)) continue;
+                A.push_back({1.0, x});
+                b.push_back(val);
+            }
+            return A.size() >= 3 ? lstsq(A, b)[0] : std::nan("");
+        };
+        Csv c(outDir + "/center_offsets.csv");
+        c << "series" << "n_used" << "s_intercept_px" << "d_intercept_px";
+        c.endl();
+        std::vector<std::vector<std::string>> rows;
+        struct Ser { const char* name; const std::vector<Meas>* v; bool byY; int sign; int n; };
+        const std::vector<Ser> ser = {{"Y 0.1 mm 배수 (첫 번째, |Y| ≤ 0.5)", &T1, true, 0, 10},
+                                      {"Y 0.05 홀수 (두 번째, |Y| ≤ 0.5)", &B2, true, 0, 10},
+                                      {"Θ + 쪽 (0 < Θ ≤ 0.1)", &T1, false, 1, 10},
+                                      {"Θ − 쪽 (−0.1 ≤ Θ < 0)", &T1, false, -1, 10}};
+        for (const auto& q : ser) {
+            const double a = icpt(*q.v, q.byY, q.sign, 0), b = icpt(*q.v, q.byY, q.sign, 1);
+            c << q.name << q.n << a << b;
+            c.endl();
+            rows.push_back({q.name, fmt("%+.3f", a), fmt("%+.3f", b)});
+        }
+        rep.table({"촬영 묶음", "플레이트 이동 s 의 영점 (px)", "시차 d 의 영점 (px)"}, rows);
+        rep.line("기준(center) 과 같은 자리로 돌아왔다면 영점은 0. s 1 px ≈ Y 70 µm 또는 Θ 0.0125°.");
+
+        // (b) 사전 기준 판정 : 첫 번째 측정으로 학습한 선택 ROI 모델로 두 번째 측정 예측
+        PoseModel m = mk();
+        m.fit(toObs(T1, [&](const Meas& x) { return feat(x, S); }));
+        std::vector<Meas> b2ok;
+        for (const auto& x : B2) if (allFinite(x, S)) b2ok.push_back(x);
+        const auto e = estimateAll(m, toObs(b2ok, [&](const Meas& x) { return feat(x, S); }));
+        writePred(outDir + "/pred_second_batch.csv", e, std::vector<std::string>(e.size(), "set1_batch2"), cfg);
+        const Summary sm = summarize(e, [](const Est&) { return true; });
+        PoseModel mb = mk();
+        mb.fit(toObs(T1, [&](const Meas& x) { return featBaseline(x, baseWalls); }));
+        const Summary sb = summarize(estimateAll(mb, toObs(B2, [&](const Meas& x) { return featBaseline(x, baseWalls); })), [](const Est&) { return true; });
+        rep.line("두 번째 측정 예측 (선택 ROI) : " + summaryRow(sm));
+        rep.line("두 번째 측정 예측 (기존 트랙 B) : " + summaryRow(sb));
+        useB2 = std::abs(sm.y.mean) <= cfg.tolY_um / 4 && std::abs(sm.t.mean) <= cfg.tolT_deg / 4 && sm.both >= int(std::ceil(0.95 * sm.n));
+        rep.line(std::string(useB2 ? "**결정 : 무의미 → 학습에 포함**" : "**결정 : 무시할 수 없음 → 첫 번째 측정만으로 학습**") +
+                 " (사전 기준 : 평균 치우침 Y ≤ 22.5 µm, Θ ≤ 0.0025°, 95 % 이상 허용 안) — " + fmt("평균 치우침 Y %+.1f µm, Θ %+.4f°, 허용 안 %d/%d → %s", sm.y.mean, sm.t.mean, sm.both, sm.n,
+                      useB2 ? "두 번째 측정도 최종 학습에 포함" : "첫 번째 측정만으로 최종 학습"));
+        { Csv c(outDir + "/second_batch_decision.csv"); c << "bias_y_um" << "bias_t_deg" << "both" << "n" << "include"; c.endl();
+          c << sm.y.mean << sm.t.mean << sm.both << sm.n << int(useB2); c.endl(); }
+    }
+
+    // ---------------- 최종 학습 → 2차 시험 (2차는 여기서 처음 사용)
+    rep.h("4. 2차 세트 시험 (선택·학습에 사용하지 않음, 기준 center1)");
+    std::vector<Meas> TR = T1;
+    if (useB2) TR.insert(TR.end(), B2.begin(), B2.end());
+    std::vector<Meas> TRok;
+    for (const auto& m : TR) if (allFinite(m, S)) TRok.push_back(m);
+    PoseModel fin = mk(), bl = mk();
+    fin.fit(toObs(TRok, [&](const Meas& x) { return feat(x, S); }));
+    bl.fit(toObs(TR, [&](const Meas& x) { return featBaseline(x, baseWalls); }));
+    std::vector<int> need = S;
+    for (int k : baseWalls) need.push_back(k);
+    std::vector<Meas> T2;
+    std::vector<double> msList;
+    for (const auto& s : ds) {
+        if (s.set_id != 2 || s.is_ref) continue;
+        const cv::Mat curImg = loadGray32(s.path);
+        Meas m = measure(ref2, curImg, cands, need);
+        m.smp = &s;
+        T2.push_back(m);
+        // 처리 시간 : 선택 ROI 만 측정할 때 (운영 조건)
+        Timer t;
+        measure(ref2, curImg, cands, S);
+        msList.push_back(t.ms());
+    }
+    const auto eF = estimateAll(fin, toObs(T2, [&](const Meas& x) { return feat(x, S); }));
+    const auto eB = estimateAll(bl, toObs(T2, [&](const Meas& x) { return featBaseline(x, baseWalls); }));
+    {
+        std::vector<std::string> tags;
+        for (const auto& m : T2) tags.push_back(set2Group(m.smp->t_deg));
+        writePred(outDir + "/pred_set2_selected.csv", eF, tags, cfg);
+        writePred(outDir + "/pred_set2_baseline.csv", eB, tags, cfg);
+    }
+    std::vector<std::vector<std::string>> rows;
+    struct G { const char* name; std::function<bool(const Est&)> f; };
+    const std::vector<G> gs = {{"전체 57장", [](const Est&) { return true; }},
+                               {"Θ ≤ 0.2° (목표 근처, 33장)", [](const Est& e) { return e.t <= 0.2 + 1e-9; }},
+                               {"Θ = 1° (12장)", [](const Est& e) { return std::abs(e.t - 1) < 1e-6; }},
+                               {"Θ = 2° (12장, 학습 범위 밖)", [](const Est& e) { return std::abs(e.t - 2) < 1e-6; }}};
+    Summary fNear, fAll;
+    for (const auto& g : gs) {
+        const Summary a = summarize(eF, g.f), b = summarize(eB, g.f);
+        if (g.name[0] == 'T' || std::string(g.name).find("0.2") != std::string::npos) fNear = a;
+        if (std::string(g.name).find("전체") != std::string::npos) fAll = a;
+        rows.push_back({g.name, fmt("%.4f / %.4f", b.t.rms, a.t.rms), fmt("%.1f / %.1f", b.y.rms, a.y.rms), fmt("%d / %d", b.both, a.both), fmt("%d", a.n)});
+    }
+    rep.table({"2차 묶음", "Θ RMS ° (기존 / 선택)", "Y RMS µm (기존 / 선택)", "둘 다 허용 안 (기존 / 선택)", "장 수"}, rows);
+    const Stat tm = stat(msList);
+    rep.line(fmt("처리 시간 (QR 3개 + 선택 ROI %d개, 영상 읽기 제외) : 평균 %.1f ms, 최대 %.1f ms", int(S.size()), tm.mean, tm.maxAbs));
+
+    // ---------------- 최종 ROI 설정 파일 + 그림
+    {
+        cv::FileStorage fs(outDir + "/roi_selected.yml", cv::FileStorage::WRITE);
+        fs << "trainedOn" << (useB2 ? "set1 first+second session" : "set1 first session");
+        fs << "rois" << "[";
+        for (int k : S)
+            fs << "{" << "name" << cands[k].name << "zone" << cands[k].zone << "cx" << cands[k].cx << "cy" << cands[k].cy << "hw" << cands[k].hw << "}";
+        fs << "]";
+        fs << "coef" << "[";
+        for (size_t i = 0; i < fin.coef().size(); ++i)
+            fs << "{" << "c" << fin.coef()[i][0] << "a_Y" << fin.coef()[i][1] << "b_T" << fin.coef()[i][2] << "q_T2" << fin.coef()[i][3] << "sigma" << fin.sigma()[i] << "}";
+        fs << "]";
+    }
+    {
+        cv::Mat img;
+        ref1.convertTo(img, CV_8U);
+        cv::cvtColor(img, img, cv::COLOR_GRAY2BGR);
+        std::map<std::string, cv::Scalar> col = {{"wall", {60, 60, 220}}, {"door", {40, 170, 40}}, {"protrusion_upper", {0, 160, 230}}, {"protrusion_lower", {200, 120, 0}}};
+        for (const auto& c : cands) {
+            const cv::Scalar k = col.count(c.zone) ? col[c.zone] : cv::Scalar(128, 128, 128);
+            cv::rectangle(img, cv::Rect(c.cx - c.hw, c.cy - c.hw, 2 * c.hw, 2 * c.hw), k, 2);
+        }
+        for (int q = 0; q < 3; ++q) {
+            const Region& r = regions()[q];
+            cv::rectangle(img, cv::Rect(r.cx - r.hw, r.cy - r.hw, 2 * r.hw, 2 * r.hw), cv::Scalar(255, 255, 255), 4);
+        }
+        for (size_t i = 0; i < S.size(); ++i) {
+            const Cand& c = cands[S[i]];
+            cv::rectangle(img, cv::Rect(c.cx - c.hw - 6, c.cy - c.hw - 6, 2 * c.hw + 12, 2 * c.hw + 12), cv::Scalar(0, 255, 255), 6);
+            cv::putText(img, fmt("#%d %s", int(i + 1), c.name.c_str()), cv::Point(c.cx - c.hw, c.cy - c.hw - 14), cv::FONT_HERSHEY_SIMPLEX, 1.0,
+                        cv::Scalar(0, 255, 255), 2, cv::LINE_AA);
+        }
+        cv::imwrite(outDir + "/roi_selected_overlay.png", img);
+    }
+
+    // ---------------- 판정
+    rep.h("판정");
+    rep.check("선택 ROI 측정 실패 없음 (1차 첫 번째 측정 전체)", !S.empty(), fmt("선택 %d개, 모두 %d장에서 측정 성공", int(S.size()), int(T1.size())));
+    rep.check("교차검증 J 가 기존 트랙 B 보다 작음", cur.J < base.J, fmt("%.3f < %.3f", cur.J, base.J));
+    rep.spec("2차 전체 57장 둘 다 허용 안", fAll.both >= int(std::ceil(0.95 * fAll.n)), fmt("%d / %d", fAll.both, fAll.n));
+    rep.spec("2차 목표 근처(Θ ≤ 0.2°) 95 % 이상", fNear.both >= int(std::ceil(0.95 * fNear.n)), fmt("%d / %d", fNear.both, fNear.n));
+    return rep.allOk();
+}
+
+} // namespace roi
+} // namespace yt

@@ -1,0 +1,4 @@
+﻿step,added,zone,J,theta_rms_deg,y_rms_um,pass_both,n
+1,door_04,door,0.5236908502,0.004679671556,21.15648053,234,240
+2,protrusion_upper_01,protrusion_upper,0.468614728,0.00390000323,23.38260127,237,240
+3,protrusion_upper_03,protrusion_upper,0.461134491,0.003872773687,22.52900784,237,240

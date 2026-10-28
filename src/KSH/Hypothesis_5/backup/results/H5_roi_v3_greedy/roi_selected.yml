@@ -1,0 +1,29 @@
+%YAML:1.0
+---
+trainedOn: set1 first+second session
+rois:
+   -
+      name: door_04
+      zone: door
+      cx: 1940
+      cy: 1860
+      hw: 60
+   -
+      name: protrusion_upper_01
+      zone: protrusion_upper
+      cx: 2180
+      cy: 540
+      hw: 60
+coef:
+   -
+      c: -5.4877796603427531e-01
+      a_Y: 1.4248862523358213e+01
+      b_T: 8.0061006169381656e+01
+      q_T2: 0.
+      sigma: 2.3184422913738312e-01
+   -
+      c: -6.1980439179464435e-02
+      a_Y: 1.9165873333739833e+00
+      b_T: 1.3493968050630338e+00
+      q_T2: 0.
+      sigma: 3.4804614510076340e-02
