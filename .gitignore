@@ -39,11 +39,23 @@ Desktop.ini
 *.swo
 *~
 
-# data 폴더와 모든 하위 폴더의 BMP 이미지 제외
+# Raw acquisition inputs and local analysis scratch (curated results are tracked).
 /data/**/*.[bB][mM][pP]
-# Generated validation runs (curated report figures stay tracked)
+/data/**/*.txt
+/docs/offaxis-eda/smoke/
+/docs/offaxis-eda/raw/points.csv
 /docs/validation-runs/*
 !/docs/validation-runs/README.md
+/tool/qr-subpixel/build/
+/tool/qr-subpixel/results/
+/tool/qr-subpixel/pipeline-*/
+__pycache__/
+/docs/offaxis-eda/ppt-method-v2/smoke/
+*.pyc
+
+# Local analysis dependencies and plotting cache
+/.analysis_packages/
+# Root-level generated validation output
 /result_*.png
 /result_*.csv
 

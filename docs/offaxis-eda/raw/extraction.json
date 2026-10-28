@@ -1,0 +1,10 @@
+{
+  "images": 341,
+  "seconds": 323.89094161987305,
+  "opencv": "5.0.0",
+  "workers": 4,
+  "smoothing": false,
+  "ecc_gauss_filter_size": 1,
+  "point_model": "separable Gaussian quadrant probabilities, local axes fixed by affine QR geometry",
+  "script_sha256": "e3633394d672bf4b31410cb31d34b6c656964f76ef72a64cb92d9d70bdd3af31"
+}
