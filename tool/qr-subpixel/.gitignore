@@ -1,0 +1,7 @@
+/build/
+/results/
+/pipeline-*/
+/smoke/
+/engineering-run-*/
+/integration/
+__pycache__/
