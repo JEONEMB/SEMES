@@ -109,7 +109,10 @@
   function renderPlane() {
     const sc = scenario();
     const svg = $("plane");
-    const W = 320, H = 200, cx = 160, cy = 100;
+    // Draw in the card's real pixel size so the graph fills the card instead of floating in it.
+    const box = svg.getBoundingClientRect();
+    const W = Math.max(240, Math.round(box.width) || 320), H = Math.max(160, Math.round(box.height) || 240), cx = W / 2, cy = H / 2;
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const span = Math.max(0.15, ...sc.steps.flatMap((s) => [Math.abs(s.pose_before.y), Math.abs(s.pose_before.t)]), Math.abs(sc.start.y), Math.abs(sc.start.t)) * 1.15;
     const k = Math.min((W / 2 - 16) / span, (H / 2 - 14) / span);
     const X = (y) => cx + y * k, Y = (t) => cy - t * k;
@@ -125,9 +128,9 @@
     add("rect", { x: X(-TOL), y: Y(TOL), width: 2 * TOL * k, height: 2 * TOL * k, fill: "#e6f4ee", stroke: "#b7dfcd", rx: 2 });
     add("line", { x1: 8, y1: cy, x2: W - 8, y2: cy, stroke: "#d5dbe5" });
     add("line", { x1: cx, y1: 6, x2: cx, y2: H - 6, stroke: "#d5dbe5" });
-    add("text", { x: W - 8, y: cy - 6, "text-anchor": "end", "font-size": 10, fill: "#8a94a6" }, "Y");
-    add("text", { x: cx + 6, y: 14, "font-size": 10, fill: "#8a94a6" }, "T");
-    add("text", { x: X(span / 1.15), y: cy + 14, "text-anchor": "end", "font-size": 9, fill: "#8a94a6" }, fmt(span / 1.15, 2));
+    add("text", { x: W - 8, y: cy - 8, "text-anchor": "end", "font-size": 13, "font-weight": 700, fill: "#8a94a6" }, "Y");
+    add("text", { x: cx + 8, y: 16, "font-size": 13, "font-weight": 700, fill: "#8a94a6" }, "T");
+    add("text", { x: X(span / 1.15), y: cy + 18, "text-anchor": "end", "font-size": 12, fill: "#8a94a6" }, fmt(span / 1.15, 2));
 
     const shown = sc.steps.slice(0, state.current);
     shown.forEach((s) => {
@@ -296,5 +299,6 @@
     state.revealed = state.current = Math.min(Number(hashStep) || 0, scenario().steps.length);
     if (hashView === "full") document.querySelector('.segmented button[data-view="full"]').click();
   }
+  window.addEventListener("resize", renderPlane);
   render();
 })();

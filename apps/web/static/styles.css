@@ -383,3 +383,24 @@ button { font: inherit; color: inherit; }
 }
 
 /* ---------- service layout v2 polish ---------- */
+.scenario-list::-webkit-scrollbar, .timeline::-webkit-scrollbar { width: 6px; }
+.scenario-list::-webkit-scrollbar-thumb, .timeline::-webkit-scrollbar-thumb { background: #cfd6e2; border-radius: 3px; }
+.scenario-list::-webkit-scrollbar-button, .timeline::-webkit-scrollbar-button { display: none; }
+@media (min-width: 1120px) and (min-height: 600px) {
+  .layout-service { grid-template-columns: minmax(0, 1fr) 340px 340px; }
+  .col-analysis .plane-card { flex: none; display: block; }
+  .col-analysis .plane-card svg { flex: none; height: auto; max-height: 250px; }
+  .col-analysis .motion-card { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .col-analysis .motion-card svg { flex: 1; min-height: 110px; height: auto; }
+  .col-analysis .motion-card .comp-grid { margin-top: 12px; }
+}
+
+.plane-card svg { height: 220px; }
+@media (min-width: 1120px) and (min-height: 600px) {
+  .col-analysis .plane-card { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .col-analysis .plane-card svg { flex: 1; min-height: 0; height: 100%; max-height: none; }
+  .col-analysis .motion-card { flex: none; display: block; }
+  .col-analysis .motion-card svg { flex: none; height: 130px; min-height: 0; }
+}
+
+/* Input source buttons: name only (reason is in the tooltip) */
