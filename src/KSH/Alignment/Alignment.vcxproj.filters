@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{7b3d370c-6931-4798-b098-1c1f43c355e4}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{a040f4ee-cbac-4e5f-9070-333597cd18ab}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx</Extensions>
+    </Filter>
+    <Filter Include="설정">
+      <UniqueIdentifier>{df5676f4-bafc-45eb-813b-e757a917ff30}</UniqueIdentifier>
+      <Extensions>yml;md</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp"><Filter>소스 파일</Filter></ClCompile>
+    <ClCompile Include="alignment.cpp"><Filter>소스 파일</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="alignment.hpp"><Filter>헤더 파일</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\alignment.yml"><Filter>설정</Filter></None>
+    <None Include="README.md"><Filter>설정</Filter></None>
+  </ItemGroup>
+</Project>
