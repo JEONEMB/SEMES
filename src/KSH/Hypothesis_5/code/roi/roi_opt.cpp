@@ -9,6 +9,7 @@
 #include <opencv2/imgproc.hpp>
 #include <algorithm>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -19,7 +20,9 @@ namespace roi {
 // ------------------------------------------------------------------ 설정
 SearchConfig loadOrCreateConfig(const std::string& path) {
     SearchConfig c;
-    cv::FileStorage in(path, cv::FileStorage::READ);
+    // 파일이 없을 때 FileStorage 가 콘솔에 오류 문구를 찍지 않도록 먼저 존재 확인
+    cv::FileStorage in;
+    if (std::ifstream(path).good()) in.open(path, cv::FileStorage::READ);
     if (in.isOpened()) {
         for (const auto& z : in["zones"]) {
             Zone q;
@@ -309,6 +312,12 @@ bool verify(const std::vector<Sample>& ds, const std::string& outDir, const std:
             }
     }
     std::cout << "  1차 측정 " << T1.size() + B2.size() << " 장, " << tAll.ms() / 1000 << " 초\n";
+    {
+        int fail = 0;
+        for (const auto* v : {&T1, &B2})
+            for (const auto& m : *v) for (double x : m.dx) if (!std::isfinite(x)) ++fail;
+        rep.line(fmt("측정 실패 (ECC 미수렴 등, 무늬가 약한 후보에서 발생 → 그 후보는 선택에서 자동 제외) : %d / %d 건", fail, int((T1.size() + B2.size()) * cands.size())));
+    }
     rep.line(fmt("1차 첫 번째 측정 %d장 (Y 0.1 mm 배수 + Θ 스윕), 두 번째 측정 %d장 (Y 0.05 홀수 값, 약 48분 뒤)", int(T1.size()), int(B2.size())));
 
     rep.h("1-1. 모델 형태");

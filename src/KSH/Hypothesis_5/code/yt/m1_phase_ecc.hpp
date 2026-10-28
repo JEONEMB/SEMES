@@ -25,6 +25,9 @@ struct Shift {
 
 // tmpl 이 img 안에서 init 만큼 이동해 있다고 보고 ECC 평행이동 정밀화 (같은 크기)
 Shift eccTranslation(const cv::Mat& tmpl, const cv::Mat& img, const cv::Point2d& init);
+// ECC 미수렴(예외) 누적 건수 — 측정 실패로 처리된 수 (콘솔 문구 대신 이 값으로 보고)
+int eccFailCount();
+void resetEccFailCount();
 
 // 플레이트 주변 거친 이동. center = 기준 영상 좌표의 창 중심
 cv::Point2d coarseShift(const cv::Mat& ref, const cv::Mat& cur, const cv::Point& center, const cv::Size& win);

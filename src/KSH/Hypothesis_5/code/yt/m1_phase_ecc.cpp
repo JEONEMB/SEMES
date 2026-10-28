@@ -23,17 +23,32 @@ cv::Point2d phaseShift(const cv::Mat& a, const cv::Mat& b) {
     return cv::phaseCorrelate(a2, b2, win);
 }
 
+namespace {
+// OpenCV 디버그 라이브러리(opencv_world3415d)는 예외를 던지기 전에 오류 문구를 콘솔에 찍음 (OPENCV_DUMP_ERRORS 기본값).
+// ECC 미수렴은 '측정 실패' 로 처리하는 정상 경로이므로, ECC 호출 동안만 문구 출력을 막고 건수를 셈.
+int quietError(int, const char*, const char*, const char*, int, void*) { return 0; }
+int gEccFail = 0;
+} // namespace
+
+int eccFailCount() { return gEccFail; }
+void resetEccFailCount() { gEccFail = 0; }
+
 Shift eccTranslation(const cv::Mat& tmpl, const cv::Mat& img, const cv::Point2d& init) {
     Shift s;
     cv::Mat w = cv::Mat::eye(2, 3, CV_32F);
     w.at<float>(0, 2) = float(init.x);
     w.at<float>(1, 2) = float(init.y);
+    void* prevData = nullptr;
+    const cv::ErrorCallback prev = cv::redirectError(quietError, nullptr, &prevData);
     try {
         s.cc = cv::findTransformECC(tmpl, img, w, cv::MOTION_TRANSLATION,
                                     cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, 100, 1e-7), cv::noArray());
     } catch (const cv::Exception&) {
-        return s;
+        cv::redirectError(prev, prevData);
+        ++gEccFail;
+        return s;   // ok = false → 호출 쪽에서 NaN(측정 실패)으로 기록
     }
+    cv::redirectError(prev, prevData);
     s.d = cv::Point2d(w.at<float>(0, 2), w.at<float>(1, 2));
     s.ok = true;
     return s;
