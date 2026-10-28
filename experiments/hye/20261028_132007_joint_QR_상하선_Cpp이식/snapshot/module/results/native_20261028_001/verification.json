@@ -1,0 +1,34 @@
+{
+  "scope": "Existing exposed development corpus. Frozen full341 joint model replay, not OOF337/341 or independent robot validation.",
+  "build": "C++17 MSVC19.16(v141) x64 OpenCV3.4.15",
+  "joint": {
+    "n": 341,
+    "valid": 341,
+    "passed": 341,
+    "Y_MAE": 0.016983401465626498,
+    "Y_max": 0.07438845524080762,
+    "T_MAE": 0.0030080536898950535,
+    "T_max": 0.01401214386645222
+  },
+  "python_full_model_parity": {
+    "n": 341,
+    "max_Y_difference": 0.004538676775266398,
+    "max_T_difference": 0.0006561083737923606,
+    "exact_reproduction": false,
+    "note": "Same frozen model parameters, native OpenCV3 observation implementation; numerical differences retained."
+  },
+  "control": {
+    "true_T0_cases": 84,
+    "accepted": 84,
+    "Y_passed": 84,
+    "Y_MAE": 0.0028788304122220783,
+    "Y_max": 0.05997525830484532,
+    "training_images": 81,
+    "note": "81 fitting photos plus3 already exposed center repeats. Not independent validation."
+  },
+  "API_tests": {
+    "ctest_passed": true,
+    "cases": "Uninitialized call, compatibility, conditional output, input immutability, empty/shape/depth rejection, rotated-photo T gate"
+  },
+  "hardware_commands_sent": 0
+}
