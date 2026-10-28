@@ -56,3 +56,11 @@ venv/
 env/
 __pycache__/
 *.pyc
+
+# 백업·캐시 (이전 판 코드·결과, 프로젝트 설정 사본, 계산 캐시 — 로컬에만 보관)
+backup/
+project_backup/
+cache/
+.cache/
+*.bak
+*.bak_*
