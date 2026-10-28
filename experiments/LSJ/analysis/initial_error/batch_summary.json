@@ -1,0 +1,2225 @@
+{
+  "timestamp_provenance": "Filesystem last-modified time in Asia/Seoul (UTC+09:00); NOT verified camera capture time.",
+  "center_modified_kst": "2026-10-04T12:13:03.594555+09:00",
+  "metadata": [
+    {
+      "file": "Theta\\T-1.00.bmp",
+      "axis": "Theta",
+      "label": -1.0,
+      "modified_epoch": 1791085572.7213802,
+      "modified_kst": "2026-10-04T12:46:12.721380+09:00"
+    },
+    {
+      "file": "Theta\\T-0.99.bmp",
+      "axis": "Theta",
+      "label": -0.99,
+      "modified_epoch": 1791085567.8006604,
+      "modified_kst": "2026-10-04T12:46:07.800660+09:00"
+    },
+    {
+      "file": "Theta\\T-0.98.bmp",
+      "axis": "Theta",
+      "label": -0.98,
+      "modified_epoch": 1791085564.613908,
+      "modified_kst": "2026-10-04T12:46:04.613908+09:00"
+    },
+    {
+      "file": "Theta\\T-0.97.bmp",
+      "axis": "Theta",
+      "label": -0.97,
+      "modified_epoch": 1791085562.067631,
+      "modified_kst": "2026-10-04T12:46:02.067631+09:00"
+    },
+    {
+      "file": "Theta\\T-0.96.bmp",
+      "axis": "Theta",
+      "label": -0.96,
+      "modified_epoch": 1791085559.3807616,
+      "modified_kst": "2026-10-04T12:45:59.380762+09:00"
+    },
+    {
+      "file": "Theta\\T-0.95.bmp",
+      "axis": "Theta",
+      "label": -0.95,
+      "modified_epoch": 1791085556.6157875,
+      "modified_kst": "2026-10-04T12:45:56.615788+09:00"
+    },
+    {
+      "file": "Theta\\T-0.94.bmp",
+      "axis": "Theta",
+      "label": -0.94,
+      "modified_epoch": 1791085553.5696259,
+      "modified_kst": "2026-10-04T12:45:53.569626+09:00"
+    },
+    {
+      "file": "Theta\\T-0.93.bmp",
+      "axis": "Theta",
+      "label": -0.93,
+      "modified_epoch": 1791085551.0702136,
+      "modified_kst": "2026-10-04T12:45:51.070214+09:00"
+    },
+    {
+      "file": "Theta\\T-0.92.bmp",
+      "axis": "Theta",
+      "label": -0.92,
+      "modified_epoch": 1791085546.7899673,
+      "modified_kst": "2026-10-04T12:45:46.789967+09:00"
+    },
+    {
+      "file": "Theta\\T-0.91.bmp",
+      "axis": "Theta",
+      "label": -0.91,
+      "modified_epoch": 1791085544.103098,
+      "modified_kst": "2026-10-04T12:45:44.103098+09:00"
+    },
+    {
+      "file": "Theta\\T-0.90.bmp",
+      "axis": "Theta",
+      "label": -0.9,
+      "modified_epoch": 1791085540.6507833,
+      "modified_kst": "2026-10-04T12:45:40.650783+09:00"
+    },
+    {
+      "file": "Theta\\T-0.89.bmp",
+      "axis": "Theta",
+      "label": -0.89,
+      "modified_epoch": 1791085536.776693,
+      "modified_kst": "2026-10-04T12:45:36.776693+09:00"
+    },
+    {
+      "file": "Theta\\T-0.88.bmp",
+      "axis": "Theta",
+      "label": -0.88,
+      "modified_epoch": 1791085534.2616587,
+      "modified_kst": "2026-10-04T12:45:34.261659+09:00"
+    },
+    {
+      "file": "Theta\\T-0.87.bmp",
+      "axis": "Theta",
+      "label": -0.87,
+      "modified_epoch": 1791085531.7934906,
+      "modified_kst": "2026-10-04T12:45:31.793491+09:00"
+    },
+    {
+      "file": "Theta\\T-0.86.bmp",
+      "axis": "Theta",
+      "label": -0.86,
+      "modified_epoch": 1791085529.200346,
+      "modified_kst": "2026-10-04T12:45:29.200346+09:00"
+    },
+    {
+      "file": "Theta\\T-0.85.bmp",
+      "axis": "Theta",
+      "label": -0.85,
+      "modified_epoch": 1791085526.6540687,
+      "modified_kst": "2026-10-04T12:45:26.654069+09:00"
+    },
+    {
+      "file": "Theta\\T-0.84.bmp",
+      "axis": "Theta",
+      "label": -0.84,
+      "modified_epoch": 1791085524.2640054,
+      "modified_kst": "2026-10-04T12:45:24.264005+09:00"
+    },
+    {
+      "file": "Theta\\T-0.83.bmp",
+      "axis": "Theta",
+      "label": -0.83,
+      "modified_epoch": 1791085521.8114557,
+      "modified_kst": "2026-10-04T12:45:21.811456+09:00"
+    },
+    {
+      "file": "Theta\\T-0.82.bmp",
+      "axis": "Theta",
+      "label": -0.82,
+      "modified_epoch": 1791085519.0933435,
+      "modified_kst": "2026-10-04T12:45:19.093343+09:00"
+    },
+    {
+      "file": "Theta\\T-0.81.bmp",
+      "axis": "Theta",
+      "label": -0.81,
+      "modified_epoch": 1791085516.7813866,
+      "modified_kst": "2026-10-04T12:45:16.781387+09:00"
+    },
+    {
+      "file": "Theta\\T-0.80.bmp",
+      "axis": "Theta",
+      "label": -0.8,
+      "modified_epoch": 1791085513.7664692,
+      "modified_kst": "2026-10-04T12:45:13.766469+09:00"
+    },
+    {
+      "file": "Theta\\T-0.79.bmp",
+      "axis": "Theta",
+      "label": -0.79,
+      "modified_epoch": 1791085509.2675252,
+      "modified_kst": "2026-10-04T12:45:09.267525+09:00"
+    },
+    {
+      "file": "Theta\\T-0.78.bmp",
+      "axis": "Theta",
+      "label": -0.78,
+      "modified_epoch": 1791085506.0495303,
+      "modified_kst": "2026-10-04T12:45:06.049530+09:00"
+    },
+    {
+      "file": "Theta\\T-0.77.bmp",
+      "axis": "Theta",
+      "label": -0.77,
+      "modified_epoch": 1791085501.0975683,
+      "modified_kst": "2026-10-04T12:45:01.097568+09:00"
+    },
+    {
+      "file": "Theta\\T-0.76.bmp",
+      "axis": "Theta",
+      "label": -0.76,
+      "modified_epoch": 1791085498.4419425,
+      "modified_kst": "2026-10-04T12:44:58.441942+09:00"
+    },
+    {
+      "file": "Theta\\T-0.75.bmp",
+      "axis": "Theta",
+      "label": -0.75,
+      "modified_epoch": 1791085495.676965,
+      "modified_kst": "2026-10-04T12:44:55.676965+09:00"
+    },
+    {
+      "file": "Theta\\T-0.74.bmp",
+      "axis": "Theta",
+      "label": -0.74,
+      "modified_epoch": 1791085492.880749,
+      "modified_kst": "2026-10-04T12:44:52.880749+09:00"
+    },
+    {
+      "file": "Theta\\T-0.73.bmp",
+      "axis": "Theta",
+      "label": -0.73,
+      "modified_epoch": 1791085490.1470141,
+      "modified_kst": "2026-10-04T12:44:50.147014+09:00"
+    },
+    {
+      "file": "Theta\\T-0.72.bmp",
+      "axis": "Theta",
+      "label": -0.72,
+      "modified_epoch": 1791085487.4289021,
+      "modified_kst": "2026-10-04T12:44:47.428902+09:00"
+    },
+    {
+      "file": "Theta\\T-0.71.bmp",
+      "axis": "Theta",
+      "label": -0.71,
+      "modified_epoch": 1791085484.7576547,
+      "modified_kst": "2026-10-04T12:44:44.757655+09:00"
+    },
+    {
+      "file": "Theta\\T-0.70.bmp",
+      "axis": "Theta",
+      "label": -0.7,
+      "modified_epoch": 1791085481.5084164,
+      "modified_kst": "2026-10-04T12:44:41.508416+09:00"
+    },
+    {
+      "file": "Theta\\T-0.69.bmp",
+      "axis": "Theta",
+      "label": -0.69,
+      "modified_epoch": 1791085476.3377547,
+      "modified_kst": "2026-10-04T12:44:36.337755+09:00"
+    },
+    {
+      "file": "Theta\\T-0.68.bmp",
+      "axis": "Theta",
+      "label": -0.68,
+      "modified_epoch": 1791085473.6040225,
+      "modified_kst": "2026-10-04T12:44:33.604023+09:00"
+    },
+    {
+      "file": "Theta\\T-0.67.bmp",
+      "axis": "Theta",
+      "label": -0.67,
+      "modified_epoch": 1791085470.6672115,
+      "modified_kst": "2026-10-04T12:44:30.667212+09:00"
+    },
+    {
+      "file": "Theta\\T-0.66.bmp",
+      "axis": "Theta",
+      "label": -0.66,
+      "modified_epoch": 1791085466.1995115,
+      "modified_kst": "2026-10-04T12:44:26.199512+09:00"
+    },
+    {
+      "file": "Theta\\T-0.65.bmp",
+      "axis": "Theta",
+      "label": -0.65,
+      "modified_epoch": 1791085463.6063688,
+      "modified_kst": "2026-10-04T12:44:23.606369+09:00"
+    },
+    {
+      "file": "Theta\\T-0.64.bmp",
+      "axis": "Theta",
+      "label": -0.64,
+      "modified_epoch": 1791085460.8882568,
+      "modified_kst": "2026-10-04T12:44:20.888257+09:00"
+    },
+    {
+      "file": "Theta\\T-0.63.bmp",
+      "axis": "Theta",
+      "label": -0.63,
+      "modified_epoch": 1791085458.2482512,
+      "modified_kst": "2026-10-04T12:44:18.248251+09:00"
+    },
+    {
+      "file": "Theta\\T-0.62.bmp",
+      "axis": "Theta",
+      "label": -0.62,
+      "modified_epoch": 1791085454.71783,
+      "modified_kst": "2026-10-04T12:44:14.717830+09:00"
+    },
+    {
+      "file": "Theta\\T-0.61.bmp",
+      "axis": "Theta",
+      "label": -0.61,
+      "modified_epoch": 1791085451.7810206,
+      "modified_kst": "2026-10-04T12:44:11.781021+09:00"
+    },
+    {
+      "file": "Theta\\T-0.60.bmp",
+      "axis": "Theta",
+      "label": -0.6,
+      "modified_epoch": 1791085448.9066942,
+      "modified_kst": "2026-10-04T12:44:08.906694+09:00"
+    },
+    {
+      "file": "Theta\\T-0.59.bmp",
+      "axis": "Theta",
+      "label": -0.59,
+      "modified_epoch": 1791085444.0172172,
+      "modified_kst": "2026-10-04T12:44:04.017217+09:00"
+    },
+    {
+      "file": "Theta\\T-0.58.bmp",
+      "axis": "Theta",
+      "label": -0.58,
+      "modified_epoch": 1791085441.1897564,
+      "modified_kst": "2026-10-04T12:44:01.189756+09:00"
+    },
+    {
+      "file": "Theta\\T-0.57.bmp",
+      "axis": "Theta",
+      "label": -0.57,
+      "modified_epoch": 1791085438.1748383,
+      "modified_kst": "2026-10-04T12:43:58.174838+09:00"
+    },
+    {
+      "file": "Theta\\T-0.56.bmp",
+      "axis": "Theta",
+      "label": -0.56,
+      "modified_epoch": 1791085434.410097,
+      "modified_kst": "2026-10-04T12:43:54.410097+09:00"
+    },
+    {
+      "file": "Theta\\T-0.55.bmp",
+      "axis": "Theta",
+      "label": -0.55,
+      "modified_epoch": 1791085418.4919596,
+      "modified_kst": "2026-10-04T12:43:38.491960+09:00"
+    },
+    {
+      "file": "Theta\\T-0.54.bmp",
+      "axis": "Theta",
+      "label": -0.54,
+      "modified_epoch": 1791085415.4458003,
+      "modified_kst": "2026-10-04T12:43:35.445800+09:00"
+    },
+    {
+      "file": "Theta\\T-0.53.bmp",
+      "axis": "Theta",
+      "label": -0.53,
+      "modified_epoch": 1791085412.6808226,
+      "modified_kst": "2026-10-04T12:43:32.680823+09:00"
+    },
+    {
+      "file": "Theta\\T-0.52.bmp",
+      "axis": "Theta",
+      "label": -0.52,
+      "modified_epoch": 1791085409.853362,
+      "modified_kst": "2026-10-04T12:43:29.853362+09:00"
+    },
+    {
+      "file": "Theta\\T-0.51.bmp",
+      "axis": "Theta",
+      "label": -0.51,
+      "modified_epoch": 1791085406.713473,
+      "modified_kst": "2026-10-04T12:43:26.713473+09:00"
+    },
+    {
+      "file": "Theta\\T-0.50.bmp",
+      "axis": "Theta",
+      "label": -0.5,
+      "modified_epoch": 1791085403.4798586,
+      "modified_kst": "2026-10-04T12:43:23.479859+09:00"
+    },
+    {
+      "file": "Theta\\T-0.49.bmp",
+      "axis": "Theta",
+      "label": -0.49,
+      "modified_epoch": 1791085397.85618,
+      "modified_kst": "2026-10-04T12:43:17.856180+09:00"
+    },
+    {
+      "file": "Theta\\T-0.48.bmp",
+      "axis": "Theta",
+      "label": -0.48,
+      "modified_epoch": 1791085395.028718,
+      "modified_kst": "2026-10-04T12:43:15.028718+09:00"
+    },
+    {
+      "file": "Theta\\T-0.47.bmp",
+      "axis": "Theta",
+      "label": -0.47,
+      "modified_epoch": 1791085392.3262262,
+      "modified_kst": "2026-10-04T12:43:12.326226+09:00"
+    },
+    {
+      "file": "Theta\\T-0.46.bmp",
+      "axis": "Theta",
+      "label": -0.46,
+      "modified_epoch": 1791085389.3269296,
+      "modified_kst": "2026-10-04T12:43:09.326930+09:00"
+    },
+    {
+      "file": "Theta\\T-0.45.bmp",
+      "axis": "Theta",
+      "label": -0.45,
+      "modified_epoch": 1791085386.5307117,
+      "modified_kst": "2026-10-04T12:43:06.530712+09:00"
+    },
+    {
+      "file": "Theta\\T-0.44.bmp",
+      "axis": "Theta",
+      "label": -0.44,
+      "modified_epoch": 1791085383.9688122,
+      "modified_kst": "2026-10-04T12:43:03.968812+09:00"
+    },
+    {
+      "file": "Theta\\T-0.43.bmp",
+      "axis": "Theta",
+      "label": -0.43,
+      "modified_epoch": 1791085381.1725953,
+      "modified_kst": "2026-10-04T12:43:01.172595+09:00"
+    },
+    {
+      "file": "Theta\\T-0.42.bmp",
+      "axis": "Theta",
+      "label": -0.42,
+      "modified_epoch": 1791085377.8452504,
+      "modified_kst": "2026-10-04T12:42:57.845250+09:00"
+    },
+    {
+      "file": "Theta\\T-0.41.bmp",
+      "axis": "Theta",
+      "label": -0.41,
+      "modified_epoch": 1791085375.1115172,
+      "modified_kst": "2026-10-04T12:42:55.111517+09:00"
+    },
+    {
+      "file": "Theta\\T-0.40.bmp",
+      "axis": "Theta",
+      "label": -0.4,
+      "modified_epoch": 1791085370.9406228,
+      "modified_kst": "2026-10-04T12:42:50.940623+09:00"
+    },
+    {
+      "file": "Theta\\T-0.39.bmp",
+      "axis": "Theta",
+      "label": -0.39,
+      "modified_epoch": 1791085365.4419117,
+      "modified_kst": "2026-10-04T12:42:45.441912+09:00"
+    },
+    {
+      "file": "Theta\\T-0.38.bmp",
+      "axis": "Theta",
+      "label": -0.38,
+      "modified_epoch": 1791085361.7552772,
+      "modified_kst": "2026-10-04T12:42:41.755277+09:00"
+    },
+    {
+      "file": "Theta\\T-0.37.bmp",
+      "axis": "Theta",
+      "label": -0.37,
+      "modified_epoch": 1791085357.771837,
+      "modified_kst": "2026-10-04T12:42:37.771837+09:00"
+    },
+    {
+      "file": "Theta\\T-0.36.bmp",
+      "axis": "Theta",
+      "label": -0.36,
+      "modified_epoch": 1791085354.2726588,
+      "modified_kst": "2026-10-04T12:42:34.272659+09:00"
+    },
+    {
+      "file": "Theta\\T-0.35.bmp",
+      "axis": "Theta",
+      "label": -0.35,
+      "modified_epoch": 1791085350.7578588,
+      "modified_kst": "2026-10-04T12:42:30.757859+09:00"
+    },
+    {
+      "file": "Theta\\T-0.34.bmp",
+      "axis": "Theta",
+      "label": -0.34,
+      "modified_epoch": 1791085347.8366694,
+      "modified_kst": "2026-10-04T12:42:27.836669+09:00"
+    },
+    {
+      "file": "Theta\\T-0.33.bmp",
+      "axis": "Theta",
+      "label": -0.33,
+      "modified_epoch": 1791085343.6345308,
+      "modified_kst": "2026-10-04T12:42:23.634531+09:00"
+    },
+    {
+      "file": "Theta\\T-0.32.bmp",
+      "axis": "Theta",
+      "label": -0.32,
+      "modified_epoch": 1791085339.7760615,
+      "modified_kst": "2026-10-04T12:42:19.776062+09:00"
+    },
+    {
+      "file": "Theta\\T-0.31.bmp",
+      "axis": "Theta",
+      "label": -0.31,
+      "modified_epoch": 1791085337.1048136,
+      "modified_kst": "2026-10-04T12:42:17.104814+09:00"
+    },
+    {
+      "file": "Theta\\T-0.30.bmp",
+      "axis": "Theta",
+      "label": -0.3,
+      "modified_epoch": 1791085333.8711977,
+      "modified_kst": "2026-10-04T12:42:13.871198+09:00"
+    },
+    {
+      "file": "Theta\\T-0.29.bmp",
+      "axis": "Theta",
+      "label": -0.29,
+      "modified_epoch": 1791085328.6068084,
+      "modified_kst": "2026-10-04T12:42:08.606808+09:00"
+    },
+    {
+      "file": "Theta\\T-0.28.bmp",
+      "axis": "Theta",
+      "label": -0.28,
+      "modified_epoch": 1791085324.9670396,
+      "modified_kst": "2026-10-04T12:42:04.967040+09:00"
+    },
+    {
+      "file": "Theta\\T-0.27.bmp",
+      "axis": "Theta",
+      "label": -0.27,
+      "modified_epoch": 1791085317.8124666,
+      "modified_kst": "2026-10-04T12:41:57.812467+09:00"
+    },
+    {
+      "file": "Theta\\T-0.26.bmp",
+      "axis": "Theta",
+      "label": -0.26,
+      "modified_epoch": 1791085312.407486,
+      "modified_kst": "2026-10-04T12:41:52.407486+09:00"
+    },
+    {
+      "file": "Theta\\T-0.25.bmp",
+      "axis": "Theta",
+      "label": -0.25,
+      "modified_epoch": 1791085308.5802596,
+      "modified_kst": "2026-10-04T12:41:48.580260+09:00"
+    },
+    {
+      "file": "Theta\\T-0.24.bmp",
+      "axis": "Theta",
+      "label": -0.24,
+      "modified_epoch": 1791085305.440371,
+      "modified_kst": "2026-10-04T12:41:45.440371+09:00"
+    },
+    {
+      "file": "Theta\\T-0.23.bmp",
+      "axis": "Theta",
+      "label": -0.23,
+      "modified_epoch": 1791085302.8003662,
+      "modified_kst": "2026-10-04T12:41:42.800366+09:00"
+    },
+    {
+      "file": "Theta\\T-0.22.bmp",
+      "axis": "Theta",
+      "label": -0.22,
+      "modified_epoch": 1791085299.7854495,
+      "modified_kst": "2026-10-04T12:41:39.785450+09:00"
+    },
+    {
+      "file": "Theta\\T-0.21.bmp",
+      "axis": "Theta",
+      "label": -0.21,
+      "modified_epoch": 1791085296.9111235,
+      "modified_kst": "2026-10-04T12:41:36.911124+09:00"
+    },
+    {
+      "file": "Theta\\T-0.20.bmp",
+      "axis": "Theta",
+      "label": -0.2,
+      "modified_epoch": 1791085293.3650808,
+      "modified_kst": "2026-10-04T12:41:33.365081+09:00"
+    },
+    {
+      "file": "Theta\\T-0.19.bmp",
+      "axis": "Theta",
+      "label": -0.19,
+      "modified_epoch": 1791085288.8192725,
+      "modified_kst": "2026-10-04T12:41:28.819273+09:00"
+    },
+    {
+      "file": "Theta\\T-0.18.bmp",
+      "axis": "Theta",
+      "label": -0.18,
+      "modified_epoch": 1791085286.0855393,
+      "modified_kst": "2026-10-04T12:41:26.085539+09:00"
+    },
+    {
+      "file": "Theta\\T-0.17.bmp",
+      "axis": "Theta",
+      "label": -0.17,
+      "modified_epoch": 1791085283.4455342,
+      "modified_kst": "2026-10-04T12:41:23.445534+09:00"
+    },
+    {
+      "file": "Theta\\T-0.16.bmp",
+      "axis": "Theta",
+      "label": -0.16,
+      "modified_epoch": 1791085280.5868306,
+      "modified_kst": "2026-10-04T12:41:20.586831+09:00"
+    },
+    {
+      "file": "Theta\\T-0.15.bmp",
+      "axis": "Theta",
+      "label": -0.15,
+      "modified_epoch": 1791085277.8530972,
+      "modified_kst": "2026-10-04T12:41:17.853097+09:00"
+    },
+    {
+      "file": "Theta\\T-0.14.bmp",
+      "axis": "Theta",
+      "label": -0.14,
+      "modified_epoch": 1791085275.2911987,
+      "modified_kst": "2026-10-04T12:41:15.291199+09:00"
+    },
+    {
+      "file": "Theta\\T-0.13.bmp",
+      "axis": "Theta",
+      "label": -0.13,
+      "modified_epoch": 1791085272.6980572,
+      "modified_kst": "2026-10-04T12:41:12.698057+09:00"
+    },
+    {
+      "file": "Theta\\T-0.12.bmp",
+      "axis": "Theta",
+      "label": -0.12,
+      "modified_epoch": 1791085270.0736747,
+      "modified_kst": "2026-10-04T12:41:10.073675+09:00"
+    },
+    {
+      "file": "Theta\\T-0.11.bmp",
+      "axis": "Theta",
+      "label": -0.11,
+      "modified_epoch": 1791085264.5124784,
+      "modified_kst": "2026-10-04T12:41:04.512478+09:00"
+    },
+    {
+      "file": "Theta\\T-0.10.bmp",
+      "axis": "Theta",
+      "label": -0.1,
+      "modified_epoch": 1791085260.9664364,
+      "modified_kst": "2026-10-04T12:41:00.966436+09:00"
+    },
+    {
+      "file": "Theta\\T-0.09.bmp",
+      "axis": "Theta",
+      "label": -0.09,
+      "modified_epoch": 1791085255.530212,
+      "modified_kst": "2026-10-04T12:40:55.530212+09:00"
+    },
+    {
+      "file": "Theta\\T-0.08.bmp",
+      "axis": "Theta",
+      "label": -0.08,
+      "modified_epoch": 1791085252.2184892,
+      "modified_kst": "2026-10-04T12:40:52.218489+09:00"
+    },
+    {
+      "file": "Theta\\T-0.07.bmp",
+      "axis": "Theta",
+      "label": -0.07,
+      "modified_epoch": 1791085248.984874,
+      "modified_kst": "2026-10-04T12:40:48.984874+09:00"
+    },
+    {
+      "file": "Theta\\T-0.06.bmp",
+      "axis": "Theta",
+      "label": -0.06,
+      "modified_epoch": 1791085245.688772,
+      "modified_kst": "2026-10-04T12:40:45.688772+09:00"
+    },
+    {
+      "file": "Theta\\T-0.05.bmp",
+      "axis": "Theta",
+      "label": -0.05,
+      "modified_epoch": 1791085242.4082923,
+      "modified_kst": "2026-10-04T12:40:42.408292+09:00"
+    },
+    {
+      "file": "Theta\\T-0.04.bmp",
+      "axis": "Theta",
+      "label": -0.04,
+      "modified_epoch": 1791085239.0965693,
+      "modified_kst": "2026-10-04T12:40:39.096569+09:00"
+    },
+    {
+      "file": "Theta\\T-0.03.bmp",
+      "axis": "Theta",
+      "label": -0.03,
+      "modified_epoch": 1791085235.7067406,
+      "modified_kst": "2026-10-04T12:40:35.706741+09:00"
+    },
+    {
+      "file": "Theta\\T-0.02.bmp",
+      "axis": "Theta",
+      "label": -0.02,
+      "modified_epoch": 1791085232.6449592,
+      "modified_kst": "2026-10-04T12:40:32.644959+09:00"
+    },
+    {
+      "file": "Theta\\T-0.01.bmp",
+      "axis": "Theta",
+      "label": -0.01,
+      "modified_epoch": 1791085227.9898021,
+      "modified_kst": "2026-10-04T12:40:27.989802+09:00"
+    },
+    {
+      "file": "Theta\\T+0.01.bmp",
+      "axis": "Theta",
+      "label": 0.01,
+      "modified_epoch": 1791084390.9050484,
+      "modified_kst": "2026-10-04T12:26:30.905048+09:00"
+    },
+    {
+      "file": "Theta\\T+0.02.bmp",
+      "axis": "Theta",
+      "label": 0.02,
+      "modified_epoch": 1791084399.9029357,
+      "modified_kst": "2026-10-04T12:26:39.902936+09:00"
+    },
+    {
+      "file": "Theta\\T+0.03.bmp",
+      "axis": "Theta",
+      "label": 0.03,
+      "modified_epoch": 1791084413.5247378,
+      "modified_kst": "2026-10-04T12:26:53.524738+09:00"
+    },
+    {
+      "file": "Theta\\T+0.04.bmp",
+      "axis": "Theta",
+      "label": 0.04,
+      "modified_epoch": 1791084419.429604,
+      "modified_kst": "2026-10-04T12:26:59.429604+09:00"
+    },
+    {
+      "file": "Theta\\T+0.05.bmp",
+      "axis": "Theta",
+      "label": 0.05,
+      "modified_epoch": 1791084426.1467752,
+      "modified_kst": "2026-10-04T12:27:06.146775+09:00"
+    },
+    {
+      "file": "Theta\\T+0.06.bmp",
+      "axis": "Theta",
+      "label": 0.06,
+      "modified_epoch": 1791084432.2859595,
+      "modified_kst": "2026-10-04T12:27:12.285959+09:00"
+    },
+    {
+      "file": "Theta\\T+0.07.bmp",
+      "axis": "Theta",
+      "label": 0.07,
+      "modified_epoch": 1791084438.4095213,
+      "modified_kst": "2026-10-04T12:27:18.409521+09:00"
+    },
+    {
+      "file": "Theta\\T+0.08.bmp",
+      "axis": "Theta",
+      "label": 0.08,
+      "modified_epoch": 1791084444.0488234,
+      "modified_kst": "2026-10-04T12:27:24.048823+09:00"
+    },
+    {
+      "file": "Theta\\T+0.09.bmp",
+      "axis": "Theta",
+      "label": 0.09,
+      "modified_epoch": 1791084451.187772,
+      "modified_kst": "2026-10-04T12:27:31.187772+09:00"
+    },
+    {
+      "file": "Theta\\T+0.10.bmp",
+      "axis": "Theta",
+      "label": 0.1,
+      "modified_epoch": 1791084458.3267214,
+      "modified_kst": "2026-10-04T12:27:38.326721+09:00"
+    },
+    {
+      "file": "Theta\\T+0.11.bmp",
+      "axis": "Theta",
+      "label": 0.11,
+      "modified_epoch": 1791084467.4495802,
+      "modified_kst": "2026-10-04T12:27:47.449580+09:00"
+    },
+    {
+      "file": "Theta\\T+0.12.bmp",
+      "axis": "Theta",
+      "label": 0.12,
+      "modified_epoch": 1791084515.7195022,
+      "modified_kst": "2026-10-04T12:28:35.719502+09:00"
+    },
+    {
+      "file": "Theta\\T+0.13.bmp",
+      "axis": "Theta",
+      "label": 0.13,
+      "modified_epoch": 1791084629.1772442,
+      "modified_kst": "2026-10-04T12:30:29.177244+09:00"
+    },
+    {
+      "file": "Theta\\T+0.14.bmp",
+      "axis": "Theta",
+      "label": 0.14,
+      "modified_epoch": 1791084635.5507455,
+      "modified_kst": "2026-10-04T12:30:35.550745+09:00"
+    },
+    {
+      "file": "Theta\\T+0.15.bmp",
+      "axis": "Theta",
+      "label": 0.15,
+      "modified_epoch": 1791084644.7985754,
+      "modified_kst": "2026-10-04T12:30:44.798575+09:00"
+    },
+    {
+      "file": "Theta\\T+0.16.bmp",
+      "axis": "Theta",
+      "label": 0.16,
+      "modified_epoch": 1791084653.2184744,
+      "modified_kst": "2026-10-04T12:30:53.218474+09:00"
+    },
+    {
+      "file": "Theta\\T+0.17.bmp",
+      "axis": "Theta",
+      "label": 0.17,
+      "modified_epoch": 1791084661.966419,
+      "modified_kst": "2026-10-04T12:31:01.966419+09:00"
+    },
+    {
+      "file": "Theta\\T+0.18.bmp",
+      "axis": "Theta",
+      "label": 0.18,
+      "modified_epoch": 1791084668.3711672,
+      "modified_kst": "2026-10-04T12:31:08.371167+09:00"
+    },
+    {
+      "file": "Theta\\T+0.19.bmp",
+      "axis": "Theta",
+      "label": 0.19,
+      "modified_epoch": 1791084675.8225415,
+      "modified_kst": "2026-10-04T12:31:15.822541+09:00"
+    },
+    {
+      "file": "Theta\\T+0.20.bmp",
+      "axis": "Theta",
+      "label": 0.2,
+      "modified_epoch": 1791084685.788953,
+      "modified_kst": "2026-10-04T12:31:25.788953+09:00"
+    },
+    {
+      "file": "Theta\\T+0.21.bmp",
+      "axis": "Theta",
+      "label": 0.21,
+      "modified_epoch": 1791084696.5520508,
+      "modified_kst": "2026-10-04T12:31:36.552051+09:00"
+    },
+    {
+      "file": "Theta\\T+0.22.bmp",
+      "axis": "Theta",
+      "label": 0.22,
+      "modified_epoch": 1791084704.2846103,
+      "modified_kst": "2026-10-04T12:31:44.284610+09:00"
+    },
+    {
+      "file": "Theta\\T+0.23.bmp",
+      "axis": "Theta",
+      "label": 0.23,
+      "modified_epoch": 1791084713.0169363,
+      "modified_kst": "2026-10-04T12:31:53.016936+09:00"
+    },
+    {
+      "file": "Theta\\T+0.24.bmp",
+      "axis": "Theta",
+      "label": 0.24,
+      "modified_epoch": 1791084722.2335224,
+      "modified_kst": "2026-10-04T12:32:02.233522+09:00"
+    },
+    {
+      "file": "Theta\\T+0.25.bmp",
+      "axis": "Theta",
+      "label": 0.25,
+      "modified_epoch": 1791084728.8413465,
+      "modified_kst": "2026-10-04T12:32:08.841347+09:00"
+    },
+    {
+      "file": "Theta\\T+0.26.bmp",
+      "axis": "Theta",
+      "label": 0.26,
+      "modified_epoch": 1791084737.7611296,
+      "modified_kst": "2026-10-04T12:32:17.761130+09:00"
+    },
+    {
+      "file": "Theta\\T+0.27.bmp",
+      "axis": "Theta",
+      "label": 0.27,
+      "modified_epoch": 1791084750.8049405,
+      "modified_kst": "2026-10-04T12:32:30.804940+09:00"
+    },
+    {
+      "file": "Theta\\T+0.28.bmp",
+      "axis": "Theta",
+      "label": 0.28,
+      "modified_epoch": 1791084758.6156073,
+      "modified_kst": "2026-10-04T12:32:38.615607+09:00"
+    },
+    {
+      "file": "Theta\\T+0.29.bmp",
+      "axis": "Theta",
+      "label": 0.29,
+      "modified_epoch": 1791084766.535624,
+      "modified_kst": "2026-10-04T12:32:46.535624+09:00"
+    },
+    {
+      "file": "Theta\\T+0.30.bmp",
+      "axis": "Theta",
+      "label": 0.3,
+      "modified_epoch": 1791084774.1900764,
+      "modified_kst": "2026-10-04T12:32:54.190076+09:00"
+    },
+    {
+      "file": "Theta\\T+0.31.bmp",
+      "axis": "Theta",
+      "label": 0.31,
+      "modified_epoch": 1791084781.657073,
+      "modified_kst": "2026-10-04T12:33:01.657073+09:00"
+    },
+    {
+      "file": "Theta\\T+0.32.bmp",
+      "axis": "Theta",
+      "label": 0.32,
+      "modified_epoch": 1791084788.9991002,
+      "modified_kst": "2026-10-04T12:33:08.999100+09:00"
+    },
+    {
+      "file": "Theta\\T+0.33.bmp",
+      "axis": "Theta",
+      "label": 0.33,
+      "modified_epoch": 1791084799.496636,
+      "modified_kst": "2026-10-04T12:33:19.496636+09:00"
+    },
+    {
+      "file": "Theta\\T+0.34.bmp",
+      "axis": "Theta",
+      "label": 0.34,
+      "modified_epoch": 1791084809.306833,
+      "modified_kst": "2026-10-04T12:33:29.306833+09:00"
+    },
+    {
+      "file": "Theta\\T+0.35.bmp",
+      "axis": "Theta",
+      "label": 0.35,
+      "modified_epoch": 1791084817.6798675,
+      "modified_kst": "2026-10-04T12:33:37.679868+09:00"
+    },
+    {
+      "file": "Theta\\T+0.36.bmp",
+      "axis": "Theta",
+      "label": 0.36,
+      "modified_epoch": 1791084825.0375154,
+      "modified_kst": "2026-10-04T12:33:45.037515+09:00"
+    },
+    {
+      "file": "Theta\\T+0.37.bmp",
+      "axis": "Theta",
+      "label": 0.37,
+      "modified_epoch": 1791084831.8015528,
+      "modified_kst": "2026-10-04T12:33:51.801553+09:00"
+    },
+    {
+      "file": "Theta\\T+0.38.bmp",
+      "axis": "Theta",
+      "label": 0.38,
+      "modified_epoch": 1791084839.3935206,
+      "modified_kst": "2026-10-04T12:33:59.393521+09:00"
+    },
+    {
+      "file": "Theta\\T+0.39.bmp",
+      "axis": "Theta",
+      "label": 0.39,
+      "modified_epoch": 1791084848.235195,
+      "modified_kst": "2026-10-04T12:34:08.235195+09:00"
+    },
+    {
+      "file": "Theta\\T+0.40.bmp",
+      "axis": "Theta",
+      "label": 0.4,
+      "modified_epoch": 1791084859.3888292,
+      "modified_kst": "2026-10-04T12:34:19.388829+09:00"
+    },
+    {
+      "file": "Theta\\T+0.41.bmp",
+      "axis": "Theta",
+      "label": 0.41,
+      "modified_epoch": 1791084877.3221169,
+      "modified_kst": "2026-10-04T12:34:37.322117+09:00"
+    },
+    {
+      "file": "Theta\\T+0.42.bmp",
+      "axis": "Theta",
+      "label": 0.42,
+      "modified_epoch": 1791084889.2099516,
+      "modified_kst": "2026-10-04T12:34:49.209952+09:00"
+    },
+    {
+      "file": "Theta\\T+0.43.bmp",
+      "axis": "Theta",
+      "label": 0.43,
+      "modified_epoch": 1791084913.8447938,
+      "modified_kst": "2026-10-04T12:35:13.844794+09:00"
+    },
+    {
+      "file": "Theta\\T+0.44.bmp",
+      "axis": "Theta",
+      "label": 0.44,
+      "modified_epoch": 1791084921.405519,
+      "modified_kst": "2026-10-04T12:35:21.405519+09:00"
+    },
+    {
+      "file": "Theta\\T+0.45.bmp",
+      "axis": "Theta",
+      "label": 0.45,
+      "modified_epoch": 1791084926.2793753,
+      "modified_kst": "2026-10-04T12:35:26.279375+09:00"
+    },
+    {
+      "file": "Theta\\T+0.46.bmp",
+      "axis": "Theta",
+      "label": 0.46,
+      "modified_epoch": 1791084930.8564258,
+      "modified_kst": "2026-10-04T12:35:30.856426+09:00"
+    },
+    {
+      "file": "Theta\\T+0.47.bmp",
+      "axis": "Theta",
+      "label": 0.47,
+      "modified_epoch": 1791084934.6680307,
+      "modified_kst": "2026-10-04T12:35:34.668031+09:00"
+    },
+    {
+      "file": "Theta\\T+0.48.bmp",
+      "axis": "Theta",
+      "label": 0.48,
+      "modified_epoch": 1791084938.5265005,
+      "modified_kst": "2026-10-04T12:35:38.526500+09:00"
+    },
+    {
+      "file": "Theta\\T+0.49.bmp",
+      "axis": "Theta",
+      "label": 0.49,
+      "modified_epoch": 1791084942.2131343,
+      "modified_kst": "2026-10-04T12:35:42.213134+09:00"
+    },
+    {
+      "file": "Theta\\T+0.50.bmp",
+      "axis": "Theta",
+      "label": 0.5,
+      "modified_epoch": 1791084949.7113745,
+      "modified_kst": "2026-10-04T12:35:49.711375+09:00"
+    },
+    {
+      "file": "Theta\\T+0.51.bmp",
+      "axis": "Theta",
+      "label": 0.51,
+      "modified_epoch": 1791084955.4756467,
+      "modified_kst": "2026-10-04T12:35:55.475647+09:00"
+    },
+    {
+      "file": "Theta\\T+0.52.bmp",
+      "axis": "Theta",
+      "label": 0.52,
+      "modified_epoch": 1791084960.2401528,
+      "modified_kst": "2026-10-04T12:36:00.240153+09:00"
+    },
+    {
+      "file": "Theta\\T+0.53.bmp",
+      "axis": "Theta",
+      "label": 0.53,
+      "modified_epoch": 1791084967.191646,
+      "modified_kst": "2026-10-04T12:36:07.191646+09:00"
+    },
+    {
+      "file": "Theta\\T+0.54.bmp",
+      "axis": "Theta",
+      "label": 0.54,
+      "modified_epoch": 1791084971.253193,
+      "modified_kst": "2026-10-04T12:36:11.253193+09:00"
+    },
+    {
+      "file": "Theta\\T+0.55.bmp",
+      "axis": "Theta",
+      "label": 0.55,
+      "modified_epoch": 1791084975.1897688,
+      "modified_kst": "2026-10-04T12:36:15.189769+09:00"
+    },
+    {
+      "file": "Theta\\T+0.56.bmp",
+      "axis": "Theta",
+      "label": 0.56,
+      "modified_epoch": 1791084979.4856358,
+      "modified_kst": "2026-10-04T12:36:19.485636+09:00"
+    },
+    {
+      "file": "Theta\\T+0.57.bmp",
+      "axis": "Theta",
+      "label": 0.57,
+      "modified_epoch": 1791084983.2659984,
+      "modified_kst": "2026-10-04T12:36:23.265998+09:00"
+    },
+    {
+      "file": "Theta\\T+0.58.bmp",
+      "axis": "Theta",
+      "label": 0.58,
+      "modified_epoch": 1791084987.7336993,
+      "modified_kst": "2026-10-04T12:36:27.733699+09:00"
+    },
+    {
+      "file": "Theta\\T+0.59.bmp",
+      "axis": "Theta",
+      "label": 0.59,
+      "modified_epoch": 1791084991.9045963,
+      "modified_kst": "2026-10-04T12:36:31.904596+09:00"
+    },
+    {
+      "file": "Theta\\T+0.60.bmp",
+      "axis": "Theta",
+      "label": 0.6,
+      "modified_epoch": 1791084996.7315874,
+      "modified_kst": "2026-10-04T12:36:36.731587+09:00"
+    },
+    {
+      "file": "Theta\\T+0.61.bmp",
+      "axis": "Theta",
+      "label": 0.61,
+      "modified_epoch": 1791085001.2617733,
+      "modified_kst": "2026-10-04T12:36:41.261773+09:00"
+    },
+    {
+      "file": "Theta\\T+0.62.bmp",
+      "axis": "Theta",
+      "label": 0.62,
+      "modified_epoch": 1791085006.60427,
+      "modified_kst": "2026-10-04T12:36:46.604270+09:00"
+    },
+    {
+      "file": "Theta\\T+0.63.bmp",
+      "axis": "Theta",
+      "label": 0.63,
+      "modified_epoch": 1791085010.1190698,
+      "modified_kst": "2026-10-04T12:36:50.119070+09:00"
+    },
+    {
+      "file": "Theta\\T+0.64.bmp",
+      "axis": "Theta",
+      "label": 0.64,
+      "modified_epoch": 1791085014.3836963,
+      "modified_kst": "2026-10-04T12:36:54.383696+09:00"
+    },
+    {
+      "file": "Theta\\T+0.65.bmp",
+      "axis": "Theta",
+      "label": 0.65,
+      "modified_epoch": 1791085017.4610958,
+      "modified_kst": "2026-10-04T12:36:57.461096+09:00"
+    },
+    {
+      "file": "Theta\\T+0.66.bmp",
+      "axis": "Theta",
+      "label": 0.66,
+      "modified_epoch": 1791085020.694712,
+      "modified_kst": "2026-10-04T12:37:00.694712+09:00"
+    },
+    {
+      "file": "Theta\\T+0.67.bmp",
+      "axis": "Theta",
+      "label": 0.67,
+      "modified_epoch": 1791085023.9127069,
+      "modified_kst": "2026-10-04T12:37:03.912707+09:00"
+    },
+    {
+      "file": "Theta\\T+0.68.bmp",
+      "axis": "Theta",
+      "label": 0.68,
+      "modified_epoch": 1791085027.068219,
+      "modified_kst": "2026-10-04T12:37:07.068219+09:00"
+    },
+    {
+      "file": "Theta\\T+0.69.bmp",
+      "axis": "Theta",
+      "label": 0.69,
+      "modified_epoch": 1791085030.208106,
+      "modified_kst": "2026-10-04T12:37:10.208106+09:00"
+    },
+    {
+      "file": "Theta\\T+0.70.bmp",
+      "axis": "Theta",
+      "label": 0.7,
+      "modified_epoch": 1791085036.0348613,
+      "modified_kst": "2026-10-04T12:37:16.034861+09:00"
+    },
+    {
+      "file": "Theta\\T+0.71.bmp",
+      "axis": "Theta",
+      "label": 0.71,
+      "modified_epoch": 1791085042.127181,
+      "modified_kst": "2026-10-04T12:37:22.127181+09:00"
+    },
+    {
+      "file": "Theta\\T+0.72.bmp",
+      "axis": "Theta",
+      "label": 0.72,
+      "modified_epoch": 1791085048.3600967,
+      "modified_kst": "2026-10-04T12:37:28.360097+09:00"
+    },
+    {
+      "file": "Theta\\T+0.73.bmp",
+      "axis": "Theta",
+      "label": 0.73,
+      "modified_epoch": 1791085053.546376,
+      "modified_kst": "2026-10-04T12:37:33.546376+09:00"
+    },
+    {
+      "file": "Theta\\T+0.74.bmp",
+      "axis": "Theta",
+      "label": 0.74,
+      "modified_epoch": 1791085056.936209,
+      "modified_kst": "2026-10-04T12:37:36.936209+09:00"
+    },
+    {
+      "file": "Theta\\T+0.75.bmp",
+      "axis": "Theta",
+      "label": 0.75,
+      "modified_epoch": 1791085059.91988,
+      "modified_kst": "2026-10-04T12:37:39.919880+09:00"
+    },
+    {
+      "file": "Theta\\T+0.76.bmp",
+      "axis": "Theta",
+      "label": 0.76,
+      "modified_epoch": 1791085063.653378,
+      "modified_kst": "2026-10-04T12:37:43.653378+09:00"
+    },
+    {
+      "file": "Theta\\T+0.77.bmp",
+      "axis": "Theta",
+      "label": 0.77,
+      "modified_epoch": 1791085067.7149246,
+      "modified_kst": "2026-10-04T12:37:47.714925+09:00"
+    },
+    {
+      "file": "Theta\\T+0.78.bmp",
+      "axis": "Theta",
+      "label": 0.78,
+      "modified_epoch": 1791085071.1828687,
+      "modified_kst": "2026-10-04T12:37:51.182869+09:00"
+    },
+    {
+      "file": "Theta\\T+0.79.bmp",
+      "axis": "Theta",
+      "label": 0.79,
+      "modified_epoch": 1791085074.10405,
+      "modified_kst": "2026-10-04T12:37:54.104050+09:00"
+    },
+    {
+      "file": "Theta\\T+0.80.bmp",
+      "axis": "Theta",
+      "label": 0.8,
+      "modified_epoch": 1791085079.790215,
+      "modified_kst": "2026-10-04T12:37:59.790215+09:00"
+    },
+    {
+      "file": "Theta\\T+0.81.bmp",
+      "axis": "Theta",
+      "label": 0.81,
+      "modified_epoch": 1791085083.2893937,
+      "modified_kst": "2026-10-04T12:38:03.289394+09:00"
+    },
+    {
+      "file": "Theta\\T+0.82.bmp",
+      "axis": "Theta",
+      "label": 0.82,
+      "modified_epoch": 1791085086.241827,
+      "modified_kst": "2026-10-04T12:38:06.241827+09:00"
+    },
+    {
+      "file": "Theta\\T+0.83.bmp",
+      "axis": "Theta",
+      "label": 0.83,
+      "modified_epoch": 1791085088.9599392,
+      "modified_kst": "2026-10-04T12:38:08.959939+09:00"
+    },
+    {
+      "file": "Theta\\T+0.84.bmp",
+      "axis": "Theta",
+      "label": 0.84,
+      "modified_epoch": 1791085092.50598,
+      "modified_kst": "2026-10-04T12:38:12.505980+09:00"
+    },
+    {
+      "file": "Theta\\T+0.85.bmp",
+      "axis": "Theta",
+      "label": 0.85,
+      "modified_epoch": 1791085096.0051591,
+      "modified_kst": "2026-10-04T12:38:16.005159+09:00"
+    },
+    {
+      "file": "Theta\\T+0.86.bmp",
+      "axis": "Theta",
+      "label": 0.86,
+      "modified_epoch": 1791085099.1606696,
+      "modified_kst": "2026-10-04T12:38:19.160670+09:00"
+    },
+    {
+      "file": "Theta\\T+0.87.bmp",
+      "axis": "Theta",
+      "label": 0.87,
+      "modified_epoch": 1791085102.2693162,
+      "modified_kst": "2026-10-04T12:38:22.269316+09:00"
+    },
+    {
+      "file": "Theta\\T+0.88.bmp",
+      "axis": "Theta",
+      "label": 0.88,
+      "modified_epoch": 1791085106.56518,
+      "modified_kst": "2026-10-04T12:38:26.565180+09:00"
+    },
+    {
+      "file": "Theta\\T+0.89.bmp",
+      "axis": "Theta",
+      "label": 0.89,
+      "modified_epoch": 1791085110.3143003,
+      "modified_kst": "2026-10-04T12:38:30.314300+09:00"
+    },
+    {
+      "file": "Theta\\T+0.90.bmp",
+      "axis": "Theta",
+      "label": 0.9,
+      "modified_epoch": 1791085115.6255543,
+      "modified_kst": "2026-10-04T12:38:35.625554+09:00"
+    },
+    {
+      "file": "Theta\\T+0.91.bmp",
+      "axis": "Theta",
+      "label": 0.91,
+      "modified_epoch": 1791085119.905799,
+      "modified_kst": "2026-10-04T12:38:39.905799+09:00"
+    },
+    {
+      "file": "Theta\\T+0.92.bmp",
+      "axis": "Theta",
+      "label": 0.92,
+      "modified_epoch": 1791085123.483085,
+      "modified_kst": "2026-10-04T12:38:43.483085+09:00"
+    },
+    {
+      "file": "Theta\\T+0.93.bmp",
+      "axis": "Theta",
+      "label": 0.93,
+      "modified_epoch": 1791085126.7791858,
+      "modified_kst": "2026-10-04T12:38:46.779186+09:00"
+    },
+    {
+      "file": "Theta\\T+0.94.bmp",
+      "axis": "Theta",
+      "label": 0.94,
+      "modified_epoch": 1791085129.9815586,
+      "modified_kst": "2026-10-04T12:38:49.981559+09:00"
+    },
+    {
+      "file": "Theta\\T+0.95.bmp",
+      "axis": "Theta",
+      "label": 0.95,
+      "modified_epoch": 1791085133.0433397,
+      "modified_kst": "2026-10-04T12:38:53.043340+09:00"
+    },
+    {
+      "file": "Theta\\T+0.96.bmp",
+      "axis": "Theta",
+      "label": 0.96,
+      "modified_epoch": 1791085136.21447,
+      "modified_kst": "2026-10-04T12:38:56.214470+09:00"
+    },
+    {
+      "file": "Theta\\T+0.97.bmp",
+      "axis": "Theta",
+      "label": 0.97,
+      "modified_epoch": 1791085139.416845,
+      "modified_kst": "2026-10-04T12:38:59.416845+09:00"
+    },
+    {
+      "file": "Theta\\T+0.98.bmp",
+      "axis": "Theta",
+      "label": 0.98,
+      "modified_epoch": 1791085142.1037128,
+      "modified_kst": "2026-10-04T12:39:02.103713+09:00"
+    },
+    {
+      "file": "Theta\\T+0.99.bmp",
+      "axis": "Theta",
+      "label": 0.99,
+      "modified_epoch": 1791085145.3998141,
+      "modified_kst": "2026-10-04T12:39:05.399814+09:00"
+    },
+    {
+      "file": "Theta\\T+1.00.bmp",
+      "axis": "Theta",
+      "label": 1.0,
+      "modified_epoch": 1791085151.3827844,
+      "modified_kst": "2026-10-04T12:39:11.382784+09:00"
+    },
+    {
+      "file": "Y\\Y-2.00.bmp",
+      "axis": "Y",
+      "label": -2.0,
+      "modified_epoch": 1791084211.728358,
+      "modified_kst": "2026-10-04T12:23:31.728358+09:00"
+    },
+    {
+      "file": "Y\\Y-1.95.bmp",
+      "axis": "Y",
+      "label": -1.95,
+      "modified_epoch": 1791086940.6346536,
+      "modified_kst": "2026-10-04T13:09:00.634654+09:00"
+    },
+    {
+      "file": "Y\\Y-1.90.bmp",
+      "axis": "Y",
+      "label": -1.9,
+      "modified_epoch": 1791084205.401718,
+      "modified_kst": "2026-10-04T12:23:25.401718+09:00"
+    },
+    {
+      "file": "Y\\Y-1.85.bmp",
+      "axis": "Y",
+      "label": -1.85,
+      "modified_epoch": 1791086950.1480455,
+      "modified_kst": "2026-10-04T13:09:10.148046+09:00"
+    },
+    {
+      "file": "Y\\Y-1.80.bmp",
+      "axis": "Y",
+      "label": -1.8,
+      "modified_epoch": 1791084198.9188733,
+      "modified_kst": "2026-10-04T12:23:18.918873+09:00"
+    },
+    {
+      "file": "Y\\Y-1.75.bmp",
+      "axis": "Y",
+      "label": -1.75,
+      "modified_epoch": 1791086955.006281,
+      "modified_kst": "2026-10-04T13:09:15.006281+09:00"
+    },
+    {
+      "file": "Y\\Y-1.70.bmp",
+      "axis": "Y",
+      "label": -1.7,
+      "modified_epoch": 1791084192.7953033,
+      "modified_kst": "2026-10-04T12:23:12.795303+09:00"
+    },
+    {
+      "file": "Y\\Y-1.65.bmp",
+      "axis": "Y",
+      "label": -1.65,
+      "modified_epoch": 1791086961.3797839,
+      "modified_kst": "2026-10-04T13:09:21.379784+09:00"
+    },
+    {
+      "file": "Y\\Y-1.60.bmp",
+      "axis": "Y",
+      "label": -1.6,
+      "modified_epoch": 1791084185.8125663,
+      "modified_kst": "2026-10-04T12:23:05.812566+09:00"
+    },
+    {
+      "file": "Y\\Y-1.55.bmp",
+      "axis": "Y",
+      "label": -1.55,
+      "modified_epoch": 1791086967.7220457,
+      "modified_kst": "2026-10-04T13:09:27.722046+09:00"
+    },
+    {
+      "file": "Y\\Y-1.50.bmp",
+      "axis": "Y",
+      "label": -1.5,
+      "modified_epoch": 1791084172.550054,
+      "modified_kst": "2026-10-04T12:22:52.550054+09:00"
+    },
+    {
+      "file": "Y\\Y-1.45.bmp",
+      "axis": "Y",
+      "label": -1.45,
+      "modified_epoch": 1791086972.1741247,
+      "modified_kst": "2026-10-04T13:09:32.174125+09:00"
+    },
+    {
+      "file": "Y\\Y-1.40.bmp",
+      "axis": "Y",
+      "label": -1.4,
+      "modified_epoch": 1791084165.8953664,
+      "modified_kst": "2026-10-04T12:22:45.895366+09:00"
+    },
+    {
+      "file": "Y\\Y-1.35.bmp",
+      "axis": "Y",
+      "label": -1.35,
+      "modified_epoch": 1791086975.1734211,
+      "modified_kst": "2026-10-04T13:09:35.173421+09:00"
+    },
+    {
+      "file": "Y\\Y-1.30.bmp",
+      "axis": "Y",
+      "label": -1.3,
+      "modified_epoch": 1791084156.7100234,
+      "modified_kst": "2026-10-04T12:22:36.710023+09:00"
+    },
+    {
+      "file": "Y\\Y-1.25.bmp",
+      "axis": "Y",
+      "label": -1.25,
+      "modified_epoch": 1791086978.8600554,
+      "modified_kst": "2026-10-04T13:09:38.860055+09:00"
+    },
+    {
+      "file": "Y\\Y-1.20.bmp",
+      "axis": "Y",
+      "label": -1.2,
+      "modified_epoch": 1791084146.6030223,
+      "modified_kst": "2026-10-04T12:22:26.603022+09:00"
+    },
+    {
+      "file": "Y\\Y-1.15.bmp",
+      "axis": "Y",
+      "label": -1.15,
+      "modified_epoch": 1791086982.687283,
+      "modified_kst": "2026-10-04T13:09:42.687283+09:00"
+    },
+    {
+      "file": "Y\\Y-1.10.bmp",
+      "axis": "Y",
+      "label": -1.1,
+      "modified_epoch": 1791084138.2456064,
+      "modified_kst": "2026-10-04T12:22:18.245606+09:00"
+    },
+    {
+      "file": "Y\\Y-1.05.bmp",
+      "axis": "Y",
+      "label": -1.05,
+      "modified_epoch": 1791086989.045165,
+      "modified_kst": "2026-10-04T13:09:49.045165+09:00"
+    },
+    {
+      "file": "Y\\Y-1.00.bmp",
+      "axis": "Y",
+      "label": -1.0,
+      "modified_epoch": 1791084131.5440547,
+      "modified_kst": "2026-10-04T12:22:11.544055+09:00"
+    },
+    {
+      "file": "Y\\Y-0.95.bmp",
+      "axis": "Y",
+      "label": -0.95,
+      "modified_epoch": 1791087029.9426231,
+      "modified_kst": "2026-10-04T13:10:29.942623+09:00"
+    },
+    {
+      "file": "Y\\Y-0.90.bmp",
+      "axis": "Y",
+      "label": -0.9,
+      "modified_epoch": 1791084123.592798,
+      "modified_kst": "2026-10-04T12:22:03.592798+09:00"
+    },
+    {
+      "file": "Y\\Y-0.85.bmp",
+      "axis": "Y",
+      "label": -0.85,
+      "modified_epoch": 1791087038.0969605,
+      "modified_kst": "2026-10-04T13:10:38.096961+09:00"
+    },
+    {
+      "file": "Y\\Y-0.80.bmp",
+      "axis": "Y",
+      "label": -0.8,
+      "modified_epoch": 1791084117.8129036,
+      "modified_kst": "2026-10-04T12:21:57.812904+09:00"
+    },
+    {
+      "file": "Y\\Y-0.75.bmp",
+      "axis": "Y",
+      "label": -0.75,
+      "modified_epoch": 1791087041.3461962,
+      "modified_kst": "2026-10-04T13:10:41.346196+09:00"
+    },
+    {
+      "file": "Y\\Y-0.70.bmp",
+      "axis": "Y",
+      "label": -0.7,
+      "modified_epoch": 1791084111.3769152,
+      "modified_kst": "2026-10-04T12:21:51.376915+09:00"
+    },
+    {
+      "file": "Y\\Y-0.65.bmp",
+      "axis": "Y",
+      "label": -0.65,
+      "modified_epoch": 1791087044.8766193,
+      "modified_kst": "2026-10-04T13:10:44.876619+09:00"
+    },
+    {
+      "file": "Y\\Y-0.60.bmp",
+      "axis": "Y",
+      "label": -0.6,
+      "modified_epoch": 1791084096.6928692,
+      "modified_kst": "2026-10-04T12:21:36.692869+09:00"
+    },
+    {
+      "file": "Y\\Y-0.55.bmp",
+      "axis": "Y",
+      "label": -0.55,
+      "modified_epoch": 1791087047.8759136,
+      "modified_kst": "2026-10-04T13:10:47.875914+09:00"
+    },
+    {
+      "file": "Y\\Y-0.50.bmp",
+      "axis": "Y",
+      "label": -0.5,
+      "modified_epoch": 1791084087.19509,
+      "modified_kst": "2026-10-04T12:21:27.195090+09:00"
+    },
+    {
+      "file": "Y\\Y-0.45.bmp",
+      "axis": "Y",
+      "label": -0.45,
+      "modified_epoch": 1791087050.8595884,
+      "modified_kst": "2026-10-04T13:10:50.859588+09:00"
+    },
+    {
+      "file": "Y\\Y-0.40.bmp",
+      "axis": "Y",
+      "label": -0.4,
+      "modified_epoch": 1791084080.1967332,
+      "modified_kst": "2026-10-04T12:21:20.196733+09:00"
+    },
+    {
+      "file": "Y\\Y-0.35.bmp",
+      "axis": "Y",
+      "label": -0.35,
+      "modified_epoch": 1791087053.936994,
+      "modified_kst": "2026-10-04T13:10:53.936994+09:00"
+    },
+    {
+      "file": "Y\\Y-0.30.bmp",
+      "axis": "Y",
+      "label": -0.3,
+      "modified_epoch": 1791084071.5268936,
+      "modified_kst": "2026-10-04T12:21:11.526894+09:00"
+    },
+    {
+      "file": "Y\\Y-0.25.bmp",
+      "axis": "Y",
+      "label": -0.25,
+      "modified_epoch": 1791087056.6394813,
+      "modified_kst": "2026-10-04T13:10:56.639481+09:00"
+    },
+    {
+      "file": "Y\\Y-0.20.bmp",
+      "axis": "Y",
+      "label": -0.2,
+      "modified_epoch": 1791084063.8724422,
+      "modified_kst": "2026-10-04T12:21:03.872442+09:00"
+    },
+    {
+      "file": "Y\\Y-0.15.bmp",
+      "axis": "Y",
+      "label": -0.15,
+      "modified_epoch": 1791087059.6387787,
+      "modified_kst": "2026-10-04T13:10:59.638779+09:00"
+    },
+    {
+      "file": "Y\\Y-0.10.bmp",
+      "axis": "Y",
+      "label": -0.1,
+      "modified_epoch": 1791084056.4210649,
+      "modified_kst": "2026-10-04T12:20:56.421065+09:00"
+    },
+    {
+      "file": "Y\\Y-0.05.bmp",
+      "axis": "Y",
+      "label": -0.05,
+      "modified_epoch": 1791087064.7000892,
+      "modified_kst": "2026-10-04T13:11:04.700089+09:00"
+    },
+    {
+      "file": "Y\\Y+0.05.bmp",
+      "axis": "Y",
+      "label": 0.05,
+      "modified_epoch": 1791086486.5068817,
+      "modified_kst": "2026-10-04T13:01:26.506882+09:00"
+    },
+    {
+      "file": "Y\\Y+0.10.bmp",
+      "axis": "Y",
+      "label": 0.1,
+      "modified_epoch": 1791083654.046767,
+      "modified_kst": "2026-10-04T12:14:14.046767+09:00"
+    },
+    {
+      "file": "Y\\Y+0.15.bmp",
+      "axis": "Y",
+      "label": 0.15,
+      "modified_epoch": 1791086555.100153,
+      "modified_kst": "2026-10-04T13:02:35.100153+09:00"
+    },
+    {
+      "file": "Y\\Y+0.20.bmp",
+      "axis": "Y",
+      "label": 0.2,
+      "modified_epoch": 1791083701.0826015,
+      "modified_kst": "2026-10-04T12:15:01.082602+09:00"
+    },
+    {
+      "file": "Y\\Y+0.25.bmp",
+      "axis": "Y",
+      "label": 0.25,
+      "modified_epoch": 1791086566.7849104,
+      "modified_kst": "2026-10-04T13:02:46.784910+09:00"
+    },
+    {
+      "file": "Y\\Y+0.30.bmp",
+      "axis": "Y",
+      "label": 0.3,
+      "modified_epoch": 1791083713.282862,
+      "modified_kst": "2026-10-04T12:15:13.282862+09:00"
+    },
+    {
+      "file": "Y\\Y+0.35.bmp",
+      "axis": "Y",
+      "label": 0.35,
+      "modified_epoch": 1791086572.1742702,
+      "modified_kst": "2026-10-04T13:02:52.174270+09:00"
+    },
+    {
+      "file": "Y\\Y+0.40.bmp",
+      "axis": "Y",
+      "label": 0.4,
+      "modified_epoch": 1791083724.4521158,
+      "modified_kst": "2026-10-04T12:15:24.452116+09:00"
+    },
+    {
+      "file": "Y\\Y+0.45.bmp",
+      "axis": "Y",
+      "label": 0.45,
+      "modified_epoch": 1791086576.641972,
+      "modified_kst": "2026-10-04T13:02:56.641972+09:00"
+    },
+    {
+      "file": "Y\\Y+0.50.bmp",
+      "axis": "Y",
+      "label": 0.5,
+      "modified_epoch": 1791083735.6838543,
+      "modified_kst": "2026-10-04T12:15:35.683854+09:00"
+    },
+    {
+      "file": "Y\\Y+0.55.bmp",
+      "axis": "Y",
+      "label": 0.55,
+      "modified_epoch": 1791086581.0940523,
+      "modified_kst": "2026-10-04T13:03:01.094052+09:00"
+    },
+    {
+      "file": "Y\\Y+0.60.bmp",
+      "axis": "Y",
+      "label": 0.6,
+      "modified_epoch": 1791083745.2753525,
+      "modified_kst": "2026-10-04T12:15:45.275352+09:00"
+    },
+    {
+      "file": "Y\\Y+0.65.bmp",
+      "axis": "Y",
+      "label": 0.65,
+      "modified_epoch": 1791086585.1712222,
+      "modified_kst": "2026-10-04T13:03:05.171222+09:00"
+    },
+    {
+      "file": "Y\\Y+0.70.bmp",
+      "axis": "Y",
+      "label": 0.7,
+      "modified_epoch": 1791083754.132648,
+      "modified_kst": "2026-10-04T12:15:54.132648+09:00"
+    },
+    {
+      "file": "Y\\Y+0.75.bmp",
+      "axis": "Y",
+      "label": 0.75,
+      "modified_epoch": 1791086592.1227126,
+      "modified_kst": "2026-10-04T13:03:12.122713+09:00"
+    },
+    {
+      "file": "Y\\Y+0.80.bmp",
+      "axis": "Y",
+      "label": 0.8,
+      "modified_epoch": 1791083761.9276948,
+      "modified_kst": "2026-10-04T12:16:01.927695+09:00"
+    },
+    {
+      "file": "Y\\Y+0.85.bmp",
+      "axis": "Y",
+      "label": 0.85,
+      "modified_epoch": 1791086596.5904138,
+      "modified_kst": "2026-10-04T13:03:16.590414+09:00"
+    },
+    {
+      "file": "Y\\Y+0.90.bmp",
+      "axis": "Y",
+      "label": 0.9,
+      "modified_epoch": 1791083768.582382,
+      "modified_kst": "2026-10-04T12:16:08.582382+09:00"
+    },
+    {
+      "file": "Y\\Y+0.95.bmp",
+      "axis": "Y",
+      "label": 0.95,
+      "modified_epoch": 1791086600.7144458,
+      "modified_kst": "2026-10-04T13:03:20.714446+09:00"
+    },
+    {
+      "file": "Y\\Y+1.00.bmp",
+      "axis": "Y",
+      "label": 1.0,
+      "modified_epoch": 1791083775.4245248,
+      "modified_kst": "2026-10-04T12:16:15.424525+09:00"
+    },
+    {
+      "file": "Y\\Y+1.05.bmp",
+      "axis": "Y",
+      "label": 1.05,
+      "modified_epoch": 1791086609.6967125,
+      "modified_kst": "2026-10-04T13:03:29.696712+09:00"
+    },
+    {
+      "file": "Y\\Y+1.10.bmp",
+      "axis": "Y",
+      "label": 1.1,
+      "modified_epoch": 1791083782.6259594,
+      "modified_kst": "2026-10-04T12:16:22.625959+09:00"
+    },
+    {
+      "file": "Y\\Y+1.15.bmp",
+      "axis": "Y",
+      "label": 1.15,
+      "modified_epoch": 1791086614.570568,
+      "modified_kst": "2026-10-04T13:03:34.570568+09:00"
+    },
+    {
+      "file": "Y\\Y+1.20.bmp",
+      "axis": "Y",
+      "label": 1.2,
+      "modified_epoch": 1791083789.8586407,
+      "modified_kst": "2026-10-04T12:16:29.858641+09:00"
+    },
+    {
+      "file": "Y\\Y+1.25.bmp",
+      "axis": "Y",
+      "label": 1.25,
+      "modified_epoch": 1791086619.147621,
+      "modified_kst": "2026-10-04T13:03:39.147621+09:00"
+    },
+    {
+      "file": "Y\\Y+1.30.bmp",
+      "axis": "Y",
+      "label": 1.3,
+      "modified_epoch": 1791083819.148636,
+      "modified_kst": "2026-10-04T12:16:59.148636+09:00"
+    },
+    {
+      "file": "Y\\Y+1.35.bmp",
+      "axis": "Y",
+      "label": 1.35,
+      "modified_epoch": 1791086622.9279816,
+      "modified_kst": "2026-10-04T13:03:42.927982+09:00"
+    },
+    {
+      "file": "Y\\Y+1.40.bmp",
+      "axis": "Y",
+      "label": 1.4,
+      "modified_epoch": 1791083826.1313756,
+      "modified_kst": "2026-10-04T12:17:06.131376+09:00"
+    },
+    {
+      "file": "Y\\Y+1.45.bmp",
+      "axis": "Y",
+      "label": 1.45,
+      "modified_epoch": 1791086626.380296,
+      "modified_kst": "2026-10-04T13:03:46.380296+09:00"
+    },
+    {
+      "file": "Y\\Y+1.50.bmp",
+      "axis": "Y",
+      "label": 1.5,
+      "modified_epoch": 1791083835.2542312,
+      "modified_kst": "2026-10-04T12:17:15.254231+09:00"
+    },
+    {
+      "file": "Y\\Y+1.55.bmp",
+      "axis": "Y",
+      "label": 1.55,
+      "modified_epoch": 1791086629.6295333,
+      "modified_kst": "2026-10-04T13:03:49.629533+09:00"
+    },
+    {
+      "file": "Y\\Y+1.60.bmp",
+      "axis": "Y",
+      "label": 1.6,
+      "modified_epoch": 1791083842.627501,
+      "modified_kst": "2026-10-04T12:17:22.627501+09:00"
+    },
+    {
+      "file": "Y\\Y+1.65.bmp",
+      "axis": "Y",
+      "label": 1.65,
+      "modified_epoch": 1791086636.2529795,
+      "modified_kst": "2026-10-04T13:03:56.252980+09:00"
+    },
+    {
+      "file": "Y\\Y+1.70.bmp",
+      "axis": "Y",
+      "label": 1.7,
+      "modified_epoch": 1791083876.9007049,
+      "modified_kst": "2026-10-04T12:17:56.900705+09:00"
+    },
+    {
+      "file": "Y\\Y+1.75.bmp",
+      "axis": "Y",
+      "label": 1.75,
+      "modified_epoch": 1791086640.1739335,
+      "modified_kst": "2026-10-04T13:04:00.173934+09:00"
+    },
+    {
+      "file": "Y\\Y+1.80.bmp",
+      "axis": "Y",
+      "label": 1.8,
+      "modified_epoch": 1791083884.9300723,
+      "modified_kst": "2026-10-04T12:18:04.930072+09:00"
+    },
+    {
+      "file": "Y\\Y+1.85.bmp",
+      "axis": "Y",
+      "label": 1.85,
+      "modified_epoch": 1791086643.4544134,
+      "modified_kst": "2026-10-04T13:04:03.454413+09:00"
+    },
+    {
+      "file": "Y\\Y+1.90.bmp",
+      "axis": "Y",
+      "label": 1.9,
+      "modified_epoch": 1791083891.1317396,
+      "modified_kst": "2026-10-04T12:18:11.131740+09:00"
+    },
+    {
+      "file": "Y\\Y+1.95.bmp",
+      "axis": "Y",
+      "label": 1.95,
+      "modified_epoch": 1791086650.2028291,
+      "modified_kst": "2026-10-04T13:04:10.202829+09:00"
+    },
+    {
+      "file": "Y\\Y+2.00.bmp",
+      "axis": "Y",
+      "label": 2.0,
+      "modified_epoch": 1791083898.6143572,
+      "modified_kst": "2026-10-04T12:18:18.614357+09:00"
+    },
+    {
+      "file": "center.bmp",
+      "axis": "center",
+      "label": 0.0,
+      "modified_epoch": 1791083583.594555,
+      "modified_kst": "2026-10-04T12:13:03.594555+09:00"
+    }
+  ],
+  "Y_groups": {
+    "negative_0.10_grid": {
+      "count": 20,
+      "first_modified_kst": "2026-10-04T12:20:56.421065+09:00",
+      "last_modified_kst": "2026-10-04T12:23:31.728358+09:00",
+      "labels_in_modification_order": [
+        -0.1,
+        -0.2,
+        -0.3,
+        -0.4,
+        -0.5,
+        -0.6,
+        -0.7,
+        -0.8,
+        -0.9,
+        -1.0,
+        -1.1,
+        -1.2,
+        -1.3,
+        -1.4,
+        -1.5,
+        -1.6,
+        -1.7,
+        -1.8,
+        -1.9,
+        -2.0
+      ],
+      "slope_px_per_nominal_mm": 14.392030106387004,
+      "intercept_px": 0.10949834992676687,
+      "within_group_rms_px": 0.021094219413366002
+    },
+    "negative_0.05_offset_grid": {
+      "count": 20,
+      "first_modified_kst": "2026-10-04T13:09:00.634654+09:00",
+      "last_modified_kst": "2026-10-04T13:11:04.700089+09:00",
+      "labels_in_modification_order": [
+        -1.95,
+        -1.85,
+        -1.75,
+        -1.65,
+        -1.55,
+        -1.45,
+        -1.35,
+        -1.25,
+        -1.15,
+        -1.05,
+        -0.95,
+        -0.85,
+        -0.75,
+        -0.65,
+        -0.55,
+        -0.45,
+        -0.35,
+        -0.25,
+        -0.15,
+        -0.05
+      ],
+      "slope_px_per_nominal_mm": 14.362590309987558,
+      "intercept_px": -0.42925148257230833,
+      "within_group_rms_px": 0.03111055747315293
+    },
+    "positive_0.10_grid": {
+      "count": 20,
+      "first_modified_kst": "2026-10-04T12:14:14.046767+09:00",
+      "last_modified_kst": "2026-10-04T12:18:18.614357+09:00",
+      "labels_in_modification_order": [
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0,
+        1.1,
+        1.2,
+        1.3,
+        1.4,
+        1.5,
+        1.6,
+        1.7,
+        1.8,
+        1.9,
+        2.0
+      ],
+      "slope_px_per_nominal_mm": 14.360048066494109,
+      "intercept_px": -0.5401004415484092,
+      "within_group_rms_px": 0.016572159623751578
+    },
+    "positive_0.05_offset_grid": {
+      "count": 20,
+      "first_modified_kst": "2026-10-04T13:01:26.506882+09:00",
+      "last_modified_kst": "2026-10-04T13:04:10.202829+09:00",
+      "labels_in_modification_order": [
+        0.05,
+        0.15,
+        0.25,
+        0.35,
+        0.45,
+        0.55,
+        0.65,
+        0.75,
+        0.85,
+        0.95,
+        1.05,
+        1.15,
+        1.25,
+        1.35,
+        1.45,
+        1.55,
+        1.65,
+        1.75,
+        1.85,
+        1.95
+      ],
+      "slope_px_per_nominal_mm": 14.387975528263008,
+      "intercept_px": -0.4494745022406028,
+      "within_group_rms_px": 0.015587447083502392
+    }
+  },
+  "Y_offset_models": {
+    "-1": {
+      "affine": {
+        "offset_px": -0.16024456377776933,
+        "slope_px_per_nominal_mm": 14.377310208187284,
+        "even_minus_odd_offset_px": 0.5085740411896401,
+        "even_minus_odd_command_equivalent_mm": 0.03537337887444539,
+        "within_group_rms_px": 0.02790091416021482
+      },
+      "translation": {
+        "offset_px": -0.1599468774852341,
+        "slope_px_per_nominal_mm": 14.377544430214067,
+        "even_minus_odd_offset_px": 0.5084800070216449,
+        "even_minus_odd_command_equivalent_mm": 0.03536626226333102,
+        "within_group_rms_px": 0.02795322270706881
+      },
+      "ncc": {
+        "offset_px": -0.1581584407211228,
+        "slope_px_per_nominal_mm": 14.376753016189442,
+        "even_minus_odd_offset_px": 0.5065255115336785,
+        "even_minus_odd_command_equivalent_mm": 0.03523226078679156,
+        "within_group_rms_px": 0.043323680327952654
+      },
+      "adjacent_label_step_mean_px_by_destination_parity": {
+        "0": 1.2304822911954407,
+        "1": 0.21029146921972316
+      }
+    },
+    "1": {
+      "affine": {
+        "offset_px": -0.4951365651666087,
+        "slope_px_per_nominal_mm": 14.374011797378563,
+        "even_minus_odd_offset_px": -0.11925158762091483,
+        "even_minus_odd_command_equivalent_mm": -0.00829633294461767,
+        "within_group_rms_px": 0.01798986555005182
+      },
+      "translation": {
+        "offset_px": -0.4950691887142928,
+        "slope_px_per_nominal_mm": 14.374276816133618,
+        "even_minus_odd_offset_px": -0.11936801248553919,
+        "even_minus_odd_command_equivalent_mm": -0.00830427951349602,
+        "within_group_rms_px": 0.017948059612190582
+      },
+      "ncc": {
+        "offset_px": -0.4965510776457513,
+        "slope_px_per_nominal_mm": 14.374984900078765,
+        "even_minus_odd_offset_px": -0.12108968136985927,
+        "even_minus_odd_command_equivalent_mm": -0.008423638856775132,
+        "within_group_rms_px": 0.032694784598887236
+      },
+      "adjacent_label_step_mean_px_by_destination_parity": {
+        "0": 0.5994490022480137,
+        "1": 0.8363146691764174
+      }
+    }
+  },
+  "Theta_zero_gap_sensitivity": {
+    "0.05": {
+      "-1": {
+        "slope_px_per_nominal_degree": 79.64548435380192,
+        "intercept_px": -0.25153851892486867
+      },
+      "1": {
+        "slope_px_per_nominal_degree": 77.12477738147452,
+        "intercept_px": -0.6288827682619598
+      },
+      "positive_minus_negative_zero_gap_px": -0.3773442493370911,
+      "gap_command_equivalent_degree": -0.004712963947881183
+    },
+    "0.1": {
+      "-1": {
+        "slope_px_per_nominal_degree": 79.70333799505738,
+        "intercept_px": -0.24745833253919355
+      },
+      "1": {
+        "slope_px_per_nominal_degree": 78.59106297221773,
+        "intercept_px": -0.6725335464601506
+      },
+      "positive_minus_negative_zero_gap_px": -0.42507521392095704,
+      "gap_command_equivalent_degree": -0.005309115381688768
+    },
+    "0.25": {
+      "-1": {
+        "slope_px_per_nominal_degree": 80.80594726018181,
+        "intercept_px": -0.19381668740058122
+      },
+      "1": {
+        "slope_px_per_nominal_degree": 79.74837132412794,
+        "intercept_px": -0.7494216712690618
+      },
+      "positive_minus_negative_zero_gap_px": -0.5556049838684806,
+      "gap_command_equivalent_degree": -0.006939409472478913
+    },
+    "0.5": {
+      "-1": {
+        "slope_px_per_nominal_degree": 80.78106923757657,
+        "intercept_px": -0.19328754366941073
+      },
+      "1": {
+        "slope_px_per_nominal_degree": 80.10585589734589,
+        "intercept_px": -0.7909089582630593
+      },
+      "positive_minus_negative_zero_gap_px": -0.5976214145936486,
+      "gap_command_equivalent_degree": -0.00746418737375671
+    },
+    "1.0": {
+      "-1": {
+        "slope_px_per_nominal_degree": 80.78758265782807,
+        "intercept_px": -0.1928909925290933
+      },
+      "1": {
+        "slope_px_per_nominal_degree": 80.30105711459888,
+        "intercept_px": -0.8349547838944777
+      },
+      "positive_minus_negative_zero_gap_px": -0.6420637913653844,
+      "gap_command_equivalent_degree": -0.008019264918601526
+    }
+  },
+  "interpretation_limits": [
+    "Even/odd Y labels were grouped after observing timestamp clusters; grouping is descriptive.",
+    "Monotonic label order by file mtime does not prove stage approach direction or absence of intermediate resets.",
+    "No repeated zero images or encoder logs: return-to-zero repeatability and backlash cannot be measured directly.",
+    "Command-equivalent units use fitted image/label slopes, not calibrated true physical displacement.",
+    "Y/Theta contributions to a baseline shift cannot be uniquely separated using horizontal displacement alone.",
+    "Residual reduction after grouping is an in-sample descriptive fit, not validated compensation performance."
+  ],
+  "method_sources": {
+    "ECC": "https://docs.opencv.org/4.x/dc/d6b/group__video__track.html",
+    "motion_terms": "https://www.newport.com/n/linear-translation-stage-terminology/resources"
+  }
+}
