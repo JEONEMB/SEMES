@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SEMES Vision Alignment</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-  <link rel="stylesheet" href="styles.css?v=20261028f">
+  <link rel="stylesheet" href="styles.css?v=20261029e">
 </head>
 <body>
   <header class="topbar">
@@ -18,7 +18,7 @@
       <button class="tab is-active" data-tab="service" aria-current="page">서비스</button>
       <button class="tab" disabled>디지털 트윈<span class="tab-soon">준비 중</span></button>
       <button class="tab" data-tab="eval">평가</button>
-      <button class="tab" disabled>보고서<span class="tab-soon">준비 중</span></button>
+      <button class="tab" data-tab="report">보고서</button>
     </nav>
     <div class="topbar-right" data-panel="service">
       <span class="source-pill" id="sourcePill">시나리오 재생</span>
@@ -205,9 +205,40 @@
   </main>
   </div>
 
-  <script src="demo/data.js?v=20261028f"></script>
-  <script src="shell.js?v=20261028f"></script>
-  <script src="app.js?v=20261028f"></script>
-  <script src="eval.js?v=20261028f"></script>
+  <div class="panel" data-panel="report" hidden>
+  <main class="report-wrap" id="reportList">
+    <header class="report-head">
+      <h1 class="report-title">보고서</h1>
+      <p class="card-sub">실험 보고서를 주제별로 모아 본다. 가정 시뮬레이션과 실측 평가를 구분해서 읽는다</p>
+    </header>
+    <div class="report-grid">
+      <button class="card report-block" data-report="augment">
+        <span class="report-text"><span class="report-kind">데이터 증강</span><span class="report-name">Y-T 평면 데이터 증강</span></span>
+      </button>
+      <div class="card report-block is-soon" aria-disabled="true">
+        <span class="report-text"><span class="report-kind">알고리즘</span><span class="report-name">알고리즘 보고서</span></span>
+        <span class="badge badge-soon">준비 중</span>
+      </div>
+      <div class="card report-block is-soon" aria-disabled="true">
+        <span class="report-text"><span class="report-kind">EDA</span><span class="report-name">EDA 보고서</span></span>
+        <span class="badge badge-soon">준비 중</span>
+      </div>
+    </div>
+  </main>
+  <section class="report-view" id="reportView" hidden>
+    <div class="report-bar">
+      <button class="link-button report-back" id="reportBack">보고서 목록</button>
+      <span class="report-bar-title" id="reportViewTitle"></span>
+      <span class="badge badge-sim" id="reportViewBadge" hidden></span>
+      <a class="link-button report-open" id="reportOpen" target="_blank" rel="noopener">새 창으로 열기</a>
+    </div>
+    <iframe class="report-frame" id="reportFrame" title="보고서"></iframe>
+  </section>
+  </div>
+
+  <script src="demo/data.js?v=20261029e"></script>
+  <script src="shell.js?v=20261029e"></script>
+  <script src="app.js?v=20261029e"></script>
+  <script src="eval.js?v=20261029e"></script>
 </body>
 </html>

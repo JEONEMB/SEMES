@@ -436,3 +436,34 @@ button { font: inherit; color: inherit; }
   .col-steps .timeline-card { padding: 14px 16px; }
   .col-steps .timeline-card .card-head { margin-bottom: 8px; }
 }
+
+/* ---------- report tab ---------- */
+.report-wrap { max-width: 1600px; margin: 0 auto; padding: 28px 32px 32px; }
+.report-head { margin-bottom: 18px; }
+.report-title { margin: 0; font-size: 24px; font-weight: 800; }
+.report-grid { display: flex; flex-direction: column; gap: 12px; }
+.report-block {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 18px 24px;
+  text-align: left; font: inherit; color: inherit; border: 1px solid transparent; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+}
+button.report-block:hover, button.report-block:focus-visible { border-color: var(--blue); box-shadow: 0 2px 10px rgba(29, 78, 216, 0.10); outline: none; }
+.report-block.is-soon { cursor: default; background: #fafbfc; }
+.report-block.is-soon .report-name { color: var(--muted); }
+.report-text { display: flex; flex-direction: column; gap: 4px; }
+.report-kind { font-size: 12px; font-weight: 700; color: var(--blue); }
+.report-name { font-size: 18px; font-weight: 700; }
+.badge-soon { color: var(--muted); background: var(--bg); }
+/* 화면 아래까지 채운다. 넓은 화면의 html zoom 0.8 에서도 vh 계산 없이 맞도록 고정 배치 */
+.report-view { display: flex; flex-direction: column; position: fixed; top: 65px; left: 0; right: 0; bottom: 0; }
+.report-view[hidden] { display: none; }
+.report-bar { display: flex; align-items: center; gap: 16px; padding: 10px 32px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.report-back { margin-left: 0; }
+.report-bar-title { font-weight: 700; }
+.report-bar .badge-sim { color: #8a4b00; background: #fff7ea; }
+.report-open { margin-left: auto; text-decoration: none; font-size: 13px; }
+.report-frame { flex: 1; width: 100%; border: 0; background: var(--surface); }
+@media (max-width: 720px) {
+  .report-wrap { padding: 20px 16px; }
+  .report-block { padding: 14px 16px; }
+  .report-bar { padding: 10px 16px; }
+}
