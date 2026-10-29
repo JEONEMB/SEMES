@@ -1,24 +1,30 @@
 %YAML:1.0
 ---
 # alignment() 설정 — 값은 모두 여기서 바꾼다 (코드 수정 불필요)
-# 모델 계수와 배경 ROI 는 QR_Image 연구 프로젝트 H5 단계(1차 첫 번째 측정, 블록 교차검증)의 학습 결과 roi_selected.yml 에서 옮김
+# 배경 ROI = QR_Image 연구 프로젝트 H5 (roi_selected.yml), 정렬·보간·식 차수와 계수 = 실험계획 DOE (results/verify/DOE) — 모두 1차 첫 번째 측정만으로 학습
 
 # 기준(티칭) 사진 : 목표 자세에서 찍은 사진. 상대 경로는 실행 폴더 → 이 설정 파일 폴더 순으로 찾음
 reference_path: "../QR_Image/img/center.bmp"
 image_width_px: 3840
 image_height_px: 2160
 
-# ① 거친 이동 : 플레이트 주변 창 (기준 사진 좌표)
+# ① Coarse Alignment (대략 정렬) : 플레이트 주변 창의 위상 상관 (기준 사진 좌표)
 coarse:
    center_x_px: 1901
    center_y_px: 1068
    width_px: 900
    height_px: 400
 
-# ② 정밀 이동
+# ② Fine Alignment (정밀 정렬) — 실험계획 2 (보간 6종 × 가우시안 σ 4수준) 에서 교차검증 J 최소
 wide_window_scale: 2       # 배경 ROI 의 위상 상관 창 = ROI 반폭 × 이 값
-qr_max_dev_px: 15.0        # QR 이 거친 이동에서 이 이상 벗어나면 실패 (이웃 QR 에 붙음)
-ecc:
+qr_max_dev_px: 15.0        # QR 이 Coarse 결과에서 이 이상 벗어나면 실패 (이웃 QR 에 붙음)
+fine:
+   method: "icgn"          # icgn = 평행이동 IC-GN (ZNSSD) / opencv_ecc = cv::findTransformECC (선형 보간 + 5×5 가우시안, 이전 방식)
+   kernel: "omoms3"        # linear, keys05, keys075, lanczos3, bspline3, omoms3
+   gauss_sigma_px: 0.0     # 가우시안 사전 필터 σ (0 = 안 씀)
+   max_iter: 60
+   eps_px: 1.0e-05
+ecc:                       # method: opencv_ecc 일 때만 사용
    max_iter: 100
    eps: 1.0e-07
 
@@ -32,18 +38,19 @@ background_rois:
    - { name: W2, cx_px: 2867, cy_px: 1357, hw_px: 60 }
    - { name: W3, cx_px: 1010, cy_px: 1677, hw_px: 60 }
 
-# ④ 특징 = c + a·Y[mm] + b·Θ[°]
+# ④ 특징 = c + a·Y[mm] + Σ_k b_k·Θ[°]^k  — 실험계획 3 (Θ 1·2·3차 9조합) 에서 교차검증 J 최소 : s = Θ 3차, d = Θ 2차
+#    학습 : 1차 첫 번째 측정 사진만 (DOE 측정 "e2_omoms3_s0.0"), sigma = 학습 잔차 (가중 = 1/σ²)
 model:
    s:
-      c_px: -5.6943191271208005e-01
-      a_px_per_mm: 1.4138594264531214e+01
-      b_px_per_deg: 8.0061006169381670e+01
-      sigma_px: 2.3145305211886752e-01
+      c_px: -4.5866473986311890e-01
+      a_px_per_mm: 1.4137348279581241e+01
+      theta_px_per_deg_k: [ 7.9606480471112235e+01, -3.8578336039235578e-01, 7.4586722478290568e-01 ]
+      sigma_px: 1.6855229940446589e-01
    d:
-      c_px: -1.0732004766375042e-01
-      a_px_per_mm: 3.0886912872529706e+00
-      b_px_per_deg: -1.2127150658701924e+00
-      sigma_px: 4.0399491135029733e-02
+      c_px: -9.7496807421145998e-02
+      a_px_per_mm: 3.0937267964338035e+00
+      theta_px_per_deg_k: [ -1.2237465146258748e+00, -4.2230301475275393e-02 ]
+      sigma_px: 3.3769940672244501e-02
 
 # ---------------------------------------------------------------- main.cpp 실행용
 demo_image: "../QR_Image/img/Y+0.50 T+0.10 (2).bmp"   # 인자 없이 실행할 때 쓰는 사진
