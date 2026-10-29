@@ -70,6 +70,20 @@ endforeach()
 
 get_filename_component(joint_assets_abs   "${SEMES_JOINT_ASSETS}"   ABSOLUTE BASE_DIR "${PROJECT_SOURCE_DIR}")
 get_filename_component(control_assets_abs "${SEMES_CONTROL_ASSETS}" ABSOLUTE BASE_DIR "${PROJECT_SOURCE_DIR}")
+# 사진 폴더 채점 도구 (웹 평가 탭이 결과 폴더를 읽는다). 기본 모델은 selected_modules.cmake의 채택 모델
+add_executable(benchmark tool/03_benchmark.cpp)
+target_link_libraries(benchmark PRIVATE semes_alignment)
+target_compile_definitions(benchmark PRIVATE NOMINMAX
+    SEMES_JOINT_ASSETS_ABS="${joint_assets_abs}"
+    SEMES_CONTROL_ASSETS_ABS="${control_assets_abs}")
+if(MSVC)
+    target_compile_options(benchmark PRIVATE /utf-8 /EHsc)
+endif()
+add_custom_command(TARGET benchmark POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
+        "$<TARGET_FILE_DIR:benchmark>")
+
 add_test(NAME alignment_module_checks COMMAND alignment_checks
     "${joint_assets_abs}"
     "${control_assets_abs}"
