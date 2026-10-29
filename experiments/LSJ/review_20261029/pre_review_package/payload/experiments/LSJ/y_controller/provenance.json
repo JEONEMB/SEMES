@@ -1,0 +1,29 @@
+{
+  "sources": {
+    "ranges": {
+      "path": "analysis\\zero_equivalence\\without_group4\\equivalence_results.json",
+      "sha256": "d0857c8d2da6ad8d8f673b7615f270136e952615501849f1b029e69bf8171c82"
+    },
+    "slopes": {
+      "path": "analysis\\first_y_slopes\\y_slope_results.json",
+      "sha256": "92d321cd6e7904aef474b45375c3fdff74e78a245bf6dca22848a4e59f0155a1"
+    },
+    "measurements": {
+      "path": "analysis\\initial_error\\measurements.json",
+      "sha256": "60b4322cc9679bc91af9c1a61f819273a2c2bcf03d83705451455e4f90b7943c"
+    }
+  },
+  "config_sha256": "db8b39bb8c02cdfa3c91621ea1768a9cf1b331ccbcb1463141a95b7aca29e97f",
+  "reference_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+  "user_choice": "4번 제외 OLS·HAC 공통 범위 사용",
+  "refit_performed": false,
+  "new_equivalence_analysis": false,
+  "second_dataset_used": false,
+  "range_is_not": [
+    "a geometric QR bounding box",
+    "an extra +/-0.045mm band",
+    "a proven future-frame accuracy guarantee"
+  ],
+  "decision_rule": "Intersect movements satisfying all 3 marker ranges under each of 4 saved Y slopes; choose smallest absolute reachable 0.05mm tick.",
+  "all_slopes_treated_as_possible": "Implementation choice, not a confidence or probability statement."
+}
