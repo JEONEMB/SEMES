@@ -51,6 +51,6 @@ demo_reference: "../QR_Image/img/center1.bmp"          # demo_image 와 같은 �
 eval_dir: "../QR_Image/img"                            # --eval 기본 폴더
 eval_reference_set1: "center"                          # 1차(10/04) 사진의 기준 사진 이름
 eval_reference_set2: "center1"                         # 2차(10/15) 사진의 기준 사진 이름
-tolerance_y_um: 90.0
-tolerance_t_deg: 0.01
+tolerance_y_um: 45.0                                   # 허용 범위 (과제 ±90 µm 의 절반을 기본으로 사용, 2026-10-29)
+tolerance_t_deg: 0.005                                 # (과제 ±0.01° 의 절반)
 display_width_px: 1600                                 # 결과 창 가로 크기
