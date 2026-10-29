@@ -1,0 +1,47 @@
+[
+  {
+    "name": "ctest",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "passed": true,
+    "command": [
+      "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\ctest.exe",
+      "--test-dir",
+      "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\theta_implementation_20261029\\build",
+      "-C",
+      "Release",
+      "--output-on-failure"
+    ]
+  },
+  {
+    "name": "native_reference_and_adapter",
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "passed": true,
+    "command": [
+      "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\theta_implementation_20261029\\build\\Release\\y_alignment_test.exe",
+      "configs/theta_alignment.json",
+      "configs/y_alignment.json",
+      "../reference_path.txt"
+    ]
+  },
+  {
+    "name": "combined_cli",
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "passed": true,
+    "command": [
+      "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\theta_implementation_20261029\\build\\Release\\main.exe",
+      "--reference",
+      "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "--config",
+      "configs/theta_alignment.json",
+      "--y-config",
+      "configs/y_alignment.json",
+      "--input-list",
+      "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\theta_implementation_20261029\\validation\\inputs.txt",
+      "--output",
+      "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\theta_implementation_20261029\\validation\\combined_cli.json"
+    ]
+  }
+]

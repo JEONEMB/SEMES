@@ -1,0 +1,26 @@
+{
+  "all_341_input_hashes_match_saved_inventory": true,
+  "input_size_and_mtime_unchanged_after_run": true,
+  "model_source_and_config_hashes_unchanged": true,
+  "outputs": 341,
+  "model_source_sha256": {
+    "configs/theta_alignment.json": "454dcb52cb82d078fb9f80a236f4ac55e521de608d700cfe5625d55660359e8c",
+    "configs/y_alignment.json": "db8b39bb8c02cdfa3c91621ea1768a9cf1b331ccbcb1463141a95b7aca29e97f",
+    "include/alignment.hpp": "292b121adf22ee07db24520a45ba0a637a17998dd67dbc3100ab2a75ce1b7380",
+    "include/alignment_error.hpp": "886bd45bc687cf1a56d5b1610431efff6d6edeeba7c62fe98c6f6accae97fcab",
+    "include/path_validation.hpp": "248a008f9196665f95e095b7bf3f32bae724520a8bb16722b72b8e6888b169fe",
+    "include/sequential_alignment.hpp": "9a578b45405267d56c955d50851abcfb89d5bf5b3688ec1d9f1020e77bb7fd2f",
+    "include/theta_alignment.hpp": "7e7ec0fff4e8753f92cc466703155c4e4ada7359d596c94ccd35d53973276ece",
+    "include/validation_utils.hpp": "3957d66b9bb76060f40d30381b45faab4b87b23ec82d4fcdb066b779b7f5a485",
+    "include/y_alignment.hpp": "63006afa79ff70efd1ffb20a1b16593b57e453d426a271a7605902c42e12d479",
+    "src/alignment.cpp": "1ce58be66a96f62fed395a1bf890d18070a6baf60513bfa44db7e986386c1625",
+    "src/main.cpp": "8492209ba266cfb9367750ec90c24064973febbae8089668f30ea10101e91095",
+    "src/path_validation.cpp": "0ff1cf265aeebe0d403885f01ae8588b7da13ece56b5190565227df82f31885b",
+    "src/sequential_alignment.cpp": "93b6cbac5fe424f38f38fc26b7391987f819bb4377b653e876a9cd81419b7729",
+    "src/theta_alignment.cpp": "7ab6508d89729fc36bed3ca23befb173d9376b5872f1837faad11e5bc7a0ef89",
+    "src/y_alignment.cpp": "7c25cf1f0d77e1935fd85ca5a6772002ab067cc210e9e3caacb265cab4cba177",
+    "tests/review_regression_test.cpp": "b0fa5828cd4f253bdc4313337a1c6a21dd796dcf2634d95d52f8fe069cd22284",
+    "tests/theta_alignment_test.cpp": "6ceff39d770260ffc9a9ea01d0508b54226113f72d1151c0e64fcaa36015dd6b",
+    "tests/y_alignment_test.cpp": "b35f81b06d61f23b003c4cb2166a7d4aa46c3c036decd39b46c85db89c9b8ee0"
+  }
+}

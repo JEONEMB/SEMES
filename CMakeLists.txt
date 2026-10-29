@@ -1,31 +1,76 @@
 cmake_minimum_required(VERSION 3.15)
-
 project(S15P31A507 LANGUAGES CXX)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# OpenCV 3.4.x
 find_package(OpenCV 3.4 REQUIRED)
+add_library(alignment_core STATIC src/alignment.cpp src/theta_alignment.cpp src/y_alignment.cpp src/sequential_alignment.cpp src/path_validation.cpp)
+target_include_directories(alignment_core PUBLIC ${PROJECT_SOURCE_DIR}/include ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(alignment_core PUBLIC ${OpenCV_LIBS})
+add_executable(main src/main.cpp)
+target_link_libraries(main PRIVATE alignment_core)
+if(MSVC)
+    target_compile_options(alignment_core PRIVATE /utf-8 /W4)
+    target_compile_options(main PRIVATE /utf-8 /W4)
+endif()
 
-file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
-    "${PROJECT_SOURCE_DIR}/src/*.cpp"
-)
+function(copy_opencv_dll target)
+    if(WIN32)
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
+                "$<TARGET_FILE_DIR:${target}>")
+    endif()
+endfunction()
+copy_opencv_dll(main)
 
-add_executable(main ${PROJECT_SOURCES})
-target_include_directories(main PRIVATE
-    ${PROJECT_SOURCE_DIR}/include
-)
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(theta_alignment_test tests/theta_alignment_test.cpp)
+    target_link_libraries(theta_alignment_test PRIVATE alignment_core)
+    if(MSVC)
+        target_compile_options(theta_alignment_test PRIVATE /utf-8 /W4)
+    endif()
+    copy_opencv_dll(theta_alignment_test)
+    add_test(NAME theta_alignment_contract COMMAND theta_alignment_test
+        "configs/theta_alignment.json")
+    set_tests_properties(theta_alignment_contract PROPERTIES WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
-target_link_libraries(main PRIVATE
-    ${OpenCV_LIBS}
-)
+    add_executable(y_alignment_test tests/y_alignment_test.cpp)
+    target_link_libraries(y_alignment_test PRIVATE alignment_core)
+    if(MSVC)
+        target_compile_options(y_alignment_test PRIVATE /utf-8 /W4)
+    endif()
+    copy_opencv_dll(y_alignment_test)
+    add_test(NAME y_alignment_contract COMMAND y_alignment_test configs/theta_alignment.json configs/y_alignment.json)
+    set_tests_properties(y_alignment_contract PROPERTIES WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
-# OpenCV DLL을 실행파일 옆으로 자동 복사
-# Debug   -> opencv_world3415d.dll
-# Release -> opencv_world3415.dll
-add_custom_command(TARGET main POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
-        "$<TARGET_FILE_DIR:main>"
-)
+    add_executable(review_regression_test tests/review_regression_test.cpp)
+    target_link_libraries(review_regression_test PRIVATE alignment_core)
+    if(MSVC)
+        target_compile_options(review_regression_test PRIVATE /utf-8 /W4)
+    endif()
+    copy_opencv_dll(review_regression_test)
+    add_test(NAME review_regressions COMMAND review_regression_test configs/theta_alignment.json configs/y_alignment.json)
+    set_tests_properties(review_regressions PROPERTIES WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
+
+    # Raw images remain external. Only a UTF-8 text file containing the reference path is copied.
+    set(ALIGNMENT_REFERENCE_FILE "" CACHE FILEPATH "Optional UTF-8 file containing the original center.bmp path")
+    if(ALIGNMENT_REFERENCE_FILE)
+        configure_file("${ALIGNMENT_REFERENCE_FILE}" test_reference_path.txt COPYONLY)
+        configure_file(configs/theta_alignment.json test_theta_config.json COPYONLY)
+        configure_file(configs/y_alignment.json test_y_config.json COPYONLY)
+        add_test(NAME native_y_integration COMMAND y_alignment_test test_theta_config.json test_y_config.json test_reference_path.txt)
+        add_test(NAME native_review_integration COMMAND review_regression_test test_theta_config.json test_y_config.json test_reference_path.txt)
+        set_tests_properties(native_y_integration native_review_integration PROPERTIES WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")
+    endif()
+    find_package(Python3 COMPONENTS Interpreter QUIET)
+    if(Python3_Interpreter_FOUND)
+        add_test(NAME review_config_and_path_io COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/tests/review_io_regression.py"
+            --bin "$<TARGET_FILE_DIR:main>" --work "${PROJECT_BINARY_DIR}/review_io_checks")
+        if(ALIGNMENT_REFERENCE_FILE)
+            add_test(NAME native_cli_integration COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/tests/review_native_cli_test.py"
+                --bin "$<TARGET_FILE_DIR:main>" --work "${PROJECT_BINARY_DIR}/native_cli_checks" --reference-file "${ALIGNMENT_REFERENCE_FILE}")
+        endif()
+    endif()
+endif()

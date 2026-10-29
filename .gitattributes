@@ -1,0 +1,7 @@
+# Preserve source bytes and provenance hashes.
+CMakeLists.txt -text
+README.md -text
+src/** -text
+include/** -text
+configs/** -text
+tests/** -text

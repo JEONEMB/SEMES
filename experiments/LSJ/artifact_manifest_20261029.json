@@ -1,0 +1,1195 @@
+{
+  "work_date": "2026-10-29",
+  "git_date": "2026-10-30",
+  "files": [
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/CMakeLists.txt",
+      "destination": "CMakeLists.txt",
+      "sha256": "64a6d6915339c47d42cdc33bc7d44ad0c654e0f0fff8beabc1594bf6707dfe35",
+      "bytes": 4158,
+      "git_file_sha256": "64a6d6915339c47d42cdc33bc7d44ad0c654e0f0fff8beabc1594bf6707dfe35",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/README.md",
+      "destination": "README.md",
+      "sha256": "8a3003f5cb603d93e4ea76fb0edd4d7a53d53e5f69b660d715bd4ee49a3f8e8b",
+      "bytes": 1461,
+      "git_file_sha256": "ea41c99f06537857a2cdf3be9bf77466d3dfc08dc3226c55a6820bd6bac1edaa",
+      "copy_unchanged": false
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/configs/theta_alignment.json",
+      "destination": "configs/theta_alignment.json",
+      "sha256": "454dcb52cb82d078fb9f80a236f4ac55e521de608d700cfe5625d55660359e8c",
+      "bytes": 809,
+      "git_file_sha256": "454dcb52cb82d078fb9f80a236f4ac55e521de608d700cfe5625d55660359e8c",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/configs/y_alignment.json",
+      "destination": "configs/y_alignment.json",
+      "sha256": "db8b39bb8c02cdfa3c91621ea1768a9cf1b331ccbcb1463141a95b7aca29e97f",
+      "bytes": 1568,
+      "git_file_sha256": "db8b39bb8c02cdfa3c91621ea1768a9cf1b331ccbcb1463141a95b7aca29e97f",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/CMakeLists.txt",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/CMakeLists.txt",
+      "sha256": "e0ae99c473a62a2e83e90a6a13d3d47741857c12d1b95ad3e741f1cb175b6c52",
+      "bytes": 845,
+      "git_file_sha256": "e0ae99c473a62a2e83e90a6a13d3d47741857c12d1b95ad3e741f1cb175b6c52",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/benchmark.cpp",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/benchmark.cpp",
+      "sha256": "1cb2d30307698c4fb2d315c263169f93580a73b1e0d009e1cc742fd15e092210",
+      "bytes": 3433,
+      "git_file_sha256": "1cb2d30307698c4fb2d315c263169f93580a73b1e0d009e1cc742fd15e092210",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/build.log",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/build.log",
+      "sha256": "89b835265b64e152359767eea10f042cf1007277967919bc01dbee5256a6136d",
+      "bytes": 821,
+      "git_file_sha256": "89b835265b64e152359767eea10f042cf1007277967919bc01dbee5256a6136d",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/configure.log",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/configure.log",
+      "sha256": "baa17478fc9965fb727e15af1f52fcf44d6d5f3bf2e66a6e3fd9b2572dd09687",
+      "bytes": 970,
+      "git_file_sha256": "baa17478fc9965fb727e15af1f52fcf44d6d5f3bf2e66a6e3fd9b2572dd09687",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/integrity.json",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/integrity.json",
+      "sha256": "247cebf92208cc91f09ab7b2093c489813b238a5cd0b894f77efcd9d875d7967",
+      "bytes": 2049,
+      "git_file_sha256": "247cebf92208cc91f09ab7b2093c489813b238a5cd0b894f77efcd9d875d7967",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/native_results.json",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/native_results.json",
+      "sha256": "c7d206f8b386bd98a2564ac13ad6a52d505c5c481e06693a507703e15d2d16cd",
+      "bytes": 787349,
+      "git_file_sha256": "c7d206f8b386bd98a2564ac13ad6a52d505c5c481e06693a507703e15d2d16cd",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/native_run.log",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/native_run.log",
+      "sha256": "bb436b9bd1334e793f978cf59cf03b6a8981c8c2f7311e51f586c40797a43601",
+      "bytes": 282,
+      "git_file_sha256": "bb436b9bd1334e793f978cf59cf03b6a8981c8c2f7311e51f586c40797a43601",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/report.md",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/report.md",
+      "sha256": "bfd39e933921ea2af014d58d4f1260e01487155f27911266b7d93daaa31f2a08",
+      "bytes": 8057,
+      "git_file_sha256": "bfd39e933921ea2af014d58d4f1260e01487155f27911266b7d93daaa31f2a08",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/results.html",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/results.html",
+      "sha256": "31b9e731e3ba0398fc6269432da2667acd1a9fa6277715c3874585e5d0ab88ed",
+      "bytes": 85296,
+      "git_file_sha256": "31b9e731e3ba0398fc6269432da2667acd1a9fa6277715c3874585e5d0ab88ed",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/run_benchmark.py",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/run_benchmark.py",
+      "sha256": "db357a8910a778cc7e053c264d0cd84f5e6dce5df0931de310c634466204a9bc",
+      "bytes": 6343,
+      "git_file_sha256": "db357a8910a778cc7e053c264d0cd84f5e6dce5df0931de310c634466204a9bc",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/summarize_benchmark.py",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/summarize_benchmark.py",
+      "sha256": "9c19c000f17422b03cbbcbfd2e3a50a40a4a37b0edf7237991c313ba84919b13",
+      "bytes": 17734,
+      "git_file_sha256": "9c19c000f17422b03cbbcbfd2e3a50a40a4a37b0edf7237991c313ba84919b13",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/summary.json",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/summary.json",
+      "sha256": "3765fcaf0c75fdac057a7a4c2ce9d47a01a196a28c3d27d204e17df6d8640dc8",
+      "bytes": 97073,
+      "git_file_sha256": "3765fcaf0c75fdac057a7a4c2ce9d47a01a196a28c3d27d204e17df6d8640dc8",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/summary_console.log",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/summary_console.log",
+      "sha256": "9e652f5910c3099b39ff3419ffbc3b09db03bda91b7a04327d920859909b1ff3",
+      "bytes": 13836,
+      "git_file_sha256": "9e652f5910c3099b39ff3419ffbc3b09db03bda91b7a04327d920859909b1ff3",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-839",
+      "source": "analysis/algorithm_benchmark_20261029/test_manifest.json",
+      "destination": "experiments/LSJ/analysis/algorithm_benchmark_20261029/test_manifest.json",
+      "sha256": "eb3d1896db127c8c28c9367e1c1460b911989560de49732ecef22d1c347b90de",
+      "bytes": 261817,
+      "git_file_sha256": "eb3d1896db127c8c28c9367e1c1460b911989560de49732ecef22d1c347b90de",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/center1_lower_edge_points.npz",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/center1_lower_edge_points.npz",
+      "sha256": "8cd9380dac89c890694af5019862e58568016995473f5a48e84a9c61486a9738",
+      "bytes": 12559,
+      "git_file_sha256": "8cd9380dac89c890694af5019862e58568016995473f5a48e84a9c61486a9738",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/center1_upper_edge_points.npz",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/center1_upper_edge_points.npz",
+      "sha256": "20222ec239c52ad4c2991e85822b79d31c6eaeb495ca0245cb4b3aecb5a1b941",
+      "bytes": 10707,
+      "git_file_sha256": "20222ec239c52ad4c2991e85822b79d31c6eaeb495ca0245cb4b3aecb5a1b941",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/center2_lower_edge_points.npz",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/center2_lower_edge_points.npz",
+      "sha256": "d21758f40775ccdb0fb3b3752807cfde4cc8ec5e84b383194db65c7f6fad77ec",
+      "bytes": 12572,
+      "git_file_sha256": "d21758f40775ccdb0fb3b3752807cfde4cc8ec5e84b383194db65c7f6fad77ec",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/center2_upper_edge_points.npz",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/center2_upper_edge_points.npz",
+      "sha256": "5223fda9eb9c742cfc89978aca24d37d064ce465c5c1ad0dfe6474168e036559",
+      "bytes": 10709,
+      "git_file_sha256": "5223fda9eb9c742cfc89978aca24d37d064ce465c5c1ad0dfe6474168e036559",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/center3_lower_edge_points.npz",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/center3_lower_edge_points.npz",
+      "sha256": "d5c610fecd6c3b4e5938f30234d019885979532c9a6fa4886dd65df5286ab894",
+      "bytes": 12574,
+      "git_file_sha256": "d5c610fecd6c3b4e5938f30234d019885979532c9a6fa4886dd65df5286ab894",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/center3_upper_edge_points.npz",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/center3_upper_edge_points.npz",
+      "sha256": "2eca35138d262106f231f60b9f3a87f64c36bdc12968b763f49f3b2e9ef3237f",
+      "bytes": 10716,
+      "git_file_sha256": "2eca35138d262106f231f60b9f3a87f64c36bdc12968b763f49f3b2e9ef3237f",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/center_lower_edge_points.npz",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/center_lower_edge_points.npz",
+      "sha256": "2a66dcd415c9dc9d7b6c6bb2d0fba56491178019dec737b4a547c27be88d27cb",
+      "bytes": 12551,
+      "git_file_sha256": "2a66dcd415c9dc9d7b6c6bb2d0fba56491178019dec737b4a547c27be88d27cb",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/center_upper_edge_points.npz",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/center_upper_edge_points.npz",
+      "sha256": "cce6e422bd8ee468643e3a9531f39a938d562299381f53c91ede2d5bdc73c9a0",
+      "bytes": 10704,
+      "git_file_sha256": "cce6e422bd8ee468643e3a9531f39a938d562299381f53c91ede2d5bdc73c9a0",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/four_reference_fit_details.png",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/four_reference_fit_details.png",
+      "sha256": "0af20458e4179fe9b74666806ce0eb1744c4e3a3d8489cbe80621c8e64d96be9",
+      "bytes": 837659,
+      "git_file_sha256": "0af20458e4179fe9b74666806ce0eb1744c4e3a3d8489cbe80621c8e64d96be9",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/full_width_results.json",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/full_width_results.json",
+      "sha256": "c9e30a9b5cf6b4558f424e9dfeda27f6d1ccab18bf4acfee74e1fa32608c9bbc",
+      "bytes": 11661,
+      "git_file_sha256": "c9e30a9b5cf6b4558f424e9dfeda27f6d1ccab18bf4acfee74e1fa32608c9bbc",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/inspect_regions.py",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/inspect_regions.py",
+      "sha256": "a149134c51ddf465740ef7b4db65a6c4c92467ce5fef3c36edaf806de167ae59",
+      "bytes": 1308,
+      "git_file_sha256": "a149134c51ddf465740ef7b4db65a6c4c92467ce5fef3c36edaf806de167ae59",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/measure_full_width.py",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/measure_full_width.py",
+      "sha256": "321ee53397729da89ce89e73f6058cf40dd40e89bd08d77d94860cdec8bc52d4",
+      "bytes": 13842,
+      "git_file_sha256": "321ee53397729da89ce89e73f6058cf40dd40e89bd08d77d94860cdec8bc52d4",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/measurement_regions.png",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/measurement_regions.png",
+      "sha256": "e6252c129ce714b5ac7a2325c3c3411f83420799fc9eec947159106dbbe0b199",
+      "bytes": 1090018,
+      "git_file_sha256": "e6252c129ce714b5ac7a2325c3c3411f83420799fc9eec947159106dbbe0b199",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/reference_bands_inspection.png",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/reference_bands_inspection.png",
+      "sha256": "c7bec1d0794a4b84c1b8d6c90e2cb4ce7e70c6c8e7bbe7b068b38e1fa645fb59",
+      "bytes": 625709,
+      "git_file_sha256": "c7bec1d0794a4b84c1b8d6c90e2cb4ce7e70c6c8e7bbe7b068b38e1fa645fb59",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_full_width_20261029/report.md",
+      "destination": "experiments/LSJ/analysis/reference_full_width_20261029/report.md",
+      "sha256": "df6f453f1dd0b8f7ab71c22e63cfc08c5d5707ff3b9a99846072063be9ce39ba",
+      "bytes": 3550,
+      "git_file_sha256": "df6f453f1dd0b8f7ab71c22e63cfc08c5d5707ff3b9a99846072063be9ce39ba",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-841",
+      "source": "analysis/reference_qr_finder_20261029/finder_lines_4references.png",
+      "destination": "experiments/LSJ/analysis/reference_qr_finder_20261029/finder_lines_4references.png",
+      "sha256": "cb896fd396576933a8ed32ebcac9199035b4c109a5b715e9be1d72e263ef51b9",
+      "bytes": 1229124,
+      "git_file_sha256": "cb896fd396576933a8ed32ebcac9199035b4c109a5b715e9be1d72e263ef51b9",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-841",
+      "source": "analysis/reference_qr_finder_20261029/finder_results.json",
+      "destination": "experiments/LSJ/analysis/reference_qr_finder_20261029/finder_results.json",
+      "sha256": "08d5ffbf7c9e66eee010bc0c1b4c84eb21b4433bf3b94dc01fec1caee0097b70",
+      "bytes": 60724,
+      "git_file_sha256": "08d5ffbf7c9e66eee010bc0c1b4c84eb21b4433bf3b94dc01fec1caee0097b70",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-841",
+      "source": "analysis/reference_qr_finder_20261029/measure_finders.py",
+      "destination": "experiments/LSJ/analysis/reference_qr_finder_20261029/measure_finders.py",
+      "sha256": "520e3dcd746c7399dbadae7922d2df879427c3ac1f79541a6566f97d8ded848e",
+      "bytes": 9612,
+      "git_file_sha256": "520e3dcd746c7399dbadae7922d2df879427c3ac1f79541a6566f97d8ded848e",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-841",
+      "source": "analysis/reference_qr_finder_20261029/report.txt",
+      "destination": "experiments/LSJ/analysis/reference_qr_finder_20261029/report.txt",
+      "sha256": "202b2b19b92c790ca658b1cafe1472b934dadd432441e2f95fcba54ff3a363e1",
+      "bytes": 3783,
+      "git_file_sha256": "202b2b19b92c790ca658b1cafe1472b934dadd432441e2f95fcba54ff3a363e1",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-841",
+      "source": "analysis/reference_qr_finder_20261029/summarize_finders.py",
+      "destination": "experiments/LSJ/analysis/reference_qr_finder_20261029/summarize_finders.py",
+      "sha256": "5af5ce053e8f23be04478ecef44bc95ece90abd5352a182f4521be007f9bb438",
+      "bytes": 3993,
+      "git_file_sha256": "5af5ce053e8f23be04478ecef44bc95ece90abd5352a182f4521be007f9bb438",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_slope_check_20261029/check_reference_slopes.py",
+      "destination": "experiments/LSJ/analysis/reference_slope_check_20261029/check_reference_slopes.py",
+      "sha256": "4eeedfb512e953872da6bd90ce2474093dcbd520a25fda5bb7aef6fc286f2cc4",
+      "bytes": 8350,
+      "git_file_sha256": "4eeedfb512e953872da6bd90ce2474093dcbd520a25fda5bb7aef6fc286f2cc4",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_slope_check_20261029/input_paths.txt",
+      "destination": "experiments/LSJ/analysis/reference_slope_check_20261029/input_paths.txt",
+      "sha256": "c6e813f5100a62621e316b016b47e9b037585959bbe5dc173449281b508a4127",
+      "bytes": 540,
+      "git_file_sha256": "c6e813f5100a62621e316b016b47e9b037585959bbe5dc173449281b508a4127",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_slope_check_20261029/native_reference_results.json",
+      "destination": "experiments/LSJ/analysis/reference_slope_check_20261029/native_reference_results.json",
+      "sha256": "8870faa60d0b6e448e92125668e1860065aacc994c3e9caaeba229885fd3ab87",
+      "bytes": 6893,
+      "git_file_sha256": "8870faa60d0b6e448e92125668e1860065aacc994c3e9caaeba229885fd3ab87",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_slope_check_20261029/reference_slope_results.json",
+      "destination": "experiments/LSJ/analysis/reference_slope_check_20261029/reference_slope_results.json",
+      "sha256": "5a25d88cdc3264b6675e01f99d30d1e0e8677fc9c14a461e915dc4bc3e1be289",
+      "bytes": 8081,
+      "git_file_sha256": "5a25d88cdc3264b6675e01f99d30d1e0e8677fc9c14a461e915dc4bc3e1be289",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_slope_check_20261029/report.md",
+      "destination": "experiments/LSJ/analysis/reference_slope_check_20261029/report.md",
+      "sha256": "2be46843a53dfada4332a532904697f7e2a73d6d7137afd00b8fbfc186919391",
+      "bytes": 2598,
+      "git_file_sha256": "2be46843a53dfada4332a532904697f7e2a73d6d7137afd00b8fbfc186919391",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-840",
+      "source": "analysis/reference_slope_check_20261029/run.log",
+      "destination": "experiments/LSJ/analysis/reference_slope_check_20261029/run.log",
+      "sha256": "81ec1f3b74e59411c515a8b198bba50c5a2e14554e470fdb647cbdb35fc8c365",
+      "bytes": 34,
+      "git_file_sha256": "81ec1f3b74e59411c515a8b198bba50c5a2e14554e470fdb647cbdb35fc8c365",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/corrected_sidecars/Y+0.05 T+0.57/Y+0.05 T+0.57 (1).txt",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/corrected_sidecars/Y+0.05 T+0.57/Y+0.05 T+0.57 (1).txt",
+      "sha256": "8717c42378b6886a54138dd534335b1cec14c808423004615d335243b382346e",
+      "bytes": 33,
+      "git_file_sha256": "8717c42378b6886a54138dd534335b1cec14c808423004615d335243b382346e",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/corrected_sidecars/Y+0.05 T+0.57/Y+0.05 T+0.57 (2).txt",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/corrected_sidecars/Y+0.05 T+0.57/Y+0.05 T+0.57 (2).txt",
+      "sha256": "8717c42378b6886a54138dd534335b1cec14c808423004615d335243b382346e",
+      "bytes": 33,
+      "git_file_sha256": "8717c42378b6886a54138dd534335b1cec14c808423004615d335243b382346e",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/corrected_sidecars/Y+0.05 T+0.57/Y+0.05 T+0.57 (3).txt",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/corrected_sidecars/Y+0.05 T+0.57/Y+0.05 T+0.57 (3).txt",
+      "sha256": "8717c42378b6886a54138dd534335b1cec14c808423004615d335243b382346e",
+      "bytes": 33,
+      "git_file_sha256": "8717c42378b6886a54138dd534335b1cec14c808423004615d335243b382346e",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/inspect_dataset.py",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/inspect_dataset.py",
+      "sha256": "5dd96c3caa9470d686a6da80bc88c87d05a7cb262910fb090dec36a11801d2f8",
+      "bytes": 10232,
+      "git_file_sha256": "5dd96c3caa9470d686a6da80bc88c87d05a7cb262910fb090dec36a11801d2f8",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/inventory.json",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/inventory.json",
+      "sha256": "ce3f333aa192dd0ee212deb0238def083d803de435b28f3a4b844f6c09e62b1c",
+      "bytes": 238339,
+      "git_file_sha256": "ce3f333aa192dd0ee212deb0238def083d803de435b28f3a4b844f6c09e62b1c",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/label_corrections.json",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/label_corrections.json",
+      "sha256": "eb5960f62fde153ecaf8c2e75b65513e70c982e7ee3d5b6f87bb98e815b47dce",
+      "bytes": 2366,
+      "git_file_sha256": "eb5960f62fde153ecaf8c2e75b65513e70c982e7ee3d5b6f87bb98e815b47dce",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/report.txt",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/report.txt",
+      "sha256": "0da26c2ca6a9499345cf043b96b012f0ea74241bb2ee02b2ff27925febecfba2",
+      "bytes": 7120,
+      "git_file_sha256": "0da26c2ca6a9499345cf043b96b012f0ea74241bb2ee02b2ff27925febecfba2",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/sample_visibility.png",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/sample_visibility.png",
+      "sha256": "3330e9765dd1aeaef62f6bc659248bda0ed304d04d1ee8afca4a0a58ed0792e1",
+      "bytes": 883167,
+      "git_file_sha256": "3330e9765dd1aeaef62f6bc659248bda0ed304d04d1ee8afca4a0a58ed0792e1",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/select_validation_inputs.py",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/select_validation_inputs.py",
+      "sha256": "909e9253df4c2fd9fad2b0e983ebec77458f6370b491bf884e3c7f785e993e03",
+      "bytes": 3762,
+      "git_file_sha256": "909e9253df4c2fd9fad2b0e983ebec77458f6370b491bf884e3c7f785e993e03",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "analysis/third_data_inspection/validation_selection.json",
+      "destination": "experiments/LSJ/analysis/third_data_inspection/validation_selection.json",
+      "sha256": "89143d265a1a013bba3d058e0a54505b3fe728bf2a1120fe937fe718a7c423ff",
+      "bytes": 212312,
+      "git_file_sha256": "89143d265a1a013bba3d058e0a54505b3fe728bf2a1120fe937fe718a7c423ff",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-843",
+      "source": "jira&gitlab.md",
+      "destination": "experiments/LSJ/gitlab_workflow.md",
+      "sha256": "62036d068aed08ad5691a4e91115d089a261645c8d339fafe740e4a92cac899a",
+      "bytes": 2876,
+      "git_file_sha256": "62036d068aed08ad5691a4e91115d089a261645c8d339fafe740e4a92cac899a",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_Claude통합전달본.txt",
+      "destination": "experiments/LSJ/review_20261029/claude_handoff.historical.txt",
+      "sha256": "bbcc32f1e7ade17a91e654032b5583be683d35ea05bcdd4fc32d5f4278f82634",
+      "bytes": 120402,
+      "git_file_sha256": "bbcc32f1e7ade17a91e654032b5583be683d35ea05bcdd4fc32d5f4278f82634",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/00_검증요청서.md",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/00_검증요청서.md",
+      "sha256": "ba58311f55de33d3fe5101d7ed205bd9855e65f0348868fdb89c6e71c735cdd0",
+      "bytes": 17812,
+      "git_file_sha256": "ba58311f55de33d3fe5101d7ed205bd9855e65f0348868fdb89c6e71c735cdd0",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/01_검증파일목록.md",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/01_검증파일목록.md",
+      "sha256": "d06aff597608478be095b9727e30ea39fa555e78e51d84ba48e83f728a08bfd9",
+      "bytes": 5478,
+      "git_file_sha256": "d06aff597608478be095b9727e30ea39fa555e78e51d84ba48e83f728a08bfd9",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/02_실행방법.md",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/02_실행방법.md",
+      "sha256": "d0fac9bc56c1ca7e882c50cc9889d5936f6acc744dd67538ddb1c7cbe0dcedf2",
+      "bytes": 5988,
+      "git_file_sha256": "d0fac9bc56c1ca7e882c50cc9889d5936f6acc744dd67538ddb1c7cbe0dcedf2",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/Claude_시작메시지.txt",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/Claude_시작메시지.txt",
+      "sha256": "abfc6aaaf0a9acbb3826fdc2040dadb69d2e5a115c4063b64c9e931222c5fa75",
+      "bytes": 1424,
+      "git_file_sha256": "abfc6aaaf0a9acbb3826fdc2040dadb69d2e5a115c4063b64c9e931222c5fa75",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/baseline_dev/CMakeLists.txt",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/baseline_dev/CMakeLists.txt",
+      "sha256": "0cc9087b8d4bc8c44812454d8c915b9c56d54f33c73355753d951ca4566633b2",
+      "bytes": 781,
+      "git_file_sha256": "0cc9087b8d4bc8c44812454d8c915b9c56d54f33c73355753d951ca4566633b2",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/baseline_dev/include/alignment.hpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/baseline_dev/include/alignment.hpp",
+      "sha256": "ae3c1e11c238692cfb1f3fec010e88cdc137674623a342e983f2c5a995a178d6",
+      "bytes": 259,
+      "git_file_sha256": "ae3c1e11c238692cfb1f3fec010e88cdc137674623a342e983f2c5a995a178d6",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/baseline_dev/src/alignment.cpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/baseline_dev/src/alignment.cpp",
+      "sha256": "dd80e49fe7b19425495654787ea3b2495f9d41f8e8c17a419ed3a2db81a0dad1",
+      "bytes": 337,
+      "git_file_sha256": "dd80e49fe7b19425495654787ea3b2495f9d41f8e8c17a419ed3a2db81a0dad1",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/baseline_dev/src/main.cpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/baseline_dev/src/main.cpp",
+      "sha256": "e7b73df96299cd1daec7e5645e3705a918f0467e2002d42925bb54ae532d178c",
+      "bytes": 711,
+      "git_file_sha256": "e7b73df96299cd1daec7e5645e3705a918f0467e2002d42925bb54ae532d178c",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/context/calibration_excerpt.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/context/calibration_excerpt.json",
+      "sha256": "50f3a26706d09882545e93941c15b60c87bddc20e8fea4bc9027e95c69610a64",
+      "bytes": 7198,
+      "git_file_sha256": "50f3a26706d09882545e93941c15b60c87bddc20e8fea4bc9027e95c69610a64",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/context/reference_path.txt",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/context/reference_path.txt",
+      "sha256": "4b96468a5607a14c8da261c6a58f08392bd11b99ac9172a41da3cf8c1d853d38",
+      "bytes": 124,
+      "git_file_sha256": "4b96468a5607a14c8da261c6a58f08392bd11b99ac9172a41da3cf8c1d853d38",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/context/source_analysis/first_y_slopes/y_slope_results.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/context/source_analysis/first_y_slopes/y_slope_results.json",
+      "sha256": "92d321cd6e7904aef474b45375c3fdff74e78a245bf6dca22848a4e59f0155a1",
+      "bytes": 135010,
+      "git_file_sha256": "92d321cd6e7904aef474b45375c3fdff74e78a245bf6dca22848a4e59f0155a1",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/context/source_analysis/initial_error/analyze_images.py",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/context/source_analysis/initial_error/analyze_images.py",
+      "sha256": "ab79c6b70d86f412af205ca5ee9ae98e8abcedb910e5b12819e72fb5db2fdad3",
+      "bytes": 5834,
+      "git_file_sha256": "ab79c6b70d86f412af205ca5ee9ae98e8abcedb910e5b12819e72fb5db2fdad3",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/context/source_analysis/theta_line_hypothesis/measure_lines.py",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/context/source_analysis/theta_line_hypothesis/measure_lines.py",
+      "sha256": "3fb65025bfe545608cb43415d71deb04921c4699db17a9c4bf8ba495537efce2",
+      "bytes": 12304,
+      "git_file_sha256": "3fb65025bfe545608cb43415d71deb04921c4699db17a9c4bf8ba495537efce2",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/context/source_analysis/zero_equivalence/without_group4/equivalence_results.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/context/source_analysis/zero_equivalence/without_group4/equivalence_results.json",
+      "sha256": "d0857c8d2da6ad8d8f673b7615f270136e952615501849f1b029e69bf8171c82",
+      "bytes": 49461,
+      "git_file_sha256": "d0857c8d2da6ad8d8f673b7615f270136e952615501849f1b029e69bf8171c82",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/context/stage_helpers/export_y_config.py",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/context/stage_helpers/export_y_config.py",
+      "sha256": "efe7e8eb2bbc5c26017d403ae36df7e3dfa111ad706ac66eefb28375ad36ec9d",
+      "bytes": 3096,
+      "git_file_sha256": "efe7e8eb2bbc5c26017d403ae36df7e3dfa111ad706ac66eefb28375ad36ec9d",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/context/stage_helpers/verify_y_implementation.py",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/context/stage_helpers/verify_y_implementation.py",
+      "sha256": "6841fbcdea734de79a6b12eac07f789ffce4675e4f88c6e1219666734119115a",
+      "bytes": 5333,
+      "git_file_sha256": "6841fbcdea734de79a6b12eac07f789ffce4675e4f88c6e1219666734119115a",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/evidence/combined_cli.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/evidence/combined_cli.json",
+      "sha256": "1a123d53d3e8b1c8aaf09ccb5939cfa8fb8a7e7e239aac66c266a6b9a1c4d998",
+      "bytes": 8049,
+      "git_file_sha256": "1a123d53d3e8b1c8aaf09ccb5939cfa8fb8a7e7e239aac66c266a6b9a1c4d998",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/evidence/combined_cli.log",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/evidence/combined_cli.log",
+      "sha256": "edcf0e2a4bf794cf467004f17923e427d032a84f2f9d984ab4703482b42da07f",
+      "bytes": 34,
+      "git_file_sha256": "edcf0e2a4bf794cf467004f17923e427d032a84f2f9d984ab4703482b42da07f",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/evidence/commands.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/evidence/commands.json",
+      "sha256": "8172de2117cc79945a67186fa5629abc41e254924ce19e23f1b0a4f1692ed1f9",
+      "bytes": 1689,
+      "git_file_sha256": "8172de2117cc79945a67186fa5629abc41e254924ce19e23f1b0a4f1692ed1f9",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/evidence/ctest.log",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/evidence/ctest.log",
+      "sha256": "6797dde00f91ec1eb8ff7af00b5a14ce48042efbbd9961e6584f28a5beb115af",
+      "bytes": 390,
+      "git_file_sha256": "6797dde00f91ec1eb8ff7af00b5a14ce48042efbbd9961e6584f28a5beb115af",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/evidence/inputs.txt",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/evidence/inputs.txt",
+      "sha256": "bce2b6573128beb370ab0eaf6d471f68a2c684e9a0a85f1c4de1be86f19db639",
+      "bytes": 531,
+      "git_file_sha256": "bce2b6573128beb370ab0eaf6d471f68a2c684e9a0a85f1c4de1be86f19db639",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/evidence/native_reference_and_adapter.log",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/evidence/native_reference_and_adapter.log",
+      "sha256": "8722c8ec20d44a2c7a684ca6c38c4aa988f69f3e6188c0dc76a2b851546e30c2",
+      "bytes": 197,
+      "git_file_sha256": "8722c8ec20d44a2c7a684ca6c38c4aa988f69f3e6188c0dc76a2b851546e30c2",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/manifest.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/manifest.json",
+      "sha256": "b4cf7c897d8aff527dade46fd62dacff04dcdecdf7e0e52eae3fb2348d296f77",
+      "bytes": 13778,
+      "git_file_sha256": "b4cf7c897d8aff527dade46fd62dacff04dcdecdf7e0e52eae3fb2348d296f77",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/CMakeLists.txt",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/CMakeLists.txt",
+      "sha256": "71411d7779ff628526c8cbea57e0521d9134ae569495e30e24193751f955583a",
+      "bytes": 2039,
+      "git_file_sha256": "71411d7779ff628526c8cbea57e0521d9134ae569495e30e24193751f955583a",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/README.md",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/README.md",
+      "sha256": "8a3003f5cb603d93e4ea76fb0edd4d7a53d53e5f69b660d715bd4ee49a3f8e8b",
+      "bytes": 1461,
+      "git_file_sha256": "8a3003f5cb603d93e4ea76fb0edd4d7a53d53e5f69b660d715bd4ee49a3f8e8b",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/configs/theta_alignment.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/configs/theta_alignment.json",
+      "sha256": "454dcb52cb82d078fb9f80a236f4ac55e521de608d700cfe5625d55660359e8c",
+      "bytes": 809,
+      "git_file_sha256": "454dcb52cb82d078fb9f80a236f4ac55e521de608d700cfe5625d55660359e8c",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/configs/y_alignment.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/configs/y_alignment.json",
+      "sha256": "db8b39bb8c02cdfa3c91621ea1768a9cf1b331ccbcb1463141a95b7aca29e97f",
+      "bytes": 1568,
+      "git_file_sha256": "db8b39bb8c02cdfa3c91621ea1768a9cf1b331ccbcb1463141a95b7aca29e97f",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/experiments/LSJ/theta_controller/README.md",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/experiments/LSJ/theta_controller/README.md",
+      "sha256": "34af46ed24416988d49c3843c52fab372c1d0444e4706bef7bbf1e9105d61b7c",
+      "bytes": 1957,
+      "git_file_sha256": "34af46ed24416988d49c3843c52fab372c1d0444e4706bef7bbf1e9105d61b7c",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/experiments/LSJ/theta_controller/provenance.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/experiments/LSJ/theta_controller/provenance.json",
+      "sha256": "bfb7e14e61958e7b1f08d63a856ed51e79473fedbe74308f7957ea878b6b42d3",
+      "bytes": 830,
+      "git_file_sha256": "bfb7e14e61958e7b1f08d63a856ed51e79473fedbe74308f7957ea878b6b42d3",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/experiments/LSJ/y_controller/README.md",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/experiments/LSJ/y_controller/README.md",
+      "sha256": "6fa0c0ce5225e3b3f766f27e48c8a52469ac4a0786320a38cfd0f7d7e28f80f0",
+      "bytes": 8223,
+      "git_file_sha256": "6fa0c0ce5225e3b3f766f27e48c8a52469ac4a0786320a38cfd0f7d7e28f80f0",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/experiments/LSJ/y_controller/provenance.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/experiments/LSJ/y_controller/provenance.json",
+      "sha256": "ed6c1e93cbce255025f6fdfd09e0fffe52a5b717f4a3a8073efb36e0e0135d13",
+      "bytes": 1318,
+      "git_file_sha256": "ed6c1e93cbce255025f6fdfd09e0fffe52a5b717f4a3a8073efb36e0e0135d13",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/experiments/LSJ/y_controller/validation_summary.json",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/experiments/LSJ/y_controller/validation_summary.json",
+      "sha256": "6601a3ead8fb6c1bf0836bccbad770c00faeacd79597bb84beb9e1531b8f3d34",
+      "bytes": 2556,
+      "git_file_sha256": "6601a3ead8fb6c1bf0836bccbad770c00faeacd79597bb84beb9e1531b8f3d34",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/include/alignment.hpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/include/alignment.hpp",
+      "sha256": "2bfe52198428762a11e84777866385bc02055f8e8deacf605f6cc17a13e6833a",
+      "bytes": 1218,
+      "git_file_sha256": "2bfe52198428762a11e84777866385bc02055f8e8deacf605f6cc17a13e6833a",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/include/sequential_alignment.hpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/include/sequential_alignment.hpp",
+      "sha256": "a3891821a44c4c602493565bcd470e8c0170d94e46a463aba5f4c37c325dcdee",
+      "bytes": 1175,
+      "git_file_sha256": "a3891821a44c4c602493565bcd470e8c0170d94e46a463aba5f4c37c325dcdee",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/include/theta_alignment.hpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/include/theta_alignment.hpp",
+      "sha256": "313e4629fa5eb814fcd0fb8105a2ae6b59384188089acce5d156c8fd22e0da0e",
+      "bytes": 2285,
+      "git_file_sha256": "313e4629fa5eb814fcd0fb8105a2ae6b59384188089acce5d156c8fd22e0da0e",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/include/y_alignment.hpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/include/y_alignment.hpp",
+      "sha256": "5f2184c6384687a8c05a1f668f867c5fd75e9b666592d0293335dc2380edb6e9",
+      "bytes": 1303,
+      "git_file_sha256": "5f2184c6384687a8c05a1f668f867c5fd75e9b666592d0293335dc2380edb6e9",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/src/alignment.cpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/src/alignment.cpp",
+      "sha256": "3b7fce236437954417b70d1709291eb953a0eff60ef27e0a0fe23ce3f5f323c5",
+      "bytes": 1767,
+      "git_file_sha256": "3b7fce236437954417b70d1709291eb953a0eff60ef27e0a0fe23ce3f5f323c5",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/src/main.cpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/src/main.cpp",
+      "sha256": "1c5a656571085e8c9d1e7620d1fcaae3a1a52a67eed6a9c28f9daea0841b5cdd",
+      "bytes": 5040,
+      "git_file_sha256": "1c5a656571085e8c9d1e7620d1fcaae3a1a52a67eed6a9c28f9daea0841b5cdd",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/src/sequential_alignment.cpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/src/sequential_alignment.cpp",
+      "sha256": "027d89e70be78d7ca99e0c1a3f1a83a935c9dab1375607e61988c4dec7ba93d5",
+      "bytes": 3010,
+      "git_file_sha256": "027d89e70be78d7ca99e0c1a3f1a83a935c9dab1375607e61988c4dec7ba93d5",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/src/theta_alignment.cpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/src/theta_alignment.cpp",
+      "sha256": "1a10d2dc6805f4ec7650337d50be6864cc28d97345548b9aca2043a291907e39",
+      "bytes": 16511,
+      "git_file_sha256": "1a10d2dc6805f4ec7650337d50be6864cc28d97345548b9aca2043a291907e39",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/src/y_alignment.cpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/src/y_alignment.cpp",
+      "sha256": "d452ca013c90b61431d20bb68ccb4cc9c5f62ba8f85a17ed8699b978ca889f88",
+      "bytes": 9401,
+      "git_file_sha256": "d452ca013c90b61431d20bb68ccb4cc9c5f62ba8f85a17ed8699b978ca889f88",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/tests/theta_alignment_test.cpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/tests/theta_alignment_test.cpp",
+      "sha256": "6ceff39d770260ffc9a9ea01d0508b54226113f72d1151c0e64fcaa36015dd6b",
+      "bytes": 4861,
+      "git_file_sha256": "6ceff39d770260ffc9a9ea01d0508b54226113f72d1151c0e64fcaa36015dd6b",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-837",
+      "source": "claude_코드검증용/20261029_θY순차정렬_코드검증/payload/tests/y_alignment_test.cpp",
+      "destination": "experiments/LSJ/review_20261029/pre_review_package/payload/tests/y_alignment_test.cpp",
+      "sha256": "b35f81b06d61f23b003c4cb2166a7d4aa46c3c036decd39b46c85db89c9b8ee0",
+      "bytes": 8551,
+      "git_file_sha256": "b35f81b06d61f23b003c4cb2166a7d4aa46c3c036decd39b46c85db89c9b8ee0",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/experiments/LSJ/review_fixes/README.md",
+      "destination": "experiments/LSJ/review_fixes/README.md",
+      "sha256": "94cc0e1b66d2dc3b6710fbfdd96dd18e72fa3f7cfda72bcfbd3e259cd5012f36",
+      "bytes": 7050,
+      "git_file_sha256": "94cc0e1b66d2dc3b6710fbfdd96dd18e72fa3f7cfda72bcfbd3e259cd5012f36",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/review_fix_20261029/build.stderr.log",
+      "destination": "experiments/LSJ/review_fixes/evidence/build.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "git_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/review_fix_20261029/build.stdout.log",
+      "destination": "experiments/LSJ/review_fixes/evidence/build.stdout.log",
+      "sha256": "107a67c010fc32ffa46ff84b2bdc1e796dfa1bbaf06defef4ddeac6e4a2e358e",
+      "bytes": 962,
+      "git_file_sha256": "107a67c010fc32ffa46ff84b2bdc1e796dfa1bbaf06defef4ddeac6e4a2e358e",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/review_fix_20261029/configure.stderr.log",
+      "destination": "experiments/LSJ/review_fixes/evidence/configure.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "git_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/review_fix_20261029/configure.stdout.log",
+      "destination": "experiments/LSJ/review_fixes/evidence/configure.stdout.log",
+      "sha256": "e123ab6d1c759eb0ecefcfa23b040b31e61e119696840ff4036c8f9733fb8bf7",
+      "bytes": 521,
+      "git_file_sha256": "e123ab6d1c759eb0ecefcfa23b040b31e61e119696840ff4036c8f9733fb8bf7",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/review_fix_20261029/ctest.stderr.log",
+      "destination": "experiments/LSJ/review_fixes/evidence/ctest.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "git_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/review_fix_20261029/ctest.stdout.log",
+      "destination": "experiments/LSJ/review_fixes/evidence/ctest.stdout.log",
+      "sha256": "ff3fc17fe236ab631b8f5d43f72104d8ec6ed4e7e4af078098e096cfbd0bcea5",
+      "bytes": 935,
+      "git_file_sha256": "ff3fc17fe236ab631b8f5d43f72104d8ec6ed4e7e4af078098e096cfbd0bcea5",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/review_fix_20261029/edit_core.py",
+      "destination": "experiments/LSJ/review_fixes/evidence/edit_core.py",
+      "sha256": "87fd0820dee1fb61cbb890a380ca5f8c03a99c1473f377b6221445c64480fdc3",
+      "bytes": 14415,
+      "git_file_sha256": "87fd0820dee1fb61cbb890a380ca5f8c03a99c1473f377b6221445c64480fdc3",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/review_fix_20261029/verify_review_fixes.py",
+      "destination": "experiments/LSJ/review_fixes/evidence/verify_review_fixes.py",
+      "sha256": "cd55f403c1ca8a280f18256a1c741829db78942678dfa2a330cbd80cf2dd206e",
+      "bytes": 4262,
+      "git_file_sha256": "cd55f403c1ca8a280f18256a1c741829db78942678dfa2a330cbd80cf2dd206e",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/experiments/LSJ/review_fixes/validation_summary.json",
+      "destination": "experiments/LSJ/review_fixes/validation_summary.json",
+      "sha256": "01a77c0b59fc47da60f99366b0b6a1cd88aca30d3c1d641ca65d3671884e5c15",
+      "bytes": 6064,
+      "git_file_sha256": "01a77c0b59fc47da60f99366b0b6a1cd88aca30d3c1d641ca65d3671884e5c15",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/experiments/LSJ/theta_controller/README.md",
+      "destination": "experiments/LSJ/theta_controller/README.md",
+      "sha256": "b56a348f4e917c2efe84e7ceda0398cc803ec09d8a52c2f94be483175f884510",
+      "bytes": 2577,
+      "git_file_sha256": "b56a348f4e917c2efe84e7ceda0398cc803ec09d8a52c2f94be483175f884510",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/experiments/LSJ/theta_controller/provenance.json",
+      "destination": "experiments/LSJ/theta_controller/provenance.json",
+      "sha256": "bfb7e14e61958e7b1f08d63a856ed51e79473fedbe74308f7957ea878b6b42d3",
+      "bytes": 830,
+      "git_file_sha256": "bfb7e14e61958e7b1f08d63a856ed51e79473fedbe74308f7957ea878b6b42d3",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/experiments/LSJ/y_controller/README.md",
+      "destination": "experiments/LSJ/y_controller/README.md",
+      "sha256": "96c4a1c22e02c13e62b0f26d242c33bd7450e569a97f9be28e188bc9577b5ac2",
+      "bytes": 9695,
+      "git_file_sha256": "96c4a1c22e02c13e62b0f26d242c33bd7450e569a97f9be28e188bc9577b5ac2",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/experiments/LSJ/y_controller/provenance.json",
+      "destination": "experiments/LSJ/y_controller/provenance.json",
+      "sha256": "ed6c1e93cbce255025f6fdfd09e0fffe52a5b717f4a3a8073efb36e0e0135d13",
+      "bytes": 1318,
+      "git_file_sha256": "ed6c1e93cbce255025f6fdfd09e0fffe52a5b717f4a3a8073efb36e0e0135d13",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/experiments/LSJ/y_controller/validation_summary.json",
+      "destination": "experiments/LSJ/y_controller/validation_summary.json",
+      "sha256": "6601a3ead8fb6c1bf0836bccbad770c00faeacd79597bb84beb9e1531b8f3d34",
+      "bytes": 2556,
+      "git_file_sha256": "6601a3ead8fb6c1bf0836bccbad770c00faeacd79597bb84beb9e1531b8f3d34",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/include/alignment.hpp",
+      "destination": "include/alignment.hpp",
+      "sha256": "292b121adf22ee07db24520a45ba0a637a17998dd67dbc3100ab2a75ce1b7380",
+      "bytes": 1550,
+      "git_file_sha256": "292b121adf22ee07db24520a45ba0a637a17998dd67dbc3100ab2a75ce1b7380",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/include/alignment_error.hpp",
+      "destination": "include/alignment_error.hpp",
+      "sha256": "886bd45bc687cf1a56d5b1610431efff6d6edeeba7c62fe98c6f6accae97fcab",
+      "bytes": 1943,
+      "git_file_sha256": "886bd45bc687cf1a56d5b1610431efff6d6edeeba7c62fe98c6f6accae97fcab",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/include/path_validation.hpp",
+      "destination": "include/path_validation.hpp",
+      "sha256": "248a008f9196665f95e095b7bf3f32bae724520a8bb16722b72b8e6888b169fe",
+      "bytes": 161,
+      "git_file_sha256": "248a008f9196665f95e095b7bf3f32bae724520a8bb16722b72b8e6888b169fe",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/include/sequential_alignment.hpp",
+      "destination": "include/sequential_alignment.hpp",
+      "sha256": "9a578b45405267d56c955d50851abcfb89d5bf5b3688ec1d9f1020e77bb7fd2f",
+      "bytes": 1620,
+      "git_file_sha256": "9a578b45405267d56c955d50851abcfb89d5bf5b3688ec1d9f1020e77bb7fd2f",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/include/theta_alignment.hpp",
+      "destination": "include/theta_alignment.hpp",
+      "sha256": "7e7ec0fff4e8753f92cc466703155c4e4ada7359d596c94ccd35d53973276ece",
+      "bytes": 2444,
+      "git_file_sha256": "7e7ec0fff4e8753f92cc466703155c4e4ada7359d596c94ccd35d53973276ece",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/include/validation_utils.hpp",
+      "destination": "include/validation_utils.hpp",
+      "sha256": "3957d66b9bb76060f40d30381b45faab4b87b23ec82d4fcdb066b779b7f5a485",
+      "bytes": 3949,
+      "git_file_sha256": "3957d66b9bb76060f40d30381b45faab4b87b23ec82d4fcdb066b779b7f5a485",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/include/y_alignment.hpp",
+      "destination": "include/y_alignment.hpp",
+      "sha256": "63006afa79ff70efd1ffb20a1b16593b57e453d426a271a7605902c42e12d479",
+      "bytes": 1448,
+      "git_file_sha256": "63006afa79ff70efd1ffb20a1b16593b57e453d426a271a7605902c42e12d479",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/src/alignment.cpp",
+      "destination": "src/alignment.cpp",
+      "sha256": "1ce58be66a96f62fed395a1bf890d18070a6baf60513bfa44db7e986386c1625",
+      "bytes": 3199,
+      "git_file_sha256": "1ce58be66a96f62fed395a1bf890d18070a6baf60513bfa44db7e986386c1625",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/src/main.cpp",
+      "destination": "src/main.cpp",
+      "sha256": "8492209ba266cfb9367750ec90c24064973febbae8089668f30ea10101e91095",
+      "bytes": 5529,
+      "git_file_sha256": "8492209ba266cfb9367750ec90c24064973febbae8089668f30ea10101e91095",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/src/path_validation.cpp",
+      "destination": "src/path_validation.cpp",
+      "sha256": "0ff1cf265aeebe0d403885f01ae8588b7da13ece56b5190565227df82f31885b",
+      "bytes": 1245,
+      "git_file_sha256": "0ff1cf265aeebe0d403885f01ae8588b7da13ece56b5190565227df82f31885b",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/src/sequential_alignment.cpp",
+      "destination": "src/sequential_alignment.cpp",
+      "sha256": "93b6cbac5fe424f38f38fc26b7391987f819bb4377b653e876a9cd81419b7729",
+      "bytes": 4828,
+      "git_file_sha256": "93b6cbac5fe424f38f38fc26b7391987f819bb4377b653e876a9cd81419b7729",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/src/theta_alignment.cpp",
+      "destination": "src/theta_alignment.cpp",
+      "sha256": "7ab6508d89729fc36bed3ca23befb173d9376b5872f1837faad11e5bc7a0ef89",
+      "bytes": 20854,
+      "git_file_sha256": "7ab6508d89729fc36bed3ca23befb173d9376b5872f1837faad11e5bc7a0ef89",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/src/y_alignment.cpp",
+      "destination": "src/y_alignment.cpp",
+      "sha256": "7c25cf1f0d77e1935fd85ca5a6772002ab067cc210e9e3caacb265cab4cba177",
+      "bytes": 10320,
+      "git_file_sha256": "7c25cf1f0d77e1935fd85ca5a6772002ab067cc210e9e3caacb265cab4cba177",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/tests/review_io_regression.py",
+      "destination": "tests/review_io_regression.py",
+      "sha256": "df880d52eab433cf7c05d639bb53d5357e43b2d12c43054bb46cdcf5d137caec",
+      "bytes": 5778,
+      "git_file_sha256": "df880d52eab433cf7c05d639bb53d5357e43b2d12c43054bb46cdcf5d137caec",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/tests/review_native_cli_test.py",
+      "destination": "tests/review_native_cli_test.py",
+      "sha256": "479cbe216e03ea43660a93b52277c3f8769541f43b1a9afcbee5d0e79a38e342",
+      "bytes": 1523,
+      "git_file_sha256": "479cbe216e03ea43660a93b52277c3f8769541f43b1a9afcbee5d0e79a38e342",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/tests/review_regression_test.cpp",
+      "destination": "tests/review_regression_test.cpp",
+      "sha256": "b0fa5828cd4f253bdc4313337a1c6a21dd796dcf2634d95d52f8fe069cd22284",
+      "bytes": 9783,
+      "git_file_sha256": "b0fa5828cd4f253bdc4313337a1c6a21dd796dcf2634d95d52f8fe069cd22284",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/tests/theta_alignment_test.cpp",
+      "destination": "tests/theta_alignment_test.cpp",
+      "sha256": "6ceff39d770260ffc9a9ea01d0508b54226113f72d1151c0e64fcaa36015dd6b",
+      "bytes": 4861,
+      "git_file_sha256": "6ceff39d770260ffc9a9ea01d0508b54226113f72d1151c0e64fcaa36015dd6b",
+      "copy_unchanged": true
+    },
+    {
+      "issue": "S15P31A507-838",
+      "source": ".tmp/theta_implementation_20261029/payload/tests/y_alignment_test.cpp",
+      "destination": "tests/y_alignment_test.cpp",
+      "sha256": "b35f81b06d61f23b003c4cb2166a7d4aa46c3c036decd39b46c85db89c9b8ee0",
+      "bytes": 8551,
+      "git_file_sha256": "b35f81b06d61f23b003c4cb2166a7d4aa46c3c036decd39b46c85db89c9b8ee0",
+      "copy_unchanged": true
+    }
+  ],
+  "copy_history_note": "Final destinations only. Pre-review snapshot is archived separately. Root README has a current-status preface."
+}

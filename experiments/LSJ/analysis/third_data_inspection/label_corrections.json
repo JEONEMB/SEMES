@@ -1,0 +1,52 @@
+{
+  "decision_date": "2026-10-29",
+  "authority": "User confirmed both reported cases are typos, and explicitly confirmed theta=0.57 with corrected T_Actual=-1.100 for all three affected TXT files.",
+  "raw_files_modified": false,
+  "confirmed": [
+    {
+      "id": "theta_032_filename",
+      "source_file": "Y+0.05 T+0.32\\Y+0.05 T+0.33 (3).bmp",
+      "normalized_file": "Y+0.05 T+0.32\\Y+0.05 T+0.32 (3).bmp",
+      "sidecar_file": "Y+0.05 T+0.32\\Y+0.05 T+0.32 (3).txt",
+      "validation_y_mm": 0.05,
+      "validation_theta_deg": 0.32,
+      "recorded_y_actual": -1.25,
+      "recorded_theta_actual": -1.35,
+      "reason": "Filename corrected logically using the folder, its other two BMP names and all three matching TXT coordinates; user confirmed typo. Original path retained for reading."
+    },
+    {
+      "id": "theta_057_recorded_coordinate_1",
+      "source_file": "Y+0.05 T+0.57\\Y+0.05 T+0.57 (1).bmp",
+      "sidecar_file": "Y+0.05 T+0.57\\Y+0.05 T+0.57 (1).txt",
+      "validation_y_mm": 0.05,
+      "validation_theta_deg": 0.57,
+      "recorded_y_actual": -1.25,
+      "recorded_theta_actual": -1.11,
+      "corrected_theta_actual": -1.1,
+      "reason": "User explicitly confirmed theta=0.57 and correction of T_Actual to -1.100. Preserve original TXT and provide corrected analysis copy."
+    },
+    {
+      "id": "theta_057_recorded_coordinate_2",
+      "source_file": "Y+0.05 T+0.57\\Y+0.05 T+0.57 (2).bmp",
+      "sidecar_file": "Y+0.05 T+0.57\\Y+0.05 T+0.57 (2).txt",
+      "validation_y_mm": 0.05,
+      "validation_theta_deg": 0.57,
+      "recorded_y_actual": -1.25,
+      "recorded_theta_actual": -1.11,
+      "corrected_theta_actual": -1.1,
+      "reason": "User explicitly confirmed theta=0.57 and correction of T_Actual to -1.100. Preserve original TXT and provide corrected analysis copy."
+    },
+    {
+      "id": "theta_057_recorded_coordinate_3",
+      "source_file": "Y+0.05 T+0.57\\Y+0.05 T+0.57 (3).bmp",
+      "sidecar_file": "Y+0.05 T+0.57\\Y+0.05 T+0.57 (3).txt",
+      "validation_y_mm": 0.05,
+      "validation_theta_deg": 0.57,
+      "recorded_y_actual": -1.25,
+      "recorded_theta_actual": -1.11,
+      "corrected_theta_actual": -1.1,
+      "reason": "User explicitly confirmed theta=0.57 and correction of T_Actual to -1.100. Preserve original TXT and provide corrected analysis copy."
+    }
+  ],
+  "pending": []
+}

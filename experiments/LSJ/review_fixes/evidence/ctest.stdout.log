@@ -1,0 +1,19 @@
+Test project C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/theta_implementation_20261029/review_fix_20261029/build
+    Start 1: theta_alignment_contract
+1/7 Test #1: theta_alignment_contract .........   Passed    0.11 sec
+    Start 2: y_alignment_contract
+2/7 Test #2: y_alignment_contract .............   Passed    0.07 sec
+    Start 3: review_regressions
+3/7 Test #3: review_regressions ...............   Passed    0.06 sec
+    Start 4: native_y_integration
+4/7 Test #4: native_y_integration .............   Passed    0.53 sec
+    Start 5: native_review_integration
+5/7 Test #5: native_review_integration ........   Passed    1.47 sec
+    Start 6: review_config_and_path_io
+6/7 Test #6: review_config_and_path_io ........   Passed    8.59 sec
+    Start 7: native_cli_integration
+7/7 Test #7: native_cli_integration ...........   Passed    0.69 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Total Test time (real) =  11.54 sec
