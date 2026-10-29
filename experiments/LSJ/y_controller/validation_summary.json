@@ -1,0 +1,55 @@
+{
+  "date_kst": "2026-10-29",
+  "opencv_native_version": "3.4.15",
+  "build": "MSVC v141 / x64 Release / CMake Visual Studio 18 2026",
+  "ctest_suites_passed": 2,
+  "reference_and_known_5px_translation_integration_passed": true,
+  "skeleton_signature_preserved": "Alignment_t alignment(cv::Mat &src)",
+  "y_ranges_and_12_slopes_equal_saved_values": true,
+  "source_hashes_unchanged": true,
+  "raw_image_hashes_unchanged": true,
+  "cli_checks": [
+    {
+      "file": "center.bmp",
+      "status": "aligned",
+      "valid": 1
+    },
+    {
+      "file": "T+0.10.bmp",
+      "status": "move_theta",
+      "valid": 1
+    },
+    {
+      "file": "T-0.10.bmp",
+      "status": "move_theta",
+      "valid": 1
+    },
+    {
+      "file": "intentional_missing_image_for_error_contract.bmp",
+      "status": "measurement_failed",
+      "valid": 0
+    }
+  ],
+  "execution_counter": "Unit-tested: count acknowledged nonzero moves, block 21st move, allow final observation after 20th.",
+  "not_tested": [
+    "physical robot accuracy",
+    "whole-dataset correction performance",
+    "physical closed-loop convergence within 20 moves"
+  ],
+  "no_new_regression_or_equivalence_fit": true,
+  "source_file_sha256": {
+    "src/alignment.cpp": "3b7fce236437954417b70d1709291eb953a0eff60ef27e0a0fe23ce3f5f323c5",
+    "src/main.cpp": "1c5a656571085e8c9d1e7620d1fcaae3a1a52a67eed6a9c28f9daea0841b5cdd",
+    "src/sequential_alignment.cpp": "027d89e70be78d7ca99e0c1a3f1a83a935c9dab1375607e61988c4dec7ba93d5",
+    "src/theta_alignment.cpp": "1a10d2dc6805f4ec7650337d50be6864cc28d97345548b9aca2043a291907e39",
+    "src/y_alignment.cpp": "d452ca013c90b61431d20bb68ccb4cc9c5f62ba8f85a17ed8699b978ca889f88",
+    "include/alignment.hpp": "2bfe52198428762a11e84777866385bc02055f8e8deacf605f6cc17a13e6833a",
+    "include/sequential_alignment.hpp": "a3891821a44c4c602493565bcd470e8c0170d94e46a463aba5f4c37c325dcdee",
+    "include/theta_alignment.hpp": "313e4629fa5eb814fcd0fb8105a2ae6b59384188089acce5d156c8fd22e0da0e",
+    "include/y_alignment.hpp": "5f2184c6384687a8c05a1f668f867c5fd75e9b666592d0293335dc2380edb6e9",
+    "tests/theta_alignment_test.cpp": "6ceff39d770260ffc9a9ea01d0508b54226113f72d1151c0e64fcaa36015dd6b",
+    "tests/y_alignment_test.cpp": "b35f81b06d61f23b003c4cb2166a7d4aa46c3c036decd39b46c85db89c9b8ee0",
+    "configs/theta_alignment.json": "454dcb52cb82d078fb9f80a236f4ac55e521de608d700cfe5625d55660359e8c",
+    "configs/y_alignment.json": "db8b39bb8c02cdfa3c91621ea1768a9cf1b331ccbcb1463141a95b7aca29e97f"
+  }
+}

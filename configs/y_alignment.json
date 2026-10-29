@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "width": 3840,
+  "height": 2160,
+  "search_margin_px": 110,
+  "tick_mm": 0.05,
+  "target_profile": "without_group4_intersection_of_primary_and_sensitivity",
+  "target_selected_by_user_on": "2026-10-29",
+  "coordinate": "zero-based tracked ROI pixel-center x = reference_roi_x + (width-1)/2 + affine_dx",
+  "target_groups": [
+    2,
+    3,
+    5,
+    6,
+    7
+  ],
+  "slope_groups": [
+    2,
+    3,
+    6,
+    7
+  ],
+  "additional_tolerance_px": 0,
+  "markers": [
+    {
+      "name": "L",
+      "roi_xywh": [
+        1545,
+        963,
+        195,
+        210
+      ],
+      "low_px": 1641.5084992273016,
+      "high_px": 1642.0520375163053,
+      "slopes_px_per_mm": [
+        14.352305508186676,
+        14.385867373770537,
+        14.378173033603522,
+        14.353736988623314
+      ]
+    },
+    {
+      "name": "C",
+      "roi_xywh": [
+        1803,
+        963,
+        195,
+        210
+      ],
+      "low_px": 1899.5189918887024,
+      "high_px": 1900.0669405323601,
+      "slopes_px_per_mm": [
+        14.364361777917091,
+        14.39819961963544,
+        14.392832328030458,
+        14.369078730878131
+      ]
+    },
+    {
+      "name": "R",
+      "roi_xywh": [
+        2062,
+        965,
+        195,
+        210
+      ],
+      "low_px": 2158.5222280477115,
+      "high_px": 2159.072710092858,
+      "slopes_px_per_mm": [
+        14.36347691337856,
+        14.392023325755037,
+        14.392921223155035,
+        14.364955210461236
+      ]
+    }
+  ]
+}
