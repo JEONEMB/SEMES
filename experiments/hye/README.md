@@ -6,6 +6,7 @@
 - [과거 미채택 조건부Y 기록](20261028_132007_control_T0_조건부Y_신규모델_미채택/README.md)
 - [QR536에 선을 더한 비교 계획](20261028_140538_control_QR536_상하선_비교/PROTOCOL.md)
 - [P12와J204 새 학습 비교](20261028_141257_control_P12_vs_J204/README.md)
+- [joint 구조점+상하선 vs ECC+상하선 (337 vs 328)](20261029_132926_joint_구조점vsECC_상하선/README.md)
 
 지정된 전달 경로인 `00000_final_Y_T control`과 `00000_final_Y_T_joint`는 유지한다. 새 비교 결과가 나와도 자동 교체하지 않는다. 빌드에 사용할 모듈은 [selected_modules.cmake](../selected_modules.cmake)에서 경로로 고른다.
 
