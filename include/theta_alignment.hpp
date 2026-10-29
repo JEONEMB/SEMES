@@ -3,6 +3,7 @@
 #include <opencv2/opencv.hpp>
 #include <array>
 #include <string>
+#include "alignment_error.hpp"
 
 namespace semes {
 
@@ -28,10 +29,13 @@ struct LineMeasurement {
 };
 
 struct ThetaResult {
+    ErrorCode errorCode = ErrorCode::None;
     std::array<double, 2> angles{}, targets{}, perLineTheta{};
     double estimatedThetaDeg = 0;
     double continuousCorrectionDeg = 0, commandDeg = 0;
     double fitResidualImageDeg = 0;
+    double plannedTotalCorrectionDeg = 0;
+    bool predictedWithinTolerance = false;
     int group = 0;
     bool thetaWithinTolerance = false;
     bool commandAvailable = true;

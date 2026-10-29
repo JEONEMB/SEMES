@@ -1,5 +1,6 @@
 #include "theta_alignment.hpp"
 #include "sequential_alignment.hpp"
+#include "path_validation.hpp"
 #include <memory>
 #include <iostream>
 #include <sstream>
@@ -41,10 +42,9 @@ int run(const std::vector<std::string>& args) {
         }
     }
     if (images.empty()) throw std::invalid_argument("No input images");
-    // Prevent accidentally replacing an input through an output argument.
-    if (!outputPath.empty() && (outputPath == referencePath || outputPath == configPath || outputPath == listPath || outputPath == yConfigPath))
-        throw std::invalid_argument("Output path must not equal an input path");
-    for (const auto& path : images) if (outputPath == path) throw std::invalid_argument("Output equals image input");
+    std::vector<std::string> protectedInputs = images;
+    protectedInputs.insert(protectedInputs.end(), {referencePath, configPath, listPath, yConfigPath});
+    semes::validateOutputPath(outputPath, protectedInputs);
 
     cv::setNumThreads(2);
     const auto config = semes::ThetaConfig::load(configPath);
@@ -73,16 +73,22 @@ int run(const std::vector<std::string>& args) {
                 semes::writeThetaResult(fs, result);
                 if (!result.commandAvailable) ++failed;
             }
+        } catch (const semes::AlignmentError& error) {
+            ++failed;
+            fs << "valid" << 0 << "status" << "measurement_failed" << "error_code" << semes::errorCodeName(error.code()) << "error" << error.what();
+        } catch (const std::invalid_argument& error) {
+            ++failed;
+            fs << "valid" << 0 << "status" << "measurement_failed" << "error_code" << "invalid_input" << "error" << error.what();
         } catch (const std::exception& error) {
             ++failed;
-            fs << "valid" << 0 << "status" << "measurement_failed" << "error" << error.what();
+            fs << "valid" << 0 << "status" << "measurement_failed" << "error_code" << "measurement_failed" << "error" << error.what();
         }
         fs << "}";
     }
     fs << "]";
     const std::string json = fs.releaseAndGetString();
     if (outputPath.empty()) std::cout << json;
-    else { semes::writeTextUtf8(outputPath, json); std::cout << "Processed " << images.size() << ", unresolved/failed " << failed << "\n"; }
+    else { semes::validateOutputPath(outputPath, protectedInputs); semes::writeTextUtf8(outputPath, json); std::cout << "Processed " << images.size() << ", unresolved/failed " << failed << "\n"; }
     return failed ? 1 : 0;
 }
 
@@ -100,5 +106,6 @@ int main(int argc, char** argv) {
     std::vector<std::string> args(argv, argv + argc);
 #endif
     try { return run(args); }
+    catch (const semes::AlignmentError& e) { std::cerr << semes::errorCodeName(e.code()) << ": " << e.what() << '\n'; return 2; }
     catch (const std::exception& e) { std::cerr << e.what() << '\n'; return 2; }
 }

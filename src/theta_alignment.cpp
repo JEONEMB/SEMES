@@ -1,4 +1,5 @@
 #include "theta_alignment.hpp"
+#include "validation_utils.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -15,7 +16,7 @@
 namespace semes {
 namespace {
 constexpr double pi = 3.14159265358979323846;
-double clamp(double x, double low, double high) { return std::max(low, std::min(x, high)); }
+double clamp(double x, double low, double high) { return detail::finiteClamp(x, low, high); }
 
 #ifdef _WIN32
 std::wstring widePath(const std::string& text) {
@@ -61,6 +62,7 @@ double stepCenter(const cv::Mat& blurred, int x, int peak, double initial) {
             cv::Vec4d rhs = jac.t() * residual, delta;
             if (!cv::solve(normal, rhs, delta, cv::DECOMP_CHOLESKY))
                 throw std::runtime_error("Edge fit linear solve failed");
+            for (int j = 0; j < 4; ++j) detail::finite(delta[j], "Non-finite edge solver update");
             return delta;
         };
         cv::Vec4d delta = solve();
@@ -75,11 +77,7 @@ double stepCenter(const cv::Mat& blurred, int x, int peak, double initial) {
             }
             delta = solve();
         }
-        delta[2] = clamp(delta[2], -0.5, 0.5);
-        delta[3] = clamp(delta[3], -0.5, 0.5);
-        p -= delta;
-        p[2] = clamp(p[2], initial - 2, initial + 2);
-        p[3] = clamp(p[3], 0.6, 4.0);
+        p = detail::boundedEdgeUpdate(p, delta, initial);
     }
     if (!std::isfinite(p[2])) throw std::runtime_error("Non-finite edge fit");
     return p[2];
@@ -92,7 +90,7 @@ std::string readTextUtf8(const std::string& path) {
 #else
     std::ifstream input(path, std::ios::binary);
 #endif
-    if (!input) throw std::runtime_error("Cannot open input: " + path);
+    if (!input) throw AlignmentError(ErrorCode::IoFailure, "Cannot open input: " + path);
     return std::string(std::istreambuf_iterator<char>(input), std::istreambuf_iterator<char>());
 }
 
@@ -102,9 +100,9 @@ void writeTextUtf8(const std::string& path, const std::string& text) {
 #else
     std::ofstream output(path, std::ios::binary);
 #endif
-    if (!output) throw std::runtime_error("Cannot open output: " + path);
+    if (!output) throw AlignmentError(ErrorCode::IoFailure, "Cannot open output: " + path);
     output.write(text.data(), static_cast<std::streamsize>(text.size()));
-    if (!output) throw std::runtime_error("Cannot write output: " + path);
+    if (!output) throw AlignmentError(ErrorCode::IoFailure, "Cannot write output: " + path);
 }
 
 cv::Mat readGrayUtf8(const std::string& path) {
@@ -116,50 +114,45 @@ cv::Mat readGrayUtf8(const std::string& path) {
 }
 
 ThetaConfig ThetaConfig::load(const std::string& path) {
-    cv::FileStorage fs(readTextUtf8(path), cv::FileStorage::READ | cv::FileStorage::MEMORY | cv::FileStorage::FORMAT_JSON);
-    if (!fs.isOpened()) throw std::runtime_error("Cannot parse theta config");
-    if (static_cast<int>(fs["schema_version"]) != 1) throw std::runtime_error("Unsupported theta schema");
-    ThetaConfig c;
-    fs["width"] >> c.width; fs["height"] >> c.height;
-    std::vector<int> roi; fs["locator_roi_xywh"] >> roi;
-    if (roi.size() != 4) throw std::runtime_error("Locator requires four coordinates");
-    c.locatorRoi = cv::Rect(roi[0], roi[1], roi[2], roi[3]);
-    fs["search_margin_px"] >> c.searchMargin;
-    fs["tick_deg"] >> c.tickDeg; fs["tolerance_deg"] >> c.toleranceDeg;
-    fs["max_step_deg"] >> c.maxStepDeg;
-    const auto entries = fs["lines"];
-    if (entries.size() != 2) throw std::runtime_error("Exactly two upper structure lines are required");
-    int i = 0;
-    for (auto it = entries.begin(); it != entries.end(); ++it, ++i) {
-        const auto node = *it; auto& line = c.lines[i];
-        node["name"] >> line.name;
-        node["x0"] >> line.x0; node["x1"] >> line.x1;
-        node["expected_y"] >> line.expectedY; node["half_height"] >> line.halfHeight;
-        node["polarity"] >> line.polarity;
-        node["group4_slope"] >> line.positiveSlope; node["group5_slope"] >> line.negativeSlope;
-    }
-    c.validate();
-    return c;
+    try {
+        cv::FileStorage fs(readTextUtf8(path), cv::FileStorage::READ | cv::FileStorage::MEMORY | cv::FileStorage::FORMAT_JSON);
+        detail::configCheck(fs.isOpened(), "Cannot parse theta config");
+        const auto root = fs.root();
+        detail::configCheck(detail::integer(root, "schema_version") == 1, "Unsupported theta schema");
+        ThetaConfig c;
+        c.width = detail::integer(root, "width"); c.height = detail::integer(root, "height");
+        const auto roi = detail::integers(root, "locator_roi_xywh", 4);
+        c.locatorRoi = cv::Rect(roi[0], roi[1], roi[2], roi[3]);
+        c.searchMargin = detail::integer(root, "search_margin_px");
+        c.tickDeg = detail::number(root, "tick_deg"); c.toleranceDeg = detail::number(root, "tolerance_deg");
+        c.maxStepDeg = detail::number(root, "max_step_deg");
+        detail::configCheck(detail::string(root, "target_source") == "first_center_image_measured_by_runtime", "Unsupported theta target source");
+        const auto entries = detail::sequence(root, "lines", 2);
+        int i = 0;
+        for (auto it = entries.begin(); it != entries.end(); ++it, ++i) {
+            const auto node = *it; auto& line = c.lines[i];
+            line.name = detail::string(node, "name");
+            line.x0 = detail::integer(node, "x0"); line.x1 = detail::integer(node, "x1");
+            line.expectedY = detail::integer(node, "expected_y"); line.halfHeight = detail::integer(node, "half_height");
+            line.polarity = detail::integer(node, "polarity");
+            line.positiveSlope = detail::number(node, "group4_slope"); line.negativeSlope = detail::number(node, "group5_slope");
+        }
+        c.validate(); return c;
+    } catch (const cv::Exception& e) { throw AlignmentError(ErrorCode::InvalidConfiguration, e.what()); }
 }
 
 void ThetaConfig::validate() const {
-    if (width <= 0 || height <= 0 || searchMargin < 1 ||
-        !(tickDeg > 0 && std::isfinite(tickDeg)) ||
-        !(toleranceDeg >= 0 && std::isfinite(toleranceDeg)) ||
-        !(maxStepDeg >= tickDeg && std::isfinite(maxStepDeg)))
-        throw std::invalid_argument("Invalid theta motion/image settings");
-    const cv::Rect whole(0, 0, width, height);
-    const cv::Rect search(locatorRoi.x - searchMargin, locatorRoi.y - searchMargin,
-                          locatorRoi.width + 2 * searchMargin, locatorRoi.height + 2 * searchMargin);
-    if (locatorRoi.width < 2 || locatorRoi.height < 2 || (search & whole) != search)
-        throw std::invalid_argument("Locator search outside configured image");
-    for (const auto& line : lines) {
-        if (line.x0 < 0 || line.x1 <= line.x0 || line.x1 >= width || line.halfHeight < 2 ||
-            line.expectedY - line.halfHeight - 8 < 0 || line.expectedY + line.halfHeight + 9 > height ||
-            (line.polarity != 1 && line.polarity != -1) ||
-            !std::isfinite(line.positiveSlope) || !std::isfinite(line.negativeSlope) ||
-            line.positiveSlope >= 0 || line.negativeSlope >= 0)
-            throw std::invalid_argument("Invalid upper-line ROI or nonnegative/nonfinite slope");
+    detail::configCheck(tickDeg > 0 && std::isfinite(tickDeg) && toleranceDeg >= 0 && std::isfinite(toleranceDeg) &&
+                        maxStepDeg >= tickDeg && std::isfinite(maxStepDeg), "Invalid theta motion settings");
+    detail::roiInside(locatorRoi, searchMargin, width, height);
+    const std::array<std::string, 2> names{{"rail_UL_edge", "rail_UR_edge"}};
+    for (int i = 0; i < 2; ++i) {
+        const auto& line = lines[i];
+        detail::configCheck(line.name == names[i] && line.x0 >= 0 && line.x1 > line.x0 && line.x1 < width && line.halfHeight >= 2 &&
+                            int64_t(line.expectedY)-line.halfHeight-8 >= 0 && int64_t(line.expectedY)+line.halfHeight+9 <= height &&
+                            (line.polarity == 1 || line.polarity == -1) && std::isfinite(line.positiveSlope) &&
+                            std::isfinite(line.negativeSlope) && line.positiveSlope < 0 && line.negativeSlope < 0,
+                            "Invalid upper-line ROI/name/slope");
     }
 }
 
@@ -215,19 +208,21 @@ LineMeasurement ThetaEstimator::measureLine(const cv::Mat& image, const LineConf
     return out;
 }
 
-ThetaResult thetaFromAngles(const std::array<double, 2>& angles,
-                           const std::array<double, 2>& targets, const ThetaConfig& config) {
-    config.validate();
+namespace {
+// Existing branch selection and BOTH-line acceptance predicate, without issuing a command.
+ThetaResult thetaState(const std::array<double, 2>& angles, const std::array<double, 2>& targets, const ThetaConfig& config) {
     struct Candidate { double theta, cost; int group; } candidates[2];
     for (int k = 0; k < 2; ++k) {
         double numerator = 0, denominator = 0;
         for (int i = 0; i < 2; ++i) {
-            if (!std::isfinite(angles[i]) || !std::isfinite(targets[i]))
-                throw std::invalid_argument("Non-finite angle or target");
+            detail::finite(angles[i], "Non-finite angle"); detail::finite(targets[i], "Non-finite target");
             const double a = k == 0 ? config.lines[i].positiveSlope : config.lines[i].negativeSlope;
             numerator += a * (angles[i] - targets[i]); denominator += a * a;
         }
+        detail::finite(numerator, "Theta numerator overflow"); detail::finite(denominator, "Theta denominator overflow");
+        if (!(denominator > 0)) throw AlignmentError(ErrorCode::NumericalFailure, "Theta slope underflow");
         double theta = numerator / denominator;
+        detail::finite(theta, "Theta estimate overflow");
         theta = k == 0 ? std::max(0.0, theta) : std::min(0.0, theta);
         double cost = 0;
         for (int i = 0; i < 2; ++i) {
@@ -235,32 +230,85 @@ ThetaResult thetaFromAngles(const std::array<double, 2>& angles,
             const double residual = angles[i] - targets[i] - a * theta;
             cost += residual * residual;
         }
+        detail::finite(cost, "Theta cost overflow");
         candidates[k] = {theta, cost, k == 0 ? 4 : 5};
     }
     const auto best = candidates[candidates[1].cost < candidates[0].cost ? 1 : 0];
-    ThetaResult r;
-    r.angles = angles; r.targets = targets; r.estimatedThetaDeg = best.theta;
-    r.group = best.theta == 0 ? 0 : best.group;
-    r.fitResidualImageDeg = std::sqrt(best.cost / 2);
-    r.continuousCorrectionDeg = -best.theta;
-    r.outsideCalibration = std::abs(best.theta) > 1.0; // saved groups cover [-1, +1]
+    ThetaResult r; r.angles = angles; r.targets = targets; r.estimatedThetaDeg = best.theta;
+    r.group = best.theta == 0 ? 0 : best.group; r.fitResidualImageDeg = std::sqrt(best.cost / 2);
+    r.continuousCorrectionDeg = -best.theta; r.outsideCalibration = std::abs(best.theta) > 1.0;
     r.thetaWithinTolerance = true;
     for (int i = 0; i < 2; ++i) {
         const double a = best.group == 4 ? config.lines[i].positiveSlope : config.lines[i].negativeSlope;
         r.perLineTheta[i] = (angles[i] - targets[i]) / a;
+        detail::finite(r.perLineTheta[i], "Per-line theta overflow");
         r.thetaWithinTolerance = r.thetaWithinTolerance && std::abs(r.perLineTheta[i]) <= config.toleranceDeg + 1e-12;
     }
-    if (r.thetaWithinTolerance) {
-        r.status = "theta_within_tolerance";
-    } else {
-        // Clamp in integer ticks so rounding cannot exceed the configured cap.
-        const double maxTicks = std::floor(config.maxStepDeg / config.tickDeg + 1e-12);
-        const double ticks = clamp(std::round(r.continuousCorrectionDeg / config.tickDeg), -maxTicks, maxTicks);
-        r.commandDeg = ticks * config.tickDeg;
-        r.commandAvailable = ticks != 0;
-        r.status = ticks == 0 ? "unresolved_at_tick_resolution" :
-                   r.outsideCalibration ? "move_extrapolated" : "move";
+    return r;
+}
+double thetaResponse(const LineConfig& line, double q) {
+    return (q >= 0 ? line.positiveSlope : line.negativeSlope) * q;
+}
+} // namespace
+
+ThetaResult thetaFromAngles(const std::array<double, 2>& angles,
+                           const std::array<double, 2>& targets, const ThetaConfig& config) {
+    config.validate();
+    auto r = thetaState(angles, targets, config);
+    if (r.thetaWithinTolerance) { r.status = "theta_within_tolerance"; r.predictedWithinTolerance = true; return r; }
+    const double q = r.estimatedThetaDeg;
+    std::array<double, 2> residual;
+    for (int i = 0; i < 2; ++i) residual[i] = angles[i] - targets[i] - thetaResponse(config.lines[i], q);
+    // Carry CURRENT image residuals. This is a prediction for command selection, not a new calibration.
+    const auto predict = [&](double command) {
+        std::array<double, 2> predicted;
+        for (int i = 0; i < 2; ++i)
+            predicted[i] = targets[i] + residual[i] + thetaResponse(config.lines[i], q + command);
+        return thetaState(predicted, targets, config);
+    };
+
+    bool continuousEnvelopeExists = false, found = false;
+    double chosen = 0;
+    // The envelope covers either acceptance branch. Re-run the EXACT unchanged acceptance
+    // predicate on each tick, so a wider envelope never widens the actual tolerance.
+    for (int branch = 0; branch < 2; ++branch) {
+        double low = branch == 0 ? 0 : -std::numeric_limits<double>::infinity();
+        double high = branch == 0 ? std::numeric_limits<double>::infinity() : 0;
+        for (int i = 0; i < 2; ++i) {
+            const auto& line = config.lines[i];
+            const double a = branch == 0 ? line.positiveSlope : line.negativeSlope;
+            const double band = std::max(std::abs(line.positiveSlope), std::abs(line.negativeSlope)) * (config.toleranceDeg + 1e-12);
+            low = std::max(low, (band - residual[i]) / a);
+            high = std::min(high, (-band - residual[i]) / a);
+        }
+        if (low > high) continue;
+        continuousEnvelopeExists = true;
+        const double first = std::ceil((low - q) / config.tickDeg - 1e-10);
+        const double last = std::floor((high - q) / config.tickDeg + 1e-10);
+        detail::finite(first, "Theta tick overflow"); detail::finite(last, "Theta tick overflow");
+        // Resource/representation guard for corrupted or extreme configurations, not an acceptance band.
+        detail::configCheck(std::abs(first) < 9007199254740992.0 && std::abs(last) < 9007199254740992.0 && last-first < 4096,
+                            "Theta candidate search exceeds numeric/resource limits");
+        for (double tick = first; tick <= last; ++tick) {
+            if (tick == 0) continue;
+            const double command = tick * config.tickDeg;
+            if (predict(command).thetaWithinTolerance && (!found || std::abs(command) < std::abs(chosen))) {
+                found = true; chosen = command;
+            }
+        }
     }
+    if (!found) {
+        r.commandAvailable = false;
+        r.errorCode = continuousEnvelopeExists ? ErrorCode::ThetaNoReachableTick : ErrorCode::ThetaTargetConflict;
+        r.status = errorCodeName(r.errorCode); return r;
+    }
+    r.plannedTotalCorrectionDeg = chosen;
+    const double maxTicks = std::floor(config.maxStepDeg / config.tickDeg + 1e-12);
+    detail::finite(maxTicks, "Theta command cap overflow");
+    r.commandDeg = clamp(std::round(chosen/config.tickDeg), -maxTicks, maxTicks) * config.tickDeg;
+    r.predictedWithinTolerance = predict(r.commandDeg).thetaWithinTolerance;
+    // An endpoint beyond the configured step cap is approached in capped, tick-aligned moves.
+    r.status = r.predictedWithinTolerance ? (r.outsideCalibration ? "move_extrapolated" : "move") : "move_partial";
     return r;
 }
 
@@ -302,7 +350,9 @@ ThetaResult ThetaEstimator::estimate(const cv::Mat& image) const {
 }
 
 void writeThetaResult(cv::FileStorage& fs, const ThetaResult& r) {
-    fs << "status" << r.status << "estimated_theta_deg" << r.estimatedThetaDeg
+    fs << "status" << r.status << "error_code" << errorCodeName(r.errorCode)
+       << "planned_total_correction_deg" << r.plannedTotalCorrectionDeg
+       << "predicted_within_tolerance" << static_cast<int>(r.predictedWithinTolerance) << "estimated_theta_deg" << r.estimatedThetaDeg
        << "continuous_correction_deg" << r.continuousCorrectionDeg << "command_deg" << r.commandDeg
        << "group" << r.group << "theta_within_tolerance" << static_cast<int>(r.thetaWithinTolerance)
        << "command_available" << static_cast<int>(r.commandAvailable)

@@ -24,9 +24,12 @@ struct YConfig {
 };
 
 struct YResult {
+    ErrorCode errorCode = ErrorCode::None;
     std::array<double, 3> x{}, intervalLowMm{}, intervalHighMm{}, zncc{}, ecc{};
     std::array<bool, 3> inside{};
     double commonLowMm = 0, commonHighMm = 0, commandMm = 0;
+    double nearestTickBelowMm = 0, nearestTickAboveMm = 0;
+    bool tickDiagnosticsAvailable = false;
     bool withinTarget = false, commandAvailable = false;
     std::string status;
 };

@@ -1,4 +1,5 @@
 #include "y_alignment.hpp"
+#include "validation_utils.hpp"
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -26,45 +27,40 @@ bool inside(double value, const YMarkerConfig& marker, double epsilon) {
 } // namespace
 
 YConfig YConfig::load(const std::string& path) {
-    cv::FileStorage fs(readTextUtf8(path), cv::FileStorage::READ | cv::FileStorage::MEMORY | cv::FileStorage::FORMAT_JSON);
-    if (!fs.isOpened() || static_cast<int>(fs["schema_version"]) != 1)
-        throw std::invalid_argument("Invalid Y config schema");
-    YConfig c;
-    fs["width"] >> c.width; fs["height"] >> c.height;
-    fs["search_margin_px"] >> c.searchMargin; fs["tick_mm"] >> c.tickMm;
-    fs["target_profile"] >> c.targetProfile;
-    std::vector<int> groups; fs["slope_groups"] >> groups;
-    if (groups != std::vector<int>{2, 3, 6, 7}) throw std::invalid_argument("Expected Y slope groups 2,3,6,7");
-    const auto entries = fs["markers"];
-    if (entries.size() != 3) throw std::invalid_argument("Expected L,C,R markers");
-    int i = 0;
-    for (auto it = entries.begin(); it != entries.end(); ++it, ++i) {
-        const auto n = *it; auto& m = c.markers[i];
-        std::vector<int> roi; std::vector<double> slopes;
-        n["name"] >> m.name; n["roi_xywh"] >> roi;
-        n["low_px"] >> m.lowPx; n["high_px"] >> m.highPx;
-        n["slopes_px_per_mm"] >> slopes;
-        if (roi.size() != 4 || slopes.size() != 4) throw std::invalid_argument("Invalid Y marker fields");
-        m.roi = cv::Rect(roi[0], roi[1], roi[2], roi[3]);
-        std::copy(slopes.begin(), slopes.end(), m.slopes.begin());
-    }
-    c.validate();
-    return c;
+    try {
+        cv::FileStorage fs(readTextUtf8(path), cv::FileStorage::READ | cv::FileStorage::MEMORY | cv::FileStorage::FORMAT_JSON);
+        detail::configCheck(fs.isOpened(), "Cannot parse Y configuration");
+        const auto root = fs.root();
+        detail::configCheck(detail::integer(root, "schema_version") == 1, "Invalid Y schema");
+        YConfig c;
+        c.width = detail::integer(root, "width"); c.height = detail::integer(root, "height");
+        c.searchMargin = detail::integer(root, "search_margin_px"); c.tickMm = detail::number(root, "tick_mm");
+        c.targetProfile = detail::string(root, "target_profile");
+        detail::configCheck(detail::number(root, "additional_tolerance_px") == 0, "Additional Y tolerance is not supported");
+        detail::configCheck(detail::integers(root, "slope_groups", 4) == std::vector<int>{2,3,6,7}, "Expected Y slope groups 2,3,6,7");
+        const auto entries = detail::sequence(root, "markers", 3);
+        int i = 0;
+        for (auto it = entries.begin(); it != entries.end(); ++it, ++i) {
+            const auto n = *it; auto& m = c.markers[i];
+            m.name = detail::string(n, "name"); const auto roi = detail::integers(n, "roi_xywh", 4);
+            m.roi = cv::Rect(roi[0], roi[1], roi[2], roi[3]);
+            m.lowPx = detail::number(n, "low_px"); m.highPx = detail::number(n, "high_px");
+            const auto slopes = detail::sequence(n, "slopes_px_per_mm", 4);
+            int j = 0; for (auto a = slopes.begin(); a != slopes.end(); ++a, ++j)
+                m.slopes[j] = detail::number(*a, std::string("slopes_px_per_mm"));
+        }
+        c.validate(); return c;
+    } catch (const cv::Exception& e) { throw AlignmentError(ErrorCode::InvalidConfiguration, e.what()); }
 }
 
 void YConfig::validate() const {
-    if (width <= 0 || height <= 0 || searchMargin < 1 || !(tickMm > 0 && std::isfinite(tickMm)) || targetProfile.empty())
-        throw std::invalid_argument("Invalid Y settings");
-    const cv::Rect whole(0, 0, width, height);
+    detail::configCheck(tickMm > 0 && std::isfinite(tickMm) && !targetProfile.empty(), "Invalid Y settings");
     const std::array<std::string, 3> names{{"L", "C", "R"}};
     for (int i = 0; i < 3; ++i) {
-        const auto& m = markers[i];
-        const cv::Rect search(m.roi.x - searchMargin, m.roi.y - searchMargin,
-                              m.roi.width + 2 * searchMargin, m.roi.height + 2 * searchMargin);
-        if (m.name != names[i] || m.roi.width < 2 || m.roi.height < 2 || (search & whole) != search ||
-            !std::isfinite(m.lowPx) || !std::isfinite(m.highPx) || m.lowPx < 0 || m.highPx >= width || m.lowPx > m.highPx)
-            throw std::invalid_argument("Invalid Y target range or ROI");
-        for (double a : m.slopes) if (!(a > 0 && std::isfinite(a))) throw std::invalid_argument("Expected finite positive Y slope");
+        const auto& m = markers[i]; detail::roiInside(m.roi, searchMargin, width, height);
+        detail::configCheck(m.name == names[i] && std::isfinite(m.lowPx) && std::isfinite(m.highPx) &&
+                            m.lowPx >= 0 && m.highPx < width && m.lowPx <= m.highPx, "Invalid Y target range/name");
+        for (double a : m.slopes) detail::configCheck(a > 0 && std::isfinite(a), "Expected finite positive Y slope");
     }
 }
 
@@ -99,22 +95,25 @@ YResult yFromPositions(const std::array<double, 3>& x, const YConfig& config) {
     }
     const double epsMm = eps / minSlope;
     if (r.commonLowMm > r.commonHighMm + epsMm) {
-        r.status = "no_common_y_interval"; return r;
+        r.errorCode = ErrorCode::YTargetConflict; r.status = errorCodeName(r.errorCode); return r;
     }
     const double firstTick = std::ceil((r.commonLowMm - epsMm) / config.tickMm);
     const double lastTick = std::floor((r.commonHighMm + epsMm) / config.tickMm);
     if (!std::isfinite(firstTick) || !std::isfinite(lastTick) || std::abs(firstTick) >= 9007199254740992.0 || std::abs(lastTick) >= 9007199254740992.0)
         throw std::invalid_argument("Y tick interval overflow");
-    if (firstTick > lastTick) { r.status = "no_reachable_y_tick"; return r; }
+    r.nearestTickBelowMm = std::floor(r.commonLowMm / config.tickMm) * config.tickMm;
+    r.nearestTickAboveMm = std::ceil(r.commonHighMm / config.tickMm) * config.tickMm;
+    r.tickDiagnosticsAvailable = true;
+    if (firstTick > lastTick) { r.errorCode = ErrorCode::YNoReachableTick; r.status = errorCodeName(r.errorCode); return r; }
     const double ticks = std::max(firstTick, std::min(0.0, lastTick));
     const double command = ticks * config.tickMm;
     // Recheck all 12 model predictions after discretization; never clamp to an arbitrary endpoint.
     for (int i = 0; i < 3; ++i)
         for (double a : config.markers[i].slopes)
             if (!inside(x[i] + a * command, config.markers[i], eps)) {
-                r.status = "no_reachable_y_tick"; return r;
+                r.errorCode = ErrorCode::YNoReachableTick; r.status = errorCodeName(r.errorCode); return r;
             }
-    if (ticks == 0) { r.status = "no_reachable_y_tick"; return r; }
+    if (ticks == 0) { r.errorCode = ErrorCode::YNoReachableTick; r.status = errorCodeName(r.errorCode); return r; }
     r.commandMm = command; r.commandAvailable = true; r.status = "move_y";
     return r;
 }
@@ -159,7 +158,9 @@ YResult YEstimator::estimate(const cv::Mat& image) const {
 }
 
 void writeYResult(cv::FileStorage& fs, const YResult& r) {
-    fs << "status" << r.status << "command_mm" << r.commandMm
+    fs << "status" << r.status << "error_code" << errorCodeName(r.errorCode)
+       << "tick_diagnostics_available" << static_cast<int>(r.tickDiagnosticsAvailable)
+       << "nearest_tick_below_mm" << r.nearestTickBelowMm << "nearest_tick_above_mm" << r.nearestTickAboveMm << "command_mm" << r.commandMm
        << "within_target" << static_cast<int>(r.withinTarget) << "command_available" << static_cast<int>(r.commandAvailable)
        << "common_interval_mm" << "[" << r.commonLowMm << r.commonHighMm << "]" << "markers" << "[";
     const std::array<std::string, 3> names{{"L", "C", "R"}};

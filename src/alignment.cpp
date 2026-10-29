@@ -8,33 +8,54 @@ namespace {
 std::unique_ptr<semes::ThetaEstimator> estimator;
 std::unique_ptr<semes::SequentialAligner> sequential;
 semes::MoveBudget budget;
+void requireConfigured() {
+    if (!estimator && !sequential) throw semes::AlignmentError(semes::ErrorCode::NotConfigured, "Call configureAlignment first");
+}
 }
 
 void configureAlignment(const cv::Mat& reference, const std::string& configPath) {
-    auto next = std::make_unique<semes::ThetaEstimator>(reference, semes::ThetaConfig::load(configPath));
-    estimator = std::move(next);
-    sequential.reset();
-    budget = semes::MoveBudget();
+    try {
+        auto next = std::make_unique<semes::ThetaEstimator>(reference, semes::ThetaConfig::load(configPath));
+        estimator = std::move(next);
+        sequential.reset();
+    } catch (const semes::AlignmentError&) { throw; }
+    catch (const std::invalid_argument& e) { throw semes::AlignmentError(semes::ErrorCode::InvalidInput, e.what()); }
+    catch (const std::exception& e) { throw semes::AlignmentError(semes::ErrorCode::MeasurementFailed, e.what()); }
 }
 
 void configureAlignment(const cv::Mat& reference, const std::string& thetaConfigPath, const std::string& yConfigPath) {
-    auto next = std::make_unique<semes::SequentialAligner>(reference, semes::ThetaConfig::load(thetaConfigPath),
+    try {
+        auto next = std::make_unique<semes::SequentialAligner>(reference, semes::ThetaConfig::load(thetaConfigPath),
                                                          semes::YConfig::load(yConfigPath));
-    sequential = std::move(next); estimator.reset(); budget = semes::MoveBudget();
+        sequential = std::move(next); estimator.reset();
+    } catch (const semes::AlignmentError&) { throw; }
+    catch (const std::invalid_argument& e) { throw semes::AlignmentError(semes::ErrorCode::InvalidInput, e.what()); }
+    catch (const std::exception& e) { throw semes::AlignmentError(semes::ErrorCode::MeasurementFailed, e.what()); }
 }
 
 void acknowledgeAlignmentMoveExecuted() { budget.acknowledgeExecuted(); }
 int completedAlignmentMoves() { return budget.completed(); }
+int usedAlignmentMoves() { return budget.used(); }
+void reportAlignmentMoveFailure(semes::MoveFailure failure) { budget.reportFailure(failure); }
+void resumeAlignmentAfterInspection() { budget.resumeAfterInspection(); }
+void startNewAlignmentSession() { requireConfigured(); budget.startNewSession(); }
 
 Alignment_t alignment(cv::Mat &src) {
-    if (sequential) {
-        if (budget.pending()) throw std::logic_error("Previous movement is awaiting execution acknowledgement");
-        const auto result = budget.issue(sequential->estimate(src));
-        if (!result.commandAvailable) throw std::runtime_error(result.status);
+    try {
+        requireConfigured(); budget.requireReady();
+        semes::AlignmentDecision decision;
+        if (sequential) decision = sequential->estimate(src);
+        else {
+            const auto theta = estimator->estimate(src);
+            decision.theta = theta; decision.thetaDeg = theta.commandDeg;
+            decision.commandAvailable = theta.commandAvailable; decision.status = theta.status;
+            decision.errorCode = theta.errorCode;
+            // Theta-only acceptance is not a claim that Y is aligned.
+        }
+        const auto result = budget.issue(decision);
+        if (!result.commandAvailable) throw semes::AlignmentError(result.errorCode, result.status);
         return Alignment_t{result.yMm, result.thetaDeg};
-    }
-    if (!estimator) throw std::logic_error("Call configureAlignment(reference, configPath) first");
-    const auto result = estimator->estimate(src);
-    if (!result.commandAvailable) throw std::runtime_error(result.status);
-    return Alignment_t{0.0, result.commandDeg};
+    } catch (const semes::AlignmentError&) { throw; }
+    catch (const std::invalid_argument& e) { throw semes::AlignmentError(semes::ErrorCode::InvalidInput, e.what()); }
+    catch (const std::exception& e) { throw semes::AlignmentError(semes::ErrorCode::MeasurementFailed, e.what()); }
 }

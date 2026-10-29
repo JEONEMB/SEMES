@@ -36,11 +36,13 @@
 | `aligned` | 현재 이미지에서 θ와 세 QR의 Y 조건 모두 충족 |
 | `no_common_y_interval` | 12개 조건을 함께 만족하는 연속 Y 이동 구간이 없음 |
 | `no_reachable_y_tick` | 연속 구간은 있으나 0.05mm 단위 명령이 없음 |
-| `theta_unresolved_at_tick_resolution` | 기존 θ 계산이 이동 단위 안에서 해결되지 않음 |
+| `theta_target_conflict` | 현재 θ 모델에서 두 선의 허용 각도 범위를 함께 만족할 수 없음 |
+| `theta_no_reachable_tick` | 현재 θ 모델에서 두 선의 완료 조건을 만족하는 0.01° 명령이 없음 |
+| `theta_oscillation_detected` | 실행 완료된 θ 명령 A, −A 다음에 A가 다시 제안되어 차단 |
 | `measurement_failed` | CLI에서 잘못된 크기·빈 이미지·정합 실패 등을 기록 |
-| `move_limit_reached` | 세션에서 실제 완료된 이동이 20회라 추가 명령 차단 |
+| `move_limit_reached` | 완료 이동과 부분·실행 여부 불명확 이동을 합쳐 20회라 추가 명령 차단 |
 
-실패를 `{0,0}` 정렬 완료로 바꾸지 않습니다. 원래 반환 형식에 상태 필드가 없으므로 `alignment()`는 실패 시 예외를 던지고, 자세한 진단이 필요한 호출자는 `SequentialAligner::estimate()`의 `AlignmentDecision`을 사용합니다.
+실패를 `{0,0}` 정렬 완료로 바꾸지 않습니다. `alignment()`는 실패 시 `AlignmentError`를 던지며 `.code()`로 원인을 구분합니다. 자세한 측정 결과가 필요한 호출자는 `SequentialAligner::estimate()`의 `AlignmentDecision`을 사용합니다. 이 추정기는 이동 횟수를 관리하지 않으므로 실제 명령에는 `MoveBudget` 또는 전역 어댑터를 연결해야 합니다. Y의 연속 구간은 있으나 tick이 없으면 주변 두 tick을 진단 정보로 반환하며 이를 실행 명령으로 사용하지 않습니다.
 
 ## 스켈레톤에 연결하기
 
@@ -49,6 +51,7 @@
 configureAlignment(referenceImage,
                    "configs/theta_alignment.json",
                    "configs/y_alignment.json");
+startNewAlignmentSession(); // Only for a genuinely NEW physical positioning task.
 
 // The external controller supplies a newly captured image each time.
 Alignment_t command = alignment(currentImage);
@@ -62,9 +65,11 @@ acknowledgeAlignmentMoveExecuted();
 
 사용 기호는 제공된 파일 라벨의 Y/θ 부호입니다. 실제 제어기 축 부호와의 연결은 장비 연동 코드에서 동일 좌표계를 사용해야 합니다. 원본 1차 `center.bmp`를 초기화에 사용합니다. 다른 기준 사진을 넣고 같은 절대 목표 범위를 그대로 쓰면 좌표 기준이 달라집니다.
 
-현재 코드는 기계 통신·이동·촬영을 수행하지 않습니다. 이동 완료 통지는 호출자가 실제 성공을 확인한 뒤 호출해야 합니다. 통지 전 중복 명령과 통지 중복을 거부합니다. Y·θ를 합쳐 완료 이동 20회까지 허용하며, 20번째 이동 뒤에는 새 이미지의 완료 판정은 허용하지만 21번째 명령은 막습니다. 프레임마다 재초기화하면 횟수가 리셋되므로 초기화는 정렬 작업 시작 때 한 번만 합니다. 전역 스켈레톤 어댑터는 동시 호출을 지원하지 않습니다.
+현재 코드는 기계 통신·이동·촬영을 수행하지 않습니다. 이동 완료 통지는 호출자가 실제 성공을 확인한 뒤 호출해야 합니다. 통지 전 중복 명령과 통지 중복을 거부합니다. `configureAlignment()`를 다시 호출해도 횟수·대기·실행 불명 상태가 유지됩니다. Y·θ의 완료 이동과 부분·실행 여부 불명확 이동을 합쳐 20회까지 허용하며, 20번째 뒤에도 새 이미지로 완료 여부를 확인할 수 있습니다. 실제 새 정렬 작업에서만 `startNewAlignmentSession()`으로 초기화합니다. 전역 어댑터는 동시 호출을 지원하지 않습니다.
 
-두 인자 `configureAlignment(reference, thetaConfig)`는 이전 θ 단독 호환용입니다. 전체 순차 동작과 세션 횟수 관리는 위의 세 인자 초기화를 사용합니다.
+이동하지 않았음이 확인된 실패는 `reportAlignmentMoveFailure(MoveFailure::NoMotion)`으로 알립니다. 부분 이동 또는 실행 여부를 모르면 `PartialOrUnknown`으로 알리며, 이동 한 회를 사용한 것으로 세고 다음 명령을 차단합니다. 외부 제어기가 상태를 확인한 후 `resumeAlignmentAfterInspection()`을 호출하고 새 이미지를 입력합니다. 이 복구는 횟수를 초기화하지 않습니다. 세부 예외·상태 계약은 [피드백 반영 문서](../review_fixes/README.md)를 참고하세요.
+
+두 인자 `configureAlignment(reference, thetaConfig)`는 θ 단독 호환용이며 같은 이동 횟수 관리와 완료·실패 통지가 적용됩니다. Y까지 판정하려면 세 인자 초기화를 사용합니다.
 
 ## 파일 실행과 테스트
 
@@ -84,4 +89,4 @@ ctest --test-dir build -C Release --output-on-failure
 
 MSVC v141 / OpenCV 3.4.15 / x64 Release로 컴파일했습니다. θ·Y 두 CTest 묶음이 통과했고, Y 테스트는 공통 구간·양/음 이동 단위·경계 포함·세 QR 불일치·네 번째 기울기 적용·θ 우선·실제 이동 통지·20회 제한을 확인합니다. 원본 center.bmp와 알려진 5px 이동 테스트에서 QR 좌표, Y 방향, 스켈레톤 연결이 통과했습니다. 실제 θ 이미지 두 장은 CLI의 θ 우선 분기 확인에만 사용했습니다. 전체 촬영 데이터 정확도 분석이나 장비 수렴 검증은 아닙니다.
 
-상세 결과는 [validation_summary.json](validation_summary.json)에 있습니다. 작업 폴더의 `verify_y_implementation.py`로 테스트 및 출처 일치 검사를 재현할 수 있습니다. 실제 장비 보정 정확도, 전체 데이터 성능, 20회 이내 물리적 수렴은 미검증입니다.
+위 최초 구현의 결과는 [validation_summary.json](validation_summary.json)에 보존되어 있습니다. 이 파일과 당시 `verify_y_implementation.py`의 해시는 피드백 반영 전 버전입니다. 현재 수정본의 테스트·해시는 [피드백 반영 검증 결과](../review_fixes/validation_summary.json)를 사용하세요. 실제 장비 보정 정확도, 전체 데이터 성능, 20회 이내 물리적 수렴은 미검증입니다.

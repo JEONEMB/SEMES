@@ -1,0 +1,10 @@
+msbuild 버전 18.11.0-1.26475.11+3cde5c8ec(.NET Framework용)
+
+  1>Checking Build System
+  alignment.cpp
+  alignment_core.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\theta_implementation_20261029\review_fix_20261029\build\Release\alignment_core.lib
+  main.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\theta_implementation_20261029\review_fix_20261029\build\Release\main.exe
+  review_regression_test.cpp
+  review_regression_test.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\theta_implementation_20261029\review_fix_20261029\build\Release\review_regression_test.exe
+  theta_alignment_test.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\theta_implementation_20261029\review_fix_20261029\build\Release\theta_alignment_test.exe
+  y_alignment_test.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\theta_implementation_20261029\review_fix_20261029\build\Release\y_alignment_test.exe
