@@ -1,0 +1,218 @@
+{
+  "scope": "Only first center.bmp and second center1.bmp/center2.bmp/center3.bmp",
+  "method": "Unchanged native OpenCV 3.4.15: central QR ZNCC+affine ECC localization, blurred-step subpixel edge fitting, Huber line fit",
+  "units": "Image line angle relative to horizontal in degrees; positive down to right. slope_dy_dx=tan(angle). NOT robot theta.",
+  "comparable_regions": "Both structural edge ROIs use the same integer pixel coordinates in all four images; no affine resampling",
+  "decision": "Measured image-line slopes differ. No population-equivalence or physical-pose conclusion.",
+  "no_new_acceptance_threshold": true,
+  "new_capture_replicates": false,
+  "limitations": [
+    "One saved image per entry; re-running the same deterministic estimator does not measure uncertainty",
+    "First and second reference images have different nominal origins",
+    "Observed differences do not distinguish actual orientation from feature-measurement variability",
+    "Robot theta tolerance must not be directly applied to image-line angles"
+  ],
+  "native_return_code": 1,
+  "native_return_code_note": "1 means some theta commands unavailable, not line measurement failure",
+  "all_4_inputs_unchanged_sha256": true,
+  "matches_prior_341_image_run_angles_within_1e_minus_12_deg": true,
+  "rows": [
+    {
+      "id": "first_001",
+      "dataset": "first",
+      "file": "center.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "time_metadata": "2026-10-04T12:13:03.594555+09:00",
+      "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "locator_shift_xy_px": [
+        6.512507866318629e-09,
+        3.4567335660540266e-09
+      ],
+      "actual_integer_roi_shift_xy_px": [
+        0,
+        0
+      ],
+      "lines": {
+        "upper_left": {
+          "image_angle_deg": 0.2220793541086069,
+          "slope_dy_dx": 0.003876035340455347,
+          "edge_fit_rms_px": 0.1217009987311667,
+          "edge_points": 449,
+          "delta_image_angle_from_first_center_deg": 0.0
+        },
+        "upper_right": {
+          "image_angle_deg": 0.31416770050022397,
+          "slope_dy_dx": 0.005483315731320636,
+          "edge_fit_rms_px": 0.1274706091984276,
+          "edge_points": 424,
+          "delta_image_angle_from_first_center_deg": 0.0
+        }
+      }
+    },
+    {
+      "id": "second_001",
+      "dataset": "second",
+      "file": "center1.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "time_metadata": "2026-10-15 19:33:08",
+      "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "locator_shift_xy_px": [
+        -0.21635277915629558,
+        0.40260578015295323
+      ],
+      "actual_integer_roi_shift_xy_px": [
+        0,
+        0
+      ],
+      "lines": {
+        "upper_left": {
+          "image_angle_deg": 0.2267329852216037,
+          "slope_dy_dx": 0.003957257771537785,
+          "edge_fit_rms_px": 0.12061904826548352,
+          "edge_points": 449,
+          "delta_image_angle_from_first_center_deg": 0.004653631112996798
+        },
+        "upper_right": {
+          "image_angle_deg": 0.3196546162228009,
+          "slope_dy_dx": 0.005579083406374996,
+          "edge_fit_rms_px": 0.12737124662759824,
+          "edge_points": 424,
+          "delta_image_angle_from_first_center_deg": 0.005486915722576924
+        }
+      }
+    },
+    {
+      "id": "second_002",
+      "dataset": "second",
+      "file": "center2.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "time_metadata": "2026-10-15 19:43:08",
+      "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "locator_shift_xy_px": [
+        -0.2940461473481264,
+        0.4351395358899026
+      ],
+      "actual_integer_roi_shift_xy_px": [
+        0,
+        0
+      ],
+      "lines": {
+        "upper_left": {
+          "image_angle_deg": 0.2249090185089564,
+          "slope_dy_dx": 0.00392542305243455,
+          "edge_fit_rms_px": 0.11666953714030887,
+          "edge_points": 449,
+          "delta_image_angle_from_first_center_deg": 0.0028296644003494853
+        },
+        "upper_right": {
+          "image_angle_deg": 0.3159478479612865,
+          "slope_dy_dx": 0.00551438610514741,
+          "edge_fit_rms_px": 0.12571290963516132,
+          "edge_points": 424,
+          "delta_image_angle_from_first_center_deg": 0.0017801474610625312
+        }
+      }
+    },
+    {
+      "id": "second_024",
+      "dataset": "second",
+      "file": "center3.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "time_metadata": "2026-10-15 21:54:26",
+      "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "locator_shift_xy_px": [
+        -0.24101940212131012,
+        0.4843012351921061
+      ],
+      "actual_integer_roi_shift_xy_px": [
+        0,
+        0
+      ],
+      "lines": {
+        "upper_left": {
+          "image_angle_deg": 0.2188879460045888,
+          "slope_dy_dx": 0.0038203339364075804,
+          "edge_fit_rms_px": 0.12348647890614209,
+          "edge_points": 449,
+          "delta_image_angle_from_first_center_deg": -0.0031914081040181064
+        },
+        "upper_right": {
+          "image_angle_deg": 0.3100426426913459,
+          "slope_dy_dx": 0.005411317754338239,
+          "edge_fit_rms_px": 0.12456209087335109,
+          "edge_points": 424,
+          "delta_image_angle_from_first_center_deg": -0.004125057808878063
+        }
+      }
+    }
+  ],
+  "pairwise_differences": [
+    {
+      "first": "center.bmp",
+      "second": "center1.bmp",
+      "delta_image_angle_deg": {
+        "upper_left": 0.004653631112996798,
+        "upper_right": 0.005486915722576924
+      }
+    },
+    {
+      "first": "center.bmp",
+      "second": "center2.bmp",
+      "delta_image_angle_deg": {
+        "upper_left": 0.0028296644003494853,
+        "upper_right": 0.0017801474610625312
+      }
+    },
+    {
+      "first": "center.bmp",
+      "second": "center3.bmp",
+      "delta_image_angle_deg": {
+        "upper_left": -0.0031914081040181064,
+        "upper_right": -0.004125057808878063
+      }
+    },
+    {
+      "first": "center1.bmp",
+      "second": "center2.bmp",
+      "delta_image_angle_deg": {
+        "upper_left": -0.0018239667126473125,
+        "upper_right": -0.0037067682615143926
+      }
+    },
+    {
+      "first": "center1.bmp",
+      "second": "center3.bmp",
+      "delta_image_angle_deg": {
+        "upper_left": -0.007845039217014904,
+        "upper_right": -0.009611973531454987
+      }
+    },
+    {
+      "first": "center2.bmp",
+      "second": "center3.bmp",
+      "delta_image_angle_deg": {
+        "upper_left": -0.006021072504367592,
+        "upper_right": -0.005905205269940594
+      }
+    }
+  ],
+  "ranges": {
+    "upper_left": {
+      "min_file": "center3.bmp",
+      "max_file": "center1.bmp",
+      "range_image_angle_deg": 0.007845039217014904,
+      "range_slope_dy_dx": 0.0001369238351302043
+    },
+    "upper_right": {
+      "min_file": "center3.bmp",
+      "max_file": "center1.bmp",
+      "range_image_angle_deg": 0.009611973531454987,
+      "range_slope_dy_dx": 0.00016776565203675646
+    }
+  },
+  "source_sha256": {
+    "theta_alignment.cpp": "7ab6508d89729fc36bed3ca23befb173d9376b5872f1837faad11e5bc7a0ef89",
+    "theta_alignment.json": "454dcb52cb82d078fb9f80a236f4ac55e521de608d700cfe5625d55660359e8c",
+    "executable": "d248f75391fa30e4eb608ddbd734f646f52c69d6c4b0119ce5fbda038575bf71"
+  }
+}

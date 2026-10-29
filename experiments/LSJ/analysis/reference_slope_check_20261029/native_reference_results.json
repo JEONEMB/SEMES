@@ -1,0 +1,163 @@
+{
+    "schema_version": 1,
+    "opencv_version": "3.4.15",
+    "stage": "theta_only",
+    "reference": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+    "config": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\theta_implementation_20261029\\payload\\configs\\theta_alignment.json",
+    "y_config": "",
+    "mode": "independent_offline_images_no_machine_moves",
+    "results": [
+        {
+            "file": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+            "valid": 1,
+            "status": "theta_within_tolerance",
+            "error_code": "none",
+            "planned_total_correction_deg": 0.0,
+            "predicted_within_tolerance": 1,
+            "estimated_theta_deg": 0.0,
+            "continuous_correction_deg": 0.0,
+            "command_deg": 0.0,
+            "group": 0,
+            "theta_within_tolerance": 1,
+            "command_available": 1,
+            "outside_calibration": 0,
+            "fit_residual_image_deg": 0.0,
+            "zncc": 1.0,
+            "ecc": 1.0000000244328540e+00,
+            "shift_xy_px": [
+                6.5125078663186287e-09,
+                3.4567335660540266e-09
+            ],
+            "lines": [
+                {
+                    "angle_deg": 2.2207935410860691e-01,
+                    "target_deg": 2.2207935410860691e-01,
+                    "estimated_theta_deg": 0.0,
+                    "edge_rms_px": 1.2170099873116670e-01,
+                    "points": 449
+                },
+                {
+                    "angle_deg": 3.1416770050022397e-01,
+                    "target_deg": 3.1416770050022397e-01,
+                    "estimated_theta_deg": 0.0,
+                    "edge_rms_px": 1.2747060919842759e-01,
+                    "points": 424
+                }
+            ]
+        },
+        {
+            "file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+            "valid": 1,
+            "status": "theta_target_conflict",
+            "error_code": "theta_target_conflict",
+            "planned_total_correction_deg": 0.0,
+            "predicted_within_tolerance": 0,
+            "estimated_theta_deg": -5.1153330141835381e-02,
+            "continuous_correction_deg": 5.1153330141835381e-02,
+            "command_deg": 0.0,
+            "group": 5,
+            "theta_within_tolerance": 0,
+            "command_available": 0,
+            "outside_calibration": 0,
+            "fit_residual_image_deg": 6.2799904831661564e-04,
+            "zncc": 9.6896106004714966e-01,
+            "ecc": 9.9744464783486531e-01,
+            "shift_xy_px": [
+                -2.1635277915629558e-01,
+                4.0260578015295323e-01
+            ],
+            "lines": [
+                {
+                    "angle_deg": 2.2673298522160371e-01,
+                    "target_deg": 2.2207935410860691e-01,
+                    "estimated_theta_deg": -4.5300688407113363e-02,
+                    "edge_rms_px": 1.2061904826548352e-01,
+                    "points": 449
+                },
+                {
+                    "angle_deg": 3.1965461622280089e-01,
+                    "target_deg": 3.1416770050022397e-01,
+                    "estimated_theta_deg": -5.8071594802540608e-02,
+                    "edge_rms_px": 1.2737124662759824e-01,
+                    "points": 424
+                }
+            ]
+        },
+        {
+            "file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+            "valid": 1,
+            "status": "theta_no_reachable_tick",
+            "error_code": "theta_no_reachable_tick",
+            "planned_total_correction_deg": 0.0,
+            "predicted_within_tolerance": 0,
+            "estimated_theta_deg": -2.3556060382853836e-02,
+            "continuous_correction_deg": 2.3556060382853836e-02,
+            "command_deg": 0.0,
+            "group": 5,
+            "theta_within_tolerance": 0,
+            "command_available": 0,
+            "outside_calibration": 0,
+            "fit_residual_image_deg": 4.2805447855618646e-04,
+            "zncc": 9.6020483970642090e-01,
+            "ecc": 9.9660971267175591e-01,
+            "shift_xy_px": [
+                -2.9404614734812640e-01,
+                4.3513953588990262e-01
+            ],
+            "lines": [
+                {
+                    "angle_deg": 2.2490901850895639e-01,
+                    "target_deg": 2.2207935410860691e-01,
+                    "estimated_theta_deg": -2.7545317233876231e-02,
+                    "edge_rms_px": 1.1666953714030887e-01,
+                    "points": 449
+                },
+                {
+                    "angle_deg": 3.1594784796128650e-01,
+                    "target_deg": 3.1416770050022397e-01,
+                    "estimated_theta_deg": -1.8840457421686864e-02,
+                    "edge_rms_px": 1.2571290963516132e-01,
+                    "points": 424
+                }
+            ]
+        },
+        {
+            "file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+            "valid": 1,
+            "status": "theta_target_conflict",
+            "error_code": "theta_target_conflict",
+            "planned_total_correction_deg": 0.0,
+            "predicted_within_tolerance": 0,
+            "estimated_theta_deg": 3.7027488731898588e-02,
+            "continuous_correction_deg": -3.7027488731898588e-02,
+            "command_deg": 0.0,
+            "group": 4,
+            "theta_within_tolerance": 0,
+            "command_available": 0,
+            "outside_calibration": 0,
+            "fit_residual_image_deg": 5.0698836889064589e-04,
+            "zncc": 9.5760220289230347e-01,
+            "ecc": 9.9660925702948411e-01,
+            "shift_xy_px": [
+                -2.4101940212131012e-01,
+                4.8430123519210611e-01
+            ],
+            "lines": [
+                {
+                    "angle_deg": 2.1888794600458880e-01,
+                    "target_deg": 2.2207935410860691e-01,
+                    "estimated_theta_deg": 3.2000098252332576e-02,
+                    "edge_rms_px": 1.2348647890614209e-01,
+                    "points": 449
+                },
+                {
+                    "angle_deg": 3.1004264269134590e-01,
+                    "target_deg": 3.1416770050022397e-01,
+                    "estimated_theta_deg": 4.2280765576558618e-02,
+                    "edge_rms_px": 1.2456209087335109e-01,
+                    "points": 424
+                }
+            ]
+        }
+    ]
+}
