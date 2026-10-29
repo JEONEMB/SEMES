@@ -1,31 +1,47 @@
 cmake_minimum_required(VERSION 3.15)
-
 project(S15P31A507 LANGUAGES CXX)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# OpenCV 3.4.x
 find_package(OpenCV 3.4 REQUIRED)
+add_library(alignment_core STATIC src/alignment.cpp src/theta_alignment.cpp src/y_alignment.cpp src/sequential_alignment.cpp)
+target_include_directories(alignment_core PUBLIC ${PROJECT_SOURCE_DIR}/include ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(alignment_core PUBLIC ${OpenCV_LIBS})
+add_executable(main src/main.cpp)
+target_link_libraries(main PRIVATE alignment_core)
+if(MSVC)
+    target_compile_options(alignment_core PRIVATE /utf-8 /W4)
+    target_compile_options(main PRIVATE /utf-8 /W4)
+endif()
 
-file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
-    "${PROJECT_SOURCE_DIR}/src/*.cpp"
-)
+function(copy_opencv_dll target)
+    if(WIN32)
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
+                "$<TARGET_FILE_DIR:${target}>")
+    endif()
+endfunction()
+copy_opencv_dll(main)
 
-add_executable(main ${PROJECT_SOURCES})
-target_include_directories(main PRIVATE
-    ${PROJECT_SOURCE_DIR}/include
-)
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(theta_alignment_test tests/theta_alignment_test.cpp)
+    target_link_libraries(theta_alignment_test PRIVATE alignment_core)
+    if(MSVC)
+        target_compile_options(theta_alignment_test PRIVATE /utf-8 /W4)
+    endif()
+    copy_opencv_dll(theta_alignment_test)
+    add_test(NAME theta_alignment_contract COMMAND theta_alignment_test
+        "configs/theta_alignment.json")
+    set_tests_properties(theta_alignment_contract PROPERTIES WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
-target_link_libraries(main PRIVATE
-    ${OpenCV_LIBS}
-)
-
-# OpenCV DLL을 실행파일 옆으로 자동 복사
-# Debug   -> opencv_world3415d.dll
-# Release -> opencv_world3415.dll
-add_custom_command(TARGET main POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
-        "$<TARGET_FILE_DIR:main>"
-)
+    add_executable(y_alignment_test tests/y_alignment_test.cpp)
+    target_link_libraries(y_alignment_test PRIVATE alignment_core)
+    if(MSVC)
+        target_compile_options(y_alignment_test PRIVATE /utf-8 /W4)
+    endif()
+    copy_opencv_dll(y_alignment_test)
+    add_test(NAME y_alignment_contract COMMAND y_alignment_test configs/theta_alignment.json configs/y_alignment.json)
+    set_tests_properties(y_alignment_contract PROPERTIES WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
+endif()
