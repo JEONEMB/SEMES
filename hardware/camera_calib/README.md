@@ -20,7 +20,7 @@ Raspberry Pi HQ 카메라(IMX477) + 6mm 렌즈의 **내부 파라미터(fx, fy, 
 ## 2. 촬영 (Pi)
 
 ```bash
-cd tool/camera_calib
+cd hardware/camera_calib
 python3 capture_calib.py                # 저장 폴더: captures/
 ```
 
