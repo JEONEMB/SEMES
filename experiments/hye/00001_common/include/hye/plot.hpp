@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include "dataset.hpp"
 #include "report.hpp"
 
 namespace hye {
