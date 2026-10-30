@@ -9,3 +9,4 @@ Module.symvers
 modules.order
 .tmp_versions/
 tools/rs_frame_test
+tools/rsctl

@@ -2,6 +2,7 @@
 #
 #   make            모듈 빌드 (robot_stage.ko)
 #   make test       프레임 코드 유저 공간 테스트 (protocol.md 9장 예시)
+#   make tools      테스트 도구 빌드 (tools/rsctl)
 #   make clean      빌드 결과 삭제
 #
 # 커널 빌드 시스템(Kbuild)이 이 Makefile을 두 번 읽습니다.
@@ -11,7 +12,7 @@
 ifneq ($(KERNELRELEASE),)
 
 obj-m := robot_stage.o
-robot_stage-y := rs_main.o rs_frame.o rs_ldisc.o
+robot_stage-y := rs_main.o rs_frame.o rs_ldisc.o rs_cmd.o rs_cdev.o
 ccflags-y := -I$(src)/include
 
 else
@@ -27,10 +28,13 @@ test:
 		tools/rs_frame_test.c rs_frame.c
 	./tools/rs_frame_test
 
+tools:
+	$(CC) -Wall -Wextra -Iinclude -Iinclude/uapi -o tools/rsctl tools/rsctl.c
+
 clean:
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
-	rm -f tools/rs_frame_test
+	rm -f tools/rs_frame_test tools/rsctl
 
-.PHONY: all test clean
+.PHONY: all test tools clean
 
 endif
