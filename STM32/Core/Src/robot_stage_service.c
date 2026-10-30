@@ -50,7 +50,8 @@ void RsService_Handle(RsService *service, const RsFrame *request,
             reply->payload[1] = (rs_u8)((switch_bits & 7U) << 2);
             break;
         case RS_STOP:
-            /* No motion can be active; ACK promises no electrical EN polarity. */
+            /* App dispatch aborts the Y test before calling this handler.
+             * Theta EN polarity remains unknown. */
             reply->type = RS_ACK; reply->len = 1U;
             reply->payload[0] = RS_STOP;
             break;

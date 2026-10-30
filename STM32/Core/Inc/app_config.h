@@ -1,8 +1,8 @@
 #ifndef APP_CONFIG_H
 #define APP_CONFIG_H
 
-/* Communication/input bring-up ONLY. Changing this flag cannot enable motion:
- * this firmware deliberately contains no motion-start implementation. */
+/* Protocol MOVE/HOME remain locked. The separate y_motor pulse-test API has
+ * its own Y_MOTOR_OUTPUT_ALLOWED gate and local Y_TEST_JOG extension. */
 #define APP_MOTION_LOCKED 1
 #if APP_MOTION_LOCKED != 1
 #error "Motion requires a separate reviewed implementation and hardware validation."
