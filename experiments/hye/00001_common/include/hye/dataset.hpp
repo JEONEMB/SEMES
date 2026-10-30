@@ -3,7 +3,9 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 #include <cstdio>
+#include <filesystem>
 #include <fstream>
+#include <iterator>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -88,14 +90,22 @@ inline const Shot& center_1014(const std::vector<Shot>& shots) {
     throw std::runtime_error("center.bmp 없음");
 }
 
+// cv::imread 는 OpenCV 3.4 에서 한글 경로(clean_20261020/기준 위치/...)를 못 연다. 바이트를 읽어 imdecode 한다.
+inline cv::Mat imread_u8(const std::string& path, int flags) {
+    std::ifstream f(std::filesystem::u8path(path), std::ios::binary);
+    if (!f) return {};
+    std::vector<char> buf((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+    return cv::imdecode(buf, flags);
+}
+
 inline cv::Mat read_gray(const Shot& s) {
-    cv::Mat m = cv::imread(s.path, cv::IMREAD_GRAYSCALE);
+    cv::Mat m = imread_u8(s.path, cv::IMREAD_GRAYSCALE);
     if (m.empty()) throw std::runtime_error("읽기 실패: " + s.path);
     return m;
 }
 
 inline cv::Mat read_color(const Shot& s) {
-    cv::Mat m = cv::imread(s.path, cv::IMREAD_COLOR);
+    cv::Mat m = imread_u8(s.path, cv::IMREAD_COLOR);
     if (m.empty()) throw std::runtime_error("읽기 실패: " + s.path);
     return m;
 }

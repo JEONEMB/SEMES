@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.15)
+project(qr_direct_registration LANGUAGES CXX)
+include("${CMAKE_CURRENT_SOURCE_DIR}/../../00001_common/hye_experiment.cmake")
+hye_experiment(qr_direct_registration src/main.cpp src/ecc_persp.cpp)
+target_include_directories(qr_direct_registration PRIVATE src)
+if(MSVC)
+  set_source_files_properties(src/ecc_persp.cpp PROPERTIES COMPILE_OPTIONS "/wd4189")
+endif()
