@@ -5,12 +5,14 @@
 -------
 data/raw/zip_20261014.zip -> data/clean/clean_20261014
 data/raw/zip_20261020.zip -> data/clean/clean_20261020
+data/raw/zip_20261029.zip -> data/clean/clean_20261029
 
 BMP 픽셀이나 파일 바이트를 가공하지 않고 중첩 분할 ZIP을 풉니다.
 공통 최상위 포장 폴더 한 개만 제거하고 촬영 폴더/파일명을 보존합니다.
 잘 안 보이거나 추정이 어려운 사진도 제외하지 않습니다. 반복 사진도 보존합니다.
 20261014: BMP 281장 (center 1, Y 80, T 200)
 20261020: BMP 60장 (center 3, 혼합 57), 동봉 TXT 60개
+20261029: BMP 234장 (center 없음, 혼합 Y+0.05 x Θ 78자세 x 3장), 동봉 TXT 234개
 
 Python이나 과거 실험 폴더 없이 실행됩니다.
 사용 라이브러리: C++17, OpenCV 3.4.15, Windows BCrypt(SHA256).

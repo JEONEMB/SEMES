@@ -1,0 +1,4 @@
+condition,n,measure_median_ms,measure_p95_ms
+A_NCC_LK15_GN17(채택),280,48.4825,71.299
+B_NCC_LK21피라미드_유효점,280,14.4704,24.9586
+C_NCC_LK15(채택LK단계)_GN없음,280,5.30995,9.62508
