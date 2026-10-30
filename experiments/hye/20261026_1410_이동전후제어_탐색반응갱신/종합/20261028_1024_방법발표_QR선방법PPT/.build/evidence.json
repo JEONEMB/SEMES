@@ -1,0 +1,123 @@
+{
+  "comparison": [
+    {
+      "condition_name": "qr",
+      "protocol": "development_oof",
+      "dataset": "all",
+      "n": 341,
+      "failures": 0,
+      "passed": 188,
+      "Y_MAE": 0.0936834276374971,
+      "Y_max": 0.4526805485377517,
+      "T_MAE": 0.0167220056818337,
+      "T_max": 0.077959762019538,
+      "name": "QR만"
+    },
+    {
+      "condition_name": "upper",
+      "protocol": "development_oof",
+      "dataset": "all",
+      "n": 341,
+      "failures": 0,
+      "passed": 333,
+      "Y_MAE": 0.0233995488917899,
+      "Y_max": 0.1772950520425287,
+      "T_MAE": 0.0042982035330148,
+      "T_max": 0.0362596739681138,
+      "name": "QR + 위쪽 선"
+    },
+    {
+      "condition_name": "lower",
+      "protocol": "development_oof",
+      "dataset": "all",
+      "n": 341,
+      "failures": 0,
+      "passed": 335,
+      "Y_MAE": 0.0238166499108541,
+      "Y_max": 0.1481958645372569,
+      "T_MAE": 0.004305791330638,
+      "T_max": 0.0304673188157587,
+      "name": "QR + 아래쪽 선"
+    },
+    {
+      "condition_name": "both",
+      "protocol": "development_oof",
+      "dataset": "all",
+      "n": 341,
+      "failures": 0,
+      "passed": 337,
+      "Y_MAE": 0.0203498497735548,
+      "Y_max": 0.1590430186815021,
+      "T_MAE": 0.0036090747283459,
+      "T_max": 0.0323842423046489,
+      "name": "QR + 위·아래 선"
+    }
+  ],
+  "bothDates": [
+    {
+      "condition_name": "both",
+      "protocol": "development_oof",
+      "dataset": "20261014",
+      "n": 281,
+      "failures": 0,
+      "passed": 281,
+      "Y_MAE": 0.0175278008993597,
+      "Y_max": 0.0534528414642897,
+      "T_MAE": 0.0030934104020428,
+      "T_max": 0.0122485135908677,
+      "name": "20261014"
+    },
+    {
+      "condition_name": "both",
+      "protocol": "development_oof",
+      "dataset": "20261020",
+      "n": 60,
+      "failures": 0,
+      "passed": 56,
+      "Y_MAE": 0.0335664453343688,
+      "Y_max": 0.1590430186815021,
+      "T_MAE": 0.006024102656532,
+      "T_max": 0.0323842423046489,
+      "name": "20261020"
+    },
+    {
+      "condition_name": "both",
+      "protocol": "development_oof",
+      "dataset": "all",
+      "n": 341,
+      "failures": 0,
+      "passed": 337,
+      "Y_MAE": 0.0203498497735548,
+      "Y_max": 0.1590430186815021,
+      "T_MAE": 0.0036090747283459,
+      "T_max": 0.0323842423046489,
+      "name": "전체"
+    }
+  ],
+  "failures": [
+    {
+      "label": "(0.05, 1.00) / 3회",
+      "predY": 0.1418908370913802,
+      "eY": 0.0918908370913802,
+      "eT": 0.0130959181839963
+    },
+    {
+      "label": "(1.00, 1.00) / 2회",
+      "predY": 0.8793367755519526,
+      "eY": 0.1206632244480474,
+      "eT": 0.0228701766719869
+    },
+    {
+      "label": "(0.10, 0.20) / 2회",
+      "predY": -0.0085046995389422,
+      "eY": 0.1085046995389422,
+      "eT": 0.0198405283387611
+    },
+    {
+      "label": "(1.00, 2.00) / 3회",
+      "predY": 1.1590430186815022,
+      "eY": 0.1590430186815021,
+      "eT": 0.0323842423046489
+    }
+  ]
+}
