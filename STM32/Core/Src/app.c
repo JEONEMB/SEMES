@@ -1,6 +1,8 @@
 #include "app.h"
 #include "app_config.h"
 #include "robot_stage_service.h"
+#include "y_motor.h"
+#include "y_test.h"
 
 static UART_HandleTypeDef *link;
 static uint8_t rx_byte;
@@ -36,8 +38,7 @@ static void DisablePulses(void)
     CLEAR_BIT(TIM1->CCER, TIM_CCER_CC1E | TIM_CCER_CC1NE);
     CLEAR_BIT(TIM1->BDTR, TIM_BDTR_MOE);
     CLEAR_BIT(TIM1->CR1, TIM_CR1_CEN);
-    CLEAR_BIT(TIM3->CCER, TIM_CCER_CC1E);
-    CLEAR_BIT(TIM3->CR1, TIM_CR1_CEN);
+    YMotor_Abort();
 }
 
 static void PollSwitches(uint32_t now)
@@ -112,8 +113,10 @@ void App_Init(UART_HandleTypeDef *uart)
     RsParser_Reset(&parser);
     RsService_Init(&service);
     /* Keep PC7 at generated Low; its physical disable meaning is UNKNOWN.
-     * Motor 24V must remain off during bring-up. */
+     * Theta driver power must remain off during Y-only commissioning. */
     DisablePulses();
+    YMotor_Init();
+    YTest_Init();
     last_sample = HAL_GetTick();
     RsFrame boot;
     RsService_Event(&service, RS_BOOT, &boot);
@@ -172,6 +175,7 @@ static void RecoverRx(void)
 
 void App_Poll(void)
 {
+    YMotor_Poll();
     uint32_t now = HAL_GetTick();
     PollSwitches(now);
     RecoverRx();
@@ -187,7 +191,9 @@ void App_Poll(void)
             /* V1 has no filter-valid bits: use raw inputs until stable. */
             uint8_t inputs = (uint8_t)((switches_filtered & switches_valid) |
                                       (switches_raw & ~switches_valid));
-            RsService_Handle(&service, &request, inputs, &reply);
+            if (!YTest_Handle(&request, &reply)) {
+                RsService_Handle(&service, &request, inputs, &reply);
+            }
             QueueReply(&reply);
             continue;
         }
@@ -203,6 +209,10 @@ void App_Poll(void)
         rx_tail = (uint16_t)((rx_tail + 1U) % APP_RX_CAPACITY);
         Unlock(key);
         RsParser_Push(&parser, byte, arrival);
+    }
+    if (tx_count < APP_TX_QUEUE_CAPACITY) {
+        RsFrame completion;
+        if (YTest_Poll(&completion)) { QueueReply(&completion); }
     }
     if (limit_pending && tx_count < APP_TX_QUEUE_CAPACITY) {
         RsFrame event;

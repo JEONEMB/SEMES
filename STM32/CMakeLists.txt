@@ -48,6 +48,9 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/app.c
     Core/Src/robot_stage_transport.c
     Core/Src/robot_stage_service.c
+    Core/Src/y_motor.c
+    Core/Src/y_motor_tim.c
+    Core/Src/y_test.c
 )
 
 # Add include paths
