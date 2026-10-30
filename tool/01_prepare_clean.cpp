@@ -527,7 +527,8 @@ struct Config {
     std::string date="all";
     bool verifyOnly=false,selfTest=false;
 };
-static const std::map<std::string,size_t> expectedImages{{"20261014",281},{"20261020",60}};
+static const std::map<std::string,size_t> expectedImages{{"20261014",281},{"20261020",60},{"20261029",234}};
+static const std::map<std::string,size_t> expectedTxt{{"20261014",0},{"20261020",60},{"20261029",234}};
 // 6. 재실행 경로: 기존 원본/사진/TXT/메타데이터를 검사하고 수정하지 않습니다.
 static void verifyExisting(const Config& cfg,const std::string& date) {
     auto target=cfg.output/(L"clean_"+decode(date));
@@ -561,7 +562,7 @@ static void verifyExisting(const Config& cfg,const std::string& date) {
         else if(lower(p.extension().wstring())==L".txt")txt++;
         if(++n%60==0)std::cout<<date<<" 기존 파일 검증 "<<n<<"/"<<inventory.size()<<std::endl;
     }
-    require(bmp==images.size()&&txt==(date=="20261020"?60u:0u),"BMP/TXT count mismatch");
+    require(bmp==images.size()&&txt==expectedTxt.at(date),"BMP/TXT count mismatch");
     std::set<std::wstring> actual;
     for(const auto& e:fs::recursive_directory_iterator(target)) {
         require(!e.is_symlink()&&within(e.path(),target),"Existing clean contains a link");
@@ -690,7 +691,7 @@ static void createClean(const Config& cfg,const std::string& date) {
         conditions[images.back().at("condition")]++;
         hashes[r.at("sha256")]++;
     }
-    require(images.size()==expectedImages.at(date)&&txt==(date=="20261020"?60u:0u),"Extracted image/TXT count mismatch");
+    require(images.size()==expectedImages.at(date)&&txt==expectedTxt.at(date),"Extracted image/TXT count mismatch");
     require(shaFile(raw)==before,"Raw ZIP changed during preparation");
     auto meta=stage/L"_metadata";
     fs::create_directories(meta);
@@ -783,7 +784,7 @@ int wmain(int argc,wchar_t** argv) {
         for(int i=1;i<argc;i++) {
             std::wstring a=argv[i];
             if(a==L"--help"||a==L"-h") {
-                std::cout<<"01_prepare_clean.exe [--date all|20261014|20261020] [--verify-only]\n                     [--repo-root PATH] [--output-root PATH] [--self-test]\n\n기본 입력: 저장소/data/raw/zip_날짜.zip\n기본 출력: 저장소/data/clean/clean_날짜\n기존 clean은 검증만 수행합니다. 원본/기존 데이터를 덮어쓰지 않습니다.\nPython 없이 C++/OpenCV/Windows tar.exe/BCrypt로 실행합니다.\n";
+                std::cout<<"01_prepare_clean.exe [--date all|20261014|20261020|20261029] [--verify-only]\n                     [--repo-root PATH] [--output-root PATH] [--self-test]\n\n기본 입력: 저장소/data/raw/zip_날짜.zip\n기본 출력: 저장소/data/clean/clean_날짜\n기존 clean은 검증만 수행합니다. 원본/기존 데이터를 덮어쓰지 않습니다.\nPython 없이 C++/OpenCV/Windows tar.exe/BCrypt로 실행합니다.\n";
                 return 0;
             }
             if(a==L"--verify-only")cfg.verifyOnly=true;

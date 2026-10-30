@@ -19,6 +19,16 @@ if(MSVC)
     target_compile_options(prepare_clean PRIVATE /utf-8 /W4)
 endif()
 
+# 새 자료 EDA 측정과 분석 (--target 20261020 / 20261029)
+add_executable(eda 04_eda.cpp)
+set_target_properties(eda PROPERTIES OUTPUT_NAME "04_eda")
+target_include_directories(eda PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(eda PRIVATE ${OpenCV_LIBS})
+target_compile_definitions(eda PRIVATE NOMINMAX WIN32_LEAN_AND_MEAN)
+if(MSVC)
+    target_compile_options(eda PRIVATE /utf-8 /W4)
+endif()
+
 # Same OpenCV binary/configuration as the team's main application.
 add_custom_command(TARGET prepare_clean POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
