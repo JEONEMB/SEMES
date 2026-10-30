@@ -1,0 +1,17 @@
+{
+  "cpu": "Intel(R) Core(TM) Ultra 9 185H",
+  "logical_processors": 22,
+  "opencv": "3.4.15",
+  "default_threads": 22,
+  "build": "Release, MSVC v141",
+  "power": "노트북, 실행 직전 배터리 상태 1(방전 중)·충전 95%, 전원 구성표 균형 조정. 성능/효율 코어 혼합 CPU라 스레드 배치를 고정하지 않았다",
+  "concurrent_load": "다른 프로그램(편집기·브라우저·다른 에이전트)이 함께 실행 중. 실행 직전 전체 CPU 약 13%",
+  "photos": 280,
+  "passes_1thread": 5,
+  "passes_default_threads": 2,
+  "warmup_photos": 10,
+  "init_repeats": 5,
+  "canvas_equivalence_max_diff": 0,
+  "seed": 20261029,
+  "quick": false
+}
