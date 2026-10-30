@@ -13,6 +13,17 @@
     <ClCompile Include="..\core\sim_runner.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
     <ClCompile Include="..\core\sim_draw.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
     <ClCompile Include="..\..\Alignment\alignment.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\align_config.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\batch.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\coarse_align.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\dataset.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\estimator.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\evaluation.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\features.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\fine_align.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\image_util.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\interp_kernel.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\Alignment\ksh\src\pose_model.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\core\sim_config.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>

@@ -114,7 +114,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\core;$(ProjectDir)..\..\Alignment;C:\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\core;$(ProjectDir)..\..\Alignment;$(ProjectDir)..\..\Alignment\ksh\include;C:\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,7 +140,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\core;$(ProjectDir)..\..\Alignment;C:\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\core;$(ProjectDir)..\..\Alignment;$(ProjectDir)..\..\Alignment\ksh\include;C:\opencv\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,6 +163,17 @@
     <ClCompile Include="..\core\sim_runner.cpp" />
     <ClCompile Include="..\core\sim_draw.cpp" />
     <ClCompile Include="..\..\Alignment\alignment.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\align_config.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\batch.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\coarse_align.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\dataset.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\estimator.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\evaluation.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\features.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\fine_align.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\image_util.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\interp_kernel.cpp" />
+    <ClCompile Include="..\..\Alignment\ksh\src\pose_model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\core\sim_config.hpp" />
