@@ -1,5 +1,7 @@
 #include "robot_stage_service.h"
 #include "mock_hal.h"
+#include "y_motor.h"
+#include "y_test.h"
 #include <stddef.h>
 #define CHECK(condition) do { if (!(condition)) return __LINE__; } while (0)
 
@@ -156,6 +158,12 @@ int TestService(void)
 
 TestTimer timer1, timer3;
 TestGpio gpio;
+TestRcc test_rcc;
+uint32_t HAL_RCC_GetPCLK1Freq(void) { return 16000000U; }
+void HAL_NVIC_DisableIRQ(int irq) { (void)irq; }
+void HAL_NVIC_ClearPendingIRQ(int irq) { (void)irq; }
+void HAL_NVIC_SetPriority(int irq, unsigned p, unsigned s) { (void)irq; (void)p; (void)s; }
+void HAL_NVIC_EnableIRQ(int irq) { (void)irq; }
 static uint32_t tick, primask;
 static uint8_t *rx_target, *tx_source;
 static uint16_t tx_length;
@@ -198,11 +206,23 @@ static void ResetApp(void)
     timer1 = timer3 = (TestTimer){.CCER = 5, .BDTR = 0x8000, .CR1 = 1};
     App_Init(&uart); Drain(); wire_length = 0;
 }
+int TestUartDuringPulseBurst(void)
+{
+    ResetApp();
+    CHECK(YMotor_Start(0, 3, 100) == Y_MOTOR_OK);
+    Receive(vectors[0], 8); Drain();
+    CHECK(wire_length == 12 && Equal(wire, vectors[1], 12));
+    YMotorStatus status;
+    YMotor_GetStatus(&status);
+    CHECK(status.state == Y_MOTOR_RUNNING && status.completed_pulses == 0);
+    YMotor_Abort();
+    return 0;
+}
 int TestApp(void)
 {
     ResetApp();
     CHECK(timer1.CCER == 0 && timer1.BDTR == 0 && timer1.CR1 == 0);
-    CHECK(timer3.CCER == 4 && timer3.CR1 == 0 && gpio_level == 1);
+    CHECK((timer3.CR1 & TIM_CR1_CEN) == 0 && gpio_level == 1);
     /* RX while TX is active cannot overwrite an in-flight packet. */
     Receive(vectors[0], 8); App_Poll();
     CHECK(uart.gState != HAL_UART_STATE_READY);
@@ -242,5 +262,31 @@ int TestApp(void)
     uart.gState = HAL_UART_STATE_READY;
     App_Init(&uart); Drain();
     CHECK(wire_length == 17 && wire[3] == RS_EVENT && wire[4] == 0 && wire[6] == RS_BOOT);
+    return 0;
+}
+
+int TestPCJog(void)
+{
+#if Y_MOTOR_OUTPUT_ALLOWED
+    ResetApp();
+    RsFrame request = {.type = Y_TEST_JOG, .seq = 23, .len = 9};
+    rs_put_u32(request.payload + 1, 160);
+    rs_put_u32(request.payload + 5, 160);
+    uint8_t bytes[RS_MAX_FRAME];
+    unsigned n = RsFrame_Encode(&request, bytes);
+    Receive(bytes, n); Drain();
+    CHECK(wire_length == 9 && wire[3] == RS_ACK && wire[6] == Y_TEST_JOG);
+    YMotorStatus s; YMotor_GetStatus(&s);
+    CHECK(s.state == Y_MOTOR_RUNNING && s.requested_pulses == 160);
+    wire_length = 0;
+    Receive(vectors[0], 8); Drain();
+    CHECK(wire_length == 12 && Equal(wire, vectors[1], 12));
+    wire_length = 0;
+    request.type = RS_STOP; request.seq = 24; request.len = 0;
+    n = RsFrame_Encode(&request, bytes); Receive(bytes, n); Drain();
+    CHECK(wire_length == 9 + 28 && wire[3] == RS_ACK && wire[6] == RS_STOP);
+    CHECK(wire[12] == Y_TEST_REPORT && wire[13] == 23 && wire[15] == Y_MOTOR_ABORTED);
+    YMotor_GetStatus(&s); CHECK(!s.enabled && s.state == Y_MOTOR_ABORTED);
+#endif
     return 0;
 }

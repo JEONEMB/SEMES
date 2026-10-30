@@ -2,9 +2,35 @@
 #define MOCK_HAL_H
 /* Replace app.h's hardware include when compiling app.c for emulation. */
 #define APP_H
+#define __MAIN_H
 #include <stdint.h>
 typedef struct { uint32_t ErrorCode, gState; } UART_HandleTypeDef;
-typedef struct { uint32_t CCER, BDTR, CR1; } TestTimer;
+typedef struct { volatile uint32_t CCER, BDTR, CR1, CR2, SMCR, DIER,
+    CCMR1, CNT, SR, PSC, ARR, CCR1, EGR; } TestTimer;
+typedef struct { uint32_t CFGR, DCKCFGR; } TestRcc;
+extern TestRcc test_rcc;
+#define RCC (&test_rcc)
+#define RCC_CFGR_PPRE1 (7U << 10)
+#define RCC_DCKCFGR_TIMPRE (1U << 24)
+#define TIM_CR1_OPM 8U
+#define TIM_CCMR1_OC1M (7U << 4)
+#define TIM_OCMODE_FORCED_INACTIVE (4U << 4)
+#define TIM_OCMODE_PWM2 (7U << 4)
+#define TIM_EGR_UG 1U
+#define TIM_DIER_UIE 1U
+#define TIM_SR_UIF 1U
+#define TIM3_IRQn 29
+#define SET_BIT(reg, mask) ((reg) |= (mask))
+#define MODIFY_REG(reg, mask, value) ((reg) = ((reg) & ~(mask)) | (value))
+#define GPIOA (&gpio)
+#define Y_DIR_GPIO_Port (&gpio)
+#define Y_DIR_Pin 32U
+#define GPIO_PIN_RESET 0U
+uint32_t HAL_RCC_GetPCLK1Freq(void);
+void HAL_NVIC_DisableIRQ(int irq);
+void HAL_NVIC_ClearPendingIRQ(int irq);
+void HAL_NVIC_SetPriority(int irq, unsigned preemption, unsigned sub);
+void HAL_NVIC_EnableIRQ(int irq);
 typedef struct { uint32_t IDR; } TestGpio;
 typedef enum { HAL_OK, HAL_ERROR, HAL_BUSY } HAL_StatusTypeDef;
 extern TestTimer timer1, timer3;
