@@ -1,0 +1,5 @@
+#include "fixed_feature_maps.hpp"
+#include "npy_writer.hpp"
+#include <iostream>
+using namespace semes;
+int wmain(int argc,wchar_t** wide){Utf8Arguments args(argc,wide);auto argv=args.data();try{if(argc!=3)throw std::runtime_error("generalization_features original-measurements.npz new-output");auto arrays=npz(fs::u8path(argv[1]));fs::path out=fs::u8path(argv[2]);if(fs::exists(out))throw std::runtime_error("New output required");auto bank=generalization_feature_bank(arrays.at("D"),arrays.at("points"),arrays.at("regions"));std::map<std::string,Npy> packed;Json summary=Json::dict();for(const auto& pair:bank){std::vector<double> values(pair.second.ptr<double>(),pair.second.ptr<double>()+pair.second.total());packed[pair.first]=numeric_npy(values,{size_t(pair.second.rows),size_t(pair.second.cols)});Json shape=Json::list();shape.push(pair.second.rows);shape.push(pair.second.cols);summary[pair.first]=shape;}fs::create_directories(out);write_npz(out/"feature_bank.npz",packed);write(out/"shapes.json",summary.dump());std::cout<<summary.dump()<<'\n';return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

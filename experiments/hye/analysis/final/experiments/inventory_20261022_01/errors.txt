@@ -1,0 +1,3 @@
+algorithm_presentation_20261022/output/~$SEMES_02_Algorithm_template_v2.pptx: Hash read failed C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\algorithm_presentation_20261022\output\~$SEMES_02_Algorithm_template_v2.pptx
+hw-analysis/docs/validation-runs/hw/eda/20261020/~$SEMES_EDA_20261020.pptx: Hash read failed C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\hw-analysis\docs\validation-runs\hw\eda\20261020\~$SEMES_EDA_20261020.pptx
+presentation_eda_20261019/~$SEMES_01_데이터EDA_정리본_v3.pptx: Hash read failed C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\presentation_eda_20261019\~$SEMES_01_데이터EDA_정리본_v3.pptx

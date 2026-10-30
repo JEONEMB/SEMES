@@ -1,0 +1,12 @@
+foreach(app historical_affine_opencv4 historical_homography_opencv4)
+  if(app STREQUAL historical_affine_opencv4)
+    set(source src/affine.cpp)
+  else()
+    set(source src/homography.cpp)
+  endif()
+  add_executable(${app} ${source})
+  target_include_directories(${app} PRIVATE ${SEMES_OPENCV4_HEADERS})
+  target_link_libraries(${app} PRIVATE semes_io semes_opencv411)
+  add_custom_command(TARGET ${app} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${SEMES_OPENCV4_DIR}/bin/Release/opencv_world4110.dll" "$<TARGET_FILE_DIR:${app}>")
+endforeach()

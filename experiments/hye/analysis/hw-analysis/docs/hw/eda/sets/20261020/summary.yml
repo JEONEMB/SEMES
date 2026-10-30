@@ -1,0 +1,23 @@
+# hw_eda 20261020 핵심 숫자 (자동 생성)
+dataset.shots: 60
+dataset.conditions: 19
+dataset.minutes_total: 168.00
+qr.label_gap_lc_px: 257.50
+qr.label_gap_cr_px: 259.00
+corner.points_total: 625
+corner.points_used: 558
+corner.points_diagonal: 56
+corner.points_lost: 11
+ecc.cc_min: 0.99588
+ecc.cc_median: 0.99800
+repeat.center_spread_dx_px: 0.0764
+repeat.condition_sd_corner_median_px: 0.16449
+repeat.condition_sd_corner_max_px: 0.33394
+repeat.condition_sd_ecc_median_px: 0.16180
+model.k_y: 14.3760
+model.k_t: 80.3028
+model.resid_rms_px: 0.6682
+model.resid_max_px: 0.8352
+model.meas_over_pred: 1.00220
+vertical.dy_per_dx: 0.002722
+vertical.resid_sd_px: 0.01121

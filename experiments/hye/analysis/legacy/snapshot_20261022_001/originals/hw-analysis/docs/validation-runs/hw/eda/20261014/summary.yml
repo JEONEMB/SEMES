@@ -1,0 +1,55 @@
+# hw_eda 20261014 핵심 숫자 (자동 생성)
+dataset.shots: 281
+dataset.minutes_total: 58.02
+dataset.center_plate_pct: 1.467
+dataset.center_whole_pct: 1.248
+qr.label_gap_lc_px: 257.50
+qr.label_gap_cr_px: 258.50
+corner.points_total: 628
+corner.points_used: 535
+corner.points_diagonal: 55
+corner.points_lost: 38
+ecc.cc_min: 0.99567
+ecc.cc_median: 0.99853
+corner.zero_spread_y_px: 0.6500
+corner.zero_spread_y_um: 45.2
+corner.zero.Y 0.1 간격 +: -0.5396
+ecc.zero.Y 0.1 간격 +: -0.5394
+corner.zero.Y 0.1 간격 -: 0.1104
+ecc.zero.Y 0.1 간격 -: 0.1061
+corner.zero.Y 0.05 홀수 +: -0.4477
+ecc.zero.Y 0.05 홀수 +: -0.4494
+corner.zero.Y 0.05 홀수 -: -0.4275
+ecc.zero.Y 0.05 홀수 -: -0.4310
+corner.zero.Θ +: -0.8350
+ecc.zero.Θ +: -0.8358
+corner.zero.Θ -: -0.1933
+ecc.zero.Θ -: -0.1933
+corner.slope_y_mean: 14.3760
+corner.slope_y_min: 14.3599
+corner.slope_y_max: 14.3928
+corner.slope_t_plus: 80.3028
+corner.slope_t_minus: 80.7802
+corner.dy_per_dx: 0.002356
+ecc.slope_y_mean: 14.3740
+ecc.slope_y_min: 14.3587
+ecc.slope_y_max: 14.3893
+ecc.slope_t_plus: 80.3014
+ecc.slope_t_minus: 80.7868
+ecc.dy_per_dx: 0.002450
+method_diff.dx_max_px: 0.0125
+method_diff.dy_max_px: 0.0128
+corner.step_y_px: 1.4358
+corner.step_y_sd: 0.0228
+corner.step_t_px: 0.8044
+corner.step_t_sd: 0.0262
+ecc.step_y_px: 1.4356
+ecc.step_t_px: 0.8044
+method_diff.step_sd_px: 0.00669
+noise.common_sd_min_px: 0.0128
+noise.common_sd_max_px: 0.0321
+noise.point_sd_x_px: 0.0451
+noise.point_sd_y_px: 0.0313
+noise.diag_sd_x_px: 0.0750
+noise.vertical_max_t_px: 0.2783
+noise.direction_change_step_px: 1.3088
