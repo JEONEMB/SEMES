@@ -57,5 +57,5 @@ marginR: 280
 maxSelect: 10
 minGain: 2.0000000000000000e-02
 beam: 5
-tolY_um: 90.
-tolT_deg: 1.0000000000000000e-02
+tolY_um: 45.
+tolT_deg: 5.0000000000000001e-03

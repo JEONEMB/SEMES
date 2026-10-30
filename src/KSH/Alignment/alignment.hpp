@@ -6,9 +6,9 @@
 //         → 로봇 보정 이동 명령은 (−y, −t)
 //  실패 : 측정이 불가능하면 y, t 에 NaN (std::isnan 으로 확인)
 //
-//  원리 (보고서 3장) : ① 위상 상관(FFT)으로 거친 이동 → ② ECC 로 화소 이하 정밀 이동
+//  원리 (보고서 3장) : ① Coarse Alignment (위상 상관, FFT) → ② Fine Alignment (IC-GN + 3차 O-MOMS 보간, 화소 이하)
 //                     → ③ 시차 특징 s(QR 3개), d(s − 하단 문 홀 W2·W3)
-//                     → ④ 학습된 선형식 2개의 교점 = (Y, Θ)
+//                     → ④ 학습된 식 2개 (s : Θ 3차, d : Θ 2차) 를 동시에 만족하는 (Y, Θ)
 //  설정 : config/alignment.yml (기준 사진 경로, ROI 좌표, 모델 계수) — 코드에 값 하드코딩 없음
 //  OpenCV 3.4.15 API, C++17
 // =====================================================================================
@@ -41,13 +41,13 @@ struct AlignmentRoi {
     std::string name;
     cv::Rect ref_rect_px;   // 기준 사진에서의 위치
     cv::Point2d shift_px;   // 측정 이동 (현재 − 기준)
-    double ecc_cc = 0.0;    // ECC 상관 (1 에 가까울수록 신뢰)
+    double ecc_cc = 0.0;    // 정합 상관 ZNCC (1 에 가까울수록 신뢰)
     bool ok = false;
 };
 struct AlignmentInfo {
     bool ok = false;
     std::string message;            // 실패 이유
-    cv::Point2d coarse_px;          // ① 거친 이동
+    cv::Point2d coarse_px;          // ① Coarse Alignment 결과
     std::vector<AlignmentRoi> rois; // ② QR 3개 + 배경 ROI
     double s_px = 0.0;              // ③ QR 평균 가로 이동
     double d_px = 0.0;              // ③ 시차 = s − 배경 평균
