@@ -1,15 +1,14 @@
 ﻿// =====================================================================================
 // alignment.hpp — 사진 한 장으로 로봇의 Y·Θ 어긋남을 추정하는 함수 (제출 형식)
 //
-//  입력 : 현재 자세에서 찍은 사진 (3840×2160, 컬러 또는 회색)
+//  입력 : 현재 자세에서 찍은 사진 (3840×2160, 컬러 또는 회색). 바꾸지 않음
 //  출력 : 기준(티칭) 사진 대비 어긋남 y [mm], t [°]  — 라벨과 같은 부호
 //         → 로봇 보정 이동 명령은 (−y, −t)
-//  실패 : 측정이 불가능하면 y, t 에 NaN (std::isnan 으로 확인)
+//  실패 : 측정이 불가능하면 y, t 에 NaN (std::isnan 으로 확인), 이유는 alignment_last_info().message
 //
-//  원리 (보고서 3장) : ① Coarse Alignment (위상 상관, FFT) → ② Fine Alignment (IC-GN + 3차 O-MOMS 보간, 화소 이하)
-//                     → ③ 시차 특징 s(QR 3개), d(s − 하단 문 홀 W2·W3)
-//                     → ④ 학습된 식 2개 (s : Θ 3차, d : Θ 2차) 를 동시에 만족하는 (Y, Θ)
-//  설정 : config/alignment.yml (기준 사진 경로, ROI 좌표, 모델 계수) — 코드에 값 하드코딩 없음
+//  구현은 ksh 모듈(ksh/include/ksh/*.hpp)을 차례로 부르는 얇은 진입점이다
+//    ① ksh::coarse_alignment → ② ksh::fine_alignment → ③ ksh::measure_features → ④ ksh::invert_pose_model
+//  설정 : config/alignment.yml (기준 사진, ROI, 정렬 방법, 사용할 모델 파일). 코드에 수치 하드코딩 없음
 //  OpenCV 3.4.15 API, C++17
 // =====================================================================================
 #ifndef __ALIGNMENT_HPP__
