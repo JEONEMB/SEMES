@@ -2,7 +2,8 @@
 // align_eval.cpp — 정확도 평가 도구
 //
 //  사용 (작업 폴더 = Alignment 프로젝트 폴더)
-//   align_eval [--config 설정] [--model 모델파일] [--dir 사진폴더]
+//   align_eval [--config 설정] [--model 모델파일] [--dir 사진폴더] [--ref2 기준사진이름] [--tag 결과이름]
+//       --ref2 : 2차 세트 기준 사진 이름 (기본 = 설정 evaluation.reference_set2), --tag : 결과 파일 eval_photos_<tag>
 //       사진 평가 : 라벨이 붙은 사진 전체를 세트별 기준 사진으로 추정 → 묶음별 허용 범위 통과·RMS·최대·J·처리 시간
 //       1차 = 학습에 쓴 데이터(참고), 2차 = 학습에 쓰지 않은 시험 데이터
 //   align_eval --cv [--order-s N --order-d N | --orders all] [--features 특징CSV]
@@ -42,28 +43,34 @@ void write_text(const std::string &path, const std::string &text) {
     f << "\xEF\xBB\xBF" << text;
 }
 
+// 묶음 : 1차 = 학습 데이터(참고). 2차 = |Θ| 범위별 (목표 근처 / 중간 / 학습 범위 끝 / 학습 범위 밖)
+//  학습 범위 = 1차 Θ ±1°
 std::string group_of(const ksh::LabeledPhoto &p, double near_t_deg) {
     if (p.set == 1) return "1차 (학습 데이터, 참고)";
-    if (std::abs(p.t_deg) <= near_t_deg + 1e-9) {
-        std::ostringstream s;
-        s << "2차 목표 근처 (Θ ±" << near_t_deg << "° 이내)";
-        return s.str();
-    }
+    const double a = std::abs(p.t_deg);
     std::ostringstream s;
-    s << "2차 Θ = " << p.t_deg << "°";
+    if (a <= near_t_deg + 1e-9) s << "2차 목표 근처 (|Θ| ≤ " << near_t_deg << "°)";
+    else if (a <= 0.5 + 1e-9) s << "2차 " << near_t_deg << "° < |Θ| ≤ 0.5°";
+    else if (a <= 1.0 + 1e-9) s << "2차 0.5° < |Θ| ≤ 1°";
+    else s << "2차 |Θ| > 1° (학습 범위 밖)";
     return s.str();
 }
 
 // ---------------------------------------------------------------- 사진 평가
-int run_photos(const ksh::AlignConfig &cfg, const std::string &config_path, std::string dir) {
+int run_photos(const ksh::AlignConfig &cfg, const std::string &config_path, std::string dir, const std::string &ref2_override, const std::string &tag) {
     const ksh::EvaluationConfig &ec = cfg.evaluation;
     if (dir.empty()) dir = ksh::resolve_path(config_path, ec.image_dir);
     const auto photos = ksh::list_labeled_photos(dir);
+    // 세트별 기준 사진 : 폴더에 그 세트 사진이 있을 때만 필요 (예 : 2차 사진만 든 폴더면 2차 기준만)
     std::map<int, cv::Mat> refs;
-    for (const auto &rs : {std::make_pair(1, ec.reference_set1), std::make_pair(2, ec.reference_set2)}) {
+    for (const auto &rs : {std::make_pair(1, ec.reference_set1), std::make_pair(2, ref2_override.empty() ? ec.reference_set2 : ref2_override)}) {
+        bool needed = false;
+        for (const auto &p : photos) needed = needed || (!p.is_reference && p.set == rs.first);
+        if (!needed) continue;
         const ksh::LabeledPhoto *r = ksh::find_photo(photos, rs.second);
         if (!r) { std::cerr << "기준 사진 " << rs.second << " 이 " << dir << " 에 없음\n"; return 1; }
         refs[rs.first] = ksh::to_gray32(cv::imread(r->path, cv::IMREAD_GRAYSCALE));
+        std::cout << rs.first << "차 기준 사진 : " << r->stem << "\n";
     }
     std::vector<ksh::LabeledPhoto> targets;
     for (const auto &p : photos)
@@ -88,14 +95,13 @@ int run_photos(const ksh::AlignConfig &cfg, const std::string &config_path, std:
     for (const auto &p : preds)
         if (p.group.rfind("2차", 0) == 0) set2.push_back(p);
     auto groups = ksh::summarize_groups(preds, cfg.tolerance, cfg.spec_tolerance, ec.score_cap);
-    const auto all2 = ksh::summarize_groups(set2, cfg.tolerance, cfg.spec_tolerance, ec.score_cap, "2차 전체");
-    groups.push_back(all2.back());
+    if (!set2.empty()) groups.push_back(ksh::summarize_groups(set2, cfg.tolerance, cfg.spec_tolerance, ec.score_cap, "2차 전체").back());
 
     std::ostringstream md;
     md << "# 사진 평가\n\n- 설정 : " << config_path << "\n- 모델 : " << (cfg.model_path.empty() ? "(설정 안 model:)" : cfg.model_path)
-       << "\n- 사진 : " << dir << "\n\n" << ksh::summary_table(groups, cfg.tolerance, cfg.spec_tolerance);
+       << "\n- 사진 : " << dir << "\n- 2차 기준 사진 : " << (ref2_override.empty() ? ec.reference_set2 : ref2_override) << "\n\n" << ksh::summary_table(groups, cfg.tolerance, cfg.spec_tolerance);
     std::cout << "\n" << md.str();
-    const std::string base = ec.result_dir + "/eval_photos";
+    const std::string base = ec.result_dir + "/eval_photos" + (tag.empty() ? "" : "_" + tag);
     ksh::save_predictions_csv(base + ".csv", preds, cfg.tolerance, cfg.spec_tolerance);
     write_text(base + ".md", md.str());
     std::cout << "\n사진별 결과 : " << base << ".csv, 요약 : " << base << ".md\n";
@@ -167,7 +173,7 @@ int main(int argc, char **argv) {
 #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8);
 #endif
-    std::string config_path = "config/alignment.yml", model_path, dir, features_csv;
+    std::string config_path = "config/alignment.yml", model_path, dir, features_csv, ref2, tag;
     bool cv_mode = false, all_orders = false;
     int order_s = -1, order_d = -1;
     for (int i = 1; i < argc; ++i) {
@@ -176,6 +182,8 @@ int main(int argc, char **argv) {
         if (a == "--config" && has) config_path = argv[++i];
         else if (a == "--model" && has) model_path = argv[++i];
         else if (a == "--dir" && has) dir = argv[++i];
+        else if (a == "--ref2" && has) ref2 = argv[++i];
+        else if (a == "--tag" && has) tag = argv[++i];
         else if (a == "--cv") cv_mode = true;
         else if (a == "--order-s" && has) order_s = std::atoi(argv[++i]);
         else if (a == "--order-d" && has) order_d = std::atoi(argv[++i]);
@@ -199,5 +207,5 @@ int main(int argc, char **argv) {
         if (order_d < 0) order_d = int(cfg.model.d.b_px_per_deg_k.size());
         return run_cv(cfg, config_path, features_csv, order_s, order_d, all_orders);
     }
-    return run_photos(cfg, config_path, dir);
+    return run_photos(cfg, config_path, dir, ref2, tag);
 }
