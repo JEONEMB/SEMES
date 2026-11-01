@@ -1,0 +1,61 @@
+%YAML:1.0
+---
+zones:
+   -
+      name: bracket_upper
+      x: 1420
+      y: 440
+      w: 1020
+      h: 460
+      topK: 8
+   -
+      name: bracket_lower
+      x: 1460
+      y: 1180
+      w: 880
+      h: 660
+      topK: 8
+   -
+      name: ledge
+      x: 0
+      y: 640
+      w: 3840
+      h: 190
+      topK: 8
+   -
+      name: door_panel
+      x: 0
+      y: 1250
+      w: 3840
+      h: 560
+      topK: 12
+   -
+      name: bottom
+      x: 0
+      y: 1830
+      w: 3840
+      h: 330
+      topK: 6
+   -
+      name: wall
+      x: 0
+      y: 0
+      w: 3840
+      h: 2160
+      topK: 10
+exclude:
+   -
+      x: 1480
+      y: 930
+      w: 880
+      h: 260
+hw: 60
+step: 40
+nmsDist: 130
+marginL: 200
+marginR: 280
+maxSelect: 10
+minGain: 2.0000000000000000e-02
+beam: 5
+tolY_um: 45.
+tolT_deg: 5.0000000000000001e-03

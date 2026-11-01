@@ -1,0 +1,9 @@
+# QR Y·Θ EDA 툴 의존성 (Python 3.12, 2026-10-26 검증한 버전)
+# 설치: python -m venv .venv && .venv\Scripts\python -m pip install -r requirements.txt
+# MP4 영상은 시스템 ffmpeg(PATH)를 별도로 사용
+numpy==2.5.4
+opencv-python==5.0.0.93
+pandas==3.1.0
+matplotlib==3.11.2
+PyYAML==6.0.3
+pillow==13.0.0

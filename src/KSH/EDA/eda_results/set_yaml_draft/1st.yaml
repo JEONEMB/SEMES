@@ -1,0 +1,14 @@
+# 1차 세트 — Stage 0 에서 실제 파일로 확인한 규칙 (초안, 사용자 확인 후 data/img/1st/set.yaml 로 복사)
+set_id: set1_1004
+date: 2026-10-04
+type: [y_sweep, theta_sweep]
+reference_images: [center.bmp]
+time_source: mtime            # 생성일시는 복사 시각이라 사용 불가, 수정일시 = 촬영 시각
+filename_rule:
+  - {glob: "center.bmp", kind: reference, y: 0.0, t: 0.0}
+  - {glob: "Y/*.bmp", kind: y_sweep, name_regex: '^Y(?P<y>[+-]?\d+(?:\.\d+)?)$', t: 0.0}
+  - {glob: "Theta/*.bmp", kind: theta_sweep, name_regex: '^T(?P<t>[+-]?\d+(?:\.\d+)?)$', y: 0.0}
+motor_log: none               # 1차 세트에는 모터 값 txt 없음
+notes: "Y 스윕 Θ=0, Θ 스윕 Y=0. 같은 지령값 반복 촬영 없음."
+# 라벨 확인용 배경 시차 추정 (정답 확인 도구로만 사용, 저장소 루트 기준 경로)
+label_reference_csv: "src/KSH/Hypothesis_2/Center_check/results/center/parallax_set1.csv"

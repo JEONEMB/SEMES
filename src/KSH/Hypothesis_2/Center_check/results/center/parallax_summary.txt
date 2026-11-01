@@ -1,0 +1,33 @@
+﻿기준(center) 영상 특징 + 깊이별 랜드마크 시차로 Y·Θ 분리
+  관찰 : 카메라가 로봇과 함께 움직이고 QR 플레이트·벽은 고정. Y 이동은 깊이에 따라 다르게(시차), Θ 회전은 깊이와 무관하게 보임
+  모델 : dx_k = a_k·Y + b_k·Θ + q_k·Θ² + c_k  (랜드마크 10개, 학습 140장, GLS)
+
+[랜드마크별 계수]
+  QR_L           plate       a  14.168 px/mm  b  80.132 px/deg  q  -0.588 px/deg2  잔차 σ 0.231 px
+  QR_C           plate       a  14.186 px/mm  b  79.892 px/deg  q  -0.510 px/deg2  잔차 σ 0.232 px
+  QR_R           plate       a  14.190 px/mm  b  80.108 px/deg  q  -0.436 px/deg2  잔차 σ 0.230 px
+  label          plate       a  14.140 px/mm  b  79.871 px/deg  q  -0.518 px/deg2  잔차 σ 0.225 px
+  wall_U1        wall_upper  a  13.106 px/mm  b  80.450 px/deg  q  -0.320 px/deg2  잔차 σ 0.216 px
+  wall_U2        wall_upper  a  13.125 px/mm  b  80.421 px/deg  q  -0.312 px/deg2  잔차 σ 0.205 px
+  wall_W1        wall_lower  a  11.065 px/mm  b  81.476 px/deg  q  -0.861 px/deg2  잔차 σ 0.281 px
+  wall_W2        wall_lower  a  11.081 px/mm  b  81.486 px/deg  q  -0.200 px/deg2  잔차 σ 0.273 px
+  wall_W3        wall_lower  a  11.043 px/mm  b  81.149 px/deg  q  -0.809 px/deg2  잔차 σ 0.247 px
+  wall_W4        wall_lower  a  11.117 px/mm  b  81.145 px/deg  q  -0.155 px/deg2  잔차 σ 0.239 px
+
+[기준 영상 — center.bmp 대비 추정]
+  center.bmp   Y   +36.5 µm  Θ -0.0018°   (plate dx +0.000 px, wall_lower dx +0.000 px)
+  center1.bmp  Y   -18.0 µm  Θ +0.0056°   (plate dx -0.113 px, wall_lower dx +0.040 px)
+  center2.bmp  Y   -36.6 µm  Θ +0.0081°   (plate dx -0.180 px, wall_lower dx +0.018 px)
+  center3.bmp  Y   -43.7 µm  Θ +0.0099°   (plate dx -0.145 px, wall_lower dx +0.073 px)
+
+[1차 세트 검증 — 홀수 번째]
+  Y 단독 (Y ±2 mm)             40장 | Θ RMS 0.0084° 최대 0.0201° 평균 -0.0010° ±0.01 통과 28/40 | Y RMS 53.9 µm 평균 -1.2 µm ±90 통과 35/40 | 둘 다 28/40
+  Θ 단독 (Θ ±1°)           100장 | Θ RMS 0.0058° 최대 0.0136° 평균 -0.0007° ±0.01 통과 89/100 | Y RMS 31.6 µm 평균 -1.4 µm ±90 통과 100/100 | 둘 다 89/100
+
+[2차 세트 — 1차 세트 모델, center1 기준으로 다시 맞춤]
+  전체                          57장 | Θ RMS 0.0242° 최대 0.0542° 평균 +0.0179° ±0.01 통과 21/57 | Y RMS 106.9 µm 평균 -98.5 µm ±90 통과 24/57 | 둘 다 18/57
+  Θ ≤ 0.20°                  33장 | Θ RMS 0.0107° 최대 0.0212° 평균 +0.0068° ±0.01 통과 21/33 | Y RMS 107.1 µm 평균 -94.2 µm ±90 통과 18/33 | 둘 다 18/33
+  Θ = 1.00°                   12장 | Θ RMS 0.0234° 최대 0.0313° 평균 +0.0231° ±0.01 통과 0/12 | Y RMS 118.9 µm 평균 -118.3 µm ±90 통과 0/12 | 둘 다 0/12
+  Θ = 2.00° (학습 범위 밖)    12장 | Θ RMS 0.0438° 최대 0.0542° 평균 +0.0434° ±0.01 통과 0/12 | Y RMS 92.4 µm 평균 -90.3 µm ±90 통과 6/12 | 둘 다 0/12
+
+모델 저장 : parallax_model.yml (model_type PARALLAX_LANDMARK_v1), 랜드마크 : landmarks.yml

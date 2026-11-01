@@ -1,0 +1,340 @@
+{
+ "stage2": {
+  "n_corner_ok": 341,
+  "n_total": 341,
+  "sep_info": {
+   "kY_px_per_mm": 14.248192374723109,
+   "kT_px_per_deg": 80.05707135757547,
+   "theta_equal_shift_deg_per_mm": 0.17797543843545635,
+   "static_pairs": 6,
+   "repeat_pairs": 38,
+   "key": "plate_cx"
+  },
+  "combined_top": {
+   "features": [
+    "plate_cx",
+    "w_ratio_RL",
+    "w_diff_RL",
+    "w_L",
+    "area_L",
+    "area_R",
+    "w_R"
+   ],
+   "sigma_Y_um": 52.89115725148066,
+   "sigma_T_deg": 0.009412859171488114
+  },
+  "combined_top_repeat_noise": {
+   "features": [
+    "plate_cx",
+    "w_ratio_RL",
+    "w_diff_RL",
+    "w_L",
+    "area_L",
+    "area_R",
+    "w_R"
+   ],
+   "sigma_Y_um": 101.86895814653273,
+   "sigma_T_deg": 0.018023371028094308
+  },
+  "combined_all": {
+   "features": [
+    "plate_cx",
+    "gap_LC",
+    "gap_CR",
+    "curv",
+    "w_diff_RL",
+    "w_ratio_RL",
+    "cx_L",
+    "cy_L",
+    "w_L",
+    "h_L",
+    "area_L",
+    "roll_L",
+    "trap_lr_L",
+    "trap_tb_L",
+    "cdiff_x_L",
+    "cx_C",
+    "cy_C",
+    "w_C",
+    "h_C",
+    "area_C",
+    "roll_C",
+    "trap_lr_C",
+    "trap_tb_C",
+    "cdiff_x_C",
+    "cx_R",
+    "cy_R",
+    "w_R",
+    "h_R",
+    "area_R",
+    "roll_R",
+    "trap_lr_R",
+    "trap_tb_R",
+    "cdiff_x_R"
+   ],
+   "sigma_Y_um": 48.09016231811316,
+   "sigma_T_deg": 0.008560379632225222
+  },
+  "fig_feature": [
+   "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s2_feature_vs_cmd_1.png",
+   "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s2_feature_vs_cmd_2.png",
+   "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s2_feature_vs_cmd_3.png"
+  ],
+  "fig_sep": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s2_separability_rank.png",
+  "paired": [
+   {
+    "y_file": "Y/Y+1.00.bmp",
+    "t_file": "Theta/T+0.18.bmp",
+    "t_deg": 0.18,
+    "align_dx_px": 0.23715824705868727,
+    "align_dy_px": -0.07786914257803801,
+    "diff_rms_band": 4.280660152435303,
+    "figure": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s2_paired_diff_Y+1mm.png"
+   },
+   {
+    "y_file": "Y/Y+2.00.bmp",
+    "t_file": "Theta/T+0.36.bmp",
+    "t_deg": 0.36,
+    "align_dx_px": 0.10877782060379104,
+    "align_dy_px": -0.06585612754997783,
+    "diff_rms_band": 4.598352909088135,
+    "figure": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s2_paired_diff_Y+2mm.png"
+   }
+  ],
+  "fig_flow": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s2_flow_compare.png",
+  "qr_info_set1_1004": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\qr_info_set1_1004.png",
+  "qr_info_set2_1015": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\qr_info_set2_1015.png",
+  "video_Y": {
+   "gif_mb": 6.9,
+   "gif": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_sync_Y.gif",
+   "mp4": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_sync_Y.mp4",
+   "mp4_realtime": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_sync_Y_realtime.mp4",
+   "n_frames": 81
+  },
+  "video_T": {
+   "gif_mb": 15.7,
+   "gif": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_sync_T.gif",
+   "mp4": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_sync_T.mp4",
+   "mp4_realtime": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_sync_T_realtime.mp4",
+   "n_frames": 201
+  }
+ },
+ "stage3": {
+  "figs": [
+   "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s3_out_of_range_set2_1015.png",
+   "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s3_superposition_residuals_set2_1015.png",
+   "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s3_center_compare.png"
+  ],
+  "out_of_range_frac": {
+   "set2_1015": 0.21052631578947367
+  },
+  "video_set2_1015": {
+   "gif_mb": 5.3,
+   "gif": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set2_1015_sync.gif",
+   "mp4": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set2_1015_sync.mp4",
+   "mp4_realtime": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set2_1015_sync_realtime.mp4",
+   "n_frames": 60
+  }
+ },
+ "stage4": {
+  "n_matched": 341,
+  "n_total": 341,
+  "within": [
+   {
+    "set_id": "set1_1004",
+    "kind": "theta_sweep",
+    "n": 100,
+    "rms_dY_um": 31.586643447666294,
+    "rms_dT_deg": 0.005752255371591214,
+    "ref_theory_sdY_um": 39.6,
+    "ref_theory_sdT_deg": 0.0063125,
+    "label_bound_Y_um": 0.0,
+    "label_bound_T_deg": 0.0,
+    "mean_dY_um": 1.4304899999999998,
+    "mean_dT_deg": 0.0006902800000000023
+   },
+   {
+    "set_id": "set1_1004",
+    "kind": "y_sweep",
+    "n": 40,
+    "rms_dY_um": 53.935490631169735,
+    "rms_dT_deg": 0.00836550219801537,
+    "ref_theory_sdY_um": 39.6,
+    "ref_theory_sdT_deg": 0.006313,
+    "label_bound_Y_um": 36.61798942630518,
+    "label_bound_T_deg": 0.005488866734126453,
+    "mean_dY_um": 1.1772750000000003,
+    "mean_dT_deg": 0.0009579250000000001
+   }
+  ],
+  "backlash": {
+   "neg_n_pass1": 20,
+   "neg_n_pass2": 19,
+   "neg_dY_um_pass2_minus_pass1": 49.31957105263158,
+   "neg_dY_um_se": 18.103549029258218,
+   "neg_dT_deg_pass2_minus_pass1": -0.0028056210526315787,
+   "neg_dT_deg_se": 0.002929626300296777,
+   "neg_approach_pass1": "-",
+   "neg_approach_pass2": "+",
+   "pos_n_pass1": 20,
+   "pos_n_pass2": 20,
+   "pos_dY_um_pass2_minus_pass1": 13.837999999999994,
+   "pos_dY_um_se": 13.929975939451012,
+   "pos_dT_deg_pass2_minus_pass1": -0.00385375,
+   "pos_dT_deg_se": 0.0022523803767231167,
+   "pos_approach_pass1": "+",
+   "pos_approach_pass2": "+",
+   "backlash_dY_um": 35.48157105263159,
+   "backlash_dY_um_se": 22.84256371619526,
+   "backlash_dT_deg": 0.0010481289473684213,
+   "backlash_dT_deg_se": 0.0036953927559649122,
+   "approach_plus_minus_actual_Y_um": -35.48157105263159,
+   "approach_plus_minus_actual_T_deg": -0.0010481289473684213
+  },
+  "reapproach": {
+   "n": 57,
+   "sd_Y_um": 20.444736658944066,
+   "sd_T_deg": 0.004373878962496734,
+   "n_static": 6,
+   "n_moved": 32,
+   "tool_Y_um": 18.942427680122385,
+   "tool_T_deg": 0.0032532570474321054,
+   "moved_raw_Y_um": 24.648098031022087,
+   "moved_raw_T_deg": 0.00542783674536874,
+   "net_Y_um": 15.770642667000232,
+   "net_T_deg": 0.0043448510121416655,
+   "shot1_mean_devY_um": 1.5177017543859563,
+   "shot2_mean_devY_um": -2.195929824561407,
+   "shot3_mean_devY_um": 0.6782280701754348,
+   "shot1_mean_devT_deg": -0.0018204736842105539,
+   "shot2_mean_devT_deg": 0.0024659999999999903,
+   "shot3_mean_devT_deg": -0.0006455263157894712
+  },
+  "origin": {
+   "set1_1004": {
+    "n": 1,
+    "mean_Y_um": 36.479,
+    "mean_T_deg": -0.00176,
+    "sd_Y_um": NaN,
+    "sd_T_deg": NaN,
+    "range_Y_um": 0.0,
+    "range_T_deg": 0.0
+   },
+   "set2_1015": {
+    "n": 3,
+    "mean_Y_um": -32.754333333333335,
+    "mean_T_deg": 0.007892666666666666,
+    "sd_Y_um": 13.283180392260482,
+    "sd_T_deg": 0.002161400086363775,
+    "range_Y_um": 25.701999999999998,
+    "range_T_deg": 0.004301
+   }
+  },
+  "session": {
+   "mean_dY_um": 98.47964912280702,
+   "mean_dT_deg": -0.017902052631578947,
+   "dT_slope_per_deg": -0.018792943829070145,
+   "rms_dT_deg": 0.02417597239794017
+  },
+  "uncertainty": [
+   {
+    "component": "참고: 배경 시차 도구 자체 잡음 (정지 쌍)",
+    "Y_um": 18.942427680122385,
+    "T_deg": 0.0032532570474321054,
+    "Y_pct_of_tol": 21.04714186680265,
+    "T_pct_of_tol": 32.532570474321055
+   },
+   {
+    "component": "원점(기준 영상 반복) sd, 도구 잡음 제거",
+    "Y_um": 0.0,
+    "T_deg": 0.0,
+    "Y_pct_of_tol": 0.0,
+    "T_pct_of_tol": 0.0
+   },
+   {
+    "component": "같은 지령값 재이동 흩어짐 sd, 도구 잡음 제거",
+    "Y_um": 15.770642667000232,
+    "T_deg": 0.0043448510121416655,
+    "Y_pct_of_tol": 17.522936296666924,
+    "T_pct_of_tol": 43.44851012141665
+   },
+   {
+    "component": "접근 방향 차의 절반 (방향 섞일 때)",
+    "Y_um": 17.740785526315793,
+    "T_deg": 0.0005240644736842106,
+    "Y_pct_of_tol": 19.71198391812866,
+    "T_pct_of_tol": 5.240644736842107
+   },
+   {
+    "component": "합계 — 접근 방향 통일 시",
+    "Y_um": 15.770642667000232,
+    "T_deg": 0.0043448510121416655,
+    "Y_pct_of_tol": 17.522936296666924,
+    "T_pct_of_tol": 43.44851012141665
+   },
+   {
+    "component": "합계 — 접근 방향 섞일 때",
+    "Y_um": 23.737073139309828,
+    "T_deg": 0.004376342524333118,
+    "Y_pct_of_tol": 26.374525710344255,
+    "T_pct_of_tol": 43.76342524333118
+   },
+   {
+    "component": "참고: 세션 안 라벨 오차 상한 (1차 Θ 스윕)",
+    "Y_um": 0.0,
+    "T_deg": 0.0,
+    "Y_pct_of_tol": 0.0,
+    "T_pct_of_tol": 0.0
+   },
+   {
+    "component": "참고: 세션 간 계통 (2차 평균 차, 라벨/모델 구분 불가)",
+    "Y_um": 98.47964912280702,
+    "T_deg": -0.017902052631578947,
+    "Y_pct_of_tol": 109.42183235867446,
+    "T_pct_of_tol": 179.02052631578945
+   }
+  ],
+  "figs": [
+   "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s4_backlash.png",
+   "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s4_label_uncertainty.png",
+   "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\figures\\s4_reapproach.png"
+  ]
+ },
+ "stage5": {
+  "pdf": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\EDA_보고서.pdf",
+  "summary": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\summary_all_sets.csv",
+  "pdf_mb": 2.5
+ },
+ "s0_video_set1_1004": {
+  "gif_mb": 12.8,
+  "gif": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_shooting.gif",
+  "mp4": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_shooting.mp4",
+  "mp4_realtime": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_shooting_realtime.mp4",
+  "n_frames": 281
+ },
+ "s0_video_set2_1015": {
+  "gif_mb": 5.1,
+  "gif": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set2_1015_shooting.gif",
+  "mp4": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set2_1015_shooting.mp4",
+  "mp4_realtime": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set2_1015_shooting_realtime.mp4",
+  "n_frames": 60
+ },
+ "stage1": {
+  "n_warn": 0,
+  "warn_files": [],
+  "video_set1_1004": {
+   "gif_mb": 12.8,
+   "gif": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_shooting_quality.gif",
+   "mp4": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_shooting_quality.mp4",
+   "mp4_realtime": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set1_1004_shooting_quality_realtime.mp4",
+   "n_frames": 281
+  },
+  "video_set2_1015": {
+   "gif_mb": 5.1,
+   "gif": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set2_1015_shooting_quality.gif",
+   "mp4": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set2_1015_shooting_quality.mp4",
+   "mp4_realtime": "C:\\Users\\SSAFY\\Desktop\\FreePJT\\PJT\\src\\KSH\\EDA\\eda_results\\videos\\set2_1015_shooting_quality_realtime.mp4",
+   "n_frames": 60
+  }
+ }
+}

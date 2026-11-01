@@ -1,0 +1,81 @@
+%YAML:1.0
+---
+# alignment() · align_train · align_eval 설정 — 값은 모두 여기서 바꾼다 (코드 수정 불필요)
+# 상대 경로는 실행 폴더 → 이 설정 파일 폴더 순으로 찾음
+
+# 기준(티칭) 사진 : 목표 자세에서 찍은 사진
+reference_path: "../QR_Image/img/center.bmp"
+image_width_px: 3840
+image_height_px: 2160
+
+# ① Coarse Alignment (대략 정렬) : 플레이트 주변 창의 위상 상관 (기준 사진 좌표)
+coarse:
+   center_x_px: 1901
+   center_y_px: 1068
+   width_px: 900
+   height_px: 400
+
+# ② Fine Alignment (정밀 정렬) — 실험계획 2 에서 고른 설정
+wide_window_scale: 2       # 배경 ROI 의 위상 상관 창 = ROI 반폭 × 이 값
+qr_max_dev_px: 15.0        # QR 이 Coarse 결과에서 이 이상 벗어나면 실패 (이웃 QR 에 붙음)
+fine:
+   method: "icgn"          # icgn = 평행이동 IC-GN (ZNSSD) / opencv_ecc = cv::findTransformECC (선형 보간 + 5×5 가우시안, 이전 방식)
+   kernel: "omoms3"        # linear, keys05, keys075, lanczos3, bspline3, omoms3
+   gauss_sigma_px: 0.0     # 가우시안 사전 필터 σ (0 = 안 씀)
+   max_iter: 60
+   eps_px: 1.0e-05
+   search_margin_px: 28    # 출발점에서 움직일 수 있는 범위 (현재 영상에서 잘라 오는 여유)
+ecc:                       # method: opencv_ecc 일 때만 사용
+   max_iter: 100
+   eps: 1.0e-07
+
+# ③ 특징 ROI (기준 사진 좌표, 정사각형 = 중심 ± hw)
+qr_rois:
+   - { name: QR_L, cx_px: 1650, cy_px: 1065, hw_px: 110 }
+   - { name: QR_C, cx_px: 1907, cy_px: 1065, hw_px: 110 }
+   - { name: QR_R, cx_px: 2165, cy_px: 1065, hw_px: 110 }
+# 깊이가 다른 배경 — 하단 문 홀 좌우 짝 (원근 휨이 서로 지워짐). 다른 배경으로 바꾸면 align_train 으로 다시 학습
+background_rois:
+   - { name: W2, cx_px: 2867, cy_px: 1357, hw_px: 60 }
+   - { name: W3, cx_px: 1010, cy_px: 1677, hw_px: 60 }
+
+# ④ 추정식 선택 (align_train 으로 만든 모델 파일)
+#    model_s1d1.yml : s·d 모두 Θ 1차 (계수 6개) — 기본. 학습·선택에 안 쓴 2차 목표 근처 사진에서 더 정확
+#    model_s3d2.yml : s Θ 3차 · d Θ 2차 (계수 9개) — 학습 범위 가장자리(|Θ| ≥ 0.5°)에서 더 정확
+model_file: "model_s1d1.yml"
+
+# 허용 범위
+tolerance:                 # 프로젝트 기본 (과제의 절반, 2026-10-29)
+   y_um: 45.0
+   t_deg: 0.005
+spec_tolerance:            # 과제 명세
+   y_um: 90.0
+   t_deg: 0.01
+
+# ---------------------------------------------------------------- align_train (모델 학습)
+training:
+   image_dir: "../QR_Image/img"
+   reference: "center"     # 학습 세트의 기준 사진 이름
+   set: 1                  # 1차(10/04) 단독 축 사진으로 학습
+   y_grid_mm: 0.1          # Y 단독은 0.1 mm 배수만 (48분 뒤 찍은 0.05 mm 묶음은 원점이 0.2 px 어긋나 제외)
+   theta_order_s: 1        # 학습할 식의 Θ 차수 (명령 인자 --order-s/-d 가 우선)
+   theta_order_d: 1
+   output: ""              # 비우면 results/model_s{N}d{N}.yml
+
+# ---------------------------------------------------------------- align_eval (정확도 평가)
+evaluation:
+   image_dir: "../QR_Image/img"
+   reference_set1: "center"    # 1차(10/04) 사진의 기준 사진
+   reference_set2: "center1"   # 2차(10/15) 사진의 기준 사진
+   result_dir: "results"
+   near_target_t_deg: 0.2      # '목표 근처' : |Θ| ≤ 이 값
+   cv_near_y_mm: 0.5           # 교차검증 '목표 근처' : 위 조건 + |Y| ≤ 이 값
+   cv_blocks_y: 4              # 블록 교차검증 묶음 수 (Y 단독 / Θ 단독)
+   cv_blocks_t: 10
+   score_cap: 100.0            # J 계산 때 정규화 오차 상한 (측정 실패 = 이 값)
+
+# ---------------------------------------------------------------- main.cpp (예제)
+demo:
+   image: "../QR_Image/img/Y+0.50 T+0.10 (2).bmp"   # 인자 없이 실행할 때 쓰는 사진
+   reference: "../QR_Image/img/center1.bmp"          # 같은 날 찍은 기준 사진 (비우면 reference_path)
+   display_width_px: 1600
