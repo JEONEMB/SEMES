@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-from legacy.KSH.EDA.eda_tool.common import (DATA_ROOT, FIGURES, TABLES, file_sha1, cache_get, cache_put,
+from common import (DATA_ROOT, FIGURES, TABLES, file_sha1, cache_get, cache_put,
                     load_set_config, rel, setup_matplotlib, write_csv)
 
 

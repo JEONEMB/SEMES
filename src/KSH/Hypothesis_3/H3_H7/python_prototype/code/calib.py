@@ -1,7 +1,7 @@
 import numpy as np, json, sys, time
 from scipy.optimize import least_squares
 from scipy.sparse import lil_matrix
-from legacy.KSH.Hypothesis_3.H3_H7.python_prototype.code.phys import *
+from KSH.Hypothesis_3.H3_H7.python_prototype.code.phys import *
 D=np.load('corr.npz',allow_pickle=True); P0,Q,OK,names,info=D['P0'],D['Q'],D['OK'],list(D['names']),D['info']
 S,Yl,Tl,SH=info[:,0].astype(int),info[:,1],info[:,2],info[:,3].astype(int)
 # 1차 세트 학습/검증 분할 (값 순서 짝수 = 학습)

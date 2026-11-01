@@ -13,11 +13,11 @@ import cv2
 import numpy as np
 import pandas as pd
 
-import legacy.KSH.EDA.eda_tool.media as media
-from legacy.KSH.EDA.eda_tool.center_def import diag_center, save_definition
-from legacy.KSH.EDA.eda_tool.common import (CENTER, FIGURES, TABLES, TOL_T_DEG, TOL_Y_UM, cache_get, cache_put, read_gray, setup_matplotlib,
+import media
+from center_def import diag_center, save_definition
+from common import (CENTER, FIGURES, TABLES, TOL_T_DEG, TOL_Y_UM, cache_get, cache_put, read_gray, setup_matplotlib,
                     write_csv)
-from legacy.KSH.EDA.eda_tool.qr_geom import find_qr_boxes, subpixel_corners
+from qr_geom import find_qr_boxes, subpixel_corners
 
 QR = ("L", "C", "R")
 FEATURE_DOC = {
