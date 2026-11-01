@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from common import FIGURES, REPO_DIR, TABLES, TOL_T_DEG, TOL_Y_UM, load_set_config, setup_matplotlib, write_csv
+from legacy.KSH.EDA.eda_tool.common import FIGURES, REPO_DIR, TABLES, TOL_T_DEG, TOL_Y_UM, load_set_config, setup_matplotlib, write_csv
 
 
 def _load_reference(sets) -> pd.DataFrame:

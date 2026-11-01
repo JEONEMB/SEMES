@@ -12,8 +12,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from common import CENTER, FIGURES, RESULTS, TABLES, TOL_T_DEG, TOL_Y_UM, VIDEOS, rel, setup_matplotlib, write_csv
-from figure_guides import GUIDES, INTRO, wrap
+from legacy.KSH.EDA.eda_tool.common import CENTER, FIGURES, RESULTS, TABLES, TOL_T_DEG, TOL_Y_UM, VIDEOS, rel, setup_matplotlib, write_csv
+from legacy.KSH.EDA.eda_tool.figure_guides import GUIDES, INTRO, wrap
 
 
 def summary_all_sets() -> pd.DataFrame:

@@ -6,7 +6,7 @@ import json
 
 import numpy as np
 
-from common import CENTER
+from legacy.KSH.EDA.eda_tool.common import CENTER
 
 VERSION = "1.0"
 DEFINITION = {

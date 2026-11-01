@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from common import CENTER, FIGURES, TABLES, TOL_T_DEG, TOL_Y_UM, setup_matplotlib, write_csv
+from legacy.KSH.EDA.eda_tool.common import CENTER, FIGURES, TABLES, TOL_T_DEG, TOL_Y_UM, setup_matplotlib, write_csv
 
 KEY_FEATS = ["plate_cx", "w_diff_RL", "w_L", "w_R", "curv", "gap_LC", "gap_CR", "plate_cy", "w_mean", "trap_lr_C"]
 
@@ -137,7 +137,7 @@ def plots(f1, f2, mix, S, D, info, plt, tag2: str = "") -> list[str]:
 
 def run_all(sets, no_video=False) -> dict:
     import json
-    from common import RESULTS
+    from legacy.KSH.EDA.eda_tool.common import RESULTS
     plt = setup_matplotlib()
     f = pd.read_csv(TABLES / "features.csv", encoding="utf-8-sig")
     q = pd.read_csv(TABLES / "quality.csv", encoding="utf-8-sig")
@@ -162,7 +162,7 @@ def run_all(sets, no_video=False) -> dict:
         m = f2[f2.kind == "mixed"]
         out["out_of_range_frac"][tag2] = float(((m.cmd_t_deg.abs() > 1 + 1e-9) | (m.cmd_y_mm.abs() > 2 + 1e-9)).mean())
         if not no_video:
-            from stage2_features import sync_videos
+            from legacy.KSH.EDA.eda_tool.stage2_features import sync_videos
             cat = pd.read_csv(TABLES / "catalog.csv", encoding="utf-8-sig")
             fall = pd.read_csv(TABLES / "features.csv", encoding="utf-8-sig")
             out[f"video_{tag2}"] = sync_videos(cat, fall, tag2, ["mixed"], "sync", plt)

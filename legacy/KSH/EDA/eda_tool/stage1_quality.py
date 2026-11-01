@@ -9,9 +9,9 @@ import cv2
 import numpy as np
 import pandas as pd
 
-import media
-from common import (FIGURES, TABLES, cache_get, cache_put, mad, read_gray, rel, setup_matplotlib, write_csv)
-from qr_geom import find_qr_boxes
+import legacy.KSH.EDA.eda_tool.media as media
+from legacy.KSH.EDA.eda_tool.common import (FIGURES, TABLES, cache_get, cache_put, mad, read_gray, rel, setup_matplotlib, write_csv)
+from legacy.KSH.EDA.eda_tool.qr_geom import find_qr_boxes
 
 QR_NAMES = ("L", "C", "R")
 METRICS = ("mean", "std", "sat_pct", "focus")

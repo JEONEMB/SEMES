@@ -20,7 +20,7 @@ if "--results" in sys.argv:                       # 결과 폴더 바꾸기 (com
 
 import pandas as pd  # noqa: E402
 
-from common import CACHE, DATA_ROOT, RESULTS, TABLES, ensure_dirs, list_set_dirs, load_set_config, rel  # noqa: E402
+from legacy.KSH.EDA.eda_tool.common import CACHE, DATA_ROOT, RESULTS, TABLES, ensure_dirs, list_set_dirs, load_set_config, rel  # noqa: E402
 
 
 def _stages(s: str) -> list[int]:
@@ -62,16 +62,16 @@ def main(argv=None) -> int:
     log = json.loads(log_path.read_text(encoding="utf-8")) if log_path.exists() else {}   # 다른 단계 결과는 유지
 
     if 0 in stages:
-        import stage0_catalog as s0
-        import media
+        import legacy.KSH.EDA.eda_tool.stage0_catalog as s0
+        import legacy.KSH.EDA.eda_tool.media as media
         dfs = {}
         for d in sets:
             df = s0.run(d); dfs[d.name] = df
             figs = s0.plot(df, df.attrs["set_id"])
             print(f"[Stage 0] {df.attrs['set_id']}: {len(df)}장, 시각={df.attrs['time_choice']}, 해석불가={len(df.attrs['unparsed'])}")
             if not a.no_video:
-                from qr_geom import find_qr_boxes
-                from common import read_gray
+                from legacy.KSH.EDA.eda_tool.qr_geom import find_qr_boxes
+                from legacy.KSH.EDA.eda_tool.common import read_gray
                 ref = df[df.kind == "reference"].iloc[0]
                 boxes = find_qr_boxes(read_gray(ref.path))
                 inset = None

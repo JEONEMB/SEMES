@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-from common import VIDEOS, read_gray, setup_matplotlib
+from legacy.KSH.EDA.eda_tool.common import VIDEOS, read_gray, setup_matplotlib
 
 FRAME_W, FRAME_H = 1600, 900
 IMG_W, IMG_H = 1120, 630               # 왼쪽 사진 (16:9 축소)
