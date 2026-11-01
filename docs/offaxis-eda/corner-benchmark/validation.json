@@ -1,0 +1,25 @@
+{
+  "original_frames": 341,
+  "synthetic_views": 24,
+  "regimes": 3,
+  "real_point_method_records": 729740,
+  "synthetic_point_method_records": 13824,
+  "material_projection_records": 644490,
+  "checks": [
+    "341 original SHA256 matches",
+    "known camera direct 3D and plane projection agreement",
+    "material projection noiseless recovery",
+    "material Jacobian finite differences",
+    "unique point identities",
+    "8-frame viewer event handlers with DOM test double",
+    "source and intermediate input hashes"
+  ],
+  "browser_rendering_verified": false,
+  "source_sha256": {
+    "tool\\offaxis\\corner_benchmark.py": "2652ddcef413ecb607adbb524f78363e63b74f5a2b6b10631fa31aaceb6530d6",
+    "tool\\offaxis\\corner_material_projection.py": "7c509df1c8919c5f921bbfc3b806317c1634f929b5f7032ee66b22b783d604e3",
+    "tool\\offaxis\\corner_benchmark_report.py": "699139c5fffc58c57ecd149cfbf7e336455f42a95b2728908218df2cdbf06d00",
+    "tool\\offaxis\\validate_corner_report.cjs": "f596cd69c52b682c78bc1020b2eaa1fbbe8e752c1e9348a78530db1cb65b1df5"
+  },
+  "report_sha256": "e725d24f3490f818948eb9629ac287ead99ed7a8c61772baf5718f9355e31ee3"
+}

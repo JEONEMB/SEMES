@@ -64,3 +64,27 @@ cache/
 .cache/
 *.bak
 *.bak_*
+
+# Raw acquisition inputs and local analysis scratch (curated results are tracked).
+/data/**/*.[bB][mM][pP]
+/data/**/*.txt
+/docs/offaxis-eda/smoke/
+/docs/offaxis-eda/raw/points.csv
+/docs/validation-runs/*
+!/docs/validation-runs/README.md
+/tool/qr-subpixel/build/
+/tool/qr-subpixel/results/
+/tool/qr-subpixel/pipeline-*/
+__pycache__/
+/docs/offaxis-eda/ppt-method-v2/smoke/
+*.pyc
+
+# Local analysis dependencies and plotting cache
+/.analysis_packages/
+# Root-level generated validation output
+/result_*.png
+/result_*.csv
+
+# Python analysis cache
+__pycache__/
+*.pyc

@@ -1,0 +1,6 @@
+{
+  "status": "pass",
+  "mixed_images": 57,
+  "identity": "mixed_axis_slope_removed_dx - mixed_axis_display_line_dx = residual_dx",
+  "tolerance_px": 1e-10
+}

@@ -1,0 +1,39 @@
+{
+  "theta_unit": "degree (user confirmed)",
+  "n_frames": 341,
+  "n_points": 257455,
+  "reference_new": "기준 위치/center1.bmp",
+  "reference_old": "center.bmp",
+  "center_pass": 600,
+  "center_nondiagonal_pass": 600,
+  "center_diagonal_pass": 0,
+  "reference_ppt_center_pass": 597,
+  "old_y_slopes": [
+    14.387477511185887,
+    14.359186552863187,
+    14.364323786971582,
+    14.39286900612194
+  ],
+  "old_theta_slopes": [
+    80.29828594930538,
+    80.78055247818419
+  ],
+  "old_common_sigma_range": [
+    0.014652847398335726,
+    0.03885599269410518
+  ],
+  "new_common_sigma_range": [
+    0.11102003363109457,
+    0.17632068211889526
+  ],
+  "new_point_sigma_median": 0.10008921425184913,
+  "new_diagonal_sigma_median": 0.04180091881522835,
+  "raw_residual_smoothing": false,
+  "original_fitting_code_available": false,
+  "known_reconstruction_limits": [
+    "PPT specifies thresholds and model family but not every optimizer setting",
+    "PPT ECC Gaussian kernel unspecified; requested no-smoothing retained (kernel=1)",
+    "Mixed sampling has unequal increments; step statistics are pooled only at identical actual command increments",
+    "Original P12 and covariance/classification source are unavailable; no fabricated classification accuracy"
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "interleaved_degree1": {
+    "features_fitted": 116,
+    "train": 184,
+    "test": 96,
+    "axes": {
+      "T": {
+        "n": 68,
+        "success": 68,
+        "y_rmse": 0.9792474181508304,
+        "theta_rmse": 0.17491724900711497,
+        "oracle_theta_y_rmse": 0.005652915035538772,
+        "joint_pass": 4,
+        "theta_boundary": 3
+      },
+      "Y": {
+        "n": 28,
+        "success": 28,
+        "y_rmse": 0.9363856385259911,
+        "theta_rmse": 0.16725593129994776,
+        "oracle_theta_y_rmse": 0.002548942125798466,
+        "joint_pass": 1,
+        "theta_boundary": 0
+      }
+    }
+  },
+  "interleaved_degree2": {
+    "features_fitted": 116,
+    "train": 184,
+    "test": 96,
+    "axes": {
+      "T": {
+        "n": 68,
+        "success": 68,
+        "y_rmse": 0.8474231286313307,
+        "theta_rmse": 0.15131902076470027,
+        "oracle_theta_y_rmse": 0.003468296134940269,
+        "joint_pass": 4,
+        "theta_boundary": 1
+      },
+      "Y": {
+        "n": 28,
+        "success": 28,
+        "y_rmse": 0.9276727066481687,
+        "theta_rmse": 0.165709979070084,
+        "oracle_theta_y_rmse": 0.002548942125798494,
+        "joint_pass": 1,
+        "theta_boundary": 0
+      }
+    }
+  },
+  "blocked_degree1": {
+    "features_fitted": 116,
+    "train": 186,
+    "test": 94,
+    "axes": {
+      "T": {
+        "n": 66,
+        "success": 66,
+        "y_rmse": 0.9717801657737055,
+        "theta_rmse": 0.17341306895950248,
+        "oracle_theta_y_rmse": 0.002719637040418054,
+        "joint_pass": 5,
+        "theta_boundary": 0
+      },
+      "Y": {
+        "n": 28,
+        "success": 28,
+        "y_rmse": 0.9207880544831104,
+        "theta_rmse": 0.1644566222938854,
+        "oracle_theta_y_rmse": 0.001921256156096864,
+        "joint_pass": 0,
+        "theta_boundary": 0
+      }
+    }
+  },
+  "blocked_degree2": {
+    "features_fitted": 116,
+    "train": 186,
+    "test": 94,
+    "axes": {
+      "T": {
+        "n": 66,
+        "success": 66,
+        "y_rmse": 0.9814377575443247,
+        "theta_rmse": 0.1751016219094783,
+        "oracle_theta_y_rmse": 0.0038829818035750184,
+        "joint_pass": 6,
+        "theta_boundary": 0
+      },
+      "Y": {
+        "n": 28,
+        "success": 28,
+        "y_rmse": 0.8705392695398544,
+        "theta_rmse": 0.15543720383010476,
+        "oracle_theta_y_rmse": 0.0019212561560968489,
+        "joint_pass": 0,
+        "theta_boundary": 0
+      }
+    }
+  }
+}
