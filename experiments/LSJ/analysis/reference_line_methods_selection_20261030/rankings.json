@@ -1,0 +1,770 @@
+{
+  "ranking_measure": "max over targets(max over references(angle) - min over references(angle))",
+  "units": "image angle degree; not robot theta",
+  "rankings": {
+    "external": [
+      {
+        "method_id": "E01",
+        "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "upper_structure": {
+            "image_angles_deg": {
+              "R01": 0.27272768856641677,
+              "R02": 0.27321447573648133,
+              "R03": 0.27227393314425297,
+              "R04": 0.2715149288216611
+            },
+            "range_deg": 0.0016995469148202158
+          },
+          "lower_structure": {
+            "image_angles_deg": {
+              "R01": 0.2130305412286383,
+              "R02": 0.21934114350373907,
+              "R03": 0.2090820291779928,
+              "R04": 0.22209830269102857
+            },
+            "range_deg": 0.013016273513035775
+          }
+        },
+        "score_deg": 0.013016273513035775,
+        "rank_among_complete_methods": 1,
+        "selected": true,
+        "reason": "상위 3개 후보로 선별"
+      },
+      {
+        "method_id": "E06",
+        "method_name": "PAE(부분 면적 효과)",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "upper_structure": {
+            "image_angles_deg": {
+              "R01": 0.27283929846402233,
+              "R02": 0.2734177775131236,
+              "R03": 0.27284711102099496,
+              "R04": 0.2721931698366623
+            },
+            "range_deg": 0.00122460767646132
+          },
+          "lower_structure": {
+            "image_angles_deg": {
+              "R01": 0.19276620629026672,
+              "R02": 0.20697899835639413,
+              "R03": 0.2051245641819776,
+              "R04": 0.21507995327060273
+            },
+            "range_deg": 0.022313746980336002
+          }
+        },
+        "score_deg": 0.022313746980336002,
+        "rank_among_complete_methods": 2,
+        "selected": true,
+        "reason": "상위 3개 후보로 선별"
+      },
+      {
+        "method_id": "E02",
+        "method_name": "Canny–Devernay 서브픽셀 경계점",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "upper_structure": {
+            "image_angles_deg": {
+              "R01": 0.272573633471639,
+              "R02": 0.2729745126213821,
+              "R03": 0.2719632657282946,
+              "R04": 0.27125594084525084
+            },
+            "range_deg": 0.0017185717761312724
+          },
+          "lower_structure": {
+            "image_angles_deg": {
+              "R01": 0.23363296907889822,
+              "R02": 0.21247488912867485,
+              "R03": 0.21806233748244813,
+              "R04": 0.23755526250725656
+            },
+            "range_deg": 0.02508037337858171
+          }
+        },
+        "score_deg": 0.02508037337858171,
+        "rank_among_complete_methods": 3,
+        "selected": true,
+        "reason": "상위 3개 후보로 선별"
+      },
+      {
+        "method_id": "E05",
+        "method_name": "Zernike 모멘트(ramp edge)",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "upper_structure": {
+            "image_angles_deg": {
+              "R01": 0.27166127876147655,
+              "R02": 0.27237245874842353,
+              "R03": 0.2716431832958259,
+              "R04": 0.27219443620817635
+            },
+            "range_deg": 0.0007292754525976552
+          },
+          "lower_structure": {
+            "image_angles_deg": {
+              "R01": 0.2363553270713018,
+              "R02": 0.20710857207331856,
+              "R03": 0.22573102132303194,
+              "R04": 0.23243791750856796
+            },
+            "range_deg": 0.029246754997983238
+          }
+        },
+        "score_deg": 0.029246754997983238,
+        "rank_among_complete_methods": 4,
+        "selected": false,
+        "reason": "완전 추출되었으나 이번 상위 3개 선별에서 보류; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "E03",
+        "method_name": "Canny → 허프 변환 → 재피팅",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "upper_structure": {
+            "image_angles_deg": {
+              "R01": 0.27238726424196413,
+              "R02": 0.27248546977764254,
+              "R03": 0.27184268497106717,
+              "R04": 0.27072606055200543
+            },
+            "range_deg": 0.0017594092256371097
+          },
+          "lower_structure": {
+            "image_angles_deg": {
+              "R01": 0.24951877081921192,
+              "R02": 0.14872394571113032,
+              "R03": 0.14933228710921567,
+              "R04": 0.1339584976674591
+            },
+            "range_deg": 0.11556027315175282
+          }
+        },
+        "score_deg": 0.11556027315175282,
+        "rank_among_complete_methods": 5,
+        "selected": false,
+        "reason": "완전 추출되었으나 이번 상위 3개 선별에서 보류; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "E09",
+        "method_name": "ELSED",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "upper_structure": {
+            "image_angles_deg": {
+              "R01": 0.2732238779335906,
+              "R02": 0.2729730195520061,
+              "R03": 0.2721895808176666,
+              "R04": 0.2706407855236274
+            },
+            "range_deg": 0.0025830924099631836
+          },
+          "lower_structure": {
+            "image_angles_deg": {
+              "R01": 0.08924232924136456,
+              "R02": 0.27855038512139746,
+              "R03": 0.184176758610005,
+              "R04": 0.28932195459697646
+            },
+            "range_deg": 0.2000796253556119
+          }
+        },
+        "score_deg": 0.2000796253556119,
+        "rank_among_complete_methods": 6,
+        "selected": false,
+        "reason": "완전 추출되었으나 이번 상위 3개 선별에서 보류; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "E07",
+        "method_name": "EDLines",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "upper_structure": {
+            "image_angles_deg": {
+              "R01": 0.2667013904681954,
+              "R02": 0.2731393468448417,
+              "R03": 0.27234082962268036,
+              "R04": 0.27079714536570176
+            },
+            "range_deg": 0.006437956376646292
+          },
+          "lower_structure": {
+            "image_angles_deg": {
+              "R01": 0.2088133991756835,
+              "R02": 0.28672221213411003,
+              "R03": 0.12876694384768902,
+              "R04": 0.33095067820230123
+            },
+            "range_deg": 0.2021837343546122
+          }
+        },
+        "score_deg": 0.2021837343546122,
+        "rank_among_complete_methods": 7,
+        "selected": false,
+        "reason": "완전 추출되었으나 이번 상위 3개 선별에서 보류; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "E04",
+        "method_name": "LSD",
+        "eligible_all_required_slots_ok": false,
+        "failed_measurement_ids": [
+          "R01_E04_lower_structure",
+          "R02_E04_lower_structure",
+          "R03_E04_lower_structure",
+          "R04_E04_lower_structure"
+        ],
+        "missing_slots": [],
+        "targets": {
+          "upper_structure": {
+            "image_angles_deg": {
+              "R01": 0.2723362311921422,
+              "R02": 0.27263546531731553,
+              "R03": 0.2718713614467236,
+              "R04": 0.2713090555944155
+            },
+            "range_deg": 0.001326409722900046
+          },
+          "lower_structure": {
+            "image_angles_deg": {},
+            "range_deg": null
+          }
+        },
+        "score_deg": null,
+        "rank_among_complete_methods": null,
+        "selected": false,
+        "reason": "추출 누락 또는 실패가 있어 이번 선별에서 제외"
+      },
+      {
+        "method_id": "E08",
+        "method_name": "FLD(Fast Line Detector)",
+        "eligible_all_required_slots_ok": false,
+        "failed_measurement_ids": [
+          "R01_E08_lower_structure",
+          "R02_E08_lower_structure",
+          "R03_E08_lower_structure"
+        ],
+        "missing_slots": [],
+        "targets": {
+          "upper_structure": {
+            "image_angles_deg": {
+              "R01": 0.2725832674881808,
+              "R02": 0.2734561891003098,
+              "R03": 0.27201199731878334,
+              "R04": 0.2707907478165108
+            },
+            "range_deg": 0.002665441283798975
+          },
+          "lower_structure": {
+            "image_angles_deg": {
+              "R04": 0.2544574288503436
+            },
+            "range_deg": null
+          }
+        },
+        "score_deg": null,
+        "rank_among_complete_methods": null,
+        "selected": false,
+        "reason": "추출 누락 또는 실패가 있어 이번 선별에서 제외"
+      }
+    ],
+    "qr": [
+      {
+        "method_id": "Q02",
+        "method_name": "Canny–Devernay 서브픽셀 경계점",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.3036411696006704,
+              "R02": 0.2750390329112231,
+              "R03": 0.27199438280221383,
+              "R04": 0.27126555509778566
+            },
+            "range_deg": 0.03237561450288473
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.29036778036603417,
+              "R02": 0.27905451632448236,
+              "R03": 0.2803234611890081,
+              "R04": 0.2773012045643364
+            },
+            "range_deg": 0.013066575801697788
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.25459876666465586,
+              "R02": 0.2635902044273203,
+              "R03": 0.26014169707021234,
+              "R04": 0.2617017845004171
+            },
+            "range_deg": 0.008991437762664423
+          }
+        },
+        "score_deg": 0.03237561450288473,
+        "rank_among_complete_methods": 1,
+        "selected": true,
+        "reason": "사용자 지정: Q02·Q04만 사용"
+      },
+      {
+        "method_id": "Q04",
+        "method_name": "LSD",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.2652420847257085,
+              "R02": 0.2783167038465886,
+              "R03": 0.27809310853965274,
+              "R04": 0.2854705654704629
+            },
+            "range_deg": 0.020228480744754418
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.2915753415724549,
+              "R02": 0.26289876564694825,
+              "R03": 0.2576434328741799,
+              "R04": 0.2512188238775707
+            },
+            "range_deg": 0.040356517694884186
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.2745630819443009,
+              "R02": 0.2586294743490333,
+              "R03": 0.25884349099014964,
+              "R04": 0.263914356759839
+            },
+            "range_deg": 0.01593360759526763
+          }
+        },
+        "score_deg": 0.040356517694884186,
+        "rank_among_complete_methods": 2,
+        "selected": true,
+        "reason": "사용자 지정: Q02·Q04만 사용"
+      },
+      {
+        "method_id": "Q01",
+        "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.279637084092491,
+              "R02": 0.26955951965052466,
+              "R03": 0.2838167802799619,
+              "R04": 0.3073634123651402
+            },
+            "range_deg": 0.03780389271461554
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.2520955641867797,
+              "R02": 0.3492760732686182,
+              "R03": 0.3497200308142039,
+              "R04": 0.3471944662357982
+            },
+            "range_deg": 0.09762446662742419
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.31044854116340453,
+              "R02": 0.24850807263797065,
+              "R03": 0.22828533361584538,
+              "R04": 0.20208699349113327
+            },
+            "range_deg": 0.10836154767227127
+          }
+        },
+        "score_deg": 0.10836154767227127,
+        "rank_among_complete_methods": 3,
+        "selected": false,
+        "reason": "사용자 지정으로 제외: 초기 3위 후보였으나 Q02·Q04만 사용"
+      },
+      {
+        "method_id": "Q11",
+        "method_name": "사각 테두리 코너 검출 → cornerSubPix → 상단 두 코너 연결",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.16385975028498692,
+              "R02": 0.2665420254153656,
+              "R03": 0.28529001193031817,
+              "R04": 0.29110065750563474
+            },
+            "range_deg": 0.12724090722064782
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.16694170953798587,
+              "R02": 0.1620166302250534,
+              "R03": 0.12473105065728424,
+              "R04": 0.14374670363867606
+            },
+            "range_deg": 0.042210658880701635
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.2236657857073251,
+              "R02": 0.1184083592772308,
+              "R03": 0.12084292692102684,
+              "R04": 0.16138064068594432
+            },
+            "range_deg": 0.1052574264300943
+          }
+        },
+        "score_deg": 0.12724090722064782,
+        "rank_among_complete_methods": 4,
+        "selected": false,
+        "reason": "보류: 사용자 지정 Q02·Q04에 포함되지 않음; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "Q06",
+        "method_name": "PAE(부분 면적 효과)",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.18795974986310682,
+              "R02": 0.25906141277084227,
+              "R03": 0.2842255876180537,
+              "R04": 0.30883419417062663
+            },
+            "range_deg": 0.12087444430751981
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.17888240082553195,
+              "R02": 0.3515263068053454,
+              "R03": 0.34029832832161167,
+              "R04": 0.33630632940493044
+            },
+            "range_deg": 0.17264390597981347
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.3457816251156489,
+              "R02": 0.31316140076675053,
+              "R03": 0.3264197540924041,
+              "R04": 0.3161632000091668
+            },
+            "range_deg": 0.032620224348898386
+          }
+        },
+        "score_deg": 0.17264390597981347,
+        "rank_among_complete_methods": 5,
+        "selected": false,
+        "reason": "보류: 사용자 지정 Q02·Q04에 포함되지 않음; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "Q12",
+        "method_name": "파인더 검출 → 코너 정밀화·중심 → 위쪽 두 중심 연결",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.47229106527811415,
+              "R02": 0.39465175716671735,
+              "R03": 0.4134464760480837,
+              "R04": 0.3364372435727365
+            },
+            "range_deg": 0.13585382170537763
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.4124669361298388,
+              "R02": 0.32155569412869783,
+              "R03": 0.39160862601515617,
+              "R04": 0.3782824035764819
+            },
+            "range_deg": 0.09091124200114098
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.44739205397911375,
+              "R02": 0.22282203520633911,
+              "R03": 0.22166171180926003,
+              "R04": 0.2436923796940778
+            },
+            "range_deg": 0.22573034216985371
+          }
+        },
+        "score_deg": 0.22573034216985371,
+        "rank_among_complete_methods": 6,
+        "selected": false,
+        "reason": "보류: 사용자 지정 Q02·Q04에 포함되지 않음; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "Q05",
+        "method_name": "Zernike 모멘트(ramp edge)",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.19258022531786217,
+              "R02": 0.2336284783985384,
+              "R03": 0.28618396496492826,
+              "R04": 0.3543845002059728
+            },
+            "range_deg": 0.1618042748881106
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.16072490737901057,
+              "R02": 0.4449203352963693,
+              "R03": 0.4403494869413789,
+              "R04": 0.4085020977181281
+            },
+            "range_deg": 0.28419542791735874
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.42513930603332734,
+              "R02": 0.16202432996016022,
+              "R03": 0.15236882267821156,
+              "R04": 0.11333423651723121
+            },
+            "range_deg": 0.3118050695160961
+          }
+        },
+        "score_deg": 0.3118050695160961,
+        "rank_among_complete_methods": 7,
+        "selected": false,
+        "reason": "보류: 사용자 지정 Q02·Q04에 포함되지 않음; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "Q08",
+        "method_name": "FLD(Fast Line Detector)",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.44511450018609755,
+              "R02": 0.23506814729792455,
+              "R03": 0.2031581444236528,
+              "R04": 0.15190270786228782
+            },
+            "range_deg": 0.29321179232380973
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.3779728574595263,
+              "R02": 0.07944827515753372,
+              "R03": 0.09551327675267758,
+              "R04": 0.14086570210072016
+            },
+            "range_deg": 0.2985245823019926
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.09835453794025259,
+              "R02": 0.37401632283497416,
+              "R03": 0.38577219595248846,
+              "R04": 0.42314159669124657
+            },
+            "range_deg": 0.324787058750994
+          }
+        },
+        "score_deg": 0.324787058750994,
+        "rank_among_complete_methods": 8,
+        "selected": false,
+        "reason": "보류: 사용자 지정 Q02·Q04에 포함되지 않음; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "Q07",
+        "method_name": "EDLines",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.42509793249779687,
+              "R02": 0.2630101271176943,
+              "R03": 0.1911227738215852,
+              "R04": 0.13052842544079554
+            },
+            "range_deg": 0.29456950705700136
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.40105776234926177,
+              "R02": 0.07949691145594724,
+              "R03": 0.07335300392266808,
+              "R04": 0.17512784371394285
+            },
+            "range_deg": 0.3277047584265937
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.07201737162211537,
+              "R02": 0.3980951208078528,
+              "R03": 0.3755750279996943,
+              "R04": 0.41829237258129515
+            },
+            "range_deg": 0.3462750009591798
+          }
+        },
+        "score_deg": 0.3462750009591798,
+        "rank_among_complete_methods": 9,
+        "selected": false,
+        "reason": "보류: 사용자 지정 Q02·Q04에 포함되지 않음; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "Q09",
+        "method_name": "ELSED",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.43816384382089285,
+              "R02": 0.28037386351645416,
+              "R03": 0.2046128470435168,
+              "R04": 0.10693300559868582
+            },
+            "range_deg": 0.331230838222207
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.41731426081583356,
+              "R02": 0.04868612363479155,
+              "R03": 0.06208625336227607,
+              "R04": 0.14295287762546915
+            },
+            "range_deg": 0.36862813718104204
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.04193929633505526,
+              "R02": 0.39849597977807777,
+              "R03": 0.4054350732672688,
+              "R04": 0.4039634255501961
+            },
+            "range_deg": 0.3634957769322135
+          }
+        },
+        "score_deg": 0.36862813718104204,
+        "rank_among_complete_methods": 10,
+        "selected": false,
+        "reason": "보류: 사용자 지정 Q02·Q04에 포함되지 않음; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "Q03",
+        "method_name": "Canny → 허프 변환 → 재피팅",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.46905602010519853,
+              "R02": 0.30927760340164684,
+              "R03": 0.2278057786868019,
+              "R04": 0.14851250893505297
+            },
+            "range_deg": 0.32054351117014557
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.46185561574385486,
+              "R02": 0.016683878206836297,
+              "R03": 0.008295054197477655,
+              "R04": 0.0
+            },
+            "range_deg": 0.46185561574385486
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.014320030627937816,
+              "R02": 0.38664816452322914,
+              "R03": 0.40657726428596724,
+              "R04": 0.4521962386392617
+            },
+            "range_deg": 0.43787620801132393
+          }
+        },
+        "score_deg": 0.46185561574385486,
+        "rank_among_complete_methods": 11,
+        "selected": false,
+        "reason": "보류: 사용자 지정 Q02·Q04에 포함되지 않음; 사용 불가 판정 아님"
+      },
+      {
+        "method_id": "Q10",
+        "method_name": "이진화 → 윤곽선 → 상단 변 윤곽점 피팅",
+        "eligible_all_required_slots_ok": true,
+        "failed_measurement_ids": [],
+        "missing_slots": [],
+        "targets": {
+          "qr_L": {
+            "image_angles_deg": {
+              "R01": 0.08759463863270389,
+              "R02": 0.4374495965304774,
+              "R03": 0.4594957681771943,
+              "R04": 0.47506585140476393
+            },
+            "range_deg": 0.38747121277206004
+          },
+          "qr_C": {
+            "image_angles_deg": {
+              "R01": 0.24824243904610427,
+              "R02": 0.5129432310485919,
+              "R03": 0.4951838698238447,
+              "R04": 0.42802920008049855
+            },
+            "range_deg": 0.2647007920024876
+          },
+          "qr_R": {
+            "image_angles_deg": {
+              "R01": 0.48257189839971143,
+              "R02": 0.02815310437133679,
+              "R03": 0.016734926436801478,
+              "R04": 0.008454599775155487
+            },
+            "range_deg": 0.4741172986245559
+          }
+        },
+        "score_deg": 0.4741172986245559,
+        "rank_among_complete_methods": 12,
+        "selected": false,
+        "reason": "보류: 사용자 지정 Q02·Q04에 포함되지 않음; 사용 불가 판정 아님"
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+msbuild 버전 18.11.0-1.26475.11+3cde5c8ec(.NET Framework용)
+
+  tp_c.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\build\Release\tp_c.lib
+  tp_cpp.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\build\Release\tp_cpp.lib
+  line_selftest.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\build\Release\line_selftest.exe
+  methods_segments.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\build\line_methods.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\build\line_methods.vcxproj]
+  line_methods.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\build\Release\line_methods.exe

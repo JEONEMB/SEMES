@@ -1,0 +1,30 @@
+{
+ "meta": {
+  "meaning": "조합 = 같은 이미지에서 외부 방법 1개의 선 2개와 QR 방법 1개의 선 3개를 함께 열람하는 항목. 새 측정이나 각도 평균이 아님.",
+  "count": 1,
+  "complete": 0,
+  "partial": 1,
+  "failed": 0
+ },
+ "combinations": [
+  {
+   "combination_id": "R02_E04_Q12",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q12",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  }
+ ]
+}

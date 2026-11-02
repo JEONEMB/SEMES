@@ -1,0 +1,18 @@
+{
+  "step": "06_single_method_run",
+  "command": [
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\build\\Release\\line_methods.exe",
+    "--root",
+    ".",
+    "--out",
+    "logs/single_method_example",
+    "--methods",
+    "E04,Q12",
+    "--refs",
+    "R02"
+  ],
+  "cwd": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030",
+  "exit_code": 0,
+  "wall_time_s": 0.805,
+  "started": "2026-10-30T10:26:00"
+}
