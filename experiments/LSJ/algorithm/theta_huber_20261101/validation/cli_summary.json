@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "checks": [
+    "Unicode image path, JSON output, theta sign, no Y command",
+    "missing arguments: nonzero exit and no correction output",
+    "missing config: nonzero exit and no correction output",
+    "missing image: nonzero exit and no correction output",
+    "incomplete calibration: nonzero exit and no correction output"
+  ],
+  "held_out_images_executed": 0,
+  "scope": "interface/implementation check only; no accuracy metric calculated"
+}

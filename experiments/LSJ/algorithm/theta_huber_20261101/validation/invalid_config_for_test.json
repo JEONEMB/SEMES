@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "calibration_id": "D2_repeat12_affine_20261101",
+  "image": {
+    "width": 3840,
+    "height": 2160
+  },
+  "huber": {
+    "t": 1.345,
+    "max_iterations": 50,
+    "tolerance": 1e-08
+  },
+  "model": {
+    "type": "affine_forward_two_angles",
+    "target_theta_deg": 0.0,
+    "upper": {
+      "intercept_deg": 0.2714001061540482,
+      "per_theta_deg": -0.08820199315018504
+    },
+    "lower": {
+      "intercept_deg": 0.2166220179900279,
+      "per_y_mm": -0.000538170429168372,
+      "per_theta_deg": 0.19791396218238544
+    }
+  },
+  "upper_region": {
+    "x_first": 24,
+    "x_last": 3816,
+    "y_first": 692,
+    "y_last": 736,
+    "excluded_x": [
+      [
+        1370,
+        2450
+      ]
+    ]
+  },
+  "lower_region": {
+    "x_first": 24,
+    "x_last": 3816,
+    "y_first": 1845,
+    "y_last": 1905,
+    "excluded_x": [
+      [
+        1560,
+        2300
+      ]
+    ]
+  }
+}
