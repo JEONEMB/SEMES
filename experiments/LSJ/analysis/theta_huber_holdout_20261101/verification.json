@@ -1,0 +1,16 @@
+{
+  "independent_metric_recalculation": {
+    "2": {
+      "images": 20,
+      "passed": 3
+    },
+    "3": {
+      "images": 234,
+      "passed": 79
+    }
+  },
+  "correction_sign_verified": true,
+  "original_model_sources_unchanged": true,
+  "report_contains_all_images": true,
+  "plot_visually_checked": true
+}
