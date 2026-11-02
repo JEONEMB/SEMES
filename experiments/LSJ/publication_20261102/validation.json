@@ -1,0 +1,189 @@
+{
+  "checked_at_utc": "2026-11-02T04:38:37.284639+00:00",
+  "scope": "Relocated source build and existing code tests only. No new image analysis, fitting, or 254-image rerun.",
+  "base": "34e6b80640ae25362e71b8ee0bcb8d472c35e092",
+  "source_head_before_publication_docs": "346a33b173d4942628463fa2e4c58a1e012218ed",
+  "executions": [
+    {
+      "name": "baseline_configure",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "-S",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\repo\\experiments\\LSJ\\algorithm\\theta_huber_20261101",
+        "-B",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_baseline",
+        "-G",
+        "Visual Studio 18 2026",
+        "-A",
+        "x64",
+        "-T",
+        "v141",
+        "-DOpenCV_DIR=C:/Users/SSAFY/opencv/build",
+        "-DBUILD_TESTING=ON"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "baseline_build",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "--build",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_baseline",
+        "--config",
+        "Release",
+        "--",
+        "/m:1",
+        "/v:minimal"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "baseline_ctest",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\ctest.exe",
+        "--test-dir",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_baseline",
+        "-C",
+        "Release",
+        "--output-on-failure",
+        "-V"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "upper_configure",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "-S",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\repo\\experiments\\LSJ\\algorithm\\theta_huber_upper_only_20261101",
+        "-B",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_upper",
+        "-G",
+        "Visual Studio 18 2026",
+        "-A",
+        "x64",
+        "-T",
+        "v141",
+        "-DOpenCV_DIR=C:/Users/SSAFY/opencv/build",
+        "-DBUILD_TESTING=ON"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "upper_build",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "--build",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_upper",
+        "--config",
+        "Release",
+        "--",
+        "/m:1",
+        "/v:minimal"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "upper_ctest",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\ctest.exe",
+        "--test-dir",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_upper",
+        "-C",
+        "Release",
+        "--output-on-failure",
+        "-V"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "line_methods_configure",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "-S",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\repo\\experiments\\LSJ\\analysis\\reference_line_methods_108_20261030\\cpp",
+        "-B",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods",
+        "-G",
+        "Visual Studio 18 2026",
+        "-A",
+        "x64",
+        "-T",
+        "v141",
+        "-DOpenCV_DIR=C:/Users/SSAFY/opencv/build",
+        "-DBUILD_TESTING=ON"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "line_methods_build",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "--build",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods",
+        "--config",
+        "Release",
+        "--",
+        "/m:1",
+        "/v:minimal"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "line_selftest",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods\\Release\\line_selftest.exe"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "pipeline_contract_test",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods\\Release\\pipeline_contract_test.exe"
+      ],
+      "returncode": 3221226505
+    },
+    {
+      "name": "pipeline_contract_test",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods\\Release\\pipeline_contract_test.exe"
+      ],
+      "working_directory": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\repo\\experiments\\LSJ\\analysis\\reference_line_methods_108_20261030",
+      "returncode": 0
+    },
+    {
+      "name": "numeric_record_test",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods\\Release\\numeric_record_test.exe"
+      ],
+      "working_directory": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\repo\\experiments\\LSJ\\analysis\\reference_line_methods_108_20261030",
+      "returncode": 0
+    },
+    {
+      "name": "gaussian_retention_test",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods\\Release\\gaussian_retention_test.exe"
+      ],
+      "working_directory": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\repo\\experiments\\LSJ\\analysis\\reference_line_methods_108_20261030",
+      "returncode": 0
+    }
+  ],
+  "publication_retry_note": "Initial pipeline_contract_test ran from repository root, but its existing configs/methods.json path requires the line-method project working directory. Retried with that directory; algorithm/test sources unchanged. Successful builds and tests were not repeated.",
+  "copied_files_verified": 1911,
+  "changed_paths_inside_lsj_only": true,
+  "python_files_syntax_checked": 65,
+  "credential_pattern_scan": "no GitLab PAT literals found",
+  "new_image_analysis_run": false,
+  "past_accuracy_results_recomputed": false,
+  "upper_image_pixel_mutation_test_rerun": false,
+  "root_or_other_team_code_changed": false,
+  "completed_at_utc": "2026-11-02T04:38:40.205763+00:00",
+  "all_publication_checks_passed": true,
+  "git_blob_hashes_verified": 1911,
+  "code_test_outputs": {
+    "line_selftest": "PASS reversed endpoints give the same angle\nPASS slope 0.01 -> atan(0.01) deg\nPASS upward-right line (dy<0) has a negative image angle\nPASS vertical line -> -90 deg (range [-90, 90))\nPASS vertical line -> slope/intercept null\nPASS vertical general form passes (5, 7)\nPASS horizontal y=20\nPASS robust fit recovers slope/intercept with one outlier\nPASS outlier trimmed\nPASS initial and both trimming solves record convergence\nPASS successful solve records final changes against unchanged stopping limits\nPASS actual fit inputs remain distinct from post-fit distance inliers\nPASS actual-input RMS uses all actual inputs, not the final distance subset\nPASS published masks preserve actual-input provenance and the legacy mask meaning\nPASS published RMS and convergence metadata identify their basis\nPASS iteration-limit exit is not reported as convergence\nPASS unconfirmed convergence publishes no normal line or stale RMS on reused output\nPASS NaN coordinate is rejected, not silently dropped\nPASS infinite coordinate is rejected\nPASS nonfinite excluded input is still an input error\nPASS mask-length mismatch is rejected\nPASS coincident points do not become a horizontal line\nPASS exactly isotropic scatter has no unique line direction\nPASS overflow in finite input arithmetic is rejected\nPASS zero direction does not silently normalize to horizontal\nPASS final minimum count is checked even after a converged solve\nPASS too few final inliers cannot publish a line or artificial endpoints\nPASS failure diagnostics serialize without nonfinite numeric outputs\nPASS enough final points at one location are not valid line support\nPASS invalid convergence parameter is rejected\nPASS existing minimum point count is enforced\nPASS signed distance positive below a horizontal line\nPASS sha256('abc')\n0 failure(s)",
+    "pipeline_contract_test": "PASS clip segment against y band and subtract central occlusion\nPASS every generated point satisfies x AND y bounds and exclusion mask\nPASS closed occlusion endpoints are not accidentally sampled\nPASS reversing endpoints preserves the visible support\nPASS negative slopes are clipped on the correct side\nPASS horizontal segment outside band is removed\nPASS horizontal segment retains only target x support\nPASS valid crossing part is retained even when original midpoint is outside band\nPASS overlapping unsorted occlusions do not duplicate support\nPASS fully hidden segment has no support\nPASS zero sampling step is rejected\nPASS non-finite segment geometry is rejected\nPASS pair hypothesis anchor uses visible support rather than original midpoint\nPASS x-step sampling has equal counts for equal x spans, not equal arc lengths\nPASS selector fits the supplied clipped line through the real common pipeline\nPASS selector never passes out-of-region samples to Huber\nPASS consensus score uses clipped arc length only\nPASS native support diagnostics are restricted to allowed regions too\nPASS clipped pieces and honest sampling semantics are recorded\nPASS all configured method keys are classified across all 21 methods\nPASS Q12 records Huber and common band as inactive\nPASS unused Huber setting cannot change the Q12 effective hash payload\nPASS unused QR band/margin/step do not affect applied settings\nPASS Q10 uses Huber but searches ROI without common band\nPASS LSD scale=1 records sigma_scale as inactive and excludes it from applied hash\nPASS display-only example frequency is excluded from measurement settings\nPASS active column step changes measurement settings\nPASS unsupported Gaussian mode is rejected\nPASS unsupported initialization mode is rejected\nPASS unsupported contour mode is rejected\nPASS unsupported threshold mode is rejected\nPASS unknown ED operator does not fall back to Sobel\nPASS native ED sigma clamping is not silently recorded as the requested value\nPASS unsupported scaled LSD support mapping is explicit\nPASS unsupported merged FLD support mapping is explicit\nPASS double-to-float overflow is rejected before recording applied settings\nPASS unknown method key is rejected\nPASS fractional integer parameter is rejected\nPASS invalid active common sampling step is rejected before execution\nPASS unknown common fit key is rejected\n0 failure(s)",
+    "numeric_record_test": "PASS valid moments preserve the previous ramp formula\nPASS centered valid edge has zero shift\nPASS zero first moment is rejected before division\nPASS NaN moment cannot become a selected point\nPASS infinite moment rejected\nPASS overflowed projected denominator rejected\nPASS overflowed moment ratio rejected\nPASS negative discriminant rejected before square root\nPASS overflowed squared width rejected\nPASS overflowed discriminant rejected\nPASS zero model width rejected\nPASS nonfinite model width rejected\nPASS existing polarity/orientation gate retained\nPASS existing configured shift gate retained\nPASS existing small-width step-limit branch retained\nPASS small nonzero denominator is not rejected by a new arbitrary epsilon\nPASS uncomputed diagnostic values serialize as null rather than fabricated zero\nPASS all common-fit coordinates round-trip without decimal truncation\nPASS calculation precision is explicitly recorded\nPASS invalid coordinates remain failed, not successfully reconstructed points\n0 failure(s)",
+    "gaussian_retention_test": "PASS weak-response profiles are fitted and forwarded\nPASS coarse maxima at search-band endpoints are retained\nPASS returned positions more than 2px from coarse locations reach common fit\nPASS nonconvergence is recorded without removing points\nPASS negative-amplitude results are retained\nPASS zero-amplitude results are retained\nPASS shared Q01 path also retains weak profiles\nPASS removed threshold configuration cannot silently remain active\nPASS removed threshold configuration cannot silently remain active\n0 failure(s)"
+  }
+}
