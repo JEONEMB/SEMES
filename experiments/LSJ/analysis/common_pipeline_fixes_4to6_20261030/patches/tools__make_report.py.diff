@@ -1,0 +1,60 @@
+--- before/tools/make_report.py
++++ after/tools/make_report.py
+@@ -39,6 +39,23 @@
+ def method_name(mid):
+     for m in mstatus["methods"]:
+         if m["method_id"] == mid: return m["name"]
++
++
++def settings_table():
++    rows = []
++    for mid in E_IDS + Q_IDS:
++        r = next((r for r in lm['records'] if r['method_id'] == mid), None)
++        if r is None:
++            continue
++        settings = r.get('settings')
++        if settings is None:
++            rows.append(f'<tr><th>{mid}</th><td colspan="3">과거 결과: 적용/비활성 설정 기록 없음</td></tr>')
++            continue
++        a = settings['applied']; off = settings['inactive']
++        rows.append(f'<tr><th>{mid}</th><td>Huber: {"적용" if "common_fit" in a else "미사용"}<br>band: {"적용" if "band_y_inclusive" in a.get("target", {}) else "미사용"}</td>'
++                    f'<td>{e(", ".join(off.keys()) or "없음")}</td><td><details><summary>{e(r["target_id"])} 설정 예시</summary>'
++                    f'<pre>{e(json.dumps(settings, ensure_ascii=False, indent=2))}</pre></details></td></tr>')
++    return '<table><tr><th>방법</th><th>공통 처리 적용</th><th>비활성 항목</th><th>실제·비활성·표시 설정</th></tr>'+''.join(rows)+'</table>'
+ 
+ 
+ def mcfg(mid):
+@@ -369,19 +386,22 @@
+ <h4>외부 구조물 72슬롯</h4>{slot_matrix(E_IDS, EXT_T)}
+ <h4>QR 144슬롯</h4>{slot_matrix(Q_IDS, QR_T)}
+ <h3>432개 이미지-조합 항목</h3>
+-<p>complete {combos["meta"]["complete"]} · partial {combos["meta"]["partial"]} · failed {combos["meta"]["failed"]} (합계 {combos["meta"]["count"]}). partial은 모두 E04 또는 E08의 하단 구조물 실패 때문입니다. 조합은 같은 단독 결과를 재사용해 함께 열람하는 항목이며, 108개의 독립 실험이나 새 직선이 아닙니다. 외부·QR 각도를 평균하거나 합치지 않았습니다.</p>
++<p>complete {combos["meta"]["complete"]} · partial {combos["meta"]["partial"]} · failed {combos["meta"]["failed"]} (합계 {combos["meta"]["count"]}). partial은 일부 선의 계산이 실패한 조합이며 구체적인 사유는 기록을 참조합니다. 조합은 같은 단독 결과를 재사용해 함께 열람하는 항목이며, 108개의 독립 실험이나 새 직선이 아닙니다. 외부·QR 각도를 평균하거나 합치지 않았습니다.</p>
+ 
+ <h2 id="s2">2. 측정 대상 확인</h2>
+ <p>상단은 <b>upper_structure 하나</b>, 하단은 <b>lower_structure 하나</b>입니다. 중앙 가림 구간(빗금)은 점 추출에서 빼고, 양쪽 가시 구간의 점을 <b>하나의 직선</b>으로 맞췄습니다. 좌우 기울기를 따로 구해 평균하지 않았습니다. 범위는 양 끝 포함이며 코드 내부는 [a, b+1) 반열림으로 처리합니다. QR ROI는 기존 Python 규약 그대로 x1·y1 미포함입니다.</p>
+ <ul class="kv"><li><span class="sw" style="background:#ff6438"></span>상단 구조물: x 24~3816, 탐색 y 692~736, 가림 x 1370~2450. 주 선 = y 증가 방향 어두움→밝음 경계</li>
+ <li><span class="sw" style="background:#00aedb"></span>하단 구조물: x 24~3816, 탐색 y 1845~1905, 가림 x 1560~2300. 같은 극성의 경계</li>
+-<li><span class="sw" style="background:#ff2bd6"></span>QR L/C/R: ROI {targets["qr_L"]["roi_xyxy"]}, {targets["qr_C"]["roi_xyxy"]}, {targets["qr_R"]["roi_xyxy"]}. Q01~Q11 주 선 = 바깥 밝은 사각 테두리 상단 경계(탐색 y 958~978, x 범위 L {targets["qr_L"]["x_range"]}, C {targets["qr_C"]["x_range"]}, R {targets["qr_R"]["x_range"]}). Q12 주 선 = 위쪽 두 파인더 중심 연결선(다른 특징)</li></ul>
++<li><span class="sw" style="background:#ff2bd6"></span>QR L/C/R: ROI {targets["qr_L"]["roi_xyxy"]}, {targets["qr_C"]["roi_xyxy"]}, {targets["qr_R"]["roi_xyxy"]}. Q01~Q09는 상단 band와 x 범위를 사용합니다. Q10·Q11은 ROI 전체에서 바깥 밝은 테두리의 상단 윤곽/코너를 고르고 공통 band 필터를 사용하지 않습니다. Q12도 ROI 전체에서 파인더 중심 연결선을 구하며 다른 특징입니다.</li></ul>
+ <p>기존 ROI는 R01에서 물리적 대상을 모두 담고 있어 바꾸지 않았습니다. QR 상단 탐색 y 범위와 x 범위는 이번에 새로 정한 값(R01 확대 영상·밝기 프로파일 기준)이며 네 장에 같게 적용했습니다. 네 장의 결과를 보고 조정하지 않았습니다.</p>
+ <img class="fig" src="figures/targets_R01_overview.png" alt="R01 대상 위치">
+ <img class="fig" src="figures/targets_R01_zoom_profiles.png" alt="R01 대상 확대와 밝기 프로파일">
+ <img class="fig" src="figures/targets_4refs_same_regions.png" alt="네 장 같은 범위">
+ 
+ <h2 id="s3">3. 방법별 추출 과정</h2>
++<p>새 실행의 <code>settings.applied</code>, <code>settings.inactive</code>, <code>settings.reporting_only</code>를 구분합니다. Q11·Q12의 Huber와 Q10~Q12의 공통 band는 미사용입니다. LSD는 현재 지원 모드 scale=1에서 sigma_scale이 비활성입니다. 지원하지 않는 고정 모드·알 수 없는 설정 키는 실행 전에 오류로 반환합니다. 설정 예시는 각 방법의 첫 타깃이며 모든 타깃별 값은 원본 JSON에 있습니다.</p>
++{settings_table()}
++<p>새 선분 결과에서는 허용된 x·y 영역에 자르고 가림을 제거한 구간을 기록합니다. 점수 계산에는 이 구간의 실제 선분 길이를 쓰지만, 최종 피팅은 설정한 가로 간격의 표본을 사용하므로 정확한 호 길이 가중과 동일하지 않습니다. 과거 결과에는 잘린 구간 기록이 없으므로 당시 검출 선분을 그대로 표시합니다.</p>
+ <p>각 그림은 저장된 후보·점·선분·코너·중간 영상으로 그립니다. 새 공통 피팅 결과는 실제 마지막 피팅 입력점과 최종 거리 분류를 따로 저장합니다. 주황 점의 의미는 각 그림·조회 표에 표시합니다. 과거 결과에는 실제 입력 마스크와 수렴 상태가 없어 최종 거리 내 점으로만 표시합니다. 선분의 주황색은 기존 선택 선분을 뜻합니다. 영상 패널은 원본 좌표·가로:세로 1:1입니다.</p>
+ <p class="small">공통 직선 피팅의 Huber C=1.345px, 제외 거리 external 2.0px/QR 1.0px, 재피팅 2회는 유지했습니다. 새 결과는 모든 IRLS 호출의 종료 사유·횟수·마지막 변화량을 저장하며, 반복 한도 종료나 유효성 검사 실패를 성공으로 반환하지 않습니다. 새 fit RMS는 실제 마지막 피팅 입력점 기준이며 최종 거리 내 점 RMS는 diagnostics에 별도 저장합니다. 과거 RMS는 최종 거리 내 점 기준입니다. 어느 잔차도 측정 정확도 자체가 아닙니다.</p>
+ {method_sections()}
+@@ -477,7 +497,7 @@
+     md.append(f"| {r['measurement_id']} | {CAT_KO.get(r['failure_category'], r['failure_category'])} | {r['failure_reason']} |")
+ md += ["", "## 2. 측정 대상", "",
+        "- 상단 구조물 1개(upper_structure): x 24~3816, 탐색 y 692~736, 가림 x 1370~2450 제외. 하단 구조물 1개(lower_structure): x 24~3816, 탐색 y 1845~1905, 가림 x 1560~2300 제외. 주 선은 y 증가 방향 어두움→밝음 경계. 양쪽 가시 구간 점을 하나의 직선으로 맞춤(좌우 평균 없음).",
+-       "- QR L/C/R: 기존 ROI 유지. Q01~Q11 = 바깥 흰 테두리 상단 경계(탐색 y 958~978). Q12 = 위쪽 두 파인더 중심 연결선(다른 특징).", "",
++       "- QR L/C/R: 기존 ROI 유지. Q01~Q09는 band·x 범위를 사용. Q10·Q11은 ROI에서 상단 윤곽/코너를 선택하고 공통 band 미사용. Q12는 ROI에서 파인더 중심 연결선(다른 특징), 공통 band 미사용.", "",
+        "![R01 대상 위치](figures/targets_R01_overview.png)", "", "![R01 확대·밝기 프로파일](figures/targets_R01_zoom_profiles.png)", "",
+        "![네 장 같은 범위](figures/targets_4refs_same_regions.png)", "", "## 3. 방법별 추출 과정 (R01 그림, 나머지는 figures/methods/<ID>_<R0n>.png)", ""]
+ for mid in E_IDS + Q_IDS:

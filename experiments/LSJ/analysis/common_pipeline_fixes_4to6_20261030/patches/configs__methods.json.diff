@@ -1,0 +1,25 @@
+--- before/configs/methods.json
++++ after/configs/methods.json
+@@ -20,7 +20,7 @@
+     "detector_margin_px": {
+       "external": 16,
+       "qr": 8,
+-      "rationale": "검출기 계산용 주변 문맥. 최종 선택은 band/x_range/exclude_x 안에서만."
++      "rationale": "E/Q02·03·04·07·08·09 검출기의 주변 문맥에 적용. E/Q01·05·06은 별도 프로파일 여백, Q10~Q12는 ROI를 직접 사용. 실제 적용 범위는 출력 settings에 구분 기록."
+     },
+     "column_step_px": {
+       "external": 2,
+@@ -45,7 +45,7 @@
+         "sample_step_px": 1.0
+       }
+     },
+-    "segment_selection_rationale": "선분형 검출기(LSD/EDLines/FLD/ELSED) 공통 선택 규칙. 각도·band·가시 길이·극성(선분 양쪽 밝기차) 필터 후, 선분/선분쌍이 만드는 직선 가설 중 consensus_inlier_px 안에 두 끝점이 모두 드는 선분 가시 길이 합이 최대인 가설을 선택. 최종선은 선택 선분 위 1px 간격 표본(길이 가중과 동일)에 공통 피팅."
++    "segment_selection_rationale": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+   },
+   "methods": {
+     "E01/Q01": {
+@@ -305,4 +305,4 @@
+     }
+   },
+   "method_key_note": "'E0n/Q0n' 항목은 같은 방법 계열. external 설정은 E0n, qr 설정은 Q0n에 적용."
+-}+}

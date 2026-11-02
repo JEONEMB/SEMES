@@ -1,0 +1,94 @@
+{
+  "steps": [
+    {
+      "name": "01_configure",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "-S",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp",
+        "-B",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_pipeline_fixes_4to6_20261030\\build",
+        "-G",
+        "Visual Studio 18 2026",
+        "-A",
+        "x64",
+        "-T",
+        "v141",
+        "-DCMAKE_GENERATOR_INSTANCE=C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools",
+        "-DOpenCV_DIR=C:/Users/SSAFY/opencv/build"
+      ],
+      "exit_code": 0,
+      "seconds": 0.2
+    },
+    {
+      "name": "02_build",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "--build",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_pipeline_fixes_4to6_20261030\\build",
+        "--config",
+        "Release",
+        "--",
+        "-m:1",
+        "/nr:false",
+        "/v:normal"
+      ],
+      "exit_code": 0,
+      "seconds": 14.64
+    },
+    {
+      "name": "03_fit_regression",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_pipeline_fixes_4to6_20261030\\build\\Release\\line_selftest.exe"
+      ],
+      "exit_code": 0,
+      "seconds": 0.02
+    },
+    {
+      "name": "04_geometry_settings",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_pipeline_fixes_4to6_20261030\\build\\Release\\pipeline_contract_test.exe"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07
+    },
+    {
+      "name": "05_config_only",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_pipeline_fixes_4to6_20261030\\build\\Release\\line_methods.exe",
+        "--root",
+        ".",
+        "--check-config"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07
+    },
+    {
+      "name": "06_report_regression",
+      "command": [
+        "C:\\Users\\SSAFY\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_fit_point_views.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07
+    },
+    {
+      "name": "07_display_contract",
+      "command": [
+        "C:\\Users\\SSAFY\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_pipeline_fixes_4to6_20261030\\test_display_contract.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.12
+    }
+  ],
+  "scope": "software/geometry/config checks; no captured-image measurement or statistical validation"
+}

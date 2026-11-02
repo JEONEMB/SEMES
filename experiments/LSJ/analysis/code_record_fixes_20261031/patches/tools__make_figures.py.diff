@@ -1,0 +1,57 @@
+--- before/tools/make_figures.py
++++ after/tools/make_figures.py
+@@ -16,6 +16,7 @@
+ from matplotlib.patches import Rectangle, FancyArrowPatch
+ from matplotlib.lines import Line2D
+ from fit_point_views import fit_point_view, rms_label
++from generation_provenance import GenerationRecord, files_under
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ RES = ROOT / "results"
+@@ -499,21 +500,31 @@
+ 
+ 
+ def main():
+-    lm, recs, targets, manifest, images = load()
+-    FIG.mkdir(exist_ok=True)
+-    targets_figure(targets, images)
+-    crops = viewer_assets(images)
+-    (FIG / "viewer" / "crops.json").write_text(json.dumps(crops), encoding="utf-8")
+-    mids = sorted({r["method_id"] for r in recs.values()})
+-    only = sys.argv[1:]
+-    for mid in mids:
+-        if only and mid not in only: continue
+-        for rid in ["R01", "R02", "R03", "R04"]:
+-            stage_figure(rid, mid, recs, targets, images[rid])
+-        print("figures", mid, flush=True)
+-    for r in manifest["references"]:
+-        assert sha(r["path"]) == r["sha256"]
+-    print("done; inputs unchanged")
++    manifest=json.loads((ROOT/'configs/inputs_manifest.json').read_text(encoding='utf-8'))
++    sources=[Path(__file__),ROOT/'tools/fit_point_views.py',ROOT/'tools/generation_provenance.py']
++    inputs=files_under(RES)+[ROOT/'configs/targets.json',ROOT/'configs/inputs_manifest.json']
++    inputs += [Path(r['path']) for r in manifest['references']]
++    with GenerationRecord(ROOT,'figures',sources=sources,inputs=inputs,
++                          metadata={'argv':sys.argv,'opencv':cv2.__version__,'numpy':np.__version__,'matplotlib':matplotlib.__version__}) as provenance:
++        lm,recs,targets,manifest,images=load()
++        FIG.mkdir(exist_ok=True)
++        outputs=list(targets_figure(targets,images))
++        crops=viewer_assets(images)
++        (FIG/'viewer/crops.json').write_text(json.dumps(crops),encoding='utf-8')
++        outputs.append(FIG/'viewer/crops.json')
++        for rid in images:
++            outputs.append(FIG/'viewer'/f'{rid}_preview.jpg')
++            outputs += [FIG/'viewer'/f'{rid}_{name}.png' for name in crops]
++        only=sys.argv[1:]
++        for mid in sorted({r['method_id'] for r in recs.values()}):
++            if only and mid not in only:continue
++            for rid in ['R01','R02','R03','R04']:
++                outputs.append(stage_figure(rid,mid,recs,targets,images[rid]))
++            print('figures',mid,flush=True)
++        for r in manifest['references']:
++            assert sha(r['path'])==r['sha256']
++        provenance.finish(outputs)
++        print('done; inputs unchanged; provenance:',provenance.finish_path)
+ 
+ 
+ if __name__ == "__main__":

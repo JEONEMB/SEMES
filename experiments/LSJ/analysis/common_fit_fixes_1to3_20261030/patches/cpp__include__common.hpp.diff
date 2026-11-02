@@ -1,0 +1,40 @@
+--- before/cpp/include/common.hpp
++++ after/cpp/include/common.hpp
+@@ -62,18 +62,34 @@
+     int min_points = 20;
+ };
+ 
++struct IrlsResult {
++    bool converged = false;
++    bool has_line = false;  // A finite candidate, including on max_iterations (not a successful fit).
++    Line line;
++    std::string termination = "not_started";
++    std::string reason;
++    int iterations = 0;
++    int n_used = 0;
++    bool has_last_change = false;
++    double last_angle_change_rad = 0, last_center_x_change_px = 0, last_center_y_change_px = 0;
++};
++
+ struct FitResult {
+     bool ok = false;
+     std::string reason;
++    std::string failure_code;
+     Line line;
+-    std::vector<char> inlier;  // per input point
+-    int n_all = 0, n_inlier = 0;
++    std::vector<char> fit_used; // Actual input mask for the last attempted Huber solve.
++    std::vector<char> inlier;  // Post-fit distance classification; NOT the fit input mask.
++    std::vector<IrlsResult> irls_runs; // initial solve, then each trimming solve, in order.
++    int n_all = 0, n_inlier = 0, n_fit_used = 0;
+     double rms_inlier = 0, rms_all = 0, max_abs_inlier = 0;
++    double rms_fit_used = 0;
+     double initial_angle_deg = 0;  // Huber fit on all points before trimming
+ };
+ 
+ // Double-precision Huber IRLS orthogonal regression, then inlier trimming.
+-Line huber_line(const std::vector<cv::Point2d>& pts, const std::vector<char>* use, const FitParams& p);
++IrlsResult huber_line(const std::vector<cv::Point2d>& pts, const std::vector<char>* use, const FitParams& p);
+ FitResult robust_fit(const std::vector<cv::Point2d>& pts, const FitParams& p);
+ 
+ // Output of one method on one target in one image.

@@ -1,0 +1,16 @@
+{
+  "changed_files": [
+    "analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt",
+    "analysis/reference_line_methods_108_20261030/cpp/include/common.hpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/main.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/tests/line_selftest.cpp",
+    "analysis/reference_line_methods_108_20261030/tools/fit_point_views.py",
+    "analysis/reference_line_methods_108_20261030/tools/make_figures.py",
+    "analysis/reference_line_methods_108_20261030/tools/make_report.py",
+    "analysis/reference_line_methods_108_20261030/tools/test_fit_point_views.py"
+  ],
+  "unexpected_changes": [],
+  "configs_original_measurements_figures_logs_and_selection_unchanged": true,
+  "allowed_scope": "Common fit items 1-3, result schema/rendering and regression checks only."
+}

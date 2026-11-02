@@ -1,0 +1,177 @@
+"""Save source diffs and verification evidence for the authorized fixes 4--6."""
+import difflib
+import hashlib
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent.parent
+BASE = ROOT / 'analysis/reference_line_methods_108_20261030'
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+subprocess.run([sys.executable, str(HERE / 'safeguard.py'), '--verify'], check=True)
+proof = json.loads((HERE / 'preservation_check.json').read_text(encoding='utf-8'))
+validation = json.loads((HERE / 'validation.json').read_text(encoding='utf-8'))
+assert len(validation['steps']) == 7 and all(s['exit_code'] == 0 for s in validation['steps'])
+resolved = json.loads((HERE / 'resolved_settings.json').read_text(encoding='utf-8'))
+assert len(resolved) == 54 and len({k.split('_')[0] for k in resolved}) == 21
+
+counts = {}
+for name in ('03_fit_regression', '04_geometry_settings'):
+    log = (HERE / 'logs' / (name + '.stdout.txt')).read_text(encoding='utf-8-sig')
+    assert '0 failure(s)' in log
+    counts[name] = sum(line.startswith('PASS ') for line in log.splitlines())
+for name in ('06_report_regression', '07_display_contract'):
+    log = (HERE / 'logs' / (name + '.stderr.txt')).read_text(encoding='utf-8-sig')
+    assert '\nOK\n' in log
+    counts[name] = int(re.search(r'Ran (\d+) tests', log).group(1))
+
+patches = HERE / 'patches'
+patches.mkdir(exist_ok=True)
+changes = []
+for name in proof['changed_files']:
+    current = ROOT / name
+    relative = current.relative_to(BASE)
+    before = HERE / 'before' / relative
+    original = before.read_text(encoding='utf-8-sig') if before.exists() else ''
+    updated = current.read_text(encoding='utf-8-sig')
+    diff = patches / (relative.as_posix().replace('/', '__') + '.diff')
+    diff.write_text(''.join(difflib.unified_diff(
+        original.splitlines(True), updated.splitlines(True),
+        fromfile='before/' + relative.as_posix(), tofile='after/' + relative.as_posix()
+    )), encoding='utf-8')
+    changes.append({'path': name, 'before_sha256': sha(before) if before.exists() else None,
+                    'after_sha256': sha(current), 'diff': diff.relative_to(HERE).as_posix()})
+
+executable = HERE / 'build/Release/line_methods.exe'
+manifest = {
+    'scope': 'Requested common pipeline fixes 4-6; baseline already includes fixes 1-3',
+    'changed_files': changes, 'passed_checks': counts,
+    'configuration_slots_checked': 54, 'methods_checked': 21,
+    'executable': str(executable), 'executable_sha256': sha(executable),
+    'configured_control_values_unchanged': proof['configured_control_values_unchanged'],
+    'protected_artifacts_unchanged': proof['protected_artifacts_unchanged'],
+    'captured_image_pipeline_run': False, 'statistical_validation_run': False,
+    'geometry_fixture': 'Known segment coordinates and an artificial intensity ramp; native detectors not run by these fixtures',
+    'result_files_regenerated': False,
+}
+(HERE / 'change_manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
+
+report = f'''공통 처리 4~6번 보완 결과
+
+적용 소스: {BASE}
+새 실행 파일: {executable}
+기존 build 실행 파일과 기존 측정 산출물은 교체하지 않음.
+이번 수정의 기준본은 1~3번 보완을 마친 소스이며, 해당 보완 내용은 유지함.
+
+4. 선분 전체에 허용 영역 적용
+대상: E04/Q04(LSD), E07/Q07(EDLines), E08/Q08(FLD), E09/Q09(ELSED)의 공통 선분 선택 처리.
+
+이전에는 선분의 중간 위치가 y 허용 범위에 있는지를 보고 선분을 통과시켰음.
+수정 후에는 선분을 x 허용 범위와 y 허용 범위에 맞춰 자르고, 가림 구간을 제외함.
+그렇게 남은 조각으로 아래 항목을 계산함.
+- 보이는 선분 길이와 최소 길이 통과 여부
+- 명암 방향 확인 위치
+- 두 선분으로 후보 직선을 만들 때 사용하는 대표 위치
+- 후보 직선 점수 및 최종 피팅에 넣을 표본점
+- 원본 검출기 지지 픽셀의 진단용 잔차
+
+좌우 가시 조각의 표본점은 함께 모아 대상당 최종 직선 1개를 구함.
+좌우 기울기를 별도로 구해 평균 내는 방식으로 변경한 것이 아님.
+검출기가 최초로 반환한 선분은 intermediates.segments에 남기고,
+실제 잘린 조각은 visible_segment_pieces에 별도로 저장함.
+그림 생성기도 선택된 선분의 잘린 조각을 표시하도록 수정함.
+과거 결과에 잘린 조각 기록이 없으면 기존 기록 그대로 표시함.
+
+가림 구간의 경계도 제외한다는 기존 정의를 유지함.
+경계의 부동소수점 처리는 nextafter(가장 가까운 표현 가능한 수)로 수행하고,
+새로운 경험적 픽셀 허용오차를 추가하지 않음.
+저장 과정에서 반올림 때문에 점이 가림 경계 안으로 들어가지 않도록,
+선분 피팅 표본 좌표는 기존 소수점 4자리 반올림 대신 double 정밀도로 저장함.
+
+5. 가중 방식 설명을 실제 계산과 일치시킴
+현재 설정의 가로 방향 1px 간격 표본 방식을 유지함.
+- 후보 직선 점수: 허용 영역 안에 남은 선분의 실제 길이 합.
+- 최종 직선 피팅: 가로 방향으로 뽑은 각 표본점의 초기 가중치는 동일하며,
+  이후 Huber가 잔차에 따라 가중치를 조정함.
+
+따라서 표본 개수는 대략 가로 투영 길이에 비례함.
+이 방식을 '정확한 선분 길이 가중과 동일하다'고 표현한 부분을 정정함.
+설정 설명, support_type, diagnostics.sample_weighting, 보고서 생성 코드에 반영함.
+새 가중 모델을 도입하거나 Huber 설정을 바꾸지 않았음.
+
+6. 설정의 실제 적용 여부 기록 및 지원하지 않는 설정 거부
+전체 외부 9개·QR 12개 방법에 대해 설정을 아래와 같이 구분함.
+- settings.applied: 실제 측정 계산에 쓰는 값.
+- settings.inactive: 설정 파일에 있지만 해당 방법에서 사용하지 않는 값과 사유.
+- settings.reporting_only: 예시 저장 빈도·그림 표시 범위 등 결과 설명용 값.
+- settings.fixed_modes: 현재 코드가 지원하는 고정 처리 방식.
+
+주요 예시
+- Q11/Q12: 공통 Huber/IRLS/trim을 사용하지 않음.
+- Q10~Q12: QR ROI를 직접 사용하며 공통 band/x 범위/가림 필터는 사용하지 않음.
+- LSD scale=1: Gaussian 축소 경로를 거치지 않아 sigma_scale은 비활성.
+- 프로파일·윈도 예시 저장 빈도: 측정값 설정에서 분리.
+- 조건부 ELSED 설정: validate/treatJunctions 적용 여부에 따라 구분.
+
+Gaussian gradient/init_sigma, Q10 threshold/contour_mode 등 고정 처리 항목을
+지원하지 않는 문자열로 바꾸면 조용히 무시하지 않고 오류를 반환함.
+알 수 없는 키, 잘못된 자료형, 계산 불가능한 값 등도 실행 전에 검사함.
+이는 구현 조건에 대한 검사이며, 설정값의 통계적 적정성을 판정하는 기준이 아님.
+
+현재 어댑터가 제대로 대응하지 못하는 LSD scale != 1과 FLD do_merge=true는
+명시적으로 거부함. 해당 모드는 지지 픽셀 대응 구현을 추가해야 사용 가능함.
+ED 내부에서 sigma < 1을 1로 바꾸는 처리는 요청값과 적용값이 달라지므로
+현재 래퍼에서는 ed_sigma >= 1을 명시하도록 함.
+일부 native float/short 인자에 표현할 수 없는 값도 거부함.
+현재 설정 파일은 이 검사들을 모두 통과함.
+
+기록 형식
+- 기존 parameters에는 입력된 설정을 유지함.
+- config_hash는 settings.applied만의 해시로 변경함.
+- configured_config_hash에 기존 방식의 원시 설정 묶음 해시를 별도 보존함.
+- settings_schema_version=2 및 해시 범위를 기록함.
+- inactive/reporting-only 값을 바꿔도 적용 설정 해시는 변하지 않음.
+- 소스 변경까지 확인하려면 소스/실행 파일 해시도 함께 확인해야 함.
+- 과거 측정 기록에 없는 적용 상태를 새로 추정해 채우지 않음.
+
+검증 결과
+- OpenCV 3.4.15 / MSVC v141 전체 타깃 빌드 성공.
+- 기존 피팅 C++ 검사 {counts['03_fit_regression']}개 통과.
+- 선분 영역 처리·설정 적용 범위 C++ 검사 {counts['04_geometry_settings']}개 통과.
+- 기존 기록 해석 Python 시험 {counts['06_report_regression']}개 통과.
+- 잘린 선분 표시·설정 표시 Python 시험 {counts['07_display_contract']}개 통과.
+- 실제 실행 파일의 --check-config로 21개 방법, 54개 대상 조합 설정 검사 통과.
+- 수정한 Python 파일 문법 검사 통과.
+- 변경 파일 13개가 허용한 범위 안에 있음을 해시로 확인함.
+- methods.json의 계산 설정값은 모두 동일함. 설명 문장만 수정됨.
+
+시험은 알려진 좌표와 인공 밝기 경사로 코드의 동작을 확인한 것임.
+실제 촬영본의 검출 정확도·기울기 일관성·Theta 상관관계를 검증한 결과가 아님.
+
+보존 및 해석
+- 기존 216개 측정값, 그림, 보고서, 선별 결과 및 native 검출기 소스는 그대로임.
+- 현재 열려 있는 first_screening_report.html은 수정 전 측정 결과임.
+- 전체 이미지 재측정, 통계 검정, 후보 변경, Git/Jira 작업은 하지 않음.
+- 4번 수정으로 향후 재측정값과 통과/실패 상태가 달라질 수 있음.
+- 기존 Huber 상수·수렴 조건·거리 임계값 등의 타당성까지 검증한 것은 아님.
+- 환경 설치나 라이브러리 교체는 하지 않음.
+
+근거 파일
+- validation.json 및 logs/: 빌드·시험 실행 결과.
+- resolved_settings.json: 이미지 없이 확인한 실제 적용/비활성 설정 54개.
+- preservation_check.json: 기존 산출물·설정값 보존 확인.
+- change_manifest.json: 변경 전후 소스 해시, 실행 파일 해시.
+- before/: 수정 전 소스 보관본.
+- patches/: 파일별 수정 내역.
+
+변경 파일
+''' + '\n'.join('- ' + x['path'] for x in changes) + '\n'
+(HERE / 'changes.txt').write_text(report, encoding='utf-8')
+print(json.dumps({'changed_files': len(changes), 'passed_checks': counts,
+                  'configuration_slots': len(resolved), 'preserved': True}))

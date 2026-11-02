@@ -1,0 +1,18 @@
+--- before/cpp/src/methods_points.cpp
++++ after/cpp/src/methods_points.cpp
+@@ -4,6 +4,7 @@
+ //   05 Zernike moments, ramp edge (S05)
+ //   06 Partial area effect, second order (S06)
+ #include "common.hpp"
++#include "effective_settings.hpp"
+ #include "methods.hpp"
+ 
+ extern "C" {
+@@ -102,6 +103,7 @@
+ // Sobel gradient samples along the edge normal (vertical here). Coarse edge: per-column argmax of
+ // the polarity-signed Sobel response inside the band (replaces the paper's ISODATA + skeleton step).
+ MethodResult method_profile_gaussian(MethodContext& c) {
++    validate_method_parameters(c.target.kind=="qr"?"Q01":"E01",c.params);
+     MethodResult r;
+     const TargetSpec& t = c.target;
+     const json& p = c.params;

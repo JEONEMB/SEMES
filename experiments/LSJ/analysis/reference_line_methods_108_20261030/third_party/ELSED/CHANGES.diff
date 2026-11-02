@@ -1,0 +1,45 @@
+diff --git a/ELSED/CHANGES.diff b/ELSED/CHANGES.diff
+new file mode 100644
+index 0000000..e69de29
+diff --git a/_pristine/ELSED/ELSED.cpp b/ELSED/ELSED.cpp
+index 6904db6..80a2bfe 100644
+--- a/_pristine/ELSED/ELSED.cpp
++++ b/ELSED/ELSED.cpp
+@@ -196,6 +196,7 @@ void ELSED::clear() {
+   imgInfo = nullptr;
+   edges.clear();
+   segments.clear();
++  validSegmentPixels.clear();  // LSJ
+   salientSegments.clear();
+   anchors.clear();
+   drawer = nullptr;
+@@ -365,6 +366,7 @@ void ELSED::drawAnchorPoints(const uint8_t *dirImg,
+     if (valid) {
+       const Segment &endpoints = detectedSeg.getEndpoints();
+       segments.push_back(endpoints);
++      validSegmentPixels.push_back(detectedSeg.getPixels());  // LSJ: keep support pixels of each returned segment
+       salientSegments.emplace_back(endpoints, saliency);
+     }
+   }
+diff --git a/_pristine/ELSED/ELSED.h b/ELSED/ELSED.h
+index d5dbf22..1fccbf8 100644
+--- a/_pristine/ELSED/ELSED.h
++++ b/ELSED/ELSED.h
+@@ -96,6 +96,9 @@ class ELSED {
+ 
+   const EdgeDrawerPtr &getDrawer() const { return drawer; }
+ 
++  // LSJ: pixels of the segments returned by detect(), same order as the returned Segments.
++  const ImageEdges &getValidSegmentPixels() const { return validSegmentPixels; }
++
+  private:
+   void drawAnchorPoints(const uint8_t *dirImg,
+                         const std::vector<Pixel> &anchorPoints,
+@@ -105,6 +108,7 @@ class ELSED {
+   LineDetectionExtraInfoPtr imgInfo;
+   ImageEdges edges;
+   Segments segments;
++  ImageEdges validSegmentPixels;  // LSJ
+   SalientSegments salientSegments;
+   std::vector<Pixel> anchors;
+   EdgeDrawerPtr drawer;

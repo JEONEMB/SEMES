@@ -1,0 +1,50 @@
+#include "common.hpp"
+#include "zernike_location.hpp"
+#include <cmath>
+#include <cstdio>
+#include <limits>
+
+using namespace lm;
+int failures=0;
+void check(bool pass,const char* name){std::printf("%s %s\n",pass?"PASS":"FAIL",name);if(!pass)++failures;}
+int main(){
+    auto solve=[](double a,double b,double c,double w=.4){return zernike_location(a,b,c,w,7,100,200,1,10,5);};
+    auto r=solve(0,1,.1);
+    double w=.4,Q=.1,disc=(w*w-1)*(w*w-1)-2*w*w*Q;
+    double expected=(1-w*w-std::sqrt(disc))/(w*w);
+    check(r.ok && r.distance==expected && r.shift==7*expected/2.0,"valid moments preserve the previous ramp formula");
+    check(solve(0,1,0).ok && solve(0,1,0).shift==0,"centered valid edge has zero shift");
+    check(!solve(0,0,0).ok && solve(0,0,0).reason=="zero_first_moment","zero first moment is rejected before division");
+    double nan=std::numeric_limits<double>::quiet_NaN(),inf=std::numeric_limits<double>::infinity(),huge=std::numeric_limits<double>::max();
+    check(solve(nan,1,0).reason=="nonfinite_moments","NaN moment cannot become a selected point");
+    check(solve(0,1,inf).reason=="nonfinite_moments","infinite moment rejected");
+    check(solve(huge,huge,1).reason=="nonfinite_moment_denominator","overflowed projected denominator rejected");
+    check(solve(0,1e-308,1e308).reason=="nonfinite_moment_ratio","overflowed moment ratio rejected");
+    check(solve(0,1,10,.5).reason=="ramp_model_no_real_solution","negative discriminant rejected before square root");
+    check(solve(0,1,0,1e308).reason=="nonfinite_ramp_width_squared","overflowed squared width rejected");
+    check(solve(0,1,0,1e100).reason=="nonfinite_ramp_discriminant","overflowed discriminant rejected");
+    check(solve(0,1,.1,0).reason=="invalid_location_parameters","zero model width rejected");
+    check(solve(0,1,.1,nan).reason=="invalid_location_parameters","nonfinite model width rejected");
+    check(solve(0,-1,.1).reason=="orientation_not_matching_target","existing polarity/orientation gate retained");
+    check(zernike_location(0,1,.1,.4,7,100,200,1,10,.001).reason=="shift_exceeds_limit","existing configured shift gate retained");
+    check(solve(0,1,.1,1e-12).ok && solve(0,1,.1,1e-12).distance==.1,"existing small-width step-limit branch retained");
+    check(solve(0,1e-200,1e-201).ok,"small nonzero denominator is not rejected by a new arbitrary epsilon");
+    auto missing=solve(0,0,0);
+    auto stored=json::parse(json({{"ratio",missing.ratio},{"u",missing.u}}).dump());
+    check(stored["ratio"].is_null() && stored["u"].is_null(),"uncomputed diagnostic values serialize as null rather than fabricated zero");
+
+    std::vector<cv::Point2d> pts;
+    for(int i=0;i<8;++i){double x=i+1.1234567890123457;pts.emplace_back(x,.25*x+10.00000000000002);}
+    FitParams fp;fp.min_points=2;fp.trim_iterations=0;
+    MethodResult output;finish_with_points(output,pts,fp,"known points");
+    auto decoded=json::parse(output.intermediates.dump());
+    bool exact=decoded["fit_points"].size()==pts.size();
+    for(size_t i=0;i<pts.size();++i)exact=exact&&decoded["fit_points"][i][0].get<double>()==pts[i].x&&decoded["fit_points"][i][1].get<double>()==pts[i].y;
+    check(output.has_line && exact,"all common-fit coordinates round-trip without decimal truncation");
+    check(decoded["fit_points_precision"]["storage"]=="binary64_json_roundtrip","calculation precision is explicitly recorded");
+    pts[0].x=nan;
+    finish_with_points(output,pts,fp,"invalid known points");
+    decoded=json::parse(output.intermediates.dump());
+    check(!output.has_line && output.status=="failed" && decoded["fit_points"][0][0].is_null(),"invalid coordinates remain failed, not successfully reconstructed points");
+    std::printf("%d failure(s)\n",failures);return failures?1:0;
+}

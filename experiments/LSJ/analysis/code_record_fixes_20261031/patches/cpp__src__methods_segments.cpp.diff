@@ -1,0 +1,12 @@
+--- before/cpp/src/methods_segments.cpp
++++ after/cpp/src/methods_segments.cpp
+@@ -148,9 +148,6 @@
+         auto sampled = sample_segment_support(t,segs[i],info[i].pieces,step);
+         pts.insert(pts.end(),sampled.begin(),sampled.end());
+     }
+-    json fitpts = json::array();
+-    for (auto& q : pts) fitpts.push_back({q.x,q.y}); // Preserve clipped/open-boundary membership in stored coordinates.
+-    r.intermediates["fit_points"] = fitpts;
+     finish_with_points(r, pts, c.fit,
+                        "segment_samples: equal initial weights at configured image-x step; approximately projected-x-length proportional, not exact arc-length weighting; not original edge pixels");
+     if (r.has_rms) r.diagnostics["segment_sample_fit_rms_px"] = r.fit_rms;

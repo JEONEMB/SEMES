@@ -1,0 +1,34 @@
+test_both_missing_expected_id (test_code_records.ComparisonTests.test_both_missing_expected_id) ... ok
+test_duplicate_id_rejected (test_code_records.ComparisonTests.test_duplicate_id_rejected) ... ok
+test_empty_never_passes (test_code_records.ComparisonTests.test_empty_never_passes) ... ok
+test_expected_ids_come_from_plan (test_code_records.ComparisonTests.test_expected_ids_come_from_plan) ... ok
+test_full_complete (test_code_records.ComparisonTests.test_full_complete) ... ok
+test_full_missing_id (test_code_records.ComparisonTests.test_full_missing_id) ... ok
+test_legacy_comparison_is_not_upgraded (test_code_records.ComparisonTests.test_legacy_comparison_is_not_upgraded) ... ok
+test_missing_field_rejected (test_code_records.ComparisonTests.test_missing_field_rejected) ... ok
+test_nonfinite_field_rejected (test_code_records.ComparisonTests.test_nonfinite_field_rejected) ... ok
+test_subset_has_separate_success (test_code_records.ComparisonTests.test_subset_has_separate_success) ... ok
+test_subset_missing_or_unexpected (test_code_records.ComparisonTests.test_subset_missing_or_unexpected) ... ok
+test_subset_requires_declared_selection (test_code_records.ComparisonTests.test_subset_requires_declared_selection) ... ok
+test_value_difference (test_code_records.ComparisonTests.test_value_difference) ... ok
+test_precision_labels_distinguish_old_records (test_code_records.PrecisionDisplayTests.test_precision_labels_distinguish_old_records) ... ok
+test_report_viewer_rounding_does_not_mutate_source (test_code_records.PrecisionDisplayTests.test_report_viewer_rounding_does_not_mutate_source) ... ok
+test_changed_input_cannot_complete (test_code_records.ProvenanceTests.test_changed_input_cannot_complete) ... ok
+test_changed_source_cannot_complete (test_code_records.ProvenanceTests.test_changed_source_cannot_complete) ... ok
+test_complete_immutable_runs_and_links (test_code_records.ProvenanceTests.test_complete_immutable_runs_and_links) ... ok
+test_exception_records_failure (test_code_records.ProvenanceTests.test_exception_records_failure) ... ok
+test_legacy_log_is_not_replaced (test_code_records.ProvenanceTests.test_legacy_log_is_not_replaced) ... ok
+test_legacy_producer_remains_unknown (test_code_records.ProvenanceTests.test_legacy_producer_remains_unknown) ... ok
+test_missing_output_does_not_claim_success (test_code_records.ProvenanceTests.test_missing_output_does_not_claim_success) ... ok
+test_no_finish_is_not_success (test_code_records.ProvenanceTests.test_no_finish_is_not_success) ... ok
+test_actual_mask_is_not_replaced_by_final_mask (test_fit_point_views.PointViewsTest.test_actual_mask_is_not_replaced_by_final_mask) ... ok
+test_bad_record_mask_is_not_silently_replaced (test_fit_point_views.PointViewsTest.test_bad_record_mask_is_not_silently_replaced) ... ok
+test_convergence_and_missing_history_differ (test_fit_point_views.PointViewsTest.test_convergence_and_missing_history_differ) ... ok
+test_legacy_mask_does_not_claim_actual_fit_use (test_fit_point_views.PointViewsTest.test_legacy_mask_does_not_claim_actual_fit_use) ... ok
+test_rms_basis_is_not_relabelled_in_old_results (test_fit_point_views.PointViewsTest.test_rms_basis_is_not_relabelled_in_old_results) ... ok
+test_unknown_mask_is_not_all_selected (test_fit_point_views.PointViewsTest.test_unknown_mask_is_not_all_selected) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.307s
+
+OK

@@ -1,0 +1,129 @@
+{
+  "scope": [
+    "F18 arithmetic guards only",
+    "F28 full/subset comparison",
+    "F24 contour explanation",
+    "F29 future stage provenance and preserved legacy gap",
+    "F30 calculation coordinate precision"
+  ],
+  "changed_files": [
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt",
+      "before_sha256": "942bc0258e85349bdb083ddf10cd9300b587821d883023711bc28840ee933bb9",
+      "after_sha256": "269a800b5c79ec2bcefaae601a6afa5cc7115e0217c8c1409dcded18a7a95293",
+      "diff": "patches/cpp__CMakeLists.txt.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/include/zernike_location.hpp",
+      "before_sha256": null,
+      "after_sha256": "2e6cb22201b430e922521ed7b666c9c753566f049f5b18e5ec6d3b5ddded8172",
+      "diff": "patches/cpp__include__zernike_location.hpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+      "before_sha256": "e8ccd21f5a626c94aab8d00309b59566a98e066d4355dde38ea6c3c18fc097ff",
+      "after_sha256": "d99d9c3f27b64cde560a0fd3447c0cc87850b092b2bf90c5bf45c9af720941c4",
+      "diff": "patches/cpp__src__line_fit.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/main.cpp",
+      "before_sha256": "424d939ef27c9b20937eb520ebfa3f4f220d3bed345013deb15dbca33b2cd2f1",
+      "after_sha256": "2efb01126041ba32925a4121411cb9b22b76387eb7e408c7c07c539c04856c3b",
+      "diff": "patches/cpp__src__main.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_hough.cpp",
+      "before_sha256": "be4d7335b8e489990b21144045312ba8d56d5b994ea1948acff2db7419a34f24",
+      "after_sha256": "b7f97d892689802fdb3ba63421bb89bdee23b8a308c97ed1ff29ff7ea8c734ed",
+      "diff": "patches/cpp__src__methods_hough.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+      "before_sha256": "0d95bebac6f90f870336963f90ccce46632c3a4c660c7c7719b65a033c9e094b",
+      "after_sha256": "048bc1656e510ed8c4ce1be107a00af2b75e08fb2edd47105a03f4d0eb6aaf9d",
+      "diff": "patches/cpp__src__methods_points.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+      "before_sha256": "a268af8bd9e2a7f620e11eeff8451bf324404384eb2ae323d0235a9cd840aca6",
+      "after_sha256": "23ad8d6a29695bbadbf51de9d850787b23b84d1b79bded1693b9f99767e41e62",
+      "diff": "patches/cpp__src__methods_qr.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+      "before_sha256": "b896cebeb56a9640cee3a2e54c2847ebeddcb6f50108e46a0357d65ae09d3392",
+      "after_sha256": "72c68bb451a35a1f5475d717ce012afddbc9887d0cf18cb2fc01ef3d121c4524",
+      "diff": "patches/cpp__src__methods_segments.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/zernike_location.cpp",
+      "before_sha256": null,
+      "after_sha256": "c476abaf3def8f0550c12cd5d085ce33de2a5b25442eb7c5aa7f2d36a9f2ab30",
+      "diff": "patches/cpp__src__zernike_location.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/tests/numeric_record_test.cpp",
+      "before_sha256": null,
+      "after_sha256": "8cba6e33801762ead3dc870c27d06fdb1a227958aa5907ea311898a2dada812b",
+      "diff": "patches/cpp__tests__numeric_record_test.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/fit_point_views.py",
+      "before_sha256": "7a04b773fea07eb5be41e7a27eccf8267500e9b3c7183a92eb594f8af737e06a",
+      "after_sha256": "25c5e3576d4324b53eb115f5ac92e53cd17ba5996b0c58d83d89dfbb00894db7",
+      "diff": "patches/tools__fit_point_views.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/generation_provenance.py",
+      "before_sha256": null,
+      "after_sha256": "21e9aec312ec7e4649cfb339ca6c007eb468670129da00262660be7dfd77ff9c",
+      "diff": "patches/tools__generation_provenance.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/make_figures.py",
+      "before_sha256": "a2cbcf094fb779d856bbc43c15069775874d09a1fcb7e3ed23aef96ba7d20803",
+      "after_sha256": "8daa32b83b8aa5ce211aa1573f1a3e670c105c74d8c831cb20b7010980ffaf8b",
+      "diff": "patches/tools__make_figures.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/make_report.py",
+      "before_sha256": "345aeb3ce47991982ea76ef3e553cbed704ad83e81dd3887d8ecd659c1d185cd",
+      "after_sha256": "bf463ea17eeb30035c0ac94f2831f6a5fb5108954de9430a8399d58a7d49f1d8",
+      "diff": "patches/tools__make_report.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/run_comparison.py",
+      "before_sha256": null,
+      "after_sha256": "4420c337c0c4b5a4462804e70c920834efa24ad27614546405ff38580e7756c0",
+      "diff": "patches/tools__run_comparison.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/run_pipeline.py",
+      "before_sha256": "1839bcf383fb21f35b4b45787833fc7d41155023495aeb98dd422425918ef329",
+      "after_sha256": "8ed1629fd801f0ce3ab1dd7d2a5a4277217264fd521bb02e24381089a5200c34",
+      "diff": "patches/tools__run_pipeline.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/test_code_records.py",
+      "before_sha256": null,
+      "after_sha256": "7b2def2860b2869c4584799d89a35a5ed234058899f2e36e1fa54cda63e46aa1",
+      "diff": "patches/tools__test_code_records.py.diff"
+    }
+  ],
+  "passed_checks": {
+    "03_fit_regression": 33,
+    "04_pipeline_regression": 40,
+    "05_numeric_records": 20,
+    "07_python_checks": 29,
+    "08_display_regression": 4
+  },
+  "configuration_slots_checked": 54,
+  "all_configs_byte_identical": true,
+  "historical_artifacts_preserved": true,
+  "executable": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\code_record_fixes_20261031\\build\\Release\\line_methods.exe",
+  "executable_sha256": "336c2bb4e079f93cdd23feb41c5c64219d5887192c82982591b155db3bbbde3f",
+  "captured_image_analysis_run": false,
+  "statistical_validation_run": false,
+  "historical_reports_regenerated": false,
+  "legacy_generation_version_reconstructed": false
+}

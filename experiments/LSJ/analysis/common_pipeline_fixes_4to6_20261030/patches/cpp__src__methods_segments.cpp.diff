@@ -1,0 +1,215 @@
+--- before/cpp/src/methods_segments.cpp
++++ after/cpp/src/methods_segments.cpp
+@@ -2,6 +2,8 @@
+ // rule that turns their segments into ONE target line (no per-side angle averaging).
+ #include "common.hpp"
+ #include "methods.hpp"
++#include "segment_support.hpp"
++#include "effective_settings.hpp"
+ 
+ extern "C" {
+ #include "lsd.h"
+@@ -19,36 +21,10 @@
+ 
+ namespace lm {
+ 
+-namespace {
+-
+-struct Seg {
+-    double x1, y1, x2, y2;
+-    double score = 0;  // detector-specific (LSD -log10 NFA, ELSED none, ...)
+-    std::vector<cv::Point> support;  // integer support pixels (original coordinates)
+-};
+-
+-struct Piece { double xa, xb; };  // visible x interval of a segment
+-
+-// Visible part of [xa, xb] inside the target x range minus occlusion intervals.
+-std::vector<Piece> visible_pieces(const TargetSpec& t, double xa, double xb) {
+-    std::vector<Piece> out;
+-    double a = std::max(xa, t.x0 - 0.5), b = std::min(xb, t.x1 + 0.5);
+-    if (b <= a) return out;
+-    std::vector<Piece> cur = {{a, b}};
+-    for (const auto& iv : t.exclude_x) {
+-        std::vector<Piece> next;
+-        double ea = iv.a - 0.5, eb = iv.b + 0.5;
+-        for (auto pc : cur) {
+-            if (pc.xb <= ea || pc.xa >= eb) { next.push_back(pc); continue; }
+-            if (pc.xa < ea) next.push_back({pc.xa, ea});
+-            if (pc.xb > eb) next.push_back({eb, pc.xb});
+-        }
+-        cur = next;
+-    }
+-    return cur;
+-}
+-
+-MethodResult select_and_fit(MethodContext& c, std::vector<Seg> segs, const std::string& detector) {
++using Seg = DetectedSegment;
++using Piece = SegmentPiece;
++
++MethodResult select_and_fit_segments(MethodContext& c, std::vector<DetectedSegment> segs, const std::string& detector) {
+     MethodResult r;
+     const TargetSpec& t = c.target;
+     const json& sp = c.common.at("segment_selection").at(t.kind);
+@@ -69,11 +45,9 @@
+         Info& in = info[i];
+         in.l = normalize_line(s.x1, s.y1, s.x2 - s.x1, s.y2 - s.y1);
+         in.angle = line_angle_deg(in.l);
+-        double my = 0.5 * (s.y1 + s.y2);
+         if (std::fabs(in.angle) > max_ang) { in.state = "excluded:angle"; continue; }
+-        if (!t.in_band(my)) { in.state = "excluded:outside_band"; continue; }
+         if (std::fabs(s.x2 - s.x1) < 1e-9) { in.state = "excluded:angle"; continue; }
+-        in.pieces = visible_pieces(t, s.x1, s.x2);
++        in.pieces = clip_segment_support(t, s);
+         for (auto& pc : in.pieces) in.vis_len += (pc.xb - pc.xa) / std::fabs(in.l.dx);
+         if (in.vis_len < min_len) { in.state = "excluded:occluded_outside_x_or_short"; continue; }
+         // Polarity: mean intensity on the +normal side (toward +y for dx>0) minus the -normal side.
+@@ -81,7 +55,8 @@
+         double nx = -in.l.dy, ny = in.l.dx;
+         for (auto& pc : in.pieces)
+             for (double x = pc.xa; x <= pc.xb; x += 2.0) {
+-                double y = s.y1 + (x - s.x1) * in.l.dy / in.l.dx;
++                double y = segment_y_at(s,x);
++                if (!allowed_support_point(t,x,y)) continue;
+                 sp_sum += bilinear(g, x + off * nx, y + off * ny);
+                 sn_sum += bilinear(g, x - off * nx, y - off * ny);
+                 ++n;
+@@ -100,7 +75,7 @@
+     auto ends_of = [&](int i, double& xa, double& ya, double& xb, double& yb) {
+         const Seg& s = segs[i]; const Info& in = info[i];
+         xa = in.pieces.front().xa; xb = in.pieces.back().xb;
+-        ya = s.y1 + (xa - s.x1) * in.l.dy / in.l.dx; yb = s.y1 + (xb - s.x1) * in.l.dy / in.l.dx;
++        ya = segment_y_at(s,xa); yb = segment_y_at(s,xb);
+     };
+     auto score_of = [&](const Line& h, std::vector<int>* members) {
+         double sc = 0;
+@@ -123,8 +98,8 @@
+         if (sc > best) { best = sc; best_h = info[i].l; best_desc = "segment " + std::to_string(i); }
+         for (size_t b = a + 1; b < order.size(); ++b) {
+             int j = order[b];
+-            double mxi = 0.5 * (segs[i].x1 + segs[i].x2), myi = 0.5 * (segs[i].y1 + segs[i].y2);
+-            double mxj = 0.5 * (segs[j].x1 + segs[j].x2), myj = 0.5 * (segs[j].y1 + segs[j].y2);
++            cv::Point2d mi = visible_support_midpoint(segs[i],info[i].pieces), mj = visible_support_midpoint(segs[j],info[j].pieces);
++            double mxi=mi.x,myi=mi.y,mxj=mj.x,myj=mj.y;
+             if (std::fabs(mxj - mxi) < 1e-6) continue;
+             Line h = normalize_line(mxi, myi, mxj - mxi, myj - myi);
+             if (std::fabs(line_angle_deg(h)) > max_ang) continue;
+@@ -145,6 +120,15 @@
+     }
+     r.intermediates["segments_fields"] = {"x1", "y1", "x2", "y2", "angle_deg", "visible_len_px", "side_contrast", "detector_score", "state"};
+     r.intermediates["segments"] = arr;
++    json clipped = json::array();
++    for (size_t i=0;i<segs.size();++i) for (const auto& pc:info[i].pieces)
++        clipped.push_back({{"segment_index",i},{"endpoints_xy",{{pc.xa,segment_y_at(segs[i],pc.xa)},{pc.xb,segment_y_at(segs[i],pc.xb)}}},
++                           {"state",info[i].state}});
++    r.intermediates["visible_segment_pieces"] = clipped;
++    r.diagnostics["segment_support_bounds"] = "x range AND y band, minus closed occlusion intervals; original detected endpoints are separately retained";
++    r.diagnostics["sample_weighting"] = {{"axis","image_x"},{"step_px",step},
++        {"initial_weight","equal per generated sample; Huber subsequently reweights residuals"},
++        {"length_relation","sample count is approximately proportional to projected x length, not exactly to arc length"}};
+     r.diagnostics["consensus_hypothesis"] = best_desc;
+     r.diagnostics["consensus_score_visible_len_px"] = best;
+     r.diagnostics["segments_selected"] = (int)members.size();
+@@ -161,16 +145,14 @@
+     }
+     std::vector<cv::Point2d> pts;
+     for (int i : members) {
+-        const Seg& s = segs[i];
+-        for (auto& pc : info[i].pieces)
+-            for (double x = pc.xa; x <= pc.xb + 1e-9; x += step)
+-                pts.emplace_back(x, s.y1 + (x - s.x1) * info[i].l.dy / info[i].l.dx);
++        auto sampled = sample_segment_support(t,segs[i],info[i].pieces,step);
++        pts.insert(pts.end(),sampled.begin(),sampled.end());
+     }
+     json fitpts = json::array();
+-    for (auto& q : pts) fitpts.push_back(round_pt(q.x, q.y, 4));
++    for (auto& q : pts) fitpts.push_back({q.x,q.y}); // Preserve clipped/open-boundary membership in stored coordinates.
+     r.intermediates["fit_points"] = fitpts;
+     finish_with_points(r, pts, c.fit,
+-                       "segment_samples: points every 1 px along the visible part of the selected segments (= length weighting); not original edge points");
++                       "segment_samples: equal initial weights at configured image-x step; approximately projected-x-length proportional, not exact arc-length weighting; not original edge pixels");
+     if (r.has_rms) r.diagnostics["segment_sample_fit_rms_px"] = r.fit_rms;
+     if (r.has_rms && members.size() == 1) {
+         // Samples of one segment lie on that segment, so their residual is ~0 by construction.
+@@ -183,7 +165,10 @@
+         json supj = json::array();
+         for (int i : members)
+             for (auto& q : segs[i].support) {
+-                if (!t.in_x(q.x) || t.excluded(q.x)) continue;
++                if (!allowed_support_point(t,q.x,q.y)) continue;
++                bool within_piece = false;
++                for (const auto& pc:info[i].pieces) if(q.x>=pc.xa&&q.x<=pc.xb){within_piece=true;break;}
++                if (!within_piece) continue;
+                 sup.emplace_back(q.x, q.y);
+                 supj.push_back({q.x, q.y});
+             }
+@@ -208,9 +193,8 @@
+     return c.gray(reg).clone();
+ }
+ 
+-}  // namespace
+-
+ MethodResult method_lsd(MethodContext& c) {
++    validate_method_parameters(c.target.kind=="qr"?"Q04":"E04",c.params);
+     const json& p = c.params;
+     cv::Rect reg;
+     cv::Mat u8 = region_u8(c, reg), f;
+@@ -232,7 +216,7 @@
+             if (lab > 0 && lab <= n) { segs[lab - 1].support.emplace_back(x + reg.x, y + reg.y); mask.at<uchar>(y, x) = 255; }
+         }
+     std::free(out); std::free(reg_img);
+-    MethodResult r = select_and_fit(c, segs, "LSD");
++    MethodResult r = select_and_fit_segments(c, segs, "LSD");
+     c.sink.save_png("lsd_line_support_regions", mask, reg.tl(), r.images);
+     r.diagnostics["detector_region_xywh"] = {reg.x, reg.y, reg.width, reg.height};
+     r.diagnostics["support_pixel_source"] = "LSD reg_img line-support regions (integer pixels)";
+@@ -240,6 +224,7 @@
+ }
+ 
+ MethodResult method_edlines(MethodContext& c) {
++    validate_method_parameters(c.target.kind=="qr"?"Q07":"E07",c.params);
+     const json& p = c.params;
+     cv::Rect reg;
+     cv::Mat u8 = region_u8(c, reg);
+@@ -263,7 +248,7 @@
+         }
+         segs.push_back(s);
+     }
+-    MethodResult r = select_and_fit(c, segs, "EDLines");
++    MethodResult r = select_and_fit_segments(c, segs, "EDLines");
+     c.sink.save_png("ed_edge_map", edl.getEdgeImage(), reg.tl(), r.images);
+     r.diagnostics["detector_region_xywh"] = {reg.x, reg.y, reg.width, reg.height};
+     r.diagnostics["support_pixel_source"] = "ED edge-segment pixels [firstPixelIndex, firstPixelIndex+len) of each EDLines line (collinear joins may not extend this range)";
+@@ -272,6 +257,7 @@
+ }
+ 
+ MethodResult method_fld(MethodContext& c) {
++    validate_method_parameters(c.target.kind=="qr"?"Q08":"E08",c.params);
+     const json& p = c.params;
+     cv::Rect reg;
+     cv::Mat u8 = region_u8(c, reg);
+@@ -287,7 +273,7 @@
+         if (i < support.size()) for (auto& q : support[i]) s.support.emplace_back(q.x + reg.x, q.y + reg.y);
+         segs.push_back(s);
+     }
+-    MethodResult r = select_and_fit(c, segs, "FLD");
++    MethodResult r = select_and_fit_segments(c, segs, "FLD");
+     cv::Mat canny;  // same Canny call FLD makes internally (for display only)
+     cv::Canny(u8, canny, p.at("canny_th1").get<double>(), p.at("canny_th2").get<double>(), p.at("canny_aperture_size").get<int>());
+     c.sink.save_png("fld_internal_canny_recomputed", canny, reg.tl(), r.images);
+@@ -298,6 +284,7 @@
+ }
+ 
+ MethodResult method_elsed(MethodContext& c) {
++    validate_method_parameters(c.target.kind=="qr"?"Q09":"E09",c.params);
+     const json& p = c.params;
+     cv::Rect reg;
+     cv::Mat u8 = region_u8(c, reg);
+@@ -324,7 +311,7 @@
+         if (i < pix.size()) for (auto& q : pix[i]) s.support.emplace_back(q.x + reg.x, q.y + reg.y);
+         segs.push_back(s);
+     }
+-    MethodResult r = select_and_fit(c, segs, "ELSED");
++    MethodResult r = select_and_fit_segments(c, segs, "ELSED");
+     r.diagnostics["detector_region_xywh"] = {reg.x, reg.y, reg.width, reg.height};
+     r.diagnostics["support_pixel_source"] = "ELSED FullSegmentInfo pixels of each returned segment";
+     r.diagnostics["support_list_aligned"] = pix.size() == out.size();

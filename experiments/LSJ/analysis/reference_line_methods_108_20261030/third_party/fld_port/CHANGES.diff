@@ -1,0 +1,163 @@
+diff --git a/fld_port/fast_line_detector.orig.cpp b/fld_port/fld_port.cpp
+index 95a46a8..000854f 100644
+--- a/fld_port/fast_line_detector.orig.cpp
++++ b/fld_port/fld_port.cpp
+@@ -2,7 +2,9 @@
+ // It is subject to the license terms in the LICENSE file found in the top-level directory
+ // of this distribution and at http://opencv.org/license.html.
+ 
+-#include "precomp.hpp"
++// LSJ port: precomp.hpp (opencv_contrib build glue) replaced by public core/imgproc headers.
++#include "fld_port.hpp"
++#include <opencv2/imgproc.hpp>
+ #include <vector>
+ #include <iostream>
+ 
+@@ -15,10 +17,10 @@ struct SEGMENT
+ 
+ /////////////////////////////////////////////////////////////////////////////////////////
+ 
+-namespace cv{
+-namespace ximgproc{
++namespace lsj_fld{
++using namespace cv;
+ 
+-class FastLineDetectorImpl : public FastLineDetector
++class FastLineDetectorImpl
+ {
+     public:
+ 
+@@ -26,9 +28,11 @@ class FastLineDetectorImpl : public FastLineDetector
+                 double _canny_th1 = 50.0, double _canny_th2 = 50.0, int _canny_aperture_size = 3,
+                 bool _do_merge = false);
+ 
+-        void detect(InputArray image, OutputArray lines) CV_OVERRIDE;
++        void detect(InputArray image, OutputArray lines);
++        // LSJ port: also returns the chain pixels (l_points) each segment was fitted on.
++        void detectWithSupport(const Mat& image, std::vector<Vec4f>& lines, std::vector<std::vector<Point2i> >& support);
+ 
+-        void drawSegments(InputOutputArray image, InputArray lines, bool draw_arrow = false, Scalar linecolor = Scalar(0, 0, 255), int linethickness = 1) CV_OVERRIDE;
++        void drawSegments(InputOutputArray image, InputArray lines, bool draw_arrow = false, Scalar linecolor = Scalar(0, 0, 255), int linethickness = 1);
+ 
+     private:
+         int imagewidth, imageheight, threshold_length;
+@@ -49,9 +53,9 @@ class FastLineDetectorImpl : public FastLineDetector
+ 
+         double distPointLine(const Mat& p, Mat& l);
+ 
+-        void extractSegments(const std::vector<Point2i>& points, std::vector<SEGMENT>& segments);
++        void extractSegments(const std::vector<Point2i>& points, std::vector<SEGMENT>& segments, std::vector<std::vector<Point2i> >* support = 0);
+ 
+-        void lineDetection(const Mat& src, std::vector<SEGMENT>& segments_all);
++        void lineDetection(const Mat& src, std::vector<SEGMENT>& segments_all, std::vector<std::vector<Point2i> >* support_all = 0);
+ 
+         void pointInboardTest(const Size srcSize, Point2i& pt);
+ 
+@@ -64,7 +68,7 @@ class FastLineDetectorImpl : public FastLineDetector
+ 
+ /////////////////////////////////////////////////////////////////////////////////////////
+ 
+-CV_EXPORTS Ptr<FastLineDetector> createFastLineDetector(
++Ptr<FastLineDetectorImpl> createFastLineDetectorImpl(
+         int length_threshold, float distance_threshold,
+         double canny_th1, double canny_th2, int canny_aperture_size, bool do_merge)
+ {
+@@ -86,8 +90,6 @@ FastLineDetectorImpl::FastLineDetectorImpl(int _length_threshold, float _distanc
+ 
+ void FastLineDetectorImpl::detect(InputArray _image, OutputArray _lines)
+ {
+-    CV_INSTRUMENT_REGION();
+-
+     Mat image = _image.getMat();
+     CV_Assert(!image.empty() && image.type() == CV_8UC1);
+ 
+@@ -103,10 +105,18 @@ void FastLineDetectorImpl::detect(InputArray _image, OutputArray _lines)
+     Mat(lines).copyTo(_lines);
+ }
+ 
+-void FastLineDetectorImpl::drawSegments(InputOutputArray image, InputArray lines, bool draw_arrow, Scalar linecolor, int linethickness)
++void FastLineDetectorImpl::detectWithSupport(const Mat& image, std::vector<Vec4f>& lines, std::vector<std::vector<Point2i> >& support)
+ {
+-    CV_INSTRUMENT_REGION();
++    CV_Assert(!image.empty() && image.type() == CV_8UC1);
++    std::vector<SEGMENT> segments;
++    lines.clear(); support.clear();
++    lineDetection(image, segments, &support);
++    for(size_t i = 0; i < segments.size(); ++i)
++        lines.push_back(Vec4f(segments[i].x1, segments[i].y1, segments[i].x2, segments[i].y2));
++}
+ 
++void FastLineDetectorImpl::drawSegments(InputOutputArray image, InputArray lines, bool draw_arrow, Scalar linecolor, int linethickness)
++{
+     int cn = image.channels();
+     CV_Assert(!image.empty() && ( cn == 1 || cn == 3 || cn == 4));
+ 
+@@ -305,7 +315,7 @@ template<class T>
+         pt = T(pt_tmp);
+     }
+ 
+-void FastLineDetectorImpl::extractSegments(const std::vector<Point2i>& points, std::vector<SEGMENT>& segments)
++void FastLineDetectorImpl::extractSegments(const std::vector<Point2i>& points, std::vector<SEGMENT>& segments, std::vector<std::vector<Point2i> >* support)
+ {
+     bool is_line;
+ 
+@@ -433,6 +443,7 @@ void FastLineDetectorImpl::extractSegments(const std::vector<Point2i>& points, s
+         seg.y2 = e2.y;
+ 
+         segments.push_back(seg);
++        if (support) support->push_back(l_points);  // LSJ port
+         i = i + j;
+     }
+ }
+@@ -497,13 +508,14 @@ bool FastLineDetectorImpl::getPointChain(const Mat& img, Point pt,
+     return false;
+ }
+ 
+-void FastLineDetectorImpl::lineDetection(const Mat& src, std::vector<SEGMENT>& segments_all)
++void FastLineDetectorImpl::lineDetection(const Mat& src, std::vector<SEGMENT>& segments_all, std::vector<std::vector<Point2i> >* support_all)
+ {
+     int r, c;
+     imageheight=src.rows; imagewidth=src.cols;
+ 
+     std::vector<Point2i> points;
+     std::vector<SEGMENT> segments, segments_tmp;
++    std::vector<std::vector<Point2i> > chain_support;  // LSJ port
+     Mat canny;
+     if (canny_aperture_size == 0)
+     {
+@@ -547,7 +559,8 @@ void FastLineDetectorImpl::lineDetection(const Mat& src, std::vector<SEGMENT>& s
+                 continue;
+             }
+ 
+-            extractSegments(points, segments);
++            chain_support.clear();
++            extractSegments(points, segments, &chain_support);
+ 
+             if ( segments.size() == 0 )
+             {
+@@ -568,7 +581,10 @@ void FastLineDetectorImpl::lineDetection(const Mat& src, std::vector<SEGMENT>& s
+                     continue;
+                 additionalOperationsOnSegment(src, seg);
+                 if(!do_merge)
++                {
+                     segments_all.push_back(seg);
++                    if (support_all) support_all->push_back(chain_support[i]);  // LSJ port
++                }
+                 segments_tmp.push_back(seg);
+             }
+             points.clear();
+@@ -677,5 +693,12 @@ void FastLineDetectorImpl::additionalOperationsOnSegment(const Mat& src, SEGMENT
+     return;
+ }
+ 
+-} // namespace cv
+-} // namespace ximgproc
++} // namespace lsj_fld
++
++namespace lsj_fld {
++void detectWithSupport(const cv::Ptr<FastLineDetectorImpl>& fld, const cv::Mat& image,
++        std::vector<cv::Vec4f>& lines, std::vector<std::vector<cv::Point2i> >& support)
++{
++    fld->detectWithSupport(image, lines, support);
++}
++}

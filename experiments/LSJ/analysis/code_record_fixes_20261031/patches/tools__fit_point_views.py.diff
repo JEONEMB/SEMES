@@ -1,0 +1,15 @@
+--- before/tools/fit_point_views.py
++++ after/tools/fit_point_views.py
+@@ -23,8 +23,11 @@
+     else:
+         basis, label, excluded = 'unrecorded', '점 분류 미기록', '점 분류 미기록'
+         display = [False] * len(points)
++    precision=intermediates.get('fit_points_precision')
++    precision_label=('계산 좌표 원정밀 저장(표시 반올림 별도)' if precision and precision.get('storage')=='binary64_json_roundtrip'
++                     else '과거 좌표: 원정밀 저장 미확인·반올림 가능')
+     return dict(points=points, used=used, final_inlier=final, display_mask=display,
+-                basis=basis, label=label, excluded_label=excluded)
++                basis=basis, label=label, excluded_label=excluded,precision=precision,precision_label=precision_label)
+ 
+ def convergence_label(record):
+     if record.get('method_id') in ('Q11', 'Q12'):

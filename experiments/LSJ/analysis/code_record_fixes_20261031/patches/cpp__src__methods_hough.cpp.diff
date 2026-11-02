@@ -1,0 +1,12 @@
+--- before/cpp/src/methods_hough.cpp
++++ after/cpp/src/methods_hough.cpp
+@@ -87,9 +87,6 @@
+     }
+     r.intermediates["voting_pixels_fields"] = {"x", "y", "within_refit_dist"};
+     r.intermediates["voting_pixels"] = pts;
+-    json fitpts = json::array();
+-    for (auto& q : near) fitpts.push_back(round_pt(q.x, q.y, 1));
+-    r.intermediates["fit_points"] = fitpts;
+     finish_with_points(r, near, c.fit, "canny_integer_pixels within refit_dist of the selected Hough line");
+     return r;
+ }
