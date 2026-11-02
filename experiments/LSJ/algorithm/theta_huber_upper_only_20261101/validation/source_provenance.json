@@ -1,0 +1,33 @@
+{
+  "source_hashes": {
+    "CMakeLists.txt": "82053b9df4cd4d4560fae0f14e3a53cc2d90b36ed3ab559a9c824aec0bf0f8c2",
+    "config\\calibration.json": "de352c58c9dbd85c31e96f779748a839dd0cd86e1f48df3af926072892ef6d79",
+    "include\\upper_theta.hpp": "2b8b3be24ccf89e037f6395221c576ccceb4626bd882e55aea81900aec08a8ec",
+    "src\\alignment.cpp": "291dbff359e6c85293221fb8bf6b4913830c703ab444b659ef3c818298430a36",
+    "src\\main.cpp": "41f17e5db2940c0aa2afb701c4cc82f8e797f070de24b73ae761eaef1258ec3d",
+    "src\\upper_theta.cpp": "902f590e9c08b4e17c73e522835f522e0eaa8050d14c2617fe918037eb5bb886",
+    "tests\\upper_tests.cpp": "ae983ade3b127be304059bc920c7320a190eb107f19894cb07fbdf97921678c3",
+    "tools\\build.cmd": "61dfa4e1b6c474bd41d7ee48b42057bf857c35422309585b5d3af9a7598c15a9",
+    "tools\\prepare_calibration.py": "0205cbb691d3f4af896003aba2815b170005d5769353024f0dcb250422ebed96"
+  },
+  "shared_source_hashes": {
+    "src\\edge_points.cpp": "1fb4f66766f433f611d670965a4de80dae63ea37f03ad720fd7f2dff8b1c93f2",
+    "src\\huber_line.cpp": "27c0b35b019152b9ec93bfce8a579558fcfe268fc344b462eaac8096943ad24a",
+    "src\\utf8_io.cpp": "e2880dc852492621d6a83e801e8f8a6442da029c51b9c160e44bdf922ca48133",
+    "include\\theta_pipeline.hpp": "80b66cc712a16a06601ba39ccb2d65818c2feed7efda3bb1f685080516a10373",
+    "include\\utf8_io.hpp": "3259e1e00bdff235f7e1c92bc50cc4cdf124b4595a80a4db7ba35cc2e2d09c79",
+    "include\\alignment.hpp": "a3891e46dd910578088fa6970766127ad890feac3ff06010d6b98870524ae7d5"
+  },
+  "executable_sha256": "a00cbd98ec07164ff99803a62c27e7c761c49f9472f77e50eb63c424bd72b1f0",
+  "build": "MSVC v141 x64 Release, OpenCV 3.4.15",
+  "verification": {
+    "metrics_independently_recomputed": true,
+    "all_254_upper_results_exactly_match_baseline": true,
+    "baseline_sources_and_executable_unchanged": true,
+    "same_train_test_split": true,
+    "lower_pixel_independence_test": "passed, 13 combined checks",
+    "paired_pass_transition_counts_verified": true,
+    "plot_visually_checked": true,
+    "report_rows": 254
+  }
+}
