@@ -1,0 +1,102 @@
+{
+  "source_checks": [
+    {
+      "source": "statsmodels.robust.robust_linear_model",
+      "unchanged": true
+    },
+    {
+      "source": "statsmodels.robust.norms",
+      "unchanged": true
+    },
+    {
+      "source": "statsmodels.robust.scale",
+      "unchanged": true
+    },
+    {
+      "source": "statsmodels.regression._tools",
+      "unchanged": true
+    }
+  ],
+  "profile_hash_unchanged": true,
+  "runs": 72,
+  "history_lengths_and_final_coefficients_match": true,
+  "termination_classified_by_actual_deviance_delta": true,
+  "cap_50_100_200_at_1e8_bitwise_identical": true,
+  "max_default_to_other_setting_difference": {
+    "input": "R03_lower_structure",
+    "config": "D",
+    "max_line_difference_px": 1.2859047160418413e-11,
+    "angle_difference_deg": 2.4172215579122726e-13
+  },
+  "max_default_to_other_angle_difference_deg": 2.4172215579122726e-13,
+  "baseline_downweighted_points": 2788,
+  "baseline_warnings": [],
+  "late_history": [
+    {
+      "input": "R01_lower_structure",
+      "start_iteration": 9,
+      "end_iteration": 800,
+      "max_departure_from_default_px": 7.928768752663018e-12,
+      "last_deviance_change": 8.793676897767e-11,
+      "last_stop_reason": "iteration_cap"
+    },
+    {
+      "input": "R01_upper_structure",
+      "start_iteration": 17,
+      "end_iteration": 800,
+      "max_departure_from_default_px": 2.0370372055822372e-12,
+      "last_deviance_change": 1.66164682013914e-08,
+      "last_stop_reason": "iteration_cap"
+    },
+    {
+      "input": "R02_lower_structure",
+      "start_iteration": 11,
+      "end_iteration": 30,
+      "max_departure_from_default_px": 8.308020937874971e-12,
+      "last_deviance_change": 3.979039320256561e-13,
+      "last_stop_reason": "tolerance"
+    },
+    {
+      "input": "R02_upper_structure",
+      "start_iteration": 13,
+      "end_iteration": 800,
+      "max_departure_from_default_px": 1.6013856907193258e-12,
+      "last_deviance_change": 4.496541805565357e-09,
+      "last_stop_reason": "iteration_cap"
+    },
+    {
+      "input": "R03_lower_structure",
+      "start_iteration": 12,
+      "end_iteration": 800,
+      "max_departure_from_default_px": 1.4461321029557439e-11,
+      "last_deviance_change": 1.475086719437968e-10,
+      "last_stop_reason": "iteration_cap"
+    },
+    {
+      "input": "R03_upper_structure",
+      "start_iteration": 13,
+      "end_iteration": 800,
+      "max_departure_from_default_px": 1.4719336860480325e-12,
+      "last_deviance_change": 1.0913936421275139e-11,
+      "last_stop_reason": "iteration_cap"
+    },
+    {
+      "input": "R04_lower_structure",
+      "start_iteration": 11,
+      "end_iteration": 800,
+      "max_departure_from_default_px": 9.114486942962685e-12,
+      "last_deviance_change": 2.773106189124519e-10,
+      "last_stop_reason": "iteration_cap"
+    },
+    {
+      "input": "R04_upper_structure",
+      "start_iteration": 12,
+      "end_iteration": 800,
+      "max_departure_from_default_px": 2.1183055309847987e-12,
+      "last_deviance_change": 1.585249265190214e-09,
+      "last_stop_reason": "iteration_cap"
+    }
+  ],
+  "conclusion_scope": "Numerical convergence on these 8 point sets only; no physical-accuracy or theta success claim.",
+  "acceptance": "No newly invented px/degree pass threshold."
+}
