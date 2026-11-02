@@ -1,7 +1,0 @@
-﻿import {finalizePresentation} from 'file:///C:/Users/SSAFY/.codex/plugins/cache/openai-primary-runtime/presentations/26.1024.11018/skills/presentations/container_tools/artifact_tool_utils.mjs';
-import fs from 'node:fs/promises';
-import crypto from 'node:crypto';
-const base=process.cwd().replaceAll('\\','/'),skill='C:/Users/SSAFY/.codex/plugins/cache/openai-primary-runtime/presentations/26.1024.11018/skills/presentations',ref=base+'/../2026-10-29_중간_v3.pptx';
-console.log(await finalizePresentation({workspaceDir:base,candidatePath:base+'/native_fixed.pptx',finalPath:base+'/deliverable/2026-10-29_중간_v4_checked.pptx',pythonExecutable:'C:/Users/SSAFY/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe',integrityValidatorPath:skill+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:skill+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit',...[4,6,8,11,16,18].flatMap(n=>['--require-native-table-slide',String(n)])],explicitTotalSlideCount:19,requiredNativeTableOwnerSlides:[4,6,8,11,16,18],requiredNativeChartOwnerSlides:[10],nativeChartTargetApplication:'powerpoint',fontPolicy:{basis:'reference',families:['Noto Sans KR'],referencePath:ref,referenceSha256:crypto.createHash('sha256').update(await fs.readFile(ref)).digest('hex')},verifyArtifactToolImport:true,receiptPath:base+'/validation.json'}));
-
-
