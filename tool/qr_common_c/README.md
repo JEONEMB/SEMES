@@ -1,5 +1,7 @@
 # QR + 공통 수평 경계로 Y·yaw 추정
 
+> 과거 C17 밝기모델 비교 기록입니다. 현재 `feature/shin/QRwithBar`의 기본 추론은 [C++17 Lanczos-3 모듈](../../modules/qrwithbar_lanczos/README.md)을 사용합니다. 아래 수치와 소스는 이전 결과의 재현용으로 보존하며 새 런타임에 링크하지 않습니다.
+
 요청한 **QR 이동 6개 + 공통 배경 경계 4개** 구성을 구현한다. QR 교점과 경계의 원본 밝기 적합, 강건 직선 적합, 최종 회귀는 C17이다. 이미지 읽기·템플릿 검색·초기 affine ECC 정합만 OpenCV C++ 어댑터를 쓴다. Canny나 Sobel은 사용하지 않는다. 실행 시 Python을 호출하지 않는다.
 
 ## 결과

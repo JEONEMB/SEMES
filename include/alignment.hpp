@@ -8,7 +8,8 @@
 using error_t = double;
 struct Alignment_t
 {
-    // Physical alignment errors are not estimated by plate detection yet.
+    // Current calibrated pose estimates, not actuator commands.
+    // The Lanczos model uses Y(mm) and the historical yaw(deg) label convention.
     error_t y = std::numeric_limits<double>::quiet_NaN();
     error_t t = std::numeric_limits<double>::quiet_NaN();
 };
@@ -21,7 +22,9 @@ enum class QrRefinementMethod
 struct AlignmentOptions
 {
     bool visualize = true;
-    // Selected by local comparison; physical Y/theta accuracy is not certified.
+    bool estimatePose = true; // false preserves the legacy detection-only debug path.
+    std::string poseAssetsDirectory; // Empty resolves assets beside the executable/repository.
+    // Legacy QR debug visualization only; pose estimation always uses Lanczos-3.
     QrRefinementMethod qrRefinement = QrRefinementMethod::Fourier;
     // Ratios in plate coordinates, relative to the plate center.
     // Initial layout estimated from supplied images; replace with measured layout if available.
@@ -61,6 +64,9 @@ struct QrRoiResult
 };
 struct PlateDetectionResult
 {
+    bool poseEstimated = false;
+    std::array<double,10> poseFeatures{};
+    std::string poseMethod;
     bool found = false;
     double score = -1;
     cv::Rect searchRoi;
@@ -73,6 +79,9 @@ struct PlateDetectionResult
 void analyzeQrFeatures(const cv::Mat &source, const AlignmentOptions &options, QrRoiResult &qr,
                        int index);
 Alignment_t alignment(cv::Mat &src);
+// Initialize once before workers start, or use the lazy default asset resolver.
+// Initialization/measurement failures throw; they are never hidden as (0,0).
+void initialize_lanczos_alignment(const std::string& assetsDirectory);
 Alignment_t alignment(cv::Mat &src, const AlignmentOptions &options,
                       PlateDetectionResult *detection = nullptr);
 #endif
