@@ -52,20 +52,16 @@
       "external": {
         "gradient": "sobel_y_ksize3_raw",
         "half_window": 5,
-        "min_peak": 8.0,
         "nm_max_iter": 800,
         "nm_tol": 1e-10,
-        "max_center_shift_px": 2.0,
         "init_sigma": "neighborhood_size",
         "profile_examples_every": 100
       },
       "qr": {
         "gradient": "sobel_y_ksize3_raw",
         "half_window": 5,
-        "min_peak": 40.0,
         "nm_max_iter": 800,
         "nm_tol": 1e-10,
-        "max_center_shift_px": 2.0,
         "init_sigma": "neighborhood_size",
         "profile_examples_every": 20
       },

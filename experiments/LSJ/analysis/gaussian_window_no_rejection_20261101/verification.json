@@ -1,0 +1,22 @@
+{
+  "all_visible_columns_every_n": true,
+  "rows_retained": 691680,
+  "expected_rows": 691680,
+  "prior_profile_comparisons": 11528,
+  "prior_sobel_samples_exact": true,
+  "prior_coarse_positions_exact": true,
+  "unchanged_sources": {
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp\\src\\methods_points.cpp": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\methods.json": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\targets.json": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\inputs_manifest.json": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_lower_window_extension_20261101\\summary.json": true
+  },
+  "unchanged_images": {
+    "R01": true,
+    "R02": true,
+    "R03": true,
+    "R04": true
+  },
+  "solver_source_exact": true
+}

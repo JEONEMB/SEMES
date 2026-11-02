@@ -1,0 +1,157 @@
+{
+  "created_utc": "2026-11-01T03:21:20.124069+00:00",
+  "design": {
+    "scope": "Lower structure only. Gaussian window sensitivity; no Huber, lines, physical theta validation or production settings changes.",
+    "sample_counts": [
+      11,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39,
+      41,
+      43,
+      45,
+      47,
+      49,
+      51,
+      53,
+      55,
+      57,
+      59,
+      61
+    ],
+    "overlap_counts_for_parity": [
+      11,
+      21
+    ],
+    "new_counts": [
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39,
+      41,
+      43,
+      45,
+      47,
+      49,
+      51,
+      53,
+      55,
+      57,
+      59,
+      61
+    ],
+    "half_widths_px": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "grid_rationale": "Exploratory extension of the existing 1px-spaced odd window grid to +/-30px (61 samples); this upper bound is not an established optimal window or accuracy requirement.",
+    "inputs": {
+      "description": "기준 이미지 정확히 4장. 원본은 읽기 전용. 해시는 2026-10-30 작업 문서 기재값.",
+      "expected_width": 3840,
+      "expected_height": 2160,
+      "expected_bits_per_pixel": 24,
+      "references": [
+        {
+          "reference_id": "R01",
+          "dataset": "first",
+          "label": "1차 기준",
+          "file": "center.bmp",
+          "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+          "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685"
+        },
+        {
+          "reference_id": "R02",
+          "dataset": "second",
+          "label": "2차 기준",
+          "file": "center1.bmp",
+          "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+          "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c"
+        },
+        {
+          "reference_id": "R03",
+          "dataset": "second",
+          "label": "2차 기준",
+          "file": "center2.bmp",
+          "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+          "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d"
+        },
+        {
+          "reference_id": "R04",
+          "dataset": "second",
+          "label": "2차 기준",
+          "file": "center3.bmp",
+          "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+          "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19"
+        }
+      ]
+    },
+    "coarse_selection": "Same original positive Sobel maximum within the same band, unchanged once per image and column.",
+    "fixed_initial_sigmas_px": [
+      11,
+      5,
+      21
+    ],
+    "primary_initial_sigma_px": 11,
+    "solver": "Exact old Nelder-Mead, 800 iterations, objective-spread tolerance 1e-10.",
+    "legacy_gate": "Same convergence, finite, A>0 and abs(mu-coarse_y)<=2px. An existing diagnostic filter, not a validated accuracy threshold.",
+    "comparison": "Report all 6104 columns and failures. Preserve prior 2176-column common cohort as a named cohort; disclose new exclusions. Also report a fixed cohort accepted throughout the extended range.",
+    "acceptance_threshold": null,
+    "new_boundary_selectors_applied": false,
+    "real_ground_truth": null,
+    "source_replacements": {
+      "if (t[\"kind\"] != \"external\") continue;": "if (t[\"id\"] != \"lower_structure\") continue;",
+      "const int pad=14,": "const int pad=34,",
+      "for (int k=-10;k<=10;++k)": "for (int k=-30;k<=30;++k)",
+      "sobel_samples_m10_p10": "sobel_samples_m30_p30",
+      "for (int n=3;n<=21;n+=2) {": "for (int n=11;n<=61;n+=2) {\n                        if (n>11 && n<21) continue;",
+      "samples[k+10]": "samples[k+30]"
+    }
+  },
+  "unchanged_source_hashes": {
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_sensitivity_20261101\\experiment.cpp": "0c78f4661395b100db66e9a19f36f0ac2cf3f201e2aeb8632256c9d0b4fdd783",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_sensitivity_20261101\\original_nelder_mead.hpp": "8ac6b3167f16f6107590cfe909fd51a6a20b7b56b6afb4152e8cad22c04c4537",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_sensitivity_20261101\\summary.json": "55ce4332236b7c82a715605a1715c4d8d007caf434869aaac97a863d22da0971",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_sensitivity_20261101\\paired_arrays.npz": "c94372e0d99fd0a03eb56c62d45f497e04caacd3df300582326d998cb30eb614",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_sensitivity_20261101\\profiles.json": "f4fecb5bd8afd3dcdb6120b8345c9b42f671b1b618f04e3d6749d7c41936bd10",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_sensitivity_20261101\\provenance.json": "8d394bc114b9c55d1f0279db47cf44ef78dc9f12be74b4d3731df29bd13647b2",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp\\src\\methods_points.cpp": "048bc1656e510ed8c4ce1be107a00af2b75e08fb2edd47105a03f4d0eb6aaf9d",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\methods.json": "787bae12925225df779092ec4583f45fd09f331028cb8e6f7dab33bd5e10626c",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\targets.json": "d530775949f67078223b7fdca735f36831891335b00bc32803f8ff26fe530999",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\inputs_manifest.json": "178be414cae0a4a671d794af9d3f962aeff3fd5af04cf45a7e4393a3dcb39b23"
+  },
+  "generated_source_hashes": {
+    "experiment.cpp": "a879c3e36e7b47cb61c18475e417e8f38d0f712706c8b8b30debdf113d2d1c8f",
+    "original_nelder_mead.hpp": "8ac6b3167f16f6107590cfe909fd51a6a20b7b56b6afb4152e8cad22c04c4537",
+    "CMakeLists.txt": "a399d620f5264f4801b5920607ce507d697a844b2ecebc21aecc1ea135df8dc8"
+  }
+}

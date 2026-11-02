@@ -1,0 +1,88 @@
+{
+  "created_utc": "2026-11-01T06:27:11.389088+00:00",
+  "design": {
+    "scope": "Only Gaussian neighborhood-size comparison on 4 reference images, upper/lower structure; no Huber/line/theta tests.",
+    "paper_comparison": "Fabijanska 2015 Fig.3/Table1 compares fixed-position fits across odd N=3..21. Report every position rather than selecting one example to decide for the whole structure.",
+    "expanded_sample_counts": "N=23..61 extends the previously discussed range. This upper endpoint is a tested range, not a stability criterion or universal bound.",
+    "coarse_selection": "Existing signed-positive Gy maximum in each existing search band. Earliest y resolves exact ties. All visible columns at 1px spacing.",
+    "unchanged_spatial_scope": "Same x range, y band, and central occlusion masks as the previous experiment. Samples may extend beyond the coarse-search band; all are real source pixels.",
+    "gradient": "Native OpenCV 3.4.15; full-image raw grayscale Sobel dy=1,dx=0,ksize=3,scale=1,border=REFLECT101; polarity=+1.",
+    "model": "A exp(-(y-mu)^2/(2 sigma^2)), raw signed samples, unweighted SSE, no offset. Existing numerical abs(sigma)+1e-12 retained.",
+    "initialization": "2014 predecessor III.B: A=max response of the fitted neighborhood, mu=coarse location, sigma=N. Unlike the earlier experiment, initial sigma is not fixed at 11.",
+    "solver": "Existing exact Nelder-Mead source; initial simplex steps=.2*A,1,.5*N; max800 and relative objective-spread tolerance1e-10. These numerical settings are inherited implementation choices, not specified/validated by the 2015 paper. All returns retained.",
+    "rejections_removed": [
+      "minimum response 8",
+      "coarse maximum at band endpoint",
+      "nonconvergence rejection",
+      "nonpositive fitted A rejection",
+      "abs(mu-coarse)>2px rejection",
+      "previous common-accepted cohort"
+    ],
+    "reporting": "Every attempted fit saved, including nonfinite and nonconverged results; solver status is recorded, not used to hide rows. No extra position bounds, clipping, outlier removal, peak-count test, or residual gate.",
+    "selection": "No invented px threshold, acceptance percentage, or smallest-stable-N rule. Full tables and all-position changes are inspected. A sample count will not be forced if the unfiltered results do not support it.",
+    "sources": [
+      "https://www.researchgate.net/publication/283556095_Subpixel_edge_detection_in_blurry_and_noisy_images",
+      "https://www.annals-csis.org/Volume_2/pliks/136.pdf"
+    ],
+    "config": {
+      "maximum_sample_count": 61,
+      "column_step_px": 1,
+      "solver_max_iterations": 800,
+      "solver_relative_objective_spread_tolerance": 1e-10
+    },
+    "inputs": {
+      "description": "기준 이미지 정확히 4장. 원본은 읽기 전용. 해시는 2026-10-30 작업 문서 기재값.",
+      "expected_width": 3840,
+      "expected_height": 2160,
+      "expected_bits_per_pixel": 24,
+      "references": [
+        {
+          "reference_id": "R01",
+          "dataset": "first",
+          "label": "1차 기준",
+          "file": "center.bmp",
+          "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+          "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685"
+        },
+        {
+          "reference_id": "R02",
+          "dataset": "second",
+          "label": "2차 기준",
+          "file": "center1.bmp",
+          "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+          "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c"
+        },
+        {
+          "reference_id": "R03",
+          "dataset": "second",
+          "label": "2차 기준",
+          "file": "center2.bmp",
+          "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+          "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d"
+        },
+        {
+          "reference_id": "R04",
+          "dataset": "second",
+          "label": "2차 기준",
+          "file": "center3.bmp",
+          "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+          "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19"
+        }
+      ]
+    }
+  },
+  "unchanged_source_hashes": {
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp\\src\\methods_points.cpp": "048bc1656e510ed8c4ce1be107a00af2b75e08fb2edd47105a03f4d0eb6aaf9d",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\methods.json": "787bae12925225df779092ec4583f45fd09f331028cb8e6f7dab33bd5e10626c",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\targets.json": "d530775949f67078223b7fdca735f36831891335b00bc32803f8ff26fe530999",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\inputs_manifest.json": "178be414cae0a4a671d794af9d3f962aeff3fd5af04cf45a7e4393a3dcb39b23",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_lower_window_extension_20261101\\summary.json": "7d0928a9687dd8a8f44955730227f1e332e9c361e7f367b0117038b721deb7ac"
+  },
+  "source_hashes": {
+    "experiment.cpp": "5a0e15614223a47f1e5fb8873347c06bad5595990e60b8611cc10643d69e1115",
+    "CMakeLists.txt": "d34c6fd0e9ad88b1f12ac845e3d178242dc2f46dbd66ba3580f97f46c6043fa3",
+    "original_nelder_mead.hpp": "8ac6b3167f16f6107590cfe909fd51a6a20b7b56b6afb4152e8cad22c04c4537",
+    "run_config.json": "3245aa319d2326e48533e5225333a3c564bbac813823d07a154b781a84ec9aa4",
+    "prepare.py": "ee4d8697ae1b677381974a9884c4ca25a416e703a59dea3255ec0ddd73997fed"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "attempts": 402864,
+  "columns": 6104,
+  "images": 4,
+  "all_old_11_21_values_and_statuses_exact_parity": true,
+  "all_old_pm10_sobel_samples_and_coarse_positions_exact_parity": true,
+  "source_hashes_unchanged": true,
+  "prior_common_count": 2176,
+  "extended_fixed_common_count": 2115,
+  "no_production_setting_changes": true,
+  "no_line_or_theta_fitting": true
+}

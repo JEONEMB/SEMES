@@ -1,0 +1,5969 @@
+{
+  "sample_counts": [
+    3,
+    5,
+    7,
+    9,
+    11,
+    13,
+    15,
+    17,
+    19,
+    21,
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    51,
+    53,
+    55,
+    57,
+    59,
+    61
+  ],
+  "no_rejections": true,
+  "total_columns": 23056,
+  "total_fits": 691680,
+  "groups": [
+    {
+      "ref": "R01",
+      "target": "upper_structure",
+      "columns": 2712,
+      "by_n": [
+        {
+          "n": 3,
+          "nonconverged": 1952,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.4987965858442749,
+            "median": 0.016561136331745274,
+            "max": 0.5000000000001137
+          },
+          "adjacent_abs_delta": null
+        },
+        {
+          "n": 5,
+          "nonconverged": 22,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.5796591944110787,
+            "median": 0.04710051056110842,
+            "max": 0.9379697110141478
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.338812115951441e-06,
+            "median": 0.024340643527466455,
+            "max": 0.5383270421316411
+          }
+        },
+        {
+          "n": 7,
+          "nonconverged": 22,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.5956022736110071,
+            "median": 0.04688069269553807,
+            "max": 0.9940526865718766
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.5212299331324175e-07,
+            "median": 0.0012887405821402353,
+            "max": 0.14955950191529155
+          }
+        },
+        {
+          "n": 9,
+          "nonconverged": 22,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.5951569262163048,
+            "median": 0.047283849633629416,
+            "max": 0.9386390372495725
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.966285243630409e-10,
+            "median": 1.5803236635747453e-05,
+            "max": 0.27870461853967754
+          }
+        },
+        {
+          "n": 11,
+          "nonconverged": 22,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.5951041956571999,
+            "median": 0.046880728396331506,
+            "max": 0.9374218063292119
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.6698111216537654e-10,
+            "median": 1.0968582273562788e-06,
+            "max": 0.27866191184216405
+          }
+        },
+        {
+          "n": 13,
+          "nonconverged": 22,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.595105272890919,
+            "median": 0.0468813549788365,
+            "max": 0.9372705886999029
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.944489096989855e-10,
+            "median": 9.607071547179658e-07,
+            "max": 0.00044529664899073396
+          }
+        },
+        {
+          "n": 15,
+          "nonconverged": 22,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.595102079977778,
+            "median": 0.046880799235850645,
+            "max": 0.9372561364093599
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 4.777120921062306e-10,
+            "median": 1.0367269283051428e-06,
+            "max": 0.0005216039324977828
+          }
+        },
+        {
+          "n": 17,
+          "nonconverged": 22,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.5951058183435407,
+            "median": 0.04688172756152653,
+            "max": 0.9372551173718193
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 4.008597898064181e-10,
+            "median": 1.0714397262745479e-06,
+            "max": 0.0004122690326084921
+          }
+        },
+        {
+          "n": 19,
+          "nonconverged": 22,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.5951039628116632,
+            "median": 0.0468793035923909,
+            "max": 0.9372528809021787
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.2975078789168037e-09,
+            "median": 1.1359595077919948e-06,
+            "max": 0.0006073110288298267
+          }
+        },
+        {
+          "n": 21,
+          "nonconverged": 22,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.5951027399702298,
+            "median": 0.04688060911558978,
+            "max": 0.9372534426989887
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.7826096154749393e-10,
+            "median": 1.3458496823659516e-06,
+            "max": 0.0005633873570332071
+          }
+        },
+        {
+          "n": 23,
+          "nonconverged": 21,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.5951036291000946,
+            "median": 0.04687971268919,
+            "max": 0.937253344427063
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 7.296421244973317e-10,
+            "median": 1.4519520732392266e-06,
+            "max": 0.0004110934495429319
+          }
+        },
+        {
+          "n": 25,
+          "nonconverged": 21,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -8.626655178171518,
+            "median": 0.04302139686058126,
+            "max": 0.9372506483122152
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.366743163089268e-09,
+            "median": 1.4938584627088858e-06,
+            "max": 9.087444388705308
+          }
+        },
+        {
+          "n": 27,
+          "nonconverged": 20,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -12.823071157729828,
+            "median": 0.04241512003898151,
+            "max": 1022078.060949224
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.3082869776990265e-10,
+            "median": 1.5847120948819793e-06,
+            "max": 1022077.6401816031
+          }
+        },
+        {
+          "n": 29,
+          "nonconverged": 20,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -14.352131714637608,
+            "median": 0.038283394107281765,
+            "max": 66333.86746386168
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 4.348521542851813e-10,
+            "median": 1.6969943317235447e-06,
+            "max": 982207.1038826079
+          }
+        },
+        {
+          "n": 31,
+          "nonconverged": 20,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -13.474701888240702,
+            "median": 0.0363652983777456,
+            "max": 4273.785285262746
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.405169314239174e-10,
+            "median": 1.7630496813580976e-06,
+            "max": 62060.08217859893
+          }
+        },
+        {
+          "n": 33,
+          "nonconverged": 20,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -11.413224785611192,
+            "median": 0.03636533417056853,
+            "max": 443583.6409660109
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 6.741629476891831e-10,
+            "median": 1.8603044509291067e-06,
+            "max": 443590.71064409835
+          }
+        },
+        {
+          "n": 35,
+          "nonconverged": 20,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -19.091690885003004,
+            "median": 0.036363305163547466,
+            "max": 376163.6881610485
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 9.599716577213258e-10,
+            "median": 1.8679536424315302e-06,
+            "max": 376174.091332958
+          }
+        },
+        {
+          "n": 37,
+          "nonconverged": 20,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -11.366175809282595,
+            "median": 0.040254343866820363,
+            "max": 1034890.8607810746
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.398987923399545e-10,
+            "median": 2.008048170409893e-06,
+            "max": 986096.3995190351
+          }
+        },
+        {
+          "n": 39,
+          "nonconverged": 18,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -15.93157000271276,
+            "median": 0.0352736058073333,
+            "max": 667367.3211845114
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.017042450257577e-09,
+            "median": 2.1130125560375745e-06,
+            "max": 1034897.95238289
+          }
+        },
+        {
+          "n": 41,
+          "nonconverged": 16,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -16.66707811741935,
+            "median": 0.030615109702921472,
+            "max": 808375.3775734291
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.4363089323742315e-10,
+            "median": 2.126190452145238e-06,
+            "max": 808382.7787221381
+          }
+        },
+        {
+          "n": 43,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -15.335153811527562,
+            "median": 0.02914013139297822,
+            "max": 782611.4465001145
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.6541434888495132e-09,
+            "median": 2.224488696356275e-06,
+            "max": 808374.9710972377
+          }
+        },
+        {
+          "n": 45,
+          "nonconverged": 15,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -23.10570278038051,
+            "median": 0.025173428216874072,
+            "max": 1010057.1356785537
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 7.964899850776419e-10,
+            "median": 2.340423691293836e-06,
+            "max": 782623.6973167628
+          }
+        },
+        {
+          "n": 47,
+          "nonconverged": 12,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -24.75800650778592,
+            "median": 0.02373685118834601,
+            "max": 606284.010062473
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.2973941920790821e-09,
+            "median": 2.3198051621875493e-06,
+            "max": 1010071.1403760271
+          }
+        },
+        {
+          "n": 49,
+          "nonconverged": 12,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -20.041671984842765,
+            "median": 0.023921294012325234,
+            "max": 1172275.57411533
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.899231160175987e-09,
+            "median": 2.344616007121658e-06,
+            "max": 1172285.612730229
+          }
+        },
+        {
+          "n": 51,
+          "nonconverged": 10,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -25.66460854367233,
+            "median": 0.02153413967113238,
+            "max": 171928.99477230053
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.85796283808304e-09,
+            "median": 2.2969715587350947e-06,
+            "max": 1172287.942061664
+          }
+        },
+        {
+          "n": 53,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -36.83379505818107,
+            "median": 0.01733777683784865,
+            "max": 436349.16895892844
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.7059846868505701e-09,
+            "median": 2.4016421775741037e-06,
+            "max": 436361.1265768427
+          }
+        },
+        {
+          "n": 55,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -112.1044122114564,
+            "median": 0.011439617829296367,
+            "max": 783349.5784567618
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.1254996934439987e-09,
+            "median": 2.542949800954375e-06,
+            "max": 783366.5637318561
+          }
+        },
+        {
+          "n": 57,
+          "nonconverged": 9,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -95085.8346264884,
+            "median": 0.013657370894691212,
+            "max": 1185056.3376882249
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 4.272123987902887e-09,
+            "median": 2.9250950319692492e-06,
+            "max": 1185055.7532257282
+          }
+        },
+        {
+          "n": 59,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -930317.9593561024,
+            "median": 0.017340005031655892,
+            "max": 1422056.7419873527
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.0523990567889996e-09,
+            "median": 3.0135890369820117e-06,
+            "max": 1422108.34455017
+          }
+        },
+        {
+          "n": 61,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -1145781.2763248924,
+            "median": 0.013650894375473399,
+            "max": 706750.3109378992
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.936531018349342e-10,
+            "median": 3.178430119987752e-06,
+            "max": 1422225.7988520488
+          }
+        }
+      ],
+      "ranges": {
+        "3-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 2.5618162112550635e-05,
+          "median": 0.02585502384067695,
+          "max": 0.5944100176893699
+        },
+        "9-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 5.797928679385222e-07,
+          "median": 3.169068634178984e-06,
+          "max": 0.27866191184216405
+        },
+        "11-15": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 3.463537723291665e-08,
+          "median": 1.5985619938874152e-06,
+          "max": 0.0005387686288713667
+        },
+        "11-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 5.03778892380069e-07,
+          "median": 2.8590952183549234e-06,
+          "max": 0.0009510376614798588
+        },
+        "13-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 4.49239564659365e-07,
+          "median": 2.712783270908403e-06,
+          "max": 0.0007534482917890273
+        },
+        "21-31": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 5.117379942021216e-07,
+          "median": 4.119537607039092e-06,
+          "max": 1022077.6401828593
+        },
+        "31-41": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 4.6963145905465353e-07,
+          "median": 5.091759362585435e-06,
+          "max": 1034898.5442119781
+        },
+        "41-51": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 8.940312454797095e-07,
+          "median": 5.69631447433494e-06,
+          "max": 1172287.942061664
+        },
+        "51-61": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.0382514119555708e-06,
+          "median": 6.755757738119428e-06,
+          "max": 1422225.7988520488
+        },
+        "59-61": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 2.936531018349342e-10,
+          "median": 3.178430119987752e-06,
+          "max": 1422225.7988520488
+        }
+      }
+    },
+    {
+      "ref": "R01",
+      "target": "lower_structure",
+      "columns": 3052,
+      "by_n": [
+        {
+          "n": 3,
+          "nonconverged": 2022,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -0.49213285516611904,
+            "median": 0.0,
+            "max": 0.5000000000004547
+          },
+          "adjacent_abs_delta": null
+        },
+        {
+          "n": 5,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.084235413622537,
+            "median": 0.019241823831180227,
+            "max": 400.6372578111241
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.4643668439239264e-08,
+            "median": 0.16333736839260382,
+            "max": 400.9855470746195
+          }
+        },
+        {
+          "n": 7,
+          "nonconverged": 132,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -389663756.1339221,
+            "median": 0.03323161589969459,
+            "max": 102205461.4205577
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.4098063729761634e-05,
+            "median": 0.3511529795276829,
+            "max": 389663755.9494853
+          }
+        },
+        {
+          "n": 9,
+          "nonconverged": 159,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -366019308.2502521,
+            "median": 0.15828498488860987,
+            "max": 41548850.213523194
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.5259456631611101e-07,
+            "median": 0.5688775346719694,
+            "max": 389663771.02303034
+          }
+        },
+        {
+          "n": 11,
+          "nonconverged": 63,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -307771282.92400634,
+            "median": 0.37898998400021355,
+            "max": 523.4164580399515
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.5253181118168868e-07,
+            "median": 0.5330723332666594,
+            "max": 366019508.852987
+          }
+        },
+        {
+          "n": 13,
+          "nonconverged": 17,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -313.06659216930007,
+            "median": 0.5924954739085706,
+            "max": 707.6742845725557
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.095237843808718e-09,
+            "median": 0.3997160032448619,
+            "max": 307771291.38429844
+          }
+        },
+        {
+          "n": 15,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -158.76993516103948,
+            "median": 0.7438408264921463,
+            "max": 31569051.14513004
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 5.70207021155511e-07,
+            "median": 0.27763727478054534,
+            "max": 31569054.881395802
+          }
+        },
+        {
+          "n": 17,
+          "nonconverged": 4,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -148.05894579605365,
+            "median": 0.7890776766945464,
+            "max": 170.22255444999837
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 6.448976819228847e-08,
+            "median": 0.18413565620892314,
+            "max": 31569053.642875366
+          }
+        },
+        {
+          "n": 19,
+          "nonconverged": 1,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -95.02715683977522,
+            "median": 0.8203078480197519,
+            "max": 13.63516873172739
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.635250322986394e-09,
+            "median": 0.12579485901403586,
+            "max": 167.24466888204824
+          }
+        },
+        {
+          "n": 21,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -13.366180052074014,
+            "median": 0.8669068102437905,
+            "max": 7.195417872711005
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.0612106962071266e-06,
+            "median": 0.07583086111048942,
+            "max": 83.83522704150187
+          }
+        },
+        {
+          "n": 23,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -8.230945833245187,
+            "median": 0.896468646016956,
+            "max": 5.618939681291977
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.223532646894455e-06,
+            "median": 0.04921991802530101,
+            "max": 6.034660720190004
+          }
+        },
+        {
+          "n": 25,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -8.650528813320307,
+            "median": 0.9140118776235795,
+            "max": 5.482102893825868
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.374640644120518e-07,
+            "median": 0.028742926834070204,
+            "max": 2.4476215325701105
+          }
+        },
+        {
+          "n": 27,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.833217311133922,
+            "median": 0.9215762585614584,
+            "max": 5.392942352490081
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.6407527659321204e-08,
+            "median": 0.01717230889687471,
+            "max": 2.5014107472702563
+          }
+        },
+        {
+          "n": 29,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.733992427088197,
+            "median": 0.934573223645657,
+            "max": 5.486525802836695
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.3284792405320331e-07,
+            "median": 0.009439192333729807,
+            "max": 1.2195956194088922
+          }
+        },
+        {
+          "n": 31,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.743254485142643,
+            "median": 0.9472613317652758,
+            "max": 5.478343099905487
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.363883014477324e-08,
+            "median": 0.0052436697783377895,
+            "max": 0.6742288228406323
+          }
+        },
+        {
+          "n": 33,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.745070846941189,
+            "median": 0.9503984679895439,
+            "max": 5.632091111739101
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.17379840958165e-07,
+            "median": 0.0026466669738738346,
+            "max": 0.7369067926047137
+          }
+        },
+        {
+          "n": 35,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.74333689918376,
+            "median": 0.9498496301835075,
+            "max": 5.613896985259544
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.048853614018299e-08,
+            "median": 0.0011649908437902923,
+            "max": 2.1911671715777175
+          }
+        },
+        {
+          "n": 37,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.7431354742309395,
+            "median": 0.9509520181079552,
+            "max": 5.618036363754072
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 4.2646206566132605e-09,
+            "median": 0.0004616518854163587,
+            "max": 1.1612407882082607
+          }
+        },
+        {
+          "n": 39,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.741471652140717,
+            "median": 0.9500247960654633,
+            "max": 5.644607588751114
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 9.021505320561118e-08,
+            "median": 0.00018533383581598173,
+            "max": 2.2083679039233175
+          }
+        },
+        {
+          "n": 41,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.74253668921574,
+            "median": 0.9529539491337573,
+            "max": 5.6533484894755475
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.7478669178672135e-08,
+            "median": 6.867305398827739e-05,
+            "max": 2.0640812567428384
+          }
+        },
+        {
+          "n": 43,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.742524009825274,
+            "median": 0.949896151146163,
+            "max": 5.655973667665194
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 8.312554200529121e-09,
+            "median": 3.8120137219266326e-05,
+            "max": 2.0083604801020556
+          }
+        },
+        {
+          "n": 45,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.742449774908437,
+            "median": 0.9529774873145698,
+            "max": 5.664339086274822
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.891351869038772e-08,
+            "median": 2.7496893835632363e-05,
+            "max": 2.0083153638952354
+          }
+        },
+        {
+          "n": 47,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.742554265355238,
+            "median": 0.9529881381866971,
+            "max": 5.667206393514107
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 4.306457412894815e-09,
+            "median": 2.3071210421221622e-05,
+            "max": 0.014825505758153668
+          }
+        },
+        {
+          "n": 49,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.742597488292631,
+            "median": 0.9529868492127207,
+            "max": 5.666689204941122
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 6.0654201661236584e-09,
+            "median": 2.0149367514932237e-05,
+            "max": 0.013916482341301162
+          }
+        },
+        {
+          "n": 51,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.742580261587136,
+            "median": 0.9530144746358928,
+            "max": 5.6674020987429685
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 4.909452400170267e-09,
+            "median": 1.8338747281632095e-05,
+            "max": 0.24798158544763282
+          }
+        },
+        {
+          "n": 53,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.742565988862225,
+            "median": 0.9499917776226994,
+            "max": 5.668283673758651
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.533344614785165e-09,
+            "median": 1.8064788264382514e-05,
+            "max": 1.4036636971929966
+          }
+        },
+        {
+          "n": 55,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.74260261896643,
+            "median": 0.9530011187898708,
+            "max": 5.66815990082705
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 9.467839845456183e-10,
+            "median": 1.858405516941275e-05,
+            "max": 1.4036734076919402
+          }
+        },
+        {
+          "n": 57,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.742570720415415,
+            "median": 0.9529902796253964,
+            "max": 5.668082275094093
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.7056436263374053e-08,
+            "median": 1.7701333604236424e-05,
+            "max": 0.0022390567239654047
+          }
+        },
+        {
+          "n": 59,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.742578933919049,
+            "median": 0.950003335292422,
+            "max": 8.062411900833695
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 5.805532055092044e-09,
+            "median": 1.8077601907862118e-05,
+            "max": 6.579024566906128
+          }
+        },
+        {
+          "n": 61,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.7425836403990616,
+            "median": 0.9499635693600794,
+            "max": 5.66807825901401
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.1741925593232736e-08,
+            "median": 1.7807368294597836e-05,
+            "max": 6.579079601525564
+          }
+        }
+      ],
+      "ranges": {
+        "3-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 0.06814132121098737,
+          "median": 2.63064116710666,
+          "max": 389663771.02303034
+        },
+        "9-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 1.802571432563127e-05,
+          "median": 1.5133317652563392,
+          "max": 366019508.852987
+        },
+        "11-15": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 8.971776424004929e-07,
+          "median": 0.6933204887469628,
+          "max": 307771291.38429844
+        },
+        "11-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 5.457716270029778e-06,
+          "median": 0.9794723396540803,
+          "max": 307771291.38429844
+        },
+        "13-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 5.457716270029778e-06,
+          "median": 0.6213217548410057,
+          "max": 31569054.881395802
+        },
+        "21-31": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 6.817254870838951e-06,
+          "median": 0.11454408762847379,
+          "max": 8.272429869406096
+        },
+        "31-41": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 7.303359552679467e-06,
+          "median": 0.004683772910766493,
+          "max": 2.2196799647579155
+        },
+        "41-51": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 6.006612238707021e-06,
+          "median": 7.015509004304477e-05,
+          "max": 2.009723178684908
+        },
+        "51-61": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 5.232126113696722e-06,
+          "median": 4.508985546181066e-05,
+          "max": 6.579079601525564
+        },
+        "59-61": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 2.1741925593232736e-08,
+          "median": 1.7807368294597836e-05,
+          "max": 6.579079601525564
+        }
+      }
+    },
+    {
+      "ref": "R02",
+      "target": "upper_structure",
+      "columns": 2712,
+      "by_n": [
+        {
+          "n": 3,
+          "nonconverged": 1955,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.49792780133350334,
+            "median": -0.00920408053917754,
+            "max": 0.5000016197781179
+          },
+          "adjacent_abs_delta": null
+        },
+        {
+          "n": 5,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.6314347319973876,
+            "median": 0.02351308966723309,
+            "max": 0.7478910437065451
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.373159820010187e-05,
+            "median": 0.027677608405269893,
+            "max": 0.3827060091102794
+          }
+        },
+        {
+          "n": 7,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.6356607676166277,
+            "median": 0.02417383486977087,
+            "max": 0.7681837714731046
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 7.000255664024735e-08,
+            "median": 0.0015616902012425271,
+            "max": 0.10474462442880395
+          }
+        },
+        {
+          "n": 9,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.6322140456736633,
+            "median": 0.024135219506320027,
+            "max": 0.7629133106036079
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.2456666809157468e-09,
+            "median": 2.4186306802675972e-05,
+            "max": 0.017420572446326332
+          }
+        },
+        {
+          "n": 11,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.6319917037986897,
+            "median": 0.024136466078800822,
+            "max": 0.7632584287002828
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.2096279533579946e-10,
+            "median": 1.1822055512311636e-06,
+            "max": 0.0008659630967713383
+          }
+        },
+        {
+          "n": 13,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.6319795244899069,
+            "median": 0.024135508837275665,
+            "max": 0.7632694993654923
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.303686627186835e-10,
+            "median": 9.300398460254655e-07,
+            "max": 0.00023044966258112254
+          }
+        },
+        {
+          "n": 15,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.6319777118643515,
+            "median": 0.02413616598181534,
+            "max": 0.7632710092020716
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.1071961125708185e-09,
+            "median": 1.0449967930981074e-06,
+            "max": 0.0004987022905424965
+          }
+        },
+        {
+          "n": 17,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.6319809083922792,
+            "median": 0.024135843806902813,
+            "max": 0.763267483543359
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.309370969072916e-10,
+            "median": 1.120374008678482e-06,
+            "max": 0.00030052328122565086
+          }
+        },
+        {
+          "n": 19,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.6319807065258374,
+            "median": 0.024134895166525894,
+            "max": 0.7632709706456353
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 4.581579560181126e-11,
+            "median": 1.1976920859524398e-06,
+            "max": 0.00015764909448989783
+          }
+        },
+        {
+          "n": 21,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.6319788272015785,
+            "median": 0.0241358172649484,
+            "max": 0.763268706329427
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 6.044729161658324e-10,
+            "median": 1.3220205801189877e-06,
+            "max": 0.00032019956313433795
+          }
+        },
+        {
+          "n": 23,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -14.744911079920257,
+            "median": 0.02369013437476042,
+            "max": 5745198.008147456
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.589093466871418e-10,
+            "median": 1.4404767512132821e-06,
+            "max": 5745197.636302961
+          }
+        },
+        {
+          "n": 25,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -11.92911916166895,
+            "median": 0.02317873586218866,
+            "max": 289321.51905191573
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.099103196291253e-10,
+            "median": 1.5166024809332157e-06,
+            "max": 5745204.6447718255
+          }
+        },
+        {
+          "n": 27,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -11.679408306085179,
+            "median": 0.02026091587248402,
+            "max": 20523.77908628224
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.347828846424818e-10,
+            "median": 1.583458470122423e-06,
+            "max": 289328.9637566302
+          }
+        },
+        {
+          "n": 29,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -15.58022943221249,
+            "median": 0.020045121959128664,
+            "max": 2339261.8128167503
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.6414105630246922e-09,
+            "median": 1.8181963241659105e-06,
+            "max": 2339262.1727135475
+          }
+        },
+        {
+          "n": 31,
+          "nonconverged": 12,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -20.834332342304492,
+            "median": 0.020044415431357265,
+            "max": 1721033.6979621265
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.064552973024547e-10,
+            "median": 1.7947324408851273e-06,
+            "max": 2280180.1713471725
+          }
+        },
+        {
+          "n": 33,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -11.183846936455893,
+            "median": 0.020787562795533177,
+            "max": 3060.3557235163817
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 9.06311470316723e-10,
+            "median": 1.9268629785074154e-06,
+            "max": 1721033.256176613
+          }
+        },
+        {
+          "n": 35,
+          "nonconverged": 14,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -12.511282787178516,
+            "median": 0.023691041863855844,
+            "max": 150.98573869364714
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.4604211173718795e-09,
+            "median": 2.0031907297379803e-06,
+            "max": 3067.4916192236974
+          }
+        },
+        {
+          "n": 37,
+          "nonconverged": 14,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -10.43458954473408,
+            "median": 0.02812363494138026,
+            "max": 1948818.4066391883
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.028617356903851e-09,
+            "median": 1.9854816741826653e-06,
+            "max": 1948817.8956105767
+          }
+        },
+        {
+          "n": 39,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -13.667751478061518,
+            "median": 0.028363358405385952,
+            "max": 300698.2685039964
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.884586708911229e-09,
+            "median": 2.13699377127341e-06,
+            "max": 1948827.9666706682
+          }
+        },
+        {
+          "n": 41,
+          "nonconverged": 9,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -16.05459607859882,
+            "median": 0.02741094508974129,
+            "max": 1143556.6232800658
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.787157088983804e-09,
+            "median": 2.2504545995616354e-06,
+            "max": 1143556.88441658
+          }
+        },
+        {
+          "n": 43,
+          "nonconverged": 9,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -27.06305938925675,
+            "median": 0.0236567261364371,
+            "max": 1321299.313182991
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.946297510992736e-09,
+            "median": 2.210940976965503e-06,
+            "max": 1321299.6282763572
+          }
+        },
+        {
+          "n": 45,
+          "nonconverged": 10,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -21.228421461227526,
+            "median": 0.0235915298665077,
+            "max": 856699.5161700016
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.253727870993316e-09,
+            "median": 2.3579564754072635e-06,
+            "max": 1321312.094430354
+          }
+        },
+        {
+          "n": 47,
+          "nonconverged": 9,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -17.240243502068324,
+            "median": 0.02369113001208234,
+            "max": 753487.1372086946
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.0286385077051818e-09,
+            "median": 2.41274267409608e-06,
+            "max": 856711.8554560189
+          }
+        },
+        {
+          "n": 49,
+          "nonconverged": 7,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -24.81570002337412,
+            "median": 0.020478827748661388,
+            "max": 623688.9090702159
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 4.240519047016278e-11,
+            "median": 2.369533035562199e-06,
+            "max": 753509.3030811829
+          }
+        },
+        {
+          "n": 51,
+          "nonconverged": 7,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -28.85595523904442,
+            "median": 0.019766719344033845,
+            "max": 364136.67664318986
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.0766037778230384e-09,
+            "median": 2.418128872250236e-06,
+            "max": 623717.3608628674
+          }
+        },
+        {
+          "n": 53,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -43.526490997825476,
+            "median": 0.01440570013477327,
+            "max": 98628.05319312465
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.2794210963184014e-10,
+            "median": 2.5009557020894135e-06,
+            "max": 364147.6735526694
+          }
+        },
+        {
+          "n": 55,
+          "nonconverged": 7,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -160.9968001507957,
+            "median": 0.015207115994371634,
+            "max": 2144224.766691628
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.7649881556280889e-09,
+            "median": 2.670261892490089e-06,
+            "max": 2144224.8347639134
+          }
+        },
+        {
+          "n": 57,
+          "nonconverged": 7,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -66242.81965345585,
+            "median": 0.018830230250443947,
+            "max": 5717750.784855026
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.931237971410155e-10,
+            "median": 2.9236520617814676e-06,
+            "max": 5717763.556412407
+          }
+        },
+        {
+          "n": 59,
+          "nonconverged": 7,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -1167043.1918709339,
+            "median": 0.018831639386689858,
+            "max": 1413416.1376996932
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 6.875779945403337e-10,
+            "median": 3.045608082175022e-06,
+            "max": 5717853.289453209
+          }
+        },
+        {
+          "n": 61,
+          "nonconverged": 7,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -872259.7394222219,
+            "median": 0.021075281234686827,
+            "max": 731955.8908852491
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 4.85624696011655e-09,
+            "median": 3.196437262431573e-06,
+            "max": 1413527.1912130958
+          }
+        }
+      ],
+      "ranges": {
+        "3-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 7.193710666797415e-05,
+          "median": 0.02907835780217738,
+          "max": 0.3827060091102794
+        },
+        "9-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 4.4428725232137367e-07,
+          "median": 3.3046679845938343e-06,
+          "max": 0.0008659630967713383
+        },
+        "11-15": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 7.595770057378104e-08,
+          "median": 1.6329831282746454e-06,
+          "max": 0.0004987022905424965
+        },
+        "11-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 4.0373470255872235e-07,
+          "median": 2.9105676162544114e-06,
+          "max": 0.0006760276669410814
+        },
+        "13-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 2.2059020921005867e-07,
+          "median": 2.763154839158233e-06,
+          "max": 0.0006760276669410814
+        },
+        "21-31": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 8.870846386344056e-07,
+          "median": 4.196835789116449e-06,
+          "max": 5745209.055993152
+        },
+        "31-41": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 7.472028755728388e-07,
+          "median": 5.198873793688108e-06,
+          "max": 1948827.9666706682
+        },
+        "41-51": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 4.921716936223675e-07,
+          "median": 5.737042386044777e-06,
+          "max": 1321317.1267803381
+        },
+        "51-61": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.0126487950401497e-06,
+          "median": 6.912696733252233e-06,
+          "max": 5717880.555078495
+        },
+        "59-61": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 4.85624696011655e-09,
+          "median": 3.196437262431573e-06,
+          "max": 1413527.1912130958
+        }
+      }
+    },
+    {
+      "ref": "R02",
+      "target": "lower_structure",
+      "columns": 3052,
+      "by_n": [
+        {
+          "n": 3,
+          "nonconverged": 1977,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -0.4963641010426727,
+            "median": 0.030881270360623603,
+            "max": 0.5000000000004547
+          },
+          "adjacent_abs_delta": null
+        },
+        {
+          "n": 5,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -191.88067368893758,
+            "median": 0.019938221447773685,
+            "max": 400.8500115477491
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.3998578651808202e-07,
+            "median": 0.15576969859068868,
+            "max": 400.62612697596387
+          }
+        },
+        {
+          "n": 7,
+          "nonconverged": 142,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -310394555.5263371,
+            "median": 0.04330662879920055,
+            "max": 627.2595288496113
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 4.125818122702185e-07,
+            "median": 0.3498318542708603,
+            "max": 310394555.63777226
+          }
+        },
+        {
+          "n": 9,
+          "nonconverged": 163,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -496677004.05097556,
+            "median": 0.14351392532068985,
+            "max": 5016031.280944008
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.5868545233388431e-07,
+            "median": 0.5774011720156977,
+            "max": 496677204.9389972
+          }
+        },
+        {
+          "n": 11,
+          "nonconverged": 65,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -12360499.337869812,
+            "median": 0.30621103184307685,
+            "max": 172720970.26959258
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.5941052424750524e-06,
+            "median": 0.5588388923681578,
+            "max": 496676638.16239685
+          }
+        },
+        {
+          "n": 13,
+          "nonconverged": 16,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -869.5569131103177,
+            "median": 0.4851134095864609,
+            "max": 568771.1817961638
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.722182999714278e-07,
+            "median": 0.4033188636602745,
+            "max": 172720975.17831376
+          }
+        },
+        {
+          "n": 15,
+          "nonconverged": 4,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -192.89148538170411,
+            "median": 0.6279563785666369,
+            "max": 10.686779090225627
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.2362663710518973e-06,
+            "median": 0.2877220784690735,
+            "max": 568771.8963910915
+          }
+        },
+        {
+          "n": 17,
+          "nonconverged": 2,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -217.19704755974044,
+            "median": 0.7146751986317668,
+            "max": 7.729210387454941
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.353692126343958e-07,
+            "median": 0.1953726556824904,
+            "max": 144.36262381091706
+          }
+        },
+        {
+          "n": 19,
+          "nonconverged": 3,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -254.57350365502225,
+            "median": 0.7869630579532441,
+            "max": 10.212510610696881
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.1453776096459478e-06,
+            "median": 0.128198324495429,
+            "max": 76.1294792580768
+          }
+        },
+        {
+          "n": 21,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -15.071239305560539,
+            "median": 0.8395272538110703,
+            "max": 7.635401661050537
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.459069830569206e-07,
+            "median": 0.0828620647561138,
+            "max": 248.95579825608093
+          }
+        },
+        {
+          "n": 23,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -9.71000627746048,
+            "median": 0.8661873438028351,
+            "max": 7.368204854130454
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.9216281543776859e-07,
+            "median": 0.05313330738977129,
+            "max": 5.3612330281000595
+          }
+        },
+        {
+          "n": 25,
+          "nonconverged": 1,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -8.511637597904382,
+            "median": 0.8938173622799468,
+            "max": 311.3445427658885
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 5.364938715501921e-07,
+            "median": 0.03312649921429056,
+            "max": 311.3521989078183
+          }
+        },
+        {
+          "n": 27,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -8.047313418480826,
+            "median": 0.9059922849996838,
+            "max": 7.2975253918129965
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 4.3952854866802227e-07,
+            "median": 0.02000403735337386,
+            "max": 311.35220228657295
+          }
+        },
+        {
+          "n": 29,
+          "nonconverged": 1,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -516.8914073072383,
+            "median": 0.9131897666768509,
+            "max": 202377.2755605207
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 4.6063178160693496e-08,
+            "median": 0.011537793500451698,
+            "max": 202376.98724503236
+          }
+        },
+        {
+          "n": 31,
+          "nonconverged": 2,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.547731632244677,
+            "median": 0.9229849765117706,
+            "max": 665.7132612589776
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.6901185517781414e-07,
+            "median": 0.006250778597745921,
+            "max": 202076.03336495353
+          }
+        },
+        {
+          "n": 33,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.531838031746247,
+            "median": 0.9248235193932715,
+            "max": 15.512149942701853
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.380681169393938e-08,
+            "median": 0.0032786385540930496,
+            "max": 650.2011113162757
+          }
+        },
+        {
+          "n": 35,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.578272031777942,
+            "median": 0.9244288785512254,
+            "max": 16.946085101570134
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.424155016138684e-08,
+            "median": 0.0015343269197956033,
+            "max": 1.5479228592375875
+          }
+        },
+        {
+          "n": 37,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.554963319006902,
+            "median": 0.9228280513143545,
+            "max": 17.505862174175263
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 5.20935827807989e-09,
+            "median": 0.0007121750471696942,
+            "max": 3.248184879079872
+          }
+        },
+        {
+          "n": 39,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.536991624093389,
+            "median": 0.9237975968871979,
+            "max": 18.275155426289302
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.7379428502172232e-08,
+            "median": 0.0002346380424569361,
+            "max": 3.2514547619744008
+          }
+        },
+        {
+          "n": 41,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.537930005014914,
+            "median": 0.9258494354760387,
+            "max": 17.72666921950463
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.9113485905108973e-08,
+            "median": 8.581399231388787e-05,
+            "max": 2.144622144759751
+          }
+        },
+        {
+          "n": 43,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.5400659133508725,
+            "median": 0.9247292771510729,
+            "max": 17.92430318980496
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.6503918232047e-08,
+            "median": 4.204342735647515e-05,
+            "max": 0.9628577664027489
+          }
+        },
+        {
+          "n": 45,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.540045197507425,
+            "median": 0.923857339741744,
+            "max": 19.23331157930238
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 4.589082891470753e-09,
+            "median": 2.9069374704704387e-05,
+            "max": 1.3090083894974214
+          }
+        },
+        {
+          "n": 47,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.540083589670303,
+            "median": 0.923872229963763,
+            "max": 19.107324757510924
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.7541879060445353e-09,
+            "median": 2.1971197384118568e-05,
+            "max": 1.0997497274720445
+          }
+        },
+        {
+          "n": 49,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.5400897705435455,
+            "median": 0.9247406798501743,
+            "max": 19.724191967420666
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.035186869557947e-08,
+            "median": 2.033610167018196e-05,
+            "max": 1.0998133645691723
+          }
+        },
+        {
+          "n": 51,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -34813421.805540964,
+            "median": 0.9247237450151715,
+            "max": 21.44246699293285
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.706121111055836e-08,
+            "median": 1.963049589903676e-05,
+            "max": 34813441.47258414
+          }
+        },
+        {
+          "n": 53,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -13204740.25565986,
+            "median": 0.9238613076807951,
+            "max": 21.036827248194413
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.6147972675971687e-10,
+            "median": 1.7821952951635467e-05,
+            "max": 21608681.549881104
+          }
+        },
+        {
+          "n": 55,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.540081431580802,
+            "median": 0.9238729598351938,
+            "max": 20.162653168591078
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.9902927306247875e-08,
+            "median": 1.8342579551244853e-05,
+            "max": 13204760.272414852
+          }
+        },
+        {
+          "n": 57,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.540081222747858,
+            "median": 0.9238872904094251,
+            "max": 20.087826720297926
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.1717929737642407e-08,
+            "median": 1.8128106148651568e-05,
+            "max": 1.0997953725961906
+          }
+        },
+        {
+          "n": 59,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.540029406316307,
+            "median": 0.924737074150471,
+            "max": 20.172111290225985
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.94670995674096e-09,
+            "median": 1.800115546757297e-05,
+            "max": 0.9629513031404713
+          }
+        },
+        {
+          "n": 61,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.540115690412904,
+            "median": 0.923868973589606,
+            "max": 20.109193986155788
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 9.933955880114809e-10,
+            "median": 1.7896888948598644e-05,
+            "max": 0.9629346531698957
+          }
+        }
+      ],
+      "ranges": {
+        "3-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 0.007674137854792207,
+          "median": 2.763354399199443,
+          "max": 496677204.9389972
+        },
+        "9-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 6.442529411287978e-06,
+          "median": 1.617348676820825,
+          "max": 496677004.02147555
+        },
+        "11-15": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 2.2343210730468854e-06,
+          "median": 0.732512809961122,
+          "max": 172720975.17831376
+        },
+        "11-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 5.758826318924548e-06,
+          "median": 1.0441466679176301,
+          "max": 172720975.17831376
+        },
+        "13-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 4.464162884687539e-06,
+          "median": 0.6617098406321702,
+          "max": 568771.8963910915
+        },
+        "21-31": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 8.070055628195405e-06,
+          "median": 0.12863971704507549,
+          "max": 202376.98725056762
+        },
+        "31-41": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 4.241139322402887e-06,
+          "median": 0.006056169473595219,
+          "max": 650.2011113162757
+        },
+        "41-51": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 7.305372946575517e-06,
+          "median": 7.981423232195084e-05,
+          "max": 34813441.47258414
+        },
+        "51-61": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 8.885977649697452e-06,
+          "median": 4.5994831452844664e-05,
+          "max": 34813441.97765225
+        },
+        "59-61": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 9.933955880114809e-10,
+          "median": 1.7896888948598644e-05,
+          "max": 0.9629346531698957
+        }
+      }
+    },
+    {
+      "ref": "R03",
+      "target": "upper_structure",
+      "columns": 2712,
+      "by_n": [
+        {
+          "n": 3,
+          "nonconverged": 1911,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.49946838295625184,
+            "median": -0.022038904974920115,
+            "max": 0.5
+          },
+          "adjacent_abs_delta": null
+        },
+        {
+          "n": 5,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.9649643689651839,
+            "median": 0.022036739381462667,
+            "max": 0.8261197075330529
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.0138330708286958e-07,
+            "median": 0.029058309927336268,
+            "max": 0.542377138942129
+          }
+        },
+        {
+          "n": 7,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.9246873009917635,
+            "median": 0.022011357669668996,
+            "max": 0.983617905133201
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.580679054313805e-07,
+            "median": 0.0017855035084153315,
+            "max": 0.272492086464581
+          }
+        },
+        {
+          "n": 9,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.8889304661282722,
+            "median": 0.021974950354263,
+            "max": 0.9778350771507576
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.978986443253234e-10,
+            "median": 2.882419670413583e-05,
+            "max": 0.08762006803658551
+          }
+        },
+        {
+          "n": 11,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.8877260375542164,
+            "median": 0.021973810641611635,
+            "max": 0.9745384057737283
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.1755219020415097e-09,
+            "median": 1.3219765833127894e-06,
+            "max": 0.004449619517572501
+          }
+        },
+        {
+          "n": 13,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.8877348756055881,
+            "median": 0.021974663856610732,
+            "max": 0.974141929864345
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 4.903313310933299e-10,
+            "median": 9.797353754947835e-07,
+            "max": 0.0021285744020360653
+          }
+        },
+        {
+          "n": 15,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.8877327100118464,
+            "median": 0.021973852291409912,
+            "max": 0.9741067163629396
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.6063950170064345e-10,
+            "median": 1.0136199080079678e-06,
+            "max": 0.00029380792318534077
+          }
+        },
+        {
+          "n": 17,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.8877327331832703,
+            "median": 0.021974274228796276,
+            "max": 0.9741093821326103
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.9528913475805894e-10,
+            "median": 1.1306935903121484e-06,
+            "max": 0.00022026590943369229
+          }
+        },
+        {
+          "n": 19,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.8877332736548169,
+            "median": 0.02197296888141409,
+            "max": 0.9741101939663395
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.5652192309498787e-10,
+            "median": 1.2409182659212092e-06,
+            "max": 0.00037464440936219034
+          }
+        },
+        {
+          "n": 21,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.8877305616406375,
+            "median": 0.02197509235105599,
+            "max": 0.9741133771688055
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.88897819397971e-11,
+            "median": 1.351097637325438e-06,
+            "max": 0.00012615147909400548
+          }
+        },
+        {
+          "n": 23,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.8877295091442647,
+            "median": 0.021974536760183128,
+            "max": 0.9741093243681007
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.977241481654346e-09,
+            "median": 1.4525454616887146e-06,
+            "max": 0.00032978723470478144
+          }
+        },
+        {
+          "n": 25,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.887734658424506,
+            "median": 0.021977142581818043,
+            "max": 0.9741067568018025
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 6.028813004377298e-10,
+            "median": 1.579703450715897e-06,
+            "max": 0.00032852308618203097
+          }
+        },
+        {
+          "n": 27,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -10.755568468811362,
+            "median": 0.021803279839730294,
+            "max": 0.9741051708982695
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.9103830456733704e-11,
+            "median": 1.6778964209152036e-06,
+            "max": 11.273401327092074
+          }
+        },
+        {
+          "n": 29,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -13.963587936007116,
+            "median": 0.02028531914481846,
+            "max": 6688643.891547872
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.3375256457948126e-09,
+            "median": 1.7379239807269187e-06,
+            "max": 6688643.47626549
+          }
+        },
+        {
+          "n": 31,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -12.126555210311949,
+            "median": 0.020287447860710017,
+            "max": 768619.8036723243
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.3881162885809317e-10,
+            "median": 1.8898190319305286e-06,
+            "max": 6688652.595978912
+          }
+        },
+        {
+          "n": 33,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -12.659464353485419,
+            "median": 0.01876197668241275,
+            "max": 1962802.0935751863
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.58335624798201e-11,
+            "median": 1.8661936564967618e-06,
+            "max": 1962814.2201303965
+          }
+        },
+        {
+          "n": 35,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -12.299596963386193,
+            "median": 0.01857337544117854,
+            "max": 20330.51526627471
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.7689671949483454e-10,
+            "median": 1.9912184257009358e-06,
+            "max": 1962812.0023649079
+          }
+        },
+        {
+          "n": 37,
+          "nonconverged": 10,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -12.213474201215377,
+            "median": 0.022249669699078822,
+            "max": 16375.420144947679
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.318767317570746e-11,
+            "median": 2.160369149351027e-06,
+            "max": 20339.670234108416
+          }
+        },
+        {
+          "n": 39,
+          "nonconverged": 9,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -14.090825263466968,
+            "median": 0.0241157547886246,
+            "max": 108577.00949090798
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.254854163969867e-09,
+            "median": 2.249589329039736e-06,
+            "max": 108583.14041318985
+          }
+        },
+        {
+          "n": 41,
+          "nonconverged": 10,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -22.51713178638306,
+            "median": 0.025314501894456498,
+            "max": 1930744.2979324502
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.454694473883137e-10,
+            "median": 2.327823438008636e-06,
+            "max": 1930744.4903969083
+          }
+        },
+        {
+          "n": 43,
+          "nonconverged": 9,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -15.841430741214026,
+            "median": 0.023731430229872785,
+            "max": 1031590.8007813251
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 6.30052454653196e-10,
+            "median": 2.288684584073053e-06,
+            "max": 1930756.4144734023
+          }
+        },
+        {
+          "n": 45,
+          "nonconverged": 9,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -24.203882770468454,
+            "median": 0.0226524651364457,
+            "max": 867122.2440214274
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.0990106602548622e-09,
+            "median": 2.3048187927088293e-06,
+            "max": 1031582.6449132408
+          }
+        },
+        {
+          "n": 47,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -17.20912575651755,
+            "median": 0.021972113157175954,
+            "max": 1932269.9018257954
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.851657185005024e-10,
+            "median": 2.380742330387875e-06,
+            "max": 1450670.638217668
+          }
+        },
+        {
+          "n": 49,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -25.408362701808983,
+            "median": 0.01738626776352703,
+            "max": 824691.907103282
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.469669410260394e-10,
+            "median": 2.41976283632539e-06,
+            "max": 1932282.2959655435
+          }
+        },
+        {
+          "n": 51,
+          "nonconverged": 9,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -25.670126816517154,
+            "median": 0.014965104356633674,
+            "max": 1136767.8489781134
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.189391696243547e-09,
+            "median": 2.5649106873970595e-06,
+            "max": 1136768.133488457
+          }
+        },
+        {
+          "n": 53,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -60.401009692452135,
+            "median": 0.013812369657671297,
+            "max": 788067.505687683
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.8553691916167736e-10,
+            "median": 2.6517648166191066e-06,
+            "max": 1136798.0025982687
+          }
+        },
+        {
+          "n": 55,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -240.68937117216603,
+            "median": 0.018162480448324914,
+            "max": 1499586.4684637138
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.633378456579521e-10,
+            "median": 2.7604303340922343e-06,
+            "max": 1499598.6074423296
+          }
+        },
+        {
+          "n": 57,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -51089.31209680543,
+            "median": 0.016718135322093985,
+            "max": 816089.569712417
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 9.987388693843968e-10,
+            "median": 3.0372335118045157e-06,
+            "max": 1494233.938007637
+          }
+        },
+        {
+          "n": 59,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -416055.59091659734,
+            "median": 0.017383961880341303,
+            "max": 442746.4464760126
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.9906565285054967e-10,
+            "median": 3.0902863841220096e-06,
+            "max": 816156.9712705127
+          }
+        },
+        {
+          "n": 61,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -987292.5739728508,
+            "median": 0.018162204989437214,
+            "max": 2334345.4809127897
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.3073986337985843e-11,
+            "median": 3.1598517580277985e-06,
+            "max": 2334461.392149952
+          }
+        }
+      ],
+      "ranges": {
+        "3-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 3.173692630298319e-05,
+          "median": 0.030770452372109958,
+          "max": 0.568316043034315
+        },
+        "9-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 6.430127541534603e-07,
+          "median": 3.5514503906597383e-06,
+          "max": 0.004449619517572501
+        },
+        "11-15": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.0638018466124777e-08,
+          "median": 1.6520007193321362e-06,
+          "max": 0.0022167707988955954
+        },
+        "11-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 4.412138423504075e-07,
+          "median": 2.977265467052348e-06,
+          "max": 0.0022288184735543837
+        },
+        "13-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 3.978235554313869e-07,
+          "median": 2.7811756240225805e-06,
+          "max": 0.00045133409059872065
+        },
+        "21-31": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 5.493980097526219e-07,
+          "median": 4.373111380573391e-06,
+          "max": 6688652.595978912
+        },
+        "31-41": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 6.024407639415585e-07,
+          "median": 5.3522575740316825e-06,
+          "max": 1962814.2201303965
+        },
+        "41-51": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.3719429716729792e-06,
+          "median": 5.841307540777052e-06,
+          "max": 1932283.004740131
+        },
+        "51-61": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.24615053209709e-06,
+          "median": 7.052763180581678e-06,
+          "max": 2334461.392149952
+        },
+        "59-61": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.3073986337985843e-11,
+          "median": 3.1598517580277985e-06,
+          "max": 2334461.392149952
+        }
+      }
+    },
+    {
+      "ref": "R03",
+      "target": "lower_structure",
+      "columns": 3052,
+      "by_n": [
+        {
+          "n": 3,
+          "nonconverged": 2020,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -0.4959991098580758,
+            "median": 2.2737367544323206e-13,
+            "max": 0.5000000000004547
+          },
+          "adjacent_abs_delta": null
+        },
+        {
+          "n": 5,
+          "nonconverged": 8,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -174.76526790089065,
+            "median": 0.00851142750013878,
+            "max": 255.27567933114597
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.4039551388123073e-07,
+            "median": 0.1729550835025293,
+            "max": 255.22533961793306
+          }
+        },
+        {
+          "n": 7,
+          "nonconverged": 127,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -144774690.45811093,
+            "median": 0.0063493534951248876,
+            "max": 526.8330626937222
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 9.72022462519817e-10,
+            "median": 0.37248612454595786,
+            "max": 144774690.30881825
+          }
+        },
+        {
+          "n": 9,
+          "nonconverged": 150,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -76578172.83613521,
+            "median": 0.07239947497816956,
+            "max": 735662422.647085
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 5.818264980916865e-09,
+            "median": 0.5699633444461369,
+            "max": 735662424.4380586
+          }
+        },
+        {
+          "n": 11,
+          "nonconverged": 63,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -603560070.4060147,
+            "median": 0.20782390528268024,
+            "max": 46671924.457188755
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.8066357370116748e-06,
+            "median": 0.5512203101559408,
+            "max": 735662430.0903411
+          }
+        },
+        {
+          "n": 13,
+          "nonconverged": 11,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -300.61944271324273,
+            "median": 0.3816933884460241,
+            "max": 583.7669592244865
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 4.4600278670259286e-07,
+            "median": 0.3917019874215839,
+            "max": 603560071.0209979
+          }
+        },
+        {
+          "n": 15,
+          "nonconverged": 4,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -133.89657163969014,
+            "median": 0.5147963815228422,
+            "max": 19.321018140821025
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.9933289624750614e-07,
+            "median": 0.26923405652985366,
+            "max": 584.3989124073423
+          }
+        },
+        {
+          "n": 17,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -32.539946080522895,
+            "median": 0.6172691905105694,
+            "max": 9.591711864103672
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.0139729056390934e-07,
+            "median": 0.1811895512415731,
+            "max": 127.86746066910246
+          }
+        },
+        {
+          "n": 19,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -10.160527973543822,
+            "median": 0.6530606383756776,
+            "max": 8.639440407418533
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.0675310022634221e-06,
+            "median": 0.12232309897365212,
+            "max": 26.570583509175776
+          }
+        },
+        {
+          "n": 21,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -13.86478404154036,
+            "median": 0.7057677402240188,
+            "max": 9.674880085187851
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 9.770826636668062e-07,
+            "median": 0.07270310155570314,
+            "max": 7.8954214701932415
+          }
+        },
+        {
+          "n": 23,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -12.641990988994166,
+            "median": 0.7641822438864665,
+            "max": 8.162325989071178
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.9564838516525924e-08,
+            "median": 0.04637237115684911,
+            "max": 5.821407728582926
+          }
+        },
+        {
+          "n": 25,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.959872463310148,
+            "median": 0.770050934655842,
+            "max": 6.092954138690857
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.553699687268818e-07,
+            "median": 0.03053258594388808,
+            "max": 7.581847974593529
+          }
+        },
+        {
+          "n": 27,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.495015820161825,
+            "median": 0.7749881030073311,
+            "max": 6.048032208899713
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.9491411623894237e-07,
+            "median": 0.017469675948404984,
+            "max": 1.132886718312875
+          }
+        },
+        {
+          "n": 29,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.538600402842121,
+            "median": 0.7810457856545554,
+            "max": 46.02370198074004
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.00874807080254e-08,
+            "median": 0.009810759558035897,
+            "max": 45.84319863981045
+          }
+        },
+        {
+          "n": 31,
+          "nonconverged": 1,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.122438517946193,
+            "median": 0.7952049808463926,
+            "max": 301.998535330963
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.8221885511593428e-07,
+            "median": 0.005261860588575473,
+            "max": 255.97483335022298
+          }
+        },
+        {
+          "n": 33,
+          "nonconverged": 1,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.015302137639992,
+            "median": 0.7958093169701215,
+            "max": 325.11295219616886
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.278144049545517e-07,
+            "median": 0.00254542482900888,
+            "max": 23.11441686520584
+          }
+        },
+        {
+          "n": 35,
+          "nonconverged": 1,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.049485352179772,
+            "median": 0.7974596914915537,
+            "max": 447.7164994736636
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.75957666215254e-08,
+            "median": 0.0011394730623806026,
+            "max": 122.60354727749473
+          }
+        },
+        {
+          "n": 37,
+          "nonconverged": 1,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.109940754974559,
+            "median": 0.7911354776002781,
+            "max": 71.88522916195916
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.4596412256651092e-07,
+            "median": 0.00048416288132102636,
+            "max": 375.83127031170443
+          }
+        },
+        {
+          "n": 39,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -561194.7737434516,
+            "median": 0.795278175939643,
+            "max": 6.17158351084322
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.5818053472903557e-08,
+            "median": 0.0001654576799410279,
+            "max": 561266.6589726135
+          }
+        },
+        {
+          "n": 41,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.123402251117568,
+            "median": 0.7921275354904083,
+            "max": 18.108273987946177
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.1175765141379088e-08,
+            "median": 6.489376175977668e-05,
+            "max": 561212.8820174395
+          }
+        },
+        {
+          "n": 43,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -11120710.280333418,
+            "median": 0.795751042509437,
+            "max": 6.199860245526224
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.16526734927902e-08,
+            "median": 3.496770727906551e-05,
+            "max": 11120728.388607407
+          }
+        },
+        {
+          "n": 45,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.122080045099665,
+            "median": 0.7982463501672328,
+            "max": 20.747988920260923
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.499018592061475e-08,
+            "median": 2.6862029471885762e-05,
+            "max": 11120731.028322339
+          }
+        },
+        {
+          "n": 47,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -61717769.84175453,
+            "median": 0.7953549770487598,
+            "max": 6.206753267750173
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.2280452210688964e-09,
+            "median": 2.2141201952763367e-05,
+            "max": 61717790.58974345
+          }
+        },
+        {
+          "n": 49,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.12186913953019,
+            "median": 0.7958288464437828,
+            "max": 20.508410985778937
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.73843567003496e-09,
+            "median": 1.9949165221078147e-05,
+            "max": 61717790.350165516
+          }
+        },
+        {
+          "n": 51,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.121905340477497,
+            "median": 0.7982713550809422,
+            "max": 20.801986363600008
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 6.288701115408912e-09,
+            "median": 1.8993377352671814e-05,
+            "max": 1.6036159748543923
+          }
+        },
+        {
+          "n": 53,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.12187985109631,
+            "median": 0.7982679809808815,
+            "max": 20.440062290097103
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 8.505139703629538e-09,
+            "median": 1.717509780974069e-05,
+            "max": 0.36192407350290523
+          }
+        },
+        {
+          "n": 55,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.121910087269953,
+            "median": 0.7982564809633459,
+            "max": 20.28570274555659
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.7966962079517543e-09,
+            "median": 1.7158106970782683e-05,
+            "max": 0.1543595445405117
+          }
+        },
+        {
+          "n": 57,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.121794105208437,
+            "median": 0.7982390410463722,
+            "max": 20.653288433412854
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.3291355571709573e-08,
+            "median": 1.6773371612543997e-05,
+            "max": 0.36758568785626267
+          }
+        },
+        {
+          "n": 59,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.121913686133212,
+            "median": 0.7958023850785594,
+            "max": 20.794621455979723
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 6.2966591940494254e-09,
+            "median": 1.697536902156571e-05,
+            "max": 3.173171862258414
+          }
+        },
+        {
+          "n": 61,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -6.121987511259476,
+            "median": 0.7958192526139101,
+            "max": 20.67374898928165
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.672196958679706e-08,
+            "median": 1.6967101146292407e-05,
+            "max": 3.1731871675092407
+          }
+        }
+      ],
+      "ranges": {
+        "3-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 0.011089072778531772,
+          "median": 2.7480851347451107,
+          "max": 735662430.0903411
+        },
+        "9-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 4.634362085198518e-06,
+          "median": 1.5231488006625113,
+          "max": 735662430.0903411
+        },
+        "11-15": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 7.878832093410892e-07,
+          "median": 0.6658360957221703,
+          "max": 603560071.0209979
+        },
+        "11-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 4.634362085198518e-06,
+          "median": 0.9459442424348481,
+          "max": 603560071.0209979
+        },
+        "13-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 3.0801720640738495e-06,
+          "median": 0.5962763700092637,
+          "max": 584.3989124073423
+        },
+        "21-31": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 5.903547389607411e-06,
+          "median": 0.11424671536030928,
+          "max": 301.8180370684863
+        },
+        "31-41": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 3.690566018121899e-06,
+          "median": 0.004808265613519325,
+          "max": 561642.4902429252
+        },
+        "41-51": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 5.66032304050168e-06,
+          "median": 6.799358709486114e-05,
+          "max": 61717790.6437409
+        },
+        "51-61": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 5.70040015190898e-06,
+          "median": 4.3786469973383646e-05,
+          "max": 3.1732086648441964
+        },
+        "59-61": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 1.672196958679706e-08,
+          "median": 1.6967101146292407e-05,
+          "max": 3.1731871675092407
+        }
+      }
+    },
+    {
+      "ref": "R04",
+      "target": "upper_structure",
+      "columns": 2712,
+      "by_n": [
+        {
+          "n": 3,
+          "nonconverged": 1906,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.4965509429644044,
+            "median": -0.014194767365779626,
+            "max": 0.5000000135321443
+          },
+          "adjacent_abs_delta": null
+        },
+        {
+          "n": 5,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.9326340250595422,
+            "median": 0.027196354143995904,
+            "max": 0.935856101086074
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.1828365131805185e-07,
+            "median": 0.03163776926828632,
+            "max": 0.5446080396880006
+          }
+        },
+        {
+          "n": 7,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.7796843625710608,
+            "median": 0.027521364153415107,
+            "max": 1.282848709008249
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 9.067807695828378e-07,
+            "median": 0.0020857243043224116,
+            "max": 0.538137565946613
+          }
+        },
+        {
+          "n": 9,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.7229851383178811,
+            "median": 0.027575200396086075,
+            "max": 1.3320051822247478
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.780975698144175e-10,
+            "median": 3.7657576740457444e-05,
+            "max": 0.1375982493691481
+          }
+        },
+        {
+          "n": 11,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.7205806664109105,
+            "median": 0.0275768631978508,
+            "max": 1.3458235648627124
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.321702024550177e-09,
+            "median": 1.4014356111147208e-06,
+            "max": 0.09390472617178602
+          }
+        },
+        {
+          "n": 13,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.7206615724122685,
+            "median": 0.027578342691242597,
+            "max": 1.339125627808471
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.375113687478006e-10,
+            "median": 9.291397873312235e-07,
+            "max": 0.015192209769793408
+          }
+        },
+        {
+          "n": 15,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.7206448974319528,
+            "median": 0.02757776754583574,
+            "max": 1.3394041645727839
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.77889760886319e-10,
+            "median": 1.0107162893291388e-06,
+            "max": 0.0004718162024346384
+          }
+        },
+        {
+          "n": 17,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.7206424530459117,
+            "median": 0.027576528720601345,
+            "max": 1.3394706471201516
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.688693712116219e-10,
+            "median": 1.114729286655347e-06,
+            "max": 0.00013534779895962856
+          }
+        },
+        {
+          "n": 19,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.7206431724669073,
+            "median": 0.027576406607522586,
+            "max": 1.3394695149759173
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.9003891793545336e-09,
+            "median": 1.2669786428887164e-06,
+            "max": 7.457994934156886e-05
+          }
+        },
+        {
+          "n": 21,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.7206455532827931,
+            "median": 0.027578330714675303,
+            "max": 1.3394656490718262
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 6.236859917407855e-10,
+            "median": 1.4133262880022812e-06,
+            "max": 0.00020414732739482133
+          }
+        },
+        {
+          "n": 23,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -0.7206449358507143,
+            "median": 0.02757664030457363,
+            "max": 1108761.9298506086
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 7.617018127348274e-12,
+            "median": 1.5349486375271226e-06,
+            "max": 1108761.4537521664
+          }
+        },
+        {
+          "n": 25,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -9.535529381742435,
+            "median": 0.027288818421368433,
+            "max": 1.3394714975935358
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 6.634763849433511e-10,
+            "median": 1.6171532593034499e-06,
+            "max": 1108769.646090806
+          }
+        },
+        {
+          "n": 27,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -13.512625217016875,
+            "median": 0.02649788757719307,
+            "max": 2756950.3519220836
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 4.2723513615783304e-10,
+            "median": 1.7505107621218485e-06,
+            "max": 2756949.942131214
+          }
+        },
+        {
+          "n": 29,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -12.536305640357455,
+            "median": 0.02618107684372717,
+            "max": 1544516.0649844226
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.085407898761332e-10,
+            "median": 1.7561985714564798e-06,
+            "max": 2756962.2115264023
+          }
+        },
+        {
+          "n": 31,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -11.866402576911923,
+            "median": 0.023643987496313912,
+            "max": 524537.9950936742
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 5.177298589842394e-10,
+            "median": 1.891934687137109e-06,
+            "max": 1019978.0698907485
+          }
+        },
+        {
+          "n": 33,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -11.293621021227182,
+            "median": 0.02311410777679157,
+            "max": 3.4858940866904504
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.6726638679974712e-09,
+            "median": 1.9863362581418187e-06,
+            "max": 524538.3264689229
+          }
+        },
+        {
+          "n": 35,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -11.507176898656212,
+            "median": 0.02311320352026769,
+            "max": 623418.6557927073
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.6040075934142806e-09,
+            "median": 2.0508517195594322e-06,
+            "max": 623417.9515039885
+          }
+        },
+        {
+          "n": 37,
+          "nonconverged": 7,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -11.604691674323817,
+            "median": 0.027287680851486584,
+            "max": 197778.91859261386
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 8.753886504564434e-10,
+            "median": 2.1776586436317302e-06,
+            "max": 623417.9514996273
+          }
+        },
+        {
+          "n": 39,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -13.253509314967346,
+            "median": 0.029084371865508274,
+            "max": 1185355.7660638662
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 9.883933671517298e-10,
+            "median": 2.1837465737917228e-06,
+            "max": 1185365.9900473284
+          }
+        },
+        {
+          "n": 41,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -14.759866026316331,
+            "median": 0.02975337898158159,
+            "max": 653035.4595309716
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.2050804798491299e-11,
+            "median": 2.322823661415896e-06,
+            "max": 1185365.8149372549
+          }
+        },
+        {
+          "n": 43,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -14.645194483984369,
+            "median": 0.02887269898798195,
+            "max": 1786906.9207874434
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.3160388334654272e-09,
+            "median": 2.358947767788777e-06,
+            "max": 1786917.0431679802
+          }
+        },
+        {
+          "n": 45,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -27.269417784528514,
+            "median": 0.028380479043391915,
+            "max": 1089582.5902723963
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.6731080399476923e-09,
+            "median": 2.3085963221092243e-06,
+            "max": 1786921.9290426574
+          }
+        },
+        {
+          "n": 47,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -23.23234298037005,
+            "median": 0.02887627586221697,
+            "max": 2510409.993947482
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.8762769943568856e-10,
+            "median": 2.435910175790923e-06,
+            "max": 2510410.3028694657
+          }
+        },
+        {
+          "n": 49,
+          "nonconverged": 6,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -22.892544974285556,
+            "median": 0.0264978831321514,
+            "max": 267668.80166388035
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.0572875908110291e-10,
+            "median": 2.4491316708008526e-06,
+            "max": 2510426.812327787
+          }
+        },
+        {
+          "n": 51,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -34.69673457687236,
+            "median": 0.023350681410988727,
+            "max": 105955.93757488018
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 7.303242455236614e-10,
+            "median": 2.4854176103872305e-06,
+            "max": 267680.8693829848
+          }
+        },
+        {
+          "n": 53,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -55.775332969999454,
+            "median": 0.017803288090590286,
+            "max": 480286.241696421
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 2.110141394950915e-09,
+            "median": 2.5656722755229566e-06,
+            "max": 480286.0550845484
+          }
+        },
+        {
+          "n": 55,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -53786.74156272033,
+            "median": 0.022353237678544247,
+            "max": 682672.1948653401
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.4754277799511328e-09,
+            "median": 2.7015314572054194e-06,
+            "max": 682671.9280018812
+          }
+        },
+        {
+          "n": 57,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -222388.90573090248,
+            "median": 0.026496221176330437,
+            "max": 845076.5317433138
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 3.160948836011812e-09,
+            "median": 2.8918262273691653e-06,
+            "max": 682769.8859487406
+          }
+        },
+        {
+          "n": 59,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -626663.609600845,
+            "median": 0.02722033506711341,
+            "max": 633658.0102545437
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.206217348226346e-09,
+            "median": 3.1375843718706165e-06,
+            "max": 845149.9452732246
+          }
+        },
+        {
+          "n": 61,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": -613183.4800519367,
+            "median": 0.02566034331721312,
+            "max": 421457.78818225185
+          },
+          "adjacent_abs_delta": {
+            "count": 2712,
+            "nonfinite": 0,
+            "min": 1.053763298841659e-09,
+            "median": 3.1890245395516104e-06,
+            "max": 633779.6536087351
+          }
+        }
+      ],
+      "ranges": {
+        "3-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.0263858712278306e-05,
+          "median": 0.03390369178691799,
+          "max": 0.9177979587685741
+        },
+        "9-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 4.9253083034273e-07,
+          "median": 3.6619342154153856e-06,
+          "max": 0.1097040999429737
+        },
+        "11-15": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.8787886801874265e-08,
+          "median": 1.6799040167825297e-06,
+          "max": 0.015664025972228046
+        },
+        "11-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 4.5129161208024016e-07,
+          "median": 3.0073584866840974e-06,
+          "max": 0.015799373771187675
+        },
+        "13-21": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.9217679891880834e-07,
+          "median": 2.8332120791674242e-06,
+          "max": 0.000607164001394267
+        },
+        "21-31": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 5.271463123790454e-07,
+          "median": 4.387388344184728e-06,
+          "max": 2756962.2115264023
+        },
+        "31-41": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 7.535763870691881e-07,
+          "median": 5.469385882861388e-06,
+          "max": 1185365.9900473284
+        },
+        "41-51": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 9.912064342643134e-07,
+          "median": 5.92058762549641e-06,
+          "max": 2510426.812327787
+        },
+        "51-61": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.2513670526459464e-06,
+          "median": 7.036630506718211e-06,
+          "max": 845150.3292510797
+        },
+        "59-61": {
+          "count": 2712,
+          "nonfinite": 0,
+          "min": 1.053763298841659e-09,
+          "median": 3.1890245395516104e-06,
+          "max": 633779.6536087351
+        }
+      }
+    },
+    {
+      "ref": "R04",
+      "target": "lower_structure",
+      "columns": 3052,
+      "by_n": [
+        {
+          "n": 3,
+          "nonconverged": 2000,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -0.49316298617077337,
+            "median": 2.2737367544323206e-13,
+            "max": 0.5000000000004547
+          },
+          "adjacent_abs_delta": null
+        },
+        {
+          "n": 5,
+          "nonconverged": 13,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -472.05579004787273,
+            "median": 0.029365158560381133,
+            "max": 207.36203317094123
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 8.229640116041992e-07,
+            "median": 0.15947426309514867,
+            "max": 471.7426938663318
+          }
+        },
+        {
+          "n": 7,
+          "nonconverged": 124,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -268376784.31162655,
+            "median": 0.033282190652244026,
+            "max": 52174311.52949801
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.3791386865923414e-05,
+            "median": 0.34845257471681634,
+            "max": 268376784.5769663
+          }
+        },
+        {
+          "n": 9,
+          "nonconverged": 139,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -773558024.474939,
+            "median": 0.08400501713663289,
+            "max": 155888046.26858246
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.3851240510120988e-07,
+            "median": 0.5937825737513549,
+            "max": 773557766.6369985
+          }
+        },
+        {
+          "n": 11,
+          "nonconverged": 67,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -294681780.33226186,
+            "median": 0.2467159871146123,
+            "max": 59972228.07950617
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 8.285542207886465e-08,
+            "median": 0.5458751801755852,
+            "max": 773558022.1112047
+          }
+        },
+        {
+          "n": 13,
+          "nonconverged": 24,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -904.1150047568581,
+            "median": 0.4916195908560894,
+            "max": 82858916.88709694
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.4655747690994758e-06,
+            "median": 0.40222117394921497,
+            "max": 294681603.7504538
+          }
+        },
+        {
+          "n": 15,
+          "nonconverged": 5,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -167.65928560560724,
+            "median": 0.6358489840525863,
+            "max": 121.85281397254403
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 5.852650701854145e-06,
+            "median": 0.2816651761158937,
+            "max": 82858921.39749227
+          }
+        },
+        {
+          "n": 17,
+          "nonconverged": 2,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -115.41435373447143,
+            "median": 0.724914195088104,
+            "max": 14.705604177079522
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.1592990176723106e-06,
+            "median": 0.18742051457661546,
+            "max": 163.28039860907097
+          }
+        },
+        {
+          "n": 19,
+          "nonconverged": 2,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -126.22813704889268,
+            "median": 0.7777664523041494,
+            "max": 7.466582252644685
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.894206772907637e-06,
+            "median": 0.12311700592567831,
+            "max": 91.56687353263032
+          }
+        },
+        {
+          "n": 21,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -12.030664346177446,
+            "median": 0.8183816293235395,
+            "max": 7.80215327493579
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.227890819194727e-08,
+            "median": 0.08080306960766848,
+            "max": 118.76259746135179
+          }
+        },
+        {
+          "n": 23,
+          "nonconverged": 1,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -219.2050814261197,
+            "median": 0.860143823518797,
+            "max": 6.2949394508978
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.3776848340494325e-06,
+            "median": 0.04826824260931062,
+            "max": 216.3083622178649
+          }
+        },
+        {
+          "n": 25,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -12.140089302556134,
+            "median": 0.8789199862621899,
+            "max": 5.797796328497498
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.5209086490795016e-07,
+            "median": 0.03079106599204806,
+            "max": 210.31553618798944
+          }
+        },
+        {
+          "n": 27,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -8.596815253887144,
+            "median": 0.8841917716916896,
+            "max": 5.909789133141658
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.324142643483356e-07,
+            "median": 0.02038457883020328,
+            "max": 3.543274048668991
+          }
+        },
+        {
+          "n": 29,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.78390171696924,
+            "median": 0.8942824311433242,
+            "max": 5.82325167513136
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.914169610652607e-08,
+            "median": 0.01135638814878348,
+            "max": 0.8129135369179039
+          }
+        },
+        {
+          "n": 31,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.573364252258216,
+            "median": 0.9025200796661466,
+            "max": 5.910048229363838
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 9.641128144721733e-07,
+            "median": 0.005932803034284007,
+            "max": 1.331230443934146
+          }
+        },
+        {
+          "n": 33,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.575662276358798,
+            "median": 0.9095066663669513,
+            "max": 5.9473320105687435
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 9.470863915339578e-08,
+            "median": 0.003132055367018438,
+            "max": 2.2069853416207934
+          }
+        },
+        {
+          "n": 35,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -8.336885053405467,
+            "median": 0.9146290095781069,
+            "max": 5.959148912548017
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 8.331880962941796e-09,
+            "median": 0.0013721750981403602,
+            "max": 2.1932200584792554
+          }
+        },
+        {
+          "n": 37,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.592729046354862,
+            "median": 0.9161286925035483,
+            "max": 5.9881102581639425
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.2319105735514313e-08,
+            "median": 0.0005748661683355749,
+            "max": 2.532643856931145
+          }
+        },
+        {
+          "n": 39,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.577994270199724,
+            "median": 0.9120666539668036,
+            "max": 6.004377429447459
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 2.514502739359159e-08,
+            "median": 0.00023968897664872202,
+            "max": 0.778925245637538
+          }
+        },
+        {
+          "n": 41,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.7244502743997145,
+            "median": 0.9160181701889769,
+            "max": 6.001453932012737
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.0518306226003915e-08,
+            "median": 8.118482492136536e-05,
+            "max": 2.2165321084216885
+          }
+        },
+        {
+          "n": 43,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -11.566356324448634,
+            "median": 0.9123722557646943,
+            "max": 6.001410375924479
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.6026904126629233e-08,
+            "median": 3.751617941816221e-05,
+            "max": 3.8419060500489195
+          }
+        },
+        {
+          "n": 45,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.972748206360393,
+            "median": 0.9123152492230702,
+            "max": 6.0041362063338966
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.542936610756442e-08,
+            "median": 2.793062901673693e-05,
+            "max": 3.593608118088241
+          }
+        },
+        {
+          "n": 47,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -41.34599354041302,
+            "median": 0.9122876019536079,
+            "max": 6.005531446596706
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.2861391951446421e-08,
+            "median": 2.253341313007695e-05,
+            "max": 33.373245334052626
+          }
+        },
+        {
+          "n": 49,
+          "nonconverged": 1,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -404.06864348230556,
+            "median": 0.9122730270448756,
+            "max": 6.0054055860437074
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.7512320482637733e-09,
+            "median": 1.99775035980565e-05,
+            "max": 362.72264994189254
+          }
+        },
+        {
+          "n": 51,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -7.575948356573235,
+            "median": 0.9195778896760203,
+            "max": 1620644.8443274014
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.0122464522719383e-09,
+            "median": 1.9387951397220604e-05,
+            "max": 1621048.9129708838
+          }
+        },
+        {
+          "n": 53,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -1888824.9484686037,
+            "median": 0.9122995938337226,
+            "max": 6.005711599853157
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.0488292900845408e-08,
+            "median": 1.8440394455865317e-05,
+            "max": 3509469.792796005
+          }
+        },
+        {
+          "n": 55,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -27896295.306018457,
+            "median": 0.9122968582088333,
+            "max": 6.005781147565358
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 1.1942120181629434e-08,
+            "median": 1.811734557577438e-05,
+            "max": 26007470.357549854
+          }
+        },
+        {
+          "n": 57,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -56770645.07524078,
+            "median": 0.9122871852762273,
+            "max": 6.00576451833922
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 5.246874934528023e-09,
+            "median": 1.7360130073029723e-05,
+            "max": 28874349.769222327
+          }
+        },
+        {
+          "n": 59,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -3463764.626051195,
+            "median": 0.9122900749857763,
+            "max": 6.005728068049166
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 3.099103196291253e-10,
+            "median": 1.689584371433739e-05,
+            "max": 53306880.44918959
+          }
+        },
+        {
+          "n": 61,
+          "nonconverged": 0,
+          "nonfinite": 0,
+          "mu_minus_coarse": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": -66093.44812570888,
+            "median": 0.9087413326244587,
+            "max": 6.005719755299879
+          },
+          "adjacent_abs_delta": {
+            "count": 3052,
+            "nonfinite": 0,
+            "min": 7.311200533877127e-09,
+            "median": 1.7142714227702527e-05,
+            "max": 3397671.177925486
+          }
+        }
+      ],
+      "ranges": {
+        "3-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 0.09266171793910871,
+          "median": 2.764215780125369,
+          "max": 773558024.5110061
+        },
+        "9-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 0.0006989488765611895,
+          "median": 1.5768796064159005,
+          "max": 773558024.0551192
+        },
+        "11-15": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 7.833976269466802e-06,
+          "median": 0.7017077541033814,
+          "max": 294681778.87965536
+        },
+        "11-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 7.833976269466802e-06,
+          "median": 1.0072310888579068,
+          "max": 294681779.76586944
+        },
+        "13-21": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 7.011949719526456e-06,
+          "median": 0.6271433502796526,
+          "max": 82858921.39749227
+        },
+        "21-31": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 9.318753654952161e-06,
+          "median": 0.12148430895911133,
+          "max": 216.3083622178649
+        },
+        "31-41": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 1.0665367653928115e-05,
+          "median": 0.005715635169053712,
+          "max": 2.9620516079005483
+        },
+        "41-51": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 6.399219500963227e-06,
+          "median": 7.776575318985124e-05,
+          "max": 1621048.9129708838
+        },
+        "51-61": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 6.897631465108134e-06,
+          "median": 4.4883235432280344e-05,
+          "max": 58391289.91956818
+        },
+        "59-61": {
+          "count": 3052,
+          "nonfinite": 0,
+          "min": 7.311200533877127e-09,
+          "median": 1.7142714227702527e-05,
+          "max": 3397671.177925486
+        }
+      }
+    }
+  ],
+  "pooled": {
+    "upper_structure": [
+      {
+        "n": 3,
+        "columns": 10848,
+        "nonconverged": 7724,
+        "nonfinite": 0,
+        "delta": null
+      },
+      {
+        "n": 5,
+        "columns": 10848,
+        "nonconverged": 52,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.0138330708286958e-07,
+          "median": 0.02808206092970522,
+          "max": 0.5446080396880006
+        }
+      },
+      {
+        "n": 7,
+        "columns": 10848,
+        "nonconverged": 52,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 7.000255664024735e-08,
+          "median": 0.0016459992540944768,
+          "max": 0.538137565946613
+        }
+      },
+      {
+        "n": 9,
+        "columns": 10848,
+        "nonconverged": 52,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 5.780975698144175e-10,
+          "median": 2.5649973508734547e-05,
+          "max": 0.27870461853967754
+        }
+      },
+      {
+        "n": 11,
+        "columns": 10848,
+        "nonconverged": 52,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.2096279533579946e-10,
+          "median": 1.2347214237706794e-06,
+          "max": 0.27866191184216405
+        }
+      },
+      {
+        "n": 13,
+        "columns": 10848,
+        "nonconverged": 52,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 2.944489096989855e-10,
+          "median": 9.487455372436671e-07,
+          "max": 0.015192209769793408
+        }
+      },
+      {
+        "n": 15,
+        "columns": 10848,
+        "nonconverged": 51,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.6063950170064345e-10,
+          "median": 1.0270842949466896e-06,
+          "max": 0.0005216039324977828
+        }
+      },
+      {
+        "n": 17,
+        "columns": 10848,
+        "nonconverged": 52,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 2.688693712116219e-10,
+          "median": 1.1082051400990167e-06,
+          "max": 0.0004122690326084921
+        }
+      },
+      {
+        "n": 19,
+        "columns": 10848,
+        "nonconverged": 52,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 4.581579560181126e-11,
+          "median": 1.2072027288922982e-06,
+          "max": 0.0006073110288298267
+        }
+      },
+      {
+        "n": 21,
+        "columns": 10848,
+        "nonconverged": 52,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 5.88897819397971e-11,
+          "median": 1.3568779877459747e-06,
+          "max": 0.0005633873570332071
+        }
+      },
+      {
+        "n": 23,
+        "columns": 10848,
+        "nonconverged": 51,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 7.617018127348274e-12,
+          "median": 1.47522433735503e-06,
+          "max": 5745197.636302961
+        }
+      },
+      {
+        "n": 25,
+        "columns": 10848,
+        "nonconverged": 51,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 3.099103196291253e-10,
+          "median": 1.542393704312417e-06,
+          "max": 5745204.6447718255
+        }
+      },
+      {
+        "n": 27,
+        "columns": 10848,
+        "nonconverged": 50,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 2.9103830456733704e-11,
+          "median": 1.6486624190292787e-06,
+          "max": 2756949.942131214
+        }
+      },
+      {
+        "n": 29,
+        "columns": 10848,
+        "nonconverged": 49,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 4.348521542851813e-10,
+          "median": 1.7473947195867368e-06,
+          "max": 6688643.47626549
+        }
+      },
+      {
+        "n": 31,
+        "columns": 10848,
+        "nonconverged": 49,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.3881162885809317e-10,
+          "median": 1.8344592831454065e-06,
+          "max": 6688652.595978912
+        }
+      },
+      {
+        "n": 33,
+        "columns": 10848,
+        "nonconverged": 50,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 8.58335624798201e-11,
+          "median": 1.8998983364326705e-06,
+          "max": 1962814.2201303965
+        }
+      },
+      {
+        "n": 35,
+        "columns": 10848,
+        "nonconverged": 51,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.7689671949483454e-10,
+          "median": 1.981088360025751e-06,
+          "max": 1962812.0023649079
+        }
+      },
+      {
+        "n": 37,
+        "columns": 10848,
+        "nonconverged": 51,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.318767317570746e-11,
+          "median": 2.0838254499722098e-06,
+          "max": 1948817.8956105767
+        }
+      },
+      {
+        "n": 39,
+        "columns": 10848,
+        "nonconverged": 44,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 9.883933671517298e-10,
+          "median": 2.1684666080545867e-06,
+          "max": 1948827.9666706682
+        }
+      },
+      {
+        "n": 41,
+        "columns": 10848,
+        "nonconverged": 41,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.2050804798491299e-11,
+          "median": 2.2591431729779288e-06,
+          "max": 1930744.4903969083
+        }
+      },
+      {
+        "n": 43,
+        "columns": 10848,
+        "nonconverged": 37,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 6.30052454653196e-10,
+          "median": 2.2567502355741453e-06,
+          "max": 1930756.4144734023
+        }
+      },
+      {
+        "n": 45,
+        "columns": 10848,
+        "nonconverged": 39,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 7.964899850776419e-10,
+          "median": 2.322924842701468e-06,
+          "max": 1786921.9290426574
+        }
+      },
+      {
+        "n": 47,
+        "columns": 10848,
+        "nonconverged": 35,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 2.8762769943568856e-10,
+          "median": 2.393582633430924e-06,
+          "max": 2510410.3028694657
+        }
+      },
+      {
+        "n": 49,
+        "columns": 10848,
+        "nonconverged": 33,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 4.240519047016278e-11,
+          "median": 2.387945414739079e-06,
+          "max": 2510426.812327787
+        }
+      },
+      {
+        "n": 51,
+        "columns": 10848,
+        "nonconverged": 31,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 7.303242455236614e-10,
+          "median": 2.447415056394675e-06,
+          "max": 1172287.942061664
+        }
+      },
+      {
+        "n": 53,
+        "columns": 10848,
+        "nonconverged": 32,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.8553691916167736e-10,
+          "median": 2.539388219702232e-06,
+          "max": 1136798.0025982687
+        }
+      },
+      {
+        "n": 55,
+        "columns": 10848,
+        "nonconverged": 31,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 8.633378456579521e-10,
+          "median": 2.662783174400829e-06,
+          "max": 2144224.8347639134
+        }
+      },
+      {
+        "n": 57,
+        "columns": 10848,
+        "nonconverged": 29,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 8.931237971410155e-10,
+          "median": 2.9422754437291587e-06,
+          "max": 5717763.556412407
+        }
+      },
+      {
+        "n": 59,
+        "columns": 10848,
+        "nonconverged": 28,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.9906565285054967e-10,
+          "median": 3.0712398597643187e-06,
+          "max": 5717853.289453209
+        }
+      },
+      {
+        "n": 61,
+        "columns": 10848,
+        "nonconverged": 28,
+        "nonfinite": 0,
+        "delta": {
+          "count": 10848,
+          "nonfinite": 0,
+          "min": 1.3073986337985843e-11,
+          "median": 3.1826773465581937e-06,
+          "max": 2334461.392149952
+        }
+      }
+    ],
+    "lower_structure": [
+      {
+        "n": 3,
+        "columns": 12208,
+        "nonconverged": 8019,
+        "nonfinite": 0,
+        "delta": null
+      },
+      {
+        "n": 5,
+        "columns": 12208,
+        "nonconverged": 39,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 2.4643668439239264e-08,
+          "median": 0.16236832043830418,
+          "max": 471.7426938663318
+        }
+      },
+      {
+        "n": 7,
+        "columns": 12208,
+        "nonconverged": 525,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 9.72022462519817e-10,
+          "median": 0.3557551490163178,
+          "max": 389663755.9494853
+        }
+      },
+      {
+        "n": 9,
+        "columns": 12208,
+        "nonconverged": 611,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 5.818264980916865e-09,
+          "median": 0.576856734272269,
+          "max": 773557766.6369985
+        }
+      },
+      {
+        "n": 11,
+        "columns": 12208,
+        "nonconverged": 258,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 8.285542207886465e-08,
+          "median": 0.5484218613643179,
+          "max": 773558022.1112047
+        }
+      },
+      {
+        "n": 13,
+        "columns": 12208,
+        "nonconverged": 68,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 3.095237843808718e-09,
+          "median": 0.39896491479817087,
+          "max": 603560071.0209979
+        }
+      },
+      {
+        "n": 15,
+        "columns": 12208,
+        "nonconverged": 21,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 2.9933289624750614e-07,
+          "median": 0.2787092683637411,
+          "max": 82858921.39749227
+        }
+      },
+      {
+        "n": 17,
+        "columns": 12208,
+        "nonconverged": 8,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 6.448976819228847e-08,
+          "median": 0.18671664270982546,
+          "max": 31569053.642875366
+        }
+      },
+      {
+        "n": 19,
+        "columns": 12208,
+        "nonconverged": 6,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 3.635250322986394e-09,
+          "median": 0.12459676987850798,
+          "max": 167.24466888204824
+        }
+      },
+      {
+        "n": 21,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 7.227890819194727e-08,
+          "median": 0.07801360497910537,
+          "max": 248.95579825608093
+        }
+      },
+      {
+        "n": 23,
+        "columns": 12208,
+        "nonconverged": 1,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 3.9564838516525924e-08,
+          "median": 0.049057880639566065,
+          "max": 216.3083622178649
+        }
+      },
+      {
+        "n": 25,
+        "columns": 12208,
+        "nonconverged": 1,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 2.374640644120518e-07,
+          "median": 0.030853516697106897,
+          "max": 311.3521989078183
+        }
+      },
+      {
+        "n": 27,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 3.6407527659321204e-08,
+          "median": 0.01875244263692366,
+          "max": 311.35220228657295
+        }
+      },
+      {
+        "n": 29,
+        "columns": 12208,
+        "nonconverged": 1,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 3.914169610652607e-08,
+          "median": 0.010520738232003168,
+          "max": 202376.98724503236
+        }
+      },
+      {
+        "n": 31,
+        "columns": 12208,
+        "nonconverged": 3,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 7.363883014477324e-08,
+          "median": 0.005708996622843188,
+          "max": 202076.03336495353
+        }
+      },
+      {
+        "n": 33,
+        "columns": 12208,
+        "nonconverged": 1,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 1.380681169393938e-08,
+          "median": 0.0028664367605415464,
+          "max": 650.2011113162757
+        }
+      },
+      {
+        "n": 35,
+        "columns": 12208,
+        "nonconverged": 1,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 8.331880962941796e-09,
+          "median": 0.0013102187137974397,
+          "max": 122.60354727749473
+        }
+      },
+      {
+        "n": 37,
+        "columns": 12208,
+        "nonconverged": 1,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 4.2646206566132605e-09,
+          "median": 0.0005515173425010289,
+          "max": 375.83127031170443
+        }
+      },
+      {
+        "n": 39,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 2.514502739359159e-08,
+          "median": 0.00020665709985223657,
+          "max": 561266.6589726135
+        }
+      },
+      {
+        "n": 41,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 1.0518306226003915e-08,
+          "median": 7.45307123679595e-05,
+          "max": 561212.8820174395
+        }
+      },
+      {
+        "n": 43,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 8.312554200529121e-09,
+          "median": 3.8083382378317765e-05,
+          "max": 11120728.388607407
+        }
+      },
+      {
+        "n": 45,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 4.589082891470753e-09,
+          "median": 2.7796387712442083e-05,
+          "max": 11120731.028322339
+        }
+      },
+      {
+        "n": 47,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 1.2280452210688964e-09,
+          "median": 2.247190843718272e-05,
+          "max": 61717790.58974345
+        }
+      },
+      {
+        "n": 49,
+        "columns": 12208,
+        "nonconverged": 1,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 1.7512320482637733e-09,
+          "median": 2.007602779485751e-05,
+          "max": 61717790.350165516
+        }
+      },
+      {
+        "n": 51,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 3.0122464522719383e-09,
+          "median": 1.905997351059341e-05,
+          "max": 34813441.47258414
+        }
+      },
+      {
+        "n": 53,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 2.6147972675971687e-10,
+          "median": 1.792152772850386e-05,
+          "max": 21608681.549881104
+        }
+      },
+      {
+        "n": 55,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 9.467839845456183e-10,
+          "median": 1.805251747555303e-05,
+          "max": 26007470.357549854
+        }
+      },
+      {
+        "n": 57,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 5.246874934528023e-09,
+          "median": 1.7517171386316477e-05,
+          "max": 28874349.769222327
+        }
+      },
+      {
+        "n": 59,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 3.099103196291253e-10,
+          "median": 1.7468773762630008e-05,
+          "max": 53306880.44918959
+        }
+      },
+      {
+        "n": 61,
+        "columns": 12208,
+        "nonconverged": 0,
+        "nonfinite": 0,
+        "delta": {
+          "count": 12208,
+          "nonfinite": 0,
+          "min": 9.933955880114809e-10,
+          "median": 1.7395897316418996e-05,
+          "max": 3397671.177925486
+        }
+      }
+    ]
+  },
+  "selection_assessment": {
+    "upper_structure": {
+      "candidate_n": 21,
+      "status": "provisional_window_candidate_not_numerical_validation",
+      "basis": "All 10848 positions: N=13..21 span max 0.0007534482917890273 px. N=21 is within this observed plateau and is the count used in the paper downstream. This is an explicit candidate choice, not a paper-prescribed smallest-stable or universal accuracy rule. 52/10848 returns at N=21 did not satisfy the inherited solver stopping criterion; they remain in all summaries."
+    },
+    "lower_structure": {
+      "candidate_n": null,
+      "status": "not_determined",
+      "basis": "No all-position plateau supports the previous N=59 choice across the tested range. N=59..61 includes multi-pixel changes and a very large out-of-image numerical return. No row was removed to choose a sample count."
+    }
+  }
+}

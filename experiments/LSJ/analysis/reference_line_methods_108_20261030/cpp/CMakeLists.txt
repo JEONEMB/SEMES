@@ -35,6 +35,22 @@ if(MSVC)
     target_compile_options(line_methods PRIVATE /utf-8 /W4 /bigobj /wd4244 /wd4267)
 endif()
 
+# Gaussian exclusion-policy regression on synthetic profiles; no captured-image analysis.
+add_executable(gaussian_retention_test tests/gaussian_retention_test.cpp src/methods_points.cpp
+    src/effective_settings.cpp src/zernike_location.cpp src/line_fit.cpp src/io_utils.cpp)
+target_include_directories(gaussian_retention_test PRIVATE include ${TP}/nlohmann_json/include)
+target_link_libraries(gaussian_retention_test PRIVATE tp_c tp_cpp ${OpenCV_LIBS})
+if(MSVC)
+    target_compile_definitions(gaussian_retention_test PRIVATE _USE_MATH_DEFINES NOMINMAX _CRT_SECURE_NO_WARNINGS)
+    target_compile_options(gaussian_retention_test PRIVATE /utf-8 /W4 /bigobj /wd4244 /wd4267)
+endif()
+if(WIN32)
+    add_custom_command(TARGET gaussian_retention_test POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
+            "$<TARGET_FILE_DIR:gaussian_retention_test>")
+endif()
+
 # Known geometry / configuration contract checks. Does not run native image detectors.
 add_executable(pipeline_contract_test tests/pipeline_contract_test.cpp src/segment_support.cpp
     src/effective_settings.cpp src/methods_segments.cpp src/line_fit.cpp src/io_utils.cpp)

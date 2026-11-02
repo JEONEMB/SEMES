@@ -1,0 +1,6 @@
+{
+  "maximum_sample_count": 61,
+  "column_step_px": 1,
+  "solver_max_iterations": 800,
+  "solver_relative_objective_spread_tolerance": 1e-10
+}

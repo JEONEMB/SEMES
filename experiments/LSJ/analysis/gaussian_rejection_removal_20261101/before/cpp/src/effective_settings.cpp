@@ -1,0 +1,212 @@
+#include "effective_settings.hpp"
+#include "ELSED.h"
+#include <cmath>
+#include <limits>
+#include <set>
+#include <sstream>
+#include <stdexcept>
+
+namespace lm {
+namespace {
+int family(const std::string& id) {
+    if (id.size()!=3 || (id[0]!='E' && id[0]!='Q') || id[1]<'0' || id[1]>'9' || id[2]<'0' || id[2]>'9')
+        throw std::invalid_argument("unknown method id: "+id);
+    int n=(id[1]-'0')*10+id[2]-'0';
+    if (n<1 || n>(id[0]=='E'?9:12)) throw std::invalid_argument("unknown method id: "+id);
+    return n;
+}
+std::set<std::string> words(const std::string& text) {
+    std::istringstream in(text);std::set<std::string> out;std::string s;while(in>>s)out.insert(s);return out;
+}
+void require(bool condition,const std::string& reason) { if(!condition)throw std::invalid_argument(reason); }
+void finite_number(const json& value,const std::string& name) {
+    require(value.is_number() && std::isfinite(value.get<double>()),"expected finite number: "+name);
+}
+void integer(const json& value,const std::string& name) {
+    finite_number(value,name);
+    require(value.is_number_integer() && value.get<double>()>=std::numeric_limits<int>::min() &&
+            value.get<double>()<=std::numeric_limits<int>::max(),"expected int-range integer: "+name);
+}
+void positive(const json& value,const std::string& name) { finite_number(value,name);require(value.get<double>()>0,"expected positive value: "+name); }
+void keys(const json& p,const std::set<std::string>& expected,const std::string& where) {
+    require(p.is_object(),"expected object: "+where);
+    for(auto it=p.begin();it!=p.end();++it)require(expected.count(it.key())!=0,"unsupported key: "+where+"."+it.key());
+    for(const auto& k:expected)require(p.contains(k),"missing key: "+where+"."+k);
+}
+json fit_values(const json& c,const std::string& kind) {
+    const auto& f=c.at("fit");
+    return {{"huber_c_px",f.at("huber_c_px")},{"irls_max_iter",f.at("irls_max_iter")},{"irls_tol",f.at("irls_tol")},
+            {"trim_iterations",f.at("trim_iterations")},{"inlier_px",f.at("inlier_px").at(kind)},{"min_points",f.at("min_points").at(kind)}};
+}
+}
+bool uses_common_fit(const std::string& id) { return family(id)<=10; }
+bool uses_segment_selection(const std::string& id) { int n=family(id);return n==4||n==7||n==8||n==9; }
+
+void validate_method_parameters(const std::string& id,const json& p) {
+    int n=family(id);
+    static const char* schema[]={"",
+        "gradient half_window min_peak nm_max_iter nm_tol max_center_shift_px init_sigma profile_examples_every",
+        "sigma th_h th_l",
+        "blur_sigma canny_low canny_high canny_aperture l2gradient hough_rho hough_theta_deg theta_min_deg theta_max_deg hough_threshold max_candidates_saved refit_dist_px",
+        "scale sigma_scale quant ang_th log_eps density_th n_bins",
+        "coarse_blur_sigma min_coarse_grad Np k_edge blur_sigma_px supersample max_shift_px max_orientation_dev_deg window_examples_every",
+        "half_height min_grad min_contrast max_abs_a_px",
+        "ed_operator ed_grad_thresh ed_anchor_thresh ed_scan_interval ed_min_path_len ed_sigma ed_sum_flag line_error min_line_len max_distance_between_two_lines max_error",
+        "length_threshold distance_threshold canny_th1 canny_th2 canny_aperture_size do_merge",
+        "ksize sigma gradientThreshold anchorThreshold scanIntervals minLineLen lineFitErrThreshold pxToSegmentDistTh junctionEigenvalsTh junctionAngleTh_deg validationTh validate treatJunctions",
+        "threshold contour_mode approx_eps_frac corner_trim_frac",
+        "max_corners quality_level min_distance block_size use_harris quad_offset_px quad_half_px min_quad_contrast subpix_half_win subpix_max_iter subpix_eps max_refine_shift_px",
+        "min_outer_area_px2 max_outer_area_roi_fraction white_outer_area_ratio inner_white_area_ratio polygon_epsilon_perimeter_fraction min_side_length_ratio subpix_half_window subpix_max_iter subpix_eps"};
+    keys(p,words(schema[n]),id);
+    auto bools=words("l2gradient ed_sum_flag do_merge validate treatJunctions use_harris");
+    auto strings=words("gradient init_sigma ed_operator threshold contour_mode");
+    auto arrays=words("white_outer_area_ratio inner_white_area_ratio");
+    auto ints=words("half_window nm_max_iter profile_examples_every canny_aperture hough_threshold max_candidates_saved n_bins Np supersample window_examples_every half_height ed_grad_thresh ed_anchor_thresh ed_scan_interval ed_min_path_len min_line_len length_threshold canny_aperture_size ksize anchorThreshold scanIntervals minLineLen max_corners block_size quad_offset_px quad_half_px subpix_half_win subpix_half_window subpix_max_iter");
+    auto positives=words("half_window nm_max_iter nm_tol profile_examples_every sigma blur_sigma hough_rho hough_theta_deg hough_threshold refit_dist_px scale sigma_scale ang_th n_bins coarse_blur_sigma Np k_edge blur_sigma_px supersample window_examples_every half_height max_abs_a_px ed_grad_thresh ed_scan_interval ed_min_path_len ed_sigma line_error max_error length_threshold distance_threshold ksize scanIntervals minLineLen lineFitErrThreshold pxToSegmentDistTh max_corners quality_level block_size quad_offset_px subpix_half_win subpix_half_window subpix_max_iter subpix_eps max_outer_area_roi_fraction polygon_epsilon_perimeter_fraction min_side_length_ratio");
+    for(auto it=p.begin();it!=p.end();++it) {
+        const std::string k=it.key(); const json& v=it.value();
+        if(bools.count(k))require(v.is_boolean(),"expected boolean: "+id+"."+k);
+        else if(strings.count(k))require(v.is_string(),"expected string: "+id+"."+k);
+        else if(arrays.count(k)) {
+            require(v.is_array()&&v.size()==2,"expected two bounds: "+k);
+            finite_number(v[0],k);finite_number(v[1],k);
+            require(v[0].get<double>()>=0&&v[0].get<double>()<=v[1].get<double>()&&v[1].get<double>()<=1,"invalid ratio bounds: "+k);
+        } else {
+            if(ints.count(k))integer(v,k);else finite_number(v,k);
+            if(positives.count(k))positive(v,k);
+            else if(k!="log_eps"&&k!="min_line_len")require(v.get<double>()>=0,"negative setting: "+k);
+        }
+    }
+    if(n==1) {
+        require(p.at("gradient")=="sobel_y_ksize3_raw","unsupported Gaussian gradient; only sobel_y_ksize3_raw is implemented");
+        require(p.at("init_sigma")=="neighborhood_size","unsupported Gaussian init_sigma; only neighborhood_size is implemented");
+    }
+    if(n==2)require(p.at("th_l").get<double>()<=p.at("th_h").get<double>(),"Devernay low threshold exceeds high threshold");
+    if(n==3) {
+        int ap=p.at("canny_aperture");require(ap==3||ap==5||ap==7,"unsupported Canny aperture");
+        require(p.at("theta_min_deg").get<double>()<p.at("theta_max_deg").get<double>()&&p.at("theta_max_deg").get<double>()<=180,"invalid Hough angle range");
+    }
+    if(n==4) {
+        require(p.at("scale")==1.0,"LSD wrapper supports scale=1 only; scaled support-region coordinate mapping is not implemented");
+        require(p.at("ang_th").get<double>()<180,"LSD ang_th must be below 180");
+        require(p.at("density_th").get<double>()<=1,"LSD density must be <=1");
+    }
+    if(n==5) { int np=p.at("Np");require(np>=3&&np%2==1&&np<=25,"Np must be odd, >=3, and fit the existing 12px patch padding"); }
+    if(n==7) {
+        require(words("PREWITT SCHARR LSD SOBEL").count(p.at("ed_operator").get<std::string>())!=0,"unsupported ED operator");
+        int len=p.at("min_line_len");require(len==-1||len>0,"EDLines min_line_len must be -1 or positive");
+        require(p.at("ed_sigma").get<double>()>=1.0,"ED clamps sigma below 1; specify ed_sigma >=1 explicitly");
+    }
+    if(n==8) {
+        require(p.at("do_merge")==false,"FLD wrapper supports do_merge=false only; merged support correspondence is not implemented");
+        int ap=p.at("canny_aperture_size");require(ap==3||ap==5||ap==7,"unsupported FLD Canny aperture");
+        float distance=p.at("distance_threshold").get<float>();
+        require(std::isfinite(distance)&&distance>0,"FLD distance is not representable as a positive float");
+    }
+    if(n==9) {
+        require(p.at("anchorThreshold").get<int>()<=255,"ELSED anchorThreshold exceeds uint8 range");
+        require(p.at("ksize").get<int>()%2==1,"ELSED kernel must be odd");
+        float sigma=p.at("sigma").get<float>(),gradient=p.at("gradientThreshold").get<float>();
+        require(std::isfinite(sigma)&&sigma>0,"ELSED sigma is not representable as a positive float");
+        require(std::isfinite(gradient)&&gradient<=std::numeric_limits<short>::max(),"ELSED gradient threshold exceeds its native short representation");
+    }
+    if(n==10) {
+        require(p.at("threshold")=="otsu_binary_bright","unsupported Q10 threshold mode");
+        require(p.at("contour_mode")=="RETR_EXTERNAL","unsupported Q10 contour mode");
+        require(p.at("approx_eps_frac").get<double>()>0&&p.at("approx_eps_frac").get<double>()<1,"invalid polygon epsilon fraction");
+        require(p.at("corner_trim_frac").get<double>()<0.5,"corner trim removes the entire side");
+    }
+    if(n==11)require(p.at("quality_level").get<double>()<=1,"corner quality_level must be <=1");
+    if(n==12)require(p.at("max_outer_area_roi_fraction").get<double>()<=1&&p.at("min_side_length_ratio").get<double>()<=1,"invalid QR fraction");
+}
+
+json effective_settings(const std::string& id,const json& p,const json& c,const TargetSpec& t,cv::Size size) {
+    validate_method_parameters(id,p);
+    keys(c,words("fit detector_margin_px column_step_px segment_selection segment_selection_rationale"),"common");
+    keys(c.at("fit"),words("huber_c_px irls_max_iter irls_tol trim_iterations inlier_px min_points rationale"),"common.fit");
+    keys(c.at("detector_margin_px"),words("external qr rationale"),"common.detector_margin_px");
+    keys(c.at("column_step_px"),words("external qr rationale"),"common.column_step_px");
+    keys(c.at("segment_selection"),words("external qr"),"common.segment_selection");
+    int n=family(id);bool fit=uses_common_fit(id),seg=uses_segment_selection(id),roi_only=n>=10;
+    bool columns=n==1||n==2||n==5||n==6;
+    bool detector_margin=n==2||n==3||seg;
+    require(t.kind==(id[0]=='E'?"external":"qr"),"method and target kind mismatch");
+    require(size.width>0&&size.height>0,"invalid frame size");
+    require(t.roi.width>0&&t.roi.height>0,"invalid target ROI");
+    json result={{"schema_version",2},{"applied",json::object()},{"inactive",json::object()},
+                 {"reporting_only",json::object()},{"fixed_modes",json::object()}};
+    auto& a=result["applied"];auto& off=result["inactive"];auto& report=result["reporting_only"];
+    a["method_id"]=id;a["method"]=p;a["implementation_constants"]=json::object();
+    auto inactive_method=[&](const char* key,const char* why) {
+        off["method"][key]={{"configured_value",p.at(key)},{"reason",why}};a["method"].erase(key);
+    };
+    for(const char* key:{"profile_examples_every","window_examples_every","max_candidates_saved"})if(p.contains(key)) {
+        report["method"][key]=p.at(key);a["method"].erase(key);
+    }
+    if(n==1)result["fixed_modes"]={{"gradient",p.at("gradient")},{"init_sigma",p.at("init_sigma")}};
+    if(n==4)inactive_method("sigma_scale","scale=1 bypasses Gaussian subsampling");
+    if(n==10)result["fixed_modes"]={{"threshold",p.at("threshold")},{"contour_mode",p.at("contour_mode")}};
+    if(n==8)a["method"]["distance_threshold"]=static_cast<double>(p.at("distance_threshold").get<float>());
+    if(n==9) {
+        a["method"]["sigma"]=static_cast<double>(p.at("sigma").get<float>());
+        a["method"]["gradientThreshold"]=static_cast<double>(p.at("gradientThreshold").get<float>());
+        if(!p.at("validate").get<bool>())inactive_method("validationTh","ELSED validation disabled");
+        upm::ELSEDParams native_defaults;
+        if(p.at("treatJunctions").get<bool>())a["implementation_constants"]["ELSED_listJunctionSizes"]=native_defaults.listJunctionSizes;
+        else {
+            for(const char* key:{"junctionEigenvalsTh","junctionAngleTh_deg"})inactive_method(key,"ELSED junction treatment disabled");
+            off["ELSED_listJunctionSizes"]={{"configured_value",native_defaults.listJunctionSizes},{"reason","junction treatment disabled"}};
+        }
+    }
+    json fv=fit_values(c,t.kind);
+    if(fit) {
+        for(const char* k:{"huber_c_px","irls_tol"})positive(fv.at(k),k);
+        for(const char* k:{"irls_max_iter","trim_iterations","min_points"})integer(fv.at(k),k);
+        require(fv.at("irls_max_iter").get<int>()>0&&fv.at("trim_iterations").get<int>()>=0&&fv.at("min_points").get<int>()>=2,"invalid common fit counts");
+        finite_number(fv.at("inlier_px"),"inlier_px");require(fv.at("inlier_px").get<double>()>=0,"negative inlier distance");
+        a["common_fit"]=fv;a["implementation_constants"]["irls_center_change_px"]=1e-9;
+    } else off["common_fit"]={{"configured_value",fv},{"reason","two-point line; Huber/IRLS/trim not used"}};
+    const auto& sp=c.at("segment_selection").at(t.kind);
+    if(seg) {
+        keys(sp,words("max_abs_angle_deg min_visible_len_px side_offset_px min_contrast consensus_inlier_px sample_step_px"),"segment_selection");
+        for(auto it=sp.begin();it!=sp.end();++it){finite_number(it.value(),it.key());require(it.value().get<double>()>=0,"negative segment setting: "+it.key());}
+        positive(sp.at("sample_step_px"),"sample_step_px");positive(sp.at("min_visible_len_px"),"min_visible_len_px");
+        require(sp.at("max_abs_angle_deg").get<double>()<90,"x-sampled segment angle must be <90 degrees");
+        a["segment_selection"]=sp;
+        a["implementation_constants"]["consensus_hypothesis_limit"]=300;
+        a["implementation_constants"]["contrast_sample_x_step_px"]=2.0;
+        a["segment_support_rule"]="clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces";
+        a["sample_weighting"]="equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting";
+    } else off["segment_selection"]={{"configured_value",sp},{"reason","not a segment detector"}};
+
+    json roi={t.roi.x,t.roi.y,t.roi.x+t.roi.width,t.roi.y+t.roi.height};
+    json ranges={{"x_range_inclusive",{t.x0,t.x1}},{"band_y_inclusive",{t.y0,t.y1}},{"exclude_x_inclusive",json::array()}};
+    for(const auto& iv:t.exclude_x)ranges["exclude_x_inclusive"].push_back({iv.a,iv.b});
+    if(roi_only) {
+        a["target"]={{"roi_xyxy_exclusive_end",roi}};
+        off["target_ranges"]={{"configured_value",ranges},{"reason","Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"}};
+        off["polarity"]={{"configured_value",t.polarity},{"reason","QR-specific intensity/corner rule"}};
+    } else {
+        require(t.x0<=t.x1&&t.y0<=t.y1,"reversed target search range");
+        require(t.polarity==1||t.polarity==-1,"polarity must be +1 or -1");
+        a["target"]=ranges;a["target"]["polarity"]=t.polarity;
+        if(detector_margin&&t.kind=="qr")a["target"]["roi_xyxy_exclusive_end"]=roi;
+        else if(t.kind=="qr")off["roi_xyxy"]={{"configured_value",roi},{"reason","local profile patch is based on x/band ranges"}};
+    }
+    if(columns){require(t.column_step>0,"column step must be positive");a["column_step_px"]=t.column_step;}
+    else off["column_step_px"]={{"configured_value",t.column_step},{"reason","method does not use common column stepping"}};
+    if(detector_margin) {
+        require(t.margin>=0,"detector margin must be nonnegative");a["detector_margin_px"]=t.margin;
+        auto r=t.detector_region(size);a["target"]["detector_region_xywh"]={r.x,r.y,r.width,r.height};
+    } else off["detector_margin_px"]={{"configured_value",t.margin},{"reason",roi_only?"ROI used directly":"method-specific profile patch padding"}};
+    if(n==1||n==5||n==6) {
+        int pad=n==1?p.at("half_window").get<int>()+4:n==5?12:p.at("half_height").get<int>()+4;
+        a["implementation_constants"]["profile_patch_padding_px"]=pad;
+    }
+    a["frame_size_wh"]={size.width,size.height};
+    report["draw_line_x_range"]={t.x0,t.x1};
+    report["configuration_explanations"]=c.value("segment_selection_rationale",std::string());
+    result["note"]="Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility.";
+    return result;
+}
+}

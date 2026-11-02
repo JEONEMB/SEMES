@@ -109,10 +109,8 @@ MethodResult method_profile_gaussian(MethodContext& c) {
     const TargetSpec& t = c.target;
     const json& p = c.params;
     const int hw = p.at("half_window").get<int>();
-    const double min_peak = p.at("min_peak").get<double>();
     const int max_iter = p.at("nm_max_iter").get<int>();
     const double tol = p.at("nm_tol").get<double>();
-    const double max_shift = p.at("max_center_shift_px").get<double>();
     const int ex_every = p.at("profile_examples_every").get<int>();
 
     BandPatch bp = band_patch(c.gray, t, hw + 4);
@@ -130,11 +128,11 @@ MethodResult method_profile_gaussian(MethodContext& c) {
             if (v > best) { best = v; best_y = y; }
         }
         json row = {x, best_y};
-        std::string state;
+        // Every visible column is fitted and forwarded. "selected" is a legacy display label,
+        // not a statement that the numerical solve converged or found the physical boundary.
+        const std::string state = "selected";
         double A = 0, mu = 0, s = 0; int iters = 0; bool conv = false;
-        if (best < min_peak) state = excluded("weak_peak");
-        else if (best_y == t.y0 || best_y == t.y1) state = excluded("peak_at_band_edge");
-        else {
+        {
             std::vector<double> ys, fs;
             for (int k = -hw; k <= hw; ++k) {
                 ys.push_back(best_y + k);
@@ -154,26 +152,30 @@ MethodResult method_profile_gaussian(MethodContext& c) {
             auto q = nelder_mead3(sse, x0, st, max_iter, tol, &iters, &conv);
             A = q[0]; mu = q[1]; s = std::fabs(q[2]);
             if (!conv) ++nm_not_conv;
-            if (!conv) state = excluded("nelder_mead_not_converged");
-            else if (A <= 0) state = excluded("non_positive_amplitude");
-            else if (std::fabs(mu - best_y) > max_shift) state = excluded("center_shift_exceeds_limit");
-            else { state = "selected"; pts.emplace_back((double)x, mu); }
+            // No response, band-endpoint, convergence, amplitude, or displacement rejection.
+            // Numerical state is recorded below; no replacement acceptance threshold is used.
+            pts.emplace_back((double)x, mu);
             if (ex_every > 0 && ci % ex_every == 0) {
                 examples.push_back({{"x", x}, {"y_samples", ys}, {"sobel_samples", fs}, {"A", A}, {"mu", mu},
                                     {"sigma", s}, {"nm_iterations", iters}, {"converged", conv}, {"state", state}});
             }
         }
         row.push_back(state); row.push_back(rnd(mu, 5)); row.push_back(rnd(A, 3)); row.push_back(rnd(s, 4));
+        row.push_back(best); row.push_back(iters); row.push_back(conv);
+        row.push_back(std::isfinite(A) && std::isfinite(mu) && std::isfinite(s));
         cand.push_back(row);
         ++ci;
     }
     r.n_candidates = (int)cols.size();
-    r.intermediates["columns_fields"] = {"x", "coarse_peak_y", "state", "mu", "A", "sigma"};
+    r.intermediates["columns_fields"] = {"x", "coarse_peak_y", "state", "mu", "A", "sigma",
+                                        "coarse_response", "nm_iterations", "nm_converged", "parameters_finite"};
     r.intermediates["columns"] = cand;
     r.intermediates["profile_examples"] = examples;
     r.diagnostics["visible_columns"] = (int)cols.size();
     r.diagnostics["occluded_columns_skipped"] = occluded;
     r.diagnostics["nelder_mead_not_converged"] = nm_not_conv;
+    r.diagnostics["gaussian_rejection_policy"] = "none: every visible column fitted and all returned positions forwarded";
+    r.diagnostics["gaussian_selected_state_note"] = "selected means forwarded to common fit, not converged or validated";
     finish_with_points(r, pts, c.fit, "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)");
     return r;
 }

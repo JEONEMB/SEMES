@@ -1,0 +1,19 @@
+{
+  "experiment.cpp": "0c78f4661395b100db66e9a19f36f0ac2cf3f201e2aeb8632256c9d0b4fdd783",
+  "prepare.py": "f5e4bf88e9f466023acfb4fe2d22fffcf8cb81810f1686295db6bcf8de99fd66",
+  "summarize.py": "50e1a62500bf312c30a356faf1c10366d989bc574c42d77f66f8a88c64ddf772",
+  "make_report.py": "5f8dd93368140f8eec685205853e0d3cc1840fff33e5d4b12234e094678e614d",
+  "original_nelder_mead.hpp": "8ac6b3167f16f6107590cfe909fd51a6a20b7b56b6afb4152e8cad22c04c4537",
+  "fits.csv": "60df5b86039fa2c4a481d9292ddf47db1d0337b904de3a6e303fd3a485d46a82",
+  "profiles.json": "f4fecb5bd8afd3dcdb6120b8345c9b42f671b1b618f04e3d6749d7c41936bd10",
+  "summary.json": "55ce4332236b7c82a715605a1715c4d8d007caf434869aaac97a863d22da0971",
+  "paired_arrays.npz": "c94372e0d99fd0a03eb56c62d45f497e04caacd3df300582326d998cb30eb614",
+  "runtime.json": "1a8a02d39b0c4d926a9be3059f73f6318ed7b908b10c5f97d8c9309a013f2f08",
+  "example_provenance.json": "4b14cd5d2c3dbe9dfc51aa98fabf94d025a9ba7a95f6559e7adb37d3c7c4aa57",
+  "report.html": "79f1c8657f725dca6d20ab032c98e689d7452d6592b718f2502e76e8ac6713ad",
+  "report.txt": "b13983a41eb7bbd354981c2e1736411d05a42a1466b0cc12c761a170123f99b6",
+  "window_comparison.png": "2ff6460d3570914ae073840b396e6e5294dab566ac38365b607df0444be0f801",
+  "spatial_sensitivity.png": "bc8d564e01942770c84023e2f0f10e7d77e65041df28474cb48427cc1964be3f",
+  "initialization_check.png": "4fdaa59eee3afcfccfa8c364313883f99721db3679496ff66890116e452a5a27",
+  "profile_examples.png": "56e9d111a7556326ae1090a1741e38204a5a811b5362aabda1b0bcc6a39973fe"
+}

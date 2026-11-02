@@ -45,7 +45,7 @@ bool uses_segment_selection(const std::string& id) { int n=family(id);return n==
 void validate_method_parameters(const std::string& id,const json& p) {
     int n=family(id);
     static const char* schema[]={"",
-        "gradient half_window min_peak nm_max_iter nm_tol max_center_shift_px init_sigma profile_examples_every",
+        "gradient half_window nm_max_iter nm_tol init_sigma profile_examples_every",
         "sigma th_h th_l",
         "blur_sigma canny_low canny_high canny_aperture l2gradient hough_rho hough_theta_deg theta_min_deg theta_max_deg hough_threshold max_candidates_saved refit_dist_px",
         "scale sigma_scale quant ang_th log_eps density_th n_bins",
@@ -143,7 +143,10 @@ json effective_settings(const std::string& id,const json& p,const json& c,const 
     for(const char* key:{"profile_examples_every","window_examples_every","max_candidates_saved"})if(p.contains(key)) {
         report["method"][key]=p.at(key);a["method"].erase(key);
     }
-    if(n==1)result["fixed_modes"]={{"gradient",p.at("gradient")},{"init_sigma",p.at("init_sigma")}};
+    if(n==1) {
+        result["fixed_modes"]={{"gradient",p.at("gradient")},{"init_sigma",p.at("init_sigma")}};
+        a["gaussian_rejection_policy"]="none: fit every visible column and forward every returned position";
+    }
     if(n==4)inactive_method("sigma_scale","scale=1 bypasses Gaussian subsampling");
     if(n==10)result["fixed_modes"]={{"threshold",p.at("threshold")},{"contour_mode",p.at("contour_mode")}};
     if(n==8)a["method"]["distance_threshold"]=static_cast<double>(p.at("distance_threshold").get<float>());
