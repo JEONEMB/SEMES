@@ -16,6 +16,7 @@ root = Path(__file__).resolve().parents[1]
 args = argparse.ArgumentParser()
 args.add_argument('--gcc', default='arm-none-eabi-gcc')
 args.add_argument('--motor-enabled', action='store_true', help='Enable pulse API in the emulator only')
+args.add_argument('--with-switches', action='store_true', help='Test restored NC switch enforcement')
 options = args.parse_args()
 out = root / 'build' / 'protocol-tests'
 out.mkdir(parents=True, exist_ok=True)
@@ -25,6 +26,7 @@ subprocess.run([
     '-O0', '-g', '-Wall', '-Wextra', '-Werror', '-ffreestanding', '-fno-builtin',
     '-nostdlib', '-I.', '-ICore/Inc', '-Itests', '-include', 'tests/mock_hal.h',
     '-DY_MOTOR_OUTPUT_ALLOWED=' + ('1' if options.motor_enabled else '0'),
+    '-DY_MOTOR_USE_LIMITS=' + ('1' if options.with_switches else '0'),
     'Core/Src/robot_stage_transport.c', 'Core/Src/robot_stage_service.c',
     'Core/Src/app.c', 'Core/Src/y_motor.c', 'Core/Src/y_motor_tim.c', 'Core/Src/y_test.c',
     'tests/test_protocol.c', 'tests/test_y_motor.c', '-Ttests/test.ld',

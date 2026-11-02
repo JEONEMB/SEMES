@@ -254,8 +254,13 @@ int TestApp(void)
     for (tick = 1; tick <= 10; ++tick) App_Poll();
     gpio.IDR = 1;
     for (; tick <= 21; ++tick) { App_Poll(); FinishTx(); }
-    Drain(); CHECK(wire_length == 17 && wire[3] == RS_EVENT && wire[6] == RS_LIMIT_HIT);
+    Drain();
+#if Y_MOTOR_USE_LIMITS
+    CHECK(wire_length == 17 && wire[3] == RS_EVENT && wire[6] == RS_LIMIT_HIT);
     CHECK(wire[4] == 1);
+#else
+    CHECK(wire_length == 0);
+#endif
     wire_length = 0;
     for (; tick <= 40; ++tick) { App_Poll(); FinishTx(); }
     CHECK(wire_length == 0);

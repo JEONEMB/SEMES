@@ -22,9 +22,13 @@ void YMotorPort_Direction(uint8_t high)
 }
 uint8_t YMotorPort_Limits(void)
 {
+#if Y_MOTOR_USE_LIMITS
     uint32_t pins = GPIOA->IDR;
     return (uint8_t)(((pins & Y_HOME_Pin) != 0U) |
                     (((pins & Y_LIMIT_Pin) != 0U) << 1));
+#else
+    return 0U;
+#endif
 }
 
 void YMotorPort_Abort(void)

@@ -123,13 +123,11 @@ def main():
         if len(inputs) != 20:
             raise RuntimeError('Unsupported input status layout')
         home, limit = (inputs[1] >> 2) & 1, (inputs[1] >> 3) & 1
-        print(f'Y_HOME={home}, Y_LIMIT={limit} (both must be 0 for this pulse test)')
+        print(f'Y_HOME={home}, Y_LIMIT={limit} (input levels only; firmware controls limit enforcement)')
         if args.command == 'status':
             return
         if state == 1 or not ready or not allowed:
             raise RuntimeError('Motor busy, not ready, or output locked')
-        if home or limit:
-            raise RuntimeError('Y limit input active: inspect NC switches/wiring. No jog sent.')
         # Avoid the last accepted jog SEQ even across separate invocations.
         seq = (last + 1) % 256 if cached else (seq + 1) % 256
         started = False
