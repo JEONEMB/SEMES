@@ -1,0 +1,140 @@
+[
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/src/io_utils.cpp",
+    "sha256": "0f94f4d128705e253b49d9748f63e1687b3067f62b25a765870ca05010fd0318",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__io_utils.cpp.html",
+    "line_count": 143
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+    "sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__line_fit.cpp.html",
+    "line_count": 226
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/src/main.cpp",
+    "sha256": "ec7255180c4e19242d72dfc6a30062f4c542feaff5c6c6af8c88e8c93bc5da21",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__main.cpp.html",
+    "line_count": 379
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/src/methods_hough.cpp",
+    "sha256": "be4d7335b8e489990b21144045312ba8d56d5b994ea1948acff2db7419a34f24",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_hough.cpp.html",
+    "line_count": 97
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+    "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html",
+    "line_count": 461
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+    "sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_qr.cpp.html",
+    "line_count": 269
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+    "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html",
+    "line_count": 334
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/src/registry.cpp",
+    "sha256": "759c5b9225826c91b14b7db83da409aa6a66d48fd81f9e539e50cfb49040cd27",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__registry.cpp.html",
+    "line_count": 34
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/tests/line_selftest.cpp",
+    "sha256": "52395f57979eabc937ade24bdf9617961769738066e2e7b7c34e58abc7942ab6",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__tests__line_selftest.cpp.html",
+    "line_count": 49
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/include/common.hpp",
+    "sha256": "589b18b5c9d39c0570609c66c399316ed691c7700d64b941653ea1a27dd8d2c3",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__include__common.hpp.html",
+    "line_count": 142
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/include/io_utils.hpp",
+    "sha256": "5ca457b808b60c0ba473c5fb9be9c93f8e5ce19890931b95d807bca6fe5bb695",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__include__io_utils.hpp.html",
+    "line_count": 33
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/cpp/include/methods.hpp",
+    "sha256": "6456e4239952aaa1370ebc1ee631f045d8e0bff74139fa3e393e43d65bd064d9",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__include__methods.hpp.html",
+    "line_count": 22
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/configs/inputs_manifest.json",
+    "sha256": "178be414cae0a4a671d794af9d3f962aeff3fd5af04cf45a7e4393a3dcb39b23",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__configs__inputs_manifest.json.html",
+    "line_count": 40
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/configs/methods.json",
+    "sha256": "e05075300ae7813bf4998571e5e630697577cc33dcfac2021495dd81b8ee4e92",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__configs__methods.json.html",
+    "line_count": 308
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/configs/method_sources.json",
+    "sha256": "6cbb91d9fcc0eb9f453964b1d97534fd7bd13a484e23c61874e636db59db2d89",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__configs__method_sources.json.html",
+    "line_count": 306
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/configs/targets.json",
+    "sha256": "d530775949f67078223b7fdca735f36831891335b00bc32803f8ff26fe530999",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__configs__targets.json.html",
+    "line_count": 122
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/tools/make_figures.py",
+    "sha256": "5ab81f711f7b83746467d1902989ab1f4e7edcc090de2547ecbe058921839518",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__tools__make_figures.py.html",
+    "line_count": 500
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/tools/make_report.py",
+    "sha256": "845b410aa71c038d1b9b0e93a7e4266035978aa9749257ddd670f489ef4d4847",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__tools__make_report.py.html",
+    "line_count": 508
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/tools/run_pipeline.py",
+    "sha256": "1839bcf383fb21f35b4b45787833fc7d41155023495aeb98dd422425918ef329",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__tools__run_pipeline.py.html",
+    "line_count": 160
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/tools/write_method_sources.py",
+    "sha256": "4230af34189442c46ffcc5f01a01673e854d58ecc17e372b34701af3fc10002c",
+    "view": "source_views/analysis__reference_line_methods_108_20261030__tools__write_method_sources.py.html",
+    "line_count": 99
+  },
+  {
+    "source": "analysis/reference_line_methods_selection_20261030/select_existing_results.py",
+    "sha256": "4f02f5713e56584bf366962f375fd5280361772c2f6f2455d6598baf652600d5",
+    "view": "source_views/analysis__reference_line_methods_selection_20261030__select_existing_results.py.html",
+    "line_count": 213
+  },
+  {
+    "source": "analysis/reference_line_methods_selection_20261030/write_screening_report.py",
+    "sha256": "f59eb3fc1f8f20fb38d88cc5377f39e1ce689dab166d2df2daabbbee4d2619cb",
+    "view": "source_views/analysis__reference_line_methods_selection_20261030__write_screening_report.py.html",
+    "line_count": 169
+  },
+  {
+    "source": "claude_코드검증용/20261030_108조합_기준4장_직선추출_Claude작업프롬프트.txt",
+    "sha256": "cf046258824d41ba6d581c02ca53534259e5bcd16edf5fea85b5119acda4195b",
+    "view": "source_views/claude_코드검증용__20261030_108조합_기준4장_직선추출_Claude작업프롬프트.txt.html",
+    "line_count": 387
+  }
+]

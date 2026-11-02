@@ -1,0 +1,20 @@
+--- pristine/ELSED/ELSED.h
++++ used/ELSED/ELSED.h
+@@ -96,6 +96,9 @@
+ 
+   const EdgeDrawerPtr &getDrawer() const { return drawer; }
+ 
++  // LSJ: pixels of the segments returned by detect(), same order as the returned Segments.
++  const ImageEdges &getValidSegmentPixels() const { return validSegmentPixels; }
++
+  private:
+   void drawAnchorPoints(const uint8_t *dirImg,
+                         const std::vector<Pixel> &anchorPoints,
+@@ -105,6 +108,7 @@
+   LineDetectionExtraInfoPtr imgInfo;
+   ImageEdges edges;
+   Segments segments;
++  ImageEdges validSegmentPixels;  // LSJ
+   SalientSegments salientSegments;
+   std::vector<Pixel> anchors;
+   EdgeDrawerPtr drawer;

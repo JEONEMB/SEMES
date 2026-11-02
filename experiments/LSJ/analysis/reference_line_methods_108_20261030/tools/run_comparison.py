@@ -1,0 +1,80 @@
+"""Compare a declared set of measurement records, never just an accidental intersection."""
+import json
+import math
+from pathlib import Path
+
+FIELDS = ('status','slope_dy_dx','intercept_y_px','image_angle_deg','fit_rms_px','n_candidates','n_selected')
+
+def load_records(path):
+    def invalid_constant(value):
+        raise ValueError('nonfinite JSON value: '+value)
+    raw=json.loads(Path(path).read_text(encoding='utf-8-sig'),parse_constant=invalid_constant)
+    records={}
+    for row in raw['records']:
+        mid=row['measurement_id']
+        if not isinstance(mid,str) or not mid or mid in records:
+            raise ValueError('empty, non-string or duplicate measurement_id: '+str(mid))
+        values={k:row[k] for k in FIELDS}  # Missing fields are malformed, not equivalent to null.
+        if values['status'] not in ('ok','failed'):
+            raise ValueError('invalid record status: '+mid)
+        for k,value in values.items():
+            if k=='status':continue
+            if value is not None and (type(value) not in (int,float) or not math.isfinite(value)):
+                raise ValueError('invalid numeric field: '+mid+'.'+k)
+        records[mid]=values
+    return records
+
+def expected_measurement_ids(manifest,targets,methods_config,*,methods=None,refs=None):
+    all_methods={mid for family in methods_config['methods'] for mid in family.split('/')}
+    all_refs={r['reference_id'] for r in manifest['references']}
+    selected_methods=all_methods if methods is None else set(methods)
+    selected_refs=all_refs if refs is None else set(refs)
+    if not selected_methods or not selected_refs or not selected_methods<=all_methods or not selected_refs<=all_refs:
+        raise ValueError('unknown or empty method/reference selection')
+    result={f"{rid}_{mid}_{t['id']}" for rid in selected_refs for mid in selected_methods
+            for t in targets['targets'] if t['kind']==('external' if mid.startswith('E') else 'qr')}
+    if not result:raise ValueError('expected measurement set is empty')
+    return result
+
+def compare_runs(a_path,b_path,*,mode='full',expected_ids=None):
+    if mode not in ('full','subset'):raise ValueError('comparison mode must be full or subset')
+    a,b=load_records(a_path),load_records(b_path)
+    ids_a,ids_b=set(a),set(b)
+    if expected_ids is None:
+        if mode=='subset':raise ValueError('subset mode requires explicit expected_ids')
+        expected=ids_a|ids_b
+    else:
+        if isinstance(expected_ids,str):raise ValueError('expected_ids must be a collection of IDs')
+        expected=set(expected_ids)
+    if any(not isinstance(mid,str) or not mid for mid in expected):raise ValueError('invalid expected ID')
+    compared=expected & ids_a & ids_b
+    diffs=[]
+    for mid in sorted(compared):
+        for field in FIELDS:
+            va,vb=a[mid][field],b[mid][field]
+            if va!=vb:
+                item={'measurement_id':mid,'field':field,'a':va,'b':vb}
+                if type(va) in (int,float) and type(vb) in (int,float):
+                    difference=abs(va-vb)
+                    item['abs_diff']=difference if math.isfinite(difference) else None
+                diffs.append(item)
+    missing_a,missing_b=expected-ids_a,expected-ids_b
+    unexpected_a=ids_a-expected if mode=='full' else set()
+    unexpected_b=ids_b-expected
+    coverage=bool(expected) and not (missing_a or missing_b or unexpected_a or unexpected_b)
+    passed=coverage and not diffs
+    # 'identical' remains a full-record-set statement, even in a subset comparison.
+    identical=passed and ids_a==ids_b==expected
+    return {'schema_version':2,'mode':mode,'fields_compared':list(FIELDS),
+            'comparison_scope':'listed measurement fields; not a byte-for-byte artifact comparison',
+            'expected_ids':sorted(expected),'expected_count':len(expected),'compared_ids':len(compared),
+            'only_in_a':sorted(ids_a-ids_b),'only_in_b':sorted(ids_b-ids_a),
+            'missing_in_a':sorted(missing_a),'missing_in_b':sorted(missing_b),
+            'unexpected_in_a':sorted(unexpected_a),'unexpected_in_b':sorted(unexpected_b),
+            'coverage_ok':coverage,'differences':diffs,'passed':passed,'identical':identical}
+
+def comparison_label(record):
+    if record.get('schema_version')!=2:
+        return '과거 비교: 필수 ID·개수 검사 미기록(전체 일치 보증 불가)'
+    scope='전체 결과 집합' if record['mode']=='full' else '지정 부분집합'
+    return f"{scope}: {'일치' if record['passed'] else '불일치/누락'} ({record['compared_ids']}/{record['expected_count']}개 비교)"

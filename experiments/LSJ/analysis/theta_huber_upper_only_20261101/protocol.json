@@ -1,0 +1,47 @@
+{
+  "started_kst": "2026-11-01T21:43:16.296559+09:00",
+  "train_images": 40,
+  "test_images": 254,
+  "test_second": 20,
+  "test_third": 234,
+  "tolerance_deg": 0.005,
+  "comparison": "Existing two-angle inverse vs upper-only forward OLS inverse.",
+  "same_components": [
+    "training image IDs",
+    "test image IDs and labels",
+    "upper ROI and mask",
+    "Sobel settings",
+    "Huber source and settings",
+    "target theta",
+    "scoring function and tolerance"
+  ],
+  "changed_components": [
+    "no lower point extraction or line fit",
+    "no two-equation Y/theta inverse",
+    "refit b and a on the same 40 training upper angles with phi=b+a*theta"
+  ],
+  "Y_effect": "Not corrected. Runtime takes no Y value and estimates no Y.",
+  "input": "Only config path and image path; no test labels given to native executable.",
+  "no_other_changes": "No Gaussian, new thresholds, clipping, tick rounding, point/image removal or post-test coefficient changes.",
+  "interpretation_limit": "Paired feature/model ablation, not proof that lower-edge extraction itself is wrong. Same test set reused after observing baseline failures; exploratory comparison.",
+  "physical_robot_executed": false,
+  "original_model_files_unchanged": true,
+  "protected_hashes_before": {
+    ".tmp\\theta_huber_upper_only_20261101_build\\Release\\theta_upper_alignment.exe": "a00cbd98ec07164ff99803a62c27e7c761c49f9472f77e50eb63c424bd72b1f0",
+    "algorithm\\theta_huber_upper_only_20261101\\config\\calibration.json": "de352c58c9dbd85c31e96f779748a839dd0cd86e1f48df3af926072892ef6d79",
+    "analysis\\theta_huber_upper_only_20261101\\frozen_calibration.json": "de352c58c9dbd85c31e96f779748a839dd0cd86e1f48df3af926072892ef6d79",
+    "algorithm\\theta_huber_upper_only_20261101\\calibration\\data_split.json": "2b4cbfb6b621405e12398121cb631ec7651c0e73b850e39995131b4a8770e348",
+    "analysis\\theta_huber_holdout_20261101\\results.json": "d0165a2b8c0dffbf3c5efc91415cb98ecf05b27cfde1dd2bb494a39446e8b9ef",
+    "analysis\\theta_huber_holdout_20261101\\summary.json": "94bfc3737b9b37e8728c89374051dd8d12d68e0227f7f4ff464489b11ba3381a",
+    "algorithm\\theta_huber_upper_only_20261101\\src\\alignment.cpp": "291dbff359e6c85293221fb8bf6b4913830c703ab444b659ef3c818298430a36",
+    "algorithm\\theta_huber_upper_only_20261101\\src\\main.cpp": "41f17e5db2940c0aa2afb701c4cc82f8e797f070de24b73ae761eaef1258ec3d",
+    "algorithm\\theta_huber_upper_only_20261101\\src\\upper_theta.cpp": "902f590e9c08b4e17c73e522835f522e0eaa8050d14c2617fe918037eb5bb886",
+    "algorithm\\theta_huber_upper_only_20261101\\include\\upper_theta.hpp": "2b8b3be24ccf89e037f6395221c576ccceb4626bd882e55aea81900aec08a8ec",
+    "algorithm\\theta_huber_upper_only_20261101\\CMakeLists.txt": "82053b9df4cd4d4560fae0f14e3a53cc2d90b36ed3ab559a9c824aec0bf0f8c2",
+    "algorithm\\theta_huber_20261101\\src\\edge_points.cpp": "1fb4f66766f433f611d670965a4de80dae63ea37f03ad720fd7f2dff8b1c93f2",
+    "algorithm\\theta_huber_20261101\\src\\huber_line.cpp": "27c0b35b019152b9ec93bfce8a579558fcfe268fc344b462eaac8096943ad24a",
+    "algorithm\\theta_huber_20261101\\src\\utf8_io.cpp": "e2880dc852492621d6a83e801e8f8a6442da029c51b9c160e44bdf922ca48133"
+  },
+  "script_sha256": "47ed2ba7d7c8739672d969d6b2f8304fb9746dcde96f2bce4a4a76be2bc481e5",
+  "scoring_source_sha256": "0a16f66af93933c010b033b781ef07976bd267bd8b20c9e1e8542c732d3ad3b8"
+}

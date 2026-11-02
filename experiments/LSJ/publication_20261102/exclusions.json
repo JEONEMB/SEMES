@@ -1,0 +1,274 @@
+[
+  {
+    "source": "analysis/reference_line_methods_108_20261030/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/qa/code_record_fixtures",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/third_party/_downloads",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/third_party/_pristine",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/tools/__pycache__",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_selection_20261030/history",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/full_line_pipeline_audit_20261030/__pycache__",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/qa/code_record_fixtures",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/third_party/_downloads",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/third_party/_pristine",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/third_party/nlohmann_json/LICENSE.MIT",
+    "reason": "not selected for source/report publication",
+    "directory": false,
+    "bytes": 1076,
+    "sha256": "86b998c792894ccb911a1cb7994f7a9652894e7a094c0b5e45be2f553f45cf14"
+  },
+  {
+    "source": "analysis/reference_line_methods_108_20261030/tools/__pycache__",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/common_fit_fixes_1to3_20261030/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/common_pipeline_fixes_4to6_20261030/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/code_record_fixes_20261031/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/gaussian_window_sensitivity_20261101/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/gaussian_window_sensitivity_20261101/fits.csv",
+    "reason": "large Gaussian per-fit table retained locally",
+    "directory": false,
+    "bytes": 46577162,
+    "sha256": "60df5b86039fa2c4a481d9292ddf47db1d0337b904de3a6e303fd3a485d46a82"
+  },
+  {
+    "source": "analysis/gaussian_window_sensitivity_20261101/paired_arrays.npz",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 8005468,
+    "sha256": "c94372e0d99fd0a03eb56c62d45f497e04caacd3df300582326d998cb30eb614"
+  },
+  {
+    "source": "analysis/gaussian_lower_window_extension_20261101/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/gaussian_lower_window_extension_20261101/fits.csv",
+    "reason": "large Gaussian per-fit table retained locally",
+    "directory": false,
+    "bytes": 54572850,
+    "sha256": "f85308b2d921a6485af479660a51d9246948c89ba5891fd68cbf94aa7618089b"
+  },
+  {
+    "source": "analysis/gaussian_lower_window_extension_20261101/paired_arrays.npz",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 7727391,
+    "sha256": "5df418eed2a78dc1eb4fe0fddae3a746cffed1b3357b6c40be7cf14aef24874c"
+  },
+  {
+    "source": "analysis/gaussian_window_no_rejection_20261101/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/gaussian_window_no_rejection_20261101/arrays.npz",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 26103352,
+    "sha256": "6bd6fca265cae75afc3800d68bcd6fada07ddbe3dccb8f974e0bff7aae33830d"
+  },
+  {
+    "source": "analysis/gaussian_window_no_rejection_20261101/fits.csv",
+    "reason": "large Gaussian per-fit table retained locally",
+    "directory": false,
+    "bytes": 90522519,
+    "sha256": "09ca97760f62a184ee6d31aa4717116097743cd25be51392236b0ecbf58bbf59"
+  },
+  {
+    "source": "analysis/gaussian_joint_sensitivity_20261101/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/gaussian_joint_sensitivity_20261101/raw",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/browser_profile",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/build",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/failed_published_url.html",
+    "reason": "failed web download, not a reference",
+    "directory": false,
+    "bytes": 1161,
+    "sha256": "eab09f82e87641fb3e8c72b6c9e061f11684c7d8345925aad1fd7de4c05f87ab"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/rcpparmadillo_source.tar.gz",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 1073253,
+    "sha256": "7b134a87d6e4994d1823a5de107d62ce8d45613eb436315aa54c6be0521348c9"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/sun2020_preprint.pdf",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 1080943,
+    "sha256": "e73628d72e2306bec13e95b3f5f596784178996b65d47454567cd75568f8fa75"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/sun2020_preprint.txt",
+    "reason": "full reference paper text retained locally; source provenance supplied",
+    "directory": false,
+    "bytes": 119968,
+    "sha256": "e9a335cf451404ac84437637f41499c0a0049245f41e0b513bb1179b7805d09a"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/wang2021_accepted.pdf",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 3351697,
+    "sha256": "f9ba3c3ffa1d63b3fd707937b953a5d0fc67131b467068f777cbf6c5376c885a"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/wang2021_accepted.txt",
+    "reason": "full reference paper text retained locally; source provenance supplied",
+    "directory": false,
+    "bytes": 68945,
+    "sha256": "3d9dcd978bcaae6b436f3bd18043dff811e03e93df84077d251e86f16f09d291"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/wang2021_final.pdf",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 1605880,
+    "sha256": "95708b9569de3d74dff7a4057780f4704f89700d5e9bff0cb4c1483e349d7d32"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/wang2021_final.txt",
+    "reason": "full reference paper text retained locally; source provenance supplied",
+    "directory": false,
+    "bytes": 66760,
+    "sha256": "3a1f75c266f78eaf42bca5e338d64245e50679a345e848925cac56120848ab38"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/wang2021_supplement.pdf",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 570176,
+    "sha256": "676c0f328d042bd5f5aebc5d5702be8ad9ba227109039c35a06ddf1a1a40427e"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/wang2021_supplement.txt",
+    "reason": "full reference paper text retained locally; source provenance supplied",
+    "directory": false,
+    "bytes": 53924,
+    "sha256": "81c7ce26d33c7d1ab202c2a067dd4e671074dda17b7591e95fe50b0115cc1a14"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/adaHuber/R/RcppExports.R",
+    "reason": "not selected for source/report publication",
+    "directory": false,
+    "bytes": 3928,
+    "sha256": "f38ecea5254ebb010dac325f9eb0064bd69e0c2c3ac799192da068ca8357e88e"
+  },
+  {
+    "source": "analysis/adahuber_verification_20261101/sources/adaHuber/R/adaHuber.R",
+    "reason": "not selected for source/report publication",
+    "directory": false,
+    "bytes": 12811,
+    "sha256": "ccbe1d8db0dfe245ad7796f405f35a0829259b8d35ea643575e0ff0dc57530f0"
+  },
+  {
+    "source": "analysis/huber_convergence_20261101/.venv",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/huber_convergence_20261101/browser_profile",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/huber_convergence_20261101/inputs.npz",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 51105,
+    "sha256": "d6455ddf1d0c5c29cef1ea49e73adb94b0126b91e5f36d1a3ea9acefd57cf5e0"
+  },
+  {
+    "source": "analysis/huber_axis_sensitivity_20261101/qa_browser_profile",
+    "reason": "build/cache/local environment or large raw-return directory",
+    "directory": true
+  },
+  {
+    "source": "analysis/huber_axis_sensitivity_20261101/points.npz",
+    "reason": "original media / binary / local raw array / reference PDF or archive",
+    "directory": false,
+    "bytes": 9170205,
+    "sha256": "ca6f62d732a6a90d3eb9adaa505ec7951ee40f5fcf480d8978077c6cf04981f2"
+  }
+]

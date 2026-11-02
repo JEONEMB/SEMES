@@ -1,0 +1,30 @@
+{
+  "started_kst": "2026-11-01T21:17:14.447437+09:00",
+  "calibration_images": 40,
+  "test_images": 254,
+  "test_second": 20,
+  "test_third": 234,
+  "selection": "All second-data repeat 3 including center3; all third data.",
+  "criteria": {
+    "absolute_theta_error_deg_lte": 0.005,
+    "target_theta_deg": 0.0
+  },
+  "theta_error_definition": "theta_estimate - corrected nominal theta label",
+  "command_error_definition": "returned correction - (target - theta label) = -theta_error",
+  "implied_residual_definition": "theta label + returned correction - target; assumes command executes exactly, not a measured post-move result.",
+  "invalid_output_policy": "Retain failed image in the overall denominator; no imputed correction.",
+  "precision": "Unrounded double values for all pass decisions; no additional epsilon.",
+  "source_labels": "Existing user-confirmed label corrections retained; no edits to original images/TXTs.",
+  "runtime_inputs": "Executable receives config path and image path only; labels used by scorer after inference.",
+  "changes": "No fitting, retraining, image omission, clipping, tick rounding, Gaussian, or new point rejection.",
+  "timing": "Per image CLI wall time includes process startup, config/image read, extraction, fitting, decoding, output; excludes SHA256 precheck.",
+  "prior_exposure": "Internal fixed holdout: these datasets were explored previously, but held-out angles/labels were not used for this model coefficient fit.",
+  "physical_robot_executed": false,
+  "hashes_before": {
+    "executable": "b7f5fca58139d41b034d3c9df169533c6f387fe2e2e665876e319d0ba1f05bfe",
+    "original_config": "eae6dddc56d30bec996bbd2780c81a7d8861baa511c427efcda7ebabfd797e21",
+    "frozen_config": "eae6dddc56d30bec996bbd2780c81a7d8861baa511c427efcda7ebabfd797e21",
+    "split": "2b4cbfb6b621405e12398121cb631ec7651c0e73b850e39995131b4a8770e348"
+  },
+  "script_sha256": "0a16f66af93933c010b033b781ef07976bd267bd8b20c9e1e8542c732d3ad3b8"
+}

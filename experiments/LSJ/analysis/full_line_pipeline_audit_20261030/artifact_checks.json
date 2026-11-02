@@ -1,0 +1,423 @@
+{
+  "record_count": 216,
+  "unique_ids": 216,
+  "method_count": 21,
+  "status_counts": {
+    "ok": 209,
+    "failed": 7
+  },
+  "selected_rows_equal_original": true,
+  "selected_count": 48,
+  "combination_count": 432,
+  "combination_errors": [],
+  "stored_record_consistency_issues": [],
+  "runtime_source_hashes": [
+    {
+      "group": "cpp",
+      "path": "cpp/src/io_utils.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/src/line_fit.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/src/main.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/src/methods_hough.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/src/methods_points.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/src/methods_qr.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/src/methods_segments.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/src/registry.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/tests/line_selftest.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/include/common.hpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/include/io_utils.hpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/include/methods.hpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "cpp",
+      "path": "cpp/CMakeLists.txt",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "configs",
+      "path": "configs/inputs_manifest.json",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "configs",
+      "path": "configs/method_sources.json",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "configs",
+      "path": "configs/methods.json",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "configs",
+      "path": "configs/targets.json",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/lsd_1.6/COPYING",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/lsd_1.6/lsd.c",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/lsd_1.6/lsd.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/lsd_1.6/README.txt",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/devernay_1.0/COPYING",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/devernay_1.0/devernay.c",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/devernay_1.0/devernay.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/devernay_1.0/README.txt",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/CHANGES.diff",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/ED.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/ED.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/EDColor.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/EDColor.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/EDLines.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/EDLines.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/LICENSE",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/NFA.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/NFA.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ED_Lib/README.md",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/CHANGES.diff",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/EdgeDrawer.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/EdgeDrawer.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/ELSED.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/ELSED.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/FullSegmentInfo.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/FullSegmentInfo.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/LICENSE",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/README.md",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/ELSED/Utils.h",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/fld_port/CHANGES.diff",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/fld_port/fast_line_detector.orig.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/fld_port/fast_line_detector.orig.hpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/fld_port/fld_port.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/fld_port/fld_port.hpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/fld_port/LICENSE",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_sources",
+      "path": "third_party/nlohmann_json/include/nlohmann/json.hpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_downloads",
+      "path": "third_party/_downloads/codeload.github.com_CihanTopal_ED_Lib_zip_refs_heads_master",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_downloads",
+      "path": "third_party/_downloads/codeload.github.com_iago-suarez_ELSED_zip_refs_heads_main",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_downloads",
+      "path": "third_party/_downloads/codeload.github.com_juanse77_EdgeLocator_zip_refs_heads_master",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_downloads",
+      "path": "third_party/_downloads/raw.githubusercontent.com_opencv_opencv_contrib_3.4_LICENSE",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_downloads",
+      "path": "third_party/_downloads/raw.githubusercontent.com_opencv_opencv_contrib_3.4_modules_ximgproc_include_opencv2_ximgproc_fast_line_detector.hpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_downloads",
+      "path": "third_party/_downloads/raw.githubusercontent.com_opencv_opencv_contrib_3.4_modules_ximgproc_src_fast_line_detector.cpp",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_downloads",
+      "path": "third_party/_downloads/www.ipol.im_pub_art_2012_gjmr-lsd_lsd_1.6.zip",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "third_party_downloads",
+      "path": "third_party/_downloads/www.ipol.im_pub_art_2017_216_devernay_1.0.zip",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "tools",
+      "path": "tools/make_figures.py",
+      "exists": true,
+      "matches_execution_log": false
+    },
+    {
+      "group": "tools",
+      "path": "tools/run_pipeline.py",
+      "exists": true,
+      "matches_execution_log": true
+    },
+    {
+      "group": "tools",
+      "path": "tools/write_method_sources.py",
+      "exists": true,
+      "matches_execution_log": true
+    }
+  ],
+  "input_hashes": [
+    {
+      "reference_id": "R01",
+      "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "matches_manifest": true
+    },
+    {
+      "reference_id": "R02",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "matches_manifest": true
+    },
+    {
+      "reference_id": "R03",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "matches_manifest": true
+    },
+    {
+      "reference_id": "R04",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "matches_manifest": true
+    }
+  ],
+  "scope": "Saved-artifact consistency and source comparison only. No image measurement, parameter sweep, model fitting or statistical test."
+}

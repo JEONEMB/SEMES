@@ -1,0 +1,49 @@
+epic: S15P31A507-2
+sprint: S15P31A5 1 스프린트 3
+stories:
+  S15P31A507-966:
+  - 968
+  - 969
+  - 970
+  S15P31A507-179:
+  - 971
+  - 972
+  - 973
+  - 842
+  S15P31A507-967:
+  - 974
+  - 975
+  - 976
+branch: S15P31A507-966-967-20261102-analysis-theta
+target: LSJ
+tasks:
+- issue: S15P31A507-968
+  commit: f0808696e4827b074ac71bffe030b8100bf2c38c
+  title: 외부 구조물·QR 직선 추출 방법 조사와 기준 영상 비교 결과 점검
+- issue: S15P31A507-969
+  commit: 2a23bb198ae58a22af18b423623e9ac85ba451e0
+  title: 직선 추출 파이프라인의 레퍼런스·설정·기록 전수 감사
+- issue: S15P31A507-970
+  commit: bb2623f2fdc16b8706b8b154052d3c7136f5a321
+  title: 공통 직선 피팅·영역 처리·설정 적용 및 결과 기록 보완
+- issue: S15P31A507-971
+  commit: 611fbecb7ede546a63906624282d44438042ac64
+  title: Gaussian 경계점 피팅의 자체 제외 조건 제거와 표본·초기값·종료 조건 비교
+- issue: S15P31A507-972
+  commit: ddeb79b1f4b03ee5656a244f1cec776b42fc2744
+  title: Adaptive Huber 공개 코드의 논문 대응·계산 문제·실데이터 동작 검토
+- issue: S15P31A507-973
+  commit: e2ff68aef4de3e65e0c9433e54f0e637a0090b6a
+  title: 일반 Huber 세로 잔차 피팅의 수렴 설정 확인과 기준 4장 직선 비교
+- issue: S15P31A507-842
+  commit: 9d3b04a516e700453dc31bc273248619065e5c9e
+  title: Y 고정 θ 변화 데이터에서 상·하단 전체 구조물 기울기의 판별 가능성 검증
+- issue: S15P31A507-974
+  commit: eac59f024f1987abe013eaa86633996d979c4c68
+  title: Sobel 경계점·일반 Huber 직선·상하단 각도 환산의 θ C++ 모듈 구현
+- issue: S15P31A507-975
+  commit: 644ab54d43e0bbe616259614842ca8a95390c075
+  title: 고정한 2차 (3)·3차 254장에서 θ 작성본 출력과 목표 오차 평가
+- issue: S15P31A507-976
+  commit: 346a33b173d4942628463fa2e4c58a1e012218ed
+  title: 하단 직선을 제외한 상단 전용 θ 비교 버전 구현과 동일 데이터 재평가

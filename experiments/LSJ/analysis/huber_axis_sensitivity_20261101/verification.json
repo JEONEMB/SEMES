@@ -1,0 +1,180 @@
+{
+  "source_image_hashes_all_match": true,
+  "reference_point_sets_match": 8,
+  "reference_coefficients_max_abs_difference": 0.0,
+  "regression_groups_crosschecked": 38,
+  "max_independent_ols_coefficient_difference": 4.440892098500626e-16,
+  "max_independent_pearson_difference": 7.771561172376096e-16,
+  "all_rows_retained": true,
+  "all_huber_tolerance_met": true,
+  "figures": {
+    "D1_G2": {
+      "label": "1차 2번 촬영구간",
+      "role": "primary",
+      "axis": "Y",
+      "path": "figures/D1_G2.png"
+    },
+    "D1_G3": {
+      "label": "1차 3번 촬영구간",
+      "role": "primary",
+      "axis": "Y",
+      "path": "figures/D1_G3.png"
+    },
+    "D1_G4": {
+      "label": "1차 4번 촬영구간",
+      "role": "primary",
+      "axis": "theta",
+      "path": "figures/D1_G4.png"
+    },
+    "D1_G5": {
+      "label": "1차 5번 촬영구간",
+      "role": "primary",
+      "axis": "theta",
+      "path": "figures/D1_G5.png"
+    },
+    "D1_G6": {
+      "label": "1차 6번 촬영구간",
+      "role": "primary",
+      "axis": "Y",
+      "path": "figures/D1_G6.png"
+    },
+    "D1_G7": {
+      "label": "1차 7번 촬영구간",
+      "role": "primary",
+      "axis": "Y",
+      "path": "figures/D1_G7.png"
+    },
+    "D2_Y_fixed_0.01": {
+      "label": "2차 theta=0.01 고정",
+      "role": "primary",
+      "axis": "Y",
+      "path": "figures/D2_Y_fixed_0.01.png"
+    },
+    "D2_Y_fixed_0.1": {
+      "label": "2차 theta=0.1 고정",
+      "role": "primary",
+      "axis": "Y",
+      "path": "figures/D2_Y_fixed_0.1.png"
+    },
+    "D2_Y_fixed_1": {
+      "label": "2차 theta=1 고정",
+      "role": "primary",
+      "axis": "Y",
+      "path": "figures/D2_Y_fixed_1.png"
+    },
+    "D2_Y_fixed_2": {
+      "label": "2차 theta=2 고정",
+      "role": "primary",
+      "axis": "Y",
+      "path": "figures/D2_Y_fixed_2.png"
+    },
+    "D2_theta_fixed_0.05": {
+      "label": "2차 Y=0.05 고정",
+      "role": "primary",
+      "axis": "theta",
+      "path": "figures/D2_theta_fixed_0.05.png"
+    },
+    "D2_theta_fixed_0.1": {
+      "label": "2차 Y=0.1 고정",
+      "role": "primary",
+      "axis": "theta",
+      "path": "figures/D2_theta_fixed_0.1.png"
+    },
+    "D2_theta_fixed_0.5": {
+      "label": "2차 Y=0.5 고정",
+      "role": "primary",
+      "axis": "theta",
+      "path": "figures/D2_theta_fixed_0.5.png"
+    },
+    "D2_theta_fixed_1": {
+      "label": "2차 Y=1 고정",
+      "role": "primary",
+      "axis": "theta",
+      "path": "figures/D2_theta_fixed_1.png"
+    },
+    "D3_theta_fixed_0.05": {
+      "label": "3차 Y=0.05mm 고정",
+      "role": "primary",
+      "axis": "theta",
+      "path": "figures/D3_theta_fixed_0.05.png"
+    },
+    "D2_common_theta_Y_0.05": {
+      "label": "2차 공통 θ 조건 / Y=0.05mm",
+      "role": "common_theta_levels_comparison",
+      "axis": "theta",
+      "path": "figures/D2_common_theta_Y_0.05.png"
+    },
+    "D2_common_theta_Y_0.1": {
+      "label": "2차 공통 θ 조건 / Y=0.1mm",
+      "role": "common_theta_levels_comparison",
+      "axis": "theta",
+      "path": "figures/D2_common_theta_Y_0.1.png"
+    },
+    "D2_common_theta_Y_0.5": {
+      "label": "2차 공통 θ 조건 / Y=0.5mm",
+      "role": "common_theta_levels_comparison",
+      "axis": "theta",
+      "path": "figures/D2_common_theta_Y_0.5.png"
+    },
+    "D2_common_theta_Y_1": {
+      "label": "2차 공통 θ 조건 / Y=1mm",
+      "role": "common_theta_levels_comparison",
+      "axis": "theta",
+      "path": "figures/D2_common_theta_Y_1.png"
+    }
+  },
+  "overlays": [
+    {
+      "id": "D1_041",
+      "label": "1차 Y-2.00.bmp",
+      "path": "figures/overlay_D1_041.png"
+    },
+    {
+      "id": "D1_021",
+      "label": "1차 Y+2.00.bmp",
+      "path": "figures/overlay_D1_021.png"
+    },
+    {
+      "id": "D1_241",
+      "label": "1차 T-1.00.bmp",
+      "path": "figures/overlay_D1_241.png"
+    },
+    {
+      "id": "D1_141",
+      "label": "1차 T+1.00.bmp",
+      "path": "figures/overlay_D1_141.png"
+    },
+    {
+      "id": "D2_003",
+      "label": "2차 Y+0.05 T+0.01 (1).bmp",
+      "path": "figures/overlay_D2_003.png"
+    },
+    {
+      "id": "D2_018",
+      "label": "2차 Y+0.05 T+2.00 (1).bmp",
+      "path": "figures/overlay_D2_018.png"
+    },
+    {
+      "id": "D2_049",
+      "label": "2차 Y+1.00 T+0.01 (1).bmp",
+      "path": "figures/overlay_D2_049.png"
+    },
+    {
+      "id": "D2_058",
+      "label": "2차 Y+1.00 T+2.00 (1).bmp",
+      "path": "figures/overlay_D2_058.png"
+    },
+    {
+      "id": "D3_001",
+      "label": "3차 Y+0.05 T+0.04 (1).bmp",
+      "path": "figures/overlay_D3_001.png"
+    },
+    {
+      "id": "D3_232",
+      "label": "3차 Y+0.05 T+0.82 (1).bmp",
+      "path": "figures/overlay_D3_232.png"
+    }
+  ],
+  "local_links_checked": 36,
+  "missing_links": []
+}

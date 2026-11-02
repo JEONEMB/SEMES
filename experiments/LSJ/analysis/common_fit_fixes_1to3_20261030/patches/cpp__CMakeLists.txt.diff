@@ -1,0 +1,15 @@
+--- before/cpp/CMakeLists.txt
++++ after/cpp/CMakeLists.txt
+@@ -45,6 +45,12 @@
+ add_executable(line_selftest tests/line_selftest.cpp src/line_fit.cpp src/io_utils.cpp)
+ target_include_directories(line_selftest PRIVATE include ${TP}/nlohmann_json/include ${OpenCV_INCLUDE_DIRS})
+ target_link_libraries(line_selftest PRIVATE ${OpenCV_LIBS})
++if(WIN32)
++    add_custom_command(TARGET line_selftest POST_BUILD
++        COMMAND ${CMAKE_COMMAND} -E copy_if_different
++            "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
++            "$<TARGET_FILE_DIR:line_selftest>")
++endif()
+ if(MSVC)
+     target_compile_definitions(line_selftest PRIVATE _USE_MATH_DEFINES NOMINMAX)
+     target_compile_options(line_selftest PRIVATE /utf-8 /W4)

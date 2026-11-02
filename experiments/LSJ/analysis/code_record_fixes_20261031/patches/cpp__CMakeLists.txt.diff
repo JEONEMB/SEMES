@@ -1,0 +1,30 @@
+--- before/cpp/CMakeLists.txt
++++ after/cpp/CMakeLists.txt
+@@ -26,7 +26,7 @@
+ 
+ add_executable(line_methods
+     src/main.cpp src/io_utils.cpp src/line_fit.cpp src/registry.cpp
+-    src/segment_support.cpp src/effective_settings.cpp
++    src/segment_support.cpp src/effective_settings.cpp src/zernike_location.cpp
+     src/methods_points.cpp src/methods_hough.cpp src/methods_segments.cpp src/methods_qr.cpp)
+ target_include_directories(line_methods PRIVATE include ${TP}/nlohmann_json/include)
+ target_link_libraries(line_methods PRIVATE tp_c tp_cpp ${OpenCV_LIBS})
+@@ -72,3 +72,18 @@
+     target_compile_definitions(line_selftest PRIVATE _USE_MATH_DEFINES NOMINMAX)
+     target_compile_options(line_selftest PRIVATE /utf-8 /W4)
+ endif()
++
++# Arithmetic domains and calculation-coordinate JSON round-trip; no captured images.
++add_executable(numeric_record_test tests/numeric_record_test.cpp src/zernike_location.cpp src/line_fit.cpp src/io_utils.cpp)
++target_include_directories(numeric_record_test PRIVATE include ${TP}/nlohmann_json/include ${OpenCV_INCLUDE_DIRS})
++target_link_libraries(numeric_record_test PRIVATE ${OpenCV_LIBS})
++if(MSVC)
++    target_compile_definitions(numeric_record_test PRIVATE _USE_MATH_DEFINES NOMINMAX)
++    target_compile_options(numeric_record_test PRIVATE /utf-8 /W4)
++endif()
++if(WIN32)
++    add_custom_command(TARGET numeric_record_test POST_BUILD
++        COMMAND ${CMAKE_COMMAND} -E copy_if_different
++            "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
++            "$<TARGET_FILE_DIR:numeric_record_test>")
++endif()

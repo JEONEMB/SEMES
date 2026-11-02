@@ -1,0 +1,21 @@
+{
+  "findings": 32,
+  "categories": {
+    "설정 근거·검증 부족": 15,
+    "조건부 코드 위험": 4,
+    "기록·설명 문제": 5,
+    "레퍼런스 대비 변형": 7,
+    "코드 논리 문제": 1
+  },
+  "methods": 21,
+  "method_parameter_entries": 171,
+  "stored_rows": 216,
+  "active_methods": [
+    "E01",
+    "E06",
+    "E02",
+    "Q02",
+    "Q04"
+  ],
+  "scope": "Read-only audit. No image measurement, fit, statistical test or original modification."
+}

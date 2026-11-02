@@ -1,0 +1,80 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "executable": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\huber_convergence_20261101\\.venv\\Scripts\\python.exe",
+  "packages": {
+    "statsmodels": "0.15.0",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pandas": "3.1.0",
+    "patsy": "1.0.3",
+    "packaging": "26.3",
+    "formulaic": "1.2.2"
+  },
+  "profile_file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_no_rejection_20261101\\profiles.jsonl",
+  "profile_sha256": "697124f6e25177ea3d6199d78a9c17aef5a4f16496e0d4334cfc98fe829b3c67",
+  "prior_point_verification": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\adahuber_verification_20261101\\data_provenance.json",
+  "image_checks": [
+    {
+      "id": "R01",
+      "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "unchanged": true
+    },
+    {
+      "id": "R02",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "unchanged": true
+    },
+    {
+      "id": "R03",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "unchanged": true
+    },
+    {
+      "id": "R04",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "unchanged": true
+    }
+  ],
+  "input_counts": {
+    "R01_upper_structure": 2712,
+    "R01_lower_structure": 3052,
+    "R02_upper_structure": 2712,
+    "R02_lower_structure": 3052,
+    "R03_upper_structure": 2712,
+    "R03_lower_structure": 3052,
+    "R04_upper_structure": 2712,
+    "R04_lower_structure": 3052
+  },
+  "source_snapshots": [
+    {
+      "module": "statsmodels.robust.robust_linear_model",
+      "installed_file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\huber_convergence_20261101\\.venv\\Lib\\site-packages\\statsmodels\\robust\\robust_linear_model.py",
+      "snapshot": "sources\\statsmodels__robust__robust_linear_model.py",
+      "sha256": "0f74f54d3ac15b059f3ddc5f2afdddca1ed575e214598df5bf90edba92bc2bee"
+    },
+    {
+      "module": "statsmodels.robust.norms",
+      "installed_file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\huber_convergence_20261101\\.venv\\Lib\\site-packages\\statsmodels\\robust\\norms.py",
+      "snapshot": "sources\\statsmodels__robust__norms.py",
+      "sha256": "8e51d85e92638878d090016a39259f4ea9ce97a8039655209a3e45a9b86363b9"
+    },
+    {
+      "module": "statsmodels.robust.scale",
+      "installed_file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\huber_convergence_20261101\\.venv\\Lib\\site-packages\\statsmodels\\robust\\scale.py",
+      "snapshot": "sources\\statsmodels__robust__scale.py",
+      "sha256": "5d9397a15cc1237d7fe714bfeca67e9859fef7c565a600cc6d3129c86660708d"
+    },
+    {
+      "module": "statsmodels.regression._tools",
+      "installed_file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\huber_convergence_20261101\\.venv\\Lib\\site-packages\\statsmodels\\regression\\_tools.py",
+      "snapshot": "sources\\statsmodels__regression___tools.py",
+      "sha256": "8df04f527de9041002fc5ad6b25c64573f55bab283ca2fd88f0c622fcd393e7b"
+    }
+  ],
+  "elapsed_seconds": 5.257587700005388,
+  "scope": "Numerical convergence comparisons for ordinary Huber only. No theta calibration, no new filtering."
+}

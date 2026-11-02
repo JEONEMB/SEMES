@@ -1,0 +1,33 @@
+{
+  "targets": {
+    "upper_structure": {
+      "label": "상단",
+      "reference_images": 4,
+      "minimum_ref": "R04",
+      "maximum_ref": "R02",
+      "minimum_slope": 0.004726613394725798,
+      "maximum_slope": 0.004770299014110857,
+      "slope_range": 4.368561938505877e-05,
+      "minimum_angle_deg": 0.2708129821868848,
+      "maximum_angle_deg": 0.2733159273666673,
+      "angle_range_deg": 0.002502945179782501
+    },
+    "lower_structure": {
+      "label": "하단",
+      "reference_images": 4,
+      "minimum_ref": "R02",
+      "maximum_ref": "R03",
+      "minimum_slope": 0.0037070707948161363,
+      "maximum_slope": 0.0038399732805483033,
+      "slope_range": 0.000132902485732167,
+      "minimum_angle_deg": 0.21239853794936447,
+      "maximum_angle_deg": 0.22001318102893697,
+      "angle_range_deg": 0.007614643079572492
+    }
+  },
+  "lower_to_upper_angle_range_ratio": 3.0422732152024934,
+  "metric": "observed maximum minus minimum across four reference images",
+  "equivalence_test": "not performed",
+  "pass_fail_threshold": null,
+  "mechanical_theta_conversion": "not performed"
+}

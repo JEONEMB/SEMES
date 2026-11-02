@@ -1,0 +1,58 @@
+{
+  "created_at": "2026-11-01T19:25:49.186064+09:00",
+  "source_directory": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\huber_convergence_20261101",
+  "source_hashes": {
+    "results.json": "0db83306a034393441c33efffea44e12cf4da880e215ebd5d03d17deda04d4bc",
+    "settings.json": "0128765dd3695e268f3df7841e4be537ec8afa8bd55bd911a62b8f466849d374",
+    "inputs.npz": "d6455ddf1d0c5c29cef1ea49e73adb94b0126b91e5f36d1a3ea9acefd57cf5e0",
+    "provenance.json": "03dbc6ba471a175ffe610d3d25ca3f4afa55c120abf38e847b2e7466d0f4ba75",
+    "verification.json": "7cadee388bed955dfc926a4a2c140dfc7a4b3cde8c575bcc75d0beb8dfb06331"
+  },
+  "source_config": "A",
+  "fixed_settings": {
+    "norm": "HuberT(t=1.345)",
+    "residual": "vertical",
+    "scale_est": "mad",
+    "update_scale": true,
+    "conv": "dev",
+    "start_params": "None: original OLS initialization",
+    "cov": "H1",
+    "design": "[ones, original image x]",
+    "input": "all saved integer Sobel points; no point rejection",
+    "gaussian": false
+  },
+  "maxiter": 50,
+  "tol": 1e-08,
+  "refitted": false,
+  "method": "Read already verified baseline results and calculate descriptive ranges.",
+  "point_rejection": false,
+  "minimum_point_count_filter": false,
+  "image_checks": [
+    {
+      "ref": "R01",
+      "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "matches_previous": true
+    },
+    {
+      "ref": "R02",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "matches_previous": true
+    },
+    {
+      "ref": "R03",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "matches_previous": true
+    },
+    {
+      "ref": "R04",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "matches_previous": true
+    }
+  ],
+  "total_input_points": 23056,
+  "illustration_only": "Overlay vertical range is enlarged; 30px crop margin affects only display. Lines connect across the occluded span for display; no points invented."
+}

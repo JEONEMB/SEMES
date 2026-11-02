@@ -1,0 +1,129 @@
+﻿D1_G2                    upper_structure  n= 20 r=+0.013364 a=+0.00000942 RMS=0.000406 step=+0.00000047
+D1_G2                    lower_structure  n= 20 r=+0.038108 a=+0.00012790 RMS=0.001934 step=+0.00000639
+D1_G3                    upper_structure  n= 20 r=-0.222841 a=-0.00013804 RMS=0.000348 step=-0.00000690
+D1_G3                    lower_structure  n= 20 r=+0.070079 a=+0.00023357 RMS=0.001917 step=+0.00001168
+D1_G4                    upper_structure  n=100 r=-0.999454 a=-0.08759520 RMS=0.000836 step=-0.00087595
+D1_G4                    lower_structure  n=100 r=+0.998943 a=+0.19787425 RMS=0.002628 step=+0.00197874
+D1_G5                    upper_structure  n=100 r=-0.999517 a=-0.08774114 RMS=0.000787 step=-0.00087741
+D1_G5                    lower_structure  n=100 r=+0.998616 a=+0.19930866 RMS=0.003030 step=+0.00199309
+D1_G6                    upper_structure  n= 20 r=+0.019682 a=+0.00001756 RMS=0.000514 step=+0.00000088
+D1_G6                    lower_structure  n= 20 r=-0.134838 a=-0.00053244 RMS=0.002256 step=-0.00002662
+D1_G7                    upper_structure  n= 20 r=-0.149004 a=-0.00010555 RMS=0.000404 step=-0.00000528
+D1_G7                    lower_structure  n= 20 r=+0.201770 a=+0.00101012 RMS=0.002827 step=+0.00005051
+D2_Y_fixed_0.01          upper_structure  n= 12 r=-0.517624 a=-0.00077061 RMS=0.000486 step=-0.00003853
+D2_Y_fixed_0.01          lower_structure  n= 12 r=+0.133508 a=+0.00131238 RMS=0.003716 step=+0.00006562
+D2_Y_fixed_0.1           upper_structure  n= 12 r=-0.479205 a=-0.00080965 RMS=0.000566 step=-0.00004048
+D2_Y_fixed_0.1           lower_structure  n= 12 r=+0.469451 a=+0.00239970 RMS=0.001721 step=+0.00011999
+D2_Y_fixed_1             upper_structure  n= 12 r=-0.603940 a=-0.00173702 RMS=0.000874 step=-0.00008685
+D2_Y_fixed_1             lower_structure  n= 12 r=-0.070086 a=-0.00078392 RMS=0.004256 step=-0.00003920
+D2_Y_fixed_2             upper_structure  n= 12 r=-0.118791 a=-0.00024707 RMS=0.000788 step=-0.00001235
+D2_Y_fixed_2             lower_structure  n= 12 r=-0.456420 a=-0.00453638 RMS=0.003373 step=-0.00022682
+D2_theta_fixed_0.05      upper_structure  n= 18 r=-0.999986 a=-0.08786648 RMS=0.000351 step=-0.00087866
+D2_theta_fixed_0.05      lower_structure  n= 18 r=+0.999836 a=+0.19904062 RMS=0.002690 step=+0.00199041
+D2_theta_fixed_0.1       upper_structure  n= 15 r=-0.999905 a=-0.08824856 RMS=0.000918 step=-0.00088249
+D2_theta_fixed_0.1       lower_structure  n= 15 r=+0.999677 a=+0.20001244 RMS=0.003842 step=+0.00200012
+D2_theta_fixed_0.5       upper_structure  n= 12 r=-0.999917 a=-0.08810352 RMS=0.000913 step=-0.00088104
+D2_theta_fixed_0.5       lower_structure  n= 12 r=+0.999731 a=+0.19905919 RMS=0.003720 step=+0.00199059
+D2_theta_fixed_1         upper_structure  n= 12 r=-0.999894 a=-0.08787100 RMS=0.001031 step=-0.00087871
+D2_theta_fixed_1         lower_structure  n= 12 r=+0.999849 a=+0.19639647 RMS=0.002744 step=+0.00196396
+D3_theta_fixed_0.05      upper_structure  n=234 r=-0.999730 a=-0.08865655 RMS=0.000467 step=-0.00088657
+D3_theta_fixed_0.05      lower_structure  n=234 r=+0.998466 a=+0.19671398 RMS=0.002470 step=+0.00196714
+{
+  "fit_stops": {
+    "tolerance": 1150
+  },
+  "endpoint_counts": {
+    "total": 352,
+    "lines_with_endpoint_points": 117
+  },
+  "interactions": {
+    "upper_structure": {
+      "common_theta_levels_deg": [
+        0.01,
+        0.1,
+        1.0,
+        2.0
+      ],
+      "sensitivities_by_y": [
+        {
+          "y_mm": 0.05,
+          "n": 12,
+          "a_theta": -0.08793629372137941,
+          "pearson_r": -0.9999940668464582,
+          "rmse_deg": 0.00024384938660137364,
+          "image_angle_change_per_tick_deg": -0.0008793629372137942
+        },
+        {
+          "y_mm": 0.1,
+          "n": 12,
+          "a_theta": -0.08818467729531883,
+          "pearson_r": -0.9999516398928829,
+          "rmse_deg": 0.0006981701765058009,
+          "image_angle_change_per_tick_deg": -0.0008818467729531883
+        },
+        {
+          "y_mm": 0.5,
+          "n": 12,
+          "a_theta": -0.08810351679575924,
+          "pearson_r": -0.9999170650302746,
+          "rmse_deg": 0.0009134775709724515,
+          "image_angle_change_per_tick_deg": -0.0008810351679575925
+        },
+        {
+          "y_mm": 1.0,
+          "n": 12,
+          "a_theta": -0.0878710038097512,
+          "pearson_r": -0.9998937549182045,
+          "rmse_deg": 0.0010312011710268728,
+          "image_angle_change_per_tick_deg": -0.000878710038097512
+        }
+      ],
+      "a_theta_max_minus_min": 0.0003136734855676282,
+      "interpretation": "Observed differences over matched theta levels; no significance or causal claim."
+    },
+    "lower_structure": {
+      "common_theta_levels_deg": [
+        0.01,
+        0.1,
+        1.0,
+        2.0
+      ],
+      "sensitivities_by_y": [
+        {
+          "y_mm": 0.05,
+          "n": 12,
+          "a_theta": 0.19881762298364414,
+          "pearson_r": 0.9998033125951945,
+          "rmse_deg": 0.0031747973462603386,
+          "image_angle_change_per_tick_deg": 0.0019881762298364415
+        },
+        {
+          "y_mm": 0.1,
+          "n": 12,
+          "a_theta": 0.2003339626852027,
+          "pearson_r": 0.9997143359051235,
+          "rmse_deg": 0.0038555315065140713,
+          "image_angle_change_per_tick_deg": 0.002003339626852027
+        },
+        {
+          "y_mm": 0.5,
+          "n": 12,
+          "a_theta": 0.19905918788046276,
+          "pearson_r": 0.9997306329567927,
+          "rmse_deg": 0.0037200689857091115,
+          "image_angle_change_per_tick_deg": 0.0019905918788046275
+        },
+        {
+          "y_mm": 1.0,
+          "n": 12,
+          "a_theta": 0.19639647148648615,
+          "pearson_r": 0.9998494652949367,
+          "rmse_deg": 0.002743530668698995,
+          "image_angle_change_per_tick_deg": 0.0019639647148648617
+        }
+      ],
+      "a_theta_max_minus_min": 0.003937491198716558,
+      "interpretation": "Observed differences over matched theta levels; no significance or causal claim."
+    }
+  }
+}

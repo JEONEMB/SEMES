@@ -1,0 +1,11 @@
+test_actual_mask_is_not_replaced_by_final_mask (test_fit_point_views.PointViewsTest.test_actual_mask_is_not_replaced_by_final_mask) ... ok
+test_bad_record_mask_is_not_silently_replaced (test_fit_point_views.PointViewsTest.test_bad_record_mask_is_not_silently_replaced) ... ok
+test_convergence_and_missing_history_differ (test_fit_point_views.PointViewsTest.test_convergence_and_missing_history_differ) ... ok
+test_legacy_mask_does_not_claim_actual_fit_use (test_fit_point_views.PointViewsTest.test_legacy_mask_does_not_claim_actual_fit_use) ... ok
+test_rms_basis_is_not_relabelled_in_old_results (test_fit_point_views.PointViewsTest.test_rms_basis_is_not_relabelled_in_old_results) ... ok
+test_unknown_mask_is_not_all_selected (test_fit_point_views.PointViewsTest.test_unknown_mask_is_not_all_selected) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.000s
+
+OK

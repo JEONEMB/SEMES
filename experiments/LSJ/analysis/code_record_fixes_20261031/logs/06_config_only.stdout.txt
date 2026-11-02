@@ -1,0 +1,4550 @@
+{
+  "E01_upper_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E01",
+      "method": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size"
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 9
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "polarity": 1
+      },
+      "column_step_px": 2,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "detector_margin_px": {
+        "configured_value": 16,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "profile_examples_every": 100
+      },
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {
+      "gradient": "sobel_y_ksize3_raw",
+      "init_sigma": "neighborhood_size"
+    },
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E01_lower_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E01",
+      "method": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size"
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 9
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "polarity": 1
+      },
+      "column_step_px": 2,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "detector_margin_px": {
+        "configured_value": 16,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "profile_examples_every": 100
+      },
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {
+      "gradient": "sobel_y_ksize3_raw",
+      "init_sigma": "neighborhood_size"
+    },
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E02_upper_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E02",
+      "method": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ]
+      },
+      "column_step_px": 2,
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E02_lower_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E02",
+      "method": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ]
+      },
+      "column_step_px": 2,
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E03_upper_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E03",
+      "method": {
+        "blur_sigma": 1.5,
+        "canny_low": 8.0,
+        "canny_high": 16.0,
+        "canny_aperture": 3,
+        "l2gradient": true,
+        "hough_rho": 1.0,
+        "hough_theta_deg": 0.01,
+        "theta_min_deg": 85.0,
+        "theta_max_deg": 95.0,
+        "hough_threshold": 150,
+        "refit_dist_px": 1.5
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "max_candidates_saved": 30
+      },
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E03_lower_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E03",
+      "method": {
+        "blur_sigma": 1.5,
+        "canny_low": 8.0,
+        "canny_high": 16.0,
+        "canny_aperture": 3,
+        "l2gradient": true,
+        "hough_rho": 1.0,
+        "hough_theta_deg": 0.01,
+        "theta_min_deg": 85.0,
+        "theta_max_deg": 95.0,
+        "hough_threshold": 150,
+        "refit_dist_px": 1.5
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "max_candidates_saved": 30
+      },
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E04_upper_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E04",
+      "method": {
+        "scale": 1.0,
+        "quant": 2.0,
+        "ang_th": 22.5,
+        "log_eps": 0.0,
+        "density_th": 0.7,
+        "n_bins": 1024
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 3.0,
+        "min_visible_len_px": 20.0,
+        "side_offset_px": 3.0,
+        "min_contrast": 3.0,
+        "consensus_inlier_px": 2.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "method": {
+        "sigma_scale": {
+          "configured_value": 0.6,
+          "reason": "scale=1 bypasses Gaussian subsampling"
+        }
+      },
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E04_lower_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E04",
+      "method": {
+        "scale": 1.0,
+        "quant": 2.0,
+        "ang_th": 22.5,
+        "log_eps": 0.0,
+        "density_th": 0.7,
+        "n_bins": 1024
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 3.0,
+        "min_visible_len_px": 20.0,
+        "side_offset_px": 3.0,
+        "min_contrast": 3.0,
+        "consensus_inlier_px": 2.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "method": {
+        "sigma_scale": {
+          "configured_value": 0.6,
+          "reason": "scale=1 bypasses Gaussian subsampling"
+        }
+      },
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E05_upper_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E05",
+      "method": {
+        "coarse_blur_sigma": 1.0,
+        "min_coarse_grad": 0.5,
+        "Np": 7,
+        "k_edge": 1.8,
+        "blur_sigma_px": 1.5,
+        "supersample": 64,
+        "max_shift_px": 1.5,
+        "max_orientation_dev_deg": 30.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 12
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "polarity": 1
+      },
+      "column_step_px": 2,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "detector_margin_px": {
+        "configured_value": 16,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "window_examples_every": 200
+      },
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E05_lower_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E05",
+      "method": {
+        "coarse_blur_sigma": 1.0,
+        "min_coarse_grad": 0.5,
+        "Np": 7,
+        "k_edge": 1.8,
+        "blur_sigma_px": 1.5,
+        "supersample": 64,
+        "max_shift_px": 1.5,
+        "max_orientation_dev_deg": 30.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 12
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "polarity": 1
+      },
+      "column_step_px": 2,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "detector_margin_px": {
+        "configured_value": 16,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "window_examples_every": 200
+      },
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E06_upper_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E06",
+      "method": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 8
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "polarity": 1
+      },
+      "column_step_px": 2,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "detector_margin_px": {
+        "configured_value": 16,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E06_lower_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E06",
+      "method": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 8
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "polarity": 1
+      },
+      "column_step_px": 2,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 3.0,
+          "min_visible_len_px": 20.0,
+          "side_offset_px": 3.0,
+          "min_contrast": 3.0,
+          "consensus_inlier_px": 2.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "detector_margin_px": {
+        "configured_value": 16,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E07_upper_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E07",
+      "method": {
+        "ed_operator": "SOBEL",
+        "ed_grad_thresh": 12,
+        "ed_anchor_thresh": 2,
+        "ed_scan_interval": 1,
+        "ed_min_path_len": 10,
+        "ed_sigma": 1.0,
+        "ed_sum_flag": true,
+        "line_error": 1.0,
+        "min_line_len": -1,
+        "max_distance_between_two_lines": 6.0,
+        "max_error": 1.3
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 3.0,
+        "min_visible_len_px": 20.0,
+        "side_offset_px": 3.0,
+        "min_contrast": 3.0,
+        "consensus_inlier_px": 2.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E07_lower_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E07",
+      "method": {
+        "ed_operator": "SOBEL",
+        "ed_grad_thresh": 12,
+        "ed_anchor_thresh": 2,
+        "ed_scan_interval": 1,
+        "ed_min_path_len": 10,
+        "ed_sigma": 1.0,
+        "ed_sum_flag": true,
+        "line_error": 1.0,
+        "min_line_len": -1,
+        "max_distance_between_two_lines": 6.0,
+        "max_error": 1.3
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 3.0,
+        "min_visible_len_px": 20.0,
+        "side_offset_px": 3.0,
+        "min_contrast": 3.0,
+        "consensus_inlier_px": 2.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E08_upper_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E08",
+      "method": {
+        "length_threshold": 10,
+        "distance_threshold": 1.4142135381698608,
+        "canny_th1": 10.0,
+        "canny_th2": 20.0,
+        "canny_aperture_size": 3,
+        "do_merge": false
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 3.0,
+        "min_visible_len_px": 20.0,
+        "side_offset_px": 3.0,
+        "min_contrast": 3.0,
+        "consensus_inlier_px": 2.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E08_lower_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E08",
+      "method": {
+        "length_threshold": 10,
+        "distance_threshold": 1.4142135381698608,
+        "canny_th1": 10.0,
+        "canny_th2": 20.0,
+        "canny_aperture_size": 3,
+        "do_merge": false
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 3.0,
+        "min_visible_len_px": 20.0,
+        "side_offset_px": 3.0,
+        "min_contrast": 3.0,
+        "consensus_inlier_px": 2.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E09_upper_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E09",
+      "method": {
+        "ksize": 5,
+        "sigma": 1.0,
+        "gradientThreshold": 10.0,
+        "anchorThreshold": 4,
+        "scanIntervals": 2,
+        "minLineLen": 15,
+        "lineFitErrThreshold": 0.2,
+        "pxToSegmentDistTh": 1.5,
+        "junctionEigenvalsTh": 10.0,
+        "junctionAngleTh_deg": 10.0,
+        "validationTh": 0.15,
+        "validate": true,
+        "treatJunctions": true
+      },
+      "implementation_constants": {
+        "ELSED_listJunctionSizes": [
+          5,
+          7,
+          9
+        ],
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 3.0,
+        "min_visible_len_px": 20.0,
+        "side_offset_px": 3.0,
+        "min_contrast": 3.0,
+        "consensus_inlier_px": 2.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "E09_lower_structure": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "E09",
+      "method": {
+        "ksize": 5,
+        "sigma": 1.0,
+        "gradientThreshold": 10.0,
+        "anchorThreshold": 4,
+        "scanIntervals": 2,
+        "minLineLen": 15,
+        "lineFitErrThreshold": 0.2,
+        "pxToSegmentDistTh": 1.5,
+        "junctionEigenvalsTh": 10.0,
+        "junctionAngleTh_deg": 10.0,
+        "validationTh": 0.15,
+        "validate": true,
+        "treatJunctions": true
+      },
+      "implementation_constants": {
+        "ELSED_listJunctionSizes": [
+          5,
+          7,
+          9
+        ],
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 2.0,
+        "min_points": 50
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 3.0,
+        "min_visible_len_px": 20.0,
+        "side_offset_px": 3.0,
+        "min_contrast": 3.0,
+        "consensus_inlier_px": 2.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "polarity": 1,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ]
+      },
+      "detector_margin_px": 16,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 2,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        24,
+        3816
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q01_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q01",
+      "method": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 40.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size"
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 9
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1560,
+          1725
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1
+      },
+      "column_step_px": 1,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "roi_xyxy": {
+        "configured_value": [
+          1535,
+          948,
+          1760,
+          1190
+        ],
+        "reason": "local profile patch is based on x/band ranges"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "profile_examples_every": 20
+      },
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {
+      "gradient": "sobel_y_ksize3_raw",
+      "init_sigma": "neighborhood_size"
+    },
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q01_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q01",
+      "method": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 40.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size"
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 9
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1817,
+          1984
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1
+      },
+      "column_step_px": 1,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "roi_xyxy": {
+        "configured_value": [
+          1794,
+          948,
+          2018,
+          1190
+        ],
+        "reason": "local profile patch is based on x/band ranges"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "profile_examples_every": 20
+      },
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {
+      "gradient": "sobel_y_ksize3_raw",
+      "init_sigma": "neighborhood_size"
+    },
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q01_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q01",
+      "method": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 40.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size"
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 9
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          2077,
+          2243
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1
+      },
+      "column_step_px": 1,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "roi_xyxy": {
+        "configured_value": [
+          2054,
+          948,
+          2278,
+          1190
+        ],
+        "reason": "local profile patch is based on x/band ranges"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "profile_examples_every": 20
+      },
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {
+      "gradient": "sobel_y_ksize3_raw",
+      "init_sigma": "neighborhood_size"
+    },
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q02_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q02",
+      "method": {
+        "sigma": 1.0,
+        "th_h": 30.0,
+        "th_l": 15.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1560,
+          1725
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1535,
+          948,
+          1760,
+          1190
+        ],
+        "detector_region_xywh": [
+          1527,
+          940,
+          241,
+          258
+        ]
+      },
+      "column_step_px": 1,
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q02_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q02",
+      "method": {
+        "sigma": 1.0,
+        "th_h": 30.0,
+        "th_l": 15.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1817,
+          1984
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1794,
+          948,
+          2018,
+          1190
+        ],
+        "detector_region_xywh": [
+          1786,
+          940,
+          240,
+          258
+        ]
+      },
+      "column_step_px": 1,
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q02_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q02",
+      "method": {
+        "sigma": 1.0,
+        "th_h": 30.0,
+        "th_l": 15.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          2077,
+          2243
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          2054,
+          948,
+          2278,
+          1190
+        ],
+        "detector_region_xywh": [
+          2046,
+          940,
+          240,
+          258
+        ]
+      },
+      "column_step_px": 1,
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q03_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q03",
+      "method": {
+        "blur_sigma": 1.0,
+        "canny_low": 40.0,
+        "canny_high": 100.0,
+        "canny_aperture": 3,
+        "l2gradient": true,
+        "hough_rho": 1.0,
+        "hough_theta_deg": 0.01,
+        "theta_min_deg": 80.0,
+        "theta_max_deg": 100.0,
+        "hough_threshold": 40,
+        "refit_dist_px": 1.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1560,
+          1725
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1535,
+          948,
+          1760,
+          1190
+        ],
+        "detector_region_xywh": [
+          1527,
+          940,
+          241,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "max_candidates_saved": 30
+      },
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q03_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q03",
+      "method": {
+        "blur_sigma": 1.0,
+        "canny_low": 40.0,
+        "canny_high": 100.0,
+        "canny_aperture": 3,
+        "l2gradient": true,
+        "hough_rho": 1.0,
+        "hough_theta_deg": 0.01,
+        "theta_min_deg": 80.0,
+        "theta_max_deg": 100.0,
+        "hough_threshold": 40,
+        "refit_dist_px": 1.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1817,
+          1984
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1794,
+          948,
+          2018,
+          1190
+        ],
+        "detector_region_xywh": [
+          1786,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "max_candidates_saved": 30
+      },
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q03_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q03",
+      "method": {
+        "blur_sigma": 1.0,
+        "canny_low": 40.0,
+        "canny_high": 100.0,
+        "canny_aperture": 3,
+        "l2gradient": true,
+        "hough_rho": 1.0,
+        "hough_theta_deg": 0.01,
+        "theta_min_deg": 80.0,
+        "theta_max_deg": 100.0,
+        "hough_threshold": 40,
+        "refit_dist_px": 1.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          2077,
+          2243
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          2054,
+          948,
+          2278,
+          1190
+        ],
+        "detector_region_xywh": [
+          2046,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "max_candidates_saved": 30
+      },
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q04_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q04",
+      "method": {
+        "scale": 1.0,
+        "quant": 2.0,
+        "ang_th": 22.5,
+        "log_eps": 0.0,
+        "density_th": 0.7,
+        "n_bins": 1024
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          1560,
+          1725
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1535,
+          948,
+          1760,
+          1190
+        ],
+        "detector_region_xywh": [
+          1527,
+          940,
+          241,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "method": {
+        "sigma_scale": {
+          "configured_value": 0.6,
+          "reason": "scale=1 bypasses Gaussian subsampling"
+        }
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q04_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q04",
+      "method": {
+        "scale": 1.0,
+        "quant": 2.0,
+        "ang_th": 22.5,
+        "log_eps": 0.0,
+        "density_th": 0.7,
+        "n_bins": 1024
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          1817,
+          1984
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1794,
+          948,
+          2018,
+          1190
+        ],
+        "detector_region_xywh": [
+          1786,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "method": {
+        "sigma_scale": {
+          "configured_value": 0.6,
+          "reason": "scale=1 bypasses Gaussian subsampling"
+        }
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q04_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q04",
+      "method": {
+        "scale": 1.0,
+        "quant": 2.0,
+        "ang_th": 22.5,
+        "log_eps": 0.0,
+        "density_th": 0.7,
+        "n_bins": 1024
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          2077,
+          2243
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          2054,
+          948,
+          2278,
+          1190
+        ],
+        "detector_region_xywh": [
+          2046,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "method": {
+        "sigma_scale": {
+          "configured_value": 0.6,
+          "reason": "scale=1 bypasses Gaussian subsampling"
+        }
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q05_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q05",
+      "method": {
+        "coarse_blur_sigma": 1.0,
+        "min_coarse_grad": 5.0,
+        "Np": 7,
+        "k_edge": 1.8,
+        "blur_sigma_px": 1.0,
+        "supersample": 64,
+        "max_shift_px": 1.5,
+        "max_orientation_dev_deg": 30.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 12
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1560,
+          1725
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1
+      },
+      "column_step_px": 1,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "roi_xyxy": {
+        "configured_value": [
+          1535,
+          948,
+          1760,
+          1190
+        ],
+        "reason": "local profile patch is based on x/band ranges"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "window_examples_every": 40
+      },
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q05_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q05",
+      "method": {
+        "coarse_blur_sigma": 1.0,
+        "min_coarse_grad": 5.0,
+        "Np": 7,
+        "k_edge": 1.8,
+        "blur_sigma_px": 1.0,
+        "supersample": 64,
+        "max_shift_px": 1.5,
+        "max_orientation_dev_deg": 30.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 12
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1817,
+          1984
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1
+      },
+      "column_step_px": 1,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "roi_xyxy": {
+        "configured_value": [
+          1794,
+          948,
+          2018,
+          1190
+        ],
+        "reason": "local profile patch is based on x/band ranges"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "window_examples_every": 40
+      },
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q05_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q05",
+      "method": {
+        "coarse_blur_sigma": 1.0,
+        "min_coarse_grad": 5.0,
+        "Np": 7,
+        "k_edge": 1.8,
+        "blur_sigma_px": 1.0,
+        "supersample": 64,
+        "max_shift_px": 1.5,
+        "max_orientation_dev_deg": 30.0
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 12
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          2077,
+          2243
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1
+      },
+      "column_step_px": 1,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "roi_xyxy": {
+        "configured_value": [
+          2054,
+          948,
+          2278,
+          1190
+        ],
+        "reason": "local profile patch is based on x/band ranges"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "method": {
+        "window_examples_every": 40
+      },
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q06_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q06",
+      "method": {
+        "half_height": 4,
+        "min_grad": 10.0,
+        "min_contrast": 30.0,
+        "max_abs_a_px": 1.5
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 8
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1560,
+          1725
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1
+      },
+      "column_step_px": 1,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "roi_xyxy": {
+        "configured_value": [
+          1535,
+          948,
+          1760,
+          1190
+        ],
+        "reason": "local profile patch is based on x/band ranges"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q06_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q06",
+      "method": {
+        "half_height": 4,
+        "min_grad": 10.0,
+        "min_contrast": 30.0,
+        "max_abs_a_px": 1.5
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 8
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          1817,
+          1984
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1
+      },
+      "column_step_px": 1,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "roi_xyxy": {
+        "configured_value": [
+          1794,
+          948,
+          2018,
+          1190
+        ],
+        "reason": "local profile patch is based on x/band ranges"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q06_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q06",
+      "method": {
+        "half_height": 4,
+        "min_grad": 10.0,
+        "min_contrast": 30.0,
+        "max_abs_a_px": 1.5
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "profile_patch_padding_px": 8
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "x_range_inclusive": [
+          2077,
+          2243
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1
+      },
+      "column_step_px": 1,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "roi_xyxy": {
+        "configured_value": [
+          2054,
+          948,
+          2278,
+          1190
+        ],
+        "reason": "local profile patch is based on x/band ranges"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "method-specific profile patch padding"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q07_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q07",
+      "method": {
+        "ed_operator": "SOBEL",
+        "ed_grad_thresh": 36,
+        "ed_anchor_thresh": 8,
+        "ed_scan_interval": 1,
+        "ed_min_path_len": 10,
+        "ed_sigma": 1.0,
+        "ed_sum_flag": true,
+        "line_error": 1.0,
+        "min_line_len": -1,
+        "max_distance_between_two_lines": 6.0,
+        "max_error": 1.3
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          1560,
+          1725
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1535,
+          948,
+          1760,
+          1190
+        ],
+        "detector_region_xywh": [
+          1527,
+          940,
+          241,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q07_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q07",
+      "method": {
+        "ed_operator": "SOBEL",
+        "ed_grad_thresh": 36,
+        "ed_anchor_thresh": 8,
+        "ed_scan_interval": 1,
+        "ed_min_path_len": 10,
+        "ed_sigma": 1.0,
+        "ed_sum_flag": true,
+        "line_error": 1.0,
+        "min_line_len": -1,
+        "max_distance_between_two_lines": 6.0,
+        "max_error": 1.3
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          1817,
+          1984
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1794,
+          948,
+          2018,
+          1190
+        ],
+        "detector_region_xywh": [
+          1786,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q07_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q07",
+      "method": {
+        "ed_operator": "SOBEL",
+        "ed_grad_thresh": 36,
+        "ed_anchor_thresh": 8,
+        "ed_scan_interval": 1,
+        "ed_min_path_len": 10,
+        "ed_sigma": 1.0,
+        "ed_sum_flag": true,
+        "line_error": 1.0,
+        "min_line_len": -1,
+        "max_distance_between_two_lines": 6.0,
+        "max_error": 1.3
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          2077,
+          2243
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          2054,
+          948,
+          2278,
+          1190
+        ],
+        "detector_region_xywh": [
+          2046,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q08_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q08",
+      "method": {
+        "length_threshold": 10,
+        "distance_threshold": 1.4142135381698608,
+        "canny_th1": 50.0,
+        "canny_th2": 50.0,
+        "canny_aperture_size": 3,
+        "do_merge": false
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          1560,
+          1725
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1535,
+          948,
+          1760,
+          1190
+        ],
+        "detector_region_xywh": [
+          1527,
+          940,
+          241,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q08_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q08",
+      "method": {
+        "length_threshold": 10,
+        "distance_threshold": 1.4142135381698608,
+        "canny_th1": 50.0,
+        "canny_th2": 50.0,
+        "canny_aperture_size": 3,
+        "do_merge": false
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          1817,
+          1984
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1794,
+          948,
+          2018,
+          1190
+        ],
+        "detector_region_xywh": [
+          1786,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q08_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q08",
+      "method": {
+        "length_threshold": 10,
+        "distance_threshold": 1.4142135381698608,
+        "canny_th1": 50.0,
+        "canny_th2": 50.0,
+        "canny_aperture_size": 3,
+        "do_merge": false
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          2077,
+          2243
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          2054,
+          948,
+          2278,
+          1190
+        ],
+        "detector_region_xywh": [
+          2046,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q09_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q09",
+      "method": {
+        "ksize": 5,
+        "sigma": 1.0,
+        "gradientThreshold": 30.0,
+        "anchorThreshold": 8,
+        "scanIntervals": 2,
+        "minLineLen": 15,
+        "lineFitErrThreshold": 0.2,
+        "pxToSegmentDistTh": 1.5,
+        "junctionEigenvalsTh": 10.0,
+        "junctionAngleTh_deg": 10.0,
+        "validationTh": 0.15,
+        "validate": true,
+        "treatJunctions": true
+      },
+      "implementation_constants": {
+        "ELSED_listJunctionSizes": [
+          5,
+          7,
+          9
+        ],
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          1560,
+          1725
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1535,
+          948,
+          1760,
+          1190
+        ],
+        "detector_region_xywh": [
+          1527,
+          940,
+          241,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q09_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q09",
+      "method": {
+        "ksize": 5,
+        "sigma": 1.0,
+        "gradientThreshold": 30.0,
+        "anchorThreshold": 8,
+        "scanIntervals": 2,
+        "minLineLen": 15,
+        "lineFitErrThreshold": 0.2,
+        "pxToSegmentDistTh": 1.5,
+        "junctionEigenvalsTh": 10.0,
+        "junctionAngleTh_deg": 10.0,
+        "validationTh": 0.15,
+        "validate": true,
+        "treatJunctions": true
+      },
+      "implementation_constants": {
+        "ELSED_listJunctionSizes": [
+          5,
+          7,
+          9
+        ],
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          1817,
+          1984
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          1794,
+          948,
+          2018,
+          1190
+        ],
+        "detector_region_xywh": [
+          1786,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q09_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q09",
+      "method": {
+        "ksize": 5,
+        "sigma": 1.0,
+        "gradientThreshold": 30.0,
+        "anchorThreshold": 8,
+        "scanIntervals": 2,
+        "minLineLen": 15,
+        "lineFitErrThreshold": 0.2,
+        "pxToSegmentDistTh": 1.5,
+        "junctionEigenvalsTh": 10.0,
+        "junctionAngleTh_deg": 10.0,
+        "validationTh": 0.15,
+        "validate": true,
+        "treatJunctions": true
+      },
+      "implementation_constants": {
+        "ELSED_listJunctionSizes": [
+          5,
+          7,
+          9
+        ],
+        "irls_center_change_px": 1e-09,
+        "consensus_hypothesis_limit": 300,
+        "contrast_sample_x_step_px": 2.0
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "segment_selection": {
+        "max_abs_angle_deg": 5.0,
+        "min_visible_len_px": 10.0,
+        "side_offset_px": 2.0,
+        "min_contrast": 20.0,
+        "consensus_inlier_px": 1.0,
+        "sample_step_px": 1.0
+      },
+      "segment_support_rule": "clip x/y bounds, subtract closed occlusion intervals, then score and sample visible pieces",
+      "sample_weighting": "equal initial weights at configured x-step; approximately projected-x-length proportional, not exact arc-length weighting",
+      "target": {
+        "x_range_inclusive": [
+          2077,
+          2243
+        ],
+        "band_y_inclusive": [
+          958,
+          978
+        ],
+        "exclude_x_inclusive": [],
+        "polarity": 1,
+        "roi_xyxy_exclusive_end": [
+          2054,
+          948,
+          2278,
+          1190
+        ],
+        "detector_region_xywh": [
+          2046,
+          940,
+          240,
+          258
+        ]
+      },
+      "detector_margin_px": 8,
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q10_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q10",
+      "method": {
+        "threshold": "otsu_binary_bright",
+        "contour_mode": "RETR_EXTERNAL",
+        "approx_eps_frac": 0.02,
+        "corner_trim_frac": 0.08
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "roi_xyxy_exclusive_end": [
+          1535,
+          948,
+          1760,
+          1190
+        ]
+      },
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "target_ranges": {
+        "configured_value": {
+          "x_range_inclusive": [
+            1560,
+            1725
+          ],
+          "band_y_inclusive": [
+            958,
+            978
+          ],
+          "exclude_x_inclusive": []
+        },
+        "reason": "Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"
+      },
+      "polarity": {
+        "configured_value": 1,
+        "reason": "QR-specific intensity/corner rule"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "ROI used directly"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {
+      "threshold": "otsu_binary_bright",
+      "contour_mode": "RETR_EXTERNAL"
+    },
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q10_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q10",
+      "method": {
+        "threshold": "otsu_binary_bright",
+        "contour_mode": "RETR_EXTERNAL",
+        "approx_eps_frac": 0.02,
+        "corner_trim_frac": 0.08
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "roi_xyxy_exclusive_end": [
+          1794,
+          948,
+          2018,
+          1190
+        ]
+      },
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "target_ranges": {
+        "configured_value": {
+          "x_range_inclusive": [
+            1817,
+            1984
+          ],
+          "band_y_inclusive": [
+            958,
+            978
+          ],
+          "exclude_x_inclusive": []
+        },
+        "reason": "Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"
+      },
+      "polarity": {
+        "configured_value": 1,
+        "reason": "QR-specific intensity/corner rule"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "ROI used directly"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {
+      "threshold": "otsu_binary_bright",
+      "contour_mode": "RETR_EXTERNAL"
+    },
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q10_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q10",
+      "method": {
+        "threshold": "otsu_binary_bright",
+        "contour_mode": "RETR_EXTERNAL",
+        "approx_eps_frac": 0.02,
+        "corner_trim_frac": 0.08
+      },
+      "implementation_constants": {
+        "irls_center_change_px": 1e-09
+      },
+      "common_fit": {
+        "huber_c_px": 1.345,
+        "irls_max_iter": 100,
+        "irls_tol": 1e-13,
+        "trim_iterations": 2,
+        "inlier_px": 1.0,
+        "min_points": 20
+      },
+      "target": {
+        "roi_xyxy_exclusive_end": [
+          2054,
+          948,
+          2278,
+          1190
+        ]
+      },
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "target_ranges": {
+        "configured_value": {
+          "x_range_inclusive": [
+            2077,
+            2243
+          ],
+          "band_y_inclusive": [
+            958,
+            978
+          ],
+          "exclude_x_inclusive": []
+        },
+        "reason": "Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"
+      },
+      "polarity": {
+        "configured_value": 1,
+        "reason": "QR-specific intensity/corner rule"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "ROI used directly"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {
+      "threshold": "otsu_binary_bright",
+      "contour_mode": "RETR_EXTERNAL"
+    },
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q11_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q11",
+      "method": {
+        "max_corners": 300,
+        "quality_level": 0.01,
+        "min_distance": 4.0,
+        "block_size": 5,
+        "use_harris": false,
+        "quad_offset_px": 4,
+        "quad_half_px": 2,
+        "min_quad_contrast": 40.0,
+        "subpix_half_win": 5,
+        "subpix_max_iter": 100,
+        "subpix_eps": 1e-05,
+        "max_refine_shift_px": 3.0
+      },
+      "implementation_constants": {},
+      "target": {
+        "roi_xyxy_exclusive_end": [
+          1535,
+          948,
+          1760,
+          1190
+        ]
+      },
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "common_fit": {
+        "configured_value": {
+          "huber_c_px": 1.345,
+          "irls_max_iter": 100,
+          "irls_tol": 1e-13,
+          "trim_iterations": 2,
+          "inlier_px": 1.0,
+          "min_points": 20
+        },
+        "reason": "two-point line; Huber/IRLS/trim not used"
+      },
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "target_ranges": {
+        "configured_value": {
+          "x_range_inclusive": [
+            1560,
+            1725
+          ],
+          "band_y_inclusive": [
+            958,
+            978
+          ],
+          "exclude_x_inclusive": []
+        },
+        "reason": "Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"
+      },
+      "polarity": {
+        "configured_value": 1,
+        "reason": "QR-specific intensity/corner rule"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "ROI used directly"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q11_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q11",
+      "method": {
+        "max_corners": 300,
+        "quality_level": 0.01,
+        "min_distance": 4.0,
+        "block_size": 5,
+        "use_harris": false,
+        "quad_offset_px": 4,
+        "quad_half_px": 2,
+        "min_quad_contrast": 40.0,
+        "subpix_half_win": 5,
+        "subpix_max_iter": 100,
+        "subpix_eps": 1e-05,
+        "max_refine_shift_px": 3.0
+      },
+      "implementation_constants": {},
+      "target": {
+        "roi_xyxy_exclusive_end": [
+          1794,
+          948,
+          2018,
+          1190
+        ]
+      },
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "common_fit": {
+        "configured_value": {
+          "huber_c_px": 1.345,
+          "irls_max_iter": 100,
+          "irls_tol": 1e-13,
+          "trim_iterations": 2,
+          "inlier_px": 1.0,
+          "min_points": 20
+        },
+        "reason": "two-point line; Huber/IRLS/trim not used"
+      },
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "target_ranges": {
+        "configured_value": {
+          "x_range_inclusive": [
+            1817,
+            1984
+          ],
+          "band_y_inclusive": [
+            958,
+            978
+          ],
+          "exclude_x_inclusive": []
+        },
+        "reason": "Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"
+      },
+      "polarity": {
+        "configured_value": 1,
+        "reason": "QR-specific intensity/corner rule"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "ROI used directly"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q11_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q11",
+      "method": {
+        "max_corners": 300,
+        "quality_level": 0.01,
+        "min_distance": 4.0,
+        "block_size": 5,
+        "use_harris": false,
+        "quad_offset_px": 4,
+        "quad_half_px": 2,
+        "min_quad_contrast": 40.0,
+        "subpix_half_win": 5,
+        "subpix_max_iter": 100,
+        "subpix_eps": 1e-05,
+        "max_refine_shift_px": 3.0
+      },
+      "implementation_constants": {},
+      "target": {
+        "roi_xyxy_exclusive_end": [
+          2054,
+          948,
+          2278,
+          1190
+        ]
+      },
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "common_fit": {
+        "configured_value": {
+          "huber_c_px": 1.345,
+          "irls_max_iter": 100,
+          "irls_tol": 1e-13,
+          "trim_iterations": 2,
+          "inlier_px": 1.0,
+          "min_points": 20
+        },
+        "reason": "two-point line; Huber/IRLS/trim not used"
+      },
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "target_ranges": {
+        "configured_value": {
+          "x_range_inclusive": [
+            2077,
+            2243
+          ],
+          "band_y_inclusive": [
+            958,
+            978
+          ],
+          "exclude_x_inclusive": []
+        },
+        "reason": "Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"
+      },
+      "polarity": {
+        "configured_value": 1,
+        "reason": "QR-specific intensity/corner rule"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "ROI used directly"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q12_qr_L": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q12",
+      "method": {
+        "min_outer_area_px2": 200,
+        "max_outer_area_roi_fraction": 0.2,
+        "white_outer_area_ratio": [
+          0.25,
+          0.85
+        ],
+        "inner_white_area_ratio": [
+          0.1,
+          0.8
+        ],
+        "polygon_epsilon_perimeter_fraction": 0.03,
+        "min_side_length_ratio": 0.65,
+        "subpix_half_window": 3,
+        "subpix_max_iter": 100,
+        "subpix_eps": 1e-05
+      },
+      "implementation_constants": {},
+      "target": {
+        "roi_xyxy_exclusive_end": [
+          1535,
+          948,
+          1760,
+          1190
+        ]
+      },
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "common_fit": {
+        "configured_value": {
+          "huber_c_px": 1.345,
+          "irls_max_iter": 100,
+          "irls_tol": 1e-13,
+          "trim_iterations": 2,
+          "inlier_px": 1.0,
+          "min_points": 20
+        },
+        "reason": "two-point line; Huber/IRLS/trim not used"
+      },
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "target_ranges": {
+        "configured_value": {
+          "x_range_inclusive": [
+            1560,
+            1725
+          ],
+          "band_y_inclusive": [
+            958,
+            978
+          ],
+          "exclude_x_inclusive": []
+        },
+        "reason": "Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"
+      },
+      "polarity": {
+        "configured_value": 1,
+        "reason": "QR-specific intensity/corner rule"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "ROI used directly"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1560,
+        1725
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q12_qr_C": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q12",
+      "method": {
+        "min_outer_area_px2": 200,
+        "max_outer_area_roi_fraction": 0.2,
+        "white_outer_area_ratio": [
+          0.25,
+          0.85
+        ],
+        "inner_white_area_ratio": [
+          0.1,
+          0.8
+        ],
+        "polygon_epsilon_perimeter_fraction": 0.03,
+        "min_side_length_ratio": 0.65,
+        "subpix_half_window": 3,
+        "subpix_max_iter": 100,
+        "subpix_eps": 1e-05
+      },
+      "implementation_constants": {},
+      "target": {
+        "roi_xyxy_exclusive_end": [
+          1794,
+          948,
+          2018,
+          1190
+        ]
+      },
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "common_fit": {
+        "configured_value": {
+          "huber_c_px": 1.345,
+          "irls_max_iter": 100,
+          "irls_tol": 1e-13,
+          "trim_iterations": 2,
+          "inlier_px": 1.0,
+          "min_points": 20
+        },
+        "reason": "two-point line; Huber/IRLS/trim not used"
+      },
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "target_ranges": {
+        "configured_value": {
+          "x_range_inclusive": [
+            1817,
+            1984
+          ],
+          "band_y_inclusive": [
+            958,
+            978
+          ],
+          "exclude_x_inclusive": []
+        },
+        "reason": "Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"
+      },
+      "polarity": {
+        "configured_value": 1,
+        "reason": "QR-specific intensity/corner rule"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "ROI used directly"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        1817,
+        1984
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  },
+  "Q12_qr_R": {
+    "schema_version": 2,
+    "applied": {
+      "method_id": "Q12",
+      "method": {
+        "min_outer_area_px2": 200,
+        "max_outer_area_roi_fraction": 0.2,
+        "white_outer_area_ratio": [
+          0.25,
+          0.85
+        ],
+        "inner_white_area_ratio": [
+          0.1,
+          0.8
+        ],
+        "polygon_epsilon_perimeter_fraction": 0.03,
+        "min_side_length_ratio": 0.65,
+        "subpix_half_window": 3,
+        "subpix_max_iter": 100,
+        "subpix_eps": 1e-05
+      },
+      "implementation_constants": {},
+      "target": {
+        "roi_xyxy_exclusive_end": [
+          2054,
+          948,
+          2278,
+          1190
+        ]
+      },
+      "frame_size_wh": [
+        3840,
+        2160
+      ]
+    },
+    "inactive": {
+      "common_fit": {
+        "configured_value": {
+          "huber_c_px": 1.345,
+          "irls_max_iter": 100,
+          "irls_tol": 1e-13,
+          "trim_iterations": 2,
+          "inlier_px": 1.0,
+          "min_points": 20
+        },
+        "reason": "two-point line; Huber/IRLS/trim not used"
+      },
+      "segment_selection": {
+        "configured_value": {
+          "max_abs_angle_deg": 5.0,
+          "min_visible_len_px": 10.0,
+          "side_offset_px": 2.0,
+          "min_contrast": 20.0,
+          "consensus_inlier_px": 1.0,
+          "sample_step_px": 1.0
+        },
+        "reason": "not a segment detector"
+      },
+      "target_ranges": {
+        "configured_value": {
+          "x_range_inclusive": [
+            2077,
+            2243
+          ],
+          "band_y_inclusive": [
+            958,
+            978
+          ],
+          "exclude_x_inclusive": []
+        },
+        "reason": "Q10-Q12 search the ROI; common band/x/exclusion are not detection filters"
+      },
+      "polarity": {
+        "configured_value": 1,
+        "reason": "QR-specific intensity/corner rule"
+      },
+      "column_step_px": {
+        "configured_value": 1,
+        "reason": "method does not use common column stepping"
+      },
+      "detector_margin_px": {
+        "configured_value": 8,
+        "reason": "ROI used directly"
+      }
+    },
+    "reporting_only": {
+      "draw_line_x_range": [
+        2077,
+        2243
+      ],
+      "configuration_explanations": "선분형 검출기 공통 규칙: 선분을 x 범위·y band에 자르고 중앙 가림 구간을 뺀 뒤 가시 길이·극성을 검사. 합의 점수는 허용 구간의 실제 선분 길이 합. 최종 피팅은 각 허용 구간에서 설정한 가로 x 간격(현재 1px)의 표본에 동일 초기 가중치를 주고 Huber를 적용. 표본 수는 대략 가로 투영 길이에 비례하며, 정확한 호 길이 가중과 동일하지 않음."
+    },
+    "fixed_modes": {},
+    "note": "Configured values are retained separately. Applied settings describe this implementation, not validated optimal settings. Source hash is needed for full reproducibility."
+  }
+}

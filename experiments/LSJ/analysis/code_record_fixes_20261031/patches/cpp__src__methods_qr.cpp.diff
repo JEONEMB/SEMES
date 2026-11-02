@@ -1,0 +1,24 @@
+--- before/cpp/src/methods_qr.cpp
++++ after/cpp/src/methods_qr.cpp
+@@ -29,6 +29,9 @@
+     r.has_endpoints = true;
+     r.ex1 = a.x; r.ey1 = a.y; r.ex2 = b.x; r.ey2 = b.y;
+     r.n_selected = 2;
++    r.intermediates["line_input_points"]={{a.x,a.y},{b.x,b.y}};
++    r.intermediates["line_input_points_precision"]={{"storage","binary64_json_roundtrip"},
++        {"role","two endpoints passed to normalize_line; upstream corner precision unchanged"}};
+     r.support_type = support;
+     r.has_rms = false;
+     r.rms_null_reason = kTwoPointRms;
+@@ -97,10 +100,7 @@
+     r.intermediates["top_run_fields"] = {"x", "y", "used_after_corner_trim"};
+     r.intermediates["top_run"] = tj;
+     r.diagnostics["top_corners_from_polygon"] = {{tl.x + t.roi.x, tl.y + t.roi.y}, {tr.x + t.roi.x, tr.y + t.roi.y}};
+-    r.diagnostics["contour_offset_note"] = "contour points are centres of the outermost bright pixels; the physical boundary lies about 0.5 px above (constant offset, no slope effect)";
+-    json fitpts = json::array();
+-    for (auto& q : pts) fitpts.push_back(round_pt(q.x, q.y, 1));
+-    r.intermediates["fit_points"] = fitpts;
++    r.diagnostics["contour_offset_note"] = "contour points are centres of the outermost bright pixels; offset from the physical boundary and its effect on slope require separate validation; no fixed 0.5 px correction is applied";
+     finish_with_points(r, pts, c.fit, "contour_integer_pixels: top side of the Otsu outer contour, corners trimmed");
+     return r;
+ }

@@ -1,0 +1,24 @@
+{
+  "changed_files": [
+    "analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt",
+    "analysis/reference_line_methods_108_20261030/cpp/include/zernike_location.hpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/main.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/methods_hough.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/zernike_location.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/tests/numeric_record_test.cpp",
+    "analysis/reference_line_methods_108_20261030/tools/fit_point_views.py",
+    "analysis/reference_line_methods_108_20261030/tools/generation_provenance.py",
+    "analysis/reference_line_methods_108_20261030/tools/make_figures.py",
+    "analysis/reference_line_methods_108_20261030/tools/make_report.py",
+    "analysis/reference_line_methods_108_20261030/tools/run_comparison.py",
+    "analysis/reference_line_methods_108_20261030/tools/run_pipeline.py",
+    "analysis/reference_line_methods_108_20261030/tools/test_code_records.py"
+  ],
+  "unexpected_changes": [],
+  "all_config_files_byte_identical": true,
+  "historical_artifacts_preserved": true
+}

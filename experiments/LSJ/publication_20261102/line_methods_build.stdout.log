@@ -1,0 +1,87 @@
+msbuild 버전 18.11.0-1.26475.11+3cde5c8ec(.NET Framework용)
+
+  1>Checking Build System
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+  lsd.c
+  devernay.c
+  코드를 생성하고 있습니다...
+  tp_c.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\Release\tp_c.lib
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+  ED.cpp
+  EDLines.cpp
+  EDColor.cpp
+  NFA.cpp
+  ELSED.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\include\memory(1801): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\tp_cpp.vcxproj]
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\include\memory(1865): note: 컴파일 중인 함수 템플릿 인스턴스화 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<upm::LineDetectionExtraInfoPtr&,cv::Mat&,double&,double&,int&,bool&,std::vector<int,std::allocator<int>>&,double&,double&>(upm::LineDetectionExtraInfoPtr &,cv::Mat &,double &,double &,int &,bool &,std::vector<int,std::allocator<int>> &,double &,double &)'에 대한 참조를 확인하십시오.
+          with
+          [
+              _Ty=upm::EdgeDrawer
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\include\memory(1866): note: 컴파일 중인 함수 템플릿 인스턴스화 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<upm::LineDetectionExtraInfoPtr&,cv::Mat&,double&,double&,int&,bool&,std::vector<int,std::allocator<int>>&,double&,double&>(upm::LineDetectionExtraInfoPtr &,cv::Mat &,double &,double &,int &,bool &,std::vector<int,std::allocator<int>> &,double &,double &)'에 대한 참조를 확인하십시오.
+          with
+          [
+              _Ty=upm::EdgeDrawer
+          ]
+  C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\repo\experiments\LSJ\analysis\reference_line_methods_108_20261030\third_party\ELSED\ELSED.cpp(97): note: 컴파일 중인 함수 템플릿 인스턴스화 'std::shared_ptr<upm::EdgeDrawer> std::make_shared<upm::EdgeDrawer,upm::LineDetectionExtraInfoPtr&,cv::Mat&,double&,double&,int&,bool&,std::vector<int,std::allocator<int>>&,double&,double&>(upm::LineDetectionExtraInfoPtr &,cv::Mat &,double &,double &,int &,bool &,std::vector<int,std::allocator<int>> &,double &,double &)'에 대한 참조를 확인하십시오.
+  EdgeDrawer.cpp
+  FullSegmentInfo.cpp
+  fld_port.cpp
+  코드를 생성하고 있습니다...
+  tp_cpp.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\Release\tp_cpp.lib
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+  gaussian_retention_test.cpp
+  methods_points.cpp
+  effective_settings.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\gaussian_retention_test.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\gaussian_retention_test.vcxproj]
+  zernike_location.cpp
+  line_fit.cpp
+  io_utils.cpp
+  코드를 생성하고 있습니다...
+  gaussian_retention_test.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\Release\gaussian_retention_test.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+  main.cpp
+  io_utils.cpp
+  line_fit.cpp
+  registry.cpp
+  segment_support.cpp
+  effective_settings.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\line_methods.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\line_methods.vcxproj]
+  zernike_location.cpp
+  methods_points.cpp
+  methods_hough.cpp
+  methods_segments.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\line_methods.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\line_methods.vcxproj]
+  methods_qr.cpp
+  코드를 생성하고 있습니다...
+  line_methods.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\Release\line_methods.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+  line_selftest.cpp
+  line_fit.cpp
+  io_utils.cpp
+  코드를 생성하고 있습니다...
+  line_selftest.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\Release\line_selftest.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+  numeric_record_test.cpp
+  zernike_location.cpp
+  line_fit.cpp
+  io_utils.cpp
+  코드를 생성하고 있습니다...
+  numeric_record_test.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\Release\numeric_record_test.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+  pipeline_contract_test.cpp
+  segment_support.cpp
+  effective_settings.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\pipeline_contract_test.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\pipeline_contract_test.vcxproj]
+  methods_segments.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\pipeline_contract_test.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\.tmp\gitlab_20261102\repo\experiments\lsj\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\pipeline_contract_test.vcxproj]
+  line_fit.cpp
+  io_utils.cpp
+  코드를 생성하고 있습니다...
+  pipeline_contract_test.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_line_methods\Release\pipeline_contract_test.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt

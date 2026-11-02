@@ -1,0 +1,11 @@
+--- pristine/ED_Lib/EDLines.h
++++ used/ED_Lib/EDLines.h
+@@ -71,6 +71,8 @@
+ 	EDLines();
+ 
+ 	std::vector<LS> getLines();
++	// LSJ: fitted line records (segmentNo/firstPixelIndex/len), same order as getLines().
++	const std::vector<LineSegment>& getLineSegments() const { return lines; }
+ 	int getLinesNo();
+ 	cv::Mat getLineImage();
+ 	cv::Mat drawOnImage();

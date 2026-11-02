@@ -1,0 +1,7523 @@
+{
+ "meta": {
+  "meaning": "조합 = 같은 이미지에서 외부 방법 1개의 선 2개와 QR 방법 1개의 선 3개를 함께 열람하는 항목. 새 측정이나 각도 평균이 아님.",
+  "count": 432,
+  "complete": 348,
+  "partial": 84,
+  "failed": 0
+ },
+ "combinations": [
+  {
+   "combination_id": "R01_E01_Q01",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q01_qr_L",
+    "qr_C": "R01_Q01_qr_C",
+    "qr_R": "R01_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q02",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q02_qr_L",
+    "qr_C": "R01_Q02_qr_C",
+    "qr_R": "R01_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q03",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q03_qr_L",
+    "qr_C": "R01_Q03_qr_C",
+    "qr_R": "R01_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q04",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q04_qr_L",
+    "qr_C": "R01_Q04_qr_C",
+    "qr_R": "R01_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q05",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q05_qr_L",
+    "qr_C": "R01_Q05_qr_C",
+    "qr_R": "R01_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q06",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q06_qr_L",
+    "qr_C": "R01_Q06_qr_C",
+    "qr_R": "R01_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q07",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q07_qr_L",
+    "qr_C": "R01_Q07_qr_C",
+    "qr_R": "R01_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q08",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q08_qr_L",
+    "qr_C": "R01_Q08_qr_C",
+    "qr_R": "R01_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q09",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q09_qr_L",
+    "qr_C": "R01_Q09_qr_C",
+    "qr_R": "R01_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q10",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q10_qr_L",
+    "qr_C": "R01_Q10_qr_C",
+    "qr_R": "R01_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q11",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q11_qr_L",
+    "qr_C": "R01_Q11_qr_C",
+    "qr_R": "R01_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E01_Q12",
+   "reference_id": "R01",
+   "external_method": "E01",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E01_upper_structure",
+    "lower_structure": "R01_E01_lower_structure",
+    "qr_L": "R01_Q12_qr_L",
+    "qr_C": "R01_Q12_qr_C",
+    "qr_R": "R01_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q01",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q01_qr_L",
+    "qr_C": "R01_Q01_qr_C",
+    "qr_R": "R01_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q02",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q02_qr_L",
+    "qr_C": "R01_Q02_qr_C",
+    "qr_R": "R01_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q03",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q03_qr_L",
+    "qr_C": "R01_Q03_qr_C",
+    "qr_R": "R01_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q04",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q04_qr_L",
+    "qr_C": "R01_Q04_qr_C",
+    "qr_R": "R01_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q05",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q05_qr_L",
+    "qr_C": "R01_Q05_qr_C",
+    "qr_R": "R01_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q06",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q06_qr_L",
+    "qr_C": "R01_Q06_qr_C",
+    "qr_R": "R01_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q07",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q07_qr_L",
+    "qr_C": "R01_Q07_qr_C",
+    "qr_R": "R01_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q08",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q08_qr_L",
+    "qr_C": "R01_Q08_qr_C",
+    "qr_R": "R01_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q09",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q09_qr_L",
+    "qr_C": "R01_Q09_qr_C",
+    "qr_R": "R01_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q10",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q10_qr_L",
+    "qr_C": "R01_Q10_qr_C",
+    "qr_R": "R01_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q11",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q11_qr_L",
+    "qr_C": "R01_Q11_qr_C",
+    "qr_R": "R01_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E02_Q12",
+   "reference_id": "R01",
+   "external_method": "E02",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E02_upper_structure",
+    "lower_structure": "R01_E02_lower_structure",
+    "qr_L": "R01_Q12_qr_L",
+    "qr_C": "R01_Q12_qr_C",
+    "qr_R": "R01_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q01",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q01_qr_L",
+    "qr_C": "R01_Q01_qr_C",
+    "qr_R": "R01_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q02",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q02_qr_L",
+    "qr_C": "R01_Q02_qr_C",
+    "qr_R": "R01_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q03",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q03_qr_L",
+    "qr_C": "R01_Q03_qr_C",
+    "qr_R": "R01_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q04",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q04_qr_L",
+    "qr_C": "R01_Q04_qr_C",
+    "qr_R": "R01_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q05",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q05_qr_L",
+    "qr_C": "R01_Q05_qr_C",
+    "qr_R": "R01_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q06",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q06_qr_L",
+    "qr_C": "R01_Q06_qr_C",
+    "qr_R": "R01_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q07",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q07_qr_L",
+    "qr_C": "R01_Q07_qr_C",
+    "qr_R": "R01_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q08",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q08_qr_L",
+    "qr_C": "R01_Q08_qr_C",
+    "qr_R": "R01_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q09",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q09_qr_L",
+    "qr_C": "R01_Q09_qr_C",
+    "qr_R": "R01_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q10",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q10_qr_L",
+    "qr_C": "R01_Q10_qr_C",
+    "qr_R": "R01_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q11",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q11_qr_L",
+    "qr_C": "R01_Q11_qr_C",
+    "qr_R": "R01_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E03_Q12",
+   "reference_id": "R01",
+   "external_method": "E03",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E03_upper_structure",
+    "lower_structure": "R01_E03_lower_structure",
+    "qr_L": "R01_Q12_qr_L",
+    "qr_C": "R01_Q12_qr_C",
+    "qr_R": "R01_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E04_Q01",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q01",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q01_qr_L",
+    "qr_C": "R01_Q01_qr_C",
+    "qr_R": "R01_Q01_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q02",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q02",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q02_qr_L",
+    "qr_C": "R01_Q02_qr_C",
+    "qr_R": "R01_Q02_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q03",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q03",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q03_qr_L",
+    "qr_C": "R01_Q03_qr_C",
+    "qr_R": "R01_Q03_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q04",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q04",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q04_qr_L",
+    "qr_C": "R01_Q04_qr_C",
+    "qr_R": "R01_Q04_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q05",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q05",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q05_qr_L",
+    "qr_C": "R01_Q05_qr_C",
+    "qr_R": "R01_Q05_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q06",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q06",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q06_qr_L",
+    "qr_C": "R01_Q06_qr_C",
+    "qr_R": "R01_Q06_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q07",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q07",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q07_qr_L",
+    "qr_C": "R01_Q07_qr_C",
+    "qr_R": "R01_Q07_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q08",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q08",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q08_qr_L",
+    "qr_C": "R01_Q08_qr_C",
+    "qr_R": "R01_Q08_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q09",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q09",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q09_qr_L",
+    "qr_C": "R01_Q09_qr_C",
+    "qr_R": "R01_Q09_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q10",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q10",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q10_qr_L",
+    "qr_C": "R01_Q10_qr_C",
+    "qr_R": "R01_Q10_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q11",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q11",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q11_qr_L",
+    "qr_C": "R01_Q11_qr_C",
+    "qr_R": "R01_Q11_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E04_Q12",
+   "reference_id": "R01",
+   "external_method": "E04",
+   "qr_method": "Q12",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E04_upper_structure",
+    "lower_structure": "R01_E04_lower_structure",
+    "qr_L": "R01_Q12_qr_L",
+    "qr_C": "R01_Q12_qr_C",
+    "qr_R": "R01_Q12_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E05_Q01",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q01_qr_L",
+    "qr_C": "R01_Q01_qr_C",
+    "qr_R": "R01_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q02",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q02_qr_L",
+    "qr_C": "R01_Q02_qr_C",
+    "qr_R": "R01_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q03",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q03_qr_L",
+    "qr_C": "R01_Q03_qr_C",
+    "qr_R": "R01_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q04",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q04_qr_L",
+    "qr_C": "R01_Q04_qr_C",
+    "qr_R": "R01_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q05",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q05_qr_L",
+    "qr_C": "R01_Q05_qr_C",
+    "qr_R": "R01_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q06",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q06_qr_L",
+    "qr_C": "R01_Q06_qr_C",
+    "qr_R": "R01_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q07",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q07_qr_L",
+    "qr_C": "R01_Q07_qr_C",
+    "qr_R": "R01_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q08",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q08_qr_L",
+    "qr_C": "R01_Q08_qr_C",
+    "qr_R": "R01_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q09",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q09_qr_L",
+    "qr_C": "R01_Q09_qr_C",
+    "qr_R": "R01_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q10",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q10_qr_L",
+    "qr_C": "R01_Q10_qr_C",
+    "qr_R": "R01_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q11",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q11_qr_L",
+    "qr_C": "R01_Q11_qr_C",
+    "qr_R": "R01_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E05_Q12",
+   "reference_id": "R01",
+   "external_method": "E05",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E05_upper_structure",
+    "lower_structure": "R01_E05_lower_structure",
+    "qr_L": "R01_Q12_qr_L",
+    "qr_C": "R01_Q12_qr_C",
+    "qr_R": "R01_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q01",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q01_qr_L",
+    "qr_C": "R01_Q01_qr_C",
+    "qr_R": "R01_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q02",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q02_qr_L",
+    "qr_C": "R01_Q02_qr_C",
+    "qr_R": "R01_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q03",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q03_qr_L",
+    "qr_C": "R01_Q03_qr_C",
+    "qr_R": "R01_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q04",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q04_qr_L",
+    "qr_C": "R01_Q04_qr_C",
+    "qr_R": "R01_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q05",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q05_qr_L",
+    "qr_C": "R01_Q05_qr_C",
+    "qr_R": "R01_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q06",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q06_qr_L",
+    "qr_C": "R01_Q06_qr_C",
+    "qr_R": "R01_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q07",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q07_qr_L",
+    "qr_C": "R01_Q07_qr_C",
+    "qr_R": "R01_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q08",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q08_qr_L",
+    "qr_C": "R01_Q08_qr_C",
+    "qr_R": "R01_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q09",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q09_qr_L",
+    "qr_C": "R01_Q09_qr_C",
+    "qr_R": "R01_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q10",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q10_qr_L",
+    "qr_C": "R01_Q10_qr_C",
+    "qr_R": "R01_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q11",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q11_qr_L",
+    "qr_C": "R01_Q11_qr_C",
+    "qr_R": "R01_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E06_Q12",
+   "reference_id": "R01",
+   "external_method": "E06",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E06_upper_structure",
+    "lower_structure": "R01_E06_lower_structure",
+    "qr_L": "R01_Q12_qr_L",
+    "qr_C": "R01_Q12_qr_C",
+    "qr_R": "R01_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q01",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q01_qr_L",
+    "qr_C": "R01_Q01_qr_C",
+    "qr_R": "R01_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q02",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q02_qr_L",
+    "qr_C": "R01_Q02_qr_C",
+    "qr_R": "R01_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q03",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q03_qr_L",
+    "qr_C": "R01_Q03_qr_C",
+    "qr_R": "R01_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q04",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q04_qr_L",
+    "qr_C": "R01_Q04_qr_C",
+    "qr_R": "R01_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q05",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q05_qr_L",
+    "qr_C": "R01_Q05_qr_C",
+    "qr_R": "R01_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q06",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q06_qr_L",
+    "qr_C": "R01_Q06_qr_C",
+    "qr_R": "R01_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q07",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q07_qr_L",
+    "qr_C": "R01_Q07_qr_C",
+    "qr_R": "R01_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q08",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q08_qr_L",
+    "qr_C": "R01_Q08_qr_C",
+    "qr_R": "R01_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q09",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q09_qr_L",
+    "qr_C": "R01_Q09_qr_C",
+    "qr_R": "R01_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q10",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q10_qr_L",
+    "qr_C": "R01_Q10_qr_C",
+    "qr_R": "R01_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q11",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q11_qr_L",
+    "qr_C": "R01_Q11_qr_C",
+    "qr_R": "R01_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E07_Q12",
+   "reference_id": "R01",
+   "external_method": "E07",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E07_upper_structure",
+    "lower_structure": "R01_E07_lower_structure",
+    "qr_L": "R01_Q12_qr_L",
+    "qr_C": "R01_Q12_qr_C",
+    "qr_R": "R01_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E08_Q01",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q01",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q01_qr_L",
+    "qr_C": "R01_Q01_qr_C",
+    "qr_R": "R01_Q01_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q02",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q02",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q02_qr_L",
+    "qr_C": "R01_Q02_qr_C",
+    "qr_R": "R01_Q02_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q03",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q03",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q03_qr_L",
+    "qr_C": "R01_Q03_qr_C",
+    "qr_R": "R01_Q03_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q04",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q04",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q04_qr_L",
+    "qr_C": "R01_Q04_qr_C",
+    "qr_R": "R01_Q04_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q05",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q05",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q05_qr_L",
+    "qr_C": "R01_Q05_qr_C",
+    "qr_R": "R01_Q05_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q06",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q06",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q06_qr_L",
+    "qr_C": "R01_Q06_qr_C",
+    "qr_R": "R01_Q06_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q07",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q07",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q07_qr_L",
+    "qr_C": "R01_Q07_qr_C",
+    "qr_R": "R01_Q07_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q08",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q08",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q08_qr_L",
+    "qr_C": "R01_Q08_qr_C",
+    "qr_R": "R01_Q08_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q09",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q09",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q09_qr_L",
+    "qr_C": "R01_Q09_qr_C",
+    "qr_R": "R01_Q09_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q10",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q10",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q10_qr_L",
+    "qr_C": "R01_Q10_qr_C",
+    "qr_R": "R01_Q10_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q11",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q11",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q11_qr_L",
+    "qr_C": "R01_Q11_qr_C",
+    "qr_R": "R01_Q11_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E08_Q12",
+   "reference_id": "R01",
+   "external_method": "E08",
+   "qr_method": "Q12",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E08_upper_structure",
+    "lower_structure": "R01_E08_lower_structure",
+    "qr_L": "R01_Q12_qr_L",
+    "qr_C": "R01_Q12_qr_C",
+    "qr_R": "R01_Q12_qr_R"
+   },
+   "failed_measurements": [
+    "R01_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R01_E09_Q01",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q01_qr_L",
+    "qr_C": "R01_Q01_qr_C",
+    "qr_R": "R01_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q02",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q02_qr_L",
+    "qr_C": "R01_Q02_qr_C",
+    "qr_R": "R01_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q03",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q03_qr_L",
+    "qr_C": "R01_Q03_qr_C",
+    "qr_R": "R01_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q04",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q04_qr_L",
+    "qr_C": "R01_Q04_qr_C",
+    "qr_R": "R01_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q05",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q05_qr_L",
+    "qr_C": "R01_Q05_qr_C",
+    "qr_R": "R01_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q06",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q06_qr_L",
+    "qr_C": "R01_Q06_qr_C",
+    "qr_R": "R01_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q07",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q07_qr_L",
+    "qr_C": "R01_Q07_qr_C",
+    "qr_R": "R01_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q08",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q08_qr_L",
+    "qr_C": "R01_Q08_qr_C",
+    "qr_R": "R01_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q09",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q09_qr_L",
+    "qr_C": "R01_Q09_qr_C",
+    "qr_R": "R01_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q10",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q10_qr_L",
+    "qr_C": "R01_Q10_qr_C",
+    "qr_R": "R01_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q11",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q11_qr_L",
+    "qr_C": "R01_Q11_qr_C",
+    "qr_R": "R01_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R01_E09_Q12",
+   "reference_id": "R01",
+   "external_method": "E09",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R01_E09_upper_structure",
+    "lower_structure": "R01_E09_lower_structure",
+    "qr_L": "R01_Q12_qr_L",
+    "qr_C": "R01_Q12_qr_C",
+    "qr_R": "R01_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q01",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q01_qr_L",
+    "qr_C": "R02_Q01_qr_C",
+    "qr_R": "R02_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q02",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q02_qr_L",
+    "qr_C": "R02_Q02_qr_C",
+    "qr_R": "R02_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q03",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q03_qr_L",
+    "qr_C": "R02_Q03_qr_C",
+    "qr_R": "R02_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q04",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q04_qr_L",
+    "qr_C": "R02_Q04_qr_C",
+    "qr_R": "R02_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q05",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q05_qr_L",
+    "qr_C": "R02_Q05_qr_C",
+    "qr_R": "R02_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q06",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q06_qr_L",
+    "qr_C": "R02_Q06_qr_C",
+    "qr_R": "R02_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q07",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q07_qr_L",
+    "qr_C": "R02_Q07_qr_C",
+    "qr_R": "R02_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q08",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q08_qr_L",
+    "qr_C": "R02_Q08_qr_C",
+    "qr_R": "R02_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q09",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q09_qr_L",
+    "qr_C": "R02_Q09_qr_C",
+    "qr_R": "R02_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q10",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q10_qr_L",
+    "qr_C": "R02_Q10_qr_C",
+    "qr_R": "R02_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q11",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q11_qr_L",
+    "qr_C": "R02_Q11_qr_C",
+    "qr_R": "R02_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E01_Q12",
+   "reference_id": "R02",
+   "external_method": "E01",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E01_upper_structure",
+    "lower_structure": "R02_E01_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q01",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q01_qr_L",
+    "qr_C": "R02_Q01_qr_C",
+    "qr_R": "R02_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q02",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q02_qr_L",
+    "qr_C": "R02_Q02_qr_C",
+    "qr_R": "R02_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q03",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q03_qr_L",
+    "qr_C": "R02_Q03_qr_C",
+    "qr_R": "R02_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q04",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q04_qr_L",
+    "qr_C": "R02_Q04_qr_C",
+    "qr_R": "R02_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q05",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q05_qr_L",
+    "qr_C": "R02_Q05_qr_C",
+    "qr_R": "R02_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q06",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q06_qr_L",
+    "qr_C": "R02_Q06_qr_C",
+    "qr_R": "R02_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q07",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q07_qr_L",
+    "qr_C": "R02_Q07_qr_C",
+    "qr_R": "R02_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q08",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q08_qr_L",
+    "qr_C": "R02_Q08_qr_C",
+    "qr_R": "R02_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q09",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q09_qr_L",
+    "qr_C": "R02_Q09_qr_C",
+    "qr_R": "R02_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q10",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q10_qr_L",
+    "qr_C": "R02_Q10_qr_C",
+    "qr_R": "R02_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q11",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q11_qr_L",
+    "qr_C": "R02_Q11_qr_C",
+    "qr_R": "R02_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E02_Q12",
+   "reference_id": "R02",
+   "external_method": "E02",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E02_upper_structure",
+    "lower_structure": "R02_E02_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q01",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q01_qr_L",
+    "qr_C": "R02_Q01_qr_C",
+    "qr_R": "R02_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q02",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q02_qr_L",
+    "qr_C": "R02_Q02_qr_C",
+    "qr_R": "R02_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q03",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q03_qr_L",
+    "qr_C": "R02_Q03_qr_C",
+    "qr_R": "R02_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q04",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q04_qr_L",
+    "qr_C": "R02_Q04_qr_C",
+    "qr_R": "R02_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q05",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q05_qr_L",
+    "qr_C": "R02_Q05_qr_C",
+    "qr_R": "R02_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q06",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q06_qr_L",
+    "qr_C": "R02_Q06_qr_C",
+    "qr_R": "R02_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q07",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q07_qr_L",
+    "qr_C": "R02_Q07_qr_C",
+    "qr_R": "R02_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q08",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q08_qr_L",
+    "qr_C": "R02_Q08_qr_C",
+    "qr_R": "R02_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q09",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q09_qr_L",
+    "qr_C": "R02_Q09_qr_C",
+    "qr_R": "R02_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q10",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q10_qr_L",
+    "qr_C": "R02_Q10_qr_C",
+    "qr_R": "R02_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q11",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q11_qr_L",
+    "qr_C": "R02_Q11_qr_C",
+    "qr_R": "R02_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E03_Q12",
+   "reference_id": "R02",
+   "external_method": "E03",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E03_upper_structure",
+    "lower_structure": "R02_E03_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E04_Q01",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q01",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q01_qr_L",
+    "qr_C": "R02_Q01_qr_C",
+    "qr_R": "R02_Q01_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q02",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q02",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q02_qr_L",
+    "qr_C": "R02_Q02_qr_C",
+    "qr_R": "R02_Q02_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q03",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q03",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q03_qr_L",
+    "qr_C": "R02_Q03_qr_C",
+    "qr_R": "R02_Q03_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q04",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q04",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q04_qr_L",
+    "qr_C": "R02_Q04_qr_C",
+    "qr_R": "R02_Q04_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q05",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q05",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q05_qr_L",
+    "qr_C": "R02_Q05_qr_C",
+    "qr_R": "R02_Q05_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q06",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q06",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q06_qr_L",
+    "qr_C": "R02_Q06_qr_C",
+    "qr_R": "R02_Q06_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q07",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q07",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q07_qr_L",
+    "qr_C": "R02_Q07_qr_C",
+    "qr_R": "R02_Q07_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q08",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q08",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q08_qr_L",
+    "qr_C": "R02_Q08_qr_C",
+    "qr_R": "R02_Q08_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q09",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q09",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q09_qr_L",
+    "qr_C": "R02_Q09_qr_C",
+    "qr_R": "R02_Q09_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q10",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q10",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q10_qr_L",
+    "qr_C": "R02_Q10_qr_C",
+    "qr_R": "R02_Q10_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q11",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q11",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q11_qr_L",
+    "qr_C": "R02_Q11_qr_C",
+    "qr_R": "R02_Q11_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E04_Q12",
+   "reference_id": "R02",
+   "external_method": "E04",
+   "qr_method": "Q12",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E04_upper_structure",
+    "lower_structure": "R02_E04_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E05_Q01",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q01_qr_L",
+    "qr_C": "R02_Q01_qr_C",
+    "qr_R": "R02_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q02",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q02_qr_L",
+    "qr_C": "R02_Q02_qr_C",
+    "qr_R": "R02_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q03",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q03_qr_L",
+    "qr_C": "R02_Q03_qr_C",
+    "qr_R": "R02_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q04",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q04_qr_L",
+    "qr_C": "R02_Q04_qr_C",
+    "qr_R": "R02_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q05",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q05_qr_L",
+    "qr_C": "R02_Q05_qr_C",
+    "qr_R": "R02_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q06",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q06_qr_L",
+    "qr_C": "R02_Q06_qr_C",
+    "qr_R": "R02_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q07",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q07_qr_L",
+    "qr_C": "R02_Q07_qr_C",
+    "qr_R": "R02_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q08",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q08_qr_L",
+    "qr_C": "R02_Q08_qr_C",
+    "qr_R": "R02_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q09",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q09_qr_L",
+    "qr_C": "R02_Q09_qr_C",
+    "qr_R": "R02_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q10",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q10_qr_L",
+    "qr_C": "R02_Q10_qr_C",
+    "qr_R": "R02_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q11",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q11_qr_L",
+    "qr_C": "R02_Q11_qr_C",
+    "qr_R": "R02_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E05_Q12",
+   "reference_id": "R02",
+   "external_method": "E05",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E05_upper_structure",
+    "lower_structure": "R02_E05_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q01",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q01_qr_L",
+    "qr_C": "R02_Q01_qr_C",
+    "qr_R": "R02_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q02",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q02_qr_L",
+    "qr_C": "R02_Q02_qr_C",
+    "qr_R": "R02_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q03",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q03_qr_L",
+    "qr_C": "R02_Q03_qr_C",
+    "qr_R": "R02_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q04",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q04_qr_L",
+    "qr_C": "R02_Q04_qr_C",
+    "qr_R": "R02_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q05",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q05_qr_L",
+    "qr_C": "R02_Q05_qr_C",
+    "qr_R": "R02_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q06",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q06_qr_L",
+    "qr_C": "R02_Q06_qr_C",
+    "qr_R": "R02_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q07",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q07_qr_L",
+    "qr_C": "R02_Q07_qr_C",
+    "qr_R": "R02_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q08",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q08_qr_L",
+    "qr_C": "R02_Q08_qr_C",
+    "qr_R": "R02_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q09",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q09_qr_L",
+    "qr_C": "R02_Q09_qr_C",
+    "qr_R": "R02_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q10",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q10_qr_L",
+    "qr_C": "R02_Q10_qr_C",
+    "qr_R": "R02_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q11",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q11_qr_L",
+    "qr_C": "R02_Q11_qr_C",
+    "qr_R": "R02_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E06_Q12",
+   "reference_id": "R02",
+   "external_method": "E06",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E06_upper_structure",
+    "lower_structure": "R02_E06_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q01",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q01_qr_L",
+    "qr_C": "R02_Q01_qr_C",
+    "qr_R": "R02_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q02",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q02_qr_L",
+    "qr_C": "R02_Q02_qr_C",
+    "qr_R": "R02_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q03",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q03_qr_L",
+    "qr_C": "R02_Q03_qr_C",
+    "qr_R": "R02_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q04",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q04_qr_L",
+    "qr_C": "R02_Q04_qr_C",
+    "qr_R": "R02_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q05",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q05_qr_L",
+    "qr_C": "R02_Q05_qr_C",
+    "qr_R": "R02_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q06",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q06_qr_L",
+    "qr_C": "R02_Q06_qr_C",
+    "qr_R": "R02_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q07",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q07_qr_L",
+    "qr_C": "R02_Q07_qr_C",
+    "qr_R": "R02_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q08",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q08_qr_L",
+    "qr_C": "R02_Q08_qr_C",
+    "qr_R": "R02_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q09",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q09_qr_L",
+    "qr_C": "R02_Q09_qr_C",
+    "qr_R": "R02_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q10",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q10_qr_L",
+    "qr_C": "R02_Q10_qr_C",
+    "qr_R": "R02_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q11",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q11_qr_L",
+    "qr_C": "R02_Q11_qr_C",
+    "qr_R": "R02_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E07_Q12",
+   "reference_id": "R02",
+   "external_method": "E07",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E07_upper_structure",
+    "lower_structure": "R02_E07_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E08_Q01",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q01",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q01_qr_L",
+    "qr_C": "R02_Q01_qr_C",
+    "qr_R": "R02_Q01_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q02",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q02",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q02_qr_L",
+    "qr_C": "R02_Q02_qr_C",
+    "qr_R": "R02_Q02_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q03",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q03",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q03_qr_L",
+    "qr_C": "R02_Q03_qr_C",
+    "qr_R": "R02_Q03_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q04",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q04",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q04_qr_L",
+    "qr_C": "R02_Q04_qr_C",
+    "qr_R": "R02_Q04_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q05",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q05",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q05_qr_L",
+    "qr_C": "R02_Q05_qr_C",
+    "qr_R": "R02_Q05_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q06",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q06",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q06_qr_L",
+    "qr_C": "R02_Q06_qr_C",
+    "qr_R": "R02_Q06_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q07",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q07",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q07_qr_L",
+    "qr_C": "R02_Q07_qr_C",
+    "qr_R": "R02_Q07_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q08",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q08",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q08_qr_L",
+    "qr_C": "R02_Q08_qr_C",
+    "qr_R": "R02_Q08_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q09",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q09",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q09_qr_L",
+    "qr_C": "R02_Q09_qr_C",
+    "qr_R": "R02_Q09_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q10",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q10",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q10_qr_L",
+    "qr_C": "R02_Q10_qr_C",
+    "qr_R": "R02_Q10_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q11",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q11",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q11_qr_L",
+    "qr_C": "R02_Q11_qr_C",
+    "qr_R": "R02_Q11_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E08_Q12",
+   "reference_id": "R02",
+   "external_method": "E08",
+   "qr_method": "Q12",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E08_upper_structure",
+    "lower_structure": "R02_E08_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": [
+    "R02_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R02_E09_Q01",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q01_qr_L",
+    "qr_C": "R02_Q01_qr_C",
+    "qr_R": "R02_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q02",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q02_qr_L",
+    "qr_C": "R02_Q02_qr_C",
+    "qr_R": "R02_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q03",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q03_qr_L",
+    "qr_C": "R02_Q03_qr_C",
+    "qr_R": "R02_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q04",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q04_qr_L",
+    "qr_C": "R02_Q04_qr_C",
+    "qr_R": "R02_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q05",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q05_qr_L",
+    "qr_C": "R02_Q05_qr_C",
+    "qr_R": "R02_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q06",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q06_qr_L",
+    "qr_C": "R02_Q06_qr_C",
+    "qr_R": "R02_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q07",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q07_qr_L",
+    "qr_C": "R02_Q07_qr_C",
+    "qr_R": "R02_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q08",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q08_qr_L",
+    "qr_C": "R02_Q08_qr_C",
+    "qr_R": "R02_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q09",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q09_qr_L",
+    "qr_C": "R02_Q09_qr_C",
+    "qr_R": "R02_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q10",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q10_qr_L",
+    "qr_C": "R02_Q10_qr_C",
+    "qr_R": "R02_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q11",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q11_qr_L",
+    "qr_C": "R02_Q11_qr_C",
+    "qr_R": "R02_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R02_E09_Q12",
+   "reference_id": "R02",
+   "external_method": "E09",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R02_E09_upper_structure",
+    "lower_structure": "R02_E09_lower_structure",
+    "qr_L": "R02_Q12_qr_L",
+    "qr_C": "R02_Q12_qr_C",
+    "qr_R": "R02_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q01",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q01_qr_L",
+    "qr_C": "R03_Q01_qr_C",
+    "qr_R": "R03_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q02",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q02_qr_L",
+    "qr_C": "R03_Q02_qr_C",
+    "qr_R": "R03_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q03",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q03_qr_L",
+    "qr_C": "R03_Q03_qr_C",
+    "qr_R": "R03_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q04",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q04_qr_L",
+    "qr_C": "R03_Q04_qr_C",
+    "qr_R": "R03_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q05",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q05_qr_L",
+    "qr_C": "R03_Q05_qr_C",
+    "qr_R": "R03_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q06",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q06_qr_L",
+    "qr_C": "R03_Q06_qr_C",
+    "qr_R": "R03_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q07",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q07_qr_L",
+    "qr_C": "R03_Q07_qr_C",
+    "qr_R": "R03_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q08",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q08_qr_L",
+    "qr_C": "R03_Q08_qr_C",
+    "qr_R": "R03_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q09",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q09_qr_L",
+    "qr_C": "R03_Q09_qr_C",
+    "qr_R": "R03_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q10",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q10_qr_L",
+    "qr_C": "R03_Q10_qr_C",
+    "qr_R": "R03_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q11",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q11_qr_L",
+    "qr_C": "R03_Q11_qr_C",
+    "qr_R": "R03_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E01_Q12",
+   "reference_id": "R03",
+   "external_method": "E01",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E01_upper_structure",
+    "lower_structure": "R03_E01_lower_structure",
+    "qr_L": "R03_Q12_qr_L",
+    "qr_C": "R03_Q12_qr_C",
+    "qr_R": "R03_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q01",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q01_qr_L",
+    "qr_C": "R03_Q01_qr_C",
+    "qr_R": "R03_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q02",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q02_qr_L",
+    "qr_C": "R03_Q02_qr_C",
+    "qr_R": "R03_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q03",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q03_qr_L",
+    "qr_C": "R03_Q03_qr_C",
+    "qr_R": "R03_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q04",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q04_qr_L",
+    "qr_C": "R03_Q04_qr_C",
+    "qr_R": "R03_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q05",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q05_qr_L",
+    "qr_C": "R03_Q05_qr_C",
+    "qr_R": "R03_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q06",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q06_qr_L",
+    "qr_C": "R03_Q06_qr_C",
+    "qr_R": "R03_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q07",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q07_qr_L",
+    "qr_C": "R03_Q07_qr_C",
+    "qr_R": "R03_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q08",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q08_qr_L",
+    "qr_C": "R03_Q08_qr_C",
+    "qr_R": "R03_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q09",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q09_qr_L",
+    "qr_C": "R03_Q09_qr_C",
+    "qr_R": "R03_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q10",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q10_qr_L",
+    "qr_C": "R03_Q10_qr_C",
+    "qr_R": "R03_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q11",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q11_qr_L",
+    "qr_C": "R03_Q11_qr_C",
+    "qr_R": "R03_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E02_Q12",
+   "reference_id": "R03",
+   "external_method": "E02",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E02_upper_structure",
+    "lower_structure": "R03_E02_lower_structure",
+    "qr_L": "R03_Q12_qr_L",
+    "qr_C": "R03_Q12_qr_C",
+    "qr_R": "R03_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q01",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q01_qr_L",
+    "qr_C": "R03_Q01_qr_C",
+    "qr_R": "R03_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q02",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q02_qr_L",
+    "qr_C": "R03_Q02_qr_C",
+    "qr_R": "R03_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q03",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q03_qr_L",
+    "qr_C": "R03_Q03_qr_C",
+    "qr_R": "R03_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q04",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q04_qr_L",
+    "qr_C": "R03_Q04_qr_C",
+    "qr_R": "R03_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q05",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q05_qr_L",
+    "qr_C": "R03_Q05_qr_C",
+    "qr_R": "R03_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q06",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q06_qr_L",
+    "qr_C": "R03_Q06_qr_C",
+    "qr_R": "R03_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q07",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q07_qr_L",
+    "qr_C": "R03_Q07_qr_C",
+    "qr_R": "R03_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q08",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q08_qr_L",
+    "qr_C": "R03_Q08_qr_C",
+    "qr_R": "R03_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q09",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q09_qr_L",
+    "qr_C": "R03_Q09_qr_C",
+    "qr_R": "R03_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q10",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q10_qr_L",
+    "qr_C": "R03_Q10_qr_C",
+    "qr_R": "R03_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q11",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q11_qr_L",
+    "qr_C": "R03_Q11_qr_C",
+    "qr_R": "R03_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E03_Q12",
+   "reference_id": "R03",
+   "external_method": "E03",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E03_upper_structure",
+    "lower_structure": "R03_E03_lower_structure",
+    "qr_L": "R03_Q12_qr_L",
+    "qr_C": "R03_Q12_qr_C",
+    "qr_R": "R03_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E04_Q01",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q01",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q01_qr_L",
+    "qr_C": "R03_Q01_qr_C",
+    "qr_R": "R03_Q01_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q02",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q02",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q02_qr_L",
+    "qr_C": "R03_Q02_qr_C",
+    "qr_R": "R03_Q02_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q03",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q03",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q03_qr_L",
+    "qr_C": "R03_Q03_qr_C",
+    "qr_R": "R03_Q03_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q04",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q04",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q04_qr_L",
+    "qr_C": "R03_Q04_qr_C",
+    "qr_R": "R03_Q04_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q05",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q05",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q05_qr_L",
+    "qr_C": "R03_Q05_qr_C",
+    "qr_R": "R03_Q05_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q06",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q06",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q06_qr_L",
+    "qr_C": "R03_Q06_qr_C",
+    "qr_R": "R03_Q06_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q07",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q07",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q07_qr_L",
+    "qr_C": "R03_Q07_qr_C",
+    "qr_R": "R03_Q07_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q08",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q08",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q08_qr_L",
+    "qr_C": "R03_Q08_qr_C",
+    "qr_R": "R03_Q08_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q09",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q09",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q09_qr_L",
+    "qr_C": "R03_Q09_qr_C",
+    "qr_R": "R03_Q09_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q10",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q10",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q10_qr_L",
+    "qr_C": "R03_Q10_qr_C",
+    "qr_R": "R03_Q10_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q11",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q11",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q11_qr_L",
+    "qr_C": "R03_Q11_qr_C",
+    "qr_R": "R03_Q11_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E04_Q12",
+   "reference_id": "R03",
+   "external_method": "E04",
+   "qr_method": "Q12",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E04_upper_structure",
+    "lower_structure": "R03_E04_lower_structure",
+    "qr_L": "R03_Q12_qr_L",
+    "qr_C": "R03_Q12_qr_C",
+    "qr_R": "R03_Q12_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E05_Q01",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q01_qr_L",
+    "qr_C": "R03_Q01_qr_C",
+    "qr_R": "R03_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q02",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q02_qr_L",
+    "qr_C": "R03_Q02_qr_C",
+    "qr_R": "R03_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q03",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q03_qr_L",
+    "qr_C": "R03_Q03_qr_C",
+    "qr_R": "R03_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q04",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q04_qr_L",
+    "qr_C": "R03_Q04_qr_C",
+    "qr_R": "R03_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q05",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q05_qr_L",
+    "qr_C": "R03_Q05_qr_C",
+    "qr_R": "R03_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q06",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q06_qr_L",
+    "qr_C": "R03_Q06_qr_C",
+    "qr_R": "R03_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q07",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q07_qr_L",
+    "qr_C": "R03_Q07_qr_C",
+    "qr_R": "R03_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q08",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q08_qr_L",
+    "qr_C": "R03_Q08_qr_C",
+    "qr_R": "R03_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q09",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q09_qr_L",
+    "qr_C": "R03_Q09_qr_C",
+    "qr_R": "R03_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q10",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q10_qr_L",
+    "qr_C": "R03_Q10_qr_C",
+    "qr_R": "R03_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q11",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q11_qr_L",
+    "qr_C": "R03_Q11_qr_C",
+    "qr_R": "R03_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E05_Q12",
+   "reference_id": "R03",
+   "external_method": "E05",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E05_upper_structure",
+    "lower_structure": "R03_E05_lower_structure",
+    "qr_L": "R03_Q12_qr_L",
+    "qr_C": "R03_Q12_qr_C",
+    "qr_R": "R03_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q01",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q01_qr_L",
+    "qr_C": "R03_Q01_qr_C",
+    "qr_R": "R03_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q02",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q02_qr_L",
+    "qr_C": "R03_Q02_qr_C",
+    "qr_R": "R03_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q03",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q03_qr_L",
+    "qr_C": "R03_Q03_qr_C",
+    "qr_R": "R03_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q04",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q04_qr_L",
+    "qr_C": "R03_Q04_qr_C",
+    "qr_R": "R03_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q05",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q05_qr_L",
+    "qr_C": "R03_Q05_qr_C",
+    "qr_R": "R03_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q06",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q06_qr_L",
+    "qr_C": "R03_Q06_qr_C",
+    "qr_R": "R03_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q07",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q07_qr_L",
+    "qr_C": "R03_Q07_qr_C",
+    "qr_R": "R03_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q08",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q08_qr_L",
+    "qr_C": "R03_Q08_qr_C",
+    "qr_R": "R03_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q09",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q09_qr_L",
+    "qr_C": "R03_Q09_qr_C",
+    "qr_R": "R03_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q10",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q10_qr_L",
+    "qr_C": "R03_Q10_qr_C",
+    "qr_R": "R03_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q11",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q11_qr_L",
+    "qr_C": "R03_Q11_qr_C",
+    "qr_R": "R03_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E06_Q12",
+   "reference_id": "R03",
+   "external_method": "E06",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E06_upper_structure",
+    "lower_structure": "R03_E06_lower_structure",
+    "qr_L": "R03_Q12_qr_L",
+    "qr_C": "R03_Q12_qr_C",
+    "qr_R": "R03_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q01",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q01_qr_L",
+    "qr_C": "R03_Q01_qr_C",
+    "qr_R": "R03_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q02",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q02_qr_L",
+    "qr_C": "R03_Q02_qr_C",
+    "qr_R": "R03_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q03",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q03_qr_L",
+    "qr_C": "R03_Q03_qr_C",
+    "qr_R": "R03_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q04",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q04_qr_L",
+    "qr_C": "R03_Q04_qr_C",
+    "qr_R": "R03_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q05",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q05_qr_L",
+    "qr_C": "R03_Q05_qr_C",
+    "qr_R": "R03_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q06",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q06_qr_L",
+    "qr_C": "R03_Q06_qr_C",
+    "qr_R": "R03_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q07",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q07_qr_L",
+    "qr_C": "R03_Q07_qr_C",
+    "qr_R": "R03_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q08",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q08_qr_L",
+    "qr_C": "R03_Q08_qr_C",
+    "qr_R": "R03_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q09",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q09_qr_L",
+    "qr_C": "R03_Q09_qr_C",
+    "qr_R": "R03_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q10",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q10_qr_L",
+    "qr_C": "R03_Q10_qr_C",
+    "qr_R": "R03_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q11",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q11_qr_L",
+    "qr_C": "R03_Q11_qr_C",
+    "qr_R": "R03_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E07_Q12",
+   "reference_id": "R03",
+   "external_method": "E07",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E07_upper_structure",
+    "lower_structure": "R03_E07_lower_structure",
+    "qr_L": "R03_Q12_qr_L",
+    "qr_C": "R03_Q12_qr_C",
+    "qr_R": "R03_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E08_Q01",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q01",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q01_qr_L",
+    "qr_C": "R03_Q01_qr_C",
+    "qr_R": "R03_Q01_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q02",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q02",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q02_qr_L",
+    "qr_C": "R03_Q02_qr_C",
+    "qr_R": "R03_Q02_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q03",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q03",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q03_qr_L",
+    "qr_C": "R03_Q03_qr_C",
+    "qr_R": "R03_Q03_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q04",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q04",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q04_qr_L",
+    "qr_C": "R03_Q04_qr_C",
+    "qr_R": "R03_Q04_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q05",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q05",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q05_qr_L",
+    "qr_C": "R03_Q05_qr_C",
+    "qr_R": "R03_Q05_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q06",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q06",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q06_qr_L",
+    "qr_C": "R03_Q06_qr_C",
+    "qr_R": "R03_Q06_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q07",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q07",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q07_qr_L",
+    "qr_C": "R03_Q07_qr_C",
+    "qr_R": "R03_Q07_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q08",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q08",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q08_qr_L",
+    "qr_C": "R03_Q08_qr_C",
+    "qr_R": "R03_Q08_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q09",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q09",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q09_qr_L",
+    "qr_C": "R03_Q09_qr_C",
+    "qr_R": "R03_Q09_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q10",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q10",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q10_qr_L",
+    "qr_C": "R03_Q10_qr_C",
+    "qr_R": "R03_Q10_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q11",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q11",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q11_qr_L",
+    "qr_C": "R03_Q11_qr_C",
+    "qr_R": "R03_Q11_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E08_Q12",
+   "reference_id": "R03",
+   "external_method": "E08",
+   "qr_method": "Q12",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E08_upper_structure",
+    "lower_structure": "R03_E08_lower_structure",
+    "qr_L": "R03_Q12_qr_L",
+    "qr_C": "R03_Q12_qr_C",
+    "qr_R": "R03_Q12_qr_R"
+   },
+   "failed_measurements": [
+    "R03_E08_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R03_E09_Q01",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q01_qr_L",
+    "qr_C": "R03_Q01_qr_C",
+    "qr_R": "R03_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q02",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q02_qr_L",
+    "qr_C": "R03_Q02_qr_C",
+    "qr_R": "R03_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q03",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q03_qr_L",
+    "qr_C": "R03_Q03_qr_C",
+    "qr_R": "R03_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q04",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q04_qr_L",
+    "qr_C": "R03_Q04_qr_C",
+    "qr_R": "R03_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q05",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q05_qr_L",
+    "qr_C": "R03_Q05_qr_C",
+    "qr_R": "R03_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q06",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q06_qr_L",
+    "qr_C": "R03_Q06_qr_C",
+    "qr_R": "R03_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q07",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q07_qr_L",
+    "qr_C": "R03_Q07_qr_C",
+    "qr_R": "R03_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q08",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q08_qr_L",
+    "qr_C": "R03_Q08_qr_C",
+    "qr_R": "R03_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q09",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q09_qr_L",
+    "qr_C": "R03_Q09_qr_C",
+    "qr_R": "R03_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q10",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q10_qr_L",
+    "qr_C": "R03_Q10_qr_C",
+    "qr_R": "R03_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q11",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q11_qr_L",
+    "qr_C": "R03_Q11_qr_C",
+    "qr_R": "R03_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R03_E09_Q12",
+   "reference_id": "R03",
+   "external_method": "E09",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R03_E09_upper_structure",
+    "lower_structure": "R03_E09_lower_structure",
+    "qr_L": "R03_Q12_qr_L",
+    "qr_C": "R03_Q12_qr_C",
+    "qr_R": "R03_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q01",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q01_qr_L",
+    "qr_C": "R04_Q01_qr_C",
+    "qr_R": "R04_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q02",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q02_qr_L",
+    "qr_C": "R04_Q02_qr_C",
+    "qr_R": "R04_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q03",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q03_qr_L",
+    "qr_C": "R04_Q03_qr_C",
+    "qr_R": "R04_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q04",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q04_qr_L",
+    "qr_C": "R04_Q04_qr_C",
+    "qr_R": "R04_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q05",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q05_qr_L",
+    "qr_C": "R04_Q05_qr_C",
+    "qr_R": "R04_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q06",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q06_qr_L",
+    "qr_C": "R04_Q06_qr_C",
+    "qr_R": "R04_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q07",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q07_qr_L",
+    "qr_C": "R04_Q07_qr_C",
+    "qr_R": "R04_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q08",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q08_qr_L",
+    "qr_C": "R04_Q08_qr_C",
+    "qr_R": "R04_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q09",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q09_qr_L",
+    "qr_C": "R04_Q09_qr_C",
+    "qr_R": "R04_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q10",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q10_qr_L",
+    "qr_C": "R04_Q10_qr_C",
+    "qr_R": "R04_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q11",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q11_qr_L",
+    "qr_C": "R04_Q11_qr_C",
+    "qr_R": "R04_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E01_Q12",
+   "reference_id": "R04",
+   "external_method": "E01",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E01_upper_structure",
+    "lower_structure": "R04_E01_lower_structure",
+    "qr_L": "R04_Q12_qr_L",
+    "qr_C": "R04_Q12_qr_C",
+    "qr_R": "R04_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q01",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q01_qr_L",
+    "qr_C": "R04_Q01_qr_C",
+    "qr_R": "R04_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q02",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q02_qr_L",
+    "qr_C": "R04_Q02_qr_C",
+    "qr_R": "R04_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q03",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q03_qr_L",
+    "qr_C": "R04_Q03_qr_C",
+    "qr_R": "R04_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q04",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q04_qr_L",
+    "qr_C": "R04_Q04_qr_C",
+    "qr_R": "R04_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q05",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q05_qr_L",
+    "qr_C": "R04_Q05_qr_C",
+    "qr_R": "R04_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q06",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q06_qr_L",
+    "qr_C": "R04_Q06_qr_C",
+    "qr_R": "R04_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q07",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q07_qr_L",
+    "qr_C": "R04_Q07_qr_C",
+    "qr_R": "R04_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q08",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q08_qr_L",
+    "qr_C": "R04_Q08_qr_C",
+    "qr_R": "R04_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q09",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q09_qr_L",
+    "qr_C": "R04_Q09_qr_C",
+    "qr_R": "R04_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q10",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q10_qr_L",
+    "qr_C": "R04_Q10_qr_C",
+    "qr_R": "R04_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q11",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q11_qr_L",
+    "qr_C": "R04_Q11_qr_C",
+    "qr_R": "R04_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E02_Q12",
+   "reference_id": "R04",
+   "external_method": "E02",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E02_upper_structure",
+    "lower_structure": "R04_E02_lower_structure",
+    "qr_L": "R04_Q12_qr_L",
+    "qr_C": "R04_Q12_qr_C",
+    "qr_R": "R04_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q01",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q01_qr_L",
+    "qr_C": "R04_Q01_qr_C",
+    "qr_R": "R04_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q02",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q02_qr_L",
+    "qr_C": "R04_Q02_qr_C",
+    "qr_R": "R04_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q03",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q03_qr_L",
+    "qr_C": "R04_Q03_qr_C",
+    "qr_R": "R04_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q04",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q04_qr_L",
+    "qr_C": "R04_Q04_qr_C",
+    "qr_R": "R04_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q05",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q05_qr_L",
+    "qr_C": "R04_Q05_qr_C",
+    "qr_R": "R04_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q06",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q06_qr_L",
+    "qr_C": "R04_Q06_qr_C",
+    "qr_R": "R04_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q07",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q07_qr_L",
+    "qr_C": "R04_Q07_qr_C",
+    "qr_R": "R04_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q08",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q08_qr_L",
+    "qr_C": "R04_Q08_qr_C",
+    "qr_R": "R04_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q09",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q09_qr_L",
+    "qr_C": "R04_Q09_qr_C",
+    "qr_R": "R04_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q10",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q10_qr_L",
+    "qr_C": "R04_Q10_qr_C",
+    "qr_R": "R04_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q11",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q11_qr_L",
+    "qr_C": "R04_Q11_qr_C",
+    "qr_R": "R04_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E03_Q12",
+   "reference_id": "R04",
+   "external_method": "E03",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E03_upper_structure",
+    "lower_structure": "R04_E03_lower_structure",
+    "qr_L": "R04_Q12_qr_L",
+    "qr_C": "R04_Q12_qr_C",
+    "qr_R": "R04_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E04_Q01",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q01",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q01_qr_L",
+    "qr_C": "R04_Q01_qr_C",
+    "qr_R": "R04_Q01_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q02",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q02",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q02_qr_L",
+    "qr_C": "R04_Q02_qr_C",
+    "qr_R": "R04_Q02_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q03",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q03",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q03_qr_L",
+    "qr_C": "R04_Q03_qr_C",
+    "qr_R": "R04_Q03_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q04",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q04",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q04_qr_L",
+    "qr_C": "R04_Q04_qr_C",
+    "qr_R": "R04_Q04_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q05",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q05",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q05_qr_L",
+    "qr_C": "R04_Q05_qr_C",
+    "qr_R": "R04_Q05_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q06",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q06",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q06_qr_L",
+    "qr_C": "R04_Q06_qr_C",
+    "qr_R": "R04_Q06_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q07",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q07",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q07_qr_L",
+    "qr_C": "R04_Q07_qr_C",
+    "qr_R": "R04_Q07_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q08",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q08",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q08_qr_L",
+    "qr_C": "R04_Q08_qr_C",
+    "qr_R": "R04_Q08_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q09",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q09",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q09_qr_L",
+    "qr_C": "R04_Q09_qr_C",
+    "qr_R": "R04_Q09_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q10",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q10",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q10_qr_L",
+    "qr_C": "R04_Q10_qr_C",
+    "qr_R": "R04_Q10_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q11",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q11",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q11_qr_L",
+    "qr_C": "R04_Q11_qr_C",
+    "qr_R": "R04_Q11_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E04_Q12",
+   "reference_id": "R04",
+   "external_method": "E04",
+   "qr_method": "Q12",
+   "status": "partial",
+   "lines_ok": 4,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E04_upper_structure",
+    "lower_structure": "R04_E04_lower_structure",
+    "qr_L": "R04_Q12_qr_L",
+    "qr_C": "R04_Q12_qr_C",
+    "qr_R": "R04_Q12_qr_R"
+   },
+   "failed_measurements": [
+    "R04_E04_lower_structure"
+   ]
+  },
+  {
+   "combination_id": "R04_E05_Q01",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q01_qr_L",
+    "qr_C": "R04_Q01_qr_C",
+    "qr_R": "R04_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q02",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q02_qr_L",
+    "qr_C": "R04_Q02_qr_C",
+    "qr_R": "R04_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q03",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q03_qr_L",
+    "qr_C": "R04_Q03_qr_C",
+    "qr_R": "R04_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q04",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q04_qr_L",
+    "qr_C": "R04_Q04_qr_C",
+    "qr_R": "R04_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q05",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q05_qr_L",
+    "qr_C": "R04_Q05_qr_C",
+    "qr_R": "R04_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q06",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q06_qr_L",
+    "qr_C": "R04_Q06_qr_C",
+    "qr_R": "R04_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q07",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q07_qr_L",
+    "qr_C": "R04_Q07_qr_C",
+    "qr_R": "R04_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q08",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q08_qr_L",
+    "qr_C": "R04_Q08_qr_C",
+    "qr_R": "R04_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q09",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q09_qr_L",
+    "qr_C": "R04_Q09_qr_C",
+    "qr_R": "R04_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q10",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q10_qr_L",
+    "qr_C": "R04_Q10_qr_C",
+    "qr_R": "R04_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q11",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q11_qr_L",
+    "qr_C": "R04_Q11_qr_C",
+    "qr_R": "R04_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E05_Q12",
+   "reference_id": "R04",
+   "external_method": "E05",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E05_upper_structure",
+    "lower_structure": "R04_E05_lower_structure",
+    "qr_L": "R04_Q12_qr_L",
+    "qr_C": "R04_Q12_qr_C",
+    "qr_R": "R04_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q01",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q01_qr_L",
+    "qr_C": "R04_Q01_qr_C",
+    "qr_R": "R04_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q02",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q02_qr_L",
+    "qr_C": "R04_Q02_qr_C",
+    "qr_R": "R04_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q03",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q03_qr_L",
+    "qr_C": "R04_Q03_qr_C",
+    "qr_R": "R04_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q04",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q04_qr_L",
+    "qr_C": "R04_Q04_qr_C",
+    "qr_R": "R04_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q05",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q05_qr_L",
+    "qr_C": "R04_Q05_qr_C",
+    "qr_R": "R04_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q06",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q06_qr_L",
+    "qr_C": "R04_Q06_qr_C",
+    "qr_R": "R04_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q07",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q07_qr_L",
+    "qr_C": "R04_Q07_qr_C",
+    "qr_R": "R04_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q08",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q08_qr_L",
+    "qr_C": "R04_Q08_qr_C",
+    "qr_R": "R04_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q09",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q09_qr_L",
+    "qr_C": "R04_Q09_qr_C",
+    "qr_R": "R04_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q10",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q10_qr_L",
+    "qr_C": "R04_Q10_qr_C",
+    "qr_R": "R04_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q11",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q11_qr_L",
+    "qr_C": "R04_Q11_qr_C",
+    "qr_R": "R04_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E06_Q12",
+   "reference_id": "R04",
+   "external_method": "E06",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E06_upper_structure",
+    "lower_structure": "R04_E06_lower_structure",
+    "qr_L": "R04_Q12_qr_L",
+    "qr_C": "R04_Q12_qr_C",
+    "qr_R": "R04_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q01",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q01_qr_L",
+    "qr_C": "R04_Q01_qr_C",
+    "qr_R": "R04_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q02",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q02_qr_L",
+    "qr_C": "R04_Q02_qr_C",
+    "qr_R": "R04_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q03",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q03_qr_L",
+    "qr_C": "R04_Q03_qr_C",
+    "qr_R": "R04_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q04",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q04_qr_L",
+    "qr_C": "R04_Q04_qr_C",
+    "qr_R": "R04_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q05",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q05_qr_L",
+    "qr_C": "R04_Q05_qr_C",
+    "qr_R": "R04_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q06",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q06_qr_L",
+    "qr_C": "R04_Q06_qr_C",
+    "qr_R": "R04_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q07",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q07_qr_L",
+    "qr_C": "R04_Q07_qr_C",
+    "qr_R": "R04_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q08",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q08_qr_L",
+    "qr_C": "R04_Q08_qr_C",
+    "qr_R": "R04_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q09",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q09_qr_L",
+    "qr_C": "R04_Q09_qr_C",
+    "qr_R": "R04_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q10",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q10_qr_L",
+    "qr_C": "R04_Q10_qr_C",
+    "qr_R": "R04_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q11",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q11_qr_L",
+    "qr_C": "R04_Q11_qr_C",
+    "qr_R": "R04_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E07_Q12",
+   "reference_id": "R04",
+   "external_method": "E07",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E07_upper_structure",
+    "lower_structure": "R04_E07_lower_structure",
+    "qr_L": "R04_Q12_qr_L",
+    "qr_C": "R04_Q12_qr_C",
+    "qr_R": "R04_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q01",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q01_qr_L",
+    "qr_C": "R04_Q01_qr_C",
+    "qr_R": "R04_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q02",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q02_qr_L",
+    "qr_C": "R04_Q02_qr_C",
+    "qr_R": "R04_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q03",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q03_qr_L",
+    "qr_C": "R04_Q03_qr_C",
+    "qr_R": "R04_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q04",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q04_qr_L",
+    "qr_C": "R04_Q04_qr_C",
+    "qr_R": "R04_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q05",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q05_qr_L",
+    "qr_C": "R04_Q05_qr_C",
+    "qr_R": "R04_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q06",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q06_qr_L",
+    "qr_C": "R04_Q06_qr_C",
+    "qr_R": "R04_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q07",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q07_qr_L",
+    "qr_C": "R04_Q07_qr_C",
+    "qr_R": "R04_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q08",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q08_qr_L",
+    "qr_C": "R04_Q08_qr_C",
+    "qr_R": "R04_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q09",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q09_qr_L",
+    "qr_C": "R04_Q09_qr_C",
+    "qr_R": "R04_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q10",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q10_qr_L",
+    "qr_C": "R04_Q10_qr_C",
+    "qr_R": "R04_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q11",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q11_qr_L",
+    "qr_C": "R04_Q11_qr_C",
+    "qr_R": "R04_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E08_Q12",
+   "reference_id": "R04",
+   "external_method": "E08",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E08_upper_structure",
+    "lower_structure": "R04_E08_lower_structure",
+    "qr_L": "R04_Q12_qr_L",
+    "qr_C": "R04_Q12_qr_C",
+    "qr_R": "R04_Q12_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q01",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q01",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q01_qr_L",
+    "qr_C": "R04_Q01_qr_C",
+    "qr_R": "R04_Q01_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q02",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q02",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q02_qr_L",
+    "qr_C": "R04_Q02_qr_C",
+    "qr_R": "R04_Q02_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q03",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q03",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q03_qr_L",
+    "qr_C": "R04_Q03_qr_C",
+    "qr_R": "R04_Q03_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q04",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q04",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q04_qr_L",
+    "qr_C": "R04_Q04_qr_C",
+    "qr_R": "R04_Q04_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q05",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q05",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q05_qr_L",
+    "qr_C": "R04_Q05_qr_C",
+    "qr_R": "R04_Q05_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q06",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q06",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q06_qr_L",
+    "qr_C": "R04_Q06_qr_C",
+    "qr_R": "R04_Q06_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q07",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q07",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q07_qr_L",
+    "qr_C": "R04_Q07_qr_C",
+    "qr_R": "R04_Q07_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q08",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q08",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q08_qr_L",
+    "qr_C": "R04_Q08_qr_C",
+    "qr_R": "R04_Q08_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q09",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q09",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q09_qr_L",
+    "qr_C": "R04_Q09_qr_C",
+    "qr_R": "R04_Q09_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q10",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q10",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q10_qr_L",
+    "qr_C": "R04_Q10_qr_C",
+    "qr_R": "R04_Q10_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q11",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q11",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q11_qr_L",
+    "qr_C": "R04_Q11_qr_C",
+    "qr_R": "R04_Q11_qr_R"
+   },
+   "failed_measurements": []
+  },
+  {
+   "combination_id": "R04_E09_Q12",
+   "reference_id": "R04",
+   "external_method": "E09",
+   "qr_method": "Q12",
+   "status": "complete",
+   "lines_ok": 5,
+   "lines_total": 5,
+   "measurement_refs": {
+    "upper_structure": "R04_E09_upper_structure",
+    "lower_structure": "R04_E09_lower_structure",
+    "qr_L": "R04_Q12_qr_L",
+    "qr_C": "R04_Q12_qr_C",
+    "qr_R": "R04_Q12_qr_R"
+   },
+   "failed_measurements": []
+  }
+ ]
+}

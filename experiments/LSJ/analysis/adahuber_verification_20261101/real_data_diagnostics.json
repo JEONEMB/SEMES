@@ -1,0 +1,546 @@
+[
+  {
+    "id": "R01_upper_structure",
+    "category": "real",
+    "n": 2712,
+    "result": {
+      "coef": [
+        707.3769694896721,
+        0.004755533168644028
+      ],
+      "iteration": 2,
+      "tau": 7.150174508531583
+    },
+    "observed_matches_original": true,
+    "runtime_ms": 0.456,
+    "regression_stage": {
+      "beta_standardized": [
+        -6.452566269118136e-15,
+        6.087302752332712
+      ],
+      "gradient_inf": 6.811987879705975e-17,
+      "iteration": 2,
+      "kind": "regression_pre_intercept",
+      "tau": 7.150174508531583
+    },
+    "mean_stage": {
+      "gradient": -2.3657739156743286e-16,
+      "iteration": 1,
+      "kind": "mean",
+      "mu": 707.3769694896721,
+      "tau": 7.58893833410766
+    },
+    "root_calls": 3,
+    "last_root": {
+      "equation_residual": 1.702744534606837e-08,
+      "iteration": 20,
+      "kind": "root",
+      "low": 57.59155083789933,
+      "rhs": 0.0029149858587980406,
+      "up": 57.59241923987817
+    },
+    "diagnostic_patch_result": {
+      "coef": [
+        707.3769694896721,
+        0.004755533168644028
+      ],
+      "iteration": 2,
+      "tau": 7.150174508531583
+    },
+    "coef": [
+      707.3769694896721,
+      0.004755533168644028
+    ],
+    "angle_deg": 0.27246992593234626,
+    "rmse_px": 0.40973259891403163,
+    "max_abs_residual_px": 1.3020406755416047,
+    "downweighted_points": 0,
+    "minimum_weight": 1.0,
+    "pre_reset_equation2": 1.4947102013138786e-08,
+    "post_reset_gradient_inf": 1.7162279463851534e-14,
+    "post_reset_equation2": 1.4947102013138786e-08,
+    "ols_coef": [
+      707.3769694896721,
+      0.004755533168644027
+    ],
+    "max_line_difference_from_ols_px": 3.309852392163748e-15,
+    "regression_converged_at_original_tolerance": true,
+    "intercept_converged_at_original_tolerance": true
+  },
+  {
+    "id": "R01_lower_structure",
+    "category": "real",
+    "n": 3052,
+    "result": {
+      "coef": [
+        1870.8266308831246,
+        0.0037371010921452975
+      ],
+      "iteration": 3,
+      "tau": 46.64071311486827
+    },
+    "observed_matches_original": true,
+    "runtime_ms": 0.5314,
+    "regression_stage": {
+      "beta_standardized": [
+        2.0111992205251727e-06,
+        4.545355166677176
+      ],
+      "gradient_inf": 2.011199324926479e-06,
+      "iteration": 3,
+      "kind": "regression_pre_intercept",
+      "tau": 46.64071311486827
+    },
+    "mean_stage": {
+      "gradient": -2.0989180977212266e-14,
+      "iteration": 1,
+      "kind": "mean",
+      "mu": 1870.8266308831246,
+      "tau": 49.461878600849026
+    },
+    "root_calls": 4,
+    "last_root": {
+      "equation_residual": -3.1028658158474554e-10,
+      "iteration": 26,
+      "kind": "root",
+      "low": 2446.4771422237136,
+      "rhs": 0.002628949014549262,
+      "up": 2446.47772722654
+    },
+    "diagnostic_patch_result": {
+      "coef": [
+        1870.8266308831246,
+        0.0037371010921452975
+      ],
+      "iteration": 3,
+      "tau": 46.64071311486827
+    },
+    "coef": [
+      1870.8266308831246,
+      0.0037371010921452975
+    ],
+    "angle_deg": 0.21411912340685935,
+    "rmse_px": 2.536072491477422,
+    "max_abs_residual_px": 7.715417168357909,
+    "downweighted_points": 0,
+    "minimum_weight": 1.0,
+    "pre_reset_equation2": -3.5579084340167655e-10,
+    "post_reset_gradient_inf": 1.0758377783566737e-06,
+    "post_reset_equation2": -3.557927030252428e-10,
+    "ols_coef": [
+      1870.8266325798354,
+      0.003737100207322844
+    ],
+    "max_line_difference_from_ols_px": 1.6797716861395584e-06,
+    "regression_converged_at_original_tolerance": true,
+    "intercept_converged_at_original_tolerance": true
+  },
+  {
+    "id": "R02_upper_structure",
+    "category": "real",
+    "n": 2712,
+    "result": {
+      "coef": [
+        707.5636407531659,
+        0.004772158317585573
+      ],
+      "iteration": 2,
+      "tau": 6.920624796006871
+    },
+    "observed_matches_original": true,
+    "runtime_ms": 0.2498,
+    "regression_stage": {
+      "beta_standardized": [
+        -9.066444097141293e-15,
+        6.1085837131253085
+      ],
+      "gradient_inf": 2.701870192671841e-17,
+      "iteration": 2,
+      "kind": "regression_pre_intercept",
+      "tau": 6.920624796006871
+    },
+    "mean_stage": {
+      "gradient": -2.059111648806075e-15,
+      "iteration": 1,
+      "kind": "mean",
+      "mu": 707.5636407531659,
+      "tau": 7.3453025164182515
+    },
+    "root_calls": 3,
+    "last_root": {
+      "equation_residual": 1.7027410134217574e-08,
+      "iteration": 20,
+      "kind": "root",
+      "low": 53.953062288431425,
+      "rhs": 0.0029149858587980406,
+      "up": 53.95387582696917
+    },
+    "diagnostic_patch_result": {
+      "coef": [
+        707.5636407531659,
+        0.004772158317585573
+      ],
+      "iteration": 2,
+      "tau": 6.920624796006871
+    },
+    "coef": [
+      707.5636407531659,
+      0.004772158317585573
+    ],
+    "angle_deg": 0.2734224551835369,
+    "rmse_px": 0.3965785143248935,
+    "max_abs_residual_px": 1.2719526173431788,
+    "downweighted_points": 0,
+    "minimum_weight": 1.0,
+    "pre_reset_equation2": 1.4947056607619164e-08,
+    "post_reset_gradient_inf": 3.167443364296361e-14,
+    "post_reset_equation2": 1.4947056607185483e-08,
+    "ols_coef": [
+      707.5636407531659,
+      0.004772158317585573
+    ],
+    "max_line_difference_from_ols_px": 0.0,
+    "regression_converged_at_original_tolerance": true,
+    "intercept_converged_at_original_tolerance": true
+  },
+  {
+    "id": "R02_lower_structure",
+    "category": "real",
+    "n": 3052,
+    "result": {
+      "coef": [
+        1870.8316312364143,
+        0.003702711773821102
+      ],
+      "iteration": 3,
+      "tau": 49.143008890290574
+    },
+    "observed_matches_original": true,
+    "runtime_ms": 0.4935,
+    "regression_stage": {
+      "beta_standardized": [
+        2.4921921014491033e-06,
+        4.503528183176
+      ],
+      "gradient_inf": 2.492192183414151e-06,
+      "iteration": 3,
+      "kind": "regression_pre_intercept",
+      "tau": 49.143008890290574
+    },
+    "mean_stage": {
+      "gradient": -8.288174555437409e-15,
+      "iteration": 1,
+      "kind": "mean",
+      "mu": 1870.8316312364143,
+      "tau": 52.11553120895078
+    },
+    "root_calls": 4,
+    "last_root": {
+      "equation_residual": -3.08226683759516e-10,
+      "iteration": 26,
+      "kind": "root",
+      "low": 2716.0282684621097,
+      "rhs": 0.002628949014549262,
+      "up": 2716.0289179201354
+    },
+    "diagnostic_patch_result": {
+      "coef": [
+        1870.8316312364143,
+        0.003702711773821102
+      ],
+      "iteration": 3,
+      "tau": 49.143008890290574
+    },
+    "coef": [
+      1870.8316312364143,
+      0.003702711773821102
+    ],
+    "angle_deg": 0.21214878787166483,
+    "rmse_px": 2.672133951807982,
+    "max_abs_residual_px": 21.676070558731396,
+    "downweighted_points": 0,
+    "minimum_weight": 1.0,
+    "pre_reset_equation2": -3.531483864019358e-10,
+    "post_reset_gradient_inf": 1.4240037249092488e-06,
+    "post_reset_equation2": -3.5315095769580807e-10,
+    "ols_coef": [
+      1870.83163348222,
+      0.0037027106026496725
+    ],
+    "max_line_difference_from_ols_px": 2.2233844570763994e-06,
+    "regression_converged_at_original_tolerance": true,
+    "intercept_converged_at_original_tolerance": true
+  },
+  {
+    "id": "R03_upper_structure",
+    "category": "real",
+    "n": 2712,
+    "result": {
+      "coef": [
+        707.6436660707523,
+        0.004743597001853209
+      ],
+      "iteration": 2,
+      "tau": 7.145830762033006
+    },
+    "observed_matches_original": true,
+    "runtime_ms": 0.2525,
+    "regression_stage": {
+      "beta_standardized": [
+        -5.216840780594058e-14,
+        6.072023905906588
+      ],
+      "gradient_inf": 3.0784945225594314e-17,
+      "iteration": 2,
+      "kind": "regression_pre_intercept",
+      "tau": 7.145830762033006
+    },
+    "mean_stage": {
+      "gradient": 5.660418053647507e-16,
+      "iteration": 1,
+      "kind": "mean",
+      "mu": 707.6436660707523,
+      "tau": 7.58432803759889
+    },
+    "root_calls": 3,
+    "last_root": {
+      "equation_residual": 1.7027254546435333e-08,
+      "iteration": 20,
+      "kind": "root",
+      "low": 57.52159810831509,
+      "rhs": 0.0029149858587980406,
+      "up": 57.522465455502186
+    },
+    "diagnostic_patch_result": {
+      "coef": [
+        707.6436660707523,
+        0.004743597001853209
+      ],
+      "iteration": 2,
+      "tau": 7.145830762033006
+    },
+    "coef": [
+      707.6436660707523,
+      0.004743597001853209
+    ],
+    "angle_deg": 0.2717860493788156,
+    "rmse_px": 0.4094836854575198,
+    "max_abs_residual_px": 1.2031617569242217,
+    "downweighted_points": 0,
+    "minimum_weight": 1.0,
+    "pre_reset_equation2": 1.4946855957358868e-08,
+    "post_reset_gradient_inf": 3.785893263913513e-14,
+    "post_reset_equation2": 1.4946855956925187e-08,
+    "ols_coef": [
+      707.6436660707524,
+      0.004743597001853209
+    ],
+    "max_line_difference_from_ols_px": 1.1368683772161603e-13,
+    "regression_converged_at_original_tolerance": true,
+    "intercept_converged_at_original_tolerance": true
+  },
+  {
+    "id": "R03_lower_structure",
+    "category": "real",
+    "n": 3052,
+    "result": {
+      "coef": [
+        1870.7327359614267,
+        0.003821607408499687
+      ],
+      "iteration": 3,
+      "tau": 48.229186727293225
+    },
+    "observed_matches_original": true,
+    "runtime_ms": 0.4485,
+    "regression_stage": {
+      "beta_standardized": [
+        2.676733436294404e-06,
+        4.648138370071275
+      ],
+      "gradient_inf": 2.6767334584753877e-06,
+      "iteration": 3,
+      "kind": "regression_pre_intercept",
+      "tau": 48.229186727293225
+    },
+    "mean_stage": {
+      "gradient": 5.9927307036942424e-15,
+      "iteration": 1,
+      "kind": "mean",
+      "mu": 1870.7327359614267,
+      "tau": 51.146434513081665
+    },
+    "root_calls": 4,
+    "last_root": {
+      "equation_residual": -3.0940438796103753e-10,
+      "iteration": 26,
+      "kind": "root",
+      "low": 2615.9574506364306,
+      "rhs": 0.002628949014549262,
+      "up": 2615.9580761654724
+    },
+    "diagnostic_patch_result": {
+      "coef": [
+        1870.7327359614267,
+        0.003821607408499687
+      ],
+      "iteration": 3,
+      "tau": 48.229186727293225
+    },
+    "coef": [
+      1870.7327359614267,
+      0.003821607408499687
+    ],
+    "angle_deg": 0.21896090951554031,
+    "rmse_px": 2.6224451900481394,
+    "max_abs_residual_px": 22.021726061807,
+    "downweighted_points": 0,
+    "minimum_weight": 1.0,
+    "pre_reset_equation2": -3.54673573930292e-10,
+    "post_reset_gradient_inf": 1.510140494288587e-06,
+    "post_reset_equation2": -3.546766534981427e-10,
+    "ols_coef": [
+      1870.7327383430793,
+      0.003821606166485097
+    ],
+    "max_line_difference_from_ols_px": 2.3578750550506955e-06,
+    "regression_converged_at_original_tolerance": true,
+    "intercept_converged_at_original_tolerance": true
+  },
+  {
+    "id": "R04_upper_structure",
+    "category": "real",
+    "n": 2712,
+    "result": {
+      "coef": [
+        707.6962793320512,
+        0.0047267917727564545
+      ],
+      "iteration": 2,
+      "tau": 6.742465475272315
+    },
+    "observed_matches_original": true,
+    "runtime_ms": 0.2564,
+    "regression_stage": {
+      "beta_standardized": [
+        9.040082749725582e-15,
+        6.050512434173246
+      ],
+      "gradient_inf": 5.4528652979377156e-17,
+      "iteration": 2,
+      "kind": "regression_pre_intercept",
+      "tau": 6.742465475272315
+    },
+    "mean_stage": {
+      "gradient": 2.507008039382175e-15,
+      "iteration": 1,
+      "kind": "mean",
+      "mu": 707.6962793320512,
+      "tau": 7.156210614150348
+    },
+    "root_calls": 3,
+    "last_root": {
+      "equation_residual": 1.702688631234628e-08,
+      "iteration": 20,
+      "kind": "root",
+      "low": 51.210964258357095,
+      "rhs": 0.0029149858587980406,
+      "up": 51.211736449799126
+    },
+    "diagnostic_patch_result": {
+      "coef": [
+        707.6962793320512,
+        0.0047267917727564545
+      ],
+      "iteration": 2,
+      "tau": 6.742465475272315
+    },
+    "coef": [
+      707.6962793320512,
+      0.0047267917727564545
+    ],
+    "angle_deg": 0.2708232022668651,
+    "rmse_px": 0.38636929751460597,
+    "max_abs_residual_px": 1.1891899874464862,
+    "downweighted_points": 0,
+    "minimum_weight": 1.0,
+    "pre_reset_equation2": 1.494638106683266e-08,
+    "post_reset_gradient_inf": 2.0928522762727436e-14,
+    "post_reset_equation2": 1.494638106770002e-08,
+    "ols_coef": [
+      707.6962793320512,
+      0.0047267917727564545
+    ],
+    "max_line_difference_from_ols_px": 0.0,
+    "regression_converged_at_original_tolerance": true,
+    "intercept_converged_at_original_tolerance": true
+  },
+  {
+    "id": "R04_lower_structure",
+    "category": "real",
+    "n": 3052,
+    "result": {
+      "coef": [
+        1870.7875262784148,
+        0.00379918594468932
+      ],
+      "iteration": 3,
+      "tau": 49.7898700310618
+    },
+    "observed_matches_original": true,
+    "runtime_ms": 0.4429,
+    "regression_stage": {
+      "beta_standardized": [
+        2.433806573640812e-06,
+        4.620867628964185
+      ],
+      "gradient_inf": 2.43380665149748e-06,
+      "iteration": 3,
+      "kind": "regression_pre_intercept",
+      "tau": 49.7898700310618
+    },
+    "mean_stage": {
+      "gradient": 2.5498170634759363e-14,
+      "iteration": 1,
+      "kind": "mean",
+      "mu": 1870.7875262784148,
+      "tau": 52.801519156060124
+    },
+    "root_calls": 4,
+    "last_root": {
+      "equation_residual": -3.107930922167934e-10,
+      "iteration": 26,
+      "kind": "root",
+      "low": 2788.0000918538026,
+      "rhs": 0.002628949014549262,
+      "up": 2788.0007585217654
+    },
+    "diagnostic_patch_result": {
+      "coef": [
+        1870.7875262784148,
+        0.00379918594468932
+      ],
+      "iteration": 3,
+      "tau": 49.7898700310618
+    },
+    "coef": [
+      1870.7875262784148,
+      0.00379918594468932
+    ],
+    "angle_deg": 0.21767627292055128,
+    "rmse_px": 2.7073067989921435,
+    "max_abs_residual_px": 31.057268686667904,
+    "downweighted_points": 0,
+    "minimum_weight": 1.0,
+    "pre_reset_equation2": -3.564593698338059e-10,
+    "post_reset_gradient_inf": 1.3887122748935122e-06,
+    "post_reset_equation2": -3.564617598490749e-10,
+    "ols_coef": [
+      1870.7875284685622,
+      0.003799184802543332
+    ],
+    "max_line_difference_from_ols_px": 2.168281720192622e-06,
+    "regression_converged_at_original_tolerance": true,
+    "intercept_converged_at_original_tolerance": true
+  }
+]

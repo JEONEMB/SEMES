@@ -1,0 +1,20 @@
+{
+  "changed_files": [
+    "analysis/reference_line_methods_108_20261030/configs/methods.json",
+    "analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt",
+    "analysis/reference_line_methods_108_20261030/cpp/include/effective_settings.hpp",
+    "analysis/reference_line_methods_108_20261030/cpp/include/segment_support.hpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/effective_settings.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/main.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/src/segment_support.cpp",
+    "analysis/reference_line_methods_108_20261030/cpp/tests/pipeline_contract_test.cpp",
+    "analysis/reference_line_methods_108_20261030/tools/make_figures.py",
+    "analysis/reference_line_methods_108_20261030/tools/make_report.py"
+  ],
+  "unexpected_changes": [],
+  "configured_control_values_unchanged": true,
+  "protected_artifacts_unchanged": true
+}

@@ -1,0 +1,26 @@
+{
+  "source": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+  "source_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+  "original_dimensions_px": [
+    3840,
+    2160
+  ],
+  "measurement_column_x": 1316,
+  "coarse_y": 1880,
+  "sample_count": 59,
+  "sample_step_px": 1,
+  "first_sample_center_y": 1851,
+  "last_sample_center_y": 1909,
+  "center_to_center_span_px": 58,
+  "pixel_row_footprint_px": 59,
+  "half_width_px": 29,
+  "source_crop_xyxy": [
+    1256,
+    1830,
+    1391,
+    1931
+  ],
+  "original_data_modified": false,
+  "new_fitting": false,
+  "figure_sha256": "788f797fbf5ef60516458facdc42c6a90a126801c47f83fd620fbaffbb5070e2"
+}

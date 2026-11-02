@@ -1,0 +1,8 @@
+R02 input ok
+R02_E04_upper_structure ok 57.2 ms
+R02_E04_lower_structure failed 49.0 ms : LSD: no segment passed angle/band/visibility/polarity filters; excluded:angle=11 excluded:occluded_outside_x_or_short=10
+R02_Q12_qr_L ok 2.1 ms
+R02_Q12_qr_C ok 1.7 ms
+R02_Q12_qr_R ok 1.8 ms
+slots=5 combinations=1 complete=0 partial=1 failed=0
+inputs_unchanged=true

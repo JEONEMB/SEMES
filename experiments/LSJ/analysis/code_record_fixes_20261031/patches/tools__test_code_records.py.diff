@@ -1,0 +1,163 @@
+--- before/tools/test_code_records.py
++++ after/tools/test_code_records.py
+@@ -0,0 +1,160 @@
++"""Known-record/temporary-file tests only; no captured images or historical outputs touched."""
++import ast
++import json
++import shutil
++import unittest
++import uuid
++from types import SimpleNamespace
++from pathlib import Path
++from run_comparison import compare_runs,comparison_label,expected_measurement_ids
++from generation_provenance import GenerationRecord
++from fit_point_views import fit_point_view
++
++FIXTURES=Path(__file__).resolve().parents[1]/'qa/code_record_fixtures'
++def temporary_fixture():
++    FIXTURES.mkdir(parents=True,exist_ok=True)
++    # mkdir's inherited workspace permissions work with the Windows restricted token.
++    # tempfile's explicit owner-only ACL can deny that token access to its own fixture.
++    path=FIXTURES/('fixture_'+uuid.uuid4().hex)
++    path.mkdir()
++    return SimpleNamespace(name=str(path))
++
++def cleanup_fixture(tmp):
++    # Validate the absolute delete target before removing the disposable fixture recursively.
++    path=Path(tmp.name).resolve()
++    if path==FIXTURES.resolve() or not path.is_relative_to(FIXTURES.resolve()):
++        raise RuntimeError('fixture cleanup escaped its intended directory')
++    shutil.rmtree(path)
++
++def record(mid,value=.12345678901234567):
++    return {'measurement_id':mid,'status':'ok','slope_dy_dx':value,'intercept_y_px':10.,
++            'image_angle_deg':1.,'fit_rms_px':None,'n_candidates':3,'n_selected':2}
++
++class ComparisonTests(unittest.TestCase):
++    def setUp(self):
++        self.tmp=temporary_fixture();self.root=Path(self.tmp.name)
++        self.a=self.root/'a.json';self.b=self.root/'b.json'
++    def tearDown(self):cleanup_fixture(self.tmp)
++    def write(self,a,b):
++        self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
++        self.b.write_text(json.dumps({'records':b}),encoding='utf-8')
++    def test_full_complete(self):
++        self.write([record('A'),record('B')],[record('B'),record('A')])
++        r=compare_runs(self.a,self.b,expected_ids={'A','B'})
++        self.assertTrue(r['passed']);self.assertTrue(r['identical']);self.assertEqual(r['compared_ids'],2)
++    def test_full_missing_id(self):
++        self.write([record('A'),record('B')],[record('A')])
++        r=compare_runs(self.a,self.b)
++        self.assertFalse(r['identical']);self.assertEqual(r['missing_in_b'],['B'])
++    def test_both_missing_expected_id(self):
++        self.write([record('A')],[record('A')])
++        r=compare_runs(self.a,self.b,expected_ids={'A','B'})
++        self.assertFalse(r['passed']);self.assertEqual(r['missing_in_a'],['B'])
++    def test_subset_has_separate_success(self):
++        self.write([record('A'),record('B')],[record('B')])
++        r=compare_runs(self.a,self.b,mode='subset',expected_ids={'B'})
++        self.assertTrue(r['passed']);self.assertFalse(r['identical']);self.assertTrue(r['coverage_ok'])
++    def test_subset_requires_declared_selection(self):
++        self.write([record('A')],[record('A')])
++        with self.assertRaises(ValueError):compare_runs(self.a,self.b,mode='subset')
++    def test_subset_missing_or_unexpected(self):
++        self.write([record('A'),record('B')],[record('A')])
++        r=compare_runs(self.a,self.b,mode='subset',expected_ids={'B'})
++        self.assertFalse(r['passed']);self.assertEqual(r['unexpected_in_b'],['A']);self.assertEqual(r['missing_in_b'],['B'])
++    def test_empty_never_passes(self):
++        self.write([],[])
++        self.assertFalse(compare_runs(self.a,self.b)['identical'])
++    def test_value_difference(self):
++        self.write([record('A')],[record('A',.5)])
++        r=compare_runs(self.a,self.b)
++        self.assertFalse(r['passed']);self.assertEqual(r['differences'][0]['field'],'slope_dy_dx')
++    def test_duplicate_id_rejected(self):
++        self.write([record('A'),record('A')],[record('A')])
++        with self.assertRaises(ValueError):compare_runs(self.a,self.b)
++    def test_missing_field_rejected(self):
++        r=record('A');del r['fit_rms_px'];self.write([r],[r])
++        with self.assertRaises(KeyError):compare_runs(self.a,self.b)
++    def test_nonfinite_field_rejected(self):
++        self.write([record('A',float('nan'))],[record('A',float('nan'))])
++        with self.assertRaises(ValueError):compare_runs(self.a,self.b)
++    def test_expected_ids_come_from_plan(self):
++        m={'references':[{'reference_id':'R1'},{'reference_id':'R2'}]}
++        t={'targets':[{'id':'upper','kind':'external'},{'id':'left','kind':'qr'}]}
++        cfg={'methods':{'E01/Q01':{},'Q12':{}}}
++        self.assertEqual(expected_measurement_ids(m,t,cfg,methods={'Q12'},refs={'R2'}),{'R2_Q12_left'})
++        self.assertEqual(len(expected_measurement_ids(m,t,cfg)),6)
++        with self.assertRaises(ValueError):expected_measurement_ids(m,t,cfg,methods={'Q99'})
++    def test_legacy_comparison_is_not_upgraded(self):
++        self.assertIn('보증 불가',comparison_label({'identical':True,'compared_ids':1}))
++
++class ProvenanceTests(unittest.TestCase):
++    def setUp(self):
++        self.tmp=temporary_fixture();self.root=Path(self.tmp.name)
++        self.source=self.root/'code.py';self.source.write_text('pass')
++        self.input=self.root/'input.json';self.input.write_text('{}')
++        self.output=self.root/'result.json'
++    def tearDown(self):cleanup_fixture(self.tmp)
++    def run_record(self,stage='measurement',inputs=None):
++        return GenerationRecord(self.root,stage,sources=[self.source],inputs=inputs or [self.input])
++    def test_complete_immutable_runs_and_links(self):
++        with self.run_record() as first:
++            self.output.write_text('result');first.finish([self.output])
++        saved=first.finish_path.read_bytes()
++        with self.run_record('figures',[self.output]) as second:
++            figure=self.root/'figure.fixture';figure.write_text('display');second.finish([figure])
++        self.assertNotEqual(first.run_id,second.run_id)
++        self.assertEqual(saved,first.finish_path.read_bytes())
++        begin=json.loads(second.start_path.read_text(encoding='utf-8'))
++        self.assertEqual(begin['upstream_output_hash_matches'][0]['matching_inputs'],[str(self.output)])
++        self.assertTrue(json.loads(first.finish_path.read_text(encoding='utf-8'))['sources_and_inputs_unchanged'])
++    def test_changed_input_cannot_complete(self):
++        with self.assertRaises(RuntimeError):
++            with self.run_record() as run:
++                self.input.write_text('changed');self.output.write_text('output');run.finish([self.output])
++        self.assertEqual(json.loads(run.finish_path.read_text(encoding='utf-8'))['status'],'invalidated_inputs_changed')
++    def test_changed_source_cannot_complete(self):
++        with self.assertRaises(RuntimeError):
++            with self.run_record() as run:
++                self.source.write_text('changed code');self.output.write_text('output');run.finish([self.output])
++        self.assertEqual(json.loads(run.finish_path.read_text(encoding='utf-8'))['status'],'invalidated_inputs_changed')
++    def test_legacy_log_is_not_replaced(self):
++        logs=self.root/'logs';logs.mkdir()
++        old=logs/'hashes.json';old.write_text('{"legacy":"known"}')
++        before=old.read_bytes()
++        with self.run_record() as run:
++            self.output.write_text('output');run.finish([self.output])
++        self.assertEqual(old.read_bytes(),before)
++    def test_exception_records_failure(self):
++        with self.assertRaises(ValueError):
++            with self.run_record() as run:raise ValueError('intentional fixture failure')
++        self.assertEqual(json.loads(run.finish_path.read_text(encoding='utf-8'))['status'],'failed')
++    def test_no_finish_is_not_success(self):
++        with self.run_record() as run:pass
++        self.assertEqual(json.loads(run.finish_path.read_text(encoding='utf-8'))['status'],'failed')
++    def test_legacy_producer_remains_unknown(self):
++        run=self.run_record().start()
++        begin=json.loads(run.start_path.read_text(encoding='utf-8'))
++        self.assertEqual(begin['upstream_output_hash_matches'],[])
++        self.assertEqual(begin['status'],'started_not_completed');self.assertFalse(run.finish_path.exists())
++    def test_missing_output_does_not_claim_success(self):
++        with self.assertRaises(FileNotFoundError):
++            with self.run_record() as run:run.finish([self.root/'missing'])
++        self.assertEqual(json.loads(run.finish_path.read_text(encoding='utf-8'))['status'],'failed')
++
++class PrecisionDisplayTests(unittest.TestCase):
++    def test_precision_labels_distinguish_old_records(self):
++        self.assertIn('미확인',fit_point_view({'fit_points':[[1.23456,2]]})['precision_label'])
++        self.assertIn('원정밀',fit_point_view({'fit_points':[[1.2345678901234567,2]],
++            'fit_points_precision':{'storage':'binary64_json_roundtrip'}})['precision_label'])
++    def test_report_viewer_rounding_does_not_mutate_source(self):
++        code=Path(__file__).with_name('make_report.py').read_text(encoding='utf-8-sig')
++        node=next(n for n in ast.parse(code).body if isinstance(n,ast.FunctionDef) and n.name=='pts_of')
++        points=[[1.2345678901234567,2.345678901234567]]
++        iv={'fit_points':points,'fit_points_used_flag':[1]}
++        namespace={'jload':lambda p:{'intermediates':iv},'RES':Path('.'),'fit_point_view':fit_point_view}
++        exec(compile(ast.Module(body=[node],type_ignores=[]),'pts_of','exec'),namespace)
++        rows,label=namespace['pts_of']({'intermediate_json':'fixture'})
++        self.assertEqual(rows,[[1.23,2.35,1]])
++        self.assertEqual(points[0][0],1.2345678901234567)
++
++if __name__=='__main__':unittest.main()

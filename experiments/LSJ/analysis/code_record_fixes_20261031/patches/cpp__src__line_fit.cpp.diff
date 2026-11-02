@@ -1,0 +1,15 @@
+--- before/cpp/src/line_fit.cpp
++++ after/cpp/src/line_fit.cpp
+@@ -277,6 +277,12 @@
+                            "fit_rms_all_input_px", "fit_max_abs_inlier_residual_px", "fit_inlier_points",
+                            "n_selected_point_set", "huber_all_points_angle_before_trim_deg"}) r.diagnostics.erase(key);
+     r.support_type = support_type;
++    json raw=json::array();for(const auto& q:pts)raw.push_back({q.x,q.y});
++    r.intermediates["fit_points"]=raw;
++    r.intermediates["fit_points_precision"]={{"storage","binary64_json_roundtrip"},
++        {"role","all input points passed to common fit, before trimming"},
++        {"display_rounding_is_separate",true},
++        {"nonfinite_policy","invalid coordinates cause fit failure; JSON nonfinite values are null"}};
+     FitResult f = robust_fit(pts, fp);
+     r.diagnostics["fit_input_points"] = f.n_all;
+     r.diagnostics["fit_used_points"] = f.n_fit_used;

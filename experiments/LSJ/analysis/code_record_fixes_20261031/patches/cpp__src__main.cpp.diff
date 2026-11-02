@@ -1,0 +1,11 @@
+--- before/cpp/src/main.cpp
++++ after/cpp/src/main.cpp
+@@ -305,6 +305,8 @@
+         meta["opencv_threads"] = cv::getNumThreads();
+         meta["config_sha256"] = cfg_hash;
+         meta["settings_schema_version"] = 2;
++        meta["point_record_schema_version"] = 2;
++        meta["point_record_precision"] = "fit_points/line_input_points preserve finite calculation coordinates without decimal rounding; viewer coordinates are display-only; upstream precision is unchanged";
+         meta["coordinate_convention"] = targets_cfg.at("coordinate_convention");
+         meta["angle_convention"] = "image_angle_deg = atan2(dy, dx) with dx > 0 (x-increasing direction), range [-90, 90). Image line angle only; NOT robot theta.";
+         meta["inputs"] = inputs;

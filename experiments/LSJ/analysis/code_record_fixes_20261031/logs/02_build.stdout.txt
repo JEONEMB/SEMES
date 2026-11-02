@@ -1,0 +1,293 @@
+msbuild 버전 18.11.0-1.26475.11+3cde5c8ec(.NET Framework용)
+빌드 시작: 2026-10-31 오후 01:22:41
+
+1 노드의 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj" 프로젝트(기본 대상)입니다.
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj"(1) 프로젝트가 1 노드에서 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ZERO_CHECK.vcxproj"(2)을(를) 빌드하고 있습니다(기본 대상).
+PrepareForBuild:
+  "x64\Release\ZERO_CHECK\" 디렉터리를 만들고 있습니다.
+  "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\" 디렉터리를 만들고 있습니다.
+InitializeBuildStatus:
+  "AlwaysCreate"이(가) 지정되었기 때문에 "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+  "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+CustomBuild:
+  1>Checking Build System
+FinalizeBuildStatus:
+  "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+  "x64\Release\ZERO_CHECK\ZERO_CHECK.tlog\ZERO_CHECK.lastbuildstate"에 연결(touching)하고 있습니다.
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ZERO_CHECK.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj"(1) 프로젝트가 1 노드에서 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj"(3)을(를) 빌드하고 있습니다(기본 대상).
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj"(3) 프로젝트가 1 노드에서 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\tp_c.vcxproj"(4)을(를) 빌드하고 있습니다(기본 대상).
+PrepareForBuild:
+  "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\" 디렉터리를 만들고 있습니다.
+  "tp_c.dir\Release\tp_c.tlog\" 디렉터리를 만들고 있습니다.
+InitializeBuildStatus:
+  "AlwaysCreate"이(가) 지정되었기 때문에 "tp_c.dir\Release\tp_c.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+  "tp_c.dir\Release\tp_c.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+CustomBuild:
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\CL.exe /c /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\lsd_1.6" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\devernay_1.0" /nologo /W1 /WX- /diagnostics:classic /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Release\"" /MD /Fo"tp_c.dir\Release\\" /Fd"tp_c.dir\Release\tp_c.pdb" /TC /errorReport:queue "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\lsd_1.6\lsd.c" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\devernay_1.0\devernay.c"
+  lsd.c
+  devernay.c
+  코드를 생성하고 있습니다...
+Lib:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\Lib.exe /OUT:"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\tp_c.lib" /NOLOGO /MACHINE:X64  /machine:x64 tp_c.dir\Release\lsd.obj
+  tp_c.dir\Release\devernay.obj
+  tp_c.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\tp_c.lib
+FinalizeBuildStatus:
+  "tp_c.dir\Release\tp_c.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+  "tp_c.dir\Release\tp_c.tlog\tp_c.lastbuildstate"에 연결(touching)하고 있습니다.
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\tp_c.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj"(3) 프로젝트가 1 노드에서 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\tp_cpp.vcxproj"(5)을(를) 빌드하고 있습니다(기본 대상).
+PrepareForBuild:
+  "tp_cpp.dir\Release\tp_cpp.tlog\" 디렉터리를 만들고 있습니다.
+InitializeBuildStatus:
+  "AlwaysCreate"이(가) 지정되었기 때문에 "tp_cpp.dir\Release\tp_cpp.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+  "tp_cpp.dir\Release\tp_cpp.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+CustomBuild:
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\CL.exe /c /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\ED_Lib" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\ELSED" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\fld_port" /IC:\Users\SSAFY\opencv\build\include /IC:\Users\SSAFY\opencv\build\include\opencv /nologo /W1 /WX- /diagnostics:classic /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D _USE_MATH_DEFINES /D _CRT_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GR /std:c++17 /Fo"tp_cpp.dir\Release\\" /Fd"tp_cpp.dir\Release\tp_cpp.pdb" /TP /errorReport:queue  /utf-8 /bigobj "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\ED_Lib\ED.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\ED_Lib\EDLines.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\ED_Lib\EDColor.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\ED_Lib\NFA.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\ELSED\ELSED.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\ELSED\EdgeDrawer.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\ELSED\FullSegmentInfo.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\fld_port\fld_port.cpp"
+  ED.cpp
+  EDLines.cpp
+  EDColor.cpp
+  NFA.cpp
+  ELSED.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\include\memory(1801): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\tp_cpp.vcxproj]
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\include\memory(1865): note: 컴파일 중인 함수 템플릿 인스턴스화 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<upm::LineDetectionExtraInfoPtr&,cv::Mat&,double&,double&,int&,bool&,std::vector<int,std::allocator<int>>&,double&,double&>(upm::LineDetectionExtraInfoPtr &,cv::Mat &,double &,double &,int &,bool &,std::vector<int,std::allocator<int>> &,double &,double &)'에 대한 참조를 확인하십시오.
+          with
+          [
+              _Ty=upm::EdgeDrawer
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\include\memory(1866): note: 컴파일 중인 함수 템플릿 인스턴스화 'std::_Ref_count_obj<_Ty>::_Ref_count_obj<upm::LineDetectionExtraInfoPtr&,cv::Mat&,double&,double&,int&,bool&,std::vector<int,std::allocator<int>>&,double&,double&>(upm::LineDetectionExtraInfoPtr &,cv::Mat &,double &,double &,int &,bool &,std::vector<int,std::allocator<int>> &,double &,double &)'에 대한 참조를 확인하십시오.
+          with
+          [
+              _Ty=upm::EdgeDrawer
+          ]
+  C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\third_party\ELSED\ELSED.cpp(97): note: 컴파일 중인 함수 템플릿 인스턴스화 'std::shared_ptr<upm::EdgeDrawer> std::make_shared<upm::EdgeDrawer,upm::LineDetectionExtraInfoPtr&,cv::Mat&,double&,double&,int&,bool&,std::vector<int,std::allocator<int>>&,double&,double&>(upm::LineDetectionExtraInfoPtr &,cv::Mat &,double &,double &,int &,bool &,std::vector<int,std::allocator<int>> &,double &,double &)'에 대한 참조를 확인하십시오.
+  EdgeDrawer.cpp
+  FullSegmentInfo.cpp
+  fld_port.cpp
+  코드를 생성하고 있습니다...
+Lib:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\Lib.exe /OUT:"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\tp_cpp.lib" /NOLOGO /MACHINE:X64  /machine:x64 tp_cpp.dir\Release\ED.obj
+  tp_cpp.dir\Release\EDLines.obj
+  tp_cpp.dir\Release\EDColor.obj
+  tp_cpp.dir\Release\NFA.obj
+  tp_cpp.dir\Release\ELSED.obj
+  tp_cpp.dir\Release\EdgeDrawer.obj
+  tp_cpp.dir\Release\FullSegmentInfo.obj
+  tp_cpp.dir\Release\fld_port.obj
+  tp_cpp.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\tp_cpp.lib
+FinalizeBuildStatus:
+  "tp_cpp.dir\Release\tp_cpp.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+  "tp_cpp.dir\Release\tp_cpp.tlog\tp_cpp.lastbuildstate"에 연결(touching)하고 있습니다.
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\tp_cpp.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+PrepareForBuild:
+  "line_methods.dir\Release\line_methods.tlog\" 디렉터리를 만들고 있습니다.
+InitializeBuildStatus:
+  "AlwaysCreate"이(가) 지정되었기 때문에 "line_methods.dir\Release\line_methods.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+  "line_methods.dir\Release\line_methods.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+CustomBuild:
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\CL.exe /c /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\include" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\nlohmann_json\include" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\lsd_1.6" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\devernay_1.0" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\ED_Lib" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\ELSED" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\fld_port" /IC:\Users\SSAFY\opencv\build\include /IC:\Users\SSAFY\opencv\build\include\opencv /nologo /W4 /WX- /diagnostics:classic /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D _USE_MATH_DEFINES /D NOMINMAX /D _CRT_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GR /std:c++17 /Fo"line_methods.dir\Release\\" /Fd"line_methods.dir\Release\vc141.pdb" /TP /wd4244 /wd4267 /errorReport:queue  /utf-8 /bigobj "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\main.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\io_utils.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\line_fit.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\registry.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\segment_support.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\effective_settings.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\zernike_location.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\methods_points.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\methods_hough.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\methods_segments.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\methods_qr.cpp"
+  main.cpp
+  io_utils.cpp
+  line_fit.cpp
+  registry.cpp
+  segment_support.cpp
+  effective_settings.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj]
+  zernike_location.cpp
+  methods_points.cpp
+  methods_hough.cpp
+  methods_segments.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj]
+  methods_qr.cpp
+  코드를 생성하고 있습니다...
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\link.exe /OUT:"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\line_methods.exe" /INCREMENTAL:NO /NOLOGO Release\tp_c.lib Release\tp_cpp.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release/line_methods.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release/line_methods.lib" /MACHINE:X64  /machine:x64 line_methods.dir\Release\main.obj
+  line_methods.dir\Release\io_utils.obj
+  line_methods.dir\Release\line_fit.obj
+  line_methods.dir\Release\registry.obj
+  line_methods.dir\Release\segment_support.obj
+  line_methods.dir\Release\effective_settings.obj
+  line_methods.dir\Release\zernike_location.obj
+  line_methods.dir\Release\methods_points.obj
+  line_methods.dir\Release\methods_hough.obj
+  line_methods.dir\Release\methods_segments.obj
+  line_methods.dir\Release\methods_qr.obj
+  line_methods.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\line_methods.exe
+PostBuildEvent:
+  setlocal
+  "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy_if_different C:/Users/SSAFY/opencv/build/x64/vc15/bin/opencv_world3415.dll C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release
+  if %errorlevel% neq 0 goto :cmEnd
+  :cmEnd
+  endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+  :cmErrorLevel
+  exit /b %1
+  :cmDone
+  if %errorlevel% neq 0 goto :VCEnd
+  :VCEnd
+FinalizeBuildStatus:
+  "line_methods.dir\Release\line_methods.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+  "line_methods.dir\Release\line_methods.tlog\line_methods.lastbuildstate"에 연결(touching)하고 있습니다.
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj"(1) 프로젝트가 1 노드에서 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_selftest.vcxproj"(6)을(를) 빌드하고 있습니다(기본 대상).
+PrepareForBuild:
+  "line_selftest.dir\Release\line_selftest.tlog\" 디렉터리를 만들고 있습니다.
+InitializeBuildStatus:
+  "AlwaysCreate"이(가) 지정되었기 때문에 "line_selftest.dir\Release\line_selftest.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+  "line_selftest.dir\Release\line_selftest.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+CustomBuild:
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\CL.exe /c /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\include" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\nlohmann_json\include" /IC:\Users\SSAFY\opencv\build\include /IC:\Users\SSAFY\opencv\build\include\opencv /nologo /W4 /WX- /diagnostics:classic /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D _USE_MATH_DEFINES /D NOMINMAX /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GR /std:c++17 /Fo"line_selftest.dir\Release\\" /Fd"line_selftest.dir\Release\vc141.pdb" /TP /errorReport:queue  /utf-8 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\tests\line_selftest.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\line_fit.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\io_utils.cpp"
+  line_selftest.cpp
+  line_fit.cpp
+  io_utils.cpp
+  코드를 생성하고 있습니다...
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\link.exe /OUT:"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\line_selftest.exe" /INCREMENTAL:NO /NOLOGO C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release/line_selftest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release/line_selftest.lib" /MACHINE:X64  /machine:x64 line_selftest.dir\Release\line_selftest.obj
+  line_selftest.dir\Release\line_fit.obj
+  line_selftest.dir\Release\io_utils.obj
+  line_selftest.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\line_selftest.exe
+PostBuildEvent:
+  setlocal
+  "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy_if_different C:/Users/SSAFY/opencv/build/x64/vc15/bin/opencv_world3415.dll C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release
+  if %errorlevel% neq 0 goto :cmEnd
+  :cmEnd
+  endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+  :cmErrorLevel
+  exit /b %1
+  :cmDone
+  if %errorlevel% neq 0 goto :VCEnd
+  :VCEnd
+FinalizeBuildStatus:
+  "line_selftest.dir\Release\line_selftest.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+  "line_selftest.dir\Release\line_selftest.tlog\line_selftest.lastbuildstate"에 연결(touching)하고 있습니다.
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_selftest.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj"(1) 프로젝트가 1 노드에서 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\numeric_record_test.vcxproj"(7)을(를) 빌드하고 있습니다(기본 대상).
+PrepareForBuild:
+  "numeric_record_test.dir\Release\numeric_.A7C7685B.tlog\" 디렉터리를 만들고 있습니다.
+InitializeBuildStatus:
+  "AlwaysCreate"이(가) 지정되었기 때문에 "numeric_record_test.dir\Release\numeric_.A7C7685B.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+  "numeric_record_test.dir\Release\numeric_.A7C7685B.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+CustomBuild:
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\CL.exe /c /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\include" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\nlohmann_json\include" /IC:\Users\SSAFY\opencv\build\include /IC:\Users\SSAFY\opencv\build\include\opencv /nologo /W4 /WX- /diagnostics:classic /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D _USE_MATH_DEFINES /D NOMINMAX /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GR /std:c++17 /Fo"numeric_record_test.dir\Release\\" /Fd"numeric_record_test.dir\Release\vc141.pdb" /TP /errorReport:queue  /utf-8 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\tests\numeric_record_test.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\zernike_location.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\line_fit.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\io_utils.cpp"
+  numeric_record_test.cpp
+  zernike_location.cpp
+  line_fit.cpp
+  io_utils.cpp
+  코드를 생성하고 있습니다...
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\link.exe /OUT:"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\numeric_record_test.exe" /INCREMENTAL:NO /NOLOGO C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release/numeric_record_test.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release/numeric_record_test.lib" /MACHINE:X64  /machine:x64 numeric_record_test.dir\Release\numeric_record_test.obj
+  numeric_record_test.dir\Release\zernike_location.obj
+  numeric_record_test.dir\Release\line_fit.obj
+  numeric_record_test.dir\Release\io_utils.obj
+  numeric_record_test.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\numeric_record_test.exe
+PostBuildEvent:
+  setlocal
+  "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy_if_different C:/Users/SSAFY/opencv/build/x64/vc15/bin/opencv_world3415.dll C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release
+  if %errorlevel% neq 0 goto :cmEnd
+  :cmEnd
+  endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+  :cmErrorLevel
+  exit /b %1
+  :cmDone
+  if %errorlevel% neq 0 goto :VCEnd
+  :VCEnd
+FinalizeBuildStatus:
+  "numeric_record_test.dir\Release\numeric_.A7C7685B.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+  "numeric_record_test.dir\Release\numeric_.A7C7685B.tlog\numeric_record_test.lastbuildstate"에 연결(touching)하고 있습니다.
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\numeric_record_test.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj"(1) 프로젝트가 1 노드에서 "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj"(8)을(를) 빌드하고 있습니다(기본 대상).
+PrepareForBuild:
+  "pipeline_contract_test.dir\Release\pipeline.41C758AD.tlog\" 디렉터리를 만들고 있습니다.
+InitializeBuildStatus:
+  "AlwaysCreate"이(가) 지정되었기 때문에 "pipeline_contract_test.dir\Release\pipeline.41C758AD.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+  "pipeline_contract_test.dir\Release\pipeline.41C758AD.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+CustomBuild:
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+ClCompile:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\CL.exe /c /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\include" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\nlohmann_json\include" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\lsd_1.6" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\devernay_1.0" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\ED_Lib" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\ELSED" /I"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\..\third_party\fld_port" /IC:\Users\SSAFY\opencv\build\include /IC:\Users\SSAFY\opencv\build\include\opencv /nologo /W4 /WX- /diagnostics:classic /O2 /Ob2 /D _MBCS /D WIN32 /D _WINDOWS /D NDEBUG /D _USE_MATH_DEFINES /D NOMINMAX /D _CRT_SECURE_NO_WARNINGS /D "CMAKE_INTDIR=\"Release\"" /EHsc /MD /GR /std:c++17 /Fo"pipeline_contract_test.dir\Release\\" /Fd"pipeline_contract_test.dir\Release\vc141.pdb" /TP /wd4244 /wd4267 /errorReport:queue  /utf-8 /bigobj "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\tests\pipeline_contract_test.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\segment_support.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\effective_settings.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\methods_segments.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\line_fit.cpp" "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\cpp\src\io_utils.cpp"
+  pipeline_contract_test.cpp
+  segment_support.cpp
+  effective_settings.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj]
+  methods_segments.cpp
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj]
+c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj]
+  line_fit.cpp
+  io_utils.cpp
+  코드를 생성하고 있습니다...
+Link:
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\bin\HostX64\x64\link.exe /OUT:"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\pipeline_contract_test.exe" /INCREMENTAL:NO /NOLOGO Release\tp_c.lib Release\tp_cpp.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib C:\Users\SSAFY\opencv\build\x64\vc15\lib\opencv_world3415.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release/pipeline_contract_test.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release/pipeline_contract_test.lib" /MACHINE:X64  /machine:x64 pipeline_contract_test.dir\Release\pipeline_contract_test.obj
+  pipeline_contract_test.dir\Release\segment_support.obj
+  pipeline_contract_test.dir\Release\effective_settings.obj
+  pipeline_contract_test.dir\Release\methods_segments.obj
+  pipeline_contract_test.dir\Release\line_fit.obj
+  pipeline_contract_test.dir\Release\io_utils.obj
+  pipeline_contract_test.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\Release\pipeline_contract_test.exe
+PostBuildEvent:
+  setlocal
+  "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy_if_different C:/Users/SSAFY/opencv/build/x64/vc15/bin/opencv_world3415.dll C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/code_record_fixes_20261031/build/Release
+  if %errorlevel% neq 0 goto :cmEnd
+  :cmEnd
+  endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+  :cmErrorLevel
+  exit /b %1
+  :cmDone
+  if %errorlevel% neq 0 goto :VCEnd
+  :VCEnd
+FinalizeBuildStatus:
+  "pipeline_contract_test.dir\Release\pipeline.41C758AD.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+  "pipeline_contract_test.dir\Release\pipeline.41C758AD.tlog\pipeline_contract_test.lastbuildstate"에 연결(touching)하고 있습니다.
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+PrepareForBuild:
+  "x64\Release\ALL_BUILD\" 디렉터리를 만들고 있습니다.
+  "x64\Release\ALL_BUILD\ALL_BUILD.tlog\" 디렉터리를 만들고 있습니다.
+InitializeBuildStatus:
+  "AlwaysCreate"이(가) 지정되었기 때문에 "x64\Release\ALL_BUILD\ALL_BUILD.tlog\unsuccessfulbuild"을(를) 만들고 있습니다.
+  "x64\Release\ALL_BUILD\ALL_BUILD.tlog\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+CustomBuild:
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt
+FinalizeBuildStatus:
+  "x64\Release\ALL_BUILD\ALL_BUILD.tlog\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+  "x64\Release\ALL_BUILD\ALL_BUILD.tlog\ALL_BUILD.lastbuildstate"에 연결(touching)하고 있습니다.
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+
+빌드했습니다.
+
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj"(기본 대상)(1)->
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj"(기본 대상)(3)->
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\tp_cpp.vcxproj"(기본 대상)(5)->
+(ClCompile 대상) -> 
+  C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Tools\MSVC\14.16.27023\include\memory(1801): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\tp_cpp.vcxproj]
+
+
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj"(기본 대상)(1)->
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj"(기본 대상)(3)->
+  c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj]
+  c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj]
+  c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj]
+  c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\line_methods.vcxproj]
+
+
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\ALL_BUILD.vcxproj"(기본 대상)(1)->
+"C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj"(기본 대상)(8)->
+  c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj]
+  c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj]
+  c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\EdgeDrawer.h(114): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj]
+  c:\users\ssafy\desktop\lsj_private\자율pjt\analysis\reference_line_methods_108_20261030\third_party\elsed\Utils.h(189): warning C4505: 'upm::bresenham': 참조되지 않은 지역 함수를 제거했습니다. [C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\code_record_fixes_20261031\build\pipeline_contract_test.vcxproj]
+
+    경고 9개
+    오류 0개
+
+경과 시간: 00:01:29.92

@@ -1,0 +1,40 @@
+{
+  "description": "기준 이미지 정확히 4장. 원본은 읽기 전용. 해시는 2026-10-30 작업 문서 기재값.",
+  "expected_width": 3840,
+  "expected_height": 2160,
+  "expected_bits_per_pixel": 24,
+  "references": [
+    {
+      "reference_id": "R01",
+      "dataset": "first",
+      "label": "1차 기준",
+      "file": "center.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685"
+    },
+    {
+      "reference_id": "R02",
+      "dataset": "second",
+      "label": "2차 기준",
+      "file": "center1.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c"
+    },
+    {
+      "reference_id": "R03",
+      "dataset": "second",
+      "label": "2차 기준",
+      "file": "center2.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d"
+    },
+    {
+      "reference_id": "R04",
+      "dataset": "second",
+      "label": "2차 기준",
+      "file": "center3.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19"
+    }
+  ]
+}

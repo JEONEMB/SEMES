@@ -1,0 +1,17 @@
+{
+  "build_exit": 0,
+  "synthetic_retention_test_exit": 0,
+  "synthetic_checks_passed": 9,
+  "pipeline_contract_test_exit": 0,
+  "configuration_check_exit": 0,
+  "only_two_threshold_keys_removed_per_kind": true,
+  "captured_images_reanalyzed": false,
+  "statistics_run": false,
+  "changed_file_hashes": {
+    "cpp/src/methods_points.cpp": "cb6747b5bd3799692d571970b128bd199c1725d081557dff20260e79811aeebd",
+    "cpp/src/effective_settings.cpp": "218811d22587f6ad07b1fde2b761cc537e9863db968a0a0b97896ce021da890e",
+    "configs/methods.json": "dfa26d86e70cd5ff7957b8f897b6a1d366b9918a3b003228eda2648d21df9d4d",
+    "cpp/CMakeLists.txt": "c4b45029394fef221ab1b12545635759707d05e2deb09e5aca1b89a93e3d7e93",
+    "cpp/tests/gaussian_retention_test.cpp": "448a71cf860adf3b434e2f882002865881aadfd342c847e673beca292f3573e6"
+  }
+}

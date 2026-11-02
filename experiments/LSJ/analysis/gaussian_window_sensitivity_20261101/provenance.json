@@ -1,0 +1,118 @@
+{
+  "created_utc": "2026-11-01T02:48:15.402287+00:00",
+  "inputs": {
+    "description": "기준 이미지 정확히 4장. 원본은 읽기 전용. 해시는 2026-10-30 작업 문서 기재값.",
+    "expected_width": 3840,
+    "expected_height": 2160,
+    "expected_bits_per_pixel": 24,
+    "references": [
+      {
+        "reference_id": "R01",
+        "dataset": "first",
+        "label": "1차 기준",
+        "file": "center.bmp",
+        "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+        "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+        "observed_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685"
+      },
+      {
+        "reference_id": "R02",
+        "dataset": "second",
+        "label": "2차 기준",
+        "file": "center1.bmp",
+        "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+        "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+        "observed_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c"
+      },
+      {
+        "reference_id": "R03",
+        "dataset": "second",
+        "label": "2차 기준",
+        "file": "center2.bmp",
+        "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+        "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+        "observed_sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d"
+      },
+      {
+        "reference_id": "R04",
+        "dataset": "second",
+        "label": "2차 기준",
+        "file": "center3.bmp",
+        "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+        "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+        "observed_sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19"
+      }
+    ]
+  },
+  "source_hashes": {
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp\\src\\methods_points.cpp": "048bc1656e510ed8c4ce1be107a00af2b75e08fb2edd47105a03f4d0eb6aaf9d",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\targets.json": "d530775949f67078223b7fdca735f36831891335b00bc32803f8ff26fe530999",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\methods.json": "787bae12925225df779092ec4583f45fd09f331028cb8e6f7dab33bd5e10626c",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\inputs_manifest.json": "178be414cae0a4a671d794af9d3f962aeff3fd5af04cf45a7e4393a3dcb39b23",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\results\\line_measurements.json": "4c6c321991d07ef368aeef424e3116af9ae9c3bbc2da829db77671ba394562e5",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\results\\intermediates\\R01\\E01\\lower_structure.json": "df5b2d7ea9fdb166c2400c8d1fa5251f445fe9a09e91224edea23689d1163818",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\results\\intermediates\\R01\\E01\\upper_structure.json": "87ca18b6d2380af6db3d820fdf530b1f836adb4309f13ea0d6a76a2811c06ddc",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\results\\intermediates\\R02\\E01\\lower_structure.json": "753f8260d5fc6bc972dbf09a10a9c051f96f5bb41f5c032ed71facc30e56dd5e",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\results\\intermediates\\R02\\E01\\upper_structure.json": "6251b9c7c9e2148ff0e88d94524f2e0db76073d1eabde282b4ff5ca63d92bbbb",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\results\\intermediates\\R03\\E01\\lower_structure.json": "df5834ac21da433ba6978f471765ac9d24e8e596a468dc55c1c2dce51038b741",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\results\\intermediates\\R03\\E01\\upper_structure.json": "c7b476aee6686dfcdf5a4444e17453bec8d011993f603abccea37dec4cc26659",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\results\\intermediates\\R04\\E01\\lower_structure.json": "5c5c20e154e95711a8f9985c797a707c396bb75d7b39ab6c45d8448982adca44",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\results\\intermediates\\R04\\E01\\upper_structure.json": "5677258caf1cfa38520e34f73c2043d2a33c61554fa6890d644412e067eca7d9"
+  },
+  "extracted_nm_sha256": "fc910690ca49b55fb4db06fd131d4b25f4345a8104fca979649b07ceccd81694",
+  "design": {
+    "scope": "Gaussian window-size sensitivity only; no Huber, theta model, or hypothesis test",
+    "target_ids": [
+      "upper_structure",
+      "lower_structure"
+    ],
+    "sample_counts": [
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21
+    ],
+    "diagnostic_only_counts": [
+      3
+    ],
+    "main_sample_counts": [
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21
+    ],
+    "sampling_step_px": 1,
+    "coarse_selection": "Original per-column positive Sobel maximum, calculated once and frozen",
+    "coarse_gate": "Original min_peak=8; reject peak at search-band endpoints",
+    "primary_initial_sigma_px": 11,
+    "auxiliary_fixed_initial_sigmas_px": [
+      5,
+      21
+    ],
+    "initial_simplex_sigma_step": "0.5 * initial_sigma, constant across windows in each start series",
+    "initial_A": "frozen coarse maximum",
+    "initial_mu": "frozen coarse y",
+    "initial_simplex_A_step": "0.2 * coarse maximum",
+    "initial_simplex_mu_step_px": 1,
+    "solver": "Original C++ Nelder-Mead verbatim; max_iter=800, relative objective spread tol=1e-10",
+    "legacy_gate": "converged, finite parameters/SSE, A>0, abs(mu-coarse_y)<=2px",
+    "raw_results": "All attempted fits retained; no Huber trimming or newly invented quality cutoff",
+    "primary_comparison_cohort": "Same columns accepted by legacy gate in ALL main windows, fixed initial sigma=11",
+    "initialization_audit": "Compare fixed starts 5,11,21 at same window; never select best start to mask sensitivity",
+    "acceptance_threshold": null,
+    "reason": "No approved px tolerance for window-induced mu change. Descriptive sensitivity, not pass/fail accuracy.",
+    "real_ground_truth": null,
+    "new_selector_methods_applied": false
+  }
+}

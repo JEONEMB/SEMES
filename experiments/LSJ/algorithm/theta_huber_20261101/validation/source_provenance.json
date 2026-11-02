@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-11-01T21:11:55.613706+09:00",
+  "reference_statsmodels_version": "0.15.0",
+  "native_opencv_version": "3.4.15",
+  "native_compiler": "MSVC 19.16.27054.0, v141, x64 Release",
+  "official_source_snapshots": {
+    "analysis\\huber_convergence_20261101\\sources\\statsmodels__robust__robust_linear_model.py": "0f74f54d3ac15b059f3ddc5f2afdddca1ed575e214598df5bf90edba92bc2bee",
+    "analysis\\huber_convergence_20261101\\sources\\statsmodels__robust__norms.py": "8e51d85e92638878d090016a39259f4ea9ce97a8039655209a3e45a9b86363b9",
+    "analysis\\huber_convergence_20261101\\sources\\statsmodels__robust__scale.py": "5d9397a15cc1237d7fe714bfeca67e9859fef7c565a600cc6d3129c86660708d",
+    "analysis\\huber_convergence_20261101\\sources\\statsmodels__regression___tools.py": "8df04f527de9041002fc5ad6b25c64573f55bab283ca2fd88f0c622fcd393e7b"
+  },
+  "implemented_sources": {
+    "CMakeLists.txt": "2114be0d3eed76530044f63f1097b79ae367c5147a5c29c749755d11309faaf6",
+    "config\\calibration.json": "eae6dddc56d30bec996bbd2780c81a7d8861baa511c427efcda7ebabfd797e21",
+    "include\\alignment.hpp": "a3891e46dd910578088fa6970766127ad890feac3ff06010d6b98870524ae7d5",
+    "include\\theta_pipeline.hpp": "80b66cc712a16a06601ba39ccb2d65818c2feed7efda3bb1f685080516a10373",
+    "include\\utf8_io.hpp": "3259e1e00bdff235f7e1c92bc50cc4cdf124b4595a80a4db7ba35cc2e2d09c79",
+    "src\\alignment.cpp": "090cb0a8770d21efc13b726726261e967f6d281fe4081815c4cd6fe4e88dc318",
+    "src\\edge_points.cpp": "1fb4f66766f433f611d670965a4de80dae63ea37f03ad720fd7f2dff8b1c93f2",
+    "src\\huber_line.cpp": "27c0b35b019152b9ec93bfce8a579558fcfe268fc344b462eaac8096943ad24a",
+    "src\\main.cpp": "71be9a58134278e3d6aa16094f0596a337ef87c86a3fc47d6327a5ee8ce18648",
+    "src\\theta_decoder.cpp": "1b2e400ef725d7c10ab07e14441f5f262c31f36bc80cf1002a38994a044ca9aa",
+    "src\\theta_pipeline.cpp": "9ad8516402236e1a69c70a896cf08d1f160c5815c778b299e31fd5ec33d0e47b",
+    "src\\utf8_io.cpp": "e2880dc852492621d6a83e801e8f8a6442da029c51b9c160e44bdf922ca48133",
+    "tests\\parity_probe.cpp": "d256a3e6d6995a70eb5186c885362d41aad3843d85d8fb3efefafdc5a434d9f2",
+    "tests\\theta_tests.cpp": "8a5bd0cc48e0af53cc80642456fcbbaa91a9c2027422b2640ad54b66ac37c3c5",
+    "tools\\build.cmd": "4c9b57e787ced2b2448187a1c1080d3eb26fa3dc3b3e8f3d9e84447c3c1430f9",
+    "tools\\check_cli.py": "dd27dc77cbd93706f396d618ede3afb89de37aff89ba1747e13a70984554a731",
+    "tools\\check_native_parity.py": "79a286e86643a818dddd5a25a9c7de9e05bbb32c83a9e5fe880f97f8bcb8b638",
+    "tools\\prepare_calibration.py": "f7ba218d3b50db395ded7513c49e1b411a0fcce5f6c1be554977a08c6a676ff3"
+  },
+  "binaries": {
+    "theta_alignment.exe": "b7f5fca58139d41b034d3c9df169533c6f387fe2e2e665876e319d0ba1f05bfe",
+    "theta_tests.exe": "5bb009fdc3013ebb401c8a76a05d4f112644f5ee495a539363ae85c5d58a88d5",
+    "theta_parity_probe.exe": "9c58575dc4663aab32d5703c782d5cc30102e1d49157f4f51efe2ae5f4661664"
+  },
+  "original_analysis_sources_unchanged": true
+}

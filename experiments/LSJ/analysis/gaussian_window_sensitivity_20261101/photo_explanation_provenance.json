@@ -1,0 +1,37 @@
+{
+  "purpose": "Illustration using existing measurements only; no fitting or statistical tests rerun.",
+  "source_image": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+  "source_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+  "ref": "R01",
+  "target": "lower_structure",
+  "x": 1316,
+  "coarse_y": 1880,
+  "example_selection": "All-window accepted R01 columns ranked by 5..21 mu span; middle rank chosen.",
+  "displayed_windows": [
+    5,
+    11,
+    13
+  ],
+  "note": "Illustrative window comparison at the previously selected representative location, not a maximum-error case.",
+  "results": [
+    {
+      "n": 5,
+      "mu_y_px": 1879.2753014436244,
+      "A": 33.76012517349672,
+      "sigma_px": 1.774552963176066
+    },
+    {
+      "n": 11,
+      "mu_y_px": 1878.7800083876073,
+      "A": 27.41958903628529,
+      "sigma_px": 3.1390548427493092
+    },
+    {
+      "n": 13,
+      "mu_y_px": 1878.0448904664268,
+      "A": 23.777085248750453,
+      "sigma_px": 5.183417861104704
+    }
+  ],
+  "rendering": "Matplotlib scientific coordinate overlays; nearest-neighbor photo enlargement; no enhancement."
+}

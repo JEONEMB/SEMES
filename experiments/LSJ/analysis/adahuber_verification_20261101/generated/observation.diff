@@ -1,0 +1,50 @@
+--- upstream
++++ observation
+@@ -27,6 +27,7 @@
+     }
+     ite++;
+   }
++  audit::events.push_back({{"kind","root"},{"low",low},{"up",up},{"iteration",ite},{"rhs",rhs},{"equation_residual",f1(0.5*(low+up),resSq,n,rhs)}});
+   return 0.5 * (low + up);
+ }
+ 
+@@ -50,6 +51,7 @@
+     }
+     ite++;
+   }
++  audit::events.push_back({{"kind","root"},{"low",low},{"up",up},{"iteration",ite},{"rhs",rhs},{"equation_residual",f1(0.5*(low+up),resSq,n,rhs)}});
+   return 0.5 * (low + up);
+ }*/
+ 
+@@ -95,6 +97,7 @@
+     derDiff = derNew - derOld;
+     ite++;
+   }
++  audit::events.push_back({{"kind","mean"},{"gradient",derNew},{"iteration",ite},{"tau",tau},{"mu",mu+mx}});
+   return mu + mx;
+ }
+ 
+@@ -132,6 +135,7 @@
+     derDiff = derNew - derOld;
+     ite++;
+   }
++  audit::events.push_back({{"kind","mean"},{"gradient",derNew},{"iteration",ite},{"tau",tau},{"mu",mu+mx}});
+   mu += mx;
+   return Rcpp::List::create(Rcpp::Named("mu") = mu, Rcpp::Named("tau") = tau, Rcpp::Named("iteration") = ite);
+ }
+@@ -262,6 +266,7 @@
+     gradDiff = gradNew - gradOld;
+     ite++;
+   }
++  audit::events.push_back({{"kind","regression_pre_intercept"},{"gradient_inf",arma::norm(gradNew,"inf")},{"iteration",ite},{"tau",tau},{"beta_standardized",Rcpp::encode(beta)}});
+   beta.rows(1, p) %= sx1;
+   beta(0) = huberMean(Y + my - X * beta.rows(1, p), n, epsilon, iteMax);
+   return Rcpp::List::create(Rcpp::Named("coef") = beta, Rcpp::Named("tau") = tau, Rcpp::Named("iteration") = ite);
+@@ -304,6 +309,7 @@
+     gradDiff = gradNew - gradOld;
+     ite++;
+   }
++  audit::events.push_back({{"kind","regression_pre_intercept"},{"gradient_inf",arma::norm(gradNew,"inf")},{"iteration",ite},{"tau",tau},{"beta_standardized",Rcpp::encode(beta)}});
+   beta.rows(1, p) %= sx1;
+   beta(0) = huberMean(Y + my - X * beta.rows(1, p), n, epsilon, iteMax);
+   return Rcpp::List::create(Rcpp::Named("coef") = beta, Rcpp::Named("tau") = tau, Rcpp::Named("iteration") = ite);

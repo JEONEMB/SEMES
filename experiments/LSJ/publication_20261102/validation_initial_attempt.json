@@ -1,0 +1,151 @@
+{
+  "checked_at_utc": "2026-11-02T04:33:52.618766+00:00",
+  "scope": "Relocated source build and existing code tests only. No new image analysis, fitting, or 254-image rerun.",
+  "base": "34e6b80640ae25362e71b8ee0bcb8d472c35e092",
+  "source_head_before_publication_docs": "346a33b173d4942628463fa2e4c58a1e012218ed",
+  "executions": [
+    {
+      "name": "baseline_configure",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "-S",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\repo\\experiments\\LSJ\\algorithm\\theta_huber_20261101",
+        "-B",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_baseline",
+        "-G",
+        "Visual Studio 18 2026",
+        "-A",
+        "x64",
+        "-T",
+        "v141",
+        "-DOpenCV_DIR=C:/Users/SSAFY/opencv/build",
+        "-DBUILD_TESTING=ON"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "baseline_build",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "--build",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_baseline",
+        "--config",
+        "Release",
+        "--",
+        "/m:1",
+        "/v:minimal"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "baseline_ctest",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\ctest.exe",
+        "--test-dir",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_baseline",
+        "-C",
+        "Release",
+        "--output-on-failure",
+        "-V"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "upper_configure",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "-S",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\repo\\experiments\\LSJ\\algorithm\\theta_huber_upper_only_20261101",
+        "-B",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_upper",
+        "-G",
+        "Visual Studio 18 2026",
+        "-A",
+        "x64",
+        "-T",
+        "v141",
+        "-DOpenCV_DIR=C:/Users/SSAFY/opencv/build",
+        "-DBUILD_TESTING=ON"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "upper_build",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "--build",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_upper",
+        "--config",
+        "Release",
+        "--",
+        "/m:1",
+        "/v:minimal"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "upper_ctest",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\ctest.exe",
+        "--test-dir",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_upper",
+        "-C",
+        "Release",
+        "--output-on-failure",
+        "-V"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "line_methods_configure",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "-S",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\repo\\experiments\\LSJ\\analysis\\reference_line_methods_108_20261030\\cpp",
+        "-B",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods",
+        "-G",
+        "Visual Studio 18 2026",
+        "-A",
+        "x64",
+        "-T",
+        "v141",
+        "-DOpenCV_DIR=C:/Users/SSAFY/opencv/build",
+        "-DBUILD_TESTING=ON"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "line_methods_build",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "--build",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods",
+        "--config",
+        "Release",
+        "--",
+        "/m:1",
+        "/v:minimal"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "line_selftest",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods\\Release\\line_selftest.exe"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "pipeline_contract_test",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\gitlab_20261102\\build_line_methods\\Release\\pipeline_contract_test.exe"
+      ],
+      "returncode": 3221226505
+    }
+  ],
+  "copied_files_verified": 1911,
+  "changed_paths_inside_lsj_only": true,
+  "python_files_syntax_checked": 65,
+  "credential_pattern_scan": "no GitLab PAT literals found"
+}

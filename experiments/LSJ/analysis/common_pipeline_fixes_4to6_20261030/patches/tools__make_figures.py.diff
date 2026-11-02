@@ -1,0 +1,36 @@
+--- before/tools/make_figures.py
++++ after/tools/make_figures.py
+@@ -126,8 +126,23 @@
+                            label='사용 여부와 최종 거리 분류가 다른 점')
+ 
+ 
++def display_segment_rows(it):
++    iv = it['intermediates']
++    rows = iv.get('segments', [])
++    if 'visible_segment_pieces' not in iv:
++        return rows  # Legacy output has no clipped-support record.
++    display = [s for s in rows if s[-1] != 'selected']
++    for piece in iv['visible_segment_pieces']:
++        if piece['state'] != 'selected':
++            continue
++        source = rows[piece['segment_index']]
++        (xa, ya), (xb, yb) = piece['endpoints_xy']
++        display.append([xa, ya, xb, yb, *source[4:]])
++    return display
++
++
+ def draw_segments(ax, it, x0, x1, y0, y1, lw_sel=2.0):
+-    segs = it["intermediates"].get("segments", [])
++    segs = display_segment_rows(it)
+     for s in segs:
+         xa, ya, xb, yb, _, _, _, _, st = s
+         if max(xa, xb) < x0 or min(xa, xb) > x1: continue
+@@ -169,7 +184,7 @@
+         ax.set_xlabel("원본 x (px)", fontsize=7); ax.tick_params(labelsize=6)
+         fail_text(ax, rec); return
+     n = {"selected": 0, "cons": 0, "other": 0}
+-    for s in it["intermediates"].get("segments", []):
++    for s in display_segment_rows(it):
+         xa, ya, xb, yb, _, _, _, _, st = s
+         da, db = signed_dist(rec, [xa, xb], [ya, yb])
+         if abs(da) > 40 and abs(db) > 40: continue
