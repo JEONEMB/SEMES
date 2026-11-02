@@ -1,0 +1,4 @@
+strategy,n,valid_536,valid_min,valid_mean,gate_rejected,shift_off_8px,matches_a0,ms_median_est,pixels_per_shot
+"S_A 현재 단일 창 110x22",575,563,269,530.5,12,12,575,53.22,293546
+"S_B joint 식 단계 확장 110-260-512",575,563,422,533.6,12,0,563,60.77,514290
+"S_C 피라미드 + 간격 게이트",575,465,27,461.6,110,110,453,56.84,166545
