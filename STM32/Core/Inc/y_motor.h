@@ -7,6 +7,13 @@
 #ifndef Y_MOTOR_OUTPUT_ALLOWED
 #define Y_MOTOR_OUTPUT_ALLOWED 1
 #endif
+/* No switches installed yet. Set to 1 after wiring NC HOME/LIMIT inputs. */
+#ifndef Y_MOTOR_USE_LIMITS
+#define Y_MOTOR_USE_LIMITS 0
+#endif
+#if Y_MOTOR_USE_LIMITS != 0 && Y_MOTOR_USE_LIMITS != 1
+#error "Y_MOTOR_USE_LIMITS must be 0 or 1"
+#endif
 #if Y_MOTOR_OUTPUT_ALLOWED != 0 && Y_MOTOR_OUTPUT_ALLOWED != 1
 #error "Y_MOTOR_OUTPUT_ALLOWED must be 0 or 1"
 #endif

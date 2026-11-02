@@ -64,7 +64,7 @@ static void PollSwitches(uint32_t now)
             switches_valid |= bit;
             /* Initial levels establish a baseline; only new Y limit edges emit.
              * Theta HOME is not an end-of-travel limit. */
-            if (i < 2U) {
+            if (i < 2U && Y_MOTOR_USE_LIMITS) {
                 if ((limit_known & bit) && !(limit_previous & bit) && value) {
                     limit_pending = 1U;
                 }
