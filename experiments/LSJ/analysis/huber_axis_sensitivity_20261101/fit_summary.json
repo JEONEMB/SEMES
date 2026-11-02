@@ -1,0 +1,79 @@
+{
+  "statsmodels_version": "0.15.0",
+  "numpy_version": "2.5.4",
+  "lines": 1150,
+  "finite": 1150,
+  "tolerance_met": 1150,
+  "cap_only": 0,
+  "exceptions": 0,
+  "reference_checks": [
+    {
+      "id": "D1_001",
+      "target": "upper_structure",
+      "reference": "R01",
+      "slope_delta": 0.0,
+      "intercept_delta_px": 0.0,
+      "angle_delta_deg": 0.0
+    },
+    {
+      "id": "D1_001",
+      "target": "lower_structure",
+      "reference": "R01",
+      "slope_delta": 0.0,
+      "intercept_delta_px": 0.0,
+      "angle_delta_deg": 0.0
+    },
+    {
+      "id": "D2_001",
+      "target": "upper_structure",
+      "reference": "R02",
+      "slope_delta": 0.0,
+      "intercept_delta_px": 0.0,
+      "angle_delta_deg": 0.0
+    },
+    {
+      "id": "D2_001",
+      "target": "lower_structure",
+      "reference": "R02",
+      "slope_delta": 0.0,
+      "intercept_delta_px": 0.0,
+      "angle_delta_deg": 0.0
+    },
+    {
+      "id": "D2_002",
+      "target": "upper_structure",
+      "reference": "R03",
+      "slope_delta": 0.0,
+      "intercept_delta_px": 0.0,
+      "angle_delta_deg": 0.0
+    },
+    {
+      "id": "D2_002",
+      "target": "lower_structure",
+      "reference": "R03",
+      "slope_delta": 0.0,
+      "intercept_delta_px": 0.0,
+      "angle_delta_deg": 0.0
+    },
+    {
+      "id": "D2_024",
+      "target": "upper_structure",
+      "reference": "R04",
+      "slope_delta": 0.0,
+      "intercept_delta_px": 0.0,
+      "angle_delta_deg": 0.0
+    },
+    {
+      "id": "D2_024",
+      "target": "lower_structure",
+      "reference": "R04",
+      "slope_delta": 0.0,
+      "intercept_delta_px": 0.0,
+      "angle_delta_deg": 0.0
+    }
+  ],
+  "elapsed_seconds": 4.8680376000120305,
+  "settings_unchanged": true,
+  "measurement_sha256": "206fee03af1825a142672de7772f2c3126d3e91f6d5bb728a059a93a595b30a9",
+  "nonconverged_handling": "Retained and flagged; not silently filtered or rerun with different settings."
+}

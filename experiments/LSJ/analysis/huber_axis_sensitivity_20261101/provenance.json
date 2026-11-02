@@ -1,0 +1,92 @@
+{
+  "sources": {
+    "first_order": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\capture_order.json",
+      "sha256": "b7561a628231df3a94821e8ffbe4f5365c02a0dd3b975f516d81b2d8f7ec1a1f"
+    },
+    "first_hashes": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\measurements.json",
+      "sha256": "60b4322cc9679bc91af9c1a61f819273a2c2bcf03d83705451455e4f90b7943c"
+    },
+    "second": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\inventory.json",
+      "sha256": "5a239ff818af8eb1f714e08ca42218775f2d895bf2ffea5ed0289c25ee2c15cd"
+    },
+    "third": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\third_data_inspection\\validation_selection.json",
+      "sha256": "89143d265a1a013bba3d058e0a54505b3fe728bf2a1120fe937fe718a7c423ff"
+    },
+    "corrections": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\third_data_inspection\\label_corrections.json",
+      "sha256": "eb5960f62fde153ecaf8c2e75b65513e70c982e7ee3d5b6f87bb98e815b47dce"
+    },
+    "targets": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\targets.json",
+      "sha256": "d530775949f67078223b7fdca735f36831891335b00bc32803f8ff26fe530999"
+    },
+    "reference_provenance": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\huber_convergence_20261101\\provenance.json",
+      "sha256": "03dbc6ba471a175ffe610d3d25ca3f4afa55c120abf38e847b2e7466d0f4ba75"
+    }
+  },
+  "opencv_version": "5.0.0",
+  "numpy_version": "2.5.1",
+  "images": 575,
+  "lines": 1150,
+  "point_count": 3314300,
+  "all_image_hashes_match_prior": true,
+  "reference_crosschecks": [
+    {
+      "id": "D1_001",
+      "reference": "R01",
+      "target": "upper_structure",
+      "points_bitwise_equal": true
+    },
+    {
+      "id": "D1_001",
+      "reference": "R01",
+      "target": "lower_structure",
+      "points_bitwise_equal": true
+    },
+    {
+      "id": "D2_001",
+      "reference": "R02",
+      "target": "upper_structure",
+      "points_bitwise_equal": true
+    },
+    {
+      "id": "D2_001",
+      "reference": "R02",
+      "target": "lower_structure",
+      "points_bitwise_equal": true
+    },
+    {
+      "id": "D2_002",
+      "reference": "R03",
+      "target": "upper_structure",
+      "points_bitwise_equal": true
+    },
+    {
+      "id": "D2_002",
+      "reference": "R03",
+      "target": "lower_structure",
+      "points_bitwise_equal": true
+    },
+    {
+      "id": "D2_024",
+      "reference": "R04",
+      "target": "upper_structure",
+      "points_bitwise_equal": true
+    },
+    {
+      "id": "D2_024",
+      "reference": "R04",
+      "target": "lower_structure",
+      "points_bitwise_equal": true
+    }
+  ],
+  "points_sha256": "ca6f62d732a6a90d3eb9adaa505ec7951ee40f5fcf480d8978077c6cf04981f2",
+  "settings_sha256": "500151495990d024b5fc36a573cef4bf3095ab3d37293549c30042903c19d9ef",
+  "elapsed_seconds": 31.033033700019587,
+  "note": "Endpoint/nonpositive response counts are observations only; no point is removed or ROI changed."
+}
