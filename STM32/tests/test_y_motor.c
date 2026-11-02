@@ -49,8 +49,13 @@ int TestYMotor(void)
     CHECK(!(TIM3->CR1 & TIM_CR1_CEN));
 #else
     gpio.IDR = 1;
+#if Y_MOTOR_USE_LIMITS
     CHECK(YMotor_Start(0,1,100) == Y_MOTOR_LIMIT_ACTIVE);
     CHECK(YMotor_SetEnabled(1) == Y_MOTOR_LIMIT_ACTIVE);
+#else
+    CHECK(YMotor_SetEnabled(1) == Y_MOTOR_OK);
+    CHECK(YMotor_SetEnabled(0) == Y_MOTOR_OK);
+#endif
     gpio.IDR = 0;
     CHECK(YMotor_Start(1,3,3200) == Y_MOTOR_OK);
     CHECK(TIM3->CCR1 >= 2000); /* first edge DIR/enable settling */
@@ -94,12 +99,28 @@ int TestYMotor(void)
     CHECK(status.state == Y_MOTOR_ABORTED && !status.count_exact && !status.enabled);
     CHECK(YMotor_Start(0,10,100) == Y_MOTOR_OK);
     gpio.IDR = 2; YMotor_Poll(); YMotor_GetStatus(&status);
+#if Y_MOTOR_USE_LIMITS
     CHECK(status.state == Y_MOTOR_LIMIT && !status.enabled && !status.count_exact);
+#else
+    CHECK(status.state == Y_MOTOR_RUNNING && status.enabled);
+    YMotor_Abort();
+#endif
     gpio.IDR = 0;
     CHECK(YMotor_Start(0,10,100) == Y_MOTOR_OK);
     Pulse(); gpio.IDR = 1; YMotor_IRQHandler(); YMotor_GetStatus(&status);
+#if Y_MOTOR_USE_LIMITS
     CHECK(status.state == Y_MOTOR_LIMIT && status.completed_pulses == 1 && status.count_exact);
     CHECK(!(TIM3->CR1 & TIM_CR1_CEN));
+#else
+    CHECK(status.state == Y_MOTOR_RUNNING && status.completed_pulses == 1);
+    YMotor_Abort();
+    /* Unconnected pullups must permit a complete finite burst. */
+    gpio.IDR = 3;
+    CHECK(YMotor_Start(0,3,160) == Y_MOTOR_OK);
+    for (unsigned i = 0; i < 3; ++i) { YMotor_Poll(); Pulse(); YMotor_IRQHandler(); }
+    YMotor_GetStatus(&status);
+    CHECK(status.state == Y_MOTOR_DONE && status.completed_pulses == 3 && !status.enabled);
+#endif
     gpio.IDR = 0;
     /* UART parsing progresses between pulse IRQs, with production app linked. */
     extern int TestUartDuringPulseBurst(void);
@@ -154,11 +175,19 @@ int TestYTest(void)
     CHECK(YTest_Poll(&reply) && reply.seq == 8 && reply.payload[0] == Y_MOTOR_ABORTED);
     CHECK(!reply.payload[2]);
     request.seq = 9; gpio.IDR = 1;
+#if Y_MOTOR_USE_LIMITS
     CHECK(YTest_Handle(&request, &reply) && reply.type == RS_NAK && reply.payload[1] == RS_FAULT);
+#endif
     gpio.IDR = 0;
     CHECK(YTest_Handle(&request, &reply) && reply.type == RS_ACK);
     gpio.IDR = 2; YMotor_Poll();
+#if Y_MOTOR_USE_LIMITS
     CHECK(YTest_Poll(&reply) && reply.payload[0] == Y_MOTOR_LIMIT);
+#else
+    CHECK(!YTest_Poll(&reply));
+    YMotor_Abort();
+    CHECK(YTest_Poll(&reply) && reply.payload[0] == Y_MOTOR_ABORTED);
+#endif
 #endif
     request.type = Y_TEST_GET; request.len = 0; request.seq = 100;
     CHECK(YTest_Handle(&request, &reply) && reply.type == Y_TEST_REPORT && reply.seq == 100);

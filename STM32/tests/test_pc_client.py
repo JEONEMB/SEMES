@@ -76,20 +76,15 @@ class ClientTests(unittest.TestCase):
         argv = ['client', '--port', 'FAKE', 'jog', '--dir', 'high']
         with mock.patch.dict(sys.modules, modules), mock.patch.object(sys, 'argv', argv), \
              mock.patch.object(client.random, 'randrange', return_value=4):
-            if active_limit:
-                with self.assertRaisesRegex(RuntimeError, 'No jog sent'):
-                    client.main()
-            else:
-                client.main()
+            client.main()
         expected = client.packet(0x31, 4) + client.packet(6, 5)
-        if not active_limit:
-            expected += client.packet(0x30, 10, struct.pack('<BII', 1, 160, 160))
+        expected += client.packet(0x30, 10, struct.pack('<BII', 1, 160, 160))
         self.assertEqual(port.sent, expected)
 
     def test_jog_end_to_end(self):
         self.run_jog(False)
 
-    def test_active_limit_never_sends_jog(self):
+    def test_high_input_does_not_block_client(self):
         self.run_jog(True)
 
 
