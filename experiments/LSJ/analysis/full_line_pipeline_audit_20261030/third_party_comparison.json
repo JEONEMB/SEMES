@@ -1,0 +1,165 @@
+[
+  {
+    "group": "lsd_1.6",
+    "file": "lsd.c",
+    "used_sha256": "f4b0c6194724e9d2cec01503fc2f4b7120f2e7d1fa570de6e67b4193a6b6723f",
+    "pristine_sha256": "f4b0c6194724e9d2cec01503fc2f4b7120f2e7d1fa570de6e67b4193a6b6723f",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "lsd_1.6",
+    "file": "lsd.h",
+    "used_sha256": "02edcbb6e7b19dfd7117ae1a13b9b5810c74e1cf69ea5492eafe7ccc65026eaa",
+    "pristine_sha256": "02edcbb6e7b19dfd7117ae1a13b9b5810c74e1cf69ea5492eafe7ccc65026eaa",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "devernay_1.0",
+    "file": "devernay.c",
+    "used_sha256": "bfcf9061b05cd7867999f38dfb2199f9b656ee5b695bd0c3197b18ff8001458f",
+    "pristine_sha256": "bfcf9061b05cd7867999f38dfb2199f9b656ee5b695bd0c3197b18ff8001458f",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "devernay_1.0",
+    "file": "devernay.h",
+    "used_sha256": "880478fdfa7793d73adeab0a5513f2115748342af49e434ab49ba60f582d2510",
+    "pristine_sha256": "880478fdfa7793d73adeab0a5513f2115748342af49e434ab49ba60f582d2510",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "ED.cpp",
+    "used_sha256": "2ccad5a50ac5ad33a7c40fefbbcbd17f555029f7a8f5543bd6475c7287df60c5",
+    "pristine_sha256": "2ccad5a50ac5ad33a7c40fefbbcbd17f555029f7a8f5543bd6475c7287df60c5",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "ED.h",
+    "used_sha256": "b0e314639adfd778264f76aa47f2ba59edc5a9bfa2de606b71f3a95ab09240f9",
+    "pristine_sha256": "b0e314639adfd778264f76aa47f2ba59edc5a9bfa2de606b71f3a95ab09240f9",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "EDLines.cpp",
+    "used_sha256": "97cfff2d5866260d461c40f903f595adaddc05e44c5866f05f70134be657b328",
+    "pristine_sha256": "97cfff2d5866260d461c40f903f595adaddc05e44c5866f05f70134be657b328",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "EDLines.h",
+    "used_sha256": "cd3f8accf8842ce9fba958c470ca605ca77bd31b053b7c9d922c0b029dee1f6d",
+    "pristine_sha256": "7709cb753e60ed07c7d7e151c6d5bbca9838ae8332004ce0514caacc2bb561bc",
+    "unchanged_from_pristine": false,
+    "pristine_equals_cached_official_archive": true,
+    "actual_diff": "source_diffs/ED_Lib_EDLines.h.diff"
+  },
+  {
+    "group": "ED_Lib",
+    "file": "EDColor.cpp",
+    "used_sha256": "86f39faca3b2e5b3f64822ff25f04072afd9f9138f7f27430ecdccb2ba484fdb",
+    "pristine_sha256": "86f39faca3b2e5b3f64822ff25f04072afd9f9138f7f27430ecdccb2ba484fdb",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "EDColor.h",
+    "used_sha256": "0bc10de4beb473efbbf9df46cd612c974fd2eeb9d3b134ae027f92d6584e45a7",
+    "pristine_sha256": "0bc10de4beb473efbbf9df46cd612c974fd2eeb9d3b134ae027f92d6584e45a7",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "NFA.cpp",
+    "used_sha256": "cff4016313bc0ca27ff4f8cc64845dcc8ad63b1bb8e8f42db812434325f9eb79",
+    "pristine_sha256": "cff4016313bc0ca27ff4f8cc64845dcc8ad63b1bb8e8f42db812434325f9eb79",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "NFA.h",
+    "used_sha256": "8fe9b93421250fdecdc7699e39ec34c856619cc27523189f19d49005038149c7",
+    "pristine_sha256": "8fe9b93421250fdecdc7699e39ec34c856619cc27523189f19d49005038149c7",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "ELSED.cpp",
+    "used_sha256": "27ac12083912da21fbce8b83d3cddffd5f2ab82fe41e3265e875639b7f4a55ae",
+    "pristine_sha256": "f3be63b7ef460d243fbbad8f2122d554ee9ef3b1864d53cc125845e3c74d0890",
+    "unchanged_from_pristine": false,
+    "pristine_equals_cached_official_archive": true,
+    "actual_diff": "source_diffs/ELSED_ELSED.cpp.diff"
+  },
+  {
+    "group": "ELSED",
+    "file": "ELSED.h",
+    "used_sha256": "fe14787ce36541f4881a57a74954cb3021c23d183e3c38490197555b3f538646",
+    "pristine_sha256": "c543e4abd6d6a3299e3c9d5069e3c709ed72ad7c4b1bbce8a70b94ae2bcfbba1",
+    "unchanged_from_pristine": false,
+    "pristine_equals_cached_official_archive": true,
+    "actual_diff": "source_diffs/ELSED_ELSED.h.diff"
+  },
+  {
+    "group": "ELSED",
+    "file": "EdgeDrawer.cpp",
+    "used_sha256": "b6046ee3c84f3dfe51c8b212dc8eb94bcfc691bdae0a48732ca8c9607479c4ed",
+    "pristine_sha256": "b6046ee3c84f3dfe51c8b212dc8eb94bcfc691bdae0a48732ca8c9607479c4ed",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "EdgeDrawer.h",
+    "used_sha256": "57d6a93d78f45c3001e82d13e8311ac095ab22ad1a95139ec723637f839fe661",
+    "pristine_sha256": "57d6a93d78f45c3001e82d13e8311ac095ab22ad1a95139ec723637f839fe661",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "FullSegmentInfo.cpp",
+    "used_sha256": "8f7159ae8d541c121aae788794b924832c1f28e1d3724ba43606cdf4a8b7c66c",
+    "pristine_sha256": "8f7159ae8d541c121aae788794b924832c1f28e1d3724ba43606cdf4a8b7c66c",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "FullSegmentInfo.h",
+    "used_sha256": "085cdd2815f798b52ea7d2dca2ff1c8ad174dd27774c9b02b110d72f0128991d",
+    "pristine_sha256": "085cdd2815f798b52ea7d2dca2ff1c8ad174dd27774c9b02b110d72f0128991d",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "Utils.h",
+    "used_sha256": "e7537b9652e2345ccb6bd309bfb675602a9faf58a4117565ef031f362dd531cf",
+    "pristine_sha256": "e7537b9652e2345ccb6bd309bfb675602a9faf58a4117565ef031f362dd531cf",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "fld_port",
+    "file": "fld_port.cpp",
+    "used_sha256": "26e6ffd66bca8c84ce2f0fab8f075f2df0b46dff33d734bf3ff1137173c896ad",
+    "unchanged_from_pristine": false,
+    "pristine_equals_cached_official_download": true,
+    "actual_diff": "source_diffs/fld_port_actual.diff"
+  }
+]

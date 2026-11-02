@@ -1,0 +1,964 @@
+직선 추출 파이프라인 전수 재점검
+2026-10-30
+핵심 문제는 논문에 근거한 검출기 뒤에 붙인 선택·제외·재피팅 규칙이 충분히 검증되지 않았는데, 최종 수치를 방법 자체의 성능처럼 비교하기 쉬운 구조라는 점입니다.
+
+
+1. 점검 결론
+========
+핵심 문제는 논문에 근거한 검출기 뒤에 붙인 선택·제외·재피팅 규칙이 충분히 검증되지 않았는데, 최종 수치를 방법 자체의 성능처럼 비교하기 쉬운 구조라는 점입니다.
+{"설정 근거·검증 부족": 15, "조건부 코드 위험": 4, "기록·설명 문제": 5, "레퍼런스 대비 변형": 7, "코드 논리 문제": 1}
+원본 수정·재측정·통계 검정·후보 변경 없음.
+
+2. 먼저 볼 항목
+==========
+F01·F02·F03 | 공통 Huber/제외/수렴값 | 1.345라는 숫자의 출처는 있으나 1.345px, 2/1px 제외와 현재 종료값의 적정성은 검증되지 않았음. | 점 추출부터 나온 방법 차이와 공통 후처리 효과를 구분해야 함.
+F28 | 누락 기록도 동일하다고 판단할 수 있음 | only_in_a/b가 있어도 동일 여부는 공통 ID 값만으로 판단함. | 비교 프로그램의 조건을 고쳐야 함. 기존 216개 전체 반복 기록은 ID도 같아 그 결론은 유지.
+F24·F27 | 설명·설정의 적용 범위 불일치 | Q10의 일정한 0.5px 오프셋 설명은 근거 부족. Q10~Q12는 공통 band 제한을 사용하지 않음. | 설명 수정 및 실제 유효 설정 분리 필요.
+F04·F11 | 피팅 사용점의 의미 | 최종 마스크가 마지막 실제 피팅 입력과 다를 수 있음. 선분법의 최종 점은 검출 화소가 아닌 인공 표본. | 저장·그림의 점과 잔차가 무엇을 뜻하는지 바로잡아야 함.
+F12·F16·F17·F19 | 방법별 변형·가정 | Gaussian 부분 참조, LSD scale=1, Zernike 흐림 폭 가정, PAE 3×9 변형이 있음. | 원문 또는 저자 기본값과 같은 성능이라고 볼 수 없음. 개별 비교가 필요.
+F31 | 선별 결과의 해석 | 기준 4장의 최대−최소 각도 폭으로 선별했으나 정답 경계 각도는 없음. | 현재 후보는 임시 선택 기록이며 정확도 합격 목록은 아님.
+
+3. 범위와 확인한 자료
+=============
+외부 9개 + QR 12개. 기준 4장, 저장 측정 216개, 조합 432개.
+R01 C:\Users\SSAFY\Desktop\[기업연계_세메스] 교보재\[기업연계_세메스] 교보재\SSAFY Test Image Set\center.bmp
+R02 C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\second_data_inspection\extracted\일부 데이터 추출\기준 위치\center1.bmp
+R03 C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\second_data_inspection\extracted\일부 데이터 추출\기준 위치\center2.bmp
+R04 C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\second_data_inspection\extracted\일부 데이터 추출\기준 위치\center3.bmp
+
+4. 유지할 수 있는 부분
+==============
+LSD와 Devernay의 실제 c/h는 보관된 공식 ZIP 원본과 같습니다. 모든 검출기 코어를 임의로 새로 만든 것은 아닙니다.
+EDLines·ELSED·FLD는 보관 원본과의 실제 diff에서 접근자/지지점 출력·이식 변경을 구분했습니다. 주 검출 계산식을 바꾼 정황은 해당 diff에서 발견하지 못했습니다.
+외부 구조물은 좌우 가시 영역의 점을 모아 상단 한 직선·하단 한 직선을 만듭니다. 좌우의 두 기울기를 평균하는 구현이 아닙니다.
+QR은 세 영역 모두 처리합니다. Q01~Q11은 밝은 바깥 테두리 상단을 목표로 하고, Q12는 파인더 중심 연결선으로 별도 분류합니다.
+Huber는 E01~E09 및 Q01~Q10에 적용됩니다. Q11·Q12는 두 점 연결이며 Huber를 적용하지 않습니다.
+원본 픽셀 좌표 복원·법선각/기울기 변환의 검토 경로에서 명백한 대수 오류는 찾지 못했습니다. 이는 영상 각도 φ와 로봇 θ가 같다는 뜻이 아닙니다.
+좌표는 x 오른쪽, y 아래, m=dy/dx, φ=atan2(dy,dx)입니다. 직선의 기울기 m은 px/px이며 φ는 영상의 각도입니다.
+
+5. 공통 처리와 고정값
+=============
+대상 ROI·가림 | targets.json 전체값 | R01·사용자 대상 지정·이전 정의 | 선정 이유는 있음. 같은 물리 경계인지·위치 변경 민감도는 미검증. | F07·F08·F27
+Huber C | 1.345px | OpenCV 기본 상수와 같은 숫자 | 픽셀 잔차의 scale 근거 없음. 95% 효율을 정확도 95%로 해석 금지. | F01·F06
+IRLS 종료 | 최대 100회; 각도 <1e-13rad; 중심 x/y <1e-9px | 자체 구현 | 수렴/한도 종료 미구분. 횟수·최종 변화량도 미저장. | F03
+hard trimming | 외부 2px / QR 1px, 재피팅 2회 | 경계 혼동 제거용 초기값 | 점 제거의 타당성과 결과 영향 미검증. | F02·F04
+최소 점 수 | 외부 50 / QR 20 | 자체 초기값 | 인공 표본 수도 포함. 마지막 마스크 분류 후 재검사 없음. | F02·F04·F11
+검출 여백 | 외부 16px / QR 8px | 주변 문맥 확보 | 모든 방법이 동일 적용하지 않음. 점 방식 일부는 별도 여백; Q10~Q12는 ROI 직접 사용. | F07·F27
+열 간격 | 외부 2px / QR 1px | 이전 측정 간격·QR 짧은 길이 | 선택 의도는 있으나 간격 민감도 미검증. 모든 방법에 적용되는 공통 규칙은 아님. | F07·F27
+선분 후보 | 각도 3°/5°; 길이 20/10px; 양쪽 offset 3/2px; 밝기차 3/20 | 자체 consensus 전처리 | 저자 검출기와 별도 선택 모델. midpoint만 band 검사. | F08·F09
+선분 consensus | 양 끝 거리 2/1px; 긴 선분 최대 300개에서 가설 생성 | 자체 설계 | 길이 합·동점·중복 지지 영향 미검증. | F09
+선분 최종 점 | x 방향 1px 간격 | 선분을 가중 통합하려는 선택 | 호 길이 가중과 정확히 같지 않음. 원 검출 화소와 다른 점. | F10·F11
+최종 마스크 | 마지막 선에 대해 원 점 전체 재분류 | 진단·저장용 | 실제 마지막 fit 입력 마스크와 구분 필요. | F04
+계산값·표시값 | fit 원정밀 / 중간 좌표 4~5자리 / 화면 점 2자리 | 저장 용량·표시 | 표시 좌표로 원 결과의 정확한 재피팅은 불가. | F30
+
+6. 방법별 전수 점검 — 21개
+==================
+
+E01 Gaussian 프로파일
+세로 Sobel → 열별 최대 → Gaussian μ → Huber·trim
+근거: Gaussian 모델·Nelder–Mead·기본 초기값은 원문 근거 있음.
+판단: 핵심 아이디어는 유지 가능. 거친 경계와 표본·피팅의 변형을 검증해야 함.
+관련: F01, F02, F03, F04, F05, F06, F07, F12, F13, F27, F28, F29, F30, F31, F32
+  gradient="sobel_y_ksize3_raw" | 설명값 | 현재 Sobel-y 구현에 고정. 문자열 변경으로 계산이 바뀌지 않음.
+  half_window=5 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  min_peak=8.0 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  nm_max_iter=800 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  nm_tol=1e-10 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  max_center_shift_px=2.0 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  init_sigma="neighborhood_size" | 원문 기반·설명값 | 초기 σ=이웃 크기는 원문 근거. 현재 코드에 고정된 초기화이며 설정 문자열로 분기하지 않음.
+  profile_examples_every=100 | 저장용 | 예시·후보 보관량이며 정확도의 합격 기준이 아님.
+
+E02 Canny–Devernay
+저자 서브픽셀 검출 → 극성/방향/열별 최강점 → Huber·trim
+근거: 원본 c/h는 공식 보관 ZIP과 동일.
+판단: 검출 코어를 폐기할 근거 없음. wrapper와 Huber 적용 근거를 먼저 보완.
+관련: F01, F02, F03, F04, F05, F06, F07, F14, F27, F28, F29, F30, F31, F32
+  sigma=1.0 | 자체 적용값·미검증 | 저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임.
+  th_h=4.0 | 자체 적용값·미검증 | 저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임.
+  th_l=2.0 | 자체 적용값·미검증 | 저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임.
+
+E03 Canny + Hough
+Canny 정수 점 → 제한 Hough → 인접 점 선택 → Huber·trim
+근거: 법선각·원본 좌표 복원 식에 명백한 대수 오류는 발견하지 못함.
+판단: 검색 해상도와 측정 정확도를 분리하고 정수 화소·선택 임계 영향을 확인.
+관련: F01, F02, F03, F04, F05, F06, F07, F15, F27, F28, F29, F30, F31, F32
+  blur_sigma=1.5 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  canny_low=8.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  canny_high=16.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  canny_aperture=3 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  l2gradient=true | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  hough_rho=1.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  hough_theta_deg=0.01 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  theta_min_deg=85.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  theta_max_deg=95.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  hough_threshold=150 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  max_candidates_saved=30 | 저장용 | 예시·후보 보관량이며 정확도의 합격 기준이 아님.
+  refit_dist_px=1.5 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+
+E04 LSD
+저자 LSD(scale=1) → 자체 consensus → 선분 표본 → Huber·trim
+근거: 저자 c/h 변경 없음. 단일 선분 잔차를 정확도처럼 쓰지 않고 null 처리.
+판단: 원본 해상도 요구를 따른 변형. 기본 LSD 성능과 동일시 금지.
+관련: F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F16, F27, F28, F29, F30, F31, F32
+  scale=1.0 | 요구사항에 따른 변경 | 0.8→1.0. 원본 해상도 요구를 따른 선택이며 기본 Gaussian subsampling은 생략됨.
+  sigma_scale=0.6 | 현재 비활성 | scale=1인 현재 분기에서는 적용되지 않음.
+  quant=2.0 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+  ang_th=22.5 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+  log_eps=0.0 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+  density_th=0.7 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+  n_bins=1024 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+
+E05 Zernike ramp edge
+거친 peak → 7×7 모멘트 → 가정한 폭으로 위치 복원 → Huber·trim
+근거: 정규화 좌표·모멘트 비·위치 복원 식은 원문 대응 확인.
+판단: 흐림 폭 가정과 수치 마스크/유효조건이 우선 검토 대상.
+관련: F01, F02, F03, F04, F05, F06, F07, F17, F18, F27, F28, F29, F30, F31, F32
+  coarse_blur_sigma=1.0 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  min_coarse_grad=0.5 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  Np=7 | 원문 허용 형태·선택값 | 7×7 적분 마스크는 원문과 양립. 현재 영상의 최적 창이라는 검증은 없음.
+  k_edge=1.8 | 원문 근사 상수 | Gaussian 흐림과 ramp 폭의 근사 대응 1.8. 원문 조건에 의존함.
+  blur_sigma_px=1.5 | 물리량 가정·미검증 | 광학 흐림 측정값이 아님. coarse_blur_sigma와 다른 양임.
+  supersample=64 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  max_shift_px=1.5 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  max_orientation_dev_deg=30.0 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  window_examples_every=200 | 저장용 | 예시·후보 보관량이며 정확도의 합격 기준이 아님.
+
+E06 PAE 2차 3×9 변형
+국소 경사 최대 → 3열 합·A/B → 중앙 a → Huber·trim
+근거: 열 합에서 2차 계수를 얻는 대수는 일관. 근본 수식 오류로 판정하지 않음.
+판단: 원형 재현으로 부르면 안 됨. A/B와 창 가정의 실제 영상 적합성 검증 필요.
+관련: F01, F02, F03, F04, F05, F06, F07, F19, F27, F28, F29, F30, F31, F32
+  half_height=4 | 변형 설정·미검증 | 3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분.
+  min_grad=1.0 | 변형 설정·미검증 | 3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분.
+  min_contrast=3.0 | 변형 설정·미검증 | 3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분.
+  max_abs_a_px=1.5 | 변형 설정·미검증 | 3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분.
+
+E07 EDLines
+ED 체인 → 저자 선분 → 자체 consensus → 선분 표본 → Huber·trim
+근거: 주 계산 소스는 보관 공식 원본과 같고 헤더 접근자만 추가.
+판단: 변경 임계와 병합 지지점의 범위를 구분해 평가.
+관련: F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F20, F27, F28, F29, F30, F31, F32
+  ed_operator="SOBEL" | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_grad_thresh=12 | 저자 기본값 변경 | 약한 구조물 경계 때문에 36/8에서 12/2로 낮춤. 이유는 있으나 비교 검증 없음.
+  ed_anchor_thresh=2 | 저자 기본값 변경 | 약한 구조물 경계 때문에 36/8에서 12/2로 낮춤. 이유는 있으나 비교 검증 없음.
+  ed_scan_interval=1 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_min_path_len=10 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_sigma=1.0 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_sum_flag=true | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  line_error=1.0 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  min_line_len=-1 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  max_distance_between_two_lines=6.0 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  max_error=1.3 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+
+E08 FLD
+Canny 체인 → 저자 선분 → 자체 consensus → 선분 표본 → Huber·trim
+근거: 공식 소스에서 빌드 연결/지지점 출력 부분을 이식. 계산식 변경은 diff에서 확인되지 않음.
+판단: 현재 E08 실패를 방법 전체 불가능 판정으로 쓰지 않음.
+관련: F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F21, F27, F28, F29, F30, F31, F32
+  length_threshold=10 | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+  distance_threshold=1.41421356 | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+  canny_th1=10.0 | 저자 기본값 변경 | 50/50에서 10/20으로 낮춤. 약한 경계 대응 의도이며 적정값은 미검증.
+  canny_th2=20.0 | 저자 기본값 변경 | 50/50에서 10/20으로 낮춤. 약한 경계 대응 의도이며 적정값은 미검증.
+  canny_aperture_size=3 | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+  do_merge=false | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+
+E09 ELSED
+저자 앵커·선분 확장 → 자체 consensus → 선분 표본 → Huber·trim
+근거: 주 검출식 변경 없이 반환 선분의 지지점 보관 추가.
+판단: 저자 기본값과 외부용 변경값을 나눠 기록.
+관련: F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F22, F27, F28, F29, F30, F31, F32
+  ksize=5 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  sigma=1.0 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  gradientThreshold=10.0 | 저자 기본값 변경 | 30/8에서 10/4로 변경. 약한 경계 대응 의도이며 적정값은 미검증.
+  anchorThreshold=4 | 저자 기본값 변경 | 30/8에서 10/4로 변경. 약한 경계 대응 의도이며 적정값은 미검증.
+  scanIntervals=2 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  minLineLen=15 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  lineFitErrThreshold=0.2 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  pxToSegmentDistTh=1.5 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  junctionEigenvalsTh=10.0 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  junctionAngleTh_deg=10.0 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  validationTh=0.15 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  validate=true | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  treatJunctions=true | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+
+Q01 Gaussian 프로파일
+세로 Sobel → 열별 최대 → Gaussian μ → Huber·trim
+근거: Gaussian 모델·Nelder–Mead·기본 초기값은 원문 근거 있음.
+판단: 핵심 아이디어는 유지 가능. 거친 경계와 표본·피팅의 변형을 검증해야 함.
+관련: F01, F02, F03, F04, F05, F06, F07, F12, F13, F27, F28, F29, F30, F31, F32
+  gradient="sobel_y_ksize3_raw" | 설명값 | 현재 Sobel-y 구현에 고정. 문자열 변경으로 계산이 바뀌지 않음.
+  half_window=5 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  min_peak=40.0 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  nm_max_iter=800 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  nm_tol=1e-10 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  max_center_shift_px=2.0 | 자체 설정·미검증 | Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음.
+  init_sigma="neighborhood_size" | 원문 기반·설명값 | 초기 σ=이웃 크기는 원문 근거. 현재 코드에 고정된 초기화이며 설정 문자열로 분기하지 않음.
+  profile_examples_every=20 | 저장용 | 예시·후보 보관량이며 정확도의 합격 기준이 아님.
+
+Q02 Canny–Devernay
+저자 서브픽셀 검출 → 극성/방향/열별 최강점 → Huber·trim
+근거: 원본 c/h는 공식 보관 ZIP과 동일.
+판단: 검출 코어를 폐기할 근거 없음. wrapper와 Huber 적용 근거를 먼저 보완.
+관련: F01, F02, F03, F04, F05, F06, F07, F14, F27, F28, F29, F30, F31, F32
+  sigma=1.0 | 자체 적용값·미검증 | 저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임.
+  th_h=30.0 | 자체 적용값·미검증 | 저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임.
+  th_l=15.0 | 자체 적용값·미검증 | 저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임.
+
+Q03 Canny + Hough
+Canny 정수 점 → 제한 Hough → 인접 점 선택 → Huber·trim
+근거: 법선각·원본 좌표 복원 식에 명백한 대수 오류는 발견하지 못함.
+판단: 검색 해상도와 측정 정확도를 분리하고 정수 화소·선택 임계 영향을 확인.
+관련: F01, F02, F03, F04, F05, F06, F07, F15, F27, F28, F29, F30, F31, F32
+  blur_sigma=1.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  canny_low=40.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  canny_high=100.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  canny_aperture=3 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  l2gradient=true | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  hough_rho=1.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  hough_theta_deg=0.01 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  theta_min_deg=80.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  theta_max_deg=100.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  hough_threshold=40 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+  max_candidates_saved=30 | 저장용 | 예시·후보 보관량이며 정확도의 합격 기준이 아님.
+  refit_dist_px=1.0 | 자체 적용값·미검증 | 표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음.
+
+Q04 LSD
+저자 LSD(scale=1) → 자체 consensus → 선분 표본 → Huber·trim
+근거: 저자 c/h 변경 없음. 단일 선분 잔차를 정확도처럼 쓰지 않고 null 처리.
+판단: 원본 해상도 요구를 따른 변형. 기본 LSD 성능과 동일시 금지.
+관련: F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F16, F27, F28, F29, F30, F31, F32
+  scale=1.0 | 요구사항에 따른 변경 | 0.8→1.0. 원본 해상도 요구를 따른 선택이며 기본 Gaussian subsampling은 생략됨.
+  sigma_scale=0.6 | 현재 비활성 | scale=1인 현재 분기에서는 적용되지 않음.
+  quant=2.0 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+  ang_th=22.5 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+  log_eps=0.0 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+  density_th=0.7 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+  n_bins=1024 | 저자 기본값 | 출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님.
+
+Q05 Zernike ramp edge
+거친 peak → 7×7 모멘트 → 가정한 폭으로 위치 복원 → Huber·trim
+근거: 정규화 좌표·모멘트 비·위치 복원 식은 원문 대응 확인.
+판단: 흐림 폭 가정과 수치 마스크/유효조건이 우선 검토 대상.
+관련: F01, F02, F03, F04, F05, F06, F07, F17, F18, F27, F28, F29, F30, F31, F32
+  coarse_blur_sigma=1.0 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  min_coarse_grad=5.0 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  Np=7 | 원문 허용 형태·선택값 | 7×7 적분 마스크는 원문과 양립. 현재 영상의 최적 창이라는 검증은 없음.
+  k_edge=1.8 | 원문 근사 상수 | Gaussian 흐림과 ramp 폭의 근사 대응 1.8. 원문 조건에 의존함.
+  blur_sigma_px=1.0 | 물리량 가정·미검증 | 광학 흐림 측정값이 아님. coarse_blur_sigma와 다른 양임.
+  supersample=64 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  max_shift_px=1.5 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  max_orientation_dev_deg=30.0 | 자체 설정·미검증 | 수치적분·거친 검출·채택 조건의 적정성 비교가 없음.
+  window_examples_every=40 | 저장용 | 예시·후보 보관량이며 정확도의 합격 기준이 아님.
+
+Q06 PAE 2차 3×9 변형
+국소 경사 최대 → 3열 합·A/B → 중앙 a → Huber·trim
+근거: 열 합에서 2차 계수를 얻는 대수는 일관. 근본 수식 오류로 판정하지 않음.
+판단: 원형 재현으로 부르면 안 됨. A/B와 창 가정의 실제 영상 적합성 검증 필요.
+관련: F01, F02, F03, F04, F05, F06, F07, F19, F27, F28, F29, F30, F31, F32
+  half_height=4 | 변형 설정·미검증 | 3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분.
+  min_grad=10.0 | 변형 설정·미검증 | 3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분.
+  min_contrast=30.0 | 변형 설정·미검증 | 3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분.
+  max_abs_a_px=1.5 | 변형 설정·미검증 | 3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분.
+
+Q07 EDLines
+ED 체인 → 저자 선분 → 자체 consensus → 선분 표본 → Huber·trim
+근거: 주 계산 소스는 보관 공식 원본과 같고 헤더 접근자만 추가.
+판단: 변경 임계와 병합 지지점의 범위를 구분해 평가.
+관련: F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F20, F27, F28, F29, F30, F31, F32
+  ed_operator="SOBEL" | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_grad_thresh=36 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_anchor_thresh=8 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_scan_interval=1 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_min_path_len=10 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_sigma=1.0 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  ed_sum_flag=true | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  line_error=1.0 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  min_line_len=-1 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  max_distance_between_two_lines=6.0 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+  max_error=1.3 | 저자 기본값 대응 | 고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님.
+
+Q08 FLD
+Canny 체인 → 저자 선분 → 자체 consensus → 선분 표본 → Huber·trim
+근거: 공식 소스에서 빌드 연결/지지점 출력 부분을 이식. 계산식 변경은 diff에서 확인되지 않음.
+판단: 현재 E08 실패를 방법 전체 불가능 판정으로 쓰지 않음.
+관련: F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F21, F27, F28, F29, F30, F31, F32
+  length_threshold=10 | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+  distance_threshold=1.41421356 | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+  canny_th1=50.0 | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+  canny_th2=50.0 | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+  canny_aperture_size=3 | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+  do_merge=false | 공식 기본값 대응 | do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사.
+
+Q09 ELSED
+저자 앵커·선분 확장 → 자체 consensus → 선분 표본 → Huber·trim
+근거: 주 검출식 변경 없이 반환 선분의 지지점 보관 추가.
+판단: 저자 기본값과 외부용 변경값을 나눠 기록.
+관련: F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F22, F27, F28, F29, F30, F31, F32
+  ksize=5 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  sigma=1.0 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  gradientThreshold=30.0 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  anchorThreshold=8 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  scanIntervals=2 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  minLineLen=15 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  lineFitErrThreshold=0.2 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  pxToSegmentDistTh=1.5 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  junctionEigenvalsTh=10.0 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  junctionAngleTh_deg=10.0 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  validationTh=0.15 | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  validate=true | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+  treatJunctions=true | 저자 기본값 대응 | 유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요.
+
+Q10 QR Otsu·윤곽
+밝은 최대 윤곽 → 네 꼭짓점 → 상단 윤곽 양끝 제외 → Huber·trim
+근거: Otsu·윤곽·다각형 API 자체의 근거는 있음.
+판단: 0.5px 고정 오프셋 설명은 정정 대상. 자체 선택 기준은 미검증.
+관련: F01, F02, F03, F04, F05, F06, F07, F23, F24, F27, F28, F29, F30, F31, F32
+  threshold="otsu_binary_bright" | 설명값 | 현재 Otsu/RETR_EXTERNAL 호출에 고정. 문자열 변경이 실행에 반영되지 않음.
+  contour_mode="RETR_EXTERNAL" | 설명값 | 현재 Otsu/RETR_EXTERNAL 호출에 고정. 문자열 변경이 실행에 반영되지 않음.
+  approx_eps_frac=0.02 | 자체 설정·미검증 | 2% 다각형 근사와 양끝 8% 제외는 프로젝트 선택.
+  corner_trim_frac=0.08 | 자체 설정·미검증 | 2% 다각형 근사와 양끝 8% 제외는 프로젝트 선택.
+
+Q11 QR 외곽 코너
+Shi–Tomasi → 사분면 규칙 → cornerSubPix → 두 코너 연결
+근거: Huber 미사용. 두 점 잔차 null 처리. 초기/정밀 코너를 보관함.
+판단: 코너 식별 규칙과 정밀화 유효성 보완. 공통 Huber 수정 대상에 포함하지 않음.
+관련: F05, F07, F25, F27, F28, F29, F30, F31, F32
+  max_corners=300 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  quality_level=0.01 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  min_distance=4.0 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  block_size=5 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  use_harris=false | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  quad_offset_px=4 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  quad_half_px=2 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  min_quad_contrast=40.0 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  subpix_half_win=5 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  subpix_max_iter=100 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  subpix_eps=1e-05 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+  max_refine_shift_px=3.0 | 자체 적용값·미검증 | Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님.
+
+Q12 QR 파인더 중심선
+중첩 윤곽 → 3개 파인더 → 코너 정밀화 → 대각선 교점 → 위쪽 두 중심 연결
+근거: Huber 미사용. 다른 feature_class로 구분. 중심의 기하학적 정의는 명확함.
+판단: 다른 QR 경계와 섞지 않음. 기존 Python 이식 사실과 타당성 검증은 구분.
+관련: F05, F07, F26, F27, F28, F29, F30, F31, F32
+  min_outer_area_px2=200 | 기존 구현 이식·미검증 | 이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함.
+  max_outer_area_roi_fraction=0.2 | 기존 구현 이식·미검증 | 이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함.
+  white_outer_area_ratio=[0.25, 0.85] | 기존 구현 이식·미검증 | 이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함.
+  inner_white_area_ratio=[0.1, 0.8] | 기존 구현 이식·미검증 | 이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함.
+  polygon_epsilon_perimeter_fraction=0.03 | 기존 구현 이식·미검증 | 이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함.
+  min_side_length_ratio=0.65 | 기존 구현 이식·미검증 | 이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함.
+  subpix_half_window=3 | 기존 구현 이식·미검증 | 이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함.
+  subpix_max_iter=100 | 기존 구현 이식·미검증 | 이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함.
+  subpix_eps=1e-05 | 기존 구현 이식·미검증 | 이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함.
+
+7. 발견 사항 — 32개
+==============
+
+F01 Huber 1.345px의 적용 근거
+설정 근거·검증 부족 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10
+현재 코드: 픽셀 단위 직교잔차 r에 w=min(1,1.345/|r|)를 적용한다. 잔차 scale 추정은 없다.
+판정: 1.345라는 상수의 출처는 있지만 이 영상에서 1.345px가 적정하다는 근거는 없다. 고정 scale Huber 자체를 수학적 오류라고 단정할 수는 없다.
+영향: 방법별 점 산포와 입력 종류가 달라도 같은 px 경계로 가중치가 바뀐다. 표준화된 Huber의 효율 설명을 그대로 붙일 수 없다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 고정 px 모델을 유지할지, 실제 경계점의 scale을 추정할지 먼저 명시하고 비교 근거를 확보한다. 선분 위 인공 표본까지 일괄 MAD 표준화하지 않는다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp:109 | w[i] = r <= p.huber_c
+코드: analysis/reference_line_methods_108_20261030/configs/methods.json:6 | "huber_c_px"
+출처: https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html
+출처: https://www.mathworks.com/help/stats/robustfit.html
+
+F02 2px/1px hard trimming과 2회 재피팅
+설정 근거·검증 부족 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10
+현재 코드: 외부 2px, QR 1px 밖의 점을 제외한 뒤 두 번 재피팅한다. 최소 점 수는 50/20이다.
+판정: 설정 설명은 경계 혼동점 제거용 초기값이다. 이 거리 밖의 점이 잘못 검출된 점이라는 근거나 임계값 비교 기록은 없다.
+영향: 진짜 경계의 휨·계단·방법 편향도 잘라낼 수 있다. 잔차가 줄었다는 사실만으로 추출이 정확해졌다고 판단할 수 없다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 제외 전후 점·각도·범위를 분리 기록하고, 점을 제외할 이유와 임계값을 검증한 뒤 확정한다. 지금은 더 작은 임계값으로 바꾸지 않는다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp:125 | for (int it = 0; it < p.trim_iterations
+코드: analysis/reference_line_methods_108_20261030/configs/methods.json:9 | "trim_iterations"
+
+F03 수렴 조건과 종료 사유 미기록
+설정 근거·검증 부족 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10
+현재 코드: 각도 변화 1e-13rad, 중심 x/y 변화 각각 1e-9px를 모두 만족하면 종료한다. 최대 100회이며 종료 사유를 반환하지 않는다.
+판정: 현재 수치에 대한 문헌/안정성 근거가 없다. 과거 Python의 cv::fitLine(reps=1e-6, aeps=1e-8)과 다른 기준이다.
+영향: 100회 제한으로 종료해도 정상 수렴과 구분되지 않는다. 소수 자릿수나 엄격한 수렴값이 측정 정확도를 보장하지 않는다.
+관측/범위: 기존 결과에 Huber 반복 횟수와 수렴 플래그가 없어 과거 수렴 여부는 확정할 수 없음.
+수정·검증 제안: 각 반복의 종료 사유·횟수·최종 변화량을 저장하도록 수정안을 마련한다. 허용 계산 오차와 실제 출력 안정성에 근거해 종료값을 정한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp:102 | bool converged =
+코드: analysis/reference_line_methods_108_20261030/cpp/include/common.hpp:65 | struct FitResult
+
+F04 마지막 피팅에 사용한 점과 최종 표시 점이 달라질 수 있음
+조건부 코드 위험 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10
+현재 코드: 마지막 Huber 호출 뒤 전체 점의 inlier 여부를 다시 계산하지만 그 집합으로 다시 피팅하지 않는다. 그 뒤 최소 점 수도 재검사하지 않는다.
+판정: 최종 flags와 n_selected는 마지막 직선에 가까운 점 목록이다. 마지막 피팅에 실제 사용한 집합과 같다는 보장이 없다.
+영향: 보고서의 “피팅 사용점” 표현이 엄밀히 맞지 않을 수 있다. 마지막 분류에서 점이 크게 줄어도 f.ok=true가 될 수 있다.
+관측/범위: 저장된 성공 결과에서 최종 점 개수 50/20 미달은 0건. 과거 마지막 fit 입력 마스크는 저장되지 않아 두 집합의 일치 여부는 확인 불가.
+수정·검증 제안: 실제 fit 입력 마스크와 최종 진단 마스크를 따로 보존하고 마지막 유효성 검사를 추가한다. 집합 안정화를 요구할지는 별도 설계한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp:137 | double s_in = 0
+코드: analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp:144 | f.ok = true;
+코드: analysis/reference_line_methods_108_20261030/tools/make_figures.py:120 | 선택 지지점(피팅 사용)
+
+F05 유한값·퇴화 직선 방어가 충분하지 않음
+조건부 코드 위험 / 후속
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10, Q11, Q12
+현재 코드: 피팅에서 NaN/Inf, 분산이 없는 점 집합, 너무 짧은 기준선에 대한 공통 검사가 없다. 길이 0인 normalize_line은 수평 방향을 반환한다.
+판정: 현재 고정 입력에서 오류가 관측됐다는 뜻은 아니다. 입력이 잘못되었을 때 정상 직선처럼 반환될 수 있는 방어 누락이다.
+영향: 이후 모듈을 다른 데이터에 재사용할 때 예외 상황을 성공으로 해석할 위험이 있다.
+관측/범위: 216개 저장 기록의 성공 각도/기울기/절편 및 저장 fit 좌표에서 비정상 숫자는 발견되지 않음.
+수정·검증 제안: 유한값·서로 다른 점·기하적 길이·행렬 퇴화를 확인하고 실패 원인을 반환한다. 새로운 임계값은 목적과 단위를 명시한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp:28 | if (n <= 0)
+코드: analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp:93 | double cx = sx / sw
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp:24 | void two_point_result
+
+F06 입력 종류가 달라도 동일한 직교 피팅을 선택함
+설정 근거·검증 부족 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10
+현재 코드: 고정 열에서 y만 추정한 점, x/y 모두 보정한 점, 정수 경계점, 검출 선분을 샘플링한 점을 같은 직교 Huber에 넘긴다.
+판정: 공통 인터페이스는 유용하지만 오차의 성격까지 같아지는 것은 아니다. 다른 손실함수보다 적합하다는 비교가 없다.
+영향: 방법 고유 성능과 공통 후처리 효과가 결합된다. 현재 순위를 원래 논문 방법의 순위로 해석할 수 없다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 각 입력의 측정 정의를 유지하고 기본 추정치와 후처리 추정치를 구분한다. OLS/TLS/Huber 선택은 데이터 정의에 맞춰 근거를 마련한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp:166 | void finish_with_points
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:173 | segment_samples: points
+
+F07 ROI는 대상 근거가 있으나 경계 선택의 안정성은 미검증
+설정 근거·검증 부족 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10, Q11, Q12
+현재 코드: R01과 기존 지정 영역으로 외부 두 띠·가림 영역·QR 세 영역을 고정한다. 점 방식에는 열별 가장 강한 전이를 주로 사용한다.
+판정: 영역 선정이 무근거한 것은 아니다. 그러나 가장 강한 전이가 항상 같은 물리적 경계라는 검증, ROI 이동 민감도 검증은 없다.
+영향: 반사·다중 경계·국소 휨이 있으면 방법별로 다른 부분을 대표할 수 있다. 기준 4장용 고정 범위를 이동 사진 전체의 탐색 범위로 확장할 수도 없다.
+관측/범위: 원본 확대·프로파일 그림을 확인. 저장 성공 외부 결과는 모두 좌우 가시 구간의 지지를 가지며, 좌우 별도 선의 평균을 낸 구현은 아님.
+수정·검증 제안: 현재 ROI와 가림 의미는 보존한다. “동일 물리 경계”의 판단 근거와 검출 실패/혼동 기록을 보강한 뒤 일반화 범위를 정한다.
+코드: analysis/reference_line_methods_108_20261030/configs/targets.json:4 | "selection_basis"
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:127 | if (v > best)
+
+F08 선분의 band 검사는 중점만 검사함
+조건부 코드 위험 / 후속
+대상: E04, E07, E08, E09, Q04, Q07, Q08, Q09
+현재 코드: 선분 양 끝 평균 y가 band 안에 있으면 통과한다. 이후 visible x만 잘라 표본을 만들고 y band로 다시 자르지 않는다.
+판정: “최종 선택은 band 안에서만”이라는 설명을 일반적으로 보장하는 코드가 아니다.
+영향: 다른 입력에서는 끝부분이 band 밖인 선분이 피팅에 들어갈 수 있다.
+관측/범위: 현재 저장 성공 결과의 최종 fit 점에서 band 이탈은 0건. 현재 값이 이 이유로 틀렸다고 주장하지 않음.
+수정·검증 제안: band가 검출 후보 중점 조건인지 최종 지지 범위인지 명시하고, 후자라면 교차 구간을 정확히 자른다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:72 | double my = 0.5
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:167 | pts.emplace_back(x, s.y1
+
+F09 선분 consensus는 별도 설계된 측정 단계
+설정 근거·검증 부족 / 우선
+대상: E04, E07, E08, E09, Q04, Q07, Q08, Q09
+현재 코드: 각도 3°/5°, 최소 가시 길이 20/10px, 양쪽 밝기차 3/20, 거리 2/1px로 선분을 걸러 길이 합이 가장 큰 가설을 선택한다. 가설 생성은 긴 선분 최대 300개다.
+판정: LSD/EDLines/FLD/ELSED 원논문이 이 공통 선택 규칙을 검증해 준 것은 아니다. 최대 길이 합이 정답 경계라는 보장도 없다.
+영향: 겹치는 검출 선분의 지지가 중복 계산될 수 있고 동점은 탐색 순서에 의존한다. 원 검출기가 같은데도 선택기 때문에 결과가 달라질 수 있다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 검출과 선택을 별도 모듈로 명시하고 후보/선택 이유를 유지한다. 길이 중복·동점·300개 제한의 영향을 별도로 검증한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:105 | auto score_of
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:118 | if (order.size() > 300)
+코드: analysis/reference_line_methods_108_20261030/configs/methods.json:30 | "segment_selection"
+
+F10 “1px 샘플링 = 정확한 길이 가중”은 부정확
+기록·설명 문제 / 우선
+대상: E04, E07, E08, E09, Q04, Q07, Q08, Q09
+현재 코드: 선분을 호 길이 기준이 아니라 x 좌표 1px 간격으로 샘플링한다. 이를 length weighting과 동일하다고 기록했다.
+판정: 표본 수는 대략 가로 투영 길이에 비례한다. 실제 선분 길이와 정확히 같지 않고 시작점·끝점 포함 방식과 중복 선분에도 의존한다.
+영향: 현재처럼 작은 각도에서는 차이가 작을 수 있으나 정확히 동등하다고 설명할 수 없다. 이 점들이 독립된 새 관측값이 되는 것도 아니다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 실제 샘플링 정의를 그대로 기록한다. 길이 가중을 의도했다면 호 길이/명시적 가중 방식 중 선택하여 검증한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:166 | for (double x = pc.xa; x <= pc.xb + 1e-9
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:173 | segment_samples: points
+
+F11 원 지지점이 있어도 최종선은 선분 표본으로 계산
+설정 근거·검증 부족 / 우선
+대상: E04, E07, E08, E09, Q04, Q07, Q08, Q09
+현재 코드: 선분 검출기의 원 지지 화소를 보관하지만 최종선은 선분 위 인공 표본으로 피팅한다. 원 지지 화소는 뒤에서 진단값만 계산한다.
+판정: 원래 검출 선분을 유지하려는 선택은 가능하다. 다만 최초 작업서는 원 지지점 사용을 우선 검토하도록 했고, 이 선택의 방법별 근거는 부족하다.
+영향: 인공 표본의 잔차는 경계 검출 오차가 아니다. 원 지지점 재피팅도 원 검출기의 고유 추정치를 바꾸므로 무조건 더 좋은 대안은 아니다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: native 선분 통합과 실제 경계점 재피팅 중 무엇을 비교할지 분리 명명한다. 단일 선분 잔차 null 처리는 유지한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:180 | // Diagnostic: the detector
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:175 | if (r.has_rms && members.size() == 1)
+
+F12 Gaussian 방식은 원문 전체 재현이 아님
+레퍼런스 대비 변형 / 우선
+대상: E01, Q01
+현재 코드: 원문의 Sobel gradient magnitude·ISODATA·골격화 대신 부호 있는 세로 Sobel의 열별 최대를 쓰고, 마지막 spline 대신 Huber 직선을 쓴다.
+판정: Gaussian 모델, Nelder–Mead, A/μ/σ 초기값의 기본 아이디어는 원문에 있다. 거친 경계·표본 구성·최종 연결은 변형이다.
+영향: 논문의 성능 결론을 현재 전체 처리에 적용할 수 없다. 수직 탐색은 거의 수평인 현재 대상에 맞춘 제한이다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: “논문 기반 Gaussian 경계점 + 자체 선택/직선 피팅”으로 명시하고 변형의 필요성과 영향을 검증한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:104 | MethodResult method_profile_gaussian
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:117 | cv::Sobel(bp.f, gy
+출처: https://annals-csis.org/proceedings/2014/pliks/136.pdf
+
+F13 Gaussian 창·최적화·채택 조건의 검증 부족
+설정 근거·검증 부족 / 우선
+대상: E01, Q01
+현재 코드: 11개 표본, peak 8/40, μ 이동 제한 2px, 최대 800회, 함수값 spread 상대 1e-10을 사용한다. 초기 simplex 크기 0.2A/1/5.5도 코드에서 정한다.
+판정: 11표본은 기존 ERF 창과 맞춘 이유다. 현재 Sobel 프로파일에서 최선이라는 근거가 아니다. 최적화 종료가 Gaussian 모델 적합성을 의미하지 않는다.
+영향: 잘못된 peak나 Gaussian과 다른 음영에도 계산이 수렴할 수 있다. A와 μ 제한만으로 경계의 정확성은 판단할 수 없다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 창 크기·초기화·종료·채택을 따로 평가한다. 프로파일 잔차 및 파라미터 이상 상태를 보존하되 새 통과 임계는 임의로 정하지 않는다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:72 | std::fabs(v[3] - v[0])
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:150 | std::array<double, 3> st =
+출처: https://annals-csis.org/proceedings/2014/pliks/136.pdf
+
+F14 Devernay 이후의 선택은 자체 구현
+레퍼런스 대비 변형 / 후속
+대상: E02, Q02
+현재 코드: 원 검출기 뒤에서 극성·|gy|>|gx|·열 구간별 최강점을 적용한다. 검출기 평활은 대칭 경계, 선택용 OpenCV 평활은 BORDER_REPLICATE다.
+판정: 원 검출기 c/h는 수정되지 않았다. 그러나 선택은 원 논문의 성능 보장 대상이 아니며 “same Gaussian-smoothed patch”라는 주석도 영상 경계에서는 엄밀히 같지 않다.
+영향: 서로 다른 곡선의 최강점이 같은 최종선에 섞일 수 있다. 경계 처리 차이는 현재 여백 내부에서의 실질 영향이 확인된 오류는 아니다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 곡선 ID·선택 이유를 계속 보존하고 선택용 gradient의 정의를 정확히 기록한다. core와 wrapper를 별도로 검증한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:198 | Gradient of the same Gaussian
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:211 | best_in_bin
+출처: https://www.ipol.im/pub/art/2017/216/
+
+F15 Hough의 세밀한 격자가 서브픽셀 정확도를 보장하지 않음
+설정 근거·검증 부족 / 우선
+대상: E03, Q03
+현재 코드: Canny 정수 화소에 Hough rho=1px, theta=0.01°를 쓰고 최다 득표선 주변 1.5/1px 점을 Huber에 넘긴다.
+판정: 0.01°는 검색 격자이다. 최종 영상 각도의 정확도나 장비 최소 이동량과 같지 않다. 임계 득표 150/40 및 재피팅 거리의 데이터 검증도 없다.
+영향: 후보선이 고른 좁은 점 집합에 결과가 의존한다. 동일 행의 정수 점은 결과 0°를 만들 수 있다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: Hough 후보 각도와 최종 재피팅 각도를 유지하고 격자·후보 선택·양자화 영향을 분리 검토한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_hough.cpp:46 | cv::HoughLines
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_hough.cpp:80 | double dmax
+출처: https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html
+
+F16 LSD scale=1은 기본 전처리를 바꿈
+레퍼런스 대비 변형 / 우선
+대상: E04, Q04
+현재 코드: 저자 기본 scale=0.8 대신 1.0을 사용한다. 이 분기에서는 Gaussian subsampling이 실행되지 않아 sigma_scale=0.6도 적용되지 않는다.
+판정: 원본 해상도 유지라는 작업서 이유가 있으므로 무근거 변경으로 단정하면 안 된다. 다만 기본 LSD와 같은 전처리·성능이라고 할 수 없다.
+영향: 논문이 설명하는 계단 양자화 완화 단계가 빠진다. 현재 실패나 편차의 원인이라고 확정하려면 별도 비교가 필요하다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: scale=1 변형을 정확히 명명하고 sigma_scale 비활성 상태를 기록한다. 해상도 요구 해석을 정한 뒤 기본 설정 비교 여부를 결정한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:219 | LineSegmentDetection(&n
+코드: analysis/reference_line_methods_108_20261030/configs/methods.json:137 | scale만 0.8
+출처: https://www.ipol.im/pub/art/2012/gjmr-lsd/article.pdf
+
+F17 Zernike의 흐림 폭은 측정값이 아님
+설정 근거·검증 부족 / 우선
+대상: E05, Q05
+현재 코드: blur_sigma_px를 외부 1.5, QR 1.0으로 가정하고 w=2×1.8×sigma/7을 계산한다.
+판정: 원문 근사식은 폭 w를 알고 있다는 조건을 둔다. 식이 맞아도 입력 폭이 타당하다는 근거가 없으면 결과 위치의 타당성은 별도이다.
+영향: 경계점의 이동량에 직접 영향을 준다. coarse 검출용 Gaussian sigma=1과 광학 흐림 sigma를 혼동하면 안 된다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 폭을 어떻게 정할지와 적용 가능한 영상 조건을 먼저 명시한다. 지금 값으로 얻은 결과는 가정한 폭에 조건부인 결과로 다룬다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:312 | const double wbar
+코드: analysis/reference_line_methods_108_20261030/configs/methods.json:145 | "blur_sigma_px"
+출처: https://pmc.ncbi.nlm.nih.gov/articles/PMC8321028/
+
+F18 Zernike 수치 근사와 수식의 유효 조건 검사
+조건부 코드 위험 / 우선
+대상: E05, Q05
+현재 코드: 7×7 마스크를 화소당 64×64 적분으로 만들고 창 평균을 뺀다. A20/A11p 나눗셈 전에 분모·유한값 검사가 없다.
+판정: 논문은 화소 내부 적분 마스크를 정의하므로 직접 수치적분 자체가 잘못은 아니다. 64의 충분성, 이산 마스크에서 평균 제거 영향, 근사식의 적용 범위는 미검증이다.
+영향: 작은 A11p나 퇴화 영상에서는 비정상 결과 경로가 있다. 판별식이 음수가 아니라는 것만으로 모델의 모든 전제가 만족되는 것은 아니다.
+관측/범위: 현재 저장 성공 결과에서 NaN/Inf는 발견되지 않음. 근사 오차의 크기는 이번에 새로 계산하지 않음.
+수정·검증 제안: 분모/유한값·파라미터 범위 방어를 추가하고 마스크·근사식은 원문 조건과 분리해 확인한다. 결과가 좋게 나오도록 sigma를 조정하지 않는다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:344 | Q = a20 / a11p
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:334 | double mean = cv::mean(win)
+출처: https://pmc.ncbi.nlm.nih.gov/articles/PMC8321028/
+
+F19 PAE는 3×9·A/B 추정이 바뀐 기본형
+레퍼런스 대비 변형 / 우선
+대상: E06, Q06
+현재 코드: 3×5 기본 설명을 3×9로 일반화하고, 모서리 세 점 평균 대신 맨 위/아래 행 세 점 평균으로 A/B를 구한다. 평활·floating window는 쓰지 않는다.
+판정: 열 합으로 a,b,c를 구하는 대수는 일관된다. 그러나 창의 두 영역이 일정한 밝기이고 경계가 창을 가로지른다는 영상 가정은 별도로 확인해야 한다. 원논문 전문은 미확인이다.
+영향: 변형한 A/B와 창 크기 때문에 원문 PAE의 성능을 그대로 주장할 수 없다. 하단처럼 넓은 전이에서는 끝 행이 평탄한 밝기인지도 쟁점이다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 현재 버전을 “PAE 2차 기본형의 3×9 변형”으로 유지 표기한다. 원형과 변형의 비교 근거를 마련한 뒤 채택한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:392 | MethodResult method_pae
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:426 | A = (I(x - 1
+출처: https://github.com/juanse77/EdgeLocator/blob/master/Method.md
+
+F20 EDLines 임계 변경과 지지 화소의 불완전성
+레퍼런스 대비 변형 / 후속
+대상: E07, Q07
+현재 코드: QR은 저자 EDLines 기본 ED 36/8, 외부는 12/2다. getLineSegments 접근자를 추가해 체인 구간을 재구성한다.
+판정: 낮춘 이유는 약한 하단 경계라는 관찰이다. 적정값이라는 비교는 없다. 저자 병합 코드는 일부 경우 더 긴 원 구간만 남겨 전체 병합 선의 지지를 완전히 담지 못한다.
+영향: support_pixels 진단 잔차는 전체 병합 선의 모든 근거 화소 잔차라고 할 수 없다. 최종선은 별도 선분 표본이므로 이것이 곧 최종선 계산 오류는 아니다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 변경 임계와 지지점 범위를 분리 기록한다. 원 지지점 기반 재피팅을 채택할 경우 병합 provenance부터 해결한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:242 | MethodResult method_edlines
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:269 | collinear joins may not extend
+출처: https://raw.githubusercontent.com/CihanTopal/ED_Lib/69b8d081bd6d28192d816ec0ed02aff9186d73c1/EDLines.cpp
+
+F21 FLD 검출 코어와 자체 적용 설정 구분
+레퍼런스 대비 변형 / 후속
+대상: E08, Q08
+현재 코드: 공식 3.4 소스를 이식하고 지지점 반환을 추가했다. QR Canny 50/50은 기본값, 외부 10/20은 변경값이다. do_merge=false이다.
+판정: 실제 diff에서 검출 계산식 변경은 확인되지 않았다. 외부 임계 변경과 뒤의 consensus/Huber는 별도 검증 대상이다.
+영향: E08 하단 실패는 현재 설정의 전체 파이프라인 결과이지 FLD 자체가 원천적으로 불가능하다는 뜻은 아니다. merge를 켜면 지지점 목록 정렬을 그대로 신뢰할 수 없다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 이식 변경은 보존하고 원본 검출과 wrapper 성능을 구분한다. merge 설정을 확장한다면 지원 범위를 명시적으로 검사한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:274 | MethodResult method_fld
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:296 | support_list_aligned
+출처: https://raw.githubusercontent.com/opencv/opencv_contrib/3.4/modules/ximgproc/src/fast_line_detector.cpp
+
+F22 ELSED 설정과 숨은 기본값
+레퍼런스 대비 변형 / 후속
+대상: E09, Q09
+현재 코드: QR은 기본 gradient/anchor 30/8, 외부는 10/4다. 나머지 주요 값은 기본값이다. listJunctionSizes={5,7,9}는 저자 구조체 기본값으로만 존재한다.
+판정: 실제 변경은 반환 선분별 픽셀 보관과 접근자 추가다. 원 검출식 변경은 확인되지 않았다. 임계 변경의 데이터 근거와 모든 유효 설정의 출력은 부족하다.
+영향: 현재 해시로 소스를 추적할 수 있지만 methods.json만으로는 유효 설정을 전부 알 수 없다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 저자 기본값을 이유 없이 바꾸지 말고, 변경한 두 임계와 미출력 기본값을 명시한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:304 | upm::ELSEDParams ep;
+출처: https://raw.githubusercontent.com/iago-suarez/ELSED/1878213b2f5f06a9261d8b1838f53d48e5fd128d/src/ELSED.h
+
+F23 Q10 윤곽 선택과 2%·8% 기준
+설정 근거·검증 부족 / 후속
+대상: Q10
+현재 코드: Otsu 이진화 후 ROI 경계에 닿지 않는 가장 큰 밝은 윤곽을 고른다. 둘레의 2%로 다각형 근사, 네 꼭짓점 요구, 상단 양끝 8%를 제외한다.
+판정: API는 표준이지만 가장 큰 윤곽=QR 외곽이라는 규칙과 2%·8% 선택은 프로젝트 자체 설정이다.
+영향: 조명/연결 상태가 바뀌면 다른 윤곽을 선택하거나 꼭짓점이 사라질 수 있다. 정수 윤곽점의 계단이 기울기에 영향을 줄 수 있다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 물리적 외곽 식별과 파라미터 민감도를 검토한다. Otsu 임계 자체는 영상에서 자동 계산되는 값임을 구분한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp:55 | if (!border && area > best_area)
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp:87 | double trim =
+출처: https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html
+
+F24 Q10의 “항상 약 0.5px 위, 기울기 영향 없음” 설명
+기록·설명 문제 / 우선
+대상: Q10
+현재 코드: diagnostics에 physical boundary lies about 0.5 px above (constant offset, no slope effect)라고 저장한다.
+판정: 실제 밝기 전이·Otsu 임계·계단 윤곽으로부터 항상 일정한 0.5px 차이가 나온다고 보장할 수 없다. 이것은 좌표 규약만으로 결론낼 수 없다.
+영향: 정수 윤곽의 위치/기울기 편향을 없다고 오해하게 만든다. 이 문구는 계산에 0.5를 빼는 코드가 아니라 설명 오류다.
+관측/범위: Q10의 저장 진단값에 해당 문구 존재. 기존 Q10 그림에서 계단 윤곽도 확인.
+수정·검증 제안: “밝은 영역의 외곽 화소 중심이며 실제 경계와의 차이는 별도 검증 대상”으로 설명을 수정한다. 수치를 임의로 0.5px 이동하지 않는다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp:98 | contour_offset_note
+출처: https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html
+
+F25 Q11 코너 식별·정밀화 기준
+설정 근거·검증 부족 / 후속
+대상: Q11
+현재 코드: Shi–Tomasi 후보 300개, quality=.01, minDistance=4, block=5. 사분면 밝기차 40, 가장 위 코너, 폭≥ROI 절반·높이차≤15px·refine 이동≤3px 조건을 쓴다.
+판정: cornerSubPix 원리는 근거가 있으나 외곽 코너를 고르는 규칙은 자체 설계다. 100회/1e-5px 종료를 쓴다는 사실만으로 성공 수렴·정확도를 알 수 없다.
+영향: 두 코너가 잘못 식별되거나 둥근 경계의 서로 다른 위치로 보정되면 직선은 계산돼도 대상 방향과 어긋날 수 있다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 식별과 정밀화를 별도 상태로 관리하고 코너 품질/이동 정보를 유지한다. 두 점의 잔차 null은 그대로 유지한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp:106 | MethodResult method_qr_corners
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp:149 | b0.x - a0.x < 0.5
+출처: https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html
+
+F26 Q12는 별도 특징이며 파인더 식별 기준이 경험값
+설정 근거·검증 부족 / 후속
+대상: Q12
+현재 코드: Otsu 역이진화·중첩 윤곽·면적비·볼록 4각형·변 길이비로 3개 파인더를 고른다. 코너를 정밀화하고 대각선 교점을 연결한다.
+판정: 기존 Python을 이식했다는 것은 출처이지 면적 200, 비율 .25~.85/.1~.8, 꼭짓점 근사 .03, 변비 .65의 검증은 아니다. 실제 결과는 다른 feature_class로 이미 구분한다.
+영향: 바깥 테두리와 내부 파인더 중심선이 같은 물리 방향이라고 자동 가정할 수 없다. refine 후 이동량 검사는 Q11과 달리 없고 대각선 교차 검사가 주 방어다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: Q12를 다른 특징으로 계속 분리하고 파인더 배치·refine 유효성·조건 적용 범위를 검토한다. Q01~Q11과 무조건 통합하지 않는다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp:198 | MethodResult method_qr_finders
+코드: analysis/reference_line_methods_108_20261030/cpp/src/main.cpp:45 | std::string q12_definition
+출처: https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html
+출처: https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html
+
+F27 기록된 설정과 실제 적용되는 설정이 다름
+기록·설명 문제 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10, Q11, Q12
+현재 코드: Q10~Q12는 t.roi를 쓰지만 공통 band/x_range/margin/column_step을 검색 제한으로 쓰지 않는다. Q11/12에도 사용하지 않는 common_fit 해시가 붙는다. E01 gradient/init_sigma, Q10 threshold/contour_mode 문자열은 실행 분기를 바꾸지 않는다.
+판정: 현재 값과 하드코딩된 동작은 대체로 일치하지만 설정 파일만 바꾸면 반영될 것처럼 읽힌다. 보고서의 Q01~Q11 모두 동일 band 검색이라는 설명은 정확하지 않다.
+영향: 방법 비교에서 실제 탐색 영역 차이가 가려지고, 향후 설정 변경이 조용히 무시될 수 있다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 유효 설정과 설명용 메타데이터를 구분해 저장한다. 지원하지 않는 값을 넣으면 명시적으로 실패하도록 수정안을 마련한다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp:41 | cv::Mat crop = c.gray(t.roi)
+코드: analysis/reference_line_methods_108_20261030/cpp/src/main.cpp:185 | json hashed =
+코드: analysis/reference_line_methods_108_20261030/tools/make_report.py:376 | Q01~Q11 주 선
+
+F28 재실행 비교의 identical이 누락 ID를 무시함
+코드 논리 문제 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10, Q11, Q12
+현재 코드: compare_runs는 두 파일의 공통 measurement_id만 비교한다. only_in_a/b는 따로 계산하지만 identical=not diffs이다.
+판정: 공통 결과가 같으면 일부 기록이 빠져도 identical=true가 된다. 전체 비교와 부분 비교의 성공 조건이 섞였다.
+영향: 향후 누락된 전체 실행을 완전히 동일하다고 보고할 수 있다. 이 검사는 통계적 재현성이나 측정 정확도 검증도 아니다.
+관측/범위: 기존 full/repeat는 실제 216개 ID 집합이 같아 이번 로그의 동일 결론은 뒤집히지 않음. 단독 실행은 의도적으로 5개만 비교한 기록.
+수정·검증 제안: 전체 비교는 ID 집합까지 동일해야 하고, 부분 비교는 의도한 부분집합과 비교 개수가 맞아야 한다. 두 모드를 분리한다.
+코드: analysis/reference_line_methods_108_20261030/tools/run_pipeline.py:79 | "identical": not diffs
+
+F29 그림 생성 스크립트의 실행 기록 해시가 현재와 다름
+기록·설명 문제 / 후속
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10, Q11, Q12
+현재 코드: logs/hashes.json과 현재 파일을 대조하면 tools/make_figures.py 하나가 다르다.
+판정: 측정 C++ 코드·설정·기록된 검출 소스 해시는 일치한다. 그림 코드 변경 자체를 측정값 변조로 볼 수 없다. 다만 어떤 그림 코드 버전이 어느 산출물을 만들었는지 추적이 불완전하다.
+영향: 측정과 보고서 생성의 provenance를 하나의 시점으로 취급하면 재현 설명이 어긋난다.
+관측/범위: artifact_checks.json에 파일별 대조 결과 보관. 본 점검 시작 이후 원본 변경 여부와는 별개인 기존 기록 차이.
+수정·검증 제안: 측정 실행과 그림/보고서 생성을 별도 버전·해시로 기록한다. 기존 로그는 덮어쓰지 않고 변경 이력을 보충한다.
+코드: analysis/reference_line_methods_108_20261030/tools/run_pipeline.py:153 | "tools": tree_hashes
+
+F30 반올림 중간 좌표와 피팅 입력의 정밀도가 다름
+기록·설명 문제 / 후속
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10, Q11, Q12
+현재 코드: 최종선은 C++ 원래 좌표로 계산하지만 저장 fit_points는 4~5자리(정수법은 1자리), HTML 표시점은 2자리로 저장한다.
+판정: 표시용 반올림은 가능하다. 다만 저장 중간 좌표를 다시 피팅해서 원래 결과를 비트 단위로 복원할 수 있다고 주장하면 안 된다.
+영향: 후속 공통 피팅 수정 시 원래 검출 결과를 정확히 재사용하려면 현재 중간 파일 정밀도에 한계가 있다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 재계산용 원정밀 좌표와 표시용 좌표를 분리한다. 기존 수치를 보존하고 복원 오차를 숨기지 않는다.
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp:172 | round_pt(q.x, q.y, 5)
+코드: analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp:170 | round_pt(q.x, q.y, 4)
+코드: analysis/reference_line_methods_108_20261030/tools/make_report.py:71 | return [[round(a, 2)
+
+F31 현재 선별 순위는 정확도 순위가 아님
+설정 근거·검증 부족 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10, Q11, Q12
+현재 코드: 기준 4장 모두 성공한 방법에서 대상별 최대−최소 각도 폭의 최댓값으로 외부 상위 3개를 남겼다. QR은 사용자 지시로 Q02/Q04만 남겼다.
+판정: 기준 4장의 실제 영상 선 각도 정답이 없으며 서로 같은 자세라고 검증된 반복 실험도 아니다. 이 폭에는 촬영 차이와 방법 효과가 함께 들어갈 수 있다.
+영향: 작은 폭은 참고 관찰값일 뿐 정확한 선이나 θ 민감도를 보장하지 않는다. 공통 선택/피팅을 바꾸면 순위도 달라질 수 있다.
+관측/범위: 현재 active 후보는 E01/E06/E02 + Q02/Q04. 사용자가 상세 확인을 요청한 E05는 active 후보에 자동 복귀시키지 않았음.
+수정·검증 제안: 기존 후보 선택은 기록으로 보존한다. 정확도 합격 또는 보류 방법의 영구 탈락으로 승격하지 말고, 수정 후 필요한 평가 범위를 별도로 결정한다.
+코드: analysis/reference_line_methods_selection_20261030/select_existing_results.py:89 | item['score_deg']
+코드: analysis/reference_line_methods_selection_20261030/select_existing_results.py:18 | QR_METHODS =
+
+F32 기존 시험이 확인한 범위가 좁음
+설정 근거·검증 부족 / 우선
+대상: E01, E02, E03, E04, E05, E06, E07, E08, E09, Q01, Q02, Q03, Q04, Q05, Q06, Q07, Q08, Q09, Q10, Q11, Q12
+현재 코드: 자체 시험은 각도 규약·한 직선과 이상점·SHA를 확인한다. 재실행 비교는 같은 프로그램이 같은 값을 내는지 확인한다.
+판정: 점 추출 수식, 후보 선택, 단위 변화에 대한 Huber 동작, 각 방법의 설정 민감도, 실제 경계 정확도까지 검증한 시험은 아니다.
+영향: 11개 자체 시험 통과와 216개 재실행 일치를 방법 타당성의 근거로 사용할 수 없다.
+관측/범위: 정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.
+수정·검증 제안: 수정 범위를 정한 후 알려진 기하/광학 조건의 검증과 실제 영상 경계 검토를 단계별로 설계한다. 이번 점검에서는 새 시험이나 통계 검정을 실행하지 않았다.
+코드: analysis/reference_line_methods_108_20261030/cpp/tests/line_selftest.cpp:33 | // Exact points on y
+코드: analysis/reference_line_methods_108_20261030/tools/run_pipeline.py:61 | def numeric_fields
+
+8. 저장 결과에서 실제로 확인한 것
+====================
+입력 이미지 | 4장 모두 manifest 해시 일치
+저장 측정 | 216개 / 성공 status 209개 / 실패 status 7개
+기록 구조·유한값 등 | 점검한 필드의 불일치 0건
+선별본 | 48개 모두 원본 기록과 동일
+조합 참조 | 432개 참조·status 계산의 불일치 0건
+외부 좌우 가시 영역 | 성공 저장값에서 한쪽 지지만 남은 사례 0건
+최종 점의 band·최소 개수 | 점검한 성공 저장값에서 이탈·미달 사례 0건
+기존 실행 해시 | tools/make_figures.py만 현재 파일과 불일치. 측정 소스/설정은 일치
+수렴 여부 | Huber 종료 사유가 없어 과거 정상 수렴 여부 확인 불가
+
+9. 저자 소스의 변경 대조
+===============
+[
+  {
+    "group": "lsd_1.6",
+    "file": "lsd.c",
+    "used_sha256": "f4b0c6194724e9d2cec01503fc2f4b7120f2e7d1fa570de6e67b4193a6b6723f",
+    "pristine_sha256": "f4b0c6194724e9d2cec01503fc2f4b7120f2e7d1fa570de6e67b4193a6b6723f",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "lsd_1.6",
+    "file": "lsd.h",
+    "used_sha256": "02edcbb6e7b19dfd7117ae1a13b9b5810c74e1cf69ea5492eafe7ccc65026eaa",
+    "pristine_sha256": "02edcbb6e7b19dfd7117ae1a13b9b5810c74e1cf69ea5492eafe7ccc65026eaa",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "devernay_1.0",
+    "file": "devernay.c",
+    "used_sha256": "bfcf9061b05cd7867999f38dfb2199f9b656ee5b695bd0c3197b18ff8001458f",
+    "pristine_sha256": "bfcf9061b05cd7867999f38dfb2199f9b656ee5b695bd0c3197b18ff8001458f",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "devernay_1.0",
+    "file": "devernay.h",
+    "used_sha256": "880478fdfa7793d73adeab0a5513f2115748342af49e434ab49ba60f582d2510",
+    "pristine_sha256": "880478fdfa7793d73adeab0a5513f2115748342af49e434ab49ba60f582d2510",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "ED.cpp",
+    "used_sha256": "2ccad5a50ac5ad33a7c40fefbbcbd17f555029f7a8f5543bd6475c7287df60c5",
+    "pristine_sha256": "2ccad5a50ac5ad33a7c40fefbbcbd17f555029f7a8f5543bd6475c7287df60c5",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "ED.h",
+    "used_sha256": "b0e314639adfd778264f76aa47f2ba59edc5a9bfa2de606b71f3a95ab09240f9",
+    "pristine_sha256": "b0e314639adfd778264f76aa47f2ba59edc5a9bfa2de606b71f3a95ab09240f9",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "EDLines.cpp",
+    "used_sha256": "97cfff2d5866260d461c40f903f595adaddc05e44c5866f05f70134be657b328",
+    "pristine_sha256": "97cfff2d5866260d461c40f903f595adaddc05e44c5866f05f70134be657b328",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "EDLines.h",
+    "used_sha256": "cd3f8accf8842ce9fba958c470ca605ca77bd31b053b7c9d922c0b029dee1f6d",
+    "pristine_sha256": "7709cb753e60ed07c7d7e151c6d5bbca9838ae8332004ce0514caacc2bb561bc",
+    "unchanged_from_pristine": false,
+    "pristine_equals_cached_official_archive": true,
+    "actual_diff": "source_diffs/ED_Lib_EDLines.h.diff"
+  },
+  {
+    "group": "ED_Lib",
+    "file": "EDColor.cpp",
+    "used_sha256": "86f39faca3b2e5b3f64822ff25f04072afd9f9138f7f27430ecdccb2ba484fdb",
+    "pristine_sha256": "86f39faca3b2e5b3f64822ff25f04072afd9f9138f7f27430ecdccb2ba484fdb",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "EDColor.h",
+    "used_sha256": "0bc10de4beb473efbbf9df46cd612c974fd2eeb9d3b134ae027f92d6584e45a7",
+    "pristine_sha256": "0bc10de4beb473efbbf9df46cd612c974fd2eeb9d3b134ae027f92d6584e45a7",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "NFA.cpp",
+    "used_sha256": "cff4016313bc0ca27ff4f8cc64845dcc8ad63b1bb8e8f42db812434325f9eb79",
+    "pristine_sha256": "cff4016313bc0ca27ff4f8cc64845dcc8ad63b1bb8e8f42db812434325f9eb79",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ED_Lib",
+    "file": "NFA.h",
+    "used_sha256": "8fe9b93421250fdecdc7699e39ec34c856619cc27523189f19d49005038149c7",
+    "pristine_sha256": "8fe9b93421250fdecdc7699e39ec34c856619cc27523189f19d49005038149c7",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "ELSED.cpp",
+    "used_sha256": "27ac12083912da21fbce8b83d3cddffd5f2ab82fe41e3265e875639b7f4a55ae",
+    "pristine_sha256": "f3be63b7ef460d243fbbad8f2122d554ee9ef3b1864d53cc125845e3c74d0890",
+    "unchanged_from_pristine": false,
+    "pristine_equals_cached_official_archive": true,
+    "actual_diff": "source_diffs/ELSED_ELSED.cpp.diff"
+  },
+  {
+    "group": "ELSED",
+    "file": "ELSED.h",
+    "used_sha256": "fe14787ce36541f4881a57a74954cb3021c23d183e3c38490197555b3f538646",
+    "pristine_sha256": "c543e4abd6d6a3299e3c9d5069e3c709ed72ad7c4b1bbce8a70b94ae2bcfbba1",
+    "unchanged_from_pristine": false,
+    "pristine_equals_cached_official_archive": true,
+    "actual_diff": "source_diffs/ELSED_ELSED.h.diff"
+  },
+  {
+    "group": "ELSED",
+    "file": "EdgeDrawer.cpp",
+    "used_sha256": "b6046ee3c84f3dfe51c8b212dc8eb94bcfc691bdae0a48732ca8c9607479c4ed",
+    "pristine_sha256": "b6046ee3c84f3dfe51c8b212dc8eb94bcfc691bdae0a48732ca8c9607479c4ed",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "EdgeDrawer.h",
+    "used_sha256": "57d6a93d78f45c3001e82d13e8311ac095ab22ad1a95139ec723637f839fe661",
+    "pristine_sha256": "57d6a93d78f45c3001e82d13e8311ac095ab22ad1a95139ec723637f839fe661",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "FullSegmentInfo.cpp",
+    "used_sha256": "8f7159ae8d541c121aae788794b924832c1f28e1d3724ba43606cdf4a8b7c66c",
+    "pristine_sha256": "8f7159ae8d541c121aae788794b924832c1f28e1d3724ba43606cdf4a8b7c66c",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "FullSegmentInfo.h",
+    "used_sha256": "085cdd2815f798b52ea7d2dca2ff1c8ad174dd27774c9b02b110d72f0128991d",
+    "pristine_sha256": "085cdd2815f798b52ea7d2dca2ff1c8ad174dd27774c9b02b110d72f0128991d",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "ELSED",
+    "file": "Utils.h",
+    "used_sha256": "e7537b9652e2345ccb6bd309bfb675602a9faf58a4117565ef031f362dd531cf",
+    "pristine_sha256": "e7537b9652e2345ccb6bd309bfb675602a9faf58a4117565ef031f362dd531cf",
+    "unchanged_from_pristine": true,
+    "pristine_equals_cached_official_archive": true
+  },
+  {
+    "group": "fld_port",
+    "file": "fld_port.cpp",
+    "used_sha256": "26e6ffd66bca8c84ce2f0fab8f075f2df0b46dff33d734bf3ff1137173c896ad",
+    "unchanged_from_pristine": false,
+    "pristine_equals_cached_official_download": true,
+    "actual_diff": "source_diffs/fld_port_actual.diff"
+  }
+]
+
+10. 다음 수정 순서 제안
+===============
+1 | 코드·설명 불일치부터 정정할 수정안 확정 | 누락 ID 비교(F28), 사용점/마스크 구분(F04), 0.5px 설명(F24), 유효 설정(F27), 해시 이력(F29). | 검출 방법을 바꾸기 전에 해결 가능한 항목. 이번에는 미수정.
+2 | 무엇을 비교하는지 고정 | 원 검출 선분을 통합할지 실제 경계점을 재피팅할지, 입력별 직선 추정 가정을 명시(F06·F11). | 모든 방법에 한 피팅을 덮어씌우기 전에 결정.
+3 | 근거 없는 값의 검증 계획 수립 | Huber scale·trim·수렴값과 각 방법의 창/임계/모델 가정을 분리(F01~F03, F12~F26). | 원문 기본값도 이 데이터의 최적값은 아님. 기본값 재현과 변경 효과를 구분.
+4 | 정한 범위만 다시 측정·평가 | 출력 정의를 고정한 후 후보 비교와 θ 반응 검증의 순서를 결정. | 현재 4장 편차만으로 정확도 합격이나 기울기-θ 관계를 확정하지 않음.
+
+11. 근거 자료와 열람 범위
+================
+
+S01 Gaussian 원논문, III.A–C
+https://annals-csis.org/proceedings/2014/pliks/136.pdf
+이번 점검에서 원문 III.A–C 대조. Gaussian/Nelder–Mead/초기값은 근거 있음. 전체 처리의 동등성이나 우리 설정의 성능 근거는 아님.
+
+S02 Canny–Devernay IPOL·저자 소스
+https://www.ipol.im/pub/art/2017/216/
+논문 소개와 저자 코드 1.0 대조. 전문 PDF는 도구 접근 시간 초과로 미열람. 로컬 공식 ZIP과 실제 c/h가 바이트 단위로 같음.
+
+S03 OpenCV 특징 검출 공식 문서
+https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html
+Canny/Hough/cornerSubPix/goodFeaturesToTrack API의 정의 확인. 온라인 주소는 3.4.20으로 이동하므로 실행 버전 3.4.15의 수치적 동일성을 입증하는 자료로 쓰지 않음.
+
+S04 LSD 1.6 원논문·저자 구현
+https://www.ipol.im/pub/art/2012/gjmr-lsd/article.pdf
+원문의 Gaussian subsampling, 선분과 지지 영역, 영상 크기 영향 및 로컬 소스 scale 분기 확인. 공식 ZIP과 실제 c/h 일치.
+
+S05 Zernike ramp edge 원논문
+https://pmc.ncbi.nlm.nih.gov/articles/PMC8321028/
+식 1, 15, 18–25, 31, 33, 40–42와 구현 대조. 7×7 마스크 자체는 허용되는 형태. 흐림 폭 가정과 수치적분 정확성은 별도 문제.
+
+S06 PAE 구현자 Method.md
+https://github.com/juanse77/EdgeLocator/blob/master/Method.md
+기본 3×5, 2차 열 합 공식, 모서리 A/B 추정 설명 대조. 2013 원논문 전문은 이번에도 직접 확인하지 못함. 원문 재현 인증을 하지 않음.
+
+S07 EDLines 고정 버전 저자 코드
+https://raw.githubusercontent.com/CihanTopal/ED_Lib/69b8d081bd6d28192d816ec0ed02aff9186d73c1/EDLines.cpp
+EDLines 생성자 기본 ED 36/8, 분할·병합·검증 흐름, 병합 시 지지 구간 처리 대조. 논문 전문의 모든 절을 검토한 것은 아님.
+
+S08 OpenCV contrib FLD 원본
+https://raw.githubusercontent.com/opencv/opencv_contrib/3.4/modules/ximgproc/src/fast_line_detector.cpp
+공식 소스와 보관 원본/이식본의 실제 diff 확인. 온라인 3.4는 이동 브랜치이므로 재현 기준은 보관 다운로드와 해시. 출력용 코드 추가와 계산 변경을 구분함.
+
+S09 ELSED 고정 버전 파라미터
+https://raw.githubusercontent.com/iago-suarez/ELSED/1878213b2f5f06a9261d8b1838f53d48e5fd128d/src/ELSED.h
+저자 기본값과 실제 호출 값 대조. 원문 전체의 증명 재검토가 아니라 고정 소스와 추가 코드의 정적 대조.
+
+S10 OpenCV 윤곽·직선 피팅 공식 문서
+https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html
+findContours/approxPolyDP/fitLine의 정의 확인. 3.4.20 문서로 이동. 각 API의 존재는 우리 조합 규칙이 검증됐다는 뜻이 아님.
+
+S11 표준화된 Huber 가중의 공식 예
+https://www.mathworks.com/help/stats/robustfit.html
+1.345와 scale을 함께 쓰는 설명 확인. MATLAB 수직잔차 회귀를 우리 직교 피팅과 같은 알고리즘이라고 주장하지 않음. 95%는 정확도나 포함 확률이 아닌 특정 조건의 통계적 효율.
+
+12. 재현 자료와 원본 보존
+================
+원본 3개 분석 폴더는 baseline_manifest.json 대비 검증. preservation_check.json 참조.

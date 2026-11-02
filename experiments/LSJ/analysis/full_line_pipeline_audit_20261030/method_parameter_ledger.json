@@ -1,0 +1,1547 @@
+[
+  {
+    "method": "E01",
+    "group": "E01/Q01",
+    "kind": "external",
+    "key": "gradient",
+    "value": "sobel_y_ksize3_raw",
+    "status": "설명값",
+    "note": "현재 Sobel-y 구현에 고정. 문자열 변경으로 계산이 바뀌지 않음."
+  },
+  {
+    "method": "E01",
+    "group": "E01/Q01",
+    "kind": "external",
+    "key": "half_window",
+    "value": 5,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "E01",
+    "group": "E01/Q01",
+    "kind": "external",
+    "key": "min_peak",
+    "value": 8.0,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "E01",
+    "group": "E01/Q01",
+    "kind": "external",
+    "key": "nm_max_iter",
+    "value": 800,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "E01",
+    "group": "E01/Q01",
+    "kind": "external",
+    "key": "nm_tol",
+    "value": 1e-10,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "E01",
+    "group": "E01/Q01",
+    "kind": "external",
+    "key": "max_center_shift_px",
+    "value": 2.0,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "E01",
+    "group": "E01/Q01",
+    "kind": "external",
+    "key": "init_sigma",
+    "value": "neighborhood_size",
+    "status": "원문 기반·설명값",
+    "note": "초기 σ=이웃 크기는 원문 근거. 현재 코드에 고정된 초기화이며 설정 문자열로 분기하지 않음."
+  },
+  {
+    "method": "E01",
+    "group": "E01/Q01",
+    "kind": "external",
+    "key": "profile_examples_every",
+    "value": 100,
+    "status": "저장용",
+    "note": "예시·후보 보관량이며 정확도의 합격 기준이 아님."
+  },
+  {
+    "method": "E02",
+    "group": "E02/Q02",
+    "kind": "external",
+    "key": "sigma",
+    "value": 1.0,
+    "status": "자체 적용값·미검증",
+    "note": "저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임."
+  },
+  {
+    "method": "E02",
+    "group": "E02/Q02",
+    "kind": "external",
+    "key": "th_h",
+    "value": 4.0,
+    "status": "자체 적용값·미검증",
+    "note": "저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임."
+  },
+  {
+    "method": "E02",
+    "group": "E02/Q02",
+    "kind": "external",
+    "key": "th_l",
+    "value": 2.0,
+    "status": "자체 적용값·미검증",
+    "note": "저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "blur_sigma",
+    "value": 1.5,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "canny_low",
+    "value": 8.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "canny_high",
+    "value": 16.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "canny_aperture",
+    "value": 3,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "l2gradient",
+    "value": true,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "hough_rho",
+    "value": 1.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "hough_theta_deg",
+    "value": 0.01,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "theta_min_deg",
+    "value": 85.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "theta_max_deg",
+    "value": 95.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "hough_threshold",
+    "value": 150,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "max_candidates_saved",
+    "value": 30,
+    "status": "저장용",
+    "note": "예시·후보 보관량이며 정확도의 합격 기준이 아님."
+  },
+  {
+    "method": "E03",
+    "group": "E03/Q03",
+    "kind": "external",
+    "key": "refit_dist_px",
+    "value": 1.5,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "E04",
+    "group": "E04/Q04",
+    "kind": "external",
+    "key": "scale",
+    "value": 1.0,
+    "status": "요구사항에 따른 변경",
+    "note": "0.8→1.0. 원본 해상도 요구를 따른 선택이며 기본 Gaussian subsampling은 생략됨."
+  },
+  {
+    "method": "E04",
+    "group": "E04/Q04",
+    "kind": "external",
+    "key": "sigma_scale",
+    "value": 0.6,
+    "status": "현재 비활성",
+    "note": "scale=1인 현재 분기에서는 적용되지 않음."
+  },
+  {
+    "method": "E04",
+    "group": "E04/Q04",
+    "kind": "external",
+    "key": "quant",
+    "value": 2.0,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "E04",
+    "group": "E04/Q04",
+    "kind": "external",
+    "key": "ang_th",
+    "value": 22.5,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "E04",
+    "group": "E04/Q04",
+    "kind": "external",
+    "key": "log_eps",
+    "value": 0.0,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "E04",
+    "group": "E04/Q04",
+    "kind": "external",
+    "key": "density_th",
+    "value": 0.7,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "E04",
+    "group": "E04/Q04",
+    "kind": "external",
+    "key": "n_bins",
+    "value": 1024,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "E05",
+    "group": "E05/Q05",
+    "kind": "external",
+    "key": "coarse_blur_sigma",
+    "value": 1.0,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "E05",
+    "group": "E05/Q05",
+    "kind": "external",
+    "key": "min_coarse_grad",
+    "value": 0.5,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "E05",
+    "group": "E05/Q05",
+    "kind": "external",
+    "key": "Np",
+    "value": 7,
+    "status": "원문 허용 형태·선택값",
+    "note": "7×7 적분 마스크는 원문과 양립. 현재 영상의 최적 창이라는 검증은 없음."
+  },
+  {
+    "method": "E05",
+    "group": "E05/Q05",
+    "kind": "external",
+    "key": "k_edge",
+    "value": 1.8,
+    "status": "원문 근사 상수",
+    "note": "Gaussian 흐림과 ramp 폭의 근사 대응 1.8. 원문 조건에 의존함."
+  },
+  {
+    "method": "E05",
+    "group": "E05/Q05",
+    "kind": "external",
+    "key": "blur_sigma_px",
+    "value": 1.5,
+    "status": "물리량 가정·미검증",
+    "note": "광학 흐림 측정값이 아님. coarse_blur_sigma와 다른 양임."
+  },
+  {
+    "method": "E05",
+    "group": "E05/Q05",
+    "kind": "external",
+    "key": "supersample",
+    "value": 64,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "E05",
+    "group": "E05/Q05",
+    "kind": "external",
+    "key": "max_shift_px",
+    "value": 1.5,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "E05",
+    "group": "E05/Q05",
+    "kind": "external",
+    "key": "max_orientation_dev_deg",
+    "value": 30.0,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "E05",
+    "group": "E05/Q05",
+    "kind": "external",
+    "key": "window_examples_every",
+    "value": 200,
+    "status": "저장용",
+    "note": "예시·후보 보관량이며 정확도의 합격 기준이 아님."
+  },
+  {
+    "method": "E06",
+    "group": "E06/Q06",
+    "kind": "external",
+    "key": "half_height",
+    "value": 4,
+    "status": "변형 설정·미검증",
+    "note": "3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분."
+  },
+  {
+    "method": "E06",
+    "group": "E06/Q06",
+    "kind": "external",
+    "key": "min_grad",
+    "value": 1.0,
+    "status": "변형 설정·미검증",
+    "note": "3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분."
+  },
+  {
+    "method": "E06",
+    "group": "E06/Q06",
+    "kind": "external",
+    "key": "min_contrast",
+    "value": 3.0,
+    "status": "변형 설정·미검증",
+    "note": "3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분."
+  },
+  {
+    "method": "E06",
+    "group": "E06/Q06",
+    "kind": "external",
+    "key": "max_abs_a_px",
+    "value": 1.5,
+    "status": "변형 설정·미검증",
+    "note": "3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "ed_operator",
+    "value": "SOBEL",
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "ed_grad_thresh",
+    "value": 12,
+    "status": "저자 기본값 변경",
+    "note": "약한 구조물 경계 때문에 36/8에서 12/2로 낮춤. 이유는 있으나 비교 검증 없음."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "ed_anchor_thresh",
+    "value": 2,
+    "status": "저자 기본값 변경",
+    "note": "약한 구조물 경계 때문에 36/8에서 12/2로 낮춤. 이유는 있으나 비교 검증 없음."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "ed_scan_interval",
+    "value": 1,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "ed_min_path_len",
+    "value": 10,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "ed_sigma",
+    "value": 1.0,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "ed_sum_flag",
+    "value": true,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "line_error",
+    "value": 1.0,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "min_line_len",
+    "value": -1,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "max_distance_between_two_lines",
+    "value": 6.0,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "E07",
+    "group": "E07/Q07",
+    "kind": "external",
+    "key": "max_error",
+    "value": 1.3,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "E08",
+    "group": "E08/Q08",
+    "kind": "external",
+    "key": "length_threshold",
+    "value": 10,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "E08",
+    "group": "E08/Q08",
+    "kind": "external",
+    "key": "distance_threshold",
+    "value": 1.41421356,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "E08",
+    "group": "E08/Q08",
+    "kind": "external",
+    "key": "canny_th1",
+    "value": 10.0,
+    "status": "저자 기본값 변경",
+    "note": "50/50에서 10/20으로 낮춤. 약한 경계 대응 의도이며 적정값은 미검증."
+  },
+  {
+    "method": "E08",
+    "group": "E08/Q08",
+    "kind": "external",
+    "key": "canny_th2",
+    "value": 20.0,
+    "status": "저자 기본값 변경",
+    "note": "50/50에서 10/20으로 낮춤. 약한 경계 대응 의도이며 적정값은 미검증."
+  },
+  {
+    "method": "E08",
+    "group": "E08/Q08",
+    "kind": "external",
+    "key": "canny_aperture_size",
+    "value": 3,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "E08",
+    "group": "E08/Q08",
+    "kind": "external",
+    "key": "do_merge",
+    "value": false,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "ksize",
+    "value": 5,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "sigma",
+    "value": 1.0,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "gradientThreshold",
+    "value": 10.0,
+    "status": "저자 기본값 변경",
+    "note": "30/8에서 10/4로 변경. 약한 경계 대응 의도이며 적정값은 미검증."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "anchorThreshold",
+    "value": 4,
+    "status": "저자 기본값 변경",
+    "note": "30/8에서 10/4로 변경. 약한 경계 대응 의도이며 적정값은 미검증."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "scanIntervals",
+    "value": 2,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "minLineLen",
+    "value": 15,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "lineFitErrThreshold",
+    "value": 0.2,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "pxToSegmentDistTh",
+    "value": 1.5,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "junctionEigenvalsTh",
+    "value": 10.0,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "junctionAngleTh_deg",
+    "value": 10.0,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "validationTh",
+    "value": 0.15,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "validate",
+    "value": true,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "E09",
+    "group": "E09/Q09",
+    "kind": "external",
+    "key": "treatJunctions",
+    "value": true,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q01",
+    "group": "E01/Q01",
+    "kind": "qr",
+    "key": "gradient",
+    "value": "sobel_y_ksize3_raw",
+    "status": "설명값",
+    "note": "현재 Sobel-y 구현에 고정. 문자열 변경으로 계산이 바뀌지 않음."
+  },
+  {
+    "method": "Q01",
+    "group": "E01/Q01",
+    "kind": "qr",
+    "key": "half_window",
+    "value": 5,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "Q01",
+    "group": "E01/Q01",
+    "kind": "qr",
+    "key": "min_peak",
+    "value": 40.0,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "Q01",
+    "group": "E01/Q01",
+    "kind": "qr",
+    "key": "nm_max_iter",
+    "value": 800,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "Q01",
+    "group": "E01/Q01",
+    "kind": "qr",
+    "key": "nm_tol",
+    "value": 1e-10,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "Q01",
+    "group": "E01/Q01",
+    "kind": "qr",
+    "key": "max_center_shift_px",
+    "value": 2.0,
+    "status": "자체 설정·미검증",
+    "note": "Gaussian 원리와 별개로 창·임계·종료값은 현재 영상에서 적정성이 검증되지 않음."
+  },
+  {
+    "method": "Q01",
+    "group": "E01/Q01",
+    "kind": "qr",
+    "key": "init_sigma",
+    "value": "neighborhood_size",
+    "status": "원문 기반·설명값",
+    "note": "초기 σ=이웃 크기는 원문 근거. 현재 코드에 고정된 초기화이며 설정 문자열로 분기하지 않음."
+  },
+  {
+    "method": "Q01",
+    "group": "E01/Q01",
+    "kind": "qr",
+    "key": "profile_examples_every",
+    "value": 20,
+    "status": "저장용",
+    "note": "예시·후보 보관량이며 정확도의 합격 기준이 아님."
+  },
+  {
+    "method": "Q02",
+    "group": "E02/Q02",
+    "kind": "qr",
+    "key": "sigma",
+    "value": 1.0,
+    "status": "자체 적용값·미검증",
+    "note": "저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임."
+  },
+  {
+    "method": "Q02",
+    "group": "E02/Q02",
+    "kind": "qr",
+    "key": "th_h",
+    "value": 30.0,
+    "status": "자체 적용값·미검증",
+    "note": "저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임."
+  },
+  {
+    "method": "Q02",
+    "group": "E02/Q02",
+    "kind": "qr",
+    "key": "th_l",
+    "value": 15.0,
+    "status": "자체 적용값·미검증",
+    "note": "저자 검출기는 그대로이나 평활 폭과 두 임계의 현재 값은 별도 선택임."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "blur_sigma",
+    "value": 1.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "canny_low",
+    "value": 40.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "canny_high",
+    "value": 100.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "canny_aperture",
+    "value": 3,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "l2gradient",
+    "value": true,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "hough_rho",
+    "value": 1.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "hough_theta_deg",
+    "value": 0.01,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "theta_min_deg",
+    "value": 80.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "theta_max_deg",
+    "value": 100.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "hough_threshold",
+    "value": 40,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "max_candidates_saved",
+    "value": 30,
+    "status": "저장용",
+    "note": "예시·후보 보관량이며 정확도의 합격 기준이 아님."
+  },
+  {
+    "method": "Q03",
+    "group": "E03/Q03",
+    "kind": "qr",
+    "key": "refit_dist_px",
+    "value": 1.0,
+    "status": "자체 적용값·미검증",
+    "note": "표준 API의 파라미터. 검색 격자·득표·거리 등의 선택이 정확도를 입증하지 않음."
+  },
+  {
+    "method": "Q04",
+    "group": "E04/Q04",
+    "kind": "qr",
+    "key": "scale",
+    "value": 1.0,
+    "status": "요구사항에 따른 변경",
+    "note": "0.8→1.0. 원본 해상도 요구를 따른 선택이며 기본 Gaussian subsampling은 생략됨."
+  },
+  {
+    "method": "Q04",
+    "group": "E04/Q04",
+    "kind": "qr",
+    "key": "sigma_scale",
+    "value": 0.6,
+    "status": "현재 비활성",
+    "note": "scale=1인 현재 분기에서는 적용되지 않음."
+  },
+  {
+    "method": "Q04",
+    "group": "E04/Q04",
+    "kind": "qr",
+    "key": "quant",
+    "value": 2.0,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "Q04",
+    "group": "E04/Q04",
+    "kind": "qr",
+    "key": "ang_th",
+    "value": 22.5,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "Q04",
+    "group": "E04/Q04",
+    "kind": "qr",
+    "key": "log_eps",
+    "value": 0.0,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "Q04",
+    "group": "E04/Q04",
+    "kind": "qr",
+    "key": "density_th",
+    "value": 0.7,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "Q04",
+    "group": "E04/Q04",
+    "kind": "qr",
+    "key": "n_bins",
+    "value": 1024,
+    "status": "저자 기본값",
+    "note": "출처는 확인됨. 이 데이터에서의 적정성까지 검증된 것은 아님."
+  },
+  {
+    "method": "Q05",
+    "group": "E05/Q05",
+    "kind": "qr",
+    "key": "coarse_blur_sigma",
+    "value": 1.0,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "Q05",
+    "group": "E05/Q05",
+    "kind": "qr",
+    "key": "min_coarse_grad",
+    "value": 5.0,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "Q05",
+    "group": "E05/Q05",
+    "kind": "qr",
+    "key": "Np",
+    "value": 7,
+    "status": "원문 허용 형태·선택값",
+    "note": "7×7 적분 마스크는 원문과 양립. 현재 영상의 최적 창이라는 검증은 없음."
+  },
+  {
+    "method": "Q05",
+    "group": "E05/Q05",
+    "kind": "qr",
+    "key": "k_edge",
+    "value": 1.8,
+    "status": "원문 근사 상수",
+    "note": "Gaussian 흐림과 ramp 폭의 근사 대응 1.8. 원문 조건에 의존함."
+  },
+  {
+    "method": "Q05",
+    "group": "E05/Q05",
+    "kind": "qr",
+    "key": "blur_sigma_px",
+    "value": 1.0,
+    "status": "물리량 가정·미검증",
+    "note": "광학 흐림 측정값이 아님. coarse_blur_sigma와 다른 양임."
+  },
+  {
+    "method": "Q05",
+    "group": "E05/Q05",
+    "kind": "qr",
+    "key": "supersample",
+    "value": 64,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "Q05",
+    "group": "E05/Q05",
+    "kind": "qr",
+    "key": "max_shift_px",
+    "value": 1.5,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "Q05",
+    "group": "E05/Q05",
+    "kind": "qr",
+    "key": "max_orientation_dev_deg",
+    "value": 30.0,
+    "status": "자체 설정·미검증",
+    "note": "수치적분·거친 검출·채택 조건의 적정성 비교가 없음."
+  },
+  {
+    "method": "Q05",
+    "group": "E05/Q05",
+    "kind": "qr",
+    "key": "window_examples_every",
+    "value": 40,
+    "status": "저장용",
+    "note": "예시·후보 보관량이며 정확도의 합격 기준이 아님."
+  },
+  {
+    "method": "Q06",
+    "group": "E06/Q06",
+    "kind": "qr",
+    "key": "half_height",
+    "value": 4,
+    "status": "변형 설정·미검증",
+    "note": "3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분."
+  },
+  {
+    "method": "Q06",
+    "group": "E06/Q06",
+    "kind": "qr",
+    "key": "min_grad",
+    "value": 10.0,
+    "status": "변형 설정·미검증",
+    "note": "3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분."
+  },
+  {
+    "method": "Q06",
+    "group": "E06/Q06",
+    "kind": "qr",
+    "key": "min_contrast",
+    "value": 30.0,
+    "status": "변형 설정·미검증",
+    "note": "3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분."
+  },
+  {
+    "method": "Q06",
+    "group": "E06/Q06",
+    "kind": "qr",
+    "key": "max_abs_a_px",
+    "value": 1.5,
+    "status": "변형 설정·미검증",
+    "note": "3×9 기본형과 경사·밝기차·중앙 이동 제한. 기본 공식의 근거와 창/임계의 검증은 구분."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "ed_operator",
+    "value": "SOBEL",
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "ed_grad_thresh",
+    "value": 36,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "ed_anchor_thresh",
+    "value": 8,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "ed_scan_interval",
+    "value": 1,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "ed_min_path_len",
+    "value": 10,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "ed_sigma",
+    "value": 1.0,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "ed_sum_flag",
+    "value": true,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "line_error",
+    "value": 1.0,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "min_line_len",
+    "value": -1,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "max_distance_between_two_lines",
+    "value": 6.0,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q07",
+    "group": "E07/Q07",
+    "kind": "qr",
+    "key": "max_error",
+    "value": 1.3,
+    "status": "저자 기본값 대응",
+    "note": "고정 소스의 기본 동작에 대응. 이 영상에서 최선이라는 근거는 아님."
+  },
+  {
+    "method": "Q08",
+    "group": "E08/Q08",
+    "kind": "qr",
+    "key": "length_threshold",
+    "value": 10,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "Q08",
+    "group": "E08/Q08",
+    "kind": "qr",
+    "key": "distance_threshold",
+    "value": 1.41421356,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "Q08",
+    "group": "E08/Q08",
+    "kind": "qr",
+    "key": "canny_th1",
+    "value": 50.0,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "Q08",
+    "group": "E08/Q08",
+    "kind": "qr",
+    "key": "canny_th2",
+    "value": 50.0,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "Q08",
+    "group": "E08/Q08",
+    "kind": "qr",
+    "key": "canny_aperture_size",
+    "value": 3,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "Q08",
+    "group": "E08/Q08",
+    "kind": "qr",
+    "key": "do_merge",
+    "value": false,
+    "status": "공식 기본값 대응",
+    "note": "do_merge=false에서만 저장 지지점과 선분의 순서 대응을 지원. 거리값은 기본 √2의 소수 근사."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "ksize",
+    "value": 5,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "sigma",
+    "value": 1.0,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "gradientThreshold",
+    "value": 30.0,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "anchorThreshold",
+    "value": 8,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "scanIntervals",
+    "value": 2,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "minLineLen",
+    "value": 15,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "lineFitErrThreshold",
+    "value": 0.2,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "pxToSegmentDistTh",
+    "value": 1.5,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "junctionEigenvalsTh",
+    "value": 10.0,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "junctionAngleTh_deg",
+    "value": 10.0,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "validationTh",
+    "value": 0.15,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "validate",
+    "value": true,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q09",
+    "group": "E09/Q09",
+    "kind": "qr",
+    "key": "treatJunctions",
+    "value": true,
+    "status": "저자 기본값 대응",
+    "note": "유효 설정은 소스 기본값까지 포함해야 함. listJunctionSizes는 별도 기록 필요."
+  },
+  {
+    "method": "Q10",
+    "group": "Q10",
+    "kind": "qr",
+    "key": "threshold",
+    "value": "otsu_binary_bright",
+    "status": "설명값",
+    "note": "현재 Otsu/RETR_EXTERNAL 호출에 고정. 문자열 변경이 실행에 반영되지 않음."
+  },
+  {
+    "method": "Q10",
+    "group": "Q10",
+    "kind": "qr",
+    "key": "contour_mode",
+    "value": "RETR_EXTERNAL",
+    "status": "설명값",
+    "note": "현재 Otsu/RETR_EXTERNAL 호출에 고정. 문자열 변경이 실행에 반영되지 않음."
+  },
+  {
+    "method": "Q10",
+    "group": "Q10",
+    "kind": "qr",
+    "key": "approx_eps_frac",
+    "value": 0.02,
+    "status": "자체 설정·미검증",
+    "note": "2% 다각형 근사와 양끝 8% 제외는 프로젝트 선택."
+  },
+  {
+    "method": "Q10",
+    "group": "Q10",
+    "kind": "qr",
+    "key": "corner_trim_frac",
+    "value": 0.08,
+    "status": "자체 설정·미검증",
+    "note": "2% 다각형 근사와 양끝 8% 제외는 프로젝트 선택."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "max_corners",
+    "value": 300,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "quality_level",
+    "value": 0.01,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "min_distance",
+    "value": 4.0,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "block_size",
+    "value": 5,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "use_harris",
+    "value": false,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "quad_offset_px",
+    "value": 4,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "quad_half_px",
+    "value": 2,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "min_quad_contrast",
+    "value": 40.0,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "subpix_half_win",
+    "value": 5,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "subpix_max_iter",
+    "value": 100,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "subpix_eps",
+    "value": 1e-05,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q11",
+    "group": "Q11",
+    "kind": "qr",
+    "key": "max_refine_shift_px",
+    "value": 3.0,
+    "status": "자체 적용값·미검증",
+    "note": "Shi–Tomasi/cornerSubPix의 존재는 현재 코너 선택과 수렴값의 검증이 아님."
+  },
+  {
+    "method": "Q12",
+    "group": "Q12",
+    "kind": "qr",
+    "key": "min_outer_area_px2",
+    "value": 200,
+    "status": "기존 구현 이식·미검증",
+    "note": "이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함."
+  },
+  {
+    "method": "Q12",
+    "group": "Q12",
+    "kind": "qr",
+    "key": "max_outer_area_roi_fraction",
+    "value": 0.2,
+    "status": "기존 구현 이식·미검증",
+    "note": "이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함."
+  },
+  {
+    "method": "Q12",
+    "group": "Q12",
+    "kind": "qr",
+    "key": "white_outer_area_ratio",
+    "value": [
+      0.25,
+      0.85
+    ],
+    "status": "기존 구현 이식·미검증",
+    "note": "이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함."
+  },
+  {
+    "method": "Q12",
+    "group": "Q12",
+    "kind": "qr",
+    "key": "inner_white_area_ratio",
+    "value": [
+      0.1,
+      0.8
+    ],
+    "status": "기존 구현 이식·미검증",
+    "note": "이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함."
+  },
+  {
+    "method": "Q12",
+    "group": "Q12",
+    "kind": "qr",
+    "key": "polygon_epsilon_perimeter_fraction",
+    "value": 0.03,
+    "status": "기존 구현 이식·미검증",
+    "note": "이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함."
+  },
+  {
+    "method": "Q12",
+    "group": "Q12",
+    "kind": "qr",
+    "key": "min_side_length_ratio",
+    "value": 0.65,
+    "status": "기존 구현 이식·미검증",
+    "note": "이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함."
+  },
+  {
+    "method": "Q12",
+    "group": "Q12",
+    "kind": "qr",
+    "key": "subpix_half_window",
+    "value": 3,
+    "status": "기존 구현 이식·미검증",
+    "note": "이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함."
+  },
+  {
+    "method": "Q12",
+    "group": "Q12",
+    "kind": "qr",
+    "key": "subpix_max_iter",
+    "value": 100,
+    "status": "기존 구현 이식·미검증",
+    "note": "이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함."
+  },
+  {
+    "method": "Q12",
+    "group": "Q12",
+    "kind": "qr",
+    "key": "subpix_eps",
+    "value": 1e-05,
+    "status": "기존 구현 이식·미검증",
+    "note": "이전 Python에서 가져온 선택값. 이력은 있지만 정확도 검증을 대신하지 못함."
+  }
+]
