@@ -1,0 +1,98 @@
+{
+  "profile_file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_no_rejection_20261101\\profiles.jsonl",
+  "profile_sha256": "697124f6e25177ea3d6199d78a9c17aef5a4f16496e0d4334cfc98fe829b3c67",
+  "images": [
+    {
+      "id": "R01",
+      "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "shape": [
+        2160,
+        3840
+      ],
+      "checks": [
+        {
+          "target": "upper_structure",
+          "n": 2712,
+          "cached_points_equal_fresh_sobel": true
+        },
+        {
+          "target": "lower_structure",
+          "n": 3052,
+          "cached_points_equal_fresh_sobel": true
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "shape": [
+        2160,
+        3840
+      ],
+      "checks": [
+        {
+          "target": "upper_structure",
+          "n": 2712,
+          "cached_points_equal_fresh_sobel": true
+        },
+        {
+          "target": "lower_structure",
+          "n": 3052,
+          "cached_points_equal_fresh_sobel": true
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "shape": [
+        2160,
+        3840
+      ],
+      "checks": [
+        {
+          "target": "upper_structure",
+          "n": 2712,
+          "cached_points_equal_fresh_sobel": true
+        },
+        {
+          "target": "lower_structure",
+          "n": 3052,
+          "cached_points_equal_fresh_sobel": true
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "shape": [
+        2160,
+        3840
+      ],
+      "checks": [
+        {
+          "target": "upper_structure",
+          "n": 2712,
+          "cached_points_equal_fresh_sobel": true
+        },
+        {
+          "target": "lower_structure",
+          "n": 3052,
+          "cached_points_equal_fresh_sobel": true
+        }
+      ]
+    }
+  ],
+  "scope": "4 original reference images; 8 complete upper/lower point sets; every saved integer Sobel point, no Gaussian or rejection",
+  "upstream_source_sha256": "5242829f08449edd6d6819ee3e0ef6fe3298e8480a9ef0feb2e4f96e759a0c32",
+  "numerical_settings": "Original defaults unchanged. Counterexample datasets and diagnostic variants are tests only.",
+  "execution": "Original C++ core unchanged, genuine Armadillo header math; R list I/O replaced by JSON adapter. R package runtime not executed.",
+  "opencv_version": "5.0.0",
+  "runtime_seconds": 0.08566269997390918,
+  "job_count": 42,
+  "source_unchanged": true
+}

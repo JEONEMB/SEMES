@@ -1,0 +1,47 @@
+--- upstream
++++ diagnostic_patch
+@@ -81,7 +81,7 @@
+     double alpha = 1.0;
+     double cross = muDiff * derDiff;
+     if (cross > 0) {
+-      double a1 = cross / derDiff * derDiff;
++      double a1 = cross / (derDiff * derDiff);
+       double a2 = muDiff * muDiff / cross;
+       alpha = std::min(std::min(a1, a2), 100.0);
+     }
+@@ -118,7 +118,7 @@
+     double alpha = 1.0;
+     double cross = muDiff * derDiff;
+     if (cross > 0) {
+-      double a1 = cross / derDiff * derDiff;
++      double a1 = cross / (derDiff * derDiff);
+       double a2 = muDiff * muDiff / cross;
+       alpha = std::min(std::min(a1, a2), 100.0);
+     }
+@@ -457,7 +457,7 @@
+     beta = betaNew;
+     //int sparse = sparsity(beta);
+     arma::vec res = Y - Z * beta;
+-    arma::vec resSq = arma::square(Y);
++    arma::vec resSq = arma::square(res);
+     tau = std::sqrt((long double)rootf1(resSq, n, rhs, arma::min(resSq), arma::accu(resSq)));
+   }
+   return betaNew;
+@@ -490,7 +490,7 @@
+     }
+     beta = betaNew;
+     arma::vec res = Y - Z * beta;
+-    arma::vec resSq = arma::square(Y);
++    arma::vec resSq = arma::square(res);
+     tau = std::sqrt((long double)rootf1(resSq, n, rhs, arma::min(resSq), arma::accu(resSq)));
+   }
+   betaNew.rows(1, p) %= sx1;
+@@ -544,7 +544,7 @@
+     }
+     beta = betaNew;
+     arma::vec res = Y - Z * beta;
+-    arma::vec resSq = arma::square(Y);
++    arma::vec resSq = arma::square(res);
+     tau = std::sqrt((long double)rootf1(resSq, n, rhs, arma::min(resSq), arma::accu(resSq)));
+   }
+   betaNew.rows(1, p) %= sx1;

@@ -1,0 +1,132 @@
+[
+  {
+    "function": "sgn",
+    "review": "source read",
+    "execution": "selected adaptive path"
+  },
+  {
+    "function": "f1",
+    "review": "source read",
+    "execution": "selected adaptive path"
+  },
+  {
+    "function": "rootf1",
+    "review": "source read",
+    "execution": "selected adaptive path"
+  },
+  {
+    "function": "huberDer",
+    "review": "source read",
+    "execution": "selected adaptive path"
+  },
+  {
+    "function": "huberMean",
+    "review": "source read",
+    "execution": "selected adaptive path"
+  },
+  {
+    "function": "huberMeanList",
+    "review": "source read",
+    "execution": "diagnostic execution"
+  },
+  {
+    "function": "huberMeanVec",
+    "review": "source read",
+    "execution": "static review only"
+  },
+  {
+    "function": "hMeanCov",
+    "review": "source read",
+    "execution": "diagnostic execution"
+  },
+  {
+    "function": "huberCov",
+    "review": "source read",
+    "execution": "diagnostic execution"
+  },
+  {
+    "function": "mad",
+    "review": "source read",
+    "execution": "selected adaptive path"
+  },
+  {
+    "function": "standardize",
+    "review": "source read",
+    "execution": "selected adaptive path"
+  },
+  {
+    "function": "updateHuber",
+    "review": "source read",
+    "execution": "selected adaptive path"
+  },
+  {
+    "function": "adaHuberReg",
+    "review": "source read",
+    "execution": "selected adaptive path"
+  },
+  {
+    "function": "huberReg",
+    "review": "source read",
+    "execution": "diagnostic execution"
+  },
+  {
+    "function": "softThresh",
+    "review": "source read",
+    "execution": "diagnostic execution"
+  },
+  {
+    "function": "cmptLambdaLasso",
+    "review": "source read",
+    "execution": "diagnostic execution"
+  },
+  {
+    "function": "lossHuber",
+    "review": "source read",
+    "execution": "static review only"
+  },
+  {
+    "function": "updateHuberHd",
+    "review": "source read",
+    "execution": "diagnostic execution"
+  },
+  {
+    "function": "lamm",
+    "review": "source read",
+    "execution": "diagnostic execution"
+  },
+  {
+    "function": "huberLasso",
+    "review": "source read",
+    "execution": "static review only"
+  },
+  {
+    "function": "huberLassoList",
+    "review": "source read",
+    "execution": "static review only"
+  },
+  {
+    "function": "sparsity",
+    "review": "source read",
+    "execution": "static review only"
+  },
+  {
+    "function": "adaHuberLasso",
+    "review": "source read",
+    "execution": "static review only"
+  },
+  {
+    "function": "adaHuberLassoList",
+    "review": "source read",
+    "execution": "diagnostic execution"
+  },
+  {
+    "function": "lossL2",
+    "review": "source read",
+    "execution": "static review only"
+  },
+  {
+    "function": "cvAdaHuberLasso",
+    "review": "source read",
+    "execution": "static review only"
+  }
+]

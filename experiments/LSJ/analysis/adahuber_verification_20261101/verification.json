@@ -1,0 +1,90 @@
+{
+  "job_count": 42,
+  "category_counts": {
+    "real": 8,
+    "synthetic": 5,
+    "invalid_input": 3,
+    "invariance": 4,
+    "termination": 2,
+    "counterexample": 16,
+    "off_path": 4
+  },
+  "all_observation_results_equal_original": true,
+  "real_fits_finite": true,
+  "real_regression_stages_converged": 8,
+  "real_intercept_stages_converged": 8,
+  "real_points_total": 23056,
+  "real_downweighted_points": 0,
+  "max_real_difference_from_ols_px": 2.3578750550506955e-06,
+  "file_checks": [
+    {
+      "file": "sources\\adaHuber\\src\\adaHuber.cpp",
+      "sha256": "5242829f08449edd6d6819ee3e0ef6fe3298e8480a9ef0feb2e4f96e759a0c32",
+      "matches_download": true
+    },
+    {
+      "file": "sources\\adaHuber\\R\\adaHuber.R",
+      "sha256": "ccbe1d8db0dfe245ad7796f405f35a0829259b8d35ea643575e0ff0dc57530f0",
+      "matches_download": true
+    },
+    {
+      "file": "sources\\adaHuber\\R\\RcppExports.R",
+      "sha256": "f38ecea5254ebb010dac325f9eb0064bd69e0c2c3ac799192da068ca8357e88e",
+      "matches_download": true
+    },
+    {
+      "file": "sources\\adaHuber\\src\\RcppExports.cpp",
+      "sha256": "66134bfd73a2977fdeeda6a2321d88cd1f24d75081c6ba7f7fd67b5f37a53b37",
+      "matches_download": true
+    },
+    {
+      "file": "sources\\adaHuber\\DESCRIPTION",
+      "sha256": "5866364e7bca6a9519f920660652360e6a9b79d5441e4c684d91a765b29ae5fa",
+      "matches_download": true
+    },
+    {
+      "file": "sources\\adaHuber\\NAMESPACE",
+      "sha256": "29e388237be011071161f067f4463fcaced3ae3b6984bd343e83b16ca4ceb49a",
+      "matches_download": true
+    },
+    {
+      "file": "sources\\adaHuber\\README.md",
+      "sha256": "2b6a197f729de4ae29fc52288767f27e9e882c9527ee26f37c9782146cd63347",
+      "matches_download": true
+    },
+    {
+      "file": "sources\\sun2020_preprint.pdf",
+      "sha256": "e73628d72e2306bec13e95b3f5f596784178996b65d47454567cd75568f8fa75",
+      "matches_download": true
+    },
+    {
+      "file": "sources\\rcpparmadillo_source.tar.gz",
+      "sha256": "7b134a87d6e4994d1823a5de107d62ce8d45613eb436315aa54c6be0521348c9",
+      "matches_download": true
+    },
+    {
+      "file": "sources\\wang2021_final.pdf",
+      "url": "https://www3.stat.sinica.edu.tw/statistica/oldpdf/A31n422.pdf",
+      "sha256": "95708b9569de3d74dff7a4057780f4704f89700d5e9bff0cb4c1483e349d7d32",
+      "pdf_header_valid": true
+    },
+    {
+      "file": "sources\\wang2021_accepted.pdf",
+      "url": "https://www3.stat.sinica.edu.tw/ss_newpaper/SS-2019-0045_na.pdf",
+      "sha256": "f9ba3c3ffa1d63b3fd707937b953a5d0fc67131b467068f777cbf6c5376c885a",
+      "pdf_header_valid": true
+    },
+    {
+      "file": "sources\\wang2021_supplement.pdf",
+      "url": "https://www3.stat.sinica.edu.tw/preprint/supp/2019-0045_supp.pdf",
+      "sha256": "676c0f328d042bd5f5aebc5d5702be8ad9ba227109039c35a06ddf1a1a40427e",
+      "pdf_header_valid": true
+    }
+  ],
+  "limitations": [
+    "C++ core compiled natively; R runtime/CRAN binary was not executed.",
+    "Independent Armadillo header-only backend; not a bitwise CRAN binary reproduction.",
+    "42 finite test inputs are not a proof of absence of all bugs.",
+    "No new theta/Y correction, hypothesis test, confidence interval, boundary-ground-truth accuracy claim, or production change."
+  ]
+}
