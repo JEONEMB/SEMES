@@ -103,8 +103,8 @@ def main():
         return
     if not args.port:
         parser.error('--port is required')
-    if args.command == 'jog' and not (1 <= args.pulses <= 1600 and 16 <= args.hz <= 3200):
-        parser.error('pulses: 1..1600; hz: 16..3200')
+    if args.command == 'jog' and not (1 <= args.pulses <= 0xffffffff and 16 <= args.hz <= 3200):
+        parser.error('pulses: 1..4294967295 (uint32); hz: 16..3200')
     with serial.Serial(args.port, 115200, timeout=0.05, write_timeout=1) as port:
         link = Link(port)
         seq = random.randrange(256)

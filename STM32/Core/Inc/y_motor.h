@@ -19,7 +19,7 @@
 #endif
 #define Y_MOTOR_MIN_HZ 16U
 #define Y_MOTOR_MAX_HZ 3200U
-#define Y_MOTOR_MAX_PULSES 1600U /* one short commissioning burst */
+#define Y_MOTOR_MAX_PULSES UINT32_MAX /* wire/count representation limit only */
 #define Y_MOTOR_PULSE_US 5U
 #define Y_MOTOR_ENABLE_SETUP_US 2000U
 

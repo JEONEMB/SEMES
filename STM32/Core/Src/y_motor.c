@@ -65,7 +65,7 @@ YMotorResult YMotor_Start(uint8_t dir_high, uint32_t pulses, uint32_t frequency_
     YMotorResult result = Y_MOTOR_OK;
     if (!motor.ready) { result = Y_MOTOR_NOT_READY; }
     else if (motor.state == Y_MOTOR_RUNNING) { result = Y_MOTOR_BUSY; }
-    else if (dir_high > 1U || pulses == 0U || pulses > Y_MOTOR_MAX_PULSES ||
+    else if (dir_high > 1U || pulses == 0U ||
              frequency_hz < Y_MOTOR_MIN_HZ || frequency_hz > Y_MOTOR_MAX_HZ) {
         result = Y_MOTOR_BAD_ARGUMENT;
     } else if (!Y_MOTOR_OUTPUT_ALLOWED) { result = Y_MOTOR_LOCKED; }
