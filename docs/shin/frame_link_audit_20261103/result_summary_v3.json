@@ -1,0 +1,42 @@
+{
+  "selected": "all_robust_Y5",
+  "source_images": 575,
+  "evaluation_images_per_scheme": 555,
+  "label_corrections": 1,
+  "restored_Actual_conflict_images": 3,
+  "hard_removed_images": 0,
+  "repeat_soft_downweighted_images": 4,
+  "changes": {
+    "pose": {
+      "QR_RMSE_before": 0.1024506908515819,
+      "QR_RMSE_after": 0.0896087857013415,
+      "right_RMSE_before": 0.1799989094179117,
+      "right_RMSE_after": 0.1444742873523725
+    },
+    "contiguous": {
+      "QR_RMSE_before": 0.1165245771173294,
+      "QR_RMSE_after": 0.1049205949163248,
+      "right_RMSE_before": 0.2094174434962467,
+      "right_RMSE_after": 0.1649325532349217
+    }
+  },
+  "center3_QR_before_after": [
+    0.4697012858160643,
+    0.0151922543856522
+  ],
+  "center3_right_before_after": [
+    0.6671565947182502,
+    0.1975621178263177
+  ],
+  "new_right_pose_95pct": 0.29849598423623924,
+  "origin_features": [
+    0.1981895334230694,
+    -0.3625532317680693,
+    0.22127633485629572,
+    -0.3630563025809711,
+    0.22960251600355158,
+    -0.37271557050673787
+  ],
+  "gradient_relative_error": 5.282572281406575e-10,
+  "conditioning_note": "Conditional bootstrap excludes anchor/image-frame/model-selection uncertainty. Physical T truth remains unknown."
+}
