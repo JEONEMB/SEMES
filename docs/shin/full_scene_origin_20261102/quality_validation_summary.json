@@ -1,0 +1,23 @@
+{
+  "candidate_features": 154,
+  "pilot_active_features": 75,
+  "features_strict_valid_at_least_90pct": 37,
+  "origin_A_features": 22,
+  "validation_B_features": 17,
+  "A_B_reference_patch_overlaps": 0,
+  "A_B_target_valid_patch_overlaps": 0,
+  "CV_images": 551,
+  "right_RMSE_reduction_vs_quality_baseline_percent": 10.019966453289742,
+  "QR_RMSE_increase_vs_quality_baseline_percent": 22.897820660044708,
+  "paired_pose_bootstrap_mean_RMS_difference_interval_px": [
+    0.016424103826100083,
+    0.02044114770063596
+  ],
+  "zero_reference_holdout_right_RMS_px": [
+    0.3112851463343565,
+    0.2461933615577004,
+    0.667555742179539
+  ],
+  "ordinary_pose_right_RMS_95pct_px": 0.34175214557458855,
+  "conclusion": "Additional features improve independent-field consistency, but zero-reference holdout fails for center3. Common origin remains unvalidated; v1 improvement must not be interpreted as physical-origin accuracy."
+}

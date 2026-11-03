@@ -1,0 +1,9 @@
+path,issue,source,primary_exclude,sensitivity_exclude
+Y+0.05 T+0.32/Y+0.05 T+0.33 (3).bmp,filename_folder_disagreement,session_eda/label_anomalies.csv,1,1
+Y+0.05 T+0.57/Y+0.05 T+0.57 (1).bmp,actual_minus_nominal_origin_disagreement,session_eda/label_anomalies.csv,1,0
+Y+0.05 T+0.57/Y+0.05 T+0.57 (2).bmp,actual_minus_nominal_origin_disagreement,session_eda/label_anomalies.csv,1,0
+Y+0.05 T+0.57/Y+0.05 T+0.57 (3).bmp,actual_minus_nominal_origin_disagreement,session_eda/label_anomalies.csv,1,0
+Y+0.05 T+2.00/Y+0.05 T+2.00 (2).bmp,coherent_repeat_position_mismatch,frame_link_audit/outlier_actions.csv,1,1
+Y+0.10 T+0.10/Y+0.1 T+0.1 (2).bmp,coherent_repeat_position_mismatch,frame_link_audit/outlier_actions.csv,1,1
+Y+0.10 T+2.00/Y+0.1 T+2.0 (2).bmp,coherent_repeat_position_mismatch,frame_link_audit/outlier_actions.csv,1,1
+Y+1.00 T+2.00/Y+1.00 T+2.00 (2).bmp,coherent_repeat_position_mismatch,frame_link_audit/outlier_actions.csv,1,1

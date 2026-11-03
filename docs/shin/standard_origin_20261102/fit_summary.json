@@ -1,0 +1,27 @@
+{
+  "fit_images": 571,
+  "source_images": 575,
+  "suspect_images_not_fit": 4,
+  "origin_features": [
+    0.17141217909344025,
+    -0.3640276911731374,
+    0.19721857144526958,
+    -0.36475786207124,
+    0.20465623046972597,
+    -0.3743724588549622,
+    -0.32151807916842823,
+    0.014847517158540725,
+    -0.18070088778590826,
+    -0.14658877787039787
+  ],
+  "image_translation": [
+    -0.2439850558464317,
+    0.44138630056716643
+  ],
+  "anchor_mean_bias": [
+    0.0,
+    0.0
+  ],
+  "hypothesis": "session label bias is constant; common smooth forward response + day common image translation",
+  "uncertainty_note": "Label bias and image shift remain conditional on this model and regularizers."
+}

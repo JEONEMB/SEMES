@@ -1,0 +1,6 @@
+{
+  "standalone_cli_from_other_cwd_passed": true,
+  "missing_input_rejected": true,
+  "source_image_not_modified": true,
+  "calibration_beside_executable": true
+}

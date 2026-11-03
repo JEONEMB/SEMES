@@ -1,0 +1,27 @@
+full train 567 bound_hits 14
+outer0 train 457 bound_hits 13
+outer0_inner1 train 344 bound_hits 12
+outer0_inner2 train 339 bound_hits 14
+outer0_inner3 train 336 bound_hits 11
+outer0_inner4 train 356 bound_hits 12
+outer1 train 454 bound_hits 14
+outer1_inner0 train 344 bound_hits 12
+outer1_inner2 train 336 bound_hits 14
+outer1_inner3 train 333 bound_hits 12
+outer1_inner4 train 353 bound_hits 14
+outer2 train 449 bound_hits 14
+outer2_inner0 train 339 bound_hits 14
+outer2_inner1 train 336 bound_hits 14
+outer2_inner3 train 328 bound_hits 15
+outer2_inner4 train 348 bound_hits 14
+outer3 train 446 bound_hits 13
+outer3_inner0 train 336 bound_hits 11
+outer3_inner1 train 333 bound_hits 12
+outer3_inner2 train 328 bound_hits 15
+outer3_inner4 train 345 bound_hits 12
+outer4 train 466 bound_hits 14
+outer4_inner0 train 356 bound_hits 12
+outer4_inner1 train 353 bound_hits 14
+outer4_inner2 train 348 bound_hits 14
+outer4_inner3 train 345 bound_hits 12
+Completed26clean_origin_fits

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Solution>
+	<Configurations>
+		<BuildType Name="Debug"/>
+		<BuildType Name="Release"/>
+		<BuildType Name="MinSizeRel"/>
+		<BuildType Name="RelWithDebInfo"/>
+		<Platform Name="x64"/>
+	</Configurations>
+	<Project Path="ALL_BUILD.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="5ba8ce24-e0d0-335f-8042-b17705fa1580" DefaultStartup="true">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+		<BuildDependency Project="v3_calibration_control.vcxproj"/>
+		<BuildDependency Project="v3_estimate.vcxproj"/>
+		<BuildDependency Project="v3_feature_extract.vcxproj"/>
+		<BuildDependency Project="v3_train.vcxproj"/>
+		<Build Solution="Debug|*" Project="false"/>
+		<Build Solution="Release|*" Project="false"/>
+		<Build Solution="MinSizeRel|*" Project="false"/>
+		<Build Solution="RelWithDebInfo|*" Project="false"/>
+	</Project>
+	<Project Path="ZERO_CHECK.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="f7c87099-959b-3548-b736-97ab2ae60032"/>
+	<Project Path="v3_calibration_control.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="1ccbedde-3d4d-3127-b310-da60ead97d71">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="v3_estimate.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="7f051a51-8552-36dd-8515-e195e0fc4b9f">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="v3_feature_extract.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="ae4e5af3-9cfd-3aa5-b9e4-cec50457ba04">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+	<Project Path="v3_train.vcxproj" Type="8bc9ceb8-8b4a-11d0-8d11-00a0c91bc942" Id="74ba3c08-f866-3aee-83ff-811e9d3a5249">
+		<BuildDependency Project="ZERO_CHECK.vcxproj"/>
+	</Project>
+</Solution>
