@@ -1,0 +1,23 @@
+feature_id,family,x_standard_px,y_standard_px,note
+0,body_fastener,1491.9386679119145,1072.0447729959608,candidate origin-construction feature; not an independent verification point
+2,upper_fixture,1631.8796152922193,549.9493791210717,candidate origin-construction feature; not an independent verification point
+6,left_panel,963.8114825640029,1359.7282707431248,candidate origin-construction feature; not an independent verification point
+8,lower_structure,1009.7965842193395,1683.7868114059947,candidate origin-construction feature; not an independent verification point
+10,lower_structure,1633.9002782732907,1779.8190191872666,candidate origin-construction feature; not an independent verification point
+14,body_fastener,1881.9490020259186,1244.1002901817571,candidate origin-construction feature; not an independent verification point
+15,body_fastener,1903.9825356456654,1294.0493220388432,candidate origin-construction feature; not an independent verification point
+16,body_fastener,1953.9875822831038,1258.0553226220607,candidate origin-construction feature; not an independent verification point
+18,body_fastener,1837.9844140088758,1260.0110845566219,candidate origin-construction feature; not an independent verification point
+20,upper_fixture,1903.9074020666296,848.0213860828337,candidate origin-construction feature; not an independent verification point
+21,upper_fixture,1613.915778345214,595.95175851491,candidate origin-construction feature; not an independent verification point
+25,upper_fixture,1439.9117568597685,868.0119219025722,candidate origin-construction feature; not an independent verification point
+27,upper_fixture,1947.9921888996569,357.91620110337567,candidate origin-construction feature; not an independent verification point
+29,body_fastener,1439.8953133411612,1424.0800598440599,candidate origin-construction feature; not an independent verification point
+36,upper_fixture,1859.9723740004545,711.9573509089225,candidate origin-construction feature; not an independent verification point
+38,upper_fixture,1945.9649663060552,525.9182109218812,candidate origin-construction feature; not an independent verification point
+39,upper_fixture,1889.9924402416232,519.9358189966612,candidate origin-construction feature; not an independent verification point
+49,upper_fixture,1627.9066808291338,493.92812352922965,candidate origin-construction feature; not an independent verification point
+53,upper_fixture,1689.9594519925554,833.9700821261259,candidate origin-construction feature; not an independent verification point
+55,upper_fixture,1459.851109371104,401.89592317745945,candidate origin-construction feature; not an independent verification point
+64,body_fastener,1423.906949599628,1470.0667512993405,candidate origin-construction feature; not an independent verification point
+69,lower_structure,1433.8752592089743,1722.05279217896,candidate origin-construction feature; not an independent verification point

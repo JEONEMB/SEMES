@@ -1,0 +1,13 @@
+path,field,file_T,folder_candidate_T,local_sequence_T,n_features,deviation_from_expected_ticks,actual_log_T,interpretation
+Y+0.05 T+0.32/Y+0.05 T+0.33 (3).bmp,QR,0.33,0.32,0.3204269037026744,3,0.042690370267439715,,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.32/Y+0.05 T+0.33 (3).bmp,A_left,0.33,0.32,0.32027235495441503,26,0.027235495441502167,,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.32/Y+0.05 T+0.33 (3).bmp,B_right,0.33,0.32,0.32042673879265954,21,0.04267387926595312,,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.57/Y+0.05 T+0.57 (1).bmp,QR,0.57,0.57,0.5691660133500074,3,-0.08339866499925686,-1.11,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.57/Y+0.05 T+0.57 (1).bmp,A_left,0.57,0.57,0.5691727568354121,23,-0.08272431645878209,-1.11,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.57/Y+0.05 T+0.57 (1).bmp,B_right,0.57,0.57,0.5690661698393826,19,-0.09338301606173216,-1.11,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.57/Y+0.05 T+0.57 (2).bmp,QR,0.57,0.57,0.5707621159019846,3,0.07621159019846058,-1.11,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.57/Y+0.05 T+0.57 (2).bmp,A_left,0.57,0.57,0.5710485907203773,22,0.10485907203773293,-1.11,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.57/Y+0.05 T+0.57 (2).bmp,B_right,0.57,0.57,0.570888443791617,19,0.08884437916170107,-1.11,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.57/Y+0.05 T+0.57 (3).bmp,QR,0.57,0.57,0.5701443414921414,3,0.01443414921414865,-1.11,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.57/Y+0.05 T+0.57 (3).bmp,A_left,0.57,0.57,0.5702271695884014,23,0.02271695884014102,-1.11,"local sequence coordinate, not physical T ground truth"
+Y+0.05 T+0.57/Y+0.05 T+0.57 (3).bmp,B_right,0.57,0.57,0.5699861914105466,19,-0.0013808589453323528,-1.11,"local sequence coordinate, not physical T ground truth"

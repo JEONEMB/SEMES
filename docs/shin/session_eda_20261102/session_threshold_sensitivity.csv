@@ -1,0 +1,10 @@
+gap_threshold_s,all_segments,nonreference_segments
+60,30,27
+90,19,17
+120,14,12
+180,9,7
+300,6,5
+600,4,4
+900,3,3
+1800,2,2
+3600,2,2

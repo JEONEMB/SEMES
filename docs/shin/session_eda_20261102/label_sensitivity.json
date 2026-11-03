@@ -1,0 +1,9 @@
+{
+  "anomaly_images": 4,
+  "filename_folder_mismatches": 1,
+  "sidecar_origin_mismatches": 3,
+  "original_within_pose_sd_ticks": 0.5852841633653714,
+  "folder_audited_within_pose_sd_ticks": 0.5833931964456621,
+  "fixed_prediction_audited_MAE_ticks": 0.5669581548809202,
+  "note": "A corrected calibration model and all folds must be rerun before claiming corrected evaluation performance."
+}
