@@ -29,7 +29,7 @@ cv::Rect rect_around(const cv::Point &center_px, int half_width_px, int half_hei
 }
 
 cv::Rect roi_rect(const RoiSpec &roi) {
-    return rect_around(roi.center_px, roi.half_width_px, roi.half_width_px);
+    return rect_around(roi.center_px, roi.half_width_px, roi.half_height_px > 0 ? roi.half_height_px : roi.half_width_px);
 }
 
 } // namespace ksh

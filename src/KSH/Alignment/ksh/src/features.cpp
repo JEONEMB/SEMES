@@ -10,8 +10,9 @@ RoiShift measure_roi(const cv::Mat &ref32, const cv::Mat &cur32, const RoiSpec &
     m.ref_rect_px = roi_rect(roi);
     cv::Point2d init_px = guess_px;
     if (wide_search) {
-        const int half_px = wide_window_scale * roi.half_width_px;
-        const cv::Rect A = rect_around(roi.center_px, half_px, half_px);
+        const int half_x_px = wide_window_scale * roi.half_width_px;
+        const int half_y_px = wide_window_scale * (roi.half_height_px > 0 ? roi.half_height_px : roi.half_width_px);
+        const cv::Rect A = rect_around(roi.center_px, half_x_px, half_y_px);
         const cv::Rect B = A + round_point(guess_px);
         if (!rect_inside(A, ref32.size()) || !rect_inside(B, cur32.size())) return m;
         init_px = cv::Point2d(round_point(guess_px)) + phase_shift(ref32(A), cur32(B));

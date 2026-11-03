@@ -16,6 +16,7 @@ struct RoiSpec {
     std::string name;
     cv::Point center_px;
     int half_width_px = 0;
+    int half_height_px = 0;   // 세로 반폭. 0 이면 half_width_px 와 같음 (정사각형) — 실험계획 2026-10-30 의 56×60 홀 ROI 용
 };
 
 // 컬러(3·4채널)·회색 영상 → CV_32F 회색

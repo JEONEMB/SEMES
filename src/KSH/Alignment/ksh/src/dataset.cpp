@@ -36,12 +36,21 @@ bool parse_label(const std::string &stem, LabeledPhoto &photo) {
 std::vector<LabeledPhoto> list_labeled_photos(const std::string &dir) {
     std::map<std::string, std::string> files;   // 이름 → 경로 (bmp 우선)
     std::error_code ec;
-    for (const auto &e : fs::directory_iterator(fs::u8path(dir), ec)) {
+    // 하위 폴더까지 찾음 (원본 배치 data/img/1st/Y, 2nd/Y+a T+b/ … 를 그대로 쓸 수 있게)
+    for (const auto &e : fs::recursive_directory_iterator(fs::u8path(dir), ec)) {
         if (!e.is_regular_file()) continue;
         std::string ext = e.path().extension().string();
         std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char ch) { return char(std::tolower(ch)); });
         if (ext != ".bmp" && ext != ".png") continue;
-        const std::string stem = e.path().stem().u8string();
+        std::string stem = e.path().stem().u8string();
+        // 폴더 이름이 라벨(Y+a T+b)인데 파일 라벨과 다르면 폴더를 따름
+        // (3rd 세트 'Y+0.05 T+0.32' 폴더 안의 'Y+0.05 T+0.33 (3)' — 촬영 시각·모터 값으로 T+0.32 (3) 확인)
+        const std::string folder = e.path().parent_path().filename().u8string();
+        LabeledPhoto by_folder, by_file;
+        const size_t k = stem.rfind(" (");
+        if (k != std::string::npos && parse_label(folder + stem.substr(k), by_folder) && parse_label(stem, by_file) &&
+            (std::abs(by_folder.y_mm - by_file.y_mm) > 1e-9 || std::abs(by_folder.t_deg - by_file.t_deg) > 1e-9))
+            stem = folder + stem.substr(k);
         if (!files.count(stem) || ext == ".bmp") files[stem] = e.path().u8string();
     }
     std::vector<LabeledPhoto> out;

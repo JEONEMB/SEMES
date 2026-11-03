@@ -16,6 +16,7 @@ std::vector<RoiSpec> read_rois(const cv::FileNode &n) {
         (*it)["name"] >> r.name;
         r.center_px = cv::Point(int((*it)["cx_px"]), int((*it)["cy_px"]));
         r.half_width_px = int((*it)["hw_px"]);
+        if (!(*it)["hh_px"].empty()) r.half_height_px = int((*it)["hh_px"]);   // 선택 : 직사각형 ROI 세로 반폭
         v.push_back(r);
     }
     return v;
