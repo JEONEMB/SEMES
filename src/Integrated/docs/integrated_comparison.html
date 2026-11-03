@@ -1,0 +1,243 @@
+<title>정렬 분석 비교·통합</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* 레이아웃 : 시험 성적서처럼 한 줄 기둥 — 결론 → 같은 조건 비교 → 차이의 원인 → 장점 → 통합. 두 사람 색 : ksh = 청록, shin = 자주, 혼합 = 회청 */
+:root {
+  --bg: #f3f5f4; --paper: #ffffff; --ink: #1b2124; --ink2: #475057; --muted: #7a8389; --rule: #d7ddda;
+  --ksh: #0f7f74; --shin: #a2457e; --mix: #5b6f8a; --sel-bg: #e6f3f1; --shin-bg: #f7eaf2; --warn: #b4561c;
+  --font-body: "IBM Plex Sans KR", "Noto Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #14181a; --paper: #1c2124; --ink: #e8eced; --ink2: #b7bfc4; --muted: #8a9399; --rule: #323a3e;
+  --ksh: #3fbfae; --shin: #d47bb3; --mix: #93a7c4; --sel-bg: #183330; --shin-bg: #33202c; --warn: #e48b54; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #14181a; --paper: #1c2124; --ink: #e8eced; --ink2: #b7bfc4; --muted: #8a9399; --rule: #323a3e;
+  --ksh: #3fbfae; --shin: #d47bb3; --mix: #93a7c4; --sel-bg: #183330; --shin-bg: #33202c; --warn: #e48b54; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.65; }
+.wrap { max-width: 980px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 64px; display: grid; gap: 34px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+h1 { font-size: 30px; line-height: 1.25; margin: 0; font-weight: 700; text-wrap: balance; }
+h2 { font-size: 21px; margin: 0; font-weight: 700; text-wrap: balance; display: flex; gap: 10px; align-items: baseline; }
+h2 .no { font-family: var(--font-mono); font-size: 14px; color: var(--ksh); font-weight: 500; }
+h3 { font-size: 16px; margin: 4px 0 0; font-weight: 600; }
+p { margin: 0; max-width: 68ch; color: var(--ink2); }
+p strong, li strong, td strong { color: var(--ink); }
+section { display: grid; gap: 14px; min-width: 0; }
+.lead { font-size: 16px; max-width: 72ch; }
+.who { display: inline-block; font-family: var(--font-mono); font-size: 11px; padding: 1px 7px; border-radius: 3px; color: var(--paper); vertical-align: 1px; }
+.who.k { background: var(--ksh); } .who.s { background: var(--shin); } .who.m { background: var(--mix); }
+.verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.vcard { background: var(--paper); border: 1px solid var(--rule); border-top: 3px solid var(--c); border-radius: 6px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.vcard h3 { margin: 0; }
+.vcard .big { font-family: var(--font-mono); font-size: 22px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.vcard ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; color: var(--ink2); }
+.tbl { overflow-x: auto; background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: 12px; background: color-mix(in srgb, var(--paper) 85%, var(--bg)); }
+tr:last-child td { border-bottom: 0; }
+tr.sel td { background: var(--sel-bg); } tr.sel td:first-child { box-shadow: inset 3px 0 0 var(--ksh); }
+tr.shin td:first-child { box-shadow: inset 3px 0 0 var(--shin); }
+code { font-family: var(--font-mono); font-size: 12.5px; background: color-mix(in srgb, var(--rule) 45%, transparent); padding: 1px 5px; border-radius: 3px; }
+.chart { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 12px 6px; min-width: 0; }
+.chart .t { font-size: 13px; font-weight: 600; } .chart .s { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.cv { position: relative; height: 340px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.key { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--ink2); }
+.key span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+ul, ol { margin: 0; padding-left: 20px; color: var(--ink2); max-width: 72ch; display: grid; gap: 6px; }
+.note { font-size: 13px; color: var(--muted); max-width: 72ch; }
+pre.mermaid { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 14px; overflow-x: auto; margin: 0; }
+a { color: var(--ksh); }
+@media (max-width: 520px) { h1 { font-size: 24px; } .cv { height: 300px; } th, td { padding: 7px 9px; } }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">SEMES × SSAFY · Y·Θ 정렬 · feat/KSH/assemble · 2026-11-01</div>
+  <h1>두 분석 비교와 통합 — 김성현(ksh) · 신윤석(shin)</h1>
+  <p class="lead">git 의 <code>feat/KSH/assemble</code> 에 합쳐진 두 분석을 <strong>같은 사진, 같은 평가 규칙</strong>으로 다시 돌려 비교했다. 정확도는 ksh 가 앞서고, 판·QR 을 찾아 확인하는 능력과 검증 방식은 shin 이 앞선다. 그래서 추정은 ksh, 검증은 shin 이 맡는 통합 프로젝트 <code>src/Integrated</code> 를 만들었다.</p>
+</header>
+
+<section>
+  <h2><span class="no">결론</span>어느 쪽이 우월한가</h2>
+  <div class="verdict">
+    <div class="vcard" style="--c: var(--ksh)">
+      <h3><span class="who k">ksh</span> Y·Θ 추정 정확도</h3>
+      <div class="big">Y RMS 13.1 µm · 틱 57/57</div>
+      <ul>
+        <li>shin 이 쓴 평가 규칙(2차 좌표 보류) 그대로에서 shin 최고 모델은 67.2 µm · 35/57</li>
+        <li>다른 날 사진(1차 학습 → 3rd): 허용 안 229/234, shin QR6 역회귀 19/234</li>
+        <li>사진당 약 35 ms (shin 검출 경로 약 706 ms)</li>
+      </ul>
+    </div>
+    <div class="vcard" style="--c: var(--shin)">
+      <h3><span class="who s">shin</span> 판·QR 확인과 검증 체계</h3>
+      <div class="big">판·QR 해독 571/575 장</div>
+      <ul>
+        <li>판 검출 → QR payload 해독 → 모듈 재생성 일치 : "같은 판, 같은 주소" 를 확인 (ksh 는 못 함)</li>
+        <li>Fourier 코너 : IC-GN 과 독립인 두 번째 측정. 두 값 차 표준편차 0.008 px</li>
+        <li>QR(판)만으로는 Y·Θ 구별이 안 된다는 식별성 분석 (조건수 799) — ksh 가 배경 시차를 쓰는 이유를 뒷받침</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">"우월" 은 이 데이터(1차 280장, 2차 57장, 3rd 234장)와 두 평가 규칙에서의 결과다. shin 의 가장자리 모델 수치는 shin 이 저장한 예측값(같은 57장)을 그대로 채점했다.</p>
+</section>
+
+<section>
+  <h2><span class="no">1</span>비교 방법</h2>
+  <div class="tbl"><table>
+    <tr><th>규칙</th><th>학습</th><th>평가</th><th>의미</th></tr>
+    <tr class=""><td>P1 교차 세션 (ksh 규칙)</td><td>1차(10/04) 단독축 240장</td><td>2차 목표 근처 33 · 학습 범위 안 45 · 3rd 234 (10/15)</td><td>다른 날, 섞인 움직임에 일반화되는가</td></tr>
+    <tr class=""><td>P2 2차 좌표 보류 (shin 규칙)</td><td>2차 19좌표 중 18좌표 (54장)</td><td>남은 1좌표 3장, 19번 돌려 57장</td><td>shin 보고서와 같은 조건</td></tr>
+  </table></div>
+  <ul>
+    <li><strong>측정</strong> : ksh = IC-GN(QR 3 + 홀 W2·W3 56×60 px, 띠 6). shin = 저장소 <code>src/*.cpp</code> 를 그대로 빌드해 575장에서 판·QR·Fourier 코너를 다시 뽑음 (Linux, OpenCV 4.6).</li>
+    <li><strong>모델</strong> : ksh 물리식 = s, d = c + aY + bΘ 를 역변환 (계수 6). 역회귀 = [Y, Θ] = W·특징 + b (shin 방식).</li>
+    <li><strong>채점</strong> : 프로젝트 허용(±45 µm·±0.005°), 과제 허용(±90 µm·±0.01°), shin 의 틱(±0.05 mm·±0.01° 동시), RMS, J.</li>
+    <li>섞어 본 조합(ksh 물리식 + shin 코너, QR6 + 홀, QR6 + 띠 dy)으로 <strong>차이가 어디서 나는지</strong>를 나눴다.</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="no">2</span>같은 57장, shin 규칙 (P2)</h2>
+  <div class="chart"><div class="t">Y RMS (µm, 로그 눈금)</div><div class="s">2차 57장 좌표 보류 · 막대에 마우스를 올리면 Θ RMS 와 틱 통과 수</div><div class="cv"><canvas id="c_p2" role="img" aria-label="P2 모델별 Y RMS"></canvas></div></div>
+  <div class="key"><span style="--c: var(--ksh)">ksh</span><span style="--c: var(--shin)">shin</span><span style="--c: var(--mix)">섞은 조합</span></div>
+  <div class="tbl"><table><tr><th>모델</th><th>장</th><th>허용 안 ±45 µm·±0.005°</th><th>과제 허용 ±90 µm·±0.01°</th><th>틱 ±0.05 mm·±0.01°</th><th>Y RMS (µm)</th><th>Θ RMS (°)</th><th>J</th></tr><tr class="sel"><td>ksh 물리식 (QR + 홀 시차)</td><td>57</td><td>56</td><td>57</td><td>57</td><td>13.1</td><td>0.0022</td><td>0.530</td></tr><tr class=""><td>ksh 물리식 + shin 코너 QR</td><td>57</td><td>57</td><td>57</td><td>57</td><td>13.1</td><td>0.0022</td><td>0.534</td></tr><tr class=""><td>QR6 + 홀 역회귀</td><td>57</td><td>56</td><td>57</td><td>57</td><td>13.6</td><td>0.0023</td><td>0.550</td></tr><tr class="shin"><td>shin 최고 : QR6 + 배경 가장자리 8</td><td>57</td><td>26</td><td>39</td><td>35</td><td>67.2</td><td>0.0123</td><td>2.874</td></tr><tr class="shin"><td>shin : QR6 + 배경 가장자리 4</td><td>57</td><td>17</td><td>31</td><td>30</td><td>75.2</td><td>0.0140</td><td>3.264</td></tr><tr class="shin"><td>shin : QR6 + 판 가장자리(가로) 4</td><td>57</td><td>19</td><td>30</td><td>29</td><td>81.3</td><td>0.0151</td><td>3.511</td></tr><tr class="shin"><td>shin : 판 가장자리 8</td><td>57</td><td>16</td><td>30</td><td>27</td><td>96.5</td><td>0.0178</td><td>4.158</td></tr><tr class=""><td>QR6 역회귀 (IC-GN 측정)</td><td>57</td><td>10</td><td>27</td><td>24</td><td>104.4</td><td>0.0188</td><td>4.418</td></tr><tr class="shin"><td>shin : QR6 역회귀 (L630 코너)</td><td>57</td><td>5</td><td>18</td><td>17</td><td>147.7</td><td>0.0262</td><td>6.182</td></tr></table></div>
+</section>
+
+<section>
+  <h2><span class="no">3</span>다른 날 사진, ksh 규칙 (P1)</h2>
+  <div class="chart"><div class="t">3rd 234장 허용 안 (±45 µm · ±0.005°)</div><div class="s">1차(10/04) 단독축 240장으로만 학습 · 기준 center1</div><div class="cv"><canvas id="c_p1" role="img" aria-label="P1 모델별 3rd 허용 안 장수"></canvas></div></div>
+  <div class="tbl"><table><tr><th>모델</th><th>장</th><th>허용 안 ±45 µm·±0.005°</th><th>과제 허용 ±90 µm·±0.01°</th><th>틱 ±0.05 mm·±0.01°</th><th>Y RMS (µm)</th><th>Θ RMS (°)</th><th>J</th></tr><tr class="sel"><td>ksh 물리식</td><td>234</td><td>229</td><td>234</td><td>234</td><td>10.8</td><td>0.0025</td><td>0.552</td></tr><tr class=""><td>ksh 물리식 + shin 코너 QR</td><td>234</td><td>226</td><td>230</td><td>229</td><td>11.6</td><td>0.0025</td><td>18.498</td></tr><tr class=""><td>QR6 + 홀 역회귀</td><td>234</td><td>142</td><td>233</td><td>233</td><td>13.5</td><td>0.0047</td><td>0.993</td></tr><tr class=""><td>QR6 + 띠 dy 역회귀</td><td>234</td><td>33</td><td>162</td><td>162</td><td>12.1</td><td>0.0088</td><td>1.787</td></tr><tr class=""><td>QR6 역회귀 (IC-GN)</td><td>234</td><td>51</td><td>105</td><td>80</td><td>104.8</td><td>0.0174</td><td>4.191</td></tr><tr class="shin"><td>shin QR6 역회귀 (Fourier 코너)</td><td>234</td><td>19</td><td>44</td><td>35</td><td>242.1</td><td>0.0406</td><td>20.857</td></tr></table></div>
+  <h3>2차 목표 근처 33장</h3>
+  <div class="tbl"><table><tr><th>모델</th><th>장</th><th>허용 안 ±45 µm·±0.005°</th><th>과제 허용 ±90 µm·±0.01°</th><th>틱 ±0.05 mm·±0.01°</th><th>Y RMS (µm)</th><th>Θ RMS (°)</th><th>J</th></tr><tr class="sel"><td>ksh 물리식</td><td>33</td><td>33</td><td>33</td><td>33</td><td>10.7</td><td>0.0020</td><td>0.468</td></tr><tr class=""><td>ksh 물리식 + shin 코너 QR</td><td>33</td><td>33</td><td>33</td><td>33</td><td>11.3</td><td>0.0021</td><td>0.482</td></tr><tr class=""><td>QR6 + 홀 역회귀</td><td>33</td><td>29</td><td>33</td><td>33</td><td>12.9</td><td>0.0036</td><td>0.777</td></tr><tr class=""><td>QR6 + 띠 dy 역회귀</td><td>33</td><td>7</td><td>26</td><td>26</td><td>48.3</td><td>0.0116</td><td>2.549</td></tr><tr class=""><td>QR6 역회귀 (IC-GN)</td><td>33</td><td>3</td><td>10</td><td>4</td><td>127.3</td><td>0.0200</td><td>4.895</td></tr><tr class="shin"><td>shin QR6 역회귀 (Fourier 코너)</td><td>33</td><td>1</td><td>3</td><td>1</td><td>306.2</td><td>0.0511</td><td>12.287</td></tr></table></div>
+  <p class="note">"ksh 물리식 + shin 코너 QR" 의 3rd J 가 큰 것은 판 검출이 안 된 4장이 실패(J 상한)로 들어갔기 때문이다. 나머지 230장의 정확도는 ksh 단독과 같다.</p>
+</section>
+
+<section>
+  <h2><span class="no">4</span>차이가 나는 곳</h2>
+  <div class="tbl"><table>
+    <tr><th>요소</th><th>확인한 것</th><th>판단</th></tr>
+    <tr class="sel"><td><strong>배경(다른 깊이) 정보</strong></td><td>QR 6채널만 : P2 Y 104~191 µm. 여기에 홀 시차를 더하면 13.6 µm. shin 의 배경 가장자리를 더하면 67 µm</td><td><span class="who k">ksh</span> 결정적 차이. QR 은 모두 같은 깊이라 Y 와 Θ 가 거의 같은 이동을 만든다 (shin 식별성 분석 : 두 패턴 각도 0.14°, 조건수 799). 깊이가 다른 홀이 그 둘을 가른다</td></tr>
+    <tr class=""><td><strong>모델 형태</strong></td><td>같은 특징(QR + 홀)이라도 다른 날(P1 3rd)에서 물리식 229/234, 역회귀 142/234</td><td><span class="who k">ksh</span> 단독축 자료로 학습한 계수 6개 물리식이 섞인 움직임·다른 날로 잘 넘어간다. 역회귀는 같은 세션 안에서만 비슷</td></tr>
+    <tr class=""><td><strong>QR 이동 측정</strong></td><td>Fourier 코너와 IC-GN 의 QR 평균 가로 이동 차 : 표준편차 0.008 px, 최대 0.026 px (527장). 물리식에 넣으면 P2 Y RMS 13.1 µm 로 같음</td><td>대등. 서로 독립인 두 방법이 0.01 px 수준으로 맞는다는 것이 오히려 검증 근거가 된다</td></tr>
+    <tr class=""><td><strong>가로 띠(직선) 정보</strong></td><td>shin 은 가장자리의 세로 위치·기울기로 Y 148 → 67 µm 개선. ksh 띠 dy 를 QR6 에 더하면 P1 3rd 33/234, Θ 2° 에서 띠가 화면 밖</td><td>같은 세션 안에서는 도움, 다른 날로는 약함. 홀 시차가 더 낫다</td></tr>
+    <tr class=""><td><strong>견고성·속도</strong></td><td>ksh 측정 실패 0/575. shin 판 검출 실패 4/575 (모두 3rd). 사진당 ksh 약 35 ms, shin 약 706 ms</td><td><span class="who k">ksh</span> 추정 경로는 ksh 가 빠르고 실패가 없다</td></tr>
+    <tr class="shin"><td><strong>식별·검증</strong></td><td>shin 은 payload(FP11L/C/R) 해독, 모듈 재생성 일치, 코너 수렴·조건수 검사를 매 사진 수행</td><td><span class="who s">shin</span> ksh 에는 "같은 판인가" 를 확인하는 단계가 없다</td></tr>
+  </table></div>
+  <h3>두 분석이 따로 같은 결론에 닿은 것</h3>
+  <ul>
+    <li>같은 자세 3장 중 <strong>(2) 번째 사진만 치우침</strong> — shin : 반복 잔차 (2) +0.142 px, ksh : (2) Θ +0.0017°, Y −3.6 µm</li>
+    <li><strong>세션(날짜)마다 원점이 다름</strong> — shin : 새 기준 − 기존 center dx −0.26 px, ksh : 영점 상수 c (center ↔ 지령 0, Y +35.5 µm)</li>
+    <li>Y·Θ 교차항은 일반화에 도움이 안 됨 — shin : 교차항 추가 시 보류 오차 증가, ksh : 1차식이 1 SE 규칙에서 선택</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="no">5</span>각자의 장점</h2>
+  <div class="grid2">
+    <div class="vcard" style="--c: var(--ksh)">
+      <h3><span class="who k">ksh</span> 김성현</h3>
+      <ul>
+        <li><strong>깊이 시차 특징</strong> s, d — 한 장으로 Y·Θ 를 가르는 핵심</li>
+        <li><strong>물리 보정식</strong> 6계수 : 단독축 학습 → 섞인 움직임·다른 날 일반화</li>
+        <li><strong>IC-GN · O-MOMS</strong> 부화소 정합, 실패 0, 35 ms</li>
+        <li><strong>실험계획 근거</strong> : ROI 크기·영역·블록 수·Center 정의·반복 정밀도를 수치로 결정</li>
+        <li>학습/평가 분리, 1차 → 3rd 독립 시험, 시뮬레이터 폐루프</li>
+      </ul>
+    </div>
+    <div class="vcard" style="--c: var(--shin)">
+      <h3><span class="who s">shin</span> 신윤석</h3>
+      <ul>
+        <li><strong>판 검출 · QR 해독 · 모듈 재생성</strong> : 판과 주소(payload)를 확인</li>
+        <li><strong>Fourier · 영상 형성 코너</strong> : 해석 미분 검사·단위 시험을 갖춘 부화소 코너</li>
+        <li><strong>식별성 분석</strong> : 판 특징만으로는 한 틱 구별이 안 됨을 정량화 (SNR 0.4)</li>
+        <li><strong>검증 규율</strong> : 원본 SHA256, 소스 해시 manifest, 좌표 단위 보류로 누출 방지</li>
+        <li>팀 공통 인터페이스 <code>include/alignment.hpp</code>, CMake·clang-format·Windows 설정 문서</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="no">6</span>통합 프로젝트 <code>src/Integrated</code></h2>
+  <pre class="mermaid">flowchart LR
+  A[현재 사진] --> B[ksh Coarse 위상 상관]
+  B --> C[ksh Fine IC-GN · QR 3 + 홀 W2·W3]
+  C --> D[ksh s, d → 물리식 역변환 → Y, Θ]
+  A --> E[shin 판 검출]
+  E --> F[shin QR 해독 · 모듈 재생성]
+  F --> G[shin Fourier 코너]
+  D --> H{검증}
+  F --> H
+  G --> H
+  B --> H
+  H -->|통과 · 검증 못 함| I[Y, Θ 출력]
+  H -->|모순| J[NaN + 이유]</pre>
+  <div class="tbl"><table>
+    <tr><th>검증 항목</th><th>한계</th><th>실측 (2차·3rd 291장)</th><th>한계 근거</th></tr>
+    <tr class=""><td>QR payload · 모듈 재생성</td><td>기준 사진과 같음</td><td>모순 0</td><td>다른 판·주소, 해독 실패 차단</td></tr>
+    <tr class=""><td>판 중심 이동 − ksh Coarse 이동</td><td>±30 px</td><td>최대 10.6 px (567장)</td><td>실측 최대의 약 3배 · QR 간격 257 px 의 오정합을 잡음</td></tr>
+    <tr class=""><td>Fourier 코너 QR 이동 − IC-GN QR 이동</td><td>±0.1 px</td><td>최대 0.018 px (291장), 0.026 px (527장)</td><td>실측 최대의 약 4배</td></tr>
+  </table></div>
+  <div class="tbl"><table>
+    <tr><th>통합 C++ 결과</th><th>허용 안</th><th>과제 허용</th><th>Y RMS</th><th>Θ RMS</th><th>검증 모순</th><th>검증 못 함</th><th>시간 (추정 / 검증)</th></tr>
+    <tr class=""><td>1차 교차검증 Y8+Θ8 (240)</td><td>219</td><td>240</td><td>12.9 µm</td><td>0.0029°</td><td>—</td><td>—</td><td>30 ms</td></tr>
+    <tr class=""><td>2차 57장 (Θ 2° 12장 포함)</td><td>36</td><td>42</td><td>28.9 µm</td><td>0.0096°</td><td>0</td><td>0</td><td>41 / 725 ms</td></tr>
+    <tr class="sel"><td>3rd 234장</td><td>229</td><td>234</td><td>10.8 µm</td><td>0.0025°</td><td>0</td><td>4</td><td>36 / 669 ms</td></tr>
+  </table></div>
+  <ul>
+    <li>팀 인터페이스 <code>Alignment_t alignment(cv::Mat&amp;)</code> 가 이제 실제 y [mm], t [°] 를 돌려준다 (<code>team_alignment.cpp</code>). shin 원본 <code>src/alignment.cpp</code>·<code>main</code> 은 그대로 둔다.</li>
+    <li>C++ 수치가 파이썬 실험계획 결과(1차 CV J 0.651, 3rd J 0.552)와 같다.</li>
+    <li>판을 못 찾은 4장은 "검증 못 함" 으로 값을 유지한다 (그 4장도 추정은 허용 안). <code>reject_unverified: 1</code> 이면 NaN.</li>
+    <li>새 center 채택 검사 <code>integrated_main --center-check</code> : center2 −5.9 µm·+0.0001°, center3 −14.2 µm·+0.0022° (한계 ±21 µm·±0.0055°, 둘 다 채택).</li>
+  </ul>
+  <h3>바꾼 파일 (원본은 백업)</h3>
+  <div class="tbl"><table>
+    <tr><th>파일</th><th>변경</th><th>이유</th></tr>
+    <tr class=""><td><code>CMakeLists.txt</code> (루트)</td><td><code>GLOB_RECURSE</code> → <code>GLOB</code>, <code>add_subdirectory(src/Integrated)</code>, Linux 정의·DLL 복사 Windows 한정</td><td>병합 후 재귀 검색이 <code>src/KSH</code> 의 .cpp 108개(main 29개)를 끌어와 루트 빌드가 깨짐</td></tr>
+    <tr class=""><td><code>src/KSH/Alignment/ksh</code> image_util · features · align_config</td><td>직사각형 ROI (<code>hh_px</code>, 없으면 정사각형)</td><td>실험계획에서 고른 56×60 px 홀 ROI</td></tr>
+    <tr class=""><td><code>src/KSH/Alignment/ksh/src/dataset.cpp</code></td><td>하위 폴더까지 사진 찾기, 폴더 라벨 우선</td><td>data/img/1st·2nd·3rd 원본 배치 그대로 사용, 3rd 의 T+0.32 폴더 안 "T+0.33 (3)" 자동 교정</td></tr>
+    <tr class=""><td><code>src/Integrated/**</code></td><td>새로 만듦</td><td>통합 정렬기·팀 인터페이스·평가 도구·설정·모델</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <h2><span class="no">7</span>한계</h2>
+  <ul>
+    <li>통합 프로젝트는 Linux(GCC 13, OpenCV 4.6)에서 빌드·평가했다. Windows(MSVC v141, OpenCV 3.4.15) 빌드는 확인하지 못했다.</li>
+    <li>검증 장치가 실제 오정합을 잡는 비율은 시험하지 못했다 (실제 사진에서 모순이 한 번도 없었음). 오탐(정상인데 거부)은 0건.</li>
+    <li>shin 의 L630 코너·가장자리 계측(파이썬)은 다시 돌리지 않고 저장된 예측값을 채점했다. shin 모델은 2차 세트 안에서 학습한 것이라 P1(다른 날)로는 평가하지 못했다.</li>
+    <li>2차·3rd 는 같은 날 같은 장비다. 다른 날짜 일반화는 다음 촬영으로 확인해야 한다.</li>
+  </ul>
+</section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<script>
+const D = {"p2": [{"name": "ksh 물리식 (QR + 홀 시차)", "kind": "ksh", "y": 13.1, "t": 0.0022, "tick": 57, "pas": 56}, {"name": "ksh 물리식 + shin 코너 QR", "kind": "mix", "y": 13.1, "t": 0.0022, "tick": 57, "pas": 57}, {"name": "QR6 + 홀 역회귀", "kind": "mix", "y": 13.6, "t": 0.0023, "tick": 57, "pas": 56}, {"name": "shin 최고 : QR6 + 배경 가장자리 8", "kind": "shin", "y": 67.2, "t": 0.0123, "tick": 35, "pas": 26}, {"name": "shin : QR6 + 배경 가장자리 4", "kind": "shin", "y": 75.2, "t": 0.014, "tick": 30, "pas": 17}, {"name": "shin : QR6 + 판 가장자리(가로) 4", "kind": "shin", "y": 81.3, "t": 0.0151, "tick": 29, "pas": 19}, {"name": "shin : 판 가장자리 8", "kind": "shin", "y": 96.5, "t": 0.0178, "tick": 27, "pas": 16}, {"name": "QR6 역회귀 (IC-GN 측정)", "kind": "mix", "y": 104.4, "t": 0.0188, "tick": 24, "pas": 10}, {"name": "shin : QR6 역회귀 (L630 코너)", "kind": "shin", "y": 147.7, "t": 0.0262, "tick": 17, "pas": 5}], "p1": [{"name": "ksh 물리식", "kind": "ksh", "pas": 229, "spec": 234, "y": 10.8, "near": 33}, {"name": "ksh 물리식 + shin 코너 QR", "kind": "mix", "pas": 226, "spec": 230, "y": 11.6, "near": 33}, {"name": "QR6 + 홀 역회귀", "kind": "mix", "pas": 142, "spec": 233, "y": 13.5, "near": 29}, {"name": "QR6 + 띠 dy 역회귀", "kind": "mix", "pas": 33, "spec": 162, "y": 12.1, "near": 7}, {"name": "QR6 역회귀 (IC-GN)", "kind": "mix", "pas": 51, "spec": 105, "y": 104.8, "near": 3}, {"name": "shin QR6 역회귀 (Fourier 코너)", "kind": "shin", "pas": 19, "spec": 44, "y": 242.1, "near": 1}]};
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const charts = [];
+function draw() {
+  charts.forEach(c => c.destroy()); charts.length = 0;
+  const col = k => k === 'ksh' ? css('--ksh') : k === 'shin' ? css('--shin') : css('--mix');
+  const ink = css('--ink2'), grid = css('--rule');
+  const tip = { backgroundColor: css('--paper'), titleColor: css('--ink'), bodyColor: ink, borderColor: grid, borderWidth: 1 };
+  charts.push(new Chart(document.getElementById('c_p2'), { type: 'bar',
+    data: { labels: D.p2.map(r => r.name), datasets: [{ data: D.p2.map(r => r.y), backgroundColor: D.p2.map(r => col(r.kind)), borderRadius: 3, barPercentage: 0.7 }] },
+    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
+      scales: { x: { type: 'logarithmic', min: 5, max: 300, ticks: { color: ink }, grid: { color: grid }, title: { display: true, text: 'Y RMS (µm)', color: css('--muted') } }, y: { ticks: { color: ink, font: { size: 11 } }, grid: { display: false } } },
+      plugins: { legend: { display: false }, tooltip: { ...tip, callbacks: { label: c => { const r = D.p2[c.dataIndex]; return [`Y RMS ${r.y} µm · Θ RMS ${r.t}°`, `틱 동시 ${r.tick}/57 · 허용 안 ${r.pas}/57`]; } } } } } }));
+  charts.push(new Chart(document.getElementById('c_p1'), { type: 'bar',
+    data: { labels: D.p1.map(r => r.name), datasets: [{ data: D.p1.map(r => r.pas), backgroundColor: D.p1.map(r => col(r.kind)), borderRadius: 3, barPercentage: 0.7 }] },
+    options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
+      scales: { x: { min: 0, max: 234, ticks: { color: ink }, grid: { color: grid }, title: { display: true, text: '허용 안 장수 (/234)', color: css('--muted') } }, y: { ticks: { color: ink, font: { size: 11 } }, grid: { display: false } } },
+      plugins: { legend: { display: false }, tooltip: { ...tip, callbacks: { label: c => { const r = D.p1[c.dataIndex]; return [`허용 안 ${r.pas}/234 · 과제 허용 ${r.spec}/234`, `Y RMS ${r.y} µm · 2차 목표 근처 ${r.near}/33`]; } } } } } }));
+}
+if (window.Chart) { draw(); window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw); new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] }); }
+</script>
