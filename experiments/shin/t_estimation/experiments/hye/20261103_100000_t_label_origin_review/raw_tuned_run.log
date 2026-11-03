@@ -1,0 +1,10 @@
+nominal_exclude8 fold 0 done; n=110
+nominal_exclude8 fold 1 done; n=113
+nominal_exclude8 fold 2 done; n=118
+nominal_exclude8 fold 3 done; n=121
+nominal_exclude8 fold 4 done; n=101
+nominal_exclude5 fold 0 done; n=110
+nominal_exclude5 fold 1 done; n=116
+nominal_exclude5 fold 2 done; n=118
+nominal_exclude5 fold 3 done; n=121
+nominal_exclude5 fold 4 done; n=101

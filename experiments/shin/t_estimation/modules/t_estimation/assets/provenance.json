@@ -1,0 +1,39 @@
+{
+  "base_branch": "feature/shin/QRwithBar",
+  "base_commit": "55c5ebe",
+  "output": "T command-label units only",
+  "tick_size": 0.01,
+  "physical_degrees_certified": false,
+  "training_labels": "nominal T parsed from image filename; not sidecar Actual",
+  "raw_images": 575,
+  "historical_hashes_verified": 341,
+  "duplicates": 0,
+  "measurement_failures": 0,
+  "general_model": {
+    "file": "model.json",
+    "training_images": 337,
+    "requires_y_fixed_at_reference": false,
+    "heldout_additional_images": 234,
+    "heldout_max_ticks": 3.4677618562042851,
+    "target_1tick_achieved": false,
+    "frozen_before_evaluation_commit": "57b22e9",
+    "sha256": "ada43c98528d7b33994ec0d45977105d0ca4f3d402392348aa62faabfe6625bd"
+  },
+  "t_axis_only_model": {
+    "file": "t_axis_only_model.json",
+    "training_images": 200,
+    "requires_y_fixed_at_reference": true,
+    "T_range": [-1.0, 1.0],
+    "development_evaluation": "nested grouped 5-fold; exposed historical data",
+    "MAE_ticks": 0.12040645008100759,
+    "RMSE_ticks": 0.15365846664841143,
+    "max_ticks": 0.47138567209149551,
+    "pass_1tick": 200,
+    "independent_test": false,
+    "sha256": "9ea6c6d07a9d41a3c9da480df3c26cfbad6f7aecad20e85d4396ee39d32b1b4c"
+  },
+  "expanded_571_model": "development comparison only; additional234 are now exposed calibration/development data",
+  "inference_uses_y_label_or_prediction": false,
+  "inference_uses_path_or_fold": false,
+  "actual_robot_motion_test": false
+}
