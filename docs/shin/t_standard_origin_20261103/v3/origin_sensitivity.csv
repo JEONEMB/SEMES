@@ -1,4 +1,0 @@
-variant,sigma_Y,sigma_T,bound,bound_hits,target_delta_RMS_ticks,target_delta_max_ticks
-prior_half,0.025,0.005,3,16,1.3139134231062217,2.28871872606205
-prior_double,0.1,0.02,3,13,2.4570318356214105,3.27830300497753
-bound_double,0.05,0.01,6,11,2.437255651646696,3.3333138264577706

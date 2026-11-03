@@ -1,6 +1,0 @@
-{
-  "pages": 10,
-  "text_checks": "PASS",
-  "render_inspection": "PASS: all 10 pages rendered and visually inspected; final modified pages 1 and 2 re-rendered and inspected.",
-  "standalone_packaged_scene_CLI": "PASS: direct execution with one original image; local packaged reference and DLLs used."
-}

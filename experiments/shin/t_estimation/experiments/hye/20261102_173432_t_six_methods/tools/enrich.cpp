@@ -1,5 +1,0 @@
-#include "six.hpp"
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-int wmain(int argc,wchar_t** argv){try{if(argc!=2)throw std::invalid_argument("Usage: six_enrich EXPERIMENT");std::filesystem::path root=argv[1];auto rows=six::read_rows(root/"observations.csv");auto ref=six::load_frame(root/"cache/reference.yml.gz");std::ofstream out(root/"observations_enriched.csv");out<<std::setprecision(17)<<"path,cohort,Y,T,mtime_unix,session_proxy,status,index";for(int j=0;j<six::dimensions;j++)out<<",f"<<j;out<<'\n';double difference=0;for(auto& r:rows){auto frame=six::load_frame(root/("cache/frame"+std::to_string(r.index)+".yml.gz"));auto x=six::describe(frame,ref);for(int j=0;j<96;j++)difference=std::max(difference,std::abs(r.x.at<double>(j)-x.at<double>(j)));out<<r.path<<','<<r.cohort<<','<<r.y<<','<<r.t<<','<<r.time<<','<<r.session<<','<<r.status<<','<<r.index;for(int j=0;j<six::dimensions;j++)out<<','<<x.at<double>(j);out<<'\n';}std::cout<<"Added shared homography; first96 max difference="<<difference<<'\n';return difference>1e-10?1:0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

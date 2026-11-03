@@ -1,8 +1,0 @@
-{
-  "local_calibration_images": 49,
-  "local_range": 0.2,
-  "polynomial_rank": 5,
-  "jacobian_rank": 2,
-  "noise_repeat_dof": 194,
-  "warning": "Equivalent displacement is conditional on local Oct-4 response. Camera/fixture changes and coordinate zero changes cannot be separated by these data."
-}
