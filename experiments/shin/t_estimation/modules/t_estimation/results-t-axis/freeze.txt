@@ -1,0 +1,4 @@
+selected_mode=2
+training_images=200
+new_evaluation_images_used_for_selection=0
+independent_test=false

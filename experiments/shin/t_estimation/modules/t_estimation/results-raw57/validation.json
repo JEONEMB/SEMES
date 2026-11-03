@@ -1,0 +1,21 @@
+{
+    "images": 57,
+    "coordinate_folds": 19,
+    "method": "lanczos3",
+    "feature_max_difference": 0.0,
+    "held_prediction_max_difference": 0.0,
+    "Y_mae": 4.4732707275077326e-02,
+    "Y_max": 1.5657105825785497e-01,
+    "Y_rmse": 5.8022316109198939e-02,
+    "T_mae": 8.0001686512955437e-03,
+    "T_max": 2.7060326613473684e-02,
+    "T_rmse": 1.0513518744270617e-02,
+    "both_tick": 34,
+    "both_009": 51,
+    "asset_initialization_ms": 5.8103150000000005e+02,
+    "median_inference_ms": 7.5488469999999995e+02,
+    "inference_timer_excludes_decode": 1,
+    "original_hashes_verified": 1,
+    "original_pixels_unchanged": 1,
+    "deployment_predictions_are_training_reapplication": 1
+}
