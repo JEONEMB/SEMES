@@ -1,0 +1,106 @@
+Claims (9)
+
+    
+    
+    What is claimed is:
+     
+      1. An image stabilization apparatus comprising:
+at least one processor or circuit to perform the operations of the following units:
+
+an image stabilization unit to move a correction member which is movable in a direction different from an optical axis of an imaging optical system based on a shake detected by a shake detection unit and stabilize an image blur based on the shake of the apparatus;
+
+a zoom unit to change a focal length of the imaging optical system;
+
+a calculation unit to calculate a movement amount of the correction member corresponding to the focal length to reduce at least one of a variation in a light amount and a variation in a resolution in an imaging screen which varies in accordance with the focal length and is based on a characteristic of the imaging optical system; and
+
+a control unit to control, when changing the focal length by the zoom unit, an actual movement amount to follow a target value of a movement position of the correction member by setting a limitation of a variation amount of the movement position per unit time on the movement amount calculated by the calculation unit,
+
+wherein the control unit sets an upper limit value of the limitation of the variation amount of the movement position larger than a first threshold value when a driving speed of the zoom unit when changing the focal length is higher than a second threshold value and sets the upper limit value of the limitation of the variation amount of the movement position smaller than the first threshold value when the driving speed of the zoom unit is lower than the second threshold value.
+
+    
+
+    
+  
+      2. An image stabilization apparatus comprising:
+at least one processor or circuit to perform the operations of the following units:
+
+an image stabilization unit to move a correction member which is movable in a direction different from an optical axis of an imaging optical system based on a shake detected by a shake detection unit and stabilize an image blur based on the shake of the apparatus;
+
+a zoom unit to change a focal length of the imaging optical system;
+
+a calculation unit to calculate a movement amount of the correction member corresponding to the focal length to reduce at least one of a variation in a light amount and a variation in a resolution in an imaging screen which varies in accordance with the focal length and is based on a characteristic of the imaging optical system; and
+
+a control unit to control, when changing the focal length by the zoom unit, an actual movement amount to follow a target value of a movement position of the correction member by setting a limitation of a variation amount of the movement position per unit time on the movement amount calculated by the calculation unit,
+
+wherein the control unit sets an upper limit value of the limitation of the variation amount of the movement position larger than a third threshold value when a variation amount of the focal length when changing the focal length is larger than a fourth threshold value and sets the upper limit value of the limitation of the variation amount of the movement position smaller than the third threshold value when the variation amount of the focal length is smaller than the fourth threshold value.
+
+    
+
+    
+  
+      3. An image stabilization apparatus comprising:
+at least one processor or circuit to perform the operations of the following units:
+
+an image stabilization unit to move a correction member which is movable in a direction different from an optical axis of an imaging optical system based on a shake detected by a shake detection unit and stabilize an image blur based on the shake of the apparatus;
+
+a zoom unit to change a focal length of the imaging optical system;
+
+a calculation unit to calculate a movement amount of the correction member corresponding to the focal length to reduce at least one of a variation in a light amount and a variation in a resolution in an imaging screen which varies in accordance with the focal length and is based on a characteristic of the imaging optical system; and
+
+a control unit to control, when changing the focal length by the zoom unit, an actual movement amount to follow a target value of a movement position of the correction member by setting a limitation of a variation amount of the movement position per unit time on the movement amount calculated by the calculation unit,
+
+wherein the control unit sets an upper limit value of the limitation of the variation amount of the movement position larger than a fifth threshold value when a variation amount of an angle of view when changing the focal length is larger than a sixth threshold value and sets the upper limit value of the limitation of the variation amount of the movement position smaller than the fifth threshold value when the variation amount of the angle of view is smaller than sixth threshold value.
+
+    
+
+    
+  
+      4. A control method of an image stabilization apparatus including an image stabilization unit to move a correction member which is movable in a direction different from an optical axis of an imaging optical system based on a shake detected by a shake detection unit and stabilize an image blur based on the shake of the apparatus, and a zoom unit to change a focal length of the imaging optical system, the method comprising:
+calculating a movement amount of the correction member corresponding to the focal length to reduce at least one of a variation in a light amount and a variation in a resolution in an imaging screen which varies in accordance with the focal length and is based on a characteristic of the imaging optical system; and
+
+controlling, when changing the focal length by the zoom unit, an actual movement amount to follow a target value of a movement position of the correction member by setting a limitation of a variation amount of the movement position per unit time on the movement amount calculated in the calculating, wherein an upper limit value of the limitation of the variation amount of the movement position is set larger than a first threshold value when a driving speed of the zoom unit when changing the focal length is higher than a second threshold value and the upper limit value of the limitation of the variation amount of the movement position is set smaller than the first threshold value when the driving speed of the zoom unit is lower than the second threshold value.
+
+    
+
+    
+  
+      5. A control method of an image stabilization apparatus including an image stabilization unit to move a correction member which is movable in a direction different from an optical axis of an imaging optical system based on a shake detected by a shake detection unit and stabilize an image blur based on the shake of the apparatus, and a zoom unit to change a focal length of the imaging optical system, the method comprising:
+calculating a movement amount of the correction member corresponding to the focal length to reduce at least one of a variation in a light amount and a variation in a resolution in an imaging screen which varies in accordance with the focal length and is based on a characteristic of the imaging optical system; and
+
+controlling, when changing the focal length by the zoom unit, an actual movement amount to follow a target value of a movement position of the correction member by setting a limitation of a variation amount of the movement position per unit time on the movement amount calculated in the calculating, wherein an upper limit value of the limitation of the variation amount of the movement position is set larger than a third threshold value when a variation amount of the focal length when changing the focal length is larger than a fourth threshold value and the upper limit value of the limitation of the variation amount of the movement position is set smaller than the third threshold value when the variation amount of the focal length is smaller than the fourth threshold value.
+
+    
+
+    
+  
+      6. A control method of an image stabilization apparatus including an image stabilization unit to move a correction member which is movable in a direction different from an optical axis of an imaging optical system based on a shake detected by a shake detection unit and stabilize an image blur based on the shake of the apparatus, and a zoom unit to change a focal length of the imaging optical system, the method comprising:
+calculating a movement amount of the correction member corresponding to the focal length to reduce at least one of a variation in a light amount and a variation in a resolution in an imaging screen which varies in accordance with the focal length and is based on a characteristic of the imaging optical system; and
+
+controlling, when changing the focal length by the zoom unit, an actual movement amount to follow a target value of a movement position of the correction member by setting a limitation of a variation amount of the movement position per unit time on the movement amount calculated in the calculating, wherein an upper limit value of the limitation of the variation amount of the movement position is set larger than a fifth threshold value when a variation amount of an angle of view when changing the focal length is larger than a sixth threshold value and the upper limit value of the limitation of the variation amount of the movement position is set smaller than the fifth threshold value when the variation amount of the angle of view is smaller than the sixth threshold value.
+
+    
+
+    
+  
+      7. A non-transitory computer readable storage medium storing a program for causing a computer to execute a control method of an image stabilization apparatus including an image stabilization unit to move a correction member which is movable in a direction different from an optical axis of an imaging optical system based on a shake detected by a shake detection unit and stabilize an image blur based on the shake of the apparatus, and a zoom unit to change a focal length of the imaging optical system, the method comprising:
+calculating a movement amount of the correction member corresponding to the focal length to reduce at least one of a variation in a light amount and a variation in a resolution in an imaging screen which varies in accordance with the focal length and is based on a characteristic of the imaging optical system; and
+
+controlling, when changing the focal length by the zoom unit, an actual movement amount to follow a target value of a movement position of the correction member by setting a limitation of a variation amount of the movement position per unit time on the movement amount calculated in the calculating, wherein an upper limit value of the limitation of the variation amount of the movement position is set larger than a first threshold value when a driving speed of the zoom unit when changing the focal length is higher than a second threshold value and the upper limit value of the limitation of the variation amount of the movement position is set smaller than the first threshold value when the driving speed of the zoom unit is lower than the second threshold value.
+
+    
+
+    
+  
+      8. A non-transitory computer readable storage medium storing a program for causing a computer to execute a control method of an image stabilization apparatus including an image stabilization unit to move a correction member which is movable in a direction different from an optical axis of an imaging optical system based on a shake detected by a shake detection unit and stabilize an image blur based on the shake of the apparatus, and a zoom unit to change a focal length of the imaging optical system, the method comprising:
+calculating a movement amount of the correction member corresponding to the focal length to reduce at least one of a variation in a light amount and a variation in a resolution in an imaging screen which varies in accordance with the focal length and is based on a characteristic of the imaging optical system; and
+
+controlling, when changing the focal length by the zoom unit, an actual movement amount to follow a target value of a movement position of the correction member by setting a limitation of a variation amount of the movement position per unit time on the movement amount calculated in the calculating, wherein an upper limit value of the limitation of the variation amount of the movement position is set larger than a third threshold value when a variation amount of the focal length when changing the focal length is larger than a fourth threshold value and the upper limit value of the limitation of the variation amount of the movement position is set smaller than the third threshold value when the variation amount of the focal length is smaller than the fourth threshold value.
+
+    
+
+    
+  
+      9. A non-transitory computer readable storage medium storing a program for causing a computer to execute a control method of an image stabilization apparatus including an image stabilization unit to move a correction member which is movable in a direction different from an optical axis of an imaging optical system based on a shake detected by a shake detection unit and stabilize an image blur based on the shake of the apparatus, and a zoom unit to change a focal length of the imaging optical system, the method comprising:
+calculating a movement amount of the correction member corresponding to the focal length to reduce at least one of a variation in a light amount and a variation in a resolution in an imaging screen which varies in accordance with the focal length and is based on a characteristic of the imaging optical system; and
+
+controlling, when changing the focal length by the zoom unit, an actual movement amount to follow a target value of a movement position of the correction member by setting a limitation of a variation amount of the movement position per unit time on the movement amount calculated in the calculating, wherein an upper limit value of the limitation of the variation amount of the movement position is set larger than a fifth threshold value when a variation amount of an angle of view when changing the focal length is larger than a sixth threshold value and the upper limit value of the limitation of the variation amount of the movement position is set smaller than the fifth threshold value when the variation amount of the angle of view is smaller than the sixth threshold value.

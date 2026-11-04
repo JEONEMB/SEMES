@@ -1,0 +1,747 @@
+                                                                            US007791043B2
+
+(12) Ulllted States Patent                                                (10) Patent N0.: US 7,791,043 B2
+
+    Seya et al.                                                           (45) Date of Patent:          Sep. 7, 2010
+
+(54) STAGE MECHANISM, ELECTRON                                        (56)  References Cited
+
+        MICROSCOPE HAVING THE STAGE                                                    U~S~ PATENT DOCUMENTS
+        MECHANISM AND METHOD OF                                             5,149,967 A 9/1992 Omk,
+
+        CONTROLLING POSITIONING OF STAGE                                    5,483,064 A * 1/1996 Frey et a1. ............ .. 250/442.11
+
+          MECHANISM
+
+(75) Inventors: Eiichi Seya, Hitachinaka (JP); Takashi                      FOREIGN PATENT DOCUMENTS
+                  Nagamatsu, Hitachinaka (JP)
+
+                                                                      JP    3-129653 A          6/1991
+
+(73) Assignee: Hitachi High-Technologies                              JP    2001-196021 A       7/2001
+                 Corporation, Tokyo (JP)
+
+( * ) Notice:  Subject to any disclaimer, the term of this            * cited by examiner
+               patent is extended or adjusted under 35
+                                                                      Primary ExamineriJack I Berman
+               U.S.C. 154(b) by 401 days.                             (74) Attorney, Agent, or Firm4CroWell & Moring LLP
+
+(21) Appl. No.: 12/038,358                                            (57)  ABSTRACT
+
+(22) Filed: Feb. 27, 2008                                             An electron microscope stage mechanism capable of per
+
+(65)               Prior Publication Data                             forming high-accuracy positioning While limiting vibration
+
+      US 2008/0211349 A1 Sep. 4,2008                                  and drift. An ultrasonic motor is used in a stage drive mecha
+
+(30)           Foreign Application Priority Data                      nism, and a ?xing mechanism capable of increasing stop
+                                                                      stiffness is combined integrally With the motor. That is, a
+Mar. 2, 2007       (JP) ........................... .. 2007-053271    structure in Which a piezoelectric actuator of the ?xing
+                                                                      mechanism is mounted in a pre-load mechanism together
+(51) Int. Cl.      (2006.01)                                          With the ultrasonic motor is used. When the stage is ?xed by
+       H01J 37/20                                                     the ?xing mechanism after acceleration, deceleration and
+                                                                      positioning of the stage performed by the drive mechanism,
+(52) US. Cl. ................................ .. 250/442.11; 310/328  the piezoelectric actuators positioned on opposite sides of the
+
+(58) Field of Classi?cation Search .......... .. 250/440.11,          stage are extended to press the stage.
+
+                                          250/442.11; 310/328               12 Claims, 6 Drawing Sheets
+       See application ?le for complete search history.
+
+                                                  , Ill
+US. Patent                                      Sep. 7, 2010  Sheet 1 0f 6                US 7,791,043 B2
+
+FIG. 1
+
+                                                                            764
+
+\\\\\\\\\\\\\\\\\\\\\\\§\\\\ 77' I                                          `&`N\\\\\\\\\\\\\\\\\\\\\\
+
+\\\\\\\\\\\\\\\\\\  \  \\  \  \  \  \w   ll  I                7                        I  E15\\\\\\\\\\\\\\\\\\\\
+
+                                        [II                                 /
+
+                                                                            5             3 2
+US. Patent  Sep. 7, 2010  Sheet 2 of6  US 7,791,043 B2
+
+FIG. 2
+US. Patent  Se .7 2010  Sheet3 0f6
+
+FIG. 3(a)
+
+FIG. 3(b)
+
+   m?/////////////%
+
+                                                                          3 5
+
+FIG. 3(0)
+
+   ..MW/////_//////%h 32
+US. Patent  Sep. 7, 2010  Sheet 4 of6  US 7,791,043 B2
+
+FIG. 4(a)
+
+FIG. 4(0)
+US. Patent  Sep. 7, 2010  Sheet 5 of6        US 7,791,043 B2
+
+FIG. 5(a)
+
+            Turn off piezoelectric brake W810i
+
+            Move stage by velocity servo M3102
+
+                          Servo positioning  ~31 03
+
+            Fix ultrasonic motor drive voltages /\/S104
+
+            Turn on piezoelectric brake M8105
+
+            Critical dimension measurement /\/Sl 06
+
+FIG. 5(1))
+
+            Turn off piezoelectric brake M8201
+
+            Move stage by velocity servo M8202
+
+                          Servo positioning  M8203
+
+            Fix ultrasonic motor drive voltages @8204
+
+            Turn on piezoelectric brake      /\/S205
+                                             /\/S206
+                    l
+
+             Separate ultrasonic motor
+
+            Critical dimension measurement M8207
+US. Patent           Sep. 7, 2010     Sheet 6 of6  US 7,791,043 B2
+
+FIG. 6                                               Amount of
+
+        Amount                                     l residual deformation
+     of deformation
+                                                   T ______ _
+               A L
+
+                                   i               t
+
+                     Voltage application           Time
+                                             US 7,791,043 B2
+
+                             1                                               2
+
+ STAGE MECHANISM, ELECTRON                                      ductor elements are provided With specimen stages capable of
+MICROSCOPE HAVING THE STAGE                                     supporting a Wafer having a diameter of 300 mm and having
+
+MECHANISM AND METHOD OF                                         a movable range larger than the diameter of the Wafer for the
+
+CONTROLLING POSITIONING OF STAGE                                purpose of observing the entire surface of silicon Wafers
+
+                     MECHANISM                                  Without cutting the silicon Wafers. HoWever, it is di?icult to
+
+BACKGROUND OF THE INVENTION                                     suf?ciently increase the mechanical stiffness of such a large
+                                                                specimen stage With respect to the Weight. Therefore the
+
+1. Field of the Invention                                       mechanical resonance frequency is reduced, so that the stage
+
+                                                                easily picks up vibration externally applied. In general, a
+
+The present invention relates to a stage mechanism for 10 semiconductor manufacturing line is in a clean room envi
+
+?xing a stage, an electron microscope having the stage          ronment in Which the level of vibration at about 50 to 200 HZ
+mechanism and a method of controlling positioning of the        derived from air conditioning is high. If the mechanical reso
+
+stage mechanism.                                                nance point of the specimen stage exists in this range, the
+  2. Background Art                                             in?uence of the vibration is so serious that an image blur and
+
+  A scanning electron microscope (SEM) is an apparatus for      a reduction in siZe measurement accuracy for example are
+obtaining an SEM image of a specimen by scanning a speci        caused.
+
+men surface With a probing converged electron beam and          Also, if the specimen stage has a drift (a phenomenon in
+
+detecting backscattered electrons and secondary electrons Which the stop position is slightly shifted With a lapse oftime)
+
+emitted from the specimen. Such microscopes using as a at the time of observation of a specimen at a high magni?ca
+
+probe a charged particle beam such as an electron beam have 20 tion, the measurement accuracy is reduced When siZe mea
+
+been used in various ?elds of research and development and surement or the like is performed on a ?ne pattern.
+
+have also ?nd applications in manufacturing ?elds. For          Therefore loW-vibration and loW-drift characteristics are
+
+example, a technique to obtain an SEM image of an object to     required of the specimen stage. More speci?cally, since the
+be observed (specimen) With a scanning electron microscope      beam resolution of electronic optical systems used in semi
+
+is applied to observation and siZe measurement on semicon 25 conductor inspection/measurement electron microscope in
+ductor ?ne structures and is indispensable to semiconductor recent years has reached to a value of about 1.5 nanometers,
+manufacturing processes.
+                                                                it is necessary to reduce the in?uence of disturbance such as
+In recent years, design rules for semiconductor integrated vibration in terms of amplitude to about 1.5 nanometers or
+circuits have become ?ner. The pattern Width is, for example, less in obtaining a good image. Also, ?ne pattern Width mea
+
+100 nm or less in quite a number of cases. Semiconductor 30 surement reproducibility of about 0.1 nanometers is required.
+
+inspection/measurement apparatuses for performing siZe If a stage drift of about 0.5 nanometers per second or higher
+
+measurement and shape observation on ?ne patterns, detec        exists after stage stopping, the measurement reproducibility
+tion of foreign materials and defects, etc., include critical   is reduced. There is, therefore, a need to limit the drift to this
+
+dimension SEMs, SEM-type defect inspection apparatuses          or smaller value.
+
+and revieW SEMs.                                               35 HoWever, the "specimen stage for electron microscope"
+
+There is a demand for obtaining images With high accuracy disclosed in JP Patent Publication (Kokai) No. 3-129653 A
+as Well as at a high throughput for a semiconductor inspec (1 991) has problems that (1) a drift causing a slight movement
+tion/measurement apparatus. Therefore, high-accuracy posi of the stage after positioning stop, particularly a drift derived
+tioning by moving at a high speed and suppression of vibra from residual deformation of the pieZoelectric actuator spe
+tion and drift at the time of stopping are required of a 40 ci?c to the ultrasonic motor, and that (2) the stage is ?xed in
+specimen stage on Which a Wafer is mounted.
+                                                                the feed direction only by the pieZoelectric actuator provided
+Structures using a feed screW as a drive means have been in the ultrasonic motor, the stop stiffness is loW and mechani
+used for specimen stages in many cases. In recent years, cal resonance of the stage can occur easily in the region from
+stages having an ultrasonic motor, Which is a linear actuator 50 to 200 HZ.
+using a pieZoelectric phenomenon of a pieZoelectric ceramic 45
+                                                                Also, the "target moving device" disclosed in JP Patent
+element as a drive source have been proposed, for example,
+for the purpose of improving the positioning accuracy and Publication (Kokai) No. 2001-196021 A has problems that
+avoiding a chemical contamination to a Wafer derived from (1) the braking mechanism has the tWo column portions, the
+lubricating oil. An example of such stages is a "stage for thin boundary portion therebetWeen and other portions
+electron microscope" disclosed in JP Patent Publication (Ko 50 formed by cutting out a number of grooves, is therefore loW in
+                                                                stiffness as a Whole and vibrates easily at the time of obser
+kai) No. 3-129653 A (1991).
+As a technique to provide a ?xing mechanism for the vation, and that (2) since the deformation of the pieZoelectric
+purpose of preventing a Wobble or small vibration of a stage actuator is indirectly transmitted to the brake pads through the
+after positioning, i.e., stage drift, a "target moving device" column portion While being fulcrumed on the boundary por
+disclosed in JP Patent Publication (Kokai) No. 2001 -1 96021 55 tion, su?icient mechanical stiffness cannot be obtained, so
+A (particularly in paragraph [0031], FIG. 3) is known. In this that a drift by Warping occurs easily.
+
+example, a structure is used in Which a positive voltage is     In vieW of the above-described problems, an object of the
+
+applied to a pieZoelectric actuator provided on a stage to present invention is to provide a stage mechanism capable of
+
+cause such a deformation extending to the left and right that positioning a specimen stage With high accuracy, an electron
+
+braking pads are displaced in such a direction as to pinch a 60 microscope having the stage mechanism and a method of
+
+braking rail While being fulcrumed on a boundary portion controlling positioning of the stage mechanism.
+
+betWeen tWo column portions.                                      To achieve the above-described object, according to the
+               SUMMARY OF THE INVENTION                         present invention, a specimen stage is positioned by being
+
+                                                                driven With an ultrasonic motor and after being set at a desired
+
+                                                                    65 position, the ultrasonic motor for driving the stage is sepa
+Electron microscopes generally used for inspection and rated from the stage When the stage is ?xed. In this Way, the
+
+observation purposes in the ?eld of manufacturing semicon in?uence due to a residual deformation of a pieZoelectric
+                                        US 7,791,043 B2
+
+                       3                                                                 4
+
+actuator of the ultrasonic motor can be reduced to prevent a         The stage mechanism of the present invention enables
+                                                                   high-accuracy positioning of a specimen stage.
+drift of the stage and to enable high-accuracy positioning of
+
+the stage.                                                         BRIEF DESCRIPTION OF THE DRAWINGS
+   More speci?cally, a stage mechanism of the present inven
+
+tion has a table, a stage including a base member on Which the
+
+table is mounted, and a drive unit for driving the stage. The      FIG. 1 is a diagram schematically shoWing the construction
+
+drive unit has an ultrasonic motor for driving the table, a        of an electron microscope apparatus according to one
+                                                                   embodiment of the present invention;
+pre-load mechanism for pressing the ultrasonic motor against
+the table, and ?xing means for ?xing the table. The ?xing            FIG. 2 is a diagram schematically shoWing the construction
+
+means is mounted on the pre-load mechanism so as to be of a stage in the electron microscope apparatus in one
+
+movable integrally With the ultrasonic motor. At least a pair of embodiment of the present invention;
+
+the drive units are provided to form a structure in Which the      FIG. 3(a) is a diagram schematically shoWing the construc
+
+table is pinched betWeen the pair of the drive units. In a case tion of a stage drive unit according to a ?rst embodiment of
+
+Where the stage has tWo tables: X- andY-tables, the four (tWo      the present invention;
+
+pairs of) drive units respectively pinch the corresponding            FIG. 3(b) is a sectional vieW of the stage drive unit accord
+
+tables by side surfaces of the tables.                             ing to the ?rst embodiment When the stage is driven;
+
+The above-described ?xing means is constituted by a                FIG. 3(c) is a sectional vieW of the stage drive unit accord
+
+pieZoelectric actuator. The above-described pre-load mecha ing to the ?rst embodiment When the stage is ?xed;
+
+nism has a positioning member ?xed on the base member, a           FIG. 4(a) is a diagram schematically shoWing a stage drive
+
+seat member to Which the ultrasonic motor and the ?xing 20 unit according to a second embodiment of the present inven
+
+means are attached, and an elastic member (a spring) for tion When the stage is driven;
+elastically supporting the seat member on the positioning
+                                                                   FIG. 4(b) is a diagram schematically shoWing the stage
+member. The ?xing means ?xes the table by pres sing the table drive unit according to the second embodiment When the
+and separates the ultrasonic motor from the table. For stage is ?xed;
+example, When a voltage is applied to the pieZoelectric actua 25 FIG. 5(a) is a diagram shoWing the How of stage control
+tor, the pieZoelectric actuator is extended to ?x the table by an
+open end of the pieZoelectric actuator not ?xed on the base according to the ?rst embodiment;
+                                                                   FIG. 5(b) is a diagram shoWing the How of stage control
+member, and to pressed the seat member by a ?xed end of the
+pieZoelectric actuator ?xed on the seat member to separate the according to the second embodiment; and
+                                                                   30 FIG. 6 is a graph shoWing an example of the relationship of
+ultrasonic motor from the table.
+
+  Another stage mechanism according to the present inven           the amount of extension of a pieZoelectric actuator With
+tion has a stage including a table, a base member on Which the
+                                                                   respect to elapsed time.
+
+stage is mounted, a drive unit for driving the stage, and ?xing    DETAILED DESCRIPTION OF THE PREFERRED
+means for ?xing the table independently of the drive unit. The                           EMBODIMENTS
+drive unit has an ultrasonic motor for driving the table, a 35
+
+pre-load mechanism for pressing the ultrasonic motor against
+
+the table, and separating means for separating the ultrasonic      Embodiments of the present invention Will be described
+
+motor from the table. That is, the ?xing means does not act to With reference to the accompanying draWings. HoWever, it is
+
+separate the ultrasonic motor; the ultrasonic motor is sepa to be noted that the embodiments described beloW are only
+rated from the table by the separating means provided inde 40 example of implementation of the present invention not lim
+
+pendently of the ?xing means. At least a pair of groups of the iting of the present invention. Components common to the
+
+drive units and the ?xing means are provided to form a struc       draWings are indicated by the same reference numerals.
+
+ture in Which the table is pinched betWeen the pair of the         The embodiment described beloW is an example of appli
+
+groups of the drive units and the ?xing means. In a case Where cation of the present invention to a scanning electron micro
+
+the stage has tWo tables: X- and Y-tables, the four (tWo pairs 45 scope (critical dimension SEM) With Which the siZe of a ?ne
+
+of) drive units and the four ?xing means respectively pinch pattern formed on a Wafer (specimen) surface. Needless to
+
+the corresponding tables by side surfaces of the tables.           say, the stage device according to the present invention can be
+
+The present invention further provides an electron micro applied to charged particle beam apparatuses in general, hav
+
+scope having a stage mechanism comprising the above-de ing a stage device moving tWo-dimensionally in X- andY-di
+
+scribed construction.                                              50 rections While clutching a holder holding a specimen, e.g.,
+
+The present invention also provides a method of control electron beam draWing apparatuses and focused ion beam
+
+ling positioning of a stage mechanism in Which a control (FIB) apparatuses as Well as to SEMs, and to optical inspec
+
+section of an electron microscope controls acceleration, tion apparatuses or the like for performing inspection as to
+
+deceleration and positioning of a stage performed by an ultra foreign materials and defects by using light scattering or the
+
+sonic motor, and an operation to ?x the stage performed by a 55 like as Well as to charged particle beam apparatuses. The
+
+stage ?xing mechanism using a pieZoelectric actuator. At the specimen held on the holder is not limited to Wafers.
+
+time of positioning control, after the stage has been stopped at   FIG. 1 is a diagram schematically shoWing the construction
+
+a positioning target position, the control section operates the    of a critical dimension SEM. The critical dimension SEM
+stage ?xing mechanism to separate the ultrasonic motor from        according to the present invention has a charged particle
+
+an object to be driven. Another form of the method may be 60 optical system 1 and a specimen chamber 2 in Which a stage
+
+such that, after the stage has been stopped at a positioning       described beloW is housed and a Wafer (specimen) 7 is moved
+target position, the control section operates motor separating     to an arbitrary inspection position. In the critical dimension
+means provided separately from the stage ?xing mechanism           SEM, a charged particle beam emitted from a charged particle
+
+to separate the ultrasonic motor from an object to be driven. beam source is converged into a thin beam on the Wafer 7; the
+
+The other features of the present invention Will become 65 Wafer 7 is scanned With this beam; secondary electrons or the
+
+apparent from the beloW-described best mode for carrying out like emitted from the Wafer 7 are detected to obtain a scanned
+
+the present invention and the accompanying draWings.               image of the Wafer 7; and the siZe of a ?ne pattern of a 30 nm
+                                      US 7,791,043 B2
+
+                              5                                                 6
+
+Width at the minimum formed on the Wafer from a signal               The ultrasonic motor 13 has a pair of pieZoelectric actua
+                                                                  tors ?xed, With a predetermined angle set therebetWeen. Fore
+representing the scanned image.
+
+The specimen chamber 2 is used in a vacuum state at about ends of the pieZoelectric actuators are ?xed to the common
+
+10'4 pascal by a vacuum pump (not shoWn in FIG. 1) or the drive chip 14. When voltages in phase opposition to each
+
+like. The stage placed in the specimen chamber 2 is a mecha other are applied to the pair of pieZoelectric actuators, a
+
+nism in Which any point on the Wafer is moved and positioned displacement of the drive chip 14 in the stage feed direction is
+
+to a critical dimension measuring position to Which the elec caused by a circular motion. By application of voltages in
+
+tron beam is irradiated. The stage has a base 3, an X-table 4, phase With each other, a displacement in the pressing direc
+
+a Y-table 5 and a chuck mechanism 6. The X-table 4 and the tion perpendicular to the feed direction. By using these dis
+
+Y-table 5 are provided on the base 3. The stage moves tWo         placement, the ultrasonic motor 13 can be used as an ultra
+
+dimensionally in the X- and Y-directions. A chuck mecha sonic linear actuator.
+
+nism 6 is provided on the X-table 4. The Wafer 7 is ?xed by the   The pieZoelectric brake 15 is provided on the base member
+
+chuck mechanism 6.                                                12 in parallel With the ultrasonic motor 13. The pieZoelectric
+
+   The above-described construction is common to ?rst and         brake 15 is placed so that the center ofthe movement stroke of
+second embodiments described beloW. Stage mechanisms              its fore end generally coincides With the fore end position of
+according to the ?rst and second embodiments Will be              the drive chip 14 While the stage is driven. This placement
+described beloW in detail.                                        enables the fore end of the pieZoelectric brake 15 to be moved
+                                                                  either forWard or backWard relative to the fore end ofthe drive
+
+                    First Embodiment                                 chip 14.
+                                                                  20 FIGS. 3(b) and 3(0) shoW comparison betWeen the state of
+
+FIG. 2 is a diagram shoWing the basic construction of the the stage drive unit 8 When the stage is driven and the state of
+stage mechanism according to the ?rst embodiment of the the stage drive unit 8 When the stage is ?xed. When the stage
+present invention. The stage is constituted by the Y-table 5 is driven in the state shoWn in FIG. 3(b), the pieZoelectric
+capable of moving in theY-direction in the specimen chamber brake 15 is in a contracted state, and only the ultrasonic motor
+2, and the X-table 4 capable of moving in the X-direction 25 13 contacts the table to perform driving.
+                                                                  When the stage is ?xed in the state shoWn in FIG. 3(c), the
+above the base 3. Only theY-table 5 is shoWn in FIG. 2. Stage
+drive units 8 each having both a drive mechanism for accel pieZoelectric brake 15 is extended to cause the fore end to
+erating/decelerating and positioning and a ?xing mechanism protrude beyond the fore end of the ultrasonic motor 13. That
+for ?xing the stage moves the X-table 4 and the Y-table 5 to is, the pieZoelectric brake 15 is extended to brought into
+                                                                  abutment against the table 5 and is further extended to press
+accelerate, decelerate, position, stop and ?x the stage. The      the table 5. The drive chip 14 is then separated from the table.
+
+stage drive units 8 are placed so as to pinch the stage to enable When the table 5 is further pressed, a rear end portion of the
+execution ofacceleration/deceleration, positioning and ?xing pieZoelectric brake 15 presses the base member 12 backWard.
+of the stage With stability.
+                                                                  Since the pre-load mechanism 9 is elastically deformable in
+In general, in a stage drive mechanisms using an ultrasonic 35 the pressing direction, a pressure higher than the pressure
+motor, a pre-load mechanism 9 for resiliently pressing the necessary for ?xing the table 5 is absorbed by the pre-load
+ultrasonic motor against a movable portion is used for the mechanism 9. As a result, only the fore end of the pieZoelec
+reason described beloW. That is, While the stroke of expan tric brake 15 contacts the table 5. Thus, the drive chip 14 ofthe
+sion/contraction ofthe pieZoelectric actuator is small, several ultrasonic motor is separated from the table by the pieZoelec
+microns or less, there is a limit to the machining accuracy of 40 tric brake 15 and a surplus pressure applied to the table 5 is
+the stage mechanism. Due to an error in the machining accu released by the pre-load mechanism 9. Therefore, the stage
+racy, there is a possibility of the ultrasonic motor differently can be ?xed Without causing a drift and can be positioned With
+contacting the movable portion of the stage drive unit 8 With high accuracy.
+respect to the same movement stroke.
+                                                                  The operation of the present embodiment When executed
+
+The pre-load mechanism 9 in the present embodiment is 45 by means of a softWare program Will be described. FIG. 5(a)
+
+constituted by a combination of tWo types of springs: plate is a ?owchart for explaining the stage control operation
+
+springs 11 and coil springs 10 Which support and press a base according to the ?rst embodiment. Each step in the ?owchart
+
+member 12 on Which the stage drive unit 8 is mounted. The         is executed by a control system (including a CPU) (not
+                                                                  shoWn) unless otherWise speci?ed.
+coil springs 10 produce a pressing force. The plate springs 11
+
+limit changes in attitude ofthe stage drive unit 8 in the rotating 50 In step S101, after the completion of the preceding critical
+
+and other directions, and limit a displacement in the feed dimension measurement, the voltage applied to the pieZoelec
+
+direction. The stage drive unit 8 is pressed against the stage tric brake 15 provided as a ?xing mechanism is turned off to
+
+With stability by the pressing force of the plate springs 11 and  undo ?xing of the stage. Subsequently, in step S102, voltage
+is supported highly stif?y in the feed direction by the plate
+                                                                  is applied to the ultrasonic motor 13 and the stage is acceler
+
+springs 11.                                                       55 ated/decelerated by the ultrasonic motor 13, thereby position
+
+FIG. 3(a) is a diagram shoWing the basic construction of ing the stage at the next critical dimension measuring posi
+
+the stage drive unit 8 according to the ?rst embodiment. As tion. After the completion of stage positioning in step S103,
+
+shoWn in FIG. 3(a), the stage drive unit 8 has the pre-load       the drive voltage to the ultrasonic motor 13 is ?xed in step
+mechanism 9 (coil springs 10 and plate springs 11), the base      S104. Subsequently, in step S105, the voltage is applied to the
+
+member 12, an ultrasonic motor 13 provided as a drive 60 pieZoelectric brake 15 provided as a ?xing mechanism. The
+mechanism, and a pieZoelectric brake 15 provided as a ?xing pieZoelectric actuator of the pieZoelectric brake 15 is thereby
+
+mechanism. FIG. 3(a) illustrates a state Where the pieZoelec extended to ?x the table and to separate the fore end of the
+
+tric brake 15 is displaced forWard relative to a drive chip 14 ultrasonic motor 13 from the drive surface. In step S106,
+
+attached to the fore end of the ultrasonic motor, i.e., a state critical dimension measurement is executed Without being
+
+When the stage is ?xed (braked state). Also, FIG. 3(a) shoWs 65 in?uenced by any drift and vibration, by virtue of?xing ofthe
+
+a con?guration as seen from above in FIG. 3(c) described table. At this time, there is no need for Waiting for conver
+
+later.                                                            gence of residual deformation of the pieZoelectric actuator.
+                               US 7,791,043 B2
+
+                            7                                                                             8
+
+The critical dimension throughput can therefore be improved.                                              stage. Therefore, the drive voltage during the time period upto
+After the stage has been ?xed, the ultrasonic motor 13 does
+                                                                                                          the next activation of the stage may be set to any value.
+
+not contact the table upto the next activation of the stage.                                              <Consideration of In?uence of Residual Deformation of
+                                                                                                          Piezoelectric Actuator>
+Therefore, the drive voltage during the time period upto the
+                                                                                                            In use in ordinary table positioning or the like, the ultra
+next activation of the stage may be set to any value.
+
+Second Embodiment                                                                                         sonic motor is considered to have, because of its solid contact
+
+                                                                                                          structure, the advantage of being used as a ?xing mechanism
+
+   In the construction ofthe stage mechanism according to the                                             after the completion of positioning Without being changed.
+second embodiment, in contrast to the ?rst embodiment, the
+piezoelectric brake 15 is not provided integrally With the base                                           Therefore, a method of use such that the motor is separated
+
+                                                                                                          after positioning is not adopted.
+
+member 12. Instead, a different mechanism for separating the                                              HoWever, in the ?eld Where a drift on the nanometer order
+
+ultrasonic motor from the drive surface is provided.                                                      is critical as in measurement of an extremely ?ne semicon
+
+  FIGS. 4(a) and 4(b) shoWs structures in Which the piezo ductor pattern, residual deformation characteristics of photo
+electric brake 15 provided as a ?xing mechanism is placed 15 electric actuator raises a problem.
+
+separately from the pre-load mechanism 9 provided With the                                                FIG. 6 is a diagram shoWing ordinary characteristics of the
+
+ultrasonic motor 13. As shoWn in FIGS. 4(a) and 4(b), a                                                   piezoelectric actuator used in the ultrasonic motor 13 and the
+separating mechanism 16 for separating the ultrasonic motor                                               piezoelectric brake 15 provided also in the present invention.
+
+15 from the stage is additionally provided in the pre-load The abscissa represents elapsed time t, and the ordinate rep
+
+mechanism 9. A piezoelectric actuator is used in the separat 20 resents the amount of deformation AL of the piezoelectric
+
+ing mechanism 16. HoWever, a separating mechanism using actuator.
+
+any other mechanical construction may alternatively be used.                                              As can be understood from FIG. 6, the piezoelectric actua
+
+When the stage is driven in the state shoWn in FIG. 4(a), the tor has such a characteristic as to extend/contract by applica
+
+piezoelectric brake 15 provided as a ?xing mechanism and tion/removal of a voltage. The piezoelectric actuator has an
+
+the separating mechanism 16 are in a retracted state, and only 25 extremely high response speed and deforms instantaneously
+
+the ultrasonic motor 13 contacts the table to perform driving. When a voltage is applied. HoWever, as is Widely knoWn, a
+
+When the stage is ?xed in the state shoWn in FIG. 4(b), the residual deformation of the piezoelectric actuator is caused
+piezoelectric brake 15 provided as a ?xing mechanism is With a lapse of time thereafter, although the amount of the
+extended to be brought into contact With the table, thereby residual deformation is small.
+                                                                                                      30
+                                                                                                          Also, since the ultrasonic motor 13 has the piezoelectric
+?xing the stage. Simultaneously, a voltage is applied to the
+
+separating mechanism 16 to move the base member 12 back                                                   actuator placed so as to form an angle not equal to 90 degrees
+Ward. The ultrasonic motor 13 is thereby mechanically sepa                                                With respect to the pressing direction, the above-described
+
+rated from the drive surface, so that the ultrasonic motor 13 is residual deformation can be a cause of a drift in the stage drive
+
+not pressed against the drive surface by the action of the 35 direction.
+pre-load mechanism 9.                                                                                     A residual deformation derived from the photoelectric ele
+
+   The operation of the present embodiment When executed                                                  ment is also caused in the piezoelectric brake 15. HoWever,
+by means of a softWare program Will be described. FIG. 5(b)                                               the direction of the residual deformation is perpendicular to
+
+is a ?owchart for explaining the stage control operation the stage drive direction, so that the residual deformation
+according to the second embodiment. Each step in the ?oW 40 causes only a change in the pressing force and is absorbed by
+chart is executed by a control system (including a CPU) the pre-load mechanism 9. Therefore the residual deforma
+
+unless otherWise speci?ed.                                                                                tion does not in?uence a drift in the stage drive direction.
+
+In step S201, after the completion of the preceding critical                                              Thus, according to the present invention, a stage mecha
+
+dimension measurement, the voltage applied to the piezoelec nism not in?uenced by any drift derived from a piezoelectric
+tric brake 15 provided as a ?xing mechanism is turned off to 45 actuator residual deformation can be implemented.
+
+undo ?xing of the stage. Subsequently, in step S202, voltage                                              The sectional area of the piezoelectric actuators used for
+
+is applied to the ultrasonic motor 13 and the stage is acceler the ultrasonic motor 13 cannot be increased because the
+
+ated/decelerated by the ultrasonic motor 13, thereby position piezoelectric is required to response at high speed. HoWever,
+
+ing the stage at the next critical dimension measuring posi the piezoelectric actuator used in the piezoelectric brake 15
+
+tion. After the completion of stage positioning in step S203, 50 may only have a response speed of about 100 milliseconds
+
+the drive voltage to the ultrasonic motor 13 is ?xed in step and the element having an increased sectional area can be
+
+S204. Subsequently, in step S205, the voltage is applied to the used. Consequently, in comparison With a case Where the
+
+piezoelectric brake 15 provided as a ?xing mechanism. The ultrasonic motor 13 is singly used, the stop stiffness can be
+
+piezoelectric actuator of the piezoelectric brake 15 is thereby increased to improve the vibration characteristics ofthe stage.
+
+extended to ?x the table. In step S206, the separating mecha 55 In actual use of the present invention, the piezoelectric brake
+
+nism 16 is operated to separate the fore end of the ultrasonic 15 Was used to enable the stage to have an increased mechani
+
+motor 13 from the drive surface. It is necessary to execute this cal resonance point in the feed direction upto 250 Hz in
+
+separating operation immediately after ?xing the ultrasonic contrast to a corresponding mechanical resonance point of 70
+
+motor drive voltages in order to avoid a change of the table Hz in a case Where only the ultrasonic motor 13 Was used.
+
+positioning position due to a drift of the ultrasonic motor 13. 60 Also, the stage drift can be limited to 0.5 nanometers/second
+
+In step S207, critical dimension measurement is executed after a lapse of 1 second from a stop of the stage.
+
+Without being in?uenced by any drift and vibration, by virtue                                                While each of the embodiments has the construction in
+of ?xing of the table. At this time, there is no need for Waiting                                         Which the tables are driven by the stage drive units 8 provided
+
+for convergence of residual deformation of the piezoelectric on the non-moving base side, a different stage construction
+
+actuator. The critical dimension throughput can therefore be 65 may alternatively be adopted in Which similar drive units are
+
+improved. After the stage has been ?xed, the ultrasonic motor provided on the moving table side to apply a drive force
+
+13 does not contact the table upto the next activation of the betWeen the table and the base or ?x the table. Also With this
+                          US 7,791,043 B2
+
+              9                                                                              10
+
+arrangement, the same effects as described above can be is caused betWeen the drive chip and the table. Under such a
+
+expected and a high-performance electron micro scope can be condition, considerable generation of dust, Wear and surface
+
+implemented.                                                       roughening occur easily.
+
+                                                                   In the ?rst embodiment of the present invention, the ultra
+
+              CONCLUSION                                          5 sonic motor and the ?xing mechanism are provided in parallel
+
+                                                                   With each other on the pre-load mechanism to enable the
+
+                                                                               ultrasonic motor to be separated from the drive surface When
+  The present invention can be used as a stage mechanism for the ?xing mechanism operates. Therefore, no such problems
+?xing a stage in an ordinary electron microscope. However, as those described above occur. Also, in the second embodi
+
+because of enabling high-accuracy positioning, the present 10 ment of the present invention, a mechanism for separating the
+invention is suitable for use in a specimen stage mechanism ultrasonic motor is provided separately from the ?xing
+
+particularly used in an electron micro scope for inspection and mechanism to be able to avoid the above-described problems.
+
+measurement in the ?eld of semiconductor device manufac               What is claimed is:
+                                                                     1. A stage mechanism comprising a stage including a table,
+ture.                                                              a base member on Which the table is mounted, and a drive unit
+
+   In the stage mechanism and the electron microscope
+
+according to the present invention, an ultrasonic motor and a      for driving the stage,
+
+?xing mechanism capable of increasing stop stiffness are             Wherein the drive unit has an ultrasonic motor for driving
+
+combined integrally With each other in a mechanism for driv        the table, a pre-load mechanism for pressing the ultra
+
+ing a stage. That is, a structure in Which an ultrasonic motor     sonic motor against the table, and ?xing means for ?xing
+
+and a pieZoelectric actuator of a ?xing mechanism are              the table, and
+
+mounted together in a pre-load mechanism for pressing the          Wherein the ?xing means is mounted on the pre-load
+
+ultrasonic motor against a member to be driven is used; the        mechanism so as to be movable integrally With the ultra
+
+pieZoelectric actuator in the ?xing mechanism is extended to       sonic motor.
+
+press the stage When the stage is ?xed by the ?xing mecha             2. The stage mechanism according to claim 1, Wherein at
+nism after acceleration/deceleration and positioning of the        least a pair of the drive units are provided to form a structure
+stage by the drive mechanism; and, simultaneously With this        in Which the table is pinched betWeen the pair of the drive
+pressing, the ultrasonic motor is separated from the table (the    units.
+
+member to be driven) of the stage. In this Way, the member to        3. The stage mechanism according to claim 1, Wherein the
+be driven is prevented from being in?uenced by a residual          ?xing means is constituted by a pieZoelectric actuator;
+deformation of the pieZoelectric actuators constituting the
+ultrasonic motor, thus preventing transmission of a drift to the     the pre-load mechanism has a positioning member ?xed on
+member to be driven.                                                     the base member, a seat member to Which the ultrasonic
+                                                                         motor and the ?xing means are attached, and an elastic
+
+   Consequently, a stage mechanism and an electron micro              member for elastically supporting the seat member on
+scope capable of limiting noise due to a drift or vibration 35
+                                                                     the positioning member; and
+When the stage is stopped and having high positioning accu         the ?xing means ?xes the table by pressing the table and
+
+racy can be provided. Also, a reduction in the time during         separates the ultrasonic motor from the table.
+
+Which settlement of the stage is Waited for can be achieved by     4. The stage mechanism according to claim 3, Wherein the
+
+limiting a drift speci?c to the ultrasonic motor, so that the ?xing means ?xes the table by its open end of the pieZoelec
+
+throughput of the electron microscope can be improved. 40 tric actuator not ?xed on the seat member, and presses the seat
+   Positioning and stopping of the stage as Well as accelera member by its ?xed end ?xed on the seat member to separate
+
+tion and deceleration can be performed only by the ultrasonic the ultrasonic motor from the table.
+
+motor. HoWever, With ?xing of the stage by the ultrasonic          5. A stage mechanism comprising a stage including a table,
+
+motor only, problems arise such that (l) a drift speci?c to the a base member on Which the table is mounted, a drive unit for
+
+ultrasonic motor occurs in the stage drive dire direction due to driving the stage, and ?xing means for ?xing the table,
+
+the above-described pieZoelectric actuator residual deforma        Wherein the drive unit has an ultrasonic motor for driving
+tion problem, (2) suf?cient ?xing stiffness cannot be                the table, a pre-load mechanism for pressing the ultra
+obtained, and the like. If the arrangement according to the           sonic motor against the table, and separating means for
+present embodiments is adopted, these problems can be                 separating the ultrasonic motor from the table.
+
+solved.                                                           50 6. The stage mechanism according to claim 5, Wherein at
+
+Apart from the present invention, a method of applying a least a pair of groups of the drive units and the ?xing means
+
+pieZoelectric actuator or the like separately from the ultra each of Which groups are provided to form a structure in
+
+sonic motor is conceivable as an ordinary ?xing method. Which the table is pinched betWeen the pair of the groups of
+
+HoWever, it is necessary to elastically pressing the ultrasonic the drive units and the ?xing means.
+
+motor against the drive surface by using a pre-load mecha 55 7. The stage mechanism according to claim 5, Wherein the
+
+nism in order to uniformiZe surface contact through the feed ?xing means is constituted by a pieZoelectric actuator and
+
+stroke. Therefore, even When the drive chip is retracted by ?xed on the base member;
+
+deforming the ultrasonic motor itself by the drive voltage, the    the pre-load mechanism has a positioning member Which is
+
+ultrasonic motor cannot be separated from the drive surface        ?xed on the base member, and to Which the separating
+
+because it is pressed against the surface by the action of the 60  means is attached, a seat member to Which the ultrasonic
+pre-load mechanism. As a result, both the ultrasonic motor         motor is attached, and an elastic member for elastically
+and the pieZoelectric brake simultaneously act on the stage
+after positioning, and there is a possibility of a force derived   supporting the seat member on the positioning member;
+                                                                   the ?xing means ?xes the table by pressing the table; and
+
+from a residual deformation speci?c to the ultrasonic motor        the separating means separates the ultrasonic motor from
+                                                                      the table after the action of the ?xing means on the table.
+being applied in the stage drive direction against ?xing With 65
+                                                                   8. The stage mechanism according to claim 5, Wherein the
+the pieZoelectric brake 15 to cause ?ne vibration of the stage.
+
+Also, by the action of the forces contrary to each other, a slip separating means is constituted by a piezoelectric actuator.
+                          US 7,791,043 B2
+
+                      11                                            12
+
+  9. The stage mechanism according to claim 1, wherein the          operating the control section so that after the stage has been
+stage has an X-table capable of moving in the X-direction on          stopped at a positioning target position, the stage ?xing
+
+a tWo-dimensional plane and a Y-table capable of moving in          mechanism is operated to separate the ultrasonic motor
+
+the Y-direction, and                                                from an object to be driven.
+
+a plurality of the drive units are provided to enable tWo 5 12. A method of controlling positioning of a stage mecha
+
+      dimensional movement of the stage in such a manner            nism in Which a control section controls acceleration, decel
+      that at least one of the drive units drives the X-table, and  eration and positioning of a stage performed by an ultrasonic
+      at least one of the drive units drives the Y-table.
+                                                                    motor, and an operation to ?x the stage performed by a stage
+   10. An electron microscope comprising the stage mecha            ?xing mechanism using a pieZoelectric actuator, the method
+nism according to claim 1.
+                                                                    comprising:
+   11. A method of controlling positioning of a stage mecha
+                                                                       operating the control section so that after the stage has been
+                                                                         stopped at a positioning target position, motor separat
+
+nism in Which a control section controls acceleration, decel        ing means provided separately from the stage ?xing
+                                                                    mechanism is operated to separate the ultrasonic motor
+eration and positioning of a stage performed by an ultrasonic
+                                                                    from an object to be driven.
+motor, and an operation to ?x the stage performed by a stage 15
+?xing mechanism using a pieZoelectric actuator, the method
+
+comprising:                                                         * * * * *
+
