@@ -1,0 +1,1 @@
+model,session,start_Y,start_T,step,stage,capture_timestamp,estimate_Y,estimate_T,command_Y,command_T,move_start_timestamp,move_end_timestamp,settled_timestamp,final_measured_Y,final_measured_T,measurement_uncertainty_Y,measurement_uncertainty_T,success,failure_reason,total_ms

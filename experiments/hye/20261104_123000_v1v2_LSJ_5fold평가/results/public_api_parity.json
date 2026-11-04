@@ -1,0 +1,26 @@
+[
+  {
+    "version": 1,
+    "stage": "joint",
+    "sample_images": 12,
+    "max_public_api_vs_cached_prediction_difference": 0.0
+  },
+  {
+    "version": 1,
+    "stage": "control",
+    "sample_images": 12,
+    "max_public_api_vs_cached_prediction_difference": 0.0
+  },
+  {
+    "version": 2,
+    "stage": "joint",
+    "sample_images": 12,
+    "max_public_api_vs_cached_prediction_difference": 0.0
+  },
+  {
+    "version": 2,
+    "stage": "control",
+    "sample_images": 12,
+    "max_public_api_vs_cached_prediction_difference": 0.0
+  }
+]
