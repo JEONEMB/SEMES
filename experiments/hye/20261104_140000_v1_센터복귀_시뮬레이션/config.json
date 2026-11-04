@@ -1,0 +1,31 @@
+﻿{
+    "source_sha256":  "79C9A110CD42C537113F28DAFCFBDF273DB3BF4F0D28DD1B1392B0DB092A2CC9",
+    "axis_speed_assumed_units_per_second":  1,
+    "initial_images":  571,
+    "later_observation":  "initial features plus train-only polynomial difference, optional within-group training residual",
+    "repeats_per_initial_image":  5,
+    "settle_assumed_ms":  200,
+    "world_degrees":  [
+                          1,
+                          2
+                      ],
+    "noise_fallback_1014":  "pooled repeated training groups from other dates",
+    "controller":  "v1 joint retrained GLS + v1 control T0 four-Y-branch adaptation",
+    "assumed_motion_noise_Y_sd":  0.005,
+    "motion_overhead_assumed_ms":  50,
+    "assumed_motion_noise_T_sd":  0.002,
+    "camera_assumed_ms":  100,
+    "noise_neighbor_limit":  20,
+    "scoring_abs_T":  0.01,
+    "Y_move_limit":  0.5,
+    "physical_robot_executed":  false,
+    "T_tick":  0.01,
+    "first_observation":  "same actual initial image in all five trials",
+    "joint_switch_estimate_abs_T":  0.005,
+    "control_stop_estimate_abs_Y":  0.025,
+    "scoring_abs_Y":  0.045,
+    "Y_tick":  0.05,
+    "max_steps":  20,
+    "seed":  20261104,
+    "T_move_limit":  1
+}
