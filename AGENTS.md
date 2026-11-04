@@ -47,7 +47,7 @@ HTML 보고서를 작성·수정할 때는 [보고서 기준 형식](docs/report
 
 ## Git 작업 흐름 (hye, 강제)
 
-**통합 브랜치에서 직접 작업하지 않는다.** `chore/hye/merge`, `dev`, `main`은 보호 브랜치이며 [tool/hye/githooks](tool/hye/githooks)의 `pre-commit`이 커밋을, `pre-push`가 push를 거부한다. clone 직후 한 번 `git config core.hooksPath tool/hye/githooks`로 설치한다(저장소마다 1회, worktree 전체에 적용된다).
+**통합 브랜치에서 직접 작업하지 않는다.** `chore/hye/merge`, `dev`, `main`은 보호 브랜치이며 [tool/hye/githooks](tool/hye/githooks)의 `pre-commit`이 커밋을, `pre-push`가 push를 거부한다. clone 직후 한 번 설치한다. `cp tool/hye/githooks/pre-commit tool/hye/githooks/pre-push .git/hooks/ && chmod +x .git/hooks/pre-commit .git/hooks/pre-push` (저장소마다 1회, 모든 worktree와 모든 브랜치에서 켜진다. `core.hooksPath`를 저장소 안 경로로 두면 그 파일이 없는 브랜치에서 훅이 꺼지므로 쓰지 않는다.)
 
 한 작업의 전체 수명은 다음 순서를 벗어나지 않는다.
 
