@@ -40,7 +40,6 @@ int TestYMotor(void)
     CHECK(TIM3->PSC == 15 && !(TIM3->CR1 & TIM_CR1_CEN));
     CHECK(YMotor_Start(0,0,100) == Y_MOTOR_BAD_ARGUMENT);
     CHECK(YMotor_Start(2,1,100) == Y_MOTOR_BAD_ARGUMENT);
-    CHECK(YMotor_Start(0,1601,100) == Y_MOTOR_BAD_ARGUMENT);
     CHECK(YMotor_Start(0,1,15) == Y_MOTOR_BAD_ARGUMENT);
     CHECK(YMotor_Start(0,1,3201) == Y_MOTOR_BAD_ARGUMENT);
 #if !Y_MOTOR_OUTPUT_ALLOWED
@@ -76,7 +75,7 @@ int TestYMotor(void)
     YMotor_IRQHandler();
     YMotor_GetStatus(&status); CHECK(status.completed_pulses == 3);
     CHECK((TIM3->CCMR1 & TIM_CCMR1_OC1M) == TIM_OCMODE_FORCED_INACTIVE);
-    const unsigned counts[] = {1, Y_MOTOR_MAX_PULSES};
+    const unsigned counts[] = {1, 1601};
     for (unsigned c = 0; c < 2; ++c) {
         unsigned before = rises;
         CHECK(YMotor_Start(0, counts[c], c ? 3200 : 16) == Y_MOTOR_OK);
@@ -85,6 +84,39 @@ int TestYMotor(void)
         CHECK(status.state == Y_MOTOR_DONE && status.completed_pulses == counts[c]);
         CHECK(rises - before == counts[c] && status.count_exact);
     }
+    /* Larger finite request: model completed timer periods without ticking
+     * every microsecond (waveform behavior is tested above). */
+    CHECK(YMotor_Start(0,16000,1600) == Y_MOTOR_OK);
+    for (unsigned p = 0; p < 16000; ++p) {
+        CHECK(TIM3->CR1 & TIM_CR1_CEN);
+        TIM3->CR1 &= ~TIM_CR1_CEN;
+        TIM3->SR |= TIM_SR_UIF;
+        YMotor_IRQHandler();
+    }
+    YMotor_GetStatus(&status);
+    CHECK(status.state == Y_MOTOR_DONE && status.completed_pulses == 16000);
+    CHECK(YMotor_Start(0,UINT32_MAX,160) == Y_MOTOR_OK);
+    YMotor_GetStatus(&status);
+    CHECK(status.requested_pulses == UINT32_MAX);
+    YMotor_Stop(); Pulse(); YMotor_IRQHandler();
+    YMotor_GetStatus(&status);
+    CHECK(status.state == Y_MOTOR_STOPPED && status.completed_pulses == 1);
+    CHECK(YMotor_Start(0,10000,3200) == Y_MOTOR_OK);
+    Pulse(); YMotor_IRQHandler(); /* settle initial delay */
+    YMotor_Decelerate();
+    for (unsigned p=0;p<700 && (TIM3->CR1 & TIM_CR1_CEN);++p) {
+        uint32_t old_period=TIM3->ARR;
+        YMotor_Decelerate(); /* repeated STOP must not restart the ramp */
+        Pulse(); YMotor_IRQHandler();
+        CHECK(!(TIM3->CR1 & TIM_CR1_CEN) || TIM3->ARR>=old_period);
+    }
+    YMotor_GetStatus(&status);
+    CHECK(status.state==Y_MOTOR_STOPPED && status.completed_pulses>2 &&
+          status.completed_pulses<=642 && status.count_exact && !status.enabled);
+    CHECK(YMotor_Start(0,2,3200) == Y_MOTOR_OK);
+    YMotor_Decelerate(); Pulse(); YMotor_IRQHandler(); Pulse(); YMotor_IRQHandler();
+    YMotor_GetStatus(&status);
+    CHECK(status.state==Y_MOTOR_STOPPED && status.completed_pulses==2); /* never pass target */
     CHECK(YMotor_Start(0,10,100) == Y_MOTOR_OK);
     Pulse(); YMotor_IRQHandler();
     YMotor_Stop(); Pulse(); YMotor_IRQHandler();
@@ -98,7 +130,7 @@ int TestYMotor(void)
     YMotor_Abort(); YMotor_GetStatus(&status);
     CHECK(status.state == Y_MOTOR_ABORTED && !status.count_exact && !status.enabled);
     CHECK(YMotor_Start(0,10,100) == Y_MOTOR_OK);
-    gpio.IDR = 2; YMotor_Poll(); YMotor_GetStatus(&status);
+    gpio.IDR = 1; YMotor_Poll(); YMotor_GetStatus(&status);
 #if Y_MOTOR_USE_LIMITS
     CHECK(status.state == Y_MOTOR_LIMIT && !status.enabled && !status.count_exact);
 #else
@@ -174,7 +206,7 @@ int TestYTest(void)
     YMotor_Abort();
     CHECK(YTest_Poll(&reply) && reply.seq == 8 && reply.payload[0] == Y_MOTOR_ABORTED);
     CHECK(!reply.payload[2]);
-    request.seq = 9; gpio.IDR = 1;
+    request.seq = 9; gpio.IDR = 2;
 #if Y_MOTOR_USE_LIMITS
     CHECK(YTest_Handle(&request, &reply) && reply.type == RS_NAK && reply.payload[1] == RS_FAULT);
 #endif

@@ -4,6 +4,32 @@
 static volatile YMotorStatus motor;
 static uint32_t period_us;
 static volatile uint8_t stop_requested;
+static uint32_t stop_hz;
+static uint8_t homing_mode, homing_stop_high;
+
+static int Guard(uint8_t dir_high)
+{
+    uint8_t bits = homing_mode ? YMotorPort_RawLimits() : YMotorPort_Limits();
+    if (bits == 3U) return Y_MOTOR_LIMIT;
+    if (homing_mode) {
+        /* Seeking left may depart the right end; release goes right. */
+        if (dir_high && (bits & 2U)) return Y_MOTOR_LIMIT;
+        if ((bits & 1U) == homing_stop_high) return Y_MOTOR_SWITCH;
+        return 0;
+    }
+    return bits & (dir_high ? 2U : 1U) ? Y_MOTOR_LIMIT : 0;
+}
+
+static uint32_t SqrtFloor(uint32_t value)
+{
+    uint32_t lo = 0U, hi = Y_MOTOR_MAX_HZ;
+    while (lo < hi) {
+        uint32_t mid = (lo + hi + 1U) / 2U;
+        if (mid * mid <= value) lo = mid;
+        else hi = mid - 1U;
+    }
+    return lo;
+}
 
 static void Enable(uint8_t enabled)
 {
@@ -59,18 +85,23 @@ YMotorResult YMotor_SetEnabled(uint8_t enabled)
     return result;
 }
 
-YMotorResult YMotor_Start(uint8_t dir_high, uint32_t pulses, uint32_t frequency_hz)
+static YMotorResult Start(uint8_t dir_high, uint32_t pulses, uint32_t frequency_hz,
+                          uint8_t is_home, uint8_t stop_high)
 {
     uint32_t key = YMotorPort_Lock();
     YMotorResult result = Y_MOTOR_OK;
     if (!motor.ready) { result = Y_MOTOR_NOT_READY; }
     else if (motor.state == Y_MOTOR_RUNNING) { result = Y_MOTOR_BUSY; }
-    else if (dir_high > 1U || pulses == 0U || pulses > Y_MOTOR_MAX_PULSES ||
+    else if (dir_high > 1U || pulses == 0U ||
              frequency_hz < Y_MOTOR_MIN_HZ || frequency_hz > Y_MOTOR_MAX_HZ) {
         result = Y_MOTOR_BAD_ARGUMENT;
     } else if (!Y_MOTOR_OUTPUT_ALLOWED) { result = Y_MOTOR_LOCKED; }
-    else if (YMotorPort_Limits()) { result = Y_MOTOR_LIMIT_ACTIVE; }
     else {
+        homing_mode = is_home; homing_stop_high = stop_high;
+        int guard = Guard(dir_high);
+        if (guard == Y_MOTOR_LIMIT) {
+            YMotorPort_Unlock(key); return Y_MOTOR_LIMIT_ACTIVE;
+        }
         period_us = (1000000U + frequency_hz - 1U) / frequency_hz;
         motor.requested_pulses = pulses;
         motor.completed_pulses = 0U;
@@ -79,6 +110,10 @@ YMotorResult YMotor_Start(uint8_t dir_high, uint32_t pulses, uint32_t frequency_
         motor.count_exact = 1U;
         motor.state = Y_MOTOR_RUNNING;
         stop_requested = 0U;
+        if (guard == Y_MOTOR_SWITCH) {
+            Finish(Y_MOTOR_SWITCH);
+            YMotorPort_Unlock(key); return Y_MOTOR_OK;
+        }
         YMotorPort_Direction(dir_high);
         Enable(1U);
         /* First rising edge follows >=2ms of DIR/ENN settling. */
@@ -90,6 +125,14 @@ YMotorResult YMotor_Start(uint8_t dir_high, uint32_t pulses, uint32_t frequency_
     }
     YMotorPort_Unlock(key);
     return result;
+}
+
+YMotorResult YMotor_Start(uint8_t dir_high, uint32_t pulses, uint32_t hz)
+{ return Start(dir_high,pulses,hz,0U,0U); }
+YMotorResult YMotor_StartHoming(uint8_t dir_high, uint32_t pulses, uint32_t hz, uint8_t stop_high)
+{
+    if (stop_high > 1U) return Y_MOTOR_BAD_ARGUMENT;
+    return Start(dir_high,pulses,hz,1U,stop_high);
 }
 
 void YMotor_Stop(void)
@@ -107,10 +150,24 @@ void YMotor_Abort(void)
     YMotorPort_Unlock(key);
 }
 
+void YMotor_Decelerate(void)
+{
+    uint32_t key = YMotorPort_Lock();
+    /* A retransmitted STOP must not reset the deceleration to full speed. */
+    if (motor.state == Y_MOTOR_RUNNING && stop_requested == 0U) {
+        stop_hz = motor.frequency_hz;
+        stop_requested = 2U;
+    } else if (motor.state != Y_MOTOR_RUNNING) Enable(0U);
+    YMotorPort_Unlock(key);
+}
+
 void YMotor_Poll(void)
 {
     uint32_t key = YMotorPort_Lock();
-    if (motor.state == Y_MOTOR_RUNNING && YMotorPort_Limits()) { Abort(Y_MOTOR_LIMIT); }
+    if (motor.state == Y_MOTOR_RUNNING) {
+        int guard = Guard(motor.dir_high);
+        if (guard) Abort((YMotorState)guard);
+    }
     YMotorPort_Unlock(key);
 }
 
@@ -127,8 +184,21 @@ void YMotor_IRQHandler(void)
     if (!YMotorPort_Completed()) { return; }
     if (motor.state != Y_MOTOR_RUNNING) { return; }
     ++motor.completed_pulses;
-    if (YMotorPort_Limits()) { Finish(Y_MOTOR_LIMIT); }
-    else if (stop_requested) { Finish(Y_MOTOR_STOPPED); }
+    int guard = Guard(motor.dir_high);
+    if (guard) { Finish((YMotorState)guard); }
+    else if (stop_requested == 1U) { Finish(Y_MOTOR_STOPPED); }
+    else if (stop_requested == 2U) {
+        uint32_t squared = stop_hz * stop_hz;
+        if (motor.completed_pulses == motor.requested_pulses ||
+            squared <= 2U * Y_MOTOR_STOP_ACCEL_PPS2 + Y_MOTOR_MIN_HZ * Y_MOTOR_MIN_HZ) {
+            Finish(Y_MOTOR_STOPPED);
+        } else {
+            /* v_next^2 = v^2 - 2*a*one_step. Floor rounding never increases
+             * the stopping distance; hardware OPM still owns each pulse. */
+            stop_hz = SqrtFloor(squared - 2U * Y_MOTOR_STOP_ACCEL_PPS2);
+            YMotorPort_Arm((1000000U + stop_hz - 1U) / stop_hz);
+        }
+    }
     else if (motor.completed_pulses == motor.requested_pulses) { Finish(Y_MOTOR_DONE); }
     else { YMotorPort_Arm(period_us); }
 }

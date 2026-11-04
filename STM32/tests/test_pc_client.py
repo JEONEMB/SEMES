@@ -65,20 +65,20 @@ class ClientTests(unittest.TestCase):
         self.assertEqual(len(link.port.sent), 17)
         self.assertEqual(link.port.sent[6:15], bytes.fromhex('01a0000000a0000000'))
 
-    def run_jog(self, active_limit):
+    def run_jog(self, active_limit, pulses=160):
         initial = struct.pack('<BBBBIIIBBBB', 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 9)
-        done = struct.pack('<BBBBIIIBBBB', 2, 1, 1, 0, 160, 160, 160, 1, 1, 1, 10)
+        done = struct.pack('<BBBBIIIBBBB', 2, 1, 1, 0, pulses, pulses, 160, 1, 1, 1, 10)
         inputs = bytes((3, 4 if active_limit else 0)) + bytes(18)
         port = FakePort(client.packet(0xB0, 4, initial) + client.packet(0x84, 5, inputs) +
                         client.packet(0x81, 10, b'\x30') + client.packet(0xB0, 10, done))
         serial = SimpleNamespace(Serial=lambda *args, **kwargs: port)
         modules = {'serial': serial, 'serial.tools': SimpleNamespace(list_ports=None)}
-        argv = ['client', '--port', 'FAKE', 'jog', '--dir', 'high']
+        argv = ['client', '--port', 'FAKE', 'jog', '--dir', 'high', '--pulses', str(pulses)]
         with mock.patch.dict(sys.modules, modules), mock.patch.object(sys, 'argv', argv), \
              mock.patch.object(client.random, 'randrange', return_value=4):
             client.main()
         expected = client.packet(0x31, 4) + client.packet(6, 5)
-        expected += client.packet(0x30, 10, struct.pack('<BII', 1, 160, 160))
+        expected += client.packet(0x30, 10, struct.pack('<BII', 1, pulses, 160))
         self.assertEqual(port.sent, expected)
 
     def test_jog_end_to_end(self):
@@ -86,6 +86,21 @@ class ClientTests(unittest.TestCase):
 
     def test_high_input_does_not_block_client(self):
         self.run_jog(True)
+
+    def test_large_counts(self):
+        for pulses in (1601, 16000, 0xffffffff):
+            self.run_jog(False, pulses)
+
+    def test_invalid_count_never_opens_port(self):
+        for pulses in (0, -1, 0x100000000):
+            open_port = mock.Mock()
+            modules = {'serial': SimpleNamespace(Serial=open_port),
+                       'serial.tools': SimpleNamespace(list_ports=None)}
+            argv = ['client', '--port', 'FAKE', 'jog', '--dir', 'high', '--pulses', str(pulses)]
+            with mock.patch.dict(sys.modules, modules), mock.patch.object(sys, 'argv', argv):
+                with self.assertRaises(SystemExit):
+                    client.main()
+            open_port.assert_not_called()
 
 
 if __name__ == '__main__':

@@ -9,7 +9,7 @@ import sys
 import time
 
 SOF = b'\xaa\x55'
-STATES = ('IDLE', 'RUNNING', 'DONE', 'STOPPED', 'ABORTED', 'LIMIT')
+STATES = ('IDLE', 'RUNNING', 'DONE', 'STOPPED', 'ABORTED', 'LIMIT', 'SWITCH')
 REASONS = {1: 'UNKNOWN_TYPE (old firmware?)', 2: 'BAD_LEN', 3: 'NOT_HOMED',
            4: 'OUT_OF_RANGE', 5: 'BUSY', 6: 'FAULT (check limits/output/clock)',
            7: 'BAD_PARAM'}
@@ -103,8 +103,8 @@ def main():
         return
     if not args.port:
         parser.error('--port is required')
-    if args.command == 'jog' and not (1 <= args.pulses <= 1600 and 16 <= args.hz <= 3200):
-        parser.error('pulses: 1..1600; hz: 16..3200')
+    if args.command == 'jog' and not (1 <= args.pulses <= 0xffffffff and 16 <= args.hz <= 3200):
+        parser.error('pulses: 1..4294967295 (uint32); hz: 16..3200')
     with serial.Serial(args.port, 115200, timeout=0.05, write_timeout=1) as port:
         link = Link(port)
         seq = random.randrange(256)
@@ -123,7 +123,7 @@ def main():
         if len(inputs) != 20:
             raise RuntimeError('Unsupported input status layout')
         home, limit = (inputs[1] >> 2) & 1, (inputs[1] >> 3) & 1
-        print(f'Y_HOME={home}, Y_LIMIT={limit} (input levels only; firmware controls limit enforcement)')
+        print(f'Y_HOME_flag={home}, Y_LIMIT_flag={limit} (STATUS flags; disabled switches report 0 in fw 0.2.0)')
         if args.command == 'status':
             return
         if state == 1 or not ready or not allowed:

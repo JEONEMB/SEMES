@@ -51,6 +51,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/y_motor.c
     Core/Src/y_motor_tim.c
     Core/Src/y_test.c
+    Core/Src/y_home.c
 )
 
 # Add include paths

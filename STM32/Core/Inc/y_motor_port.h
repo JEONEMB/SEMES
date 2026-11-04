@@ -11,4 +11,5 @@ void YMotorPort_Arm(uint32_t period_us);
 int YMotorPort_Completed(void); /* consume one completed hardware one-shot */
 void YMotorPort_Abort(void);
 uint8_t YMotorPort_Limits(void); /* bit0 PA0, bit1 PA1; NC: high = open */
+uint8_t YMotorPort_RawLimits(void);
 #endif

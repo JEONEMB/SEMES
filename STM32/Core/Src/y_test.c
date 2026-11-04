@@ -37,6 +37,7 @@ static void Nak(const RsFrame *request, RsFrame *reply, uint8_t reason)
 }
 
 void YTest_Init(void) { cached = pending = 0; }
+int YTest_Busy(void) { return pending; }
 
 int YTest_Handle(const RsFrame *request, RsFrame *reply)
 {

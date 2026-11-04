@@ -1,18 +1,38 @@
 #ifndef APP_CONFIG_H
 #define APP_CONFIG_H
 
-/* Protocol MOVE/HOME remain locked. The separate y_motor pulse-test API has
- * its own Y_MOTOR_OUTPUT_ALLOWED gate and local Y_TEST_JOG extension. */
-#define APP_MOTION_LOCKED 1
-#if APP_MOTION_LOCKED != 1
-#error "Motion requires a separate reviewed implementation and hardware validation."
+/* NC switches: PA0 left, PA1 right. DIR High=right, Low=left.
+ * HOME is command-triggered only. Software range is user-requested 500mm;
+ * the physical actuator is 50mm and end switches take priority. */
+#ifndef APP_Y_SWITCH_HOME
+#define APP_Y_SWITCH_HOME 1
+#endif
+#ifndef APP_Y_MANUAL_HOME
+#define APP_Y_MANUAL_HOME 0
+#endif
+#ifndef APP_Y_MIN_UM
+#define APP_Y_MIN_UM 0
+#endif
+#ifndef APP_Y_MAX_UM
+#define APP_Y_MAX_UM 500000
+#endif
+#define APP_Y_DEFAULT_SPEED_UM_S 100U
+#define APP_Y_HOME_SEEK_PULSES 83200U /* 52mm bounded search, not 500mm */
+#define APP_Y_HOME_RELEASE_PULSES 3200U /* 2mm maximum to release a switch */
+#define APP_Y_HOME_SEEK_HZ 800U
+#define APP_Y_HOME_RELEASE_HZ 320U
+#define APP_Y_HOME_LATCH_HZ 160U
+#define APP_Y_HOME_TIMEOUT_MS 120000U
+#define APP_Y_HOME_STABLE_MS 10U
+#if APP_Y_SWITCH_HOME && APP_Y_MANUAL_HOME
+#error "Choose physical HOME or manual-origin test, not both"
 #endif
 
 #define APP_RX_CAPACITY 512U
 #define APP_TX_QUEUE_CAPACITY 16U
 #define APP_RX_POLL_BUDGET 128U
 #define APP_FW_MAJOR 0U
-#define APP_FW_MINOR 1U
+#define APP_FW_MINOR 2U
 #define APP_FW_PATCH 0U
 #define APP_SWITCH_STABLE_SAMPLES 10U
 
@@ -23,7 +43,7 @@
 #define APP_Y_INPUT_MICROSTEPS APP_SPEC_UNKNOWN
 #define APP_Y_LEAD_MM_PER_REV APP_SPEC_UNKNOWN
 #define APP_Y_CURRENT_MA APP_SPEC_UNKNOWN
-#define APP_Y_POSITIVE_DIR_LEVEL APP_SPEC_UNKNOWN
+#define APP_Y_POSITIVE_DIR_LEVEL 1U /* User confirmed: +Y = right = DIR High */
 #define APP_THETA_INPUT_PULSES_PER_REV APP_SPEC_UNKNOWN
 #define APP_THETA_PULSE_REFERENCE APP_SPEC_UNKNOWN /* motor or output shaft */
 #define APP_THETA_GEAR_RATIO APP_SPEC_UNKNOWN
