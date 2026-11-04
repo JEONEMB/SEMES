@@ -1,6 +1,7 @@
 // A17. control 측정기의 범위 밖 정수 이동 실패를 세 전략으로 비교한다.
 // 입력 목록과 정답은 A0 캐시의 shots.csv 를 그대로 읽는다.
 #include "tracker_variant.hpp"
+#include "hye/plot.hpp"
 #include <chrono>
 #include <fstream>
 #include <iomanip>
@@ -51,6 +52,7 @@ int main() {
     try {
         const fs::path repo = fs::u8path(kRepo), out = fs::u8path(kOut);
         fs::create_directories(out / "results");
+        hye::begin_results();
         auto shots = read_shots(repo / "experiments" / "hye" /
                                 fs::u8path("20261102_124309_A0_분할측정고정_계층분할과점측정캐시") /
                                 fs::u8path("결과") / "cache" / "shots.csv");
@@ -93,7 +95,7 @@ int main() {
                 per << s.set << ',' << '"' << s.rel << '"' << ',' << f(s.y, 3) << ',' << f(s.t, 3) << ',' << f(predicted, 1) << ','
                     << '"' << c.name << '"' << ',' << tr.shift[0].x << ',' << tr.shift[1].x << ',' << tr.shift[2].x << ','
                     << tr.shift_spread << ',' << f(ncc_min, 3) << ',' << valid << ',' << s.valid_a0 << ','
-                    << (tr.gate_ok ? 1 : 0) << ',' << '"' << tr.gate_reason << '"' << ',' << tr.template_matches << ',' << f(ms, 2) << '\n';
+                    << (tr.gate_ok ? 1 : 0) << ',' << '"' << tr.gate_reason << '"' << ',' << tr.template_matches << '\n';
                 if (!tr.gate_ok)
                     gate << s.set << ',' << '"' << s.rel << '"' << ',' << f(s.y, 3) << ',' << f(s.t, 3) << ','
                          << '"' << c.name << '"' << ',' << tr.shift_spread << ',' << f(ncc_min, 3) << ',' << valid << ','
@@ -102,8 +104,32 @@ int main() {
             if ((i + 1) % 50 == 0) std::cout << (i + 1) << "/" << shots.size() << std::flush << "\n";
         }
 
+        // 그림 두 장
+        {
+            std::vector<std::string> cats; std::vector<double> valid_536, pixels, worst;
+            for (const auto& c : cases) {
+                const auto& r = rows[c.name];
+                cats.push_back(c.name); valid_536.push_back(r.recovered);
+                pixels.push_back(r.pixels_total / r.n / 1000.0); worst.push_back(r.valid_min);
+            }
+            hye::bar_chart("171_shots_with_all_536_valid.png",
+                           "A17-171 shots with all 536 selected points valid (of 575)",
+                           cats, valid_536, "shots", 2, 575);
+            hye::bar_chart("172_worst_case_valid_points.png",
+                           "A17-172 worst-case valid selected points (of 536)",
+                           cats, worst, "points", 2, 536);
+            hye::bar_chart("173_search_cost.png",
+                           "A17-173 searched pixels per shot (thousands, lower is better)",
+                           cats, pixels, "kilopixels", 2);
+        }
+
+        {   // 시간은 실행마다 달라 결과.md 와 summary.csv 에 넣지 않는다. 재현 대상이 아니다.
+            std::ofstream tm(out / "results" / "timing.csv");
+            tm << "strategy,n,ms_mean_this_run\n";
+            for (const auto& c : cases) { const auto& r = rows[c.name]; tm << '"' << r.name << '"' << ',' << r.n << ',' << f(r.ms_total / r.n, 2) << '\n'; }
+        }
         std::ofstream sum(out / "results" / "summary.csv");
-        sum << "strategy,n,valid_536,valid_min,valid_mean,gate_rejected,shift_off_8px,matches_a0,ms_median_est,pixels_per_shot\n";
+        sum << "strategy,n,valid_536,valid_min,valid_mean,gate_rejected,shift_off_8px,matches_a0,pixels_per_shot\n";
         std::ostringstream md;
         md << "# A17 결과 - control 범위 밖 정수 이동 실패\n\n"
            << "`실험/src/main.cpp` 가 다시 쓴다. 해석은 [보고서](보고서.md). 계획은 [계획서](../계획서.md).\n\n"
@@ -116,12 +142,16 @@ int main() {
             const auto& r = rows[c.name];
             sum << '"' << r.name << '"' << ',' << r.n << ',' << r.recovered << ',' << r.valid_min << ','
                 << f(double(r.valid_sum) / r.n, 1) << ',' << r.gate_rejected << ',' << r.shift_wrong << ','
-                << r.matched_a0 << ',' << f(r.ms_total / r.n, 2) << ',' << f(r.pixels_total / r.n, 0) << '\n';
+                << r.matched_a0 << ',' << f(r.pixels_total / r.n, 0) << '\n';
             md << "| " << r.name << " | " << r.n << " | " << r.recovered << " | " << r.valid_min << " | "
                << f(double(r.valid_sum) / r.n, 1) << " | " << r.gate_rejected << " | " << r.shift_wrong << " | "
-               << r.matched_a0 << " | " << f(r.ms_total / r.n, 2) << " | " << f(r.pixels_total / r.n, 0) << " |\n";
+               << r.matched_a0 << " | " << f(r.pixels_total / r.n, 0) << " |\n";
         }
-        md << "\n장당 평균 ms 는 세 전략을 한 프로세스에서 번갈아 돌린 값이라 캐시 효과가 섞여 있다. "
+        md << "\n![all 536 valid](이미지/171_shots_with_all_536_valid.png)\n\n"
+              "![worst case](이미지/172_worst_case_valid_points.png)\n\n"
+              "![search cost](이미지/173_search_cost.png)\n\n"
+              "빨간 선은 각각 575장, 536점이다.\n\n"
+           << "장당 평균 ms 는 세 전략을 한 프로세스에서 번갈아 돌린 값이라 캐시 효과가 섞여 있다. "
               "전략 사이의 **상대 비교**로만 읽는다. 장당 탐색 화소는 matchTemplate 에 넘긴 탐색 영역 넓이의 합이며 캐시와 무관한 비용 대리값이다.\n\n"
            << "## 2. 범위 밖 12장 (T+2.00)\n\n"
            << "| 사진 | 예측 dx | 전략 | QR1 | QR2 | QR3 | 불일치 | 최소 NCC | 유효/536 | 게이트 |\n"
