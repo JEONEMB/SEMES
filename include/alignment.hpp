@@ -1,78 +1,57 @@
-#ifndef ALIGNMENT_HPP
-#define ALIGNMENT_HPP
+﻿// =====================================================================================
+// alignment.hpp — 사진 한 장으로 로봇의 Y·Θ 어긋남을 추정하는 함수 (제출 형식)
+//
+//  입력 : 현재 자세에서 찍은 사진 (3840×2160, 컬러 또는 회색). 바꾸지 않음
+//  출력 : 기준(티칭) 사진 대비 어긋남 y [mm], t [°]  — 라벨과 같은 부호
+//         → 로봇 보정 이동 명령은 (−y, −t)
+//  실패 : 측정이 불가능하면 y, t 에 NaN (std::isnan 으로 확인), 이유는 alignment_last_info().message
+//
+//  구현은 ksh 모듈(ksh/include/ksh/*.hpp)을 차례로 부르는 얇은 진입점이다
+//    ① ksh::coarse_alignment → ② ksh::fine_alignment → ③ ksh::measure_features → ④ ksh::invert_pose_model
+//  설정 : config/alignment.yml (기준 사진, ROI, 정렬 방법, 사용할 모델 파일). 코드에 수치 하드코딩 없음
+//  OpenCV 3.4.15 API, C++17
+// =====================================================================================
+#ifndef __ALIGNMENT_HPP__
+#define __ALIGNMENT_HPP__
+
 #include <opencv2/opencv.hpp>
-#include <array>
+
 #include <string>
-#include <limits>
 #include <vector>
-using error_t = double;
-struct Alignment_t
-{
-    // Physical alignment errors are not estimated by plate detection yet.
-    error_t y = std::numeric_limits<double>::quiet_NaN();
-    error_t t = std::numeric_limits<double>::quiet_NaN();
-};
-enum class QrRefinementMethod
-{
-    CornerSubPix,
-    ImageFormation,
-    Fourier
-};
-struct AlignmentOptions
-{
-    bool visualize = true;
-    // Selected by local comparison; physical Y/theta accuracy is not certified.
-    QrRefinementMethod qrRefinement = QrRefinementMethod::Fourier;
-    // Ratios in plate coordinates, relative to the plate center.
-    // Initial layout estimated from supplied images; replace with measured layout if available.
-    std::array<float, 3> qrCenterOffsetsX{{-0.265f, 0.f, 0.265f}};
-    float qrCenterOffsetY = 0.f;
-    float qrWidthRatio = 0.225f;
-    float qrHeightRatio = 1.f;
-    std::string outputPrefix; // Empty disables PNG output; parent directory must exist.
-};
-struct QrFeature
-{
-    int id = -1;                         // Stable module-grid ID: row * (moduleCount + 1) + column.
-    cv::Point2f model, initial, refined; // model in modules; image positions in original pixels.
-    double shift = 0, minEigenvalue = 0, contrast = 0;
-    double reprojectionError = std::numeric_limits<double>::quiet_NaN();
-    bool localAccepted = false, accepted = false;
-    bool refinementConverged = false;
-    int refinementBoundaryMask = 0;
-    double refinementCondition = std::numeric_limits<double>::quiet_NaN();
-    double refinementResidual = std::numeric_limits<double>::quiet_NaN();
-};
-struct QrRoiResult
-{
-    bool valid = false;
-    cv::Point2f center;
-    std::array<cv::Point2f, 4> corners{}; // TL, TR, BR, BL in source image.
-    cv::Mat image;                        // Perspective-corrected crop used for decoding.
-    std::string payload, featureStatus;
-    bool decoded = false, modelMatched = false, featuresValid = false;
-    // Fixed preprocessing is always Gaussian when the ROI is analyzed.
-    bool decodeUsedGaussian = false;
-    double decodeGaussianSigma = 0;
-    double modelMismatch = 1;
-    int moduleCount = 0;
-    cv::Mat idealModules, decodedVisualization, candidateVisualization, featureVisualization;
-    std::vector<QrFeature> features;
-};
-struct PlateDetectionResult
-{
-    bool found = false;
-    double score = -1;
-    cv::Rect searchRoi;
-    std::array<cv::Point2f, 4> corners{}; // Full-image coordinates, cyclic order.
-    cv::Point2f center;
-    std::array<QrRoiResult, 3> qrRois{}; // Left, center, right in image orientation.
-    cv::Mat edges, hough, visualization, roiVisualization;
-};
-// Decode crop, reconstruct and verify module pattern, refine on original grayscale pixels.
-void analyzeQrFeatures(const cv::Mat &source, const AlignmentOptions &options, QrRoiResult &qr,
-                       int index);
+
+typedef double error_t;
+
+typedef struct _alignment_t {
+    error_t y;  // Y 어긋남 [mm]
+    error_t t;  // theta 어긋남 [°]
+} Alignment_t;
+
 Alignment_t alignment(cv::Mat &src);
-Alignment_t alignment(cv::Mat &src, const AlignmentOptions &options,
-                      PlateDetectionResult *detection = nullptr);
-#endif
+
+// ---------------------------------------------------------------- 추가 함수 (선택 사용)
+// 설정 파일 읽기. 호출하지 않으면 첫 alignment() 호출 때 기본 경로(config/alignment.yml)를 읽음
+bool alignment_init(const std::string &config_path = "config/alignment.yml");
+
+// 기준(티칭) 사진 교체 — 장비 기동 후 목표 자세에서 다시 찍은 사진으로 바꿀 때
+bool alignment_set_reference(const cv::Mat &reference);
+
+// 마지막 alignment() 호출의 측정 상세 (진단·시각화용)
+struct AlignmentRoi {
+    std::string name;
+    cv::Rect ref_rect_px;   // 기준 사진에서의 위치
+    cv::Point2d shift_px;   // 측정 이동 (현재 − 기준)
+    double ecc_cc = 0.0;    // 정합 상관 ZNCC (1 에 가까울수록 신뢰)
+    bool ok = false;
+};
+struct AlignmentInfo {
+    bool ok = false;
+    std::string message;            // 실패 이유
+    cv::Point2d coarse_px;          // ① Coarse Alignment 결과
+    std::vector<AlignmentRoi> rois; // ② QR 3개 + 배경 ROI
+    double s_px = 0.0;              // ③ QR 평균 가로 이동
+    double d_px = 0.0;              // ③ 시차 = s − 배경 평균
+    double elapsed_ms = 0.0;        // 처리 시간 (회색 변환 포함)
+};
+const AlignmentInfo &alignment_last_info();
+
+#endif // __ALIGNMENT_HPP__

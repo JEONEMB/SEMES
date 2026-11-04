@@ -1,10 +1,10 @@
 %YAML:1.0
 ---
 # alignment() · align_train · align_eval 설정 — 값은 모두 여기서 바꾼다 (코드 수정 불필요)
-# 상대 경로는 실행 폴더 → 이 설정 파일 폴더 순으로 찾음
+# 상대 경로는 실행 폴더 → 이 설정 파일 폴더 순으로 찾음 (실행 폴더 = 저장소 루트, 사진 = data/img/1st·2nd·3rd)
 
 # 기준(티칭) 사진 : 목표 자세에서 찍은 사진
-reference_path: "../QR_Image/img/center.bmp"
+reference_path: "data/img/1st/center.bmp"
 image_width_px: 3840
 image_height_px: 2160
 
@@ -54,7 +54,7 @@ spec_tolerance:            # 과제 명세
 
 # ---------------------------------------------------------------- align_train (모델 학습)
 training:
-   image_dir: "../QR_Image/img"
+   image_dir: "data/img"
    reference: "center"     # 학습 세트의 기준 사진 이름
    set: 1                  # 1차(10/04) 단독 축 사진으로 학습
    y_grid_mm: 0.1          # Y 단독은 0.1 mm 배수만 (48분 뒤 찍은 0.05 mm 묶음은 원점이 0.2 px 어긋나 제외)
@@ -64,7 +64,7 @@ training:
 
 # ---------------------------------------------------------------- align_eval (정확도 평가)
 evaluation:
-   image_dir: "../QR_Image/img"
+   image_dir: "data/img"
    reference_set1: "center"    # 1차(10/04) 사진의 기준 사진
    reference_set2: "center1"   # 2차(10/15) 사진의 기준 사진
    result_dir: "results"
@@ -76,6 +76,6 @@ evaluation:
 
 # ---------------------------------------------------------------- main.cpp (예제)
 demo:
-   image: "../QR_Image/img/Y+0.50 T+0.10 (2).bmp"   # 인자 없이 실행할 때 쓰는 사진
-   reference: "../QR_Image/img/center1.bmp"          # 같은 날 찍은 기준 사진 (비우면 reference_path)
+   image: "data/img/2nd/Y+0.50 T+0.10/Y+0.50 T+0.10 (2).bmp"   # 인자 없이 실행할 때 쓰는 사진
+   reference: "data/img/2nd/기준 위치/center1.bmp"          # 같은 날 찍은 기준 사진 (비우면 reference_path)
    display_width_px: 1600
