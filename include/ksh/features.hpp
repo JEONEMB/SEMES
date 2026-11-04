@@ -26,6 +26,7 @@ struct FeatureParams {
     std::vector<RoiSpec> background_rois;   // 깊이가 다른 배경 (넓은 창 위상 상관 → Fine)
     int wide_window_scale = 2;              // 배경 ROI 위상 상관 창 = ROI 반폭 × 이 값
     double qr_max_dev_px = 15.0;            // QR 결과가 Coarse 에서 이 이상 벗어나면 이웃 QR 에 붙은 것으로 보고 실패
+    double wide_min_response = 0.0;         // 배경 ROI 넓은 창 위상 상관 봉우리 세기 하한 (0 = 검사 안 함)
 };
 
 struct RoiShift {
@@ -33,13 +34,17 @@ struct RoiShift {
     cv::Rect ref_rect_px;   // 기준 사진에서의 위치
     cv::Point2d shift_px;   // 측정 이동 (현재 − 기준)
     double zncc = 0.0;
+    double response = 0.0;  // 넓은 창 위상 상관 봉우리 세기 (배경 ROI 만, QR 은 0)
+    bool converged = false; // Fine Alignment 수렴 여부
     bool ok = false;
+    std::string message;    // 실패 이유 (성공이면 빈 문자열)
 };
 
 struct FeatureMeasurement {
     bool ok = false;
     std::string message;          // 실패 이유
     cv::Point2d coarse_px;        // ① Coarse Alignment 결과
+    double coarse_response = 0.0; // ① 위상 상관 봉우리 세기
     std::vector<RoiShift> rois;   // ② QR → 배경 순서
     double s_px = 0.0;            // ③
     double d_px = 0.0;
@@ -47,7 +52,7 @@ struct FeatureMeasurement {
 
 // ROI 하나 : (wide_search 이면 넓은 창 위상 상관으로 출발점을 다시 잡고) Fine Alignment
 RoiShift measure_roi(const cv::Mat &ref32, const cv::Mat &cur32, const RoiSpec &roi, const cv::Point2d &guess_px, bool wide_search,
-                     int wide_window_scale, const FineParams &fine);
+                     int wide_window_scale, const FineParams &fine, double wide_min_response = 0.0);
 
 // ROI 이동 목록 → s, d (QR 개수 = n_qr, 그 뒤가 배경). 개수가 0 이면 false
 bool compute_features(const std::vector<RoiShift> &rois, size_t n_qr, double &s_px, double &d_px);
