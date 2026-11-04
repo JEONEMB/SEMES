@@ -21,7 +21,7 @@ static std::vector<std::string> split(const std::string& s) { std::vector<std::s
 static std::vector<Row> read_rows(const fs::path& p, bool features) {
     std::ifstream in(p); if (!in) throw std::runtime_error("cannot read " + p.u8string());
     std::string l; std::getline(in, l); std::vector<Row> out;
-    while (std::getline(in, l)) { auto r = split(l); Row x; x.set = r[0]; x.rel = r[1]; x.y = std::stod(r[2]); x.t = std::stod(r[3]); x.group = std::stoi(r[4]); x.cond = r[5];
+    while (std::getline(in, l)) { if (!l.empty() && l.back() == '\r') l.pop_back(); auto r = split(l); Row x; x.set = r[0]; x.rel = r[1]; x.y = std::stod(r[2]); x.t = std::stod(r[3]); x.group = std::stoi(r[4]); x.cond = r[5];
         if (features && r.size() > 10) { x.s = std::stod(r[6]); x.d = std::stod(r[7]); x.qr = std::stod(r[8]); x.line = std::stod(r[9]); x.ms = std::stod(r[10]); if (r.size() > 11) x.error = r[11]; }
         out.push_back(x); }
     return out;

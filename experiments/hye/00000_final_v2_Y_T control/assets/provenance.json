@@ -16,7 +16,7 @@
   },
   "training_list": {
     "file": "assets/training_list.csv",
-    "sha256": "76246BAB7FB914812C976A503E7FBD7B2392EF1F97145FBDD4F5576EA7B2FA02",
+    "sha256": "B8135B102BDDD8116B44B3522A3FBAEE5E7EFCA356A421C6AF3FE0337BC63D16",
     "runtime_required": false,
     "source": "experiments/hye/20261102_124309_A0_분할측정고정_계층분할과점측정캐시/결과/cache/shots.csv"
   },

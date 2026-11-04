@@ -23,7 +23,7 @@ static std::vector<std::string> split(const std::string& s) { std::vector<std::s
 static std::vector<Row> read_rows(const fs::path& p) {
     std::ifstream in(p); if (!in) throw std::runtime_error("cannot read " + p.u8string());
     std::string l; std::getline(in, l); bool feat = l.find(",s,") != std::string::npos; std::vector<Row> out;
-    while (std::getline(in, l)) { auto r = split(l); Row x; x.set = r[0]; x.rel = r[1]; x.y = std::stod(r[2]); x.t = std::stod(r[3]); x.group = std::stoi(r[4]); x.cond = r[5]; x.fold4 = std::stoi(r[6]);
+    while (std::getline(in, l)) { if (!l.empty() && l.back() == '\r') l.pop_back(); auto r = split(l); Row x; x.set = r[0]; x.rel = r[1]; x.y = std::stod(r[2]); x.t = std::stod(r[3]); x.group = std::stoi(r[4]); x.cond = r[5]; x.fold4 = std::stoi(r[6]);
         if (feat) { x.s = std::stod(r[7]); x.d = std::stod(r[8]); x.ms = std::stod(r[9]); if (r.size() > 10) x.error = r[10]; } out.push_back(x); }
     return out;
 }

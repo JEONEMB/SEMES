@@ -34,7 +34,7 @@
     {
       "source_provenance": "experiments/hye/20261102_124309_A0_분할측정고정_계층분할과점측정캐시/결과/cache/shots.csv (set, rel, command Y/T, group, condition)",
       "runtime_relative_path": "assets/training_list.csv",
-      "runtime_sha256": "789069cc0858d1321fc9728510e2a66de8656ae9afa57eb3b05a08dc93eb2106",
+      "runtime_sha256": "a20297e4db2bb1d7dd28035eaa06105747208c53d1cb89babfb217663fc0c1da",
       "runtime_required": false
     }
   ],
