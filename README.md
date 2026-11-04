@@ -90,7 +90,7 @@ ctest --test-dir build -C Release --output-on-failure
 
 - joint 341장 재실행: [native_20261028_001/README.md](experiments/hye/00000_final_Y_T_joint/results/native_20261028_001/README.md)
 - control 280장 재현: [native_qr536_20261028_001/README.md](experiments/hye/00000_final_Y_T%20control/results/native_qr536_20261028_001/README.md)
-- QR536 상하선 비교 보고서: `experiments/hye/20261028_140538_control_QR536_상하선_비교/report.html`을 브라우저로 엽니다.
+- QR536 상하선 비교 보고서: `experiments/hye/20261028_140538_control_QR536_상하선_비교/결과/report.html`을 브라우저로 엽니다.
 
 ## joint / control 모듈
 

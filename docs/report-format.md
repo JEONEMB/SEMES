@@ -2,7 +2,7 @@
 
 2026-10-28 사용자가 지정한 디자인 참고: `C:/Users/SSAFY/Desktop/hwlee/portfolios/tools/web/참고.md` → `C:/Users/SSAFY/Desktop/hwlee/portfolios/portfolio-web/hr-v2`.
 
-기준 구현은 [control 가로선 비교 보고서](../experiments/hye/20261028_140538_control_QR536_상하선_비교/report.html)다. 알고리즘·평가 규칙은 [ALGORITHM_RULES.md](../ALGORITHM_RULES.md) 한 곳에서 관리하며 이 문서는 보고서 표현과 파일 구성을 관리한다.
+기준 구현은 [control 가로선 비교 보고서](../experiments/hye/20261028_140538_control_QR536_상하선_비교/결과/report.html)다. 알고리즘·평가 규칙은 [ALGORITHM_RULES.md](../ALGORITHM_RULES.md) 한 곳에서 관리하며 이 문서는 보고서 표현과 파일 구성을 관리한다.
 
 ## 디자인
 

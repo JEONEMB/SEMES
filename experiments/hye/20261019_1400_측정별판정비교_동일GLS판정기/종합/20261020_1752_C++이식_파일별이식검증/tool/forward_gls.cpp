@@ -1,0 +1,4 @@
+#include "forward_gls.hpp"
+#include <iostream>
+using namespace semes;
+int wmain(int argc,wchar_t** wide){Utf8Arguments args(argc,wide);auto argv=args.data();try{if(argc!=3)throw std::runtime_error("forward_gls training-or-prediction.json new-output");fs::path out=fs::u8path(argv[2]);if(fs::exists(out))throw std::runtime_error("New output required");auto j=Json::parse(read(fs::u8path(argv[1])));auto X=matrix(j.at("X"));ForwardGLS model;if(j.has("model"))model=ForwardGLS::from_json(j.at("model"));else{model=ForwardGLS(int(j.at("degree").num()),j.at("shrink").num());model.fit(X,matrix(j.at("commands")),j.has("weights")?matrix(j.at("weights")).t():cv::Mat());}auto result=model.json();result["predictions"]=jsonmatrix(model.predict(j.has("test_X")?matrix(j.at("test_X")):X));write(out/"model.json",result.dump());std::cout<<"Native forward GLS result saved\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

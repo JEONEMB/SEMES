@@ -1,0 +1,7 @@
+=== hw_eda: 20261020 ===
+종류: grid (Y, Θ 조합 반복 촬영), 사진 60장, center 3장
+기준 사진: 기준 위치\center1.bmp
+center 모서리 맞춤 탈락: 같은 꼭짓점 중복 37, 대비 낮음 1, 모델과 밝기 차이 큼 58, 수렴 안 됨 15, 시작점에서 너무 멂 6, 창 크기에 따라 위치가 바뀜 109,
+QR 라벨 3개, 모서리 625개
+발표자료: C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/final\results\eda_20261027_013217_329_utc\20261020\SEMES_EDA_20261020.pptx
+완료

@@ -1,0 +1,7 @@
+=== hw_eda: 20261014 ===
+종류: sweep (한 축씩 연속 촬영), 사진 281장, center 1장
+기준 사진: center.bmp
+center 모서리 맞춤 탈락: 같은 꼭짓점 중복 36, 대비 낮음 6, 모델과 밝기 차이 큼 88, 수렴 안 됨 17, 시작점에서 너무 멂 8, 창 크기에 따라 위치가 바뀜 99,
+QR 라벨 3개, 모서리 628개
+발표자료: C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/final\results\eda_20261027_012821_598_utc\20261014\SEMES_EDA_20261014.pptx
+완료

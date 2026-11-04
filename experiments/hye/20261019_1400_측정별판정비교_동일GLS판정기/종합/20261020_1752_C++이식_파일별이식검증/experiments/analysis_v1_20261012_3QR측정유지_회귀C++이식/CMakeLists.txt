@@ -1,0 +1,10 @@
+add_executable(historical_agent_evaluate src/evaluate.cpp)
+target_link_libraries(historical_agent_evaluate PRIVATE alignment)
+add_executable(historical_theta_only src/evaluate_theta_only.cpp)
+target_link_libraries(historical_theta_only PRIVATE alignment)
+add_executable(historical_measure_qr src/measure_qr.cpp)
+target_link_libraries(historical_measure_qr PRIVATE alignment)
+foreach(app historical_agent_evaluate historical_theta_only historical_measure_qr)
+  add_custom_command(TARGET ${app} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll" "$<TARGET_FILE_DIR:${app}>")
+endforeach()

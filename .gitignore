@@ -38,3 +38,7 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# 실험 결과의 옛 ppt·그림·영상 원본 사본 (00000.legacies 에 원본 보관, 용량 때문에 커밋하지 않음)
+experiments/hye/**/원본자료/
+__pycache__/

@@ -1,0 +1,33 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "native",
+      "displayName": "Self-contained Windows x64 native C++",
+      "generator": "Visual Studio 18 2026",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build/native",
+      "cacheVariables": {
+        "SEMES_ZLIB_SOURCE": "${sourceDir}/third_party/zlib",
+        "SEMES_OPENCV4_DIR": "${sourceDir}/third_party/opencv411-build"
+      }
+    },
+    {
+      "name":"modern",
+      "displayName":"Isolated OpenCV5 image-feedback runtime",
+      "generator":"Visual Studio 18 2026",
+      "architecture":"x64",
+      "binaryDir":"${sourceDir}/build/modern",
+      "cacheVariables":{"SEMES_OBSERVER5_ONLY":"ON"}
+    },
+    {
+      "name":"modern-ipp",
+      "inherits":"modern",
+      "displayName":"OpenCV5 with original IPP numerical kernels",
+      "binaryDir":"${sourceDir}/build/modern-ipp",
+      "cacheVariables":{"SEMES_OPENCV5_DIR":"${sourceDir}/third_party/opencv500-ipp-build"}
+    }
+  ],
+  "buildPresets": [{"name":"native-release","configurePreset":"native","configuration":"Release","nativeToolOptions":["/m:1","/nr:false"]},{"name":"modern-release","configurePreset":"modern","configuration":"Release","nativeToolOptions":["/m:2","/nr:false"]},{"name":"modern-ipp-release","configurePreset":"modern-ipp","configuration":"Release","nativeToolOptions":["/m:2","/nr:false"]}],
+  "testPresets": [{"name":"native-release","configurePreset":"native","configuration":"Release","output":{"outputOnFailure":true}},{"name":"modern-release","configurePreset":"modern","configuration":"Release","output":{"outputOnFailure":true}}]
+}

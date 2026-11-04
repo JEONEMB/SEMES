@@ -1,0 +1,10 @@
+method,protocol,Y_correct,Y_n,T_correct,T_n,failures,Y_max,T_max
+v1_edge630,full280,76,80,199,200,5,0.2555,0.0500
+v1_edge630,repeated20,1506,1600,3980,4000,114,0.3000,0.0500
+v1_edge630,interleaved,75,80,198,200,7,0.4168,0.0800
+v2_patch630,full280,77,80,199,200,4,0.2587,0.0500
+v2_patch630,repeated20,1517,1600,3979,4000,104,0.6500,0.1215
+v2_patch630,interleaved,75,80,199,200,6,0.6500,0.1198
+v2_patch630_quality,full280,77,80,199,200,4,0.2590,0.0500
+v2_patch630_quality,repeated20,1519,1600,3979,4000,102,0.6500,0.1213
+v2_patch630_quality,interleaved,75,80,199,200,6,0.6500,0.1198
