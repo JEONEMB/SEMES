@@ -2,12 +2,12 @@
 
 정렬·분석 코드를 **함수 단위 모듈(`ksh::`)** 로 나눈 프로젝트. 팀원과 함수 단위로 공유하기 위한 정리본이다.
 
-- 제출 형식 진입점 `alignment()` 는 그대로 (스켈레톤 `main.cpp`, `alignment.hpp`, `alignment.cpp`)
-- 알고리즘 본문은 `ksh/` 모듈에 있고, 모든 모듈 함수는 **상태 없이** 입력·설정을 인자로 받는다
+- 제출 형식 진입점 `alignment()` 는 그대로 (스켈레톤 `src/main.cpp`, `include/alignment.hpp`, `src/alignment.cpp`)
+- 알고리즘 본문은 ksh 모듈(`include/ksh/*.hpp`, `src/modules/*.cpp`)에 있고, 모든 모듈 함수는 **상태 없이** 입력·설정을 인자로 받는다
 - 모델 학습(`align_train`)과 정확도 평가(`align_eval`)는 별도 실행 파일
 - C++17, OpenCV 3.4.15 API. 수치는 모두 `config/alignment.yml` 에 둔다
 
-![모듈 구성](docs/module_map.png)
+![모듈 구성](module_map.png)
 
 ## 처리 흐름
 
@@ -19,7 +19,7 @@
 | ④ 자세 추정 | `pose_model` · `invert_pose_model()` | s, d 두 식을 동시에 만족하는 (Y, Θ) — 1/σ² 가중 가우스–뉴턴 |
 | 전체 | `estimator` · `estimate_pose()` | ①~④ 를 한 번에 (기준 영상·설정·모델을 인자로) |
 
-## 모듈과 공개 함수 (`ksh/include/ksh/*.hpp`)
+## 모듈과 공개 함수 (`include/ksh/*.hpp`)
 
 | 모듈 | 공개 함수 · 자료형 | 의존 |
 |---|---|---|
@@ -53,16 +53,16 @@ if (e.ok) { /* e.y_mm, e.t_deg — 보정 이동 = (−Y, −Θ) */ }
 ## 폴더
 
 ```
-Alignment/
-  main.cpp, alignment.hpp, alignment.cpp   제출 형식 (예제 · 진입점)
-  ksh/include/ksh/*.hpp                    모듈 선언 (공개)
-  ksh/src/*.cpp                            모듈 구현
-  tools/align_train.cpp                    모델 학습 도구
-  tools/align_eval.cpp                     정확도 평가 도구
+(저장소 루트)
+  src/main.cpp, include/alignment.hpp, src/alignment.cpp   제출 형식 (예제 · 진입점)
+  include/ksh/*.hpp                        모듈 선언 (공개)
+  src/modules/*.cpp                        모듈 구현
+  tool/ksh/align_train.cpp                 모델 학습 도구
+  tool/ksh/align_eval.cpp                  정확도 평가 도구
   config/alignment.yml                     설정 (ROI, 정렬 방법, 허용 범위, 학습·평가 조건, 모델 선택)
   config/model_s1d1.yml, model_s3d2.yml    학습된 모델 (align_train 출력)
   CMakeLists.txt                           팀 기준 CMake (ksh_align 라이브러리 + 실행 파일 3개)
-  Alignment / AlignTrain / AlignEval.vcxproj   Visual Studio (QR_Image.slnx 의 2_모델 폴더)
+  experiments/KSH/Alignment_vs/           이전 Visual Studio 프로젝트 사본 (QR_Image.slnx 용)
 ```
 
 ## 추정식 선택 (`model_file`)
@@ -72,7 +72,7 @@ Alignment/
 | `model_s1d1.yml` (기본) | s, d 모두 Θ 1차 (계수 6개) | 학습·선택에 쓰지 않은 2차 목표 근처 사진에서 더 정확 |
 | `model_s3d2.yml` | s Θ 3차 · d Θ 2차 (계수 9개) | 학습 범위 가장자리(\|Θ\| ≥ 0.5°)에서 더 정확 |
 
-## 실행 (작업 폴더 = 이 폴더)
+## 실행 (작업 폴더 = 저장소 루트)
 
 | 명령 | 동작 |
 |---|---|
@@ -99,8 +99,8 @@ Alignment/
 
 ## 3rd 세트 평가 (2026-10-30, 학습·방법 선택에 한 번도 쓰지 않은 사진)
 
-- 사진 : `QR_Image/img/3rd/` 234장 — 10/15 촬영, Y +0.05 mm 고정, Θ +0.04 ~ +0.82° (78 자세 × 3장), 기준 center1
-- 명령 : `align_eval --model config/model_s1d1.yml --dir ../QR_Image/img/3rd --tag 3rd_om_s1d1` (2차 기준 사진을 바꾸려면 `--ref2 center2`)
+- 사진 : `data/img/3rd/` 234장 — 10/15 촬영, Y +0.05 mm 고정, Θ +0.04 ~ +0.82° (78 자세 × 3장), 기준 center1
+- 명령 : `align_eval --model config/model_s1d1.yml --dir data/img/3rd --tag 3rd_om_s1d1` (2차 기준 사진을 바꾸려면 `--ref2 center2`)
 
 | 방법 | 허용 안 (±45 µm · ±0.005°) | 과제 허용 안 | J | Θ RMS | Y RMS | 시간 (ms/장) |
 |---|---|---|---|---|---|---|
