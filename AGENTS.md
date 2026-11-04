@@ -45,6 +45,30 @@ HTML 보고서를 작성·수정할 때는 [보고서 기준 형식](docs/report
 
 공유 파일과 기존 `src`, `include`, 루트 `CMakeLists.txt`는 요청에 필요한 범위에서만 변경한다. 실험별 CMake/라이브러리 대상을 사용해 기존 main과 분리하고, 루트 CMake의 `src/*.cpp` 재귀 수집에 다른 `main`이 섞이지 않도록 한다.
 
+## Git 작업 흐름 (hye, 강제)
+
+**통합 브랜치에서 직접 작업하지 않는다.** `chore/hye/merge`, `dev`, `main`은 보호 브랜치이며 [tool/hye/githooks](tool/hye/githooks)의 `pre-commit`이 커밋을, `pre-push`가 push를 거부한다. clone 직후 한 번 `git config core.hooksPath tool/hye/githooks`로 설치한다(저장소마다 1회, worktree 전체에 적용된다).
+
+한 작업의 전체 수명은 다음 순서를 벗어나지 않는다.
+
+1. `chore/hye/merge`를 최신으로 받는다. `git fetch origin && git switch chore/hye/merge && git pull --ff-only`
+2. 거기서 작업 브랜치를 만든다. `git switch -c feature/hye/<영문-기능명>`
+3. 작업하고 변경 경로만 골라 stage한다. `git add .`로 일괄 추가하지 않는다. 커밋 메시지는 [Git 컨벤션](docs/gitConvention.md)의 `<type>: <한국어 설명>`을 따른다.
+4. push한다. `git push -u origin feature/hye/<영문-기능명>`
+5. MR을 만든다. 대상 브랜치는 `chore/hye/merge`다. glab이 없으므로 아래 링크를 사용자에게 전달한다.
+   `https://lab.ssafy.com/s15-final/S15P31A507/-/merge_requests/new?merge_request[source_branch]=<작업브랜치>&merge_request[target_branch]=chore/hye/merge`
+6. **머지는 사용자가 GitLab에서 직접 승인한다.** 로컬에서 `chore/hye/merge`로 merge하거나 push하지 않는다.
+7. 머지된 뒤 1번으로 돌아간다. 다음 작업은 반드시 **새 브랜치**에서 시작한다. 이미 머지된 작업 브랜치를 이어 쓰지 않는다.
+
+지키지 않는 흔한 형태와 금지 사항:
+
+- 통합 브랜치에 쌓인 미커밋 변경을 그대로 커밋하는 것. → 작업 브랜치를 만들어 옮긴다.
+- 작업 브랜치를 머지한 뒤 같은 브랜치에서 다음 작업을 계속하는 것. → 새로 판다.
+- MR 없이 로컬 merge로 통합하는 것. → MR 링크만 만들고 멈춘다.
+- 여러 폴더(worktree)에 같은 저장소를 펼쳐 두고 어느 쪽이 최신인지 잃는 것. → 작업 폴더는 `S15P31A507` 하나만 쓴다. worktree는 끝나면 `git worktree remove`로 정리한다.
+
+급히 우회해야 할 때만 `SEMES_ALLOW_PROTECTED=1 git commit ...`로 훅을 건너뛴다. 기본값은 우회하지 않는 것이다.
+
 ## 데이터와 기록
 
 - 원본은 `data/raw/`, 정제 결과는 `data/clean/`이며 정제 도구는 [tool/01_prepare_clean.cpp](tool/01_prepare_clean.cpp)다. 정제·빌드·실행 방법은 [도구 사용 설명](tool/README.txt)을 따른다.
