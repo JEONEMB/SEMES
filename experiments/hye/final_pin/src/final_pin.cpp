@@ -73,6 +73,19 @@ cv::Mat relative_features(const cv::Mat& qr,const cv::Mat& pins) {
     for(int k=0;k<3;++k){double x=0,y=0;for(int p=0;p<9;++p){x+=qr.at<double>(18*k+2*p)/9;y+=qr.at<double>(18*k+2*p+1)/9;}f.at<double>(2*k)=x-wx;f.at<double>(2*k+1)=y-wy;}
     pins.copyTo(f.colRange(6,14));return f;
 }
+cv::Mat with_bars_features(const cv::Mat& qr,const cv::Mat& pins,const std::vector<double>& block_x) {
+    auto base=relative_features(qr,pins);
+    if(block_x.size()!=48)throw std::invalid_argument("Expected 48 bar block centers");
+    cv::Mat f(1,18,CV_64F);base.copyTo(f.colRange(0,14));double wall_y=0;
+    for(int k=0;k<4;++k)wall_y+=pins.at<double>(2*k+1)/4;
+    for(int bar=0;bar<2;++bar){double mx=0,my=0,sxx=0,sxy=0;
+        for(int k=bar*24;k<(bar+1)*24;++k){if(!std::isfinite(block_x[k]))throw std::invalid_argument("Nonfinite bar center");mx+=block_x[k]/1000./24;my+=qr.at<double>(54+k)/24;}
+        for(int k=bar*24;k<(bar+1)*24;++k){double x=block_x[k]/1000.-mx;sxx+=x*x;sxy+=x*(qr.at<double>(54+k)-my);}
+        if(sxx<1e-12)throw std::invalid_argument("Degenerate bar geometry");
+        f.at<double>(14+2*bar)=my-wall_y;f.at<double>(15+2*bar)=sxy/sxx;
+    }return f;
+}
+int Regressor::feature_count()const{return mean_.cols;}
 cv::Mat Regressor::design(const cv::Mat& features)const {
     if(features.type()!=CV_64F||features.cols!=mean_.cols||!cv::checkRange(features))throw std::invalid_argument("Invalid regression features");
     int n=features.cols,cols=1+n+(degree_==2?n*(n+1)/2:0);cv::Mat a=cv::Mat::ones(features.rows,cols,CV_64F);

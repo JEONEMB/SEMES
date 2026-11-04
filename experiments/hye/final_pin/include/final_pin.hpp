@@ -2,6 +2,7 @@
 #include <opencv2/core.hpp>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace final_pin {
 struct Measurement {
@@ -18,6 +19,10 @@ private:
 // 1x14: three QR mean displacements relative to the mean wall displacement,
 // then all four wall displacements. No filenames or labels are inputs.
 cv::Mat relative_features(const cv::Mat& qr102, const cv::Mat& pins8);
+// 1x18: relative_features plus upper/lower mean vertical shift relative to
+// mean pin y, and upper/lower slope (px per 1000px), all 24 blocks per bar.
+cv::Mat with_bars_features(const cv::Mat& qr102, const cv::Mat& pins8,
+                           const std::vector<double>& block_x);
 
 class Regressor {
 public:
@@ -26,6 +31,7 @@ public:
     cv::Vec2d predict(const cv::Mat& features) const;
     void save(const std::string& utf8_file) const;
     void load(const std::string& utf8_file);
+    int feature_count() const;
 private:
     cv::Mat design(const cv::Mat& features) const;
     cv::Mat mean_, scale_, weights_;

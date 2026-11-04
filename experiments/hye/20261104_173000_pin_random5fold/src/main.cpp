@@ -23,7 +23,7 @@ static std::vector<std::string> fields(std::string s,char delim){
 }
 static cv::Mat numbers(const std::string&s){if(s.empty())return {};auto v=fields(s,';');cv::Mat x(1,int(v.size()),CV_64F);for(int j=0;j<x.cols;++j)x.at<double>(j)=std::stod(v[j]);return x;}
 static void write_mat(std::ostream&o,const cv::Mat&m){for(int j=0;j<m.cols;++j){if(j)o<<';';o<<m.at<double>(j);}}
-struct Row{std::string date,rel,hash,group,jerror,perror;double y,t,jms=0,pms=0;int fold=0;cv::Mat qr,pins,quality,v2;};
+struct Row{std::string date,rel,hash,group,jerror,perror;double y,t,jms=0,pms=0;int fold=0;cv::Mat qr,pins,quality,v2,bars;};
 static std::vector<Row> dataset(const fs::path& root){
     std::ifstream in(root/"data/fivefold_seed20261104/_metadata/images.csv");if(!in)throw std::runtime_error("Missing original image metadata");
     std::string l;std::getline(in,l);std::vector<Row> rows;std::set<std::string> hashes,paths;
@@ -48,7 +48,7 @@ struct GLS{cv::Mat origin,P;void fit(const cv::Mat& X,const cv::Mat& Y){
 }cv::Vec2d predict(const cv::Mat&x)const{cv::Mat q=(x-origin)*P;return {q.at<double>(0),q.at<double>(1)};}};
 static cv::Mat target(const Row&r){return (cv::Mat_<double>(1,2)<<r.y,r.t);}
 static cv::Mat basis(double y,double t,int degree){cv::Mat b=(cv::Mat_<double>(1,6)<<1.,y,t,y*y,y*t,t*t);return degree==1?b.colRange(0,3).clone():b;}
-static cv::Mat features(const Row&r,const std::string&m){if(m=="v1_joint_GLS")return r.qr.empty()?cv::Mat():fmap(r.qr);if(m=="v2_joint")return r.v2;if(m.find("pin_only")==0)return r.pins;if(r.qr.empty()||r.pins.empty())return {};return final_pin::relative_features(r.qr,r.pins);}
+static cv::Mat features(const Row&r,const std::string&m){if(m=="v1_joint_GLS")return r.qr.empty()?cv::Mat():fmap(r.qr);if(m=="v2_joint")return r.v2;if(m.find("pin_only")==0)return r.pins;if(m.find("qr_pin_bars_")==0)return r.bars;if(r.qr.empty()||r.pins.empty())return {};return final_pin::relative_features(r.qr,r.pins);}
 static void measure(const fs::path&root,const fs::path&out,std::vector<Row>&rows){
     auto assets=root/"experiments/hye/v2_Y_T_joint/assets";alignment_detail::Observer qr(assets);final_pin::Observer pin(alignment_detail::read_gray(assets/"center.bmp"));auto bx=qr.block_centers();
     fs::create_directories(out/"measure_cache");std::atomic<int> next{0},done{0};
@@ -64,8 +64,15 @@ static void measure(const fs::path&root,const fs::path&out,std::vector<Row>&rows
     for(int i=0;i<int(rows.size());++i){auto&r=rows[i];f<<i<<'\t'<<r.date<<'\t'<<r.rel<<'\t'<<r.hash<<'\t'<<r.group<<'\t'<<r.y<<'\t'<<r.t<<'\t'<<r.fold<<'\t';write_mat(f,r.qr);f<<'\t';write_mat(f,r.pins);f<<'\t';write_mat(f,r.quality);f<<'\t';write_mat(f,r.v2);f<<'\t'<<r.jms<<'\t'<<r.pms<<'\t'<<r.jerror<<'\t'<<r.perror<<'\n';}
 }
 static void load_measurements(const fs::path&out,std::vector<Row>&rows){std::ifstream f(out/"features.tsv");if(!f)throw std::runtime_error("Run measure first");std::string l;std::getline(f,l);std::set<int> seen;while(std::getline(f,l)){auto v=fields(l,'\t');if(v.size()!=16)throw std::runtime_error("Bad measurement row");int i=std::stoi(v[0]);auto&r=rows.at(i);if(r.rel!=v[2]||r.hash!=v[3]||r.fold!=std::stoi(v[7])||!seen.insert(i).second)throw std::runtime_error("Measurement manifest mismatch");r.qr=numbers(v[8]);r.pins=numbers(v[9]);r.quality=numbers(v[10]);r.v2=numbers(v[11]);r.jms=std::stod(v[12]);r.pms=std::stod(v[13]);r.jerror=v[14];r.perror=v[15];}if(seen.size()!=rows.size())throw std::runtime_error("Incomplete measurement table");}
-static void evaluate(const fs::path&out,const std::vector<Row>&rows){
-    const std::vector<std::string> models={"v1_joint_GLS","v2_joint","pin_only_linear","pin_only_quadratic","qr_pin_linear","qr_pin_quadratic"};
+static void populate_bars(const fs::path&root,std::vector<Row>&rows){
+    cv::FileStorage protocol((root/"experiments/hye/v2_Y_T_joint/assets/line_protocol.json").u8string(),cv::FileStorage::READ);
+    if(!protocol.isOpened())throw std::runtime_error("Missing line protocol");
+    std::vector<double> bx;for(auto it=protocol["blocks"].begin();it!=protocol["blocks"].end();++it){auto b=(*it)["read_box"];bx.push_back((double(b[0])+double(b[2]))/2.);}
+    for(auto&r:rows)if(!r.qr.empty()&&!r.pins.empty())r.bars=final_pin::with_bars_features(r.qr,r.pins,bx);
+}
+static void evaluate(const fs::path&out,const std::vector<Row>&rows,bool include_bars=false){
+    std::vector<std::string> models={"v1_joint_GLS","v2_joint","pin_only_linear","pin_only_quadratic","qr_pin_linear","qr_pin_quadratic"};
+    if(include_bars){models.push_back("qr_pin_bars_linear");models.push_back("qr_pin_bars_quadratic");}
     std::ofstream pred(out/"predictions.tsv"),summary(out/"summary.tsv"),sim(out/"simulation.tsv"),integrity(out/"integrity.txt");
     pred<<std::setprecision(17)<<"model\tfold\tindex\tdate\tY\tT\tpred_Y\tpred_T\tabs_eY\tabs_eT\tpass_Y\tpass_T\tpass_both\terror\n";
     summary<<std::setprecision(17)<<"model\tfold\tn_test\tn_train_valid\tn_valid\tpass_Y\tpass_T\tpass_both\tMAE_Y_valid\tMAE_T_valid\tmax_eY_valid\tmax_eT_valid\n";
@@ -105,7 +112,7 @@ static void evaluate(const fs::path&out,const std::vector<Row>&rows){
     }
     if(joint_keys.size()!=models.size()*rows.size())throw std::runtime_error("OOF prediction count mismatch");
     integrity<<"OOF_predictions "<<joint_keys.size()<<"\nmodel_reload_parity_pass true\nscaling_train_only true\nforward_surrogate_train_only true\nreal_robot_trials 0\n";
-    for(int degree:{1,2}){cv::Mat X,Y;for(const auto&r:rows){auto x=features(r,"qr_pin_linear");if(!x.empty()){X.push_back(x);Y.push_back(target(r));}}final_pin::Regressor model;model.fit(X,Y,degree);model.save((out/(std::string("development_all_qr_pin_")+(degree==1?"linear":"quadratic")+".yml")).u8string());}
+    for(const auto&name:models)if(name.find("qr_pin_")==0){cv::Mat X,Y;for(const auto&r:rows){auto x=features(r,name);if(!x.empty()){X.push_back(x);Y.push_back(target(r));}}final_pin::Regressor model;model.fit(X,Y,name.find("quadratic")!=std::string::npos?2:1);model.save((out/("development_all_"+name+".yml")).u8string());}
 }
 static void summarize(const fs::path&out,const std::vector<Row>&rows){
     struct Stats{int n=0,valid=0,py=0,pt=0,pb=0;double ey=0,et=0,my=0,mt=0;std::map<int,int> fn,fp;std::map<std::string,std::vector<cv::Vec2d>> repeated;};
@@ -129,15 +136,15 @@ static void selftest(const fs::path&root,const fs::path&out){
     auto center=alignment_detail::read_gray(root/"experiments/hye/v2_Y_T_joint/assets/center.bmp");final_pin::Observer pin(center);auto zero=pin.measure(center);double ident=cv::norm(zero.displacement,cv::NORM_INF);if(ident>1e-4)throw std::runtime_error("Pin identity failed");
     cv::Mat shifted;cv::Mat warp=(cv::Mat_<double>(2,3)<<1,0,3.25,0,1,-2.375);cv::warpAffine(center,shifted,warp,center.size(),cv::INTER_CUBIC,cv::BORDER_REFLECT_101);auto m=pin.measure(shifted);double worst=0;for(int k=0;k<4;++k)worst=std::max(worst,std::max(std::abs(m.displacement.at<double>(2*k)-3.25),std::abs(m.displacement.at<double>(2*k+1)+2.375)));if(worst>.04)throw std::runtime_error("Pin synthetic translation error exceeds .04px");
     std::ofstream f(out/"selftest.txt");f<<std::setprecision(17)<<"identity_max_px "<<ident<<"\nsynthetic_translation_max_error_px "<<worst<<"\n";std::cout<<"identity "<<ident<<" translation "<<worst<<std::endl;
-    for(const std::string kind:{"linear","quadratic"}){auto model=out/("development_all_qr_pin_"+kind+".yml");
-    if(fs::exists(model)){auto rows=dataset(root);load_measurements(out,rows);const auto&r=rows.front();auto image=alignment_detail::read_gray(root/fs::u8path(r.rel)),before=image.clone();
-        final_pin::Estimator pipeline((root/"experiments/hye/v2_Y_T_joint/assets").u8string(),model.u8string());auto actual=pipeline.predict(image);final_pin::Regressor reg;reg.load(model.u8string());auto expected=reg.predict(final_pin::relative_features(r.qr,r.pins));double parity=cv::norm(actual-expected),mutation=cv::norm(image,before,cv::NORM_INF);if(parity>1e-9||mutation!=0)throw std::runtime_error("Public inference parity or input preservation failed");f<<"public_image_api_parity_"<<kind<<' '<<parity<<"\ninput_mutation_max_"<<kind<<' '<<mutation<<"\n";std::cout<<"public API "<<kind<<" parity "<<parity<<std::endl;
+    for(const std::string kind:{"linear","quadratic","bars_linear","bars_quadratic"}){auto model=out/("development_all_qr_pin_"+kind+".yml");
+    if(fs::exists(model)){auto rows=dataset(root);load_measurements(out,rows);populate_bars(root,rows);const auto&r=rows.front();auto image=alignment_detail::read_gray(root/fs::u8path(r.rel)),before=image.clone();
+        final_pin::Estimator pipeline((root/"experiments/hye/v2_Y_T_joint/assets").u8string(),model.u8string());auto actual=pipeline.predict(image);final_pin::Regressor reg;reg.load(model.u8string());auto expected=reg.predict(features(r,"qr_pin_"+kind));double parity=cv::norm(actual-expected),mutation=cv::norm(image,before,cv::NORM_INF);if(parity>1e-9||mutation!=0)throw std::runtime_error("Public inference parity or input preservation failed");f<<"public_image_api_parity_"<<kind<<' '<<parity<<"\ninput_mutation_max_"<<kind<<' '<<mutation<<"\n";std::cout<<"public API "<<kind<<" parity "<<parity<<std::endl;
     }}
 }
 int main(int argc,char**argv){try{
-    if(argc!=4)throw std::runtime_error("pin_eval measure|evaluate|selftest REPO OUTPUT");cv::setNumThreads(1);fs::path root=fs::u8path(argv[2]),out=fs::u8path(argv[3]);fs::create_directories(out);std::string mode=argv[1];
+    if(argc!=4)throw std::runtime_error("pin_eval measure|evaluate|evaluate_bars|summarize|selftest REPO OUTPUT");cv::setNumThreads(1);fs::path root=fs::u8path(argv[2]),out=fs::u8path(argv[3]);fs::create_directories(out);std::string mode=argv[1];
     if(mode=="selftest"){selftest(root,out);return 0;}auto rows=dataset(root);
-    if(mode=="measure")measure(root,out,rows);else if(mode=="evaluate"){load_measurements(out,rows);evaluate(out,rows);}else if(mode=="summarize")summarize(out,rows);else throw std::runtime_error("Unknown mode");
+    if(mode=="measure")measure(root,out,rows);else if(mode=="evaluate"){load_measurements(out,rows);evaluate(out,rows);}else if(mode=="evaluate_bars"){load_measurements(out,rows);populate_bars(root,rows);evaluate(out,rows,true);}else if(mode=="summarize")summarize(out,rows);else throw std::runtime_error("Unknown mode");
     std::ofstream env(out/"environment.txt");env<<"OpenCV "<<CV_VERSION<<"\nC++17\nOpenCV threads 1; image workers 4\n";
 #ifdef _MSC_VER
     env<<"MSVC "<<_MSC_VER<<"\n";

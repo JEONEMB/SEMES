@@ -4,6 +4,8 @@
 
 ## 고정한 평가 조건
 
+위·아래 바까지 결합한 후속 비교는 [추가 결과 보고](REPORT_WITH_BARS.md)와 `results_with_bars/`에 있다. 기존 `results/`는 최초 6방법 비교 이력으로 보존한다.
+
 - `data/fivefold_seed20261104/_metadata/images.csv`의 center 제외 571장. 실제 원본의 SHA-256과 메타데이터를 비교한다. center 4장은 test와 train에 넣지 않고, 고정 기준 사진 1장을 관측 기준으로 사용한다.
 - 경로를 UTF-8 바이트 순으로 정렬하고 seed 20261104, mt19937, rejection sampling Fisher–Yates로 섞은 뒤 순서 modulo 5로 test fold를 배정한다. 115장 test 한 fold, 114장 test 네 fold다. 각 이미지는 test 1회, train 4회다.
 - 사용자 지정 무작위 **이미지 단위** 분할이다. 같은 자세의 반복 사진이 train과 test에 함께 있을 수 있다. 날짜 외삽 평가나 독립 성능 검증이 아니다.
@@ -34,6 +36,23 @@ $out = 'experiments/hye/20261104_173000_pin_random5fold/results'
 `measure`에는 원본 이미지가 필요하다. `evaluate`와 `summarize`는 커밋한 features.tsv와 메타데이터로 재실행할 수 있고, BMP나 임시 pickle이 필요하지 않다. measure_cache는 중단 재개용 로컬 캐시로 커밋하지 않는다.
 
 ## 20턴 평가의 의미
+
+### 바 결합 비교 재실행
+
+위에서 빌드한 실행 파일로 저장 특징을 사용한다. 원본 BMP를 다시 측정하지 않는다. 같은 6개 대조 조건에 QR+나사+위·아래 바 선형/2차 후보 2개를 더해 8개 방법, 40개 fold 모델을 평가한다.
+
+```powershell
+$out = 'experiments/hye/20261104_173000_pin_random5fold/results_with_bars'
+New-Item -ItemType Directory -Path $out -Force | Out-Null
+Copy-Item -LiteralPath experiments/hye/20261104_173000_pin_random5fold/results/features.tsv -Destination "$out/features.tsv"
+& $exe evaluate_bars . $out
+& $exe summarize . $out
+& $exe selftest . $out
+```
+
+`evaluate_bars`와 `summarize`에는 커밋한 특징과 line_protocol.json만 필요하다. 이미지 입력을 검증하는 `selftest`에는 원본 BMP가 필요하다. 새 비교 결과를 보존하려면 다른 출력 폴더를 사용한다.
+
+### 시뮬레이션 가정
 
 실제 로봇에는 연결하지 않았다. 각 fold의 train 사진만으로 자세→관측 특징의 선형/2차 전방 모델을 적합한다. test 사진을 초기 관측 기준점으로 삼고, 그 잔차를 고정한 채 이동 후 특징을 생성한다. 제어기에는 생성된 특징만 주고 추정 Y/T를 동시에 보정한다. 1턴 이동 상한은 Y 0.5, T 0.25다. 추정값이 허용범위면 멈추고 최대 20턴에서 종료한다. 실제 잔차는 시뮬레이터만 보관해 마지막 채점에 쓴다.
 
