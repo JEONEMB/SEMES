@@ -4,8 +4,8 @@
   "runtime": "C++17, OpenCV 3.4 API; no Python",
   "model": {
     "file": "assets/control_v2_model.json",
-    "sha256": "D00A3462B427F726514EB6C815621A753B4EAC6A46AB0DC821057A86E6D1445B",
-    "source": "tool/control_v2_tool fit theta=0.01 on results/v2_validation_20261104/features.csv (y0: 84 images with T==0; t_hat and k: 563 images with |T|<=1 from 20261014, 20261020, 20261029)"
+    "sha256": "568AF3020A3AB856CAB07903D1EDF19A4E48D098912FA5EAB7D555CDB84B6432",
+    "source": "tool/control_v2_tool fit theta=0.01 on results/v2_validation_20261104/features_1014.csv (20261014 only: y0 from 81 images with T==0; t_hat and k from 281 images with |T|<=1). 20261020 and 20261029 are evaluation only."
   },
   "points_sha256": "3D951E071A982A2C2E0411C3601B1CE5F71183336D05C91E77B7A9251CCF8482",
   "center_sha256": "01A69DF6771B840D2FCF9CF727760592B5FB199C12277BFC173AF514E26FD685",

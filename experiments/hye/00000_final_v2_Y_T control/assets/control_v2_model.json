@@ -3,15 +3,15 @@
         "form": "v2_precise_y_with_gated_residual_t",
         "definition": "y = y0[0] + y0[1]*s - k*soft(t_hat, theta); t_hat = t_hat[0] + t_hat[1]*s + t_hat[2]*d; soft(v,theta) = 0 if |v|<=theta else v - sign(v)*theta. s = mean horizontal shift of valid fixed QR536 points (px, center self-measure subtracted); d = upper bar slope - lower bar slope (px per 1000 px)",
         "y0": [
-            0.022526496039157025,
-            0.070170435748259624
+            0.022721916463138862,
+            0.070170500135543254
         ],
         "t_hat": [
-            0.0065643167923911229,
-            0.00051063571934290843,
-            -0.2244329041030928
+            0.0063978299488311758,
+            0.00051285067358450677,
+            -0.22484416474785104
         ],
-        "k": 5.5836482029545627,
+        "k": 5.617848341743807,
         "theta": 0.01,
         "block_x": [
             432.0,
@@ -65,12 +65,12 @@
         ],
         "training_range": {
             "s_min": -80.99108932,
-            "s_max": 94.145359720000002,
-            "d_min": -4.4090691599999996,
+            "s_max": 79.498827079999998,
+            "d_min": -4.2164239749999997,
             "d_max": 4.3149242320000001
         },
-        "training_images_y0": 84,
-        "training_images_t_hat": 563,
+        "training_images_y0": 81,
+        "training_images_t_hat": 281,
         "training_filter": "y0: T == 0; t_hat and k: |T| <= 1; all three sets"
     }
 }

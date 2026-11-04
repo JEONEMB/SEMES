@@ -20,9 +20,10 @@ t^ = c0 + c1·s + c2·d                      남은 T 추정
 y  = a0 + a1·s − k·soft(t^, θ)             soft(v, θ) = |v| ≤ θ 이면 0, 아니면 v − sign(v)·θ
 ```
 
-- a0, a1: T = 0 사진 84장으로 맞춘 s → Y 직선. T가 0이면 이것만 쓴다.
-- c0~c2: \|T\| ≤ 1 사진 563장으로 맞춘 남은 T 추정. 바 기울기 차 d는 카메라 세로 이동에 영향을 받지 않는다.
-- k = 5.58: Y 직선 잔차를 T로 회귀한 기울기. 감도비 이론값 5.62와 맞는다.
+- **학습 자료는 1차(20261014) 사진만 쓴다.** 2차(20261020), 3차(20261029)는 학습에 쓰지 않고 평가에만 쓴다.
+- a0, a1: 20261014의 T = 0 사진 81장으로 맞춘 s → Y 직선. T가 0이면 이것만 쓴다.
+- c0~c2: 20261014의 \|T\| ≤ 1 사진 281장으로 맞춘 남은 T 추정. 바 기울기 차 d는 카메라 세로 이동에 영향을 받지 않는다.
+- k = 5.618: Y 직선 잔차를 T로 회귀한 기울기. 감도비 이론값 5.617과 맞는다.
 - **θ = 0.01 (T 1틱)**: 남은 T 추정이 1틱 안이면 보정하지 않는다. 바 기울기 잡음이 Y로 번지는 것을 막는다. 0.0075~0.015를 비교해 골랐다([A22](../20261104_103107_A22_control_v2_후보비교/결과/보고서.md), [A23](../20261104_103651_A23_control_v1v2_교란강건성/결과/보고서.md)).
 
 ## 함수 계약
@@ -55,7 +56,7 @@ AlignmentDiagnostics alignment_diagnostics();
 | 날짜 층화 5-fold 10분할, \|T\| ≤ 0.1 | (v1은 20261014만 학습) | 88.5~89.2% |
 | 남은 T가 Y로 새는 기울기 dY/dT (20261029) | −1.76 | **−0.015** |
 
-v1은 20261014 280장으로만 학습한 전달 모델이라, 20261020과 20261029는 v1과 v2 모두 학습에 쓰지 않은 날짜로 비교했다.
+v1과 v2 모두 20261014만으로 학습했다. 20261020과 20261029는 두 버전 모두 학습에 쓰지 않은 날짜다. 배포 모델(`assets/control_v2_model.json`)의 출력은 위 표 "20261014만 학습" 행과 같다(575장 차이 최대 4e-8). 날짜 층화 5-fold 행은 모든 날짜를 섞어 학습했을 때의 참고값이다.
 
 **같은 자세 반복의 흩어짐 (보조 기준, 20261014만 학습, \|T\| ≤ 0.1 묶음 16개)**
 
@@ -90,7 +91,8 @@ cmake -S tool/standalone -B build_v2 -DCMAKE_BUILD_TYPE=Release
 cmake --build build_v2 -j
 T=build_v2/control/control_v2_tool
 $T measure  assets ../../../data/clean assets/training_list.csv results/v2_validation_20261104/features.csv
-$T fit      assets results/v2_validation_20261104/features.csv assets/control_v2_model.json 0.01
+awk -F, 'NR==1 || $1 ~ /20261014/' results/v2_validation_20261104/features.csv > results/v2_validation_20261104/features_1014.csv
+$T fit      assets results/v2_validation_20261104/features_1014.csv assets/control_v2_model.json 0.01
 $T evaluate results/v2_validation_20261104/features.csv results/v2_validation_20261104 0.01 results/v2_validation_20261104/v1_control_outputs.csv
 $T check    assets ../../../data/clean results/v2_validation_20261104/features.csv results/v2_validation_20261104/check_public_api.csv
 ```
