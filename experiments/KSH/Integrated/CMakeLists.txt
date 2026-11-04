@@ -1,30 +1,32 @@
 # 통합 정렬 (김성현 ksh 추정 + 신윤석 판 검출·QR 검증)
-#   루트 CMakeLists.txt 에서 add_subdirectory(src/Integrated) 로 함께 빌드된다
-#   실행 파일은 작업 폴더 = src/Integrated 에서 실행 (config/integrated.yml 을 상대 경로로 찾음)
+#   루트 CMakeLists.txt 에서 -DKSH_BUILD_INTEGRATED=ON 일 때 add_subdirectory(experiments/KSH/Integrated) 로 함께 빌드된다
+#   실행 파일은 작업 폴더 = experiments/KSH/Integrated 에서 실행 (config/integrated.yml 을 상대 경로로 찾음)
 
 set(REPO_ROOT "${PROJECT_SOURCE_DIR}")
-set(KSH_DIR "${REPO_ROOT}/src/KSH/Alignment")
+set(TEAM_DIR "${REPO_ROOT}/legacy/team_pipeline")   # 팀 고정 파이프라인 (2026-11-04 루트 src·include 에서 옮김)
 
-# ---- 김성현 : ksh 추정 모듈 (ROI 정합 · 시차 특징 · 보정식)
-file(GLOB KSH_SOURCES CONFIGURE_DEPENDS "${KSH_DIR}/ksh/src/*.cpp")
-add_library(ksh_align STATIC ${KSH_SOURCES})
-target_include_directories(ksh_align PUBLIC "${KSH_DIR}/ksh/include" ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(ksh_align PUBLIC ${OpenCV_LIBS})
+# ---- 김성현 : ksh 추정 모듈 (ROI 정합 · 시차 특징 · 보정식) — 루트 CMake 의 ksh_align 을 그대로 씀
+if(NOT TARGET ksh_align)
+    file(GLOB KSH_SOURCES CONFIGURE_DEPENDS "${REPO_ROOT}/src/modules/*.cpp")
+    add_library(ksh_align STATIC ${KSH_SOURCES})
+    target_include_directories(ksh_align PUBLIC "${REPO_ROOT}/include" ${OpenCV_INCLUDE_DIRS})
+    target_link_libraries(ksh_align PUBLIC ${OpenCV_LIBS})
+endif()
 
 # ---- 신윤석 : 판 검출 · QR 해독 · 모듈 재생성 · Fourier 코너 (src/*.cpp 중 main.cpp, alignment.cpp 제외)
 #      alignment.cpp 는 검출만 하고 NaN 을 돌려주므로, 통합 쪽 team_alignment.cpp 가 같은 함수를 실제 값으로 구현한다
-file(GLOB SHIN_SOURCES CONFIGURE_DEPENDS "${REPO_ROOT}/src/*.cpp")
+file(GLOB SHIN_SOURCES CONFIGURE_DEPENDS "${TEAM_DIR}/src/*.cpp")
 list(FILTER SHIN_SOURCES EXCLUDE REGEX ".*/src/(main|alignment)\\.cpp$")
 add_library(shin_detect STATIC ${SHIN_SOURCES})
-target_include_directories(shin_detect PUBLIC "${REPO_ROOT}/include" ${OpenCV_INCLUDE_DIRS})
+target_include_directories(shin_detect PUBLIC "${TEAM_DIR}/include" ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(shin_detect PUBLIC ${OpenCV_LIBS})
 
 # ---- 통합 라이브러리
 add_library(integrated STATIC src/integrated.cpp src/team_alignment.cpp)
 target_include_directories(integrated PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
-target_link_libraries(integrated PUBLIC ksh_align shin_detect)
+target_link_libraries(integrated PUBLIC shin_detect ksh_align)   # 팀 alignment.hpp 를 먼저 찾도록 shin_detect 를 앞에
 
-foreach(t ksh_align shin_detect integrated)
+foreach(t shin_detect integrated)
     if(MSVC)
         target_compile_options(${t} PUBLIC /utf-8 /EHsc)
         target_compile_definitions(${t} PUBLIC NOMINMAX _CRT_SECURE_NO_WARNINGS)
