@@ -7,6 +7,7 @@
 #define Y_TEST_GET 0x31U
 #define Y_TEST_REPORT 0xB0U
 void YTest_Init(void);
+int YTest_Busy(void);
 int YTest_Handle(const RsFrame *request, RsFrame *reply);
 int YTest_Poll(RsFrame *reply);
 #endif

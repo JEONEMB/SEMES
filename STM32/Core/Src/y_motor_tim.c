@@ -20,12 +20,16 @@ void YMotorPort_Direction(uint8_t high)
     HAL_GPIO_WritePin(Y_DIR_GPIO_Port, Y_DIR_Pin,
                      high ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
-uint8_t YMotorPort_Limits(void)
+uint8_t YMotorPort_RawLimits(void)
 {
-#if Y_MOTOR_USE_LIMITS
     uint32_t pins = GPIOA->IDR;
     return (uint8_t)(((pins & Y_HOME_Pin) != 0U) |
                     (((pins & Y_LIMIT_Pin) != 0U) << 1));
+}
+uint8_t YMotorPort_Limits(void)
+{
+#if Y_MOTOR_USE_LIMITS
+    return YMotorPort_RawLimits();
 #else
     return 0U;
 #endif

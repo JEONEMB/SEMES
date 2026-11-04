@@ -3,6 +3,7 @@
 #include "robot_stage_service.h"
 #include "y_motor.h"
 #include "y_test.h"
+#include "y_home.h"
 
 static UART_HandleTypeDef *link;
 static uint8_t rx_byte;
@@ -66,7 +67,13 @@ static void PollSwitches(uint32_t now)
              * Theta HOME is not an end-of-travel limit. */
             if (i < 2U && Y_MOTOR_USE_LIMITS) {
                 if ((limit_known & bit) && !(limit_previous & bit) && value) {
-                    limit_pending = 1U;
+                    /* Standard movement reports limit failure through DONE. */
+                    if (!service.pending && !service.fault &&
+                        !(i==0U && service.homed && service.steps==0)) {
+                        limit_pending = 1U;
+                        service.fault = 1U;
+                        service.homed = 0U;
+                    }
                 }
                 limit_known |= bit;
                 limit_previous = (uint8_t)((limit_previous & ~bit) | (value << i));
@@ -176,6 +183,7 @@ static void RecoverRx(void)
 void App_Poll(void)
 {
     YMotor_Poll();
+    YHome_Poll();
     uint32_t now = HAL_GetTick();
     PollSwitches(now);
     RecoverRx();
@@ -187,11 +195,18 @@ void App_Poll(void)
         RsFrame request, reply;
         if (RsParser_Next(&parser, &request)) {
             if (rx_fault) { RecoverRx(); continue; }
-            if (request.type == RS_STOP && request.len == 0U) { DisablePulses(); }
             /* V1 has no filter-valid bits: use raw inputs until stable. */
             uint8_t inputs = (uint8_t)((switches_filtered & switches_valid) |
                                       (switches_raw & ~switches_valid));
-            if (!YTest_Handle(&request, &reply)) {
+            if ((request.type == Y_TEST_JOG && service.pending) ||
+                (YTest_Busy() && (request.type == RS_HOME || request.type == RS_MOVE_REL ||
+                 request.type == RS_MOVE_ABS || request.type == RS_SET_SPEED))) {
+                reply = (RsFrame){.type = RS_NAK, .seq = request.seq, .len = 2};
+                reply.payload[0] = request.type; reply.payload[1] = RS_BUSY;
+            } else if (YTest_Handle(&request, &reply)) {
+                if (request.type == Y_TEST_JOG && reply.type == RS_ACK)
+                    RsService_InvalidatePosition(&service);
+            } else {
                 RsService_Handle(&service, &request, inputs, &reply);
             }
             QueueReply(&reply);
@@ -209,6 +224,10 @@ void App_Poll(void)
         rx_tail = (uint16_t)((rx_tail + 1U) % APP_RX_CAPACITY);
         Unlock(key);
         RsParser_Push(&parser, byte, arrival);
+    }
+    if (tx_count < APP_TX_QUEUE_CAPACITY) {
+        RsFrame completion;
+        if (RsService_Poll(&service, &completion)) { QueueReply(&completion); }
     }
     if (tx_count < APP_TX_QUEUE_CAPACITY) {
         RsFrame completion;
