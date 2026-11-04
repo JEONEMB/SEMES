@@ -1,0 +1,165 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/7_명령만들기/논문/01_Papadopoulos2018_TAC_양자화되먹임_리밋사이클",
+   "title": "Switched Control for Quantized Feedback Systems: Invariance and Limit Cycle Analysis",
+   "citation": "Papadopoulos A.V., Terraneo F., Leva A., Prandini M. (2018). IEEE Transactions on Automatic Control 63(11):3775-3786. doi:10.1109/TAC.2018.2797246. arXiv:1701.07482 (v2 2017-06-12)",
+   "url": "https://arxiv.org/abs/1701.07482",
+   "pdf_url": "https://arxiv.org/pdf/1701.07482",
+   "questions": [
+    4,
+    5
+   ],
+   "why": "Integrator with a one-step delay whose input and output are both quantized, the same shape as our measure, round, move loop with 0.01/0.05 command steps. Gives the necessary and sufficient conditions for a limit cycle under a constant disturbance (backlash-like bias) and a switched controller that holds the output at zero or one step. Only the abstract was checked."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/7_명령만들기/논문/02_He2009_TSM_일반조화규칙_R2R제어기",
+   "title": "A General Harmonic Rule Controller for Run-to-Run Process Control",
+   "citation": "He F., Wang K., Jiang W. (2009). IEEE Transactions on Semiconductor Manufacturing 22(2):232-244. doi:10.1109/tsm.2009.2017627",
+   "url": "https://doi.org/10.1109/tsm.2009.2017627",
+   "pdf_url": "https://www2.ie.tsinghua.edu.cn/kbwang/Downloads/papers/7.A%20General%20Harmonic%20Rule%20Controller%20for%20Run-to-Run%20Process%20Control.pdf",
+   "questions": [
+    1,
+    6,
+    7
+   ],
+   "why": "Generalizes the 1/k harmonic rule (Grubbs) for removing an initial setup bias. Shows it is more robust than EWMA when the process gain is estimated with error. This answers full versus partial moves, gain-mismatch robustness, and how to combine measurements across turns. The author-hosted PDF was downloaded and page 1 checked."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/7_명령만들기/논문/03_delCastillo2019_arXiv_2변수_데드밴드_조정정책",
+   "title": "A Bivariate Dead Band Process Adjustment Policy",
+   "citation": "del Castillo E., Göb R. (2019). arXiv:1912.08337 [stat.ME]. No journal version was confirmed.",
+   "url": "https://arxiv.org/abs/1912.08337",
+   "pdf_url": "https://arxiv.org/pdf/1912.08337",
+   "questions": [
+    5,
+    9
+   ],
+   "why": "Trades a fixed cost per adjustment (for us, one turn) against a quadratic off-target loss for two responses and two controllable factors. The optimal policy is a 2D dead band, with analytic loss and average adjustment interval. This applies directly to the Y,T joint stop rule and to sizing the dead band. Only the abstract was checked."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/7_명령만들기/논문/04_Ai2015_arXiv_EWMA_R2R_안정영역",
+   "title": "Stability analysis of semiconductor manufacturing process with EWMA run-to-run controllers",
+   "citation": "Ai B., Wong D.S.-H., Jang S.-S. (2015). arXiv:1510.08946. No journal version was confirmed.",
+   "url": "https://arxiv.org/abs/1510.08946",
+   "pdf_url": "https://arxiv.org/pdf/1510.08946",
+   "questions": [
+    6,
+    7
+   ],
+   "why": "Derives the stability region of the EWMA gain under model-gain mismatch and metrology delay, using Routh-Hurwitz and Lyapunov methods. This bounds how far the move gain can be reduced or raised before overshoot or divergence. Only the abstract was checked."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/7_명령만들기/특허/01_US9517563_FANUC_시각되먹임_이동량임계_도달판정",
+   "title": "Robot system using visual feedback",
+   "citation": "US 9,517,563 B2, FANUC Corporation (inventor Keisuke Watanabe). Filed 2015-02-10, granted 2016-12-13, priority JP 2014-025600.",
+   "url": "https://patents.google.com/patent/US9517563B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/9517563",
+   "questions": [
+    5,
+    7
+   ],
+   "why": "The loop is capture, compute the robot move, then judge arrival when the computed move is below a threshold (e.g. 0.5 mm, or 1 pixel of feature difference). Otherwise the robot moves and the image is retaken. This is an industrial example of a dead-band stop rule on the computed move. The USPTO PDF was checked by OCR."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/7_명령만들기/특허/02_US4910679_Canon_스텝반복정렬_가중평균보정",
+   "title": "Step-and-repeat alignment and exposure method and apparatus",
+   "citation": "US 4,910,679 A, Canon K.K. (Takahashi K., Kosugi M.). Filed 1989-04-13, granted 1990-03-20, priority JP 60-058535 / 60-090891.",
+   "url": "https://patents.google.com/patent/US4910679A/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/4910679",
+   "questions": [
+    1,
+    7
+   ],
+   "why": "Updates the stored correction as Q = (1-R)Q + R*C, which becomes the running average (harmonic rule) when R = 1/P. States that the same learning applies to the X, Y and theta errors. This is patent evidence for partial (weighted) correction under measurement noise. The USPTO PDF was checked by OCR."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/7_명령만들기/특허/03_US9635266_Canon_보정변화량상한_잔여량이월",
+   "title": "Image stabilization apparatus and control method thereof, and storage medium",
+   "citation": "US 9,635,266 B2, Canon K.K. (inventor Masaaki Noguchi). Filed 2015-04-17, granted 2017-04-25, priority JP 2014-087589.",
+   "url": "https://patents.google.com/patent/US9635266B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/9635266",
+   "questions": [
+    2
+   ],
+   "why": "Puts an upper limit (Δshiftmax) on the correction change per update and carries the excess to later updates as a 'correction remaining amount'. The field is image stabilization, not robotics, but it states the max-move-per-step and carry-over rule explicitly. The USPTO PDF was checked by OCR."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/04_Chaumette2006_RAM_시각서보_PartI_기본/요약.md",
+   "why": "Q1, Q6. Discrete look-and-move gives e(k+1) = (I - g J^-1 J) e(k). The gain and the Jacobian estimation error together set convergence and overshoot. The eigenvalue (0,2) condition limits the gain."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/14_Hutchinson1996_TRA_시각서보_튜토리얼/요약.md",
+   "why": "Q1, Q4. Our structure is a static look-and-move. Its own summary says the remaining issues are loop gain, sensitivity error and quantization."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/07_Chaumette2007_RAM_시각서보_PartII_고급/요약.md",
+   "why": "Q6. Stability conditions under different interaction-matrix estimates."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/07_Chaumette1998_LNCIS_시각서보_안정성수렴/요약.md",
+   "why": "Q6. Convergence problems when the calibration or model error is large."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/13_Kyrki2004_ICRA_시각서보_측정오차전파/요약.md",
+   "why": "Q5. Propagation of measurement error into the final positioning error. This informs the dead-band width relative to noise."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/04_Jagersand1997_ICRA_비보정시각서보_자코비안온라인추정/요약.md",
+   "why": "Q6, Q7. Online Jacobian (gain) update from executed moves and image change, as a remedy for gain mismatch."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/05_Piepmeier2004_TRA_동적준뉴턴_비보정시각서보/요약.md",
+   "why": "Q6, Q7. Dynamic quasi-Newton Jacobian estimation in uncalibrated visual servoing."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/03_US9424646_Omron_2단계_비전위치결정/요약.md",
+   "why": "Q2, Q5, Q8. Stops when the error is at or below the allowable value, skips correction when the measurement is unusable, and approaches from one side without passing the target, which avoids reversal and backlash."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/04_US12211719_TEL_열변위_백래시방향_목표위치보정/요약.md",
+   "why": "Q8. Target-position correction that depends on the backlash direction."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/02_US10403539_Kawasaki_로스트모션_편차진단/요약.md",
+   "why": "Q8. Diagnosis of lost motion, which sets the backlash size that the final-approach rule must handle."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/01_US11984340_TEL_검사웨이퍼_반복티칭_분산갱신/요약.md",
+   "why": "Q5, Q7. Repeated teaching until within an allowable range, with variance-based updating of the correction."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/14_Nordin2002_Automatica_백래시제어_조사/요약.md",
+   "why": "Q4, Q8. Survey of backlash in control loops, including limit cycles and compensation."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/09_Yao2025_IEEEAccess_기어백래시_식별보상/요약.md",
+   "why": "Q8. Gear backlash identification and compensation."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/10_vanHulst2026_arXiv_히스테리시스보상_ILC_비전측정/요약.md",
+   "why": "Q7, Q8. Iterative learning compensation of hysteresis using vision measurement across iterations."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/11_Cho2009_ICROS_대형LCD패널_비전정렬/요약.md",
+   "why": "Q1, Q9. Look-and-move stage alignment repeated until the error is below a criterion (3 um, about 480 ms)."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/12_Lee2013_MPE_XXY스테이지_비전서보_오차분석/요약.md",
+   "why": "Q1, Q9. XXY stage visual servo alignment of linear and angle axes with error analysis."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/02_Malis1999_TRA_2.5D시각서보_회전평행이동분리/요약.md",
+   "why": "Q9. Decoupled control of rotation and translation, which informs moving Y and T together or in sequence."
+  }
+ ]
+}

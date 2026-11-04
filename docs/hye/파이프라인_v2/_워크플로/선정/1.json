@@ -1,0 +1,150 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/1_촬영/논문/01_Handel2009_IPSJTCVA_카메라예열_영상드리프트",
+   "title": "Analyzing the Influences of Camera Warm-Up Effects on Image Acquisition",
+   "citation": "Holger Handel, IPSJ Transactions on Computer Vision and Applications, vol.1, pp.12-20, 2009. doi:10.2197/ipsjtcva.1.12",
+   "url": "https://doi.org/10.2197/ipsjtcva.1.12",
+   "pdf_url": "https://www.jstage.jst.go.jp/article/ipsjtcva/1/0/1_0_12/_pdf",
+   "questions": [
+    2,
+    5,
+    6
+   ],
+   "why": "카메라 기동 후 영상이 0.1 px대로 밀리고 센서 보드 온도와 함께 가다 열평형에서 멈춤. 센서 변위를 사영기하+이중 지수 감쇠로 모형화해 보정. 우리 허용 0.65 px과 같은 규모라 예열 필요성의 직접 근거(초록 확인, J-STAGE PDF 200 응답 확인)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/1_촬영/논문/02_Zhou2020_ApplSci_카메라열변형_예열보상",
+   "title": "Mechanism and Compensation of Measurement Error Induced by Thermal Deformation of Digital Camera in Photo Mechanics",
+   "citation": "Shichao Zhou, Haibin Zhu, Qinwei Ma, Shaopeng Ma, Applied Sciences 10(10):3422, 2020. doi:10.3390/app10103422",
+   "url": "https://doi.org/10.3390/app10103422",
+   "pdf_url": "https://www.mdpi.com/2076-3417/10/10/3422/pdf?version=1590564575",
+   "questions": [
+    2,
+    5,
+    6
+   ],
+   "why": "카메라 열변형 영상오차의 원리와 모형 보상, 예열, 보상 시편(고정 기준물) 세 보상법을 실험 비교. QR−가로선 상쇄가 보상 시편 계열인지 비교 근거(초록 확인, 오픈액세스이나 curl은 403이라 브라우저로 받아야 함)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/1_촬영/논문/03_Yoon2023_Electronics_웨이퍼로봇_비대칭속도_정착시간",
+   "title": "An Asymmetric Velocity Profile for Minimizing Wafer Slippage and Settling Time of a Wafer Transport Robot",
+   "citation": "Kwan Sik Yoon, Min Seok Kim, Hyungpil Moon, Hyouk Ryeol Choi, Ja Choon Koo, Electronics 12(10):2157, 2023. doi:10.3390/electronics12102157",
+   "url": "https://doi.org/10.3390/electronics12102157",
+   "pdf_url": "https://www.mdpi.com/2079-9292/12/10/2157/pdf?version=1683623149",
+   "questions": [
+    1,
+    3,
+    4
+   ],
+   "why": "웨이퍼 이송 로봇에서 가속/감속 구간의 영향을 나눠 비대칭 속도 프로파일+ILC로 진동, 정착 시간, 택트 시간을 줄임. 도착 속도와 정착 대기, 사이클 시간 예산의 근거(초록 확인, MDPI curl 403)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/1_촬영/논문/04_Lavatelli2017_TIM_모션블러_DIC불확도",
+   "title": "A Displacement Uncertainty Model for 2-D DIC Measurement Under Motion Blur Conditions",
+   "citation": "Alberto Lavatelli, Emanuele Zappa, IEEE Transactions on Instrumentation and Measurement 66(3):451-459, 2017. doi:10.1109/TIM.2016.2644898",
+   "url": "https://doi.org/10.1109/TIM.2016.2644898",
+   "pdf_url": "https://re.public.polimi.it/bitstream/11311/1049506/4/11311-1049506%20Zappa.pdf",
+   "questions": [
+    3,
+    7
+   ],
+   "why": "노출 중 움직임(잔진동)이 DIC 변위 불확도를 키우는 정도를 SSD 감도와 멱법칙으로 모형화. 잔진동 속도와 노출 시간으로 대기 시간, 노출을 정하는 근거(초록 확인, 저자 공개본은 curl 403)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/1_촬영/논문/05_Tocci2021_ERX_ArUco변위_반복성불확도",
+   "title": "ArUco marker-based displacement measurement technique: uncertainty analysis",
+   "citation": "Tommaso Tocci, Lorenzo Capponi, Gianluca L. Rossi, Engineering Research Express 3(3):035032, 2021. doi:10.1088/2631-8695/ac1fc7",
+   "url": "https://doi.org/10.1088/2631-8695/ac1fc7",
+   "pdf_url": "https://iopscience.iop.org/article/10.1088/2631-8695/ac1fc7/pdf",
+   "questions": [
+    5,
+    7,
+    8
+   ],
+   "why": "산업용 카메라+ArUco 마커 변위 측정의 반복성 불확도와 촬영, 환경 조건의 영향을 기준 측정기와 비교. 마커 기반 반복 촬영 흔들림과 조건 영향을 나누는 시험 설계 근거(초록 확인, 오픈액세스)."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/1_촬영/특허/01_US8622198_SeikoEpson_마크핸드_한영상_열변형상쇄",
+   "title": "Component transferring apparatus (and IC handler)",
+   "citation": "US8622198B2, Seiko Epson Corporation, Yamazaki et al., 등록 2014-01-07, 출원 13/275,619(2011-10-18), 공개 US 2012/0034052 A1, 우선일 2007-06-22",
+   "url": "https://patents.google.com/patent/US8622198B2/en",
+   "pdf_url": "https://patentimages.storage.googleapis.com/pdfs/US8622198.pdf",
+   "questions": [
+    2,
+    5,
+    6
+   ],
+   "why": "이송 헤드와 카메라 상대 위치가 열팽창, 수축, 진동으로 바뀌는 문제를 소켓 마크와 핸드 마크를 한 영상에 함께 찍어 상대 편차로 해결. QR과 가로선을 한 영상에서 같이 보는 상쇄 방식의 특허 사례(공보 PDF 본문 직접 확인)."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/1_촬영/특허/02_US9327488_SCREEN_정렬이송_촬영시점",
+   "title": "Alignment method, transfer method and transfer apparatus",
+   "citation": "US9327488B2, SCREEN Holdings Co., Ltd., 우선일 2011-11-30",
+   "url": "https://patents.google.com/patent/US9327488B2/en",
+   "pdf_url": null,
+   "questions": [
+    3,
+    4
+   ],
+   "why": "로봇+카메라+진동+정지/대기+촬영+기판 조합 Google Patents 검색에서 걸린 기판 이송 정렬 특허. 서지(번호, 제목, 출원인, 우선일)만 검색 결과로 확인했고 본문 미확인. 진동 정착 대기와 촬영 시점 내용인지 다음 단계에서 공보로 확인하고, 관련 없으면 제외해야 함. patentimages 옛 경로는 403."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/03_LeReun2022_Robotica_열드리프트_백래시_위치성능/요약.md",
+   "why": "질문 1, 2: 산업 로봇의 열 드리프트와 백래시가 단방향/양방향 정확도를 떨어뜨림, 6.5시간 측정, 열-기하 모형과 백래시 보상."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/04_US12211719_TEL_열변위_백래시방향_목표위치보정/요약.md",
+   "why": "질문 1, 2: 웨이퍼 이송 로봇의 열변위와 가감속 방향에 따른 백래시 오차 방향을 나눠 목표 위치를 보정."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/02_US10403539_Kawasaki_로스트모션_편차진단/요약.md",
+   "why": "질문 1: 직전과 반대 방향 구동 시 로스트 모션(백래시) 편차량 측정, 도착 방향 영점 차이 시험 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/06_US10020216_Kawasaki_라인센서_로스트모션/요약.md",
+   "why": "질문 1: 라인센서로 로스트 모션을 재는 방법, 접근 방향별 영점 차이."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/06_Kuric2018_MATEC_ISO9283_반복정밀도측정/요약.md",
+   "why": "질문 1, 5: ISO 9283 반복정밀도는 같은 방향 접근으로 정의, 정/역방향 30회씩 측정 설계, 측정기는 한 자릿수 더 정밀해야 함."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/14_Nordin2002_Automatica_백래시제어_조사/요약.md",
+   "why": "질문 1: 백래시 모형과 제어 조사, 접근 방향 고정 후보의 이론 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/특허/06_US7248931_ASM_고정기준점_드리프트측정/요약.md",
+   "why": "질문 2, 5, 6: 같은 영상 속 고정 기준 마크 대비 상대 거리로 재서 측정 기준의 드리프트(영점 변동)를 상쇄."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/04_US7019836_Canon_마크간격_조명조건선택/요약.md",
+   "why": "질문 5, 7: 스테이지 흔들림에 불변인 마크 간격으로 검출계 순수 반복성을 재고, 조명 모드를 선택."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/15_NIST_eHandbook_GaugeRR_측정시스템/요약.md",
+   "why": "질문 5, 8: 반복성(같은 런)/재현성(일간)/안정성(런간) 중첩 설계와 단일 측정 총 불확도 식, 드리프트와 히스테리시스 편향 항목."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/01_JCGM2008_GUM_측정불확도표현지침/요약.md",
+   "why": "질문 8: 반복 측정 평균의 표준불확도(1/√N)와 상관된 오차 합성 규칙."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/02_Wang2023_JMNM_비전웨이퍼본딩정렬_오차예산/요약.md",
+   "why": "질문 5: 비전 정렬 오차 예산에 열, 진동 같은 촬영 조건 항목을 넣는 사례."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/12_Sciacchitano2019_MST_PIV_불확도정량화/요약.md",
+   "why": "질문 5, 8: 영상 측정 불확도의 사전/사후 정량, 사후 지표는 편향을 못 잡으므로 반복 촬영과 별도 편향 시험이 필요."
+  }
+ ]
+}

@@ -1,0 +1,158 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/4_특징만들기/논문/01_Hild2012_ExpMech_국소전역DIC_불확도비교",
+   "title": "Comparison of Local and Global Approaches to Digital Image Correlation",
+   "citation": "Hild F., Roux S. Experimental Mechanics 52(9):1503-1519, 2012. doi:10.1007/s11340-012-9603-7",
+   "url": "https://hal.science/hal-00750756",
+   "pdf_url": "https://hal.science/hal-00750756/document",
+   "questions": [
+    2,
+    6
+   ],
+   "why": "점(부분 창) 방식과 전역(형상 함수로 영역 전체 맞춤) 방식의 변위 불확도를 미리 계산해 비교하고 실제 영상으로 확인한다. 캔버스의 빈 항목인 점 방식과 영역 방식의 정보량 비교에 바로 쓴다. HAL 초록 확인, PDF 200 확인."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/4_특징만들기/논문/02_Roux2006_IJF_변위장모드투영_통합DIC",
+   "title": "Stress intensity factor measurements from digital image correlation: post-processing and integrated approaches",
+   "citation": "Roux S., Hild F. International Journal of Fracture 140(1-4):141-157, 2006. doi:10.1007/s10704-006-6631-2",
+   "url": "https://hal.science/hal-00013818",
+   "pdf_url": "https://hal.science/hal-00013818/document",
+   "questions": [
+    4,
+    2
+   ],
+   "why": "변위장을 소수 물리 모드 값으로 요약하는 두 길(측정 변위를 나중에 모드에 맞춤 vs 영상에서 모드 값을 바로 맞춤, 통합 DIC)을 비교한다. control의 P12식 사후 요약과 영역 직접 요약의 비교 근거. HAL 초록 확인, PDF 200 확인."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/4_특징만들기/논문/03_Cohen2015_TMI_점정합아핀_CRLB_이분산",
+   "title": "Cramér-Rao Lower Bound for Point Based Image Registration With Heteroscedastic Error Model for Application in Single Molecule Microscopy",
+   "citation": "Cohen E.A.K., Kim D., Ober R.J. IEEE Transactions on Medical Imaging 34(12):2632-2644, 2015. doi:10.1109/TMI.2015.2451513. arXiv:1504.05781",
+   "url": "https://arxiv.org/abs/1504.05781",
+   "pdf_url": "https://arxiv.org/pdf/1504.05781",
+   "questions": [
+    6,
+    7,
+    4
+   ],
+   "why": "점마다 공분산이 다른 오차(이분산), 양쪽 점 집합 모두 오차가 있는 모델에서 아핀 변환 파라미터의 CRLB를 유도한다. 아핀 요약 특징의 정보 하한과 점별 가중 근거. arXiv 초록과 Crossref 서지 확인."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/4_특징만들기/논문/04_Zhang2020_ExpFluids_상관오차_GLS가중",
+   "title": "Using uncertainty to improve pressure field reconstruction from PIV/PTV flow measurements (arXiv: Uncertainty-based pressure field reconstruction from PIV/PTV flow measurements with generalized least-squares)",
+   "citation": "Zhang J., Bhattacharya S., Vlachos P.P. Experiments in Fluids 61(6):131, 2020. doi:10.1007/s00348-020-02974-y. arXiv:1912.00130 (arXiv판과 저널판 동일 연구 여부 확인 필요)",
+   "url": "https://arxiv.org/abs/1912.00130",
+   "pdf_url": "https://arxiv.org/pdf/1912.00130",
+   "questions": [
+    5,
+    7
+   ],
+   "why": "영상 변위(속도) 측정의 분산과 공분산을 GLS 가중으로 넣어 과결정 선형계를 풀고, 초록 기준 공간 상관 오차에서 이득이 더 크다고 보고한다. 상관 잡음 하 GLS 이득의 실험 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/4_특징만들기/논문/05_Ledoit2004_JMVA_공분산축소_조건수",
+   "title": "A well-conditioned estimator for large-dimensional covariance matrices",
+   "citation": "Ledoit O., Wolf M. Journal of Multivariate Analysis 88(2):365-411, 2004. doi:10.1016/S0047-259X(03)00096-4",
+   "url": "https://doi.org/10.1016/S0047-259X(03)00096-4",
+   "pdf_url": "http://www.ledoit.net/ole1a.pdf",
+   "questions": [
+    5
+   ],
+   "why": "joint의 공분산 축소 0.01(팀 보고서 [26])의 원 문헌인데 문헌 폴더가 없었다. 표본 공분산과 단위 행렬의 최적 볼록 결합과 축소 강도 추정식을 준다. PDF는 저자 사이트 2001년 원고(1쪽 확인), 저널판과의 차이 확인 필요."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/4_특징만들기/논문/06_Bretherton1999_JClim_유효공간자유도",
+   "title": "The Effective Number of Spatial Degrees of Freedom of a Time-Varying Field",
+   "citation": "Bretherton C.S., Widmann M., Dymnikov V.P., Wallace J.M., Bladé I. Journal of Climate 12(7):1990-2009, 1999. doi:10.1175/1520-0442(1999)012<1990:TENOSD>2.0.CO;2",
+   "url": "https://doi.org/10.1175/1520-0442(1999)012<1990:TENOSD>2.0.CO;2",
+   "pdf_url": "https://journals.ametsoc.org/downloadpdf/journals/clim/12/7/1520-0442_1999_012_1990_tenosd_2.0.co_2.pdf",
+   "questions": [
+    1
+   ],
+   "why": "상관된 많은 점으로 된 장의 유효 자유도 추정식을 비교하는 대표 문헌(Crossref 서지만 확인, 본문 미확인). 536점=독립 정보 19(A1)의 산정식 검증 근거. AMS가 curl에 403을 내 우회하지 않았고 브라우저 수동 확보 대상."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/4_특징만들기/특허/01_US4780617_Nikon_EGA_최소제곱_배열모델",
+   "title": "Method for successive alignment of chip patterns on a substrate",
+   "citation": "US4780617, Umatate et al., Nippon Kogaku K.K. (Nikon), 출원 1986-10-03, 등록 1988-10-25",
+   "url": "https://patents.google.com/patent/US4780617A/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/4780617",
+   "questions": [
+    4,
+    1
+   ],
+   "why": "여러 마크 측정 위치와 설계 위치의 편차 제곱합을 최소로 하는 연산식 계수를 구한다(EGA). 많은 점 변위를 소수 파라미터로 요약하는 산업 표준으로 P12와 QR별 아핀 요약의 선행 근거. USPTO 공보 1쪽 OCR로 서지와 초록 확인(Google Patents는 503)."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/4_특징만들기/특허/02_US5525808_Nikon_거리가중_EGA통계계산",
+   "title": "Alignment method and alignment apparatus with a statistic calculation using a plurality of weighted coordinate positions",
+   "citation": "US5525808, Irie et al., Nikon Corporation, 출원 1994-12-20, 등록 1996-06-11",
+   "url": "https://patents.google.com/patent/US5525808A/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5525808",
+   "questions": [
+    7,
+    5,
+    3
+   ],
+   "why": "측정 마크 좌표에 거리 기반 가중을 주고 통계 계산을 한다(가중 EGA). 점별 가중을 요약 특징 계산에 넣고, 위치가 다른 관측(QR, 가로선)을 합치는 가중 설계 참고. USPTO 공보 1쪽 OCR로 서지와 초록 확인."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/02_YoungChellappa1992_PAMI_운동추정모호성_CRLB/요약.md",
+   "why": "질문 6, 2: 광류장 운동 파라미터의 Fisher 정보와 CRLB 닫힌 식. 536점 특징의 Y, T 하한 계산 틀."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/01_Daniilidis1993_CVPR_평면운동_회전병진결합/요약.md",
+   "why": "질문 6, 2: 평면 운동장 CRLB로 회전 병진 결합 분석. 정면 평면, 좁은 시야인 우리 조건이 결합 최대."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/01_Irani1997_PAMI_영역정렬_회전제거_평면시차/요약.md",
+   "why": "질문 3, 4: 평면 호모그래피 정렬 뒤 잔차로 병진을 가름. QR 호모그래피 값과 가로선 잔차 결합 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/08_Nahvi1996_ICRA_잡음증폭지수_보정자세선택/요약.md",
+   "why": "질문 4, 1: 반응 행렬 특이값(잡음 증폭 지수)으로 특징 집합 비교. 요약 표현 선택의 수치 기준."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/12_Hoerl1970_Technometrics_능형회귀/요약.md",
+   "why": "질문 5, 4: 거의 평행한 Y, T 열의 계수 쪽 안정화. 공분산 축소(잡음 쪽)와 짝."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/13_Kyrki2004_ICRA_시각서보_측정오차전파/요약.md",
+   "why": "질문 6, 5: 점 잡음이 특징을 거쳐 자세 공분산으로 전파되는 1차 식. GLS 출력 Cov(Y,T) 계산 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/01_JCGM2008_GUM_측정불확도표현지침/요약.md",
+   "why": "질문 5, 1: 상관 입력의 불확도 합성식. 상관을 무시하면 불확도가 크게 틀림."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/12_Sciacchitano2019_MST_PIV_불확도정량화/요약.md",
+   "why": "질문 7: 점별 불확도 지표(피크 비, 잔차)를 가중과 유효점 선택에 사용하는 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/06_Duncan2010_MST_이웃중앙값_이상치검출/요약.md",
+   "why": "질문 7: 이웃 중앙값 검정으로 틀린 점 제거. 유효점 선택 후보."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/09_MalisVargas2007_INRIA_호모그래피분해/요약.md",
+   "why": "질문 4: QR별 호모그래피 값을 회전과 병진으로 나누는 해석식. 호모그래피 파라미터 특징의 물리 해석."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/13_Baker2001_CVPR_넓은시야_회전병진모호성해소/요약.md",
+   "why": "질문 3: 시야 안 멀리 떨어진 관측(가로선)을 더하면 회전 병진 상관이 줄어든다는 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/00002_문헌대장_v2.md",
+   "why": "기존 114개 등록 대장. 위 재사용 문헌의 등록 상태 확인과, 새 문헌(Hild 2012, Roux 2006, Cohen 2015, Zhang 2020, Ledoit 2004, Bretherton 1999, US4780617, US5525808)이 기존과 중복되지 않음을 확인한 근거."
+  }
+ ]
+}

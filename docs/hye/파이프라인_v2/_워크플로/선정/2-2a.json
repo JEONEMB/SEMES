@@ -1,0 +1,140 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/a_특징점/논문/01_Bennett2013_CVIU_ChESS_안장점검출",
+   "title": "ChESS - Quick and robust detection of chess-board features",
+   "citation": "Bennett, S., Lasenby, J. Computer Vision and Image Understanding 118, 197-210 (OpenAlex year 2013). DOI 10.1016/j.cviu.2013.10.008; arXiv 1301.5491",
+   "url": "https://doi.org/10.1016/j.cviu.2013.10.008",
+   "pdf_url": "https://arxiv.org/pdf/1301.5491",
+   "questions": [
+    1,
+    4,
+    6
+   ],
+   "why": "X 코너 전용 검출기. 일반 검출기와 정확도, 속도, 강건성을 비교함(초록 확인). 응답 강도로 점 품질 점검 가능."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/a_특징점/논문/02_Abeles2021_arXiv_블러인지_X코너검출",
+   "title": "Pyramidal Blur Aware X-Corner Chessboard Detector",
+   "citation": "Abeles, P. arXiv 2110.13793 (2021)",
+   "url": "https://arxiv.org/abs/2110.13793",
+   "pdf_url": "https://arxiv.org/pdf/2110.13793",
+   "questions": [
+    1,
+    3,
+    4
+   ],
+   "why": "고해상도와 초점 흐림에서 블러를 추정해 코너 위치를 보정. 여러 라이브러리와 코너 정확도, 속도 비교(초록: F1 0.97, 1.9배 빠름). 3840x2160, 1020 세트 흐림 조건과 맞음."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/a_특징점/논문/03_Yang2018_AppSci_체커코너모델적합_자기점검",
+   "title": "Sub-Pixel Chessboard Corner Localization for Camera Calibration and Pose Estimation",
+   "citation": "Yang, T., Zhao, Q., Wang, X. et al. Applied Sciences 8(11), 2118 (2018). DOI 10.3390/app8112118",
+   "url": "https://doi.org/10.3390/app8112118",
+   "pdf_url": "https://www.mdpi.com/2076-3417/8/11/2118/pdf",
+   "questions": [
+    3,
+    5,
+    6
+   ],
+   "why": "회전, 전단, 밝기, 블러를 넣은 연속 코너 모델의 비선형 맞춤과 맞춤 품질 자기 점검. 팀의 흐린 흑백 경계 모델 맞춤과 같은 계열이라 직접 비교 대상."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/a_특징점/논문/04_Schops2020_CVPR_대칭기반_특징점정밀화",
+   "title": "Why Having 10,000 Parameters in Your Camera Model Is Better Than Twelve",
+   "citation": "Schöps, T., Larsson, V., Pollefeys, M., Sattler, T. CVPR 2020. DOI 10.1109/cvpr42600.2020.00261; arXiv 1912.02908",
+   "url": "https://doi.org/10.1109/cvpr42600.2020.00261",
+   "pdf_url": "https://arxiv.org/pdf/1912.02908v3",
+   "questions": [
+    3,
+    7
+   ],
+   "why": "본문 3.2절 대칭 기반 특징점 정밀화를 cornerSubPix, 정밀화 없음, Deltille 정밀화와 비교(원문 PDF에서 확인). 정밀화가 최종 정확도를 정한다는 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/a_특징점/논문/05_ReyOtero2014_IPOL_SIFT_키포인트정밀화",
+   "title": "Anatomy of the SIFT Method",
+   "citation": "Rey-Otero, I., Delbracio, M. Image Processing On Line 4, 370-396 (2014). DOI 10.5201/ipol.2014.82",
+   "url": "https://doi.org/10.5201/ipol.2014.82",
+   "pdf_url": "http://www.ipol.im/pub/art/2014/82//article.pdf",
+   "questions": [
+    2,
+    3
+   ],
+   "why": "SIFT 검출, 부화소 키포인트 정밀화, 서술자, 짝짓기 규칙을 단계별로 해부한 공개 구현. 서술자 계열 위치 정밀도 한계와 반복 무늬 오매칭 원리 확인용."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/a_특징점/특허/01_US20220335651A1_Aptiv_영상내지정점검출",
+   "title": "Methods and Systems for Determining Pre-Determined Points in an Input Image",
+   "citation": "US20220335651A1, Aptiv Technologies Limited, priority 2021-04-15 (same family US12211233B2)",
+   "url": "https://patents.google.com/patent/US20220335651A1/en",
+   "pdf_url": null,
+   "questions": [
+    1,
+    3
+   ],
+   "why": "잠정. Google Patents 검색 (\"saddle point\") (subpixel) corner, US 결과에서 번호, 출원인, 우선일, 제목만 확인. 이후 503 차단으로 초록, 청구항 미확인. 다음 단계에서 관련도 확인 필요, 무관하면 삭제."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/a_특징점/특허/02_US20080267506A1_Microsoft_관심점검출",
+   "title": "Interest point detection",
+   "citation": "US20080267506A1, Microsoft Corporation, priority 2007-04-24",
+   "url": "https://patents.google.com/patent/US20080267506A1/en",
+   "pdf_url": null,
+   "questions": [
+    1,
+    2
+   ],
+   "why": "잠정. 같은 검색 결과에서 번호, 출원인, 우선일, 제목만 확인. 본문 미확인(Google Patents 503 차단, 우회하지 않음). 검출기 설계와 위치 정밀도 주장 여부를 본문에서 확인해야 함."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/03_Duda2018_BMVC_체커보드코너_정밀검출/요약.md",
+   "why": "Q1, Q3, Q4: cornerSubPix와 Förstner 기울기 기반 정밀화의 부화소 위치 의존 편향(1/4 화소 부근 불안정), 블러 조건별 우열. 국소 Radon 기반 검출."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/04_Mallon2007_PRL_보정패턴_편향비교/요약.md",
+   "why": "Q3, Q5: 안장점 곡면 맞춤은 원근과 왜곡 편향에 불변, 에지 교차법은 왜곡에 영향. 검출 오차 약 0.02~0.04 px. 점 종류별 편향 성질."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/08_Ha2017_ICCV_Deltille격자_코너정밀도/요약.md",
+   "why": "Q3, Q4: 다항식 곡면(안장점) 정밀화가 OpenCV 대비 오차 2~3배 감소, OpenCV는 블러 σ>2 px에서 발산."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/05_Stelldinger2025_LNCS_PuzzleBoard_위치부호화패턴/요약.md",
+   "why": "Q2, Q7: 반복 무늬의 대응 문제를 위치 부호로 해결, 점 개수 늘리기와 점별 정확도의 맞교환 계산."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/01_US9230326_Cognex_2D코드내장_체커보드교정판/요약.md",
+   "why": "Q2, Q5: 코드는 절대 ID, 측정은 주변 코너로 분업해 반복 무늬 오매칭을 피하는 설계. 팀의 구조점 ID 고정 방식과 같은 원리."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/01_Shimizu2005_IJCV_부화소추정오차상쇄/요약.md",
+   "why": "Q3: 부화소 추정의 계통 오차(편향)와 상쇄 원리. 정밀화 방법별 편향 비교의 기준."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/00000_QR분석_조사_방법론_및_결과_.md",
+   "why": "Q2: 팀 실측 근거(서술자 ORB, BRISK, AKAZE, KAZE 오매칭 8.8~16.4 %, 일반 특징점 최대 108 px 오매칭, cornerSubPix 87.5~93.9 %)와 ROCHADE 등 이미 검토한 후보 목록."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/15_Kallwies2020_ICRA_AprilTag_위치정확도/요약.md",
+   "why": "Q1, Q6: 마커 라이브러리별 코너 위치 정확도와 처리 시간 비교, 고정밀 에지 정제와 부정확 검출 걸러내기."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/13_Kalaitzakis2021_JIRS_피듀셜마커_자세추정_비교/요약.md",
+   "why": "Q1: 마커 시스템별 코너 부화소 정제 방식(라돈, 안장점, 기울기)과 코너 지터 비교."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/11_Cho2009_ICROS_대형LCD패널_비전정렬/요약.md",
+   "why": "Q1(참고): 정렬 장비에서 Harris 코너를 마크 검출에 쓴 사례와 코너 이외 오검출 문제."
+  }
+ ]
+}

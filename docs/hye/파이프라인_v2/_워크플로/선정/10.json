@@ -1,0 +1,151 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/10_단계전환/논문/01_Wright2015_MathProg_좌표하강_순차수렴",
+   "title": "Coordinate Descent Algorithms",
+   "citation": "Wright, S. J. (2015). Coordinate descent algorithms. Mathematical Programming 151(1), 3-34. DOI 10.1007/s10107-015-0892-3. arXiv:1502.04759",
+   "url": "https://arxiv.org/abs/1502.04759",
+   "pdf_url": "https://arxiv.org/pdf/1502.04759",
+   "questions": [
+    1,
+    4
+   ],
+   "why": "한 좌표씩 차례로 최소화하는 방법(T 다음 Y 순차 정렬의 수학적 원형)의 수렴 이론이다. 두 축이 강하게 묶이면(cos 0.99999, 조건수 큼) 번갈아 맞추기가 느려지는 근거와, 순차와 동시(전체 기울기) 방식의 수렴 속도 비교 틀을 준다. 원문 무료(arXiv, PDF 200 확인)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/10_단계전환/논문/02_MalisRives2003_ICRA_근사상호작용행렬_안정영역",
+   "title": "Robustness of image-based visual servoing with respect to depth distribution errors",
+   "citation": "Malis, E., Rives, P. (2003). Robustness of image-based visual servoing with respect to depth distribution errors. IEEE ICRA 2003, Taipei, pp. 1056-1061. DOI 10.1109/ROBOT.2003.1241732. HAL hal-04647494",
+   "url": "https://hal.science/hal-04647494",
+   "pdf_url": "https://hal.science/hal-04647494/file/2003-ICRA-Malis_Rives-Robustness_image_based_visual_servoing.pdf",
+   "questions": [
+    5
+   ],
+   "why": "근사한 상호작용 행렬로 반복 보정할 때 안정 영역이 생각보다 좁다는 것을 증명했다(초록 원문 확인). 우리 GLS 계수와 6절편 후보 곡선이 실제 반응과 다를 때 20턴 반복이 수렴할 조건, 남은 T 5.6배 번짐이 이 조건을 깨는지 따지는 근거다. 원문 무료(HAL, PDF 받아 확인)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/10_단계전환/논문/03_Hespanha2003_Automatica_히스테리시스전환_전환횟수상한",
+   "title": "Hysteresis-based switching algorithms for supervisory control of uncertain systems",
+   "citation": "Hespanha, J. P., Liberzon, D., Morse, A. S. (2003). Hysteresis-based switching algorithms for supervisory control of uncertain systems. Automatica 39(2), 263-272. DOI 10.1016/S0005-1098(02)00241-8",
+   "url": "https://doi.org/10.1016/S0005-1098(02)00241-8",
+   "pdf_url": "https://web.ece.ucsb.edu/~hespanha/published/journal-hhs-final.pdf",
+   "questions": [
+    2,
+    3,
+    6
+   ],
+   "why": "여러 제어기 사이를 히스테리시스 논리로 전환하고 전환 횟수 상한과 잡음, 외란에서의 안정성을 보인다(초록 원문 확인). T 단계와 Y 단계 사이 전환, 재이탈 시 복귀 판정이 측정 잡음 근처에서 왔다 갔다 하지 않게 하는 여유 폭 설계의 근거다. 원문 무료(저자 사이트 PDF 200 확인. eScholarship은 봇 확인 화면이라 쓰지 않음)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/10_단계전환/논문/04_Gans2007_TRO_전환시스템_시각서보안정",
+   "title": "Stable Visual Servoing Through Hybrid Switched-System Control",
+   "citation": "Gans, N. R., Hutchinson, S. A. (2007). Stable visual servoing through hybrid switched-system control. IEEE Transactions on Robotics 23(3), 530-540. DOI 10.1109/TRO.2007.895067",
+   "url": "https://doi.org/10.1109/TRO.2007.895067",
+   "pdf_url": null,
+   "questions": [
+    2,
+    3
+   ],
+   "why": "두 시각 서보 제어기(영상 기반, 위치 기반)를 상태에 따라 바꿔 쓰며 전체 안정성을 보인 대표 논문이다. 1차 joint(T)와 2차 control(Y)을 바꿔 쓰는 우리 구조의 전환 조건과 되돌아가기 설계에 직접 대응한다. 서지는 Crossref로 확인했다. Unpaywall 기준 무료 원문 없음, 원문 받을 목록 대상."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/10_단계전환/특허/01_US5142156_Canon_θ거친정렬_재시도한계",
+   "title": "Alignment method for printing a pattern of an original onto different surface areas of a substrate",
+   "citation": "US5142156A, Canon Kabushiki Kaisha (Ozawa 외), 출원 1990-09-27, 우선일 1989-09-29 (JP 1-252348), 등록 1992-08-25",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5142156",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5142156",
+   "questions": [
+    1,
+    2,
+    8
+   ],
+   "why": "먼저 θ 거친 정렬을 하고 허용 범위에 못 들면 재시도 횟수를 세어 정해진 횟수를 넘으면 오류 처리(정지, 경보)한다. 이어 더 많은 마크로 정밀 정렬에서 X, Y, θ를 함께 판정하고 다시 재시도 한계를 둔다(청구항 1, 4, 5와 단계 601~812 OCR 확인). T 먼저 Y 나중, 단계 전환 조건, 실패 보고 규칙의 특허 근거다. 공보 PDF(19쪽, 스캔본) 받음."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/10_단계전환/특허/02_US4669867_Canon_임계값T_거친정밀전환",
+   "title": "Alignment and exposure apparatus",
+   "citation": "US4669867A, Canon Kabushiki Kaisha (Uda, Oda, Ayata), 출원 1985-02-14, 우선일 1984-02-20 (JP 59-28794), 등록 1987-06-02",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/4669867",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/4669867",
+   "questions": [
+    2,
+    3,
+    6
+   ],
+   "why": "매 반복마다 X, Y, θ를 모두 다시 재고, θ가 허용 밖이면 θ를 먼저 고친다. X, Y 편차를 임계값 T와 비교해 거친 구동(웨이퍼 스테이지)과 정밀 구동(레티클 스테이지)을 고르며, T는 정렬 시간을 최소로 하도록 스테이지 특성으로 정한다(단계 301~311 OCR 확인). 매 턴 모든 축을 다시 보는 구조가 재이탈 감지와 복귀를 겸하는 방식의 근거다. 공보 PDF(24쪽) 받음."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/10_단계전환/특허/03_US4328553_Computervision_θ반복보정후_XY",
+   "title": "Method and apparatus for targetless wafer alignment",
+   "citation": "US4328553A, Computervision Corporation (Fredriksen, Villers), 출원 1980-09-08 (1976-12-07 출원의 계속), 등록 1982-05-04",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/4328553",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/4328553",
+   "questions": [
+    1,
+    2
+   ],
+   "why": "웨이퍼 X, Y, θ 정렬에서 θ 보정을 최소 각도 증분 안에 들 때까지 반복한 뒤 X, Y를 맞춘다(초록과 본문 OCR 확인). T를 먼저 반복 수렴시키고 Y로 넘어가는 순차 구조와 그 전환 조건(최소 증분 이하)의 원형이다. 공보 PDF(9쪽) 받음."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/03_US9424646_Omron_2단계_비전위치결정/요약.md",
+   "why": "질문 2, 7, 8. 통상 정렬에서 논스톱 정렬로 넘어가는 마진 거리 dns를 실측 오차 최댓값으로 정하고, 목표를 지나쳐 되돌아오는 반전(백래시)을 막는다. 캔버스의 'Omron 특허 1건'."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/07_Chaumette1998_LNCIS_시각서보_안정성수렴/요약.md",
+   "why": "질문 5. 영상 기반 반복 보정은 국소 최솟값과 자코비안 특이점으로 수렴이 깨질 수 있고, 두 열이 거의 평행(Y와 T)하면 위험하다."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/04_Chaumette2006_RAM_시각서보_PartI_기본/요약.md",
+   "why": "질문 5. 지수 수렴 제어 법칙과 추정 상호작용 행렬의 양정치 조건(국소 안정)."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/07_Chaumette2007_RAM_시각서보_PartII_고급/요약.md",
+   "why": "질문 1, 5. 분할(partitioned) 제어와, 학습으로 직접 구한 역행렬은 이론적 안정성 보장이 없어 실측 수렴 확인이 필요하다는 점."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/02_Malis1999_TRA_2.5D시각서보_회전평행이동분리/요약.md",
+   "why": "질문 1, 5. 회전과 평행이동을 분리한 제어 법칙과 보정 오차에서의 국소, 전역 안정 조건. 순차 대신 분리 동시 제어의 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/13_Kyrki2004_ICRA_시각서보_측정오차전파/요약.md",
+   "why": "질문 5, 7. 수렴만으로는 최종 정지 위치 산포를 알 수 없으므로 영상 잡음이 정지 위치로 전파되는 양을 따로 계산해야 한다(정지 판정 여유)."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/14_Hutchinson1996_TRA_시각서보_튜토리얼/요약.md",
+   "why": "질문 1, 2. look-and-move 구조와 반복 정렬, 정지 조건의 기본 틀."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/11_Cho2009_ICROS_대형LCD패널_비전정렬/요약.md",
+   "why": "질문 2, 8. 측정, 구동, 재측정을 오차가 기준 이하가 될 때까지 반복하는 look-and-move 정렬. 매칭 점수가 낮으면 정렬 오차가 커진다(판정과 연결)."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/12_Lee2013_MPE_XXY스테이지_비전서보_오차분석/요약.md",
+   "why": "질문 1. X, Y, θ를 함께 맞추는 XXY 스테이지 비전 서보(동시 정렬)의 사례와 1초 이내 정렬 시간."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/특허/01_US12566413_SEMES_비전카메라_2단계티칭/요약.md",
+   "why": "질문 2. 1차 촬영 후 이동해 2차 정밀 촬영으로 넘어가는 2단계 구조(SEMES)."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/10_vanHulst2026_arXiv_히스테리시스보상_ILC_비전측정/요약.md",
+   "why": "질문 3. 반복 보정에서 히스테리시스(백래시)를 보상하는 방법. 되돌아가기 이동의 방향 반전 비용."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/14_Nordin2002_Automatica_백래시제어_조사/요약.md",
+   "why": "질문 3. 방향을 바꾸는 복귀 이동에서 백래시가 생기는 원리와 제어 대책."
+  },
+  {
+   "path": "docs/hye/문헌연구/00002_문헌대장_v2.md",
+   "why": "기존 114건 대장. 위 기존 문헌을 찾은 출처이며 새 문헌과의 중복 여부를 확인했다(새 7건은 대장에 없음)."
+  }
+ ]
+}
