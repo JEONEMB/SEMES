@@ -1,0 +1,5 @@
+OpenCV 3.4.15
+MSVC 1916
+OpenCV threads 1
+Initialization joint+tracker ms 677.854
+Measurements on grayscale decoded BMP; decode separate; no physical motion

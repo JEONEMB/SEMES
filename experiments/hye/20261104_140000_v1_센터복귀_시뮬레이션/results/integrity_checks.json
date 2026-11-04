@@ -1,0 +1,12 @@
+{
+  "simulation_trials": 17130,
+  "initial_images": 571,
+  "each_initial_replays": 5,
+  "world_variants": 2,
+  "scenarios": 3,
+  "max_steps": 20,
+  "success_recomputed_from_state_and_controller_stop": true,
+  "repetition_and_counts_verified": true,
+  "physical_robot_trials": 0,
+  "surrogate_validated_to_target_precision": false
+}

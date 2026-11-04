@@ -1,0 +1,94 @@
+﻿[
+    {
+        "path":  "results\\benchmark_init_v1.tsv",
+        "sha256":  "970A62102B54DE3F0F9534E7E46BE78AE0C138E905D5C55AFAA48ABF2E95B980"
+    },
+    {
+        "path":  "results\\benchmark_init_v2.tsv",
+        "sha256":  "652B45D44748279F22A19CBDBE5B7CC7B5F64500BB5F94FE0F11F9B95096F20C"
+    },
+    {
+        "path":  "results\\benchmark_v1.tsv",
+        "sha256":  "702FEF4DBEBA04628C4E72407A37945176084B0EFC231D88CEE0FF734FC798D7"
+    },
+    {
+        "path":  "results\\benchmark_v2.tsv",
+        "sha256":  "06141B5D4C930D4C48ABBC5FFA981469B77E618A913C26F980EB745276058DCD"
+    },
+    {
+        "path":  "results\\environment.txt",
+        "sha256":  "864A8BA2CE0FF03B0D54803EDAB01AF5E07822E89FAA60DF3BD9737F807D88A0"
+    },
+    {
+        "path":  "results\\evaluation_integrity.json",
+        "sha256":  "161C346A10563271EA9AA7A4EAA848E68E6C9A89F992311238869A345F143A43"
+    },
+    {
+        "path":  "results\\features.tsv",
+        "sha256":  "6B8639874919E4C5116DDD937C1C1F36EE4061CF18505C2250EA6B79AE558829"
+    },
+    {
+        "path":  "results\\fold_1.yml",
+        "sha256":  "4F324C9D484E73BCA8D7C5F9EE782E931A66AE8AAE409914A0B36B842783876D"
+    },
+    {
+        "path":  "results\\fold_2.yml",
+        "sha256":  "ECC81E3C90CD96389CA70CF3E82D008BACCA9CF7A9ECD3B56E6D303171356466"
+    },
+    {
+        "path":  "results\\fold_3.yml",
+        "sha256":  "2FF5611F36D984FA7035639FE080634DA5CBAE842F9FE59C8D6125552417BB9A"
+    },
+    {
+        "path":  "results\\fold_4.yml",
+        "sha256":  "13F2191EABC4E45DF17D3730C8D373D83C62211CBDD8504A5DBA5656C30687E2"
+    },
+    {
+        "path":  "results\\fold_5.yml",
+        "sha256":  "1F6BC62EE627FDE05FEF995766EB3826AD91899FD2709D441635C3F6FA099DD2"
+    },
+    {
+        "path":  "results\\frozen_predictions.tsv",
+        "sha256":  "0E840F7311D0D6061E4B6B22C3099AB8C60F077D13AD24B251562E0F13D34CAD"
+    },
+    {
+        "path":  "results\\lsj_new.tsv",
+        "sha256":  "9A5BD1E61AEFF2CD9ED3E5341D38A86E206FFC1E061DBDD8963141A594809B16"
+    },
+    {
+        "path":  "results\\lsj_root.tsv",
+        "sha256":  "CFF7666685C149D5DE0CE791B0D31E7C32DB3CA7E4D82A718781E540BB7FCAB4"
+    },
+    {
+        "path":  "results\\measurements.tsv",
+        "sha256":  "14DF3C2E0DC969D06677D2B0D2AE38CD5944A497BB72054AB002CC05C842569C"
+    },
+    {
+        "path":  "results\\predictions.tsv",
+        "sha256":  "88BA46DC313D29CF4C1C4C91DB2E264BCFA870055471FA9AD51FE0342C5E1908"
+    },
+    {
+        "path":  "results\\public_api_parity.json",
+        "sha256":  "4BE73B66DB5170ACC15BB2CD07364275C35361FC2860A780008ECF13EB8D3FEE"
+    },
+    {
+        "path":  "src\\bench.cpp",
+        "sha256":  "5F8B9EB5140FA5D24E92E29CC6BF9F6263E8CAACE7F40999D6C0F5BB320D250D"
+    },
+    {
+        "path":  "src\\eval.cpp",
+        "sha256":  "3FC6C40ECCFD8AE0837E0F8EAFD4842B7187887D62560E4CB6BAE75CC865F8AA"
+    },
+    {
+        "path":  "src\\frozen.cpp",
+        "sha256":  "58C43C1C2ECF5ACA8288BE463B8243B2227146623DFD1D4F22DB150DC90E709E"
+    },
+    {
+        "path":  "src\\lsj.cpp",
+        "sha256":  "0758C19DE80BBD8A2571560EDE89B1249681F592156CE099927A9547D414B00F"
+    },
+    {
+        "path":  "src\\lsj_new.cpp",
+        "sha256":  "DE66C06EC0AABA03E1F326E081325411BA59C2E79187FC2743EEAE4088BAFB08"
+    }
+]

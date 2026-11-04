@@ -9,7 +9,7 @@ set(CONTROL "${REPO}/experiments/hye/00000_final_Y_T control")
 # tracker.cpp 는 링크하지 않는다. 정수 이동 단계를 바꾼 복사본(src/tracker_variant.hpp)을 쓰기 때문이다.
 # 그 복사본이 원본과 같은지는 S_A 가 A0 캐시의 유효점 수를 재현하는지로 확인한다.
 add_executable(a17 src/main.cpp "${CONTROL}/src/spline.cpp" "${CONTROL}/src/tracker.cpp")
-target_include_directories(a17 PRIVATE src "${REPO}/include" "${CONTROL}/include" ${OpenCV_INCLUDE_DIRS})
+target_include_directories(a17 PRIVATE src "${REPO}/include" "${CONTROL}/include" "${REPO}/experiments/hye/00001_common/include" ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(a17 PRIVATE ${OpenCV_LIBS} bcrypt)
 target_compile_definitions(a17 PRIVATE REPO_DIR="${REPO}" EXPERIMENT_DIR="${CMAKE_CURRENT_SOURCE_DIR}/../결과")
 if(MSVC)

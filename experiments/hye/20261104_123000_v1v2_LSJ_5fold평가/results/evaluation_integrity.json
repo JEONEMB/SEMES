@@ -1,0 +1,17 @@
+{
+  "measurements": 571,
+  "joint_measurement_failures": 0,
+  "control_measurement_failures": 0,
+  "models": {
+    "joint_v1_retrained_GLS": 571,
+    "joint_v2_retrained": 571,
+    "joint_v1_frozen_development": 571,
+    "control_v1_T0_four_Y_branches": 571,
+    "control_v2_T0_no_T_correction": 571
+  },
+  "unique_test_prediction_per_image_per_model": true,
+  "test_fold_group_leakage": 0,
+  "control_T0_test_n": 80,
+  "control_T0_train_per_fold": 64,
+  "physical_robot_trial_count": 0
+}
