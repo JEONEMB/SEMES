@@ -16,7 +16,7 @@ std::vector<PhotoFeatures> measure_photos(const std::vector<LabeledPhoto> &photo
     for (const auto &p : photos) {
         PhotoFeatures r;
         r.photo = p;
-        const cv::Mat img = cv::imread(p.path, cv::IMREAD_GRAYSCALE);
+        const cv::Mat img = ksh::read_image(p.path, cv::IMREAD_GRAYSCALE);
         const auto t0 = std::chrono::steady_clock::now();
         if (img.empty()) r.features.message = "사진을 읽지 못함";
         else if (img.size() != ref32.size()) r.features.message = "사진 크기가 기준과 다름";
@@ -36,7 +36,7 @@ std::vector<PhotoEstimate> estimate_photos(const std::vector<LabeledPhoto> &phot
         if (ref == ref32_by_set.end()) continue;
         PhotoEstimate r;
         r.photo = p;
-        const cv::Mat img = cv::imread(p.path, cv::IMREAD_GRAYSCALE);
+        const cv::Mat img = ksh::read_image(p.path, cv::IMREAD_GRAYSCALE);
         r.estimate = estimate_pose(ref->second, img, params, model);
         out.push_back(r);
         if (progress && out.size() % 50 == 0) *progress << "  " << out.size() << " 장\n" << std::flush;

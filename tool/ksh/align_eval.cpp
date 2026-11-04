@@ -69,7 +69,7 @@ int run_photos(const ksh::AlignConfig &cfg, const std::string &config_path, std:
         if (!needed) continue;
         const ksh::LabeledPhoto *r = ksh::find_photo(photos, rs.second);
         if (!r) { std::cerr << "기준 사진 " << rs.second << " 이 " << dir << " 에 없음\n"; return 1; }
-        refs[rs.first] = ksh::to_gray32(cv::imread(r->path, cv::IMREAD_GRAYSCALE));
+        refs[rs.first] = ksh::to_gray32(ksh::read_image(r->path, cv::IMREAD_GRAYSCALE));
         std::cout << rs.first << "차 기준 사진 : " << r->stem << "\n";
     }
     std::vector<ksh::LabeledPhoto> targets;
@@ -124,7 +124,7 @@ int run_cv(const ksh::AlignConfig &cfg, const std::string &config_path, const st
         for (const auto &p : photos)
             if (ksh::is_training_photo(p, tc.set, tc.y_grid_mm)) train.push_back(p);
         std::cout << "학습 사진 " << train.size() << " 장 측정\n";
-        const auto measured = ksh::measure_photos(train, ksh::to_gray32(cv::imread(ref->path, cv::IMREAD_GRAYSCALE)), cfg.features, &std::cout);
+        const auto measured = ksh::measure_photos(train, ksh::to_gray32(ksh::read_image(ref->path, cv::IMREAD_GRAYSCALE)), cfg.features, &std::cout);
         samples = ksh::to_samples(measured);
         if (samples.size() != measured.size()) std::cout << "측정 실패 " << measured.size() - samples.size() << " 장은 교차검증에서 빠짐\n";
         ksh::save_feature_csv(ec.result_dir + "/cv_features.csv", samples);

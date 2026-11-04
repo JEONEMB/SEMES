@@ -54,7 +54,7 @@ bool alignment_init(const std::string &config_path) {
         return false;
     }
     g_loaded = true;
-    const cv::Mat ref = cv::imread(ksh::resolve_path(config_path, g_cfg.reference_path), cv::IMREAD_GRAYSCALE);
+    const cv::Mat ref = ksh::read_image(ksh::resolve_path(config_path, g_cfg.reference_path), cv::IMREAD_GRAYSCALE);
     if (ref.empty()) {
         std::cerr << "[alignment] 기준 사진을 읽을 수 없음 : " << g_cfg.reference_path << "\n";
         return true;   // 설정은 읽음. alignment_set_reference 로 기준을 따로 줄 수 있음

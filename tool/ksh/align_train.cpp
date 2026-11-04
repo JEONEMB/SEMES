@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
         for (const auto &p : photos)
             if (ksh::is_training_photo(p, tc.set, tc.y_grid_mm)) train.push_back(p);
         std::cout << "학습 사진 " << train.size() << " 장 (세트 " << tc.set << ", Y 간격 " << tc.y_grid_mm << " mm 배수), 기준 = " << ref->stem << "\n";
-        const cv::Mat ref32 = ksh::to_gray32(cv::imread(ref->path, cv::IMREAD_GRAYSCALE));
+        const cv::Mat ref32 = ksh::to_gray32(ksh::read_image(ref->path, cv::IMREAD_GRAYSCALE));
         const auto t0 = std::chrono::steady_clock::now();
         const auto measured = ksh::measure_photos(train, ref32, cfg.features, &std::cout);
         const double sec = std::chrono::duration<double>(std::chrono::steady_clock::now() - t0).count();

@@ -12,6 +12,7 @@
 #include "alignment.hpp"
 #include "ksh/align_config.hpp"
 #include "ksh/dataset.hpp"
+#include "ksh/image_util.hpp"
 
 #include <cmath>
 #include <cstdio>
@@ -126,13 +127,13 @@ int main(int argc, char **argv)
     //  cv::imread(..., IMREAD_GRAYSCALE) : 회색 1채널로 읽음. 파일이 없으면 빈 Mat
     //  alignment_set_reference : 빈 사진이거나 크기가 설정(3840×2160)과 다르면 false
     //  && 는 앞이 거짓이면 뒤를 실행하지 않으므로, ref_path 가 비어 있으면 사진을 읽지 않음
-    if (!ref_path.empty() && !alignment_set_reference(cv::imread(ref_path, cv::IMREAD_GRAYSCALE))) {
+    if (!ref_path.empty() && !alignment_set_reference(ksh::read_image(ref_path, cv::IMREAD_GRAYSCALE))) {
         std::cerr << "기준 사진을 읽지 못함 : " << ref_path << "\n";
         return 1;
     }
 
     // 추정할 사진 읽기 (컬러로 읽어도 alignment 안에서 회색으로 바꿈. 결과 창에 색을 칠하려고 컬러로 읽음)
-    cv::Mat image = cv::imread(image_path, cv::IMREAD_COLOR);
+    cv::Mat image = ksh::read_image(image_path, cv::IMREAD_COLOR);
     if (image.empty()) {   // 경로가 틀렸거나 사진 파일이 아님
         std::cerr << "사진을 읽지 못함 : " << image_path << "\n";
         return 1;
