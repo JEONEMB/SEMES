@@ -84,10 +84,14 @@ bool load_align_config(const std::string &path, AlignConfig &cfg, std::string &e
     fp.coarse.center_px = cv::Point(integer(co["center_x_px"], 0), integer(co["center_y_px"], 0));
     // 윈도우 사이즈
     fp.coarse.window_px = cv::Size(integer(co["width_px"], 0), integer(co["height_px"], 0));
+    // 봉우리 세기 하한 (없으면 0 = 검사 안 함)
+    fp.coarse.min_response = num(co["min_response"], 0.0);
     // 배경 RoI 찾을 때 사용하는 비율
     fp.wide_window_scale = integer(f["wide_window_scale"], 0);
     // QR 한계점
     fp.qr_max_dev_px = num(f["qr_max_dev_px"], 0.0);
+    // 배경 RoI 넓은 창 위상 상관 봉우리 세기 하한 (없으면 0 = 검사 안 함)
+    fp.wide_min_response = num(f["wide_min_response"], 0.0);
 
 
     // 상세한 부분 맞추기
@@ -111,6 +115,7 @@ bool load_align_config(const std::string &path, AlignConfig &cfg, std::string &e
         fp.fine.max_iter = integer(fi["max_iter"], fp.fine.max_iter);
         fp.fine.eps_px = num(fi["eps_px"], fp.fine.eps_px);
         fp.fine.search_margin_px = integer(fi["search_margin_px"], fp.fine.search_margin_px);
+        fp.fine.min_zncc = num(fi["min_zncc"], fp.fine.min_zncc);   // 정합 상관 하한 (없으면 0 = 검사 안 함)
     } 
 
     // 상세 설정 부분이 없다면 ECC 방법으로 대체
