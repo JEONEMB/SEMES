@@ -1,0 +1,13 @@
+# 저장소 루트 CMake 없이 이 모듈과 도구만 빌드한다 (검증용).
+cmake_minimum_required(VERSION 3.15)
+project(joint_v2_standalone LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(OpenCV REQUIRED)
+get_filename_component(MODULE "${CMAKE_CURRENT_SOURCE_DIR}/../.." ABSOLUTE)
+get_filename_component(REPO "${MODULE}/../../.." ABSOLUTE)
+set(PROJECT_SOURCE_DIR "${REPO}")
+add_library(semes_diagnostics STATIC "${REPO}/src/alignment_diagnostics.cpp")
+target_include_directories(semes_diagnostics PUBLIC "${REPO}/include" ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(semes_diagnostics PUBLIC ${OpenCV_LIBS})
+add_subdirectory("${MODULE}" joint)
