@@ -101,6 +101,22 @@ int TestYMotor(void)
     YMotor_Stop(); Pulse(); YMotor_IRQHandler();
     YMotor_GetStatus(&status);
     CHECK(status.state == Y_MOTOR_STOPPED && status.completed_pulses == 1);
+    CHECK(YMotor_Start(0,10000,3200) == Y_MOTOR_OK);
+    Pulse(); YMotor_IRQHandler(); /* settle initial delay */
+    YMotor_Decelerate();
+    for (unsigned p=0;p<700 && (TIM3->CR1 & TIM_CR1_CEN);++p) {
+        uint32_t old_period=TIM3->ARR;
+        YMotor_Decelerate(); /* repeated STOP must not restart the ramp */
+        Pulse(); YMotor_IRQHandler();
+        CHECK(!(TIM3->CR1 & TIM_CR1_CEN) || TIM3->ARR>=old_period);
+    }
+    YMotor_GetStatus(&status);
+    CHECK(status.state==Y_MOTOR_STOPPED && status.completed_pulses>2 &&
+          status.completed_pulses<=642 && status.count_exact && !status.enabled);
+    CHECK(YMotor_Start(0,2,3200) == Y_MOTOR_OK);
+    YMotor_Decelerate(); Pulse(); YMotor_IRQHandler(); Pulse(); YMotor_IRQHandler();
+    YMotor_GetStatus(&status);
+    CHECK(status.state==Y_MOTOR_STOPPED && status.completed_pulses==2); /* never pass target */
     CHECK(YMotor_Start(0,10,100) == Y_MOTOR_OK);
     Pulse(); YMotor_IRQHandler();
     YMotor_Stop(); Pulse(); YMotor_IRQHandler();
@@ -114,7 +130,7 @@ int TestYMotor(void)
     YMotor_Abort(); YMotor_GetStatus(&status);
     CHECK(status.state == Y_MOTOR_ABORTED && !status.count_exact && !status.enabled);
     CHECK(YMotor_Start(0,10,100) == Y_MOTOR_OK);
-    gpio.IDR = 2; YMotor_Poll(); YMotor_GetStatus(&status);
+    gpio.IDR = 1; YMotor_Poll(); YMotor_GetStatus(&status);
 #if Y_MOTOR_USE_LIMITS
     CHECK(status.state == Y_MOTOR_LIMIT && !status.enabled && !status.count_exact);
 #else
@@ -190,7 +206,7 @@ int TestYTest(void)
     YMotor_Abort();
     CHECK(YTest_Poll(&reply) && reply.seq == 8 && reply.payload[0] == Y_MOTOR_ABORTED);
     CHECK(!reply.payload[2]);
-    request.seq = 9; gpio.IDR = 1;
+    request.seq = 9; gpio.IDR = 2;
 #if Y_MOTOR_USE_LIMITS
     CHECK(YTest_Handle(&request, &reply) && reply.type == RS_NAK && reply.payload[1] == RS_FAULT);
 #endif

@@ -2,6 +2,7 @@
 #include "mock_hal.h"
 #include "y_motor.h"
 #include "y_test.h"
+#include "app_config.h"
 #include <stddef.h>
 #define CHECK(condition) do { if (!(condition)) return __LINE__; } while (0)
 
@@ -106,45 +107,49 @@ int TestTransport(void)
     return 0;
 }
 
+static const uint8_t firmware_pong[] = {0xAA,0x55,1,0x85,1,4,1,0,2,0,0xC3,0x78};
+
 int TestService(void)
 {
+    gpio.IDR = 0; test_rcc.CFGR = test_rcc.DCKCFGR = 0;
+    YMotor_Init();
     RsService service; RsService_Init(&service);
     RsFrame request = {.type = RS_PING, .seq = 1}, reply, old;
     uint8_t encoded[40];
     RsService_Handle(&service, &request, 0, &reply);
     CHECK(RsFrame_Encode(&reply, encoded) == 12);
-    CHECK(Equal(encoded, vectors[1], 12));
+    CHECK(Equal(encoded, firmware_pong, 12));
     request.type = RS_GET_STATUS;
     RsService_Handle(&service, &request, 5, &reply);
     CHECK(reply.type == RS_STATUS && reply.len == 20);
-    CHECK(reply.payload[0] == RS_STATE_FAULT && reply.payload[1] == 20);
+    CHECK(reply.payload[0] == (Y_MOTOR_OUTPUT_ALLOWED ? RS_STATE_IDLE : RS_STATE_FAULT));
+    CHECK(reply.payload[1] == (Y_MOTOR_USE_LIMITS ? 4 : 0));
     for (unsigned i = 2; i < 20; ++i) CHECK(reply.payload[i] == 0);
     old = reply;
     RsService_Handle(&service, &request, 2, &reply);
     CHECK(Equal(&old, &reply, sizeof(reply)));
     ++request.seq;
     RsService_Handle(&service, &request, 2, &reply);
-    CHECK(reply.payload[1] == 8);
+    CHECK(reply.payload[1] == (Y_MOTOR_USE_LIMITS ? 8 : 0));
+    request.type = RS_GET_CONFIG; request.seq++;
+    RsService_Handle(&service, &request, 0, &reply);
+    CHECK(reply.type == RS_CONFIG && reply.len == 16);
+    uint8_t expected_max[4]; rs_put_u32(expected_max, APP_Y_MAX_UM);
+    CHECK(Equal(reply.payload+4, expected_max, 4));
+    for (unsigned i = 8; i < 16; ++i) CHECK(reply.payload[i] == 0);
     const uint8_t lengths[] = {0,1,8,8,0,0,8,0};
     for (unsigned type = 1; type <= 8; ++type) {
         request.type = (uint8_t)type; request.seq++;
         request.len = lengths[type - 1] + 1;
         RsService_Handle(&service, &request, 0, &reply);
         CHECK(reply.type == RS_NAK && reply.payload[1] == RS_BAD_LEN);
-        request.seq++; request.len = lengths[type - 1]; request.payload[0] = 3;
-        RsService_Handle(&service, &request, 0, &reply);
-        if (type == RS_HOME || type == RS_MOVE_REL || type == RS_MOVE_ABS ||
-            type == RS_SET_SPEED || type == RS_GET_CONFIG) {
-            CHECK(reply.type == RS_NAK && reply.payload[1] == RS_FAULT);
-        } else if (type == RS_STOP) {
-            CHECK(reply.type == RS_ACK && reply.payload[0] == RS_STOP);
-        }
     }
     request.type = RS_HOME; request.len = 1;
     for (unsigned mask = 0; mask < 256; ++mask) {
+        if (mask == 1) continue;
         request.seq++; request.payload[0] = (uint8_t)mask;
         RsService_Handle(&service, &request, 0, &reply);
-        CHECK(reply.payload[1] == (mask >= 1 && mask <= 3 ? RS_FAULT : RS_BAD_PARAM));
+        CHECK(reply.type == RS_NAK && reply.payload[1] == RS_BAD_PARAM);
     }
     request.type = 0x7F;
     RsService_Handle(&service, &request, 0, &reply);
@@ -175,6 +180,7 @@ uint32_t __get_PRIMASK(void) { return primask; }
 void __disable_irq(void) { primask = 1; }
 void __set_PRIMASK(uint32_t state) { primask = state; }
 uint32_t HAL_GetTick(void) { return tick; }
+void TestSetTime(uint32_t now) { tick=now; }
 void HAL_GPIO_WritePin(TestGpio *port, uint32_t pin, uint32_t level)
 { (void)port; (void)pin; gpio_level = level; }
 void BSP_LED_Toggle(unsigned led) { (void)led; }
@@ -211,7 +217,7 @@ int TestUartDuringPulseBurst(void)
     ResetApp();
     CHECK(YMotor_Start(0, 3, 100) == Y_MOTOR_OK);
     Receive(vectors[0], 8); Drain();
-    CHECK(wire_length == 12 && Equal(wire, vectors[1], 12));
+    CHECK(wire_length == 12 && Equal(wire, firmware_pong, 12));
     YMotorStatus status;
     YMotor_GetStatus(&status);
     CHECK(status.state == Y_MOTOR_RUNNING && status.completed_pulses == 0);
@@ -229,12 +235,12 @@ int TestApp(void)
     for (unsigned i = 0; i < 20; ++i) Receive(vectors[0], 8);
     App_Poll(); Drain();
     CHECK(wire_length == 21U * 12U);
-    for (unsigned i = 0; i < 21; ++i) CHECK(Equal(wire + i * 12, vectors[1], 12));
+    for (unsigned i = 0; i < 21; ++i) CHECK(Equal(wire + i * 12, firmware_pong, 12));
     /* Arrival timestamps, not drain time, decide timeout. */
     ResetApp(); Receive(vectors[0], 4); tick = 20; Receive(vectors[0] + 4, 4);
     Drain(); CHECK(wire_length == 0);
     Receive(vectors[0], 8); tick = 100; Drain();
-    CHECK(wire_length == 12 && Equal(wire, vectors[1], 12));
+    CHECK(wire_length == 12 && Equal(wire, firmware_pong, 12));
     /* UART loss discards partial frame, preserves TX, accepts next full frame. */
     ResetApp(); Receive(vectors[0], 8); App_Poll();
     uart.ErrorCode = 1; *rx_target = 0xAA; App_UartRxComplete(&uart);
@@ -248,7 +254,7 @@ int TestApp(void)
     Receive(vectors[0], 8); Drain(); CHECK(wire_length == 12);
     /* Transient TX start failures retain the response. */
     ResetApp(); next_tx_result = HAL_ERROR; Receive(vectors[0], 8);
-    Drain(); CHECK(wire_length == 12 && Equal(wire, vectors[1], 12));
+    Drain(); CHECK(wire_length == 12 && Equal(wire, firmware_pong, 12));
     /* Boot once; stable Y input edges emit one independent event. */
     ResetApp();
     for (tick = 1; tick <= 10; ++tick) App_Poll();
@@ -285,13 +291,109 @@ int TestPCJog(void)
     CHECK(s.state == Y_MOTOR_RUNNING && s.requested_pulses == 160);
     wire_length = 0;
     Receive(vectors[0], 8); Drain();
-    CHECK(wire_length == 12 && Equal(wire, vectors[1], 12));
+    CHECK(wire_length == 12 && Equal(wire, firmware_pong, 12));
     wire_length = 0;
     request.type = RS_STOP; request.seq = 24; request.len = 0;
     n = RsFrame_Encode(&request, bytes); Receive(bytes, n); Drain();
     CHECK(wire_length == 9 + 28 && wire[3] == RS_ACK && wire[6] == RS_STOP);
     CHECK(wire[12] == Y_TEST_REPORT && wire[13] == 23 && wire[15] == Y_MOTOR_ABORTED);
     YMotor_GetStatus(&s); CHECK(!s.enabled && s.state == Y_MOTOR_ABORTED);
+#endif
+    return 0;
+}
+
+int TestPhysicalApp(void)
+{
+#if APP_Y_SWITCH_HOME && Y_MOTOR_OUTPUT_ALLOWED
+    ResetApp();
+    for (tick=1;tick<=10;++tick) Drain();
+    RsFrame q={.type=RS_HOME,.seq=90,.len=1,.payload={1}};
+    uint8_t bytes[RS_MAX_FRAME];
+    unsigned n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==9 && wire[3]==RS_ACK);
+    gpio.IDR=1;
+    for (;tick<=22;++tick) Drain(); /* left contact -> release */
+    gpio.IDR=0;
+    for (;tick<=34;++tick) Drain(); /* release -> slow latch */
+    gpio.IDR=1;
+    for (;tick<=60;++tick) Drain(); /* latch -> zero, no spurious idle fault */
+    CHECK(wire_length==29 && wire[12]==RS_DONE && wire[13]==90 && wire[15]==RS_OK);
+    wire_length=0;
+    q=(RsFrame){.type=RS_GET_STATUS,.seq=91};
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==28 && wire[3]==RS_STATUS && wire[6]==RS_STATE_IDLE && wire[7]==5);
+    wire_length=0;
+    q=(RsFrame){.type=RS_MOVE_REL,.seq=92,.len=8}; rs_put_u32(q.payload,1000);
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==9 && wire[3]==RS_ACK); /* may leave pressed home switch */
+    gpio.IDR=0;
+    for (unsigned i=0;i<1600;++i) {
+        TIM3->CR1 &= ~TIM_CR1_CEN; TIM3->SR |= TIM_SR_UIF; YMotor_IRQHandler();
+    }
+    Drain();
+    CHECK(wire_length==29 && wire[12]==RS_DONE && wire[15]==RS_OK);
+    CHECK(wire[19]==0xE8 && wire[20]==3);
+#endif
+    return 0;
+}
+
+int TestStandardApp(void)
+{
+#if Y_MOTOR_OUTPUT_ALLOWED
+    ResetApp();
+    RsFrame q = {.type=RS_HOME, .seq=70, .len=1, .payload={1}};
+    uint8_t bytes[RS_MAX_FRAME];
+    unsigned n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==29 && wire[3]==RS_ACK && wire[12]==RS_DONE && wire[13]==70);
+    wire_length=0;
+    q=(RsFrame){.type=RS_MOVE_REL, .seq=71, .len=8};
+    rs_put_u32(q.payload,1000);
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==9 && wire[3]==RS_ACK);
+    wire_length=0;
+    q=(RsFrame){.type=Y_TEST_JOG, .seq=72, .len=9};
+    rs_put_u32(q.payload+1,160); rs_put_u32(q.payload+5,160);
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==10 && wire[3]==RS_NAK && wire[7]==RS_BUSY);
+    wire_length=0;
+    q=(RsFrame){.type=RS_STOP, .seq=73};
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==9 && wire[3]==RS_ACK); /* ACK precedes ramp completion */
+    for (unsigned i=0;i<700 && (TIM3->CR1 & TIM_CR1_CEN);++i) {
+        TIM3->CR1 &= ~TIM_CR1_CEN; TIM3->SR |= TIM_SR_UIF; YMotor_IRQHandler();
+    }
+    Drain();
+    CHECK(wire_length==29 && wire[3]==RS_ACK && wire[6]==RS_STOP);
+    CHECK(wire[12]==RS_DONE && wire[13]==71 && wire[15]==RS_STOPPED && wire[16]==RS_MOVE_REL);
+    wire_length=0;
+    q=(RsFrame){.type=RS_HOME, .seq=74, .len=1, .payload={1}};
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==29 && wire[12]==RS_DONE);
+    wire_length=0;
+    q=(RsFrame){.type=RS_MOVE_ABS, .seq=75, .len=8};
+    rs_put_u32(q.payload,1000);
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==9 && wire[3]==RS_ACK);
+    for (unsigned i=0;i<1600;++i) {
+        TIM3->CR1 &= ~TIM_CR1_CEN; TIM3->SR |= TIM_SR_UIF; YMotor_IRQHandler();
+    }
+    Drain();
+    CHECK(wire_length==29 && wire[12]==RS_DONE && wire[15]==RS_OK);
+    CHECK(wire[19]==0xE8 && wire[20]==3);
+    wire_length=0;
+    q=(RsFrame){.type=Y_TEST_JOG, .seq=76, .len=9};
+    rs_put_u32(q.payload+1,160); rs_put_u32(q.payload+5,160);
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==9 && wire[3]==RS_ACK);
+    wire_length=0;
+    q=(RsFrame){.type=RS_HOME, .seq=77, .len=1, .payload={1}};
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire[3]==RS_NAK && wire[7]==RS_BUSY);
+    wire_length=0;
+    q=(RsFrame){.type=RS_GET_STATUS, .seq=78};
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==28 && wire[3]==RS_STATUS && !(wire[7]&1));
+    YMotor_Abort(); Drain();
 #endif
     return 0;
 }
