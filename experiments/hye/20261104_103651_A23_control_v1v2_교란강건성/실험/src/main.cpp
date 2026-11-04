@@ -22,7 +22,7 @@ int main() {
     const fs::path repo = fs::u8path(REPO_DIR), res = fs::u8path(EXPERIMENT_DIR) / "results"; fs::create_directories(res);
     initialize_control(ASSETS_DIR);
     std::vector<std::pair<std::string, std::string>> pick;
-    { std::ifstream in(repo / fs::u8path(u8"experiments/hye/00000_final_v2_Y_T control/assets/training_list.csv")); std::string l; std::getline(in, l); int k = 0;
+    { std::ifstream in(repo / fs::u8path(u8"experiments/hye/v2_Y_T control/assets/training_list.csv")); std::string l; std::getline(in, l); int k = 0;
       while (std::getline(in, l)) { std::stringstream ss(l); std::string set, rel, y, t, g, cond; std::getline(ss, set, ','); std::getline(ss, rel, ','); std::getline(ss, y, ','); std::getline(ss, t, ','); std::getline(ss, g, ','); std::getline(ss, cond, ',');
         bool take = (set.find("1014") != std::string::npos && (cond == "center" || (cond == "Y" && (k++ % 4 == 0)))) || (set.find("1020") != std::string::npos && cond != "center" && std::abs(std::stod(t)) <= 0.03 + 1e-9);
         if (take) pick.push_back({set, rel}); } }
