@@ -14,10 +14,12 @@ coarse:
    center_y_px: 1068
    width_px: 900
    height_px: 400
+   min_response: 0.6       # 위상 상관 봉우리 세기 하한 (0 = 검사 안 함). 실측 정상 사진 최소 0.71 (Θ 2°), 300 px 밖 이동 0.53 → 실패
 
 # ② Fine Alignment (정밀 정렬) — 실험계획 2 에서 고른 설정
 wide_window_scale: 2       # 배경 ROI 의 위상 상관 창 = ROI 반폭 × 이 값
 qr_max_dev_px: 15.0        # QR 이 Coarse 결과에서 이 이상 벗어나면 실패 (이웃 QR 에 붙음)
+wide_min_response: 0.5     # 배경 ROI 넓은 창 위상 상관 봉우리 세기 하한. 실측 정상 최소 0.91, 케이블 가림 −0.06 → 실패
 fine:
    method: "icgn"          # icgn = 평행이동 IC-GN (ZNSSD) / opencv_ecc = cv::findTransformECC (선형 보간 + 5×5 가우시안, 이전 방식)
    kernel: "omoms3"        # linear, keys05, keys075, lanczos3, bspline3, omoms3
@@ -25,6 +27,8 @@ fine:
    max_iter: 60
    eps_px: 1.0e-05
    search_margin_px: 28    # 출발점에서 움직일 수 있는 범위 (현재 영상에서 잘라 오는 여유)
+   min_zncc: 0.95          # 정합 상관 하한 (0 = 검사 안 함). 실측 정상 최소 0.979, QR 반 가림 0.26 · 강한 잡음 0.88 → 실패
+                           #   max_iter 안에 eps_px 로 수렴하지 못하면 (흐림 · 가림) 이 값과 상관없이 실패
 ecc:                       # method: opencv_ecc 일 때만 사용
    max_iter: 100
    eps: 1.0e-07
