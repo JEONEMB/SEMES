@@ -6,6 +6,16 @@
 - [과거 미채택 조건부Y 기록](20261028_132007_control_T0_조건부Y_신규모델_미채택/README.md)
 - [QR536에 선을 더한 비교 계획](20261028_140538_control_QR536_상하선_비교/PROTOCOL.md)
 - [P12와J204 새 학습 비교](20261028_141257_control_P12_vs_J204/README.md)
+- [증강으로만 학습, 실측은 평가만](20261029_095521_증강학습_실측평가/README.md) (샘플 간격 임의 변경, 아래 격자판으로 다시 함)
+- [격자 증강으로만 학습, 실측은 평가만](20261029_101807_증강학습_실측평가_격자/README.md)
+- [QR 판 특징점 검출기 비교 (구조점 vs GFTT·Harris·FAST·ORB·BRISK·AKAZE·KAZE)](20261029_112722_QR특징점검출기_비교/README.md)
+- [control 측정기 검토: GN 정밀화의 효과 (A 채택 유지)](20261029_132047_control_LK측정_재학습/README.md)
+- [부화소 정합 방법 1단계: 합성 정답 (NCC·포물선·위상상관·cornerSubPix·LK·GN·ECC·FB)](20261029_122323_부화소정합_합성정답/README.md)
+- [특징점 검출기: 합성 정답 (Harris·Shi-Tomasi·Förstner·FAST·ORB·BRISK·AKAZE·KAZE, SIFT·SURF 미평가)](20261029_123526_특징점검출기_합성정답/README.md)
+- [부화소 정합 방법 1B·1C: 실측 반복성과 기하 일관성](20261029_124339_부화소정합_실측반복성_기하일관성/README.md)
+- [부화소 정합 방법 2단계: 측정만 GN·ECC·LK로 바꾼 Y/T 결과](20261029_131112_부화소정합_YT결과영향/README.md)
+- [부화소 정합 방법 3단계: 속도 측정 (초기화·cold·warm, 1스레드·기본 스레드)](20261029_132151_부화소정합_속도측정/README.md)
+
 - [joint 구조점+상하선 vs ECC+상하선 (337 vs 328)](20261029_132926_joint_구조점vsECC_상하선/README.md)
 
 지정된 전달 경로인 `00000_final_Y_T control`과 `00000_final_Y_T_joint`는 유지한다. 새 비교 결과가 나와도 자동 교체하지 않는다. 빌드에 사용할 모듈은 [selected_modules.cmake](../selected_modules.cmake)에서 경로로 고른다.
