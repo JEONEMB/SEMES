@@ -1,0 +1,40 @@
+{
+  "created_date": "2026-11-04",
+  "derived_from": "experiments/hye/00000_final_Y_T control (QR536 tracker unchanged; bar slope measurement and v2 model added; 6-candidate Y-or-T model removed)",
+  "runtime": "C++17, OpenCV 3.4 API; no Python",
+  "model": {
+    "file": "assets/control_v2_model.json",
+    "sha256": "D00A3462B427F726514EB6C815621A753B4EAC6A46AB0DC821057A86E6D1445B",
+    "source": "tool/control_v2_tool fit theta=0.01 on results/v2_validation_20261104/features.csv (y0: 84 images with T==0; t_hat and k: 563 images with |T|<=1 from 20261014, 20261020, 20261029)"
+  },
+  "points_sha256": "3D951E071A982A2C2E0411C3601B1CE5F71183336D05C91E77B7A9251CCF8482",
+  "center_sha256": "01A69DF6771B840D2FCF9CF727760592B5FB199C12277BFC173AF514E26FD685",
+  "line_protocol": {
+    "file": "assets/line_protocol.json",
+    "sha256": "526F34EC495941759EFD7564351AED4227160258495448BB7B63683A1A241CAA",
+    "source": "experiments/hye/00000_final_Y_T_joint/assets/line_protocol.json"
+  },
+  "training_list": {
+    "file": "assets/training_list.csv",
+    "sha256": "76246BAB7FB914812C976A503E7FBD7B2392EF1F97145FBDD4F5576EA7B2FA02",
+    "runtime_required": false,
+    "source": "experiments/hye/20261102_124309_A0_분할측정고정_계층분할과점측정캐시/결과/cache/shots.csv"
+  },
+  "validation": "development data (575 images), not an independent test or robot run",
+  "v1_provenance": {
+    "mask_sha256": "B2403F586120364DEE48BBD91F506D5B782DA2A873DBF26FA160641B7F07A87E",
+    "model_sha256": "7E4105C2F76843D3E07F8560368DB4458E4CBEEB8A4E3942741E319B591B8726",
+    "source": "codex_experiments_20261014/release_qr536_20261021",
+    "points_sha256": "278310370FBFC3214FDCAD9FAB92046ED08306A2D65CCBB501D7F3BE4D7F0CD2",
+    "runtime": "C++17/OpenCV3.4.15; no Python",
+    "validation": "Frozen original parameters and folds; development data, not independent test",
+    "selected": "QR-only fixed630 tracked,536 selected",
+    "source_code_hashes": {
+      "measurement/refine.py": "2D12CEC425B3BA03E02DD944EA5F9A7B8A475EA51E8C64DDDFABD0B3F13C5A98",
+      "infer.py": "B438A6193DD5459C2F3781B5848A915732C0F362B47E9D0CDD30A27AB246F5A8",
+      "pipeline.py": "E3822D2BF4DF3FE7FCBFFA5BBE2BABF5E5103D81A243EBC06AD45422245731A6",
+      "measurement/spread.py": "993DAF74E8354089970DFD90E390FA9AFE2476B8EE712CFE4D6DCADB6799FB71",
+      "measurement/measure.py": "B7817406537EF7F5B335246338BAC1C3D05B35EF4ADA2841C84E8F9C861E2077"
+    }
+  }
+}
