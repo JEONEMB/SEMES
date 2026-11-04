@@ -23,6 +23,7 @@ struct FineParams {
     int max_iter = 60;
     double eps_px = 1e-5;          // 걸음 크기가 이보다 작으면 멈춤
     int search_margin_px = 28;     // 현재 영상에서 잘라 올 여유 (init 에서 이만큼까지만 움직일 수 있음)
+    double min_zncc = 0.0;         // 정합 상관 하한 (0 = 검사 안 함). 낮으면 가림·반사 등으로 보고 실패
     int ecc_max_iter = 100;        // opencv_ecc 전용
     double ecc_eps = 1e-7;
 };
@@ -30,6 +31,8 @@ struct FineParams {
 struct FineResult {
     cv::Point2d shift_px;   // 기준 영역이 현재 영상에서 옮겨진 양 (현재 − 기준)
     double zncc = 0.0;      // 정규화 상관 (1 에 가까울수록 잘 맞음)
+    bool converged = false; // 반복이 멈춤 조건(eps_px)을 만족해 끝났는지 (max_iter 를 다 쓰면 false)
+    int iterations = 0;     // 반복 횟수 (IC-GN)
 };
 
 // 기준 영상의 영역 ref_rect_px 가 현재 영상에서 init_px 근처로 옮겨졌다고 보고 화소 이하로 다듬음
@@ -39,6 +42,7 @@ bool ecc_translation(const cv::Mat &ref32, const cv::Mat &cur32, const cv::Rect 
                      const FineParams &params, FineResult &out);
 
 // params.method 에 따라 위 둘 중 하나 호출
+//   계산이 끝났어도 미수렴(IC-GN) 이거나 zncc < params.min_zncc 이면 false (out 에 값은 채워 둠 → 실패 이유 확인용)
 bool fine_alignment(const cv::Mat &ref32, const cv::Mat &cur32, const cv::Rect &ref_rect_px, const cv::Point2d &init_px,
                     const FineParams &params, FineResult &out);
 

@@ -71,8 +71,11 @@ bool icgn_translation(const cv::Mat &ref32, const cv::Mat &cur32, const cv::Rect
 
     cv::Point2d p = init_px;
     double zncc = 0.0;
+    bool converged = false;
+    int iterations = 0;
     std::vector<double> g(n), tmp, wx(2 * R), wy(2 * R);
     for (int it = 0; it < params.max_iter; ++it) {
+        iterations = it + 1;
         const double ux = std::floor(p.x), uy = std::floor(p.y);
         for (int m = 0; m < 2 * R; ++m) {
             wx[m] = kernel_weight(K, (p.x - ux) - (m - R + 1));
@@ -113,13 +116,15 @@ bool icgn_translation(const cv::Mat &ref32, const cv::Mat &cur32, const cv::Rect
         const double dx = (h11 * b0 - h01 * b1) / det, dy = (h00 * b1 - h01 * b0) / det;
         p.x -= dx; p.y -= dy;   // 역합성 갱신
         zncc = 1.0 - 0.5 * ss;
-        if (std::abs(dx) < params.eps_px && std::abs(dy) < params.eps_px) break;
+        if (std::abs(dx) < params.eps_px && std::abs(dy) < params.eps_px) { converged = true; break; }
         if (cv::norm(p - init_px) > M - R - 2) return false;   // 잘라 온 범위를 벗어남
     }
     if (!std::isfinite(p.x) || !std::isfinite(p.y)) return false;
     out.shift_px = p;
     out.zncc = zncc;
-    return true;
+    out.converged = converged;
+    out.iterations = iterations;
+    return true;   // 수렴 여부 판정은 fine_alignment 에서 (값은 진단용으로 남김)
 }
 
 bool ecc_translation(const cv::Mat &ref32, const cv::Mat &cur32, const cv::Rect &T, const cv::Point2d &init_px,
@@ -144,13 +149,17 @@ bool ecc_translation(const cv::Mat &ref32, const cv::Mat &cur32, const cv::Rect 
     cv::redirectError(prev, prev_data);
     out.shift_px = cv::Point2d(warp.at<float>(0, 2) + gi.x, warp.at<float>(1, 2) + gi.y);
     out.zncc = cc;
+    out.converged = true;   // findTransformECC 는 최대 반복 도달 여부를 알려 주지 않음 (이전 방식, 비교용) — 상관 하한으로만 거름
     return true;
 }
 
 bool fine_alignment(const cv::Mat &ref32, const cv::Mat &cur32, const cv::Rect &ref_rect_px, const cv::Point2d &init_px,
                     const FineParams &params, FineResult &out) {
-    return params.method == FineMethod::opencv_ecc ? ecc_translation(ref32, cur32, ref_rect_px, init_px, params, out)
-                                                   : icgn_translation(ref32, cur32, ref_rect_px, init_px, params, out);
+    out = FineResult();
+    const bool done = params.method == FineMethod::opencv_ecc ? ecc_translation(ref32, cur32, ref_rect_px, init_px, params, out)
+                                                              : icgn_translation(ref32, cur32, ref_rect_px, init_px, params, out);
+    // 계산이 끝났어도 미수렴이거나 상관이 낮으면 측정 실패 (엉뚱한 곳에 맞은 값을 s·d 에 넣지 않음)
+    return done && out.converged && out.zncc >= params.min_zncc;
 }
 
 } // namespace ksh
