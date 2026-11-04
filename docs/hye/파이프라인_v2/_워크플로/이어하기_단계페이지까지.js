@@ -105,6 +105,14 @@ const results = await pipeline(TARGET,
     { label: `review:${u.code}`, phase: 'Review' }).then(s => ({ ...st, review: s }))
 )
 
-const done = results.filter(Boolean)
-log(`단계 페이지 ${done.length}/${TARGET.length} 완료. 실패: ${TARGET.filter(u => !done.find(d => d && d.review)).map(u => u.code).join(', ') || '없음'}`)
-return { 완료: done.length, 대상: TARGET.length, 단위: TARGET.map(u => u.code) }
+// A pipeline result object can exist even when the review agent failed.
+// This is an execution-status check; verify actual artifacts with
+// tool/audit_pipeline_v2.ps1 before reporting document completion.
+const failedResponse = /hit your .*limit|usage limit|rate limit|사용 한도|You've hit/i
+const completed = TARGET.filter((u, i) => {
+  const review = results[i]?.review
+  return typeof review === 'string' && review.trim().length > 0 && !failedResponse.test(review)
+})
+const failed = TARGET.filter(u => !completed.some(c => c.code === u.code)).map(u => u.code)
+log(`단계 응답 ${completed.length}/${TARGET.length}. 실패: ${failed.join(', ') || '없음'}. 실제 파일은 tool/audit_pipeline_v2.ps1로 별도 검증한다.`)
+return { 응답완료: completed.length, 대상: TARGET.length, 실패: failed, 파일검증: '미실행' }
