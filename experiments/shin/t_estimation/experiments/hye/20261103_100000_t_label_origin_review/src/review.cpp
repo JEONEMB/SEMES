@@ -16,8 +16,64 @@ static Table table(const fs::path& path){std::ifstream f(path);if(!f)throw std::
 static std::vector<six::Row> targets(std::vector<six::Row> rows,const fs::path& file){auto t=table(file);for(auto& r:rows){auto v=t.at(r.path);r.y=std::stod(v.at("Y_standard"));r.t=std::stod(v.at("T_standard"));}return rows;}
 static six::Model ensemble(const std::vector<six::Row>& rows,const std::vector<int>& ids,const std::vector<six::Config>& cfg){six::Model m;m.config.method=7;m.min_t=-1;m.max_t=2;for(auto c:cfg)m.members.push_back(std::make_shared<six::Model>(six::fit(rows,ids,c)));m.weights=cv::Mat(1,(int)cfg.size(),CV_64F,cv::Scalar(1./cfg.size()));return m;}
 static cv::Mat choose(const cv::Mat& oof,const std::vector<int>& train,const std::vector<double>& truth){int n=oof.cols;cv::Mat w(1,n,CV_64F,cv::Scalar(0)),best=w.clone();double minimum=1e300;std::function<void(int,int)> visit=[&](int k,int left){if(k+1==n){w.at<double>(k)=left/4.;double sse=0,maxe=0;for(int i:train){double e=(oof.row(i).dot(w)-truth[i])/.01;sse+=e*e;maxe=std::max(maxe,std::abs(e));}double score=maxe+.1*sqrt(sse/train.size());if(score<minimum){minimum=score;best=w.clone();}return;}for(int x=0;x<=left;x++){w.at<double>(k)=x/4.;visit(k+1,left-x);}};visit(0,4);return best;}
+static void score_relabelled(const fs::path& old, const fs::path& review,
+                             const fs::path& labels_file) {
+    const auto rows = six::read_rows(old / "observations.csv");
+    const auto labels = table(labels_file);
+    const auto excluded = table(review / "exclusions.csv");
+    std::vector<six::Model> models;
+    for (int fold = 0; fold < 5; ++fold) {
+        models.push_back(six::load_model(review / "results/nominal_exclude8/models" /
+                                         ("fold" + std::to_string(fold) + ".json")));
+    }
+
+    std::map<std::pair<double, double>, int> pose_folds;
+    for (const auto& row : rows) {
+        if (row.cohort != "reference" && !excluded.count(row.path)) {
+            pose_folds.emplace(std::make_pair(row.y, row.t), row.fold);
+        }
+    }
+
+    const auto output = review / "results/label_only_relabelled";
+    fs::create_directories(output);
+    std::ofstream pred(output / "predictions.csv");
+    if (!pred) throw std::runtime_error("Cannot write predictions");
+    pred << std::setprecision(17)
+         << "path,fold,training_excluded,T_original,T_evaluation,prediction,error_tick\n";
+    size_t scored = 0;
+    for (const auto& row : rows) {
+        if (row.cohort == "reference") continue;
+        const auto label = labels.find(row.path);
+        const bool flagged = excluded.count(row.path) != 0;
+        if (flagged != (label != labels.end()) || row.status) {
+            throw std::runtime_error("Correction manifest or measurement mismatch");
+        }
+        const double target = flagged ? std::stod(label->second.at("T_evaluation")) : row.t;
+        int fold = row.fold;
+        if (flagged && label->second.at("method") == "folder_and_sequence") {
+            // The mislabeled filename hashes to a different pose than its true repeat group.
+            fold = pose_folds.at({row.y, target});
+        }
+        const double prediction = six::predict(models.at(fold), row.x).t;
+        if (!std::isfinite(target) || !std::isfinite(prediction)) {
+            throw std::runtime_error("Non-finite score");
+        }
+        pred << row.path << ',' << fold << ',' << flagged << ',' << row.t << ','
+             << target << ',' << prediction << ',' << (prediction - target) / .01 << '\n';
+        ++scored;
+    }
+    if (scored != 571 || labels.size() != excluded.size() || !pred) {
+        throw std::runtime_error("Incomplete evaluation");
+    }
+}
+
 int wmain(int argc,wchar_t** argv){try{
- if(argc!=5)throw std::runtime_error("Usage: t_label_review OLD_EXPERIMENT NEW_EXPERIMENT COORDINATES raw|standard|group|all");cv::setNumThreads(1);fs::path old=argv[1],out=argv[2],coords=argv[3];bool standard=std::wstring(argv[4])==L"standard",leavegroup=std::wstring(argv[4])==L"group",auditall=std::wstring(argv[4])==L"all";if(!standard&&!leavegroup&&!auditall&&std::wstring(argv[4])!=L"raw")throw std::runtime_error("Invalid mode");
+ if(argc!=5)throw std::runtime_error("Usage: t_label_review OLD_EXPERIMENT NEW_EXPERIMENT COORDINATES raw|standard|group|all|relabel");cv::setNumThreads(1);
+ if(std::wstring(argv[4])==L"relabel"){
+     score_relabelled(argv[1], argv[2], argv[3]);
+     return 0;
+ }
+ fs::path old=argv[1],out=argv[2],coords=argv[3];bool standard=std::wstring(argv[4])==L"standard",leavegroup=std::wstring(argv[4])==L"group",auditall=std::wstring(argv[4])==L"all";if(!standard&&!leavegroup&&!auditall&&std::wstring(argv[4])!=L"raw")throw std::runtime_error("Invalid mode");
  auto original=six::read_rows(old/"observations.csv");auto metadata=table(coords);auto anomalies=table(out/"exclusions.csv");if(original.size()!=575||anomalies.size()!=8)throw std::runtime_error("Unexpected input counts");for(auto& r:original)r.session=std::stoi(metadata.at(r.path).at("group"));
  auto deployed=six::load_model(old/"assets/best_image_ensemble.json");std::vector<six::Config> configs;for(auto& m:deployed.members)configs.push_back(m->config);
  for(int policy:auditall?std::vector<int>{0}:(standard||leavegroup)?std::vector<int>{8}:std::vector<int>{8,5}){
