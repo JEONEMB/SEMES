@@ -1,0 +1,6 @@
+identity_max_px 0
+synthetic_translation_max_error_px 0.0010587571412714603
+public_image_api_parity_linear 0
+input_mutation_max_linear 0
+public_image_api_parity_quadratic 0
+input_mutation_max_quadratic 0

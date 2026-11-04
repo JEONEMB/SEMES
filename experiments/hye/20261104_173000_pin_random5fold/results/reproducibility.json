@@ -1,0 +1,22 @@
+﻿[
+    {
+        "file":  "predictions.tsv",
+        "sha256":  "3B17DBE5B62D4F9770E945ACD66C83DCC940EF556AC10D2C33CB75B998B78175",
+        "identical":  true
+    },
+    {
+        "file":  "summary.tsv",
+        "sha256":  "227CBB61577AC18407E14FE5426DA8DE44B6AD9A908462D52892CC186214EB0B",
+        "identical":  true
+    },
+    {
+        "file":  "simulation.tsv",
+        "sha256":  "811C2C6B5B01484081D1212307FC910BBE0AC962D810A8EC88DB938BAB051948",
+        "identical":  true
+    },
+    {
+        "file":  "integrity.txt",
+        "sha256":  "57CD38EB729162C1B714CF854CEF2A7DBC64411461085EEF9F6ABDF6F0A4FCE7",
+        "identical":  true
+    }
+]
