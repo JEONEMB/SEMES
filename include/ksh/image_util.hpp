@@ -36,7 +36,7 @@ cv::Rect roi_rect(const RoiSpec &roi);
 
 // 사진 읽기 (cv::imread 와 같은 flags). 경로에 한글이 있어도 읽음
 //  1) cv::imread 로 먼저 시도 (명령 인자처럼 시스템 코드 페이지 경로)
-//  2) 실패하면 경로를 UTF-8 로 보고 파일을 바이트로 읽어 cv::imdecode (설정·폴더 검색 경로, 예 data/img/2nd/기준 위치)
+//  2) 실패하면 경로를 UTF-8 로 보고 파일을 바이트로 읽어 cv::imdecode (설정 파일에 적은 한글 경로 등)
 //  없거나 못 읽으면 빈 Mat
 cv::Mat read_image(const std::string &path, int flags);
 

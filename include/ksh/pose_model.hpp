@@ -16,10 +16,10 @@
 namespace ksh {
 
 struct FeatureModel {
-    double c_px = 0.0;
-    double a_px_per_mm = 0.0;
+    double c_px = 0.0;                    // 상수항 (기준 사진과 학습 스윕 원점의 차이)
+    double a_px_per_mm = 0.0;             // Y 감도
     std::vector<double> b_px_per_deg_k;   // [b1, b2, ...] — 길이 = Θ 차수
-    double sigma_px = 1.0;
+    double sigma_px = 1.0;                // 학습 잔차 RMS (역산 가중치)
 };
 
 struct PoseModel {

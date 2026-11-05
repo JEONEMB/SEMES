@@ -33,7 +33,7 @@ struct RoiShift {
     std::string name;
     cv::Rect ref_rect_px;   // 기준 사진에서의 위치
     cv::Point2d shift_px;   // 측정 이동 (현재 − 기준)
-    double zncc = 0.0;
+    double zncc = 0.0;      // 정합 상관 ZNCC (1 에 가까울수록 신뢰)
     double response = 0.0;  // 넓은 창 위상 상관 봉우리 세기 (배경 ROI 만, QR 은 0)
     bool converged = false; // Fine Alignment 수렴 여부
     bool ok = false;
