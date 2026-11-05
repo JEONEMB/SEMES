@@ -7,6 +7,9 @@
 
 namespace ksh {
 
+// ROI 하나의 이동 측정
+//  QR(wide_search = false) : Coarse 결과를 출발점으로 바로 Fine (QR 3개가 닮아 넓게 찾으면 이웃 QR 에 붙을 수 있음)
+//  배경(wide_search = true) : 깊이가 달라 플레이트와 이동량이 다르므로 ROI 주변 넓은 창 위상 상관으로 출발점을 다시 잡은 뒤 Fine
 RoiShift measure_roi(const cv::Mat &ref32, const cv::Mat &cur32, const RoiSpec &roi, const cv::Point2d &guess_px, bool wide_search,
                      int wide_window_scale, const FineParams &fine, double wide_min_response) {
     RoiShift m;
@@ -41,6 +44,8 @@ RoiShift measure_roi(const cv::Mat &ref32, const cv::Mat &cur32, const RoiSpec &
     return m;
 }
 
+// ③ 특징 (가로 이동만 사용 — Y·Θ 는 모두 가로 이동으로 나타남)
+//  s = QR 평균 이동,  d = s − 배경 평균 이동 (시차)
 bool compute_features(const std::vector<RoiShift> &rois, size_t n_qr, double &s_px, double &d_px) {
     if (n_qr == 0 || rois.size() <= n_qr) return false;
     double qr_sum_px = 0.0, bg_sum_px = 0.0;
@@ -50,6 +55,7 @@ bool compute_features(const std::vector<RoiShift> &rois, size_t n_qr, double &s_
     return true;
 }
 
+// ①②③ 전체 : Coarse → ROI 5곳 Fine → s, d. ROI 하나라도 실패하면 전체 실패 (실패한 ROI 이름과 이유를 message 에)
 FeatureMeasurement measure_features(const cv::Mat &ref32, const cv::Mat &cur32, const FeatureParams &params) {
     FeatureMeasurement out;
     if (ref32.empty() || cur32.empty() || ref32.size() != cur32.size()) { out.message = "기준·현재 영상 크기가 다름"; return out; }

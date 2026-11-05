@@ -9,7 +9,7 @@ namespace ksh {
 
 namespace {
 
-// 기저 [1, Y, Θ, Θ², ...]
+// 보정식의 기저 [1, Y, Θ, Θ², ...] — 특징 = 기저 · 계수 (Y 는 1차, Θ 는 theta_order 차까지)
 std::vector<double> basis(double y_mm, double t_deg, int theta_order) {
     std::vector<double> b = {1.0, y_mm};
     double tp = 1.0;
@@ -17,6 +17,8 @@ std::vector<double> basis(double y_mm, double t_deg, int theta_order) {
     return b;
 }
 
+// 특징 하나(s 또는 d)의 계수 학습 : 최소제곱 A·x ≈ B 를 SVD 로 풂 (A 행 = 사진 한 장의 기저, B = 측정 특징)
+//  σ = 학습 잔차 RMS (역산에서 그 식을 얼마나 믿을지에 씀)
 bool fit_one(const std::vector<FeatureSample> &samples, bool use_s, int theta_order, FeatureModel &m) {
     const int n = int(samples.size()), k = theta_order + 2;
     if (theta_order < 1 || n < k) return false;
@@ -35,6 +37,7 @@ bool fit_one(const std::vector<FeatureSample> &samples, bool use_s, int theta_or
     return true;
 }
 
+// 모델 파일 쓰기·읽기 (특징 하나 = c_px, a_px_per_mm, theta_px_per_deg_k[], sigma_px)
 void write_feature(cv::FileStorage &fs, const char *name, const FeatureModel &m) {
     fs << name << "{";
     fs << "c_px" << m.c_px << "a_px_per_mm" << m.a_px_per_mm;
@@ -59,6 +62,7 @@ bool read_feature(const cv::FileNode &n, FeatureModel &m) {
 
 } // namespace
 
+// 특징값 v = c + a·Y + Σ b_k·Θ^k 와 미분 ∂v/∂Y = a, ∂v/∂Θ = Σ k·b_k·Θ^(k−1) (뉴턴 반복의 야코비안)
 double eval_feature(const FeatureModel &m, double y_mm, double t_deg, double *dv_dy, double *dv_dt) {
     double v = m.c_px + m.a_px_per_mm * y_mm, dt = 0.0, tp = 1.0;   // tp = Θ^(k−1)
     for (size_t k = 0; k < m.b_px_per_deg_k.size(); ++k) {
@@ -71,6 +75,10 @@ double eval_feature(const FeatureModel &m, double y_mm, double t_deg, double *dv
     return v;
 }
 
+// ④ 역산 : 측정 (s, d) 를 동시에 만족하는 (Y, Θ) — (Y, Θ) 평면에서 두 곡선(1차식이면 직선)의 교점
+//  초기값 : 1차 항만 쓴 두 직선의 교점 (크라메르 공식, det = a_s·b_d − a_d·b_s)
+//  반복   : 가우스–뉴턴 (JᵀWJ)Δ = JᵀW e,  e = 측정 − 모델 예측,  W = diag(1/σ_s², 1/σ_d²)
+//           1차식이면 첫 걸음에서 수렴. 식 2개·미지수 2개라 가중치는 해를 바꾸지 않음 (식이 더 많아질 때를 위한 형태)
 bool invert_pose_model(const PoseModel &model, double s_px, double d_px, double &y_mm, double &t_deg) {
     const FeatureModel &S = model.s, &D = model.d;
     if (S.b_px_per_deg_k.empty() || D.b_px_per_deg_k.empty() || !std::isfinite(s_px) || !std::isfinite(d_px)) return false;
@@ -98,6 +106,7 @@ bool invert_pose_model(const PoseModel &model, double s_px, double d_px, double 
     return true;
 }
 
+// s, d 두 식을 각각 학습 (학습 도구용)
 bool fit_pose_model(const std::vector<FeatureSample> &samples, int theta_order_s, int theta_order_d, PoseModel &model) {
     PoseModel m;
     if (!fit_one(samples, true, theta_order_s, m.s) || !fit_one(samples, false, theta_order_d, m.d)) return false;
@@ -105,6 +114,7 @@ bool fit_pose_model(const std::vector<FeatureSample> &samples, int theta_order_s
     return true;
 }
 
+// 설정 노드 model: {s, d} 읽기
 bool read_pose_model(const cv::FileNode &node, PoseModel &model) {
     PoseModel m;
     if (!read_feature(node["s"], m.s) || !read_feature(node["d"], m.d)) return false;
@@ -112,6 +122,7 @@ bool read_pose_model(const cv::FileNode &node, PoseModel &model) {
     return true;
 }
 
+// 모델 파일 저장 (학습 시각 · 메모 · 표본 수 · 차수 · 계수)
 bool save_pose_model(const std::string &path, const PoseModel &model, const std::string &note, int n_samples) {
     cv::FileStorage fs(path, cv::FileStorage::WRITE);
     if (!fs.isOpened()) return false;
@@ -136,6 +147,7 @@ bool save_pose_model(const std::string &path, const PoseModel &model, const std:
     return true;
 }
 
+// 모델 파일 읽기 (파일이 없으면 OpenCV 가 오류 문구를 찍으므로 먼저 존재 확인)
 bool load_pose_model(const std::string &path, PoseModel &model) {
     std::error_code ec;
     if (!std::filesystem::exists(std::filesystem::u8path(path), ec)) return false;

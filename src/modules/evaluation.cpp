@@ -11,13 +11,16 @@
 
 namespace ksh {
 
+// 오차 = 추정 − 정답 (Y 는 µm 로)
 double error_y_um(const PosePrediction &p) { return (p.y_est_mm - p.y_mm) * 1000.0; }
 double error_t_deg(const PosePrediction &p) { return p.t_est_deg - p.t_deg; }
 
+// 측정 성공이고 Y·Θ 오차가 모두 허용 범위 안
 bool within_tolerance(const PosePrediction &p, const Tolerance &tol) {
     return p.ok && std::abs(error_y_um(p)) <= tol.y_um && std::abs(error_t_deg(p)) <= tol.t_deg;
 }
 
+// J = √ mean[ (eY/tolY)² + (eΘ/tolΘ)² ] — 항마다 cap 에서 자르고, 측정 실패는 두 항 모두 cap
 double score_j(const std::vector<PosePrediction> &preds, const Tolerance &tol, double cap) {
     if (preds.empty()) return 0.0;
     double sum = 0.0;
@@ -30,6 +33,7 @@ double score_j(const std::vector<PosePrediction> &preds, const Tolerance &tol, d
 }
 
 namespace {
+// 묶음 하나 요약 : 장 수, 성공 수, 허용 통과 수, RMS·최대 오차, 평균 시간, J
 GroupSummary summarize(const std::string &name, const std::vector<const PosePrediction *> &v, const Tolerance &tol, const Tolerance &spec,
                        double cap) {
     GroupSummary g;
@@ -56,6 +60,7 @@ GroupSummary summarize(const std::string &name, const std::vector<const PosePred
 }
 } // namespace
 
+// group 이름별 요약 (처음 나온 순서), all_label 이 있으면 전체 줄 추가
 std::vector<GroupSummary> summarize_groups(const std::vector<PosePrediction> &preds, const Tolerance &tol, const Tolerance &spec, double cap,
                                            const std::string &all_label) {
     std::vector<std::string> order;
@@ -76,6 +81,7 @@ std::vector<GroupSummary> summarize_groups(const std::vector<PosePrediction> &pr
     return out;
 }
 
+// 블록 교차검증 묶음 번호 : Y 단독은 Y 순으로 n_y 묶음, Θ 단독은 Θ 순으로 n_t 묶음 (이웃 라벨끼리 같은 묶음)
 std::vector<int> block_folds(const std::vector<FeatureSample> &samples, int n_y_blocks, int n_t_blocks) {
     std::vector<int> fold(samples.size(), 0), iy, it;
     for (size_t i = 0; i < samples.size(); ++i) (samples[i].t_deg == 0.0 ? iy : it).push_back(int(i));
@@ -88,6 +94,7 @@ std::vector<int> block_folds(const std::vector<FeatureSample> &samples, int n_y_
     return fold;
 }
 
+// 묶음마다 : 나머지로 학습 → 그 묶음 예측 (학습에 안 쓴 사진으로만 채점)
 std::vector<PosePrediction> cross_validate(const std::vector<FeatureSample> &samples, const std::vector<int> &folds, int theta_order_s,
                                            int theta_order_d) {
     std::vector<PosePrediction> out(samples.size());
@@ -111,6 +118,7 @@ std::vector<PosePrediction> cross_validate(const std::vector<FeatureSample> &sam
     return out;
 }
 
+// 요약 표 (마크다운)
 std::string summary_table(const std::vector<GroupSummary> &groups, const Tolerance &tol, const Tolerance &spec) {
     std::ostringstream s;
     s << std::fixed;
@@ -127,6 +135,7 @@ std::string summary_table(const std::vector<GroupSummary> &groups, const Toleran
     return s.str();
 }
 
+// 사진별 결과 CSV (UTF-8 BOM)
 bool save_predictions_csv(const std::string &path, const std::vector<PosePrediction> &preds, const Tolerance &tol, const Tolerance &spec) {
     std::ofstream f(std::filesystem::u8path(path));
     if (!f) return false;

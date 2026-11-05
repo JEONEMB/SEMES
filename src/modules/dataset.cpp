@@ -15,6 +15,9 @@ namespace ksh {
 
 namespace fs = std::filesystem;
 
+// 파일 이름 → 라벨
+//  "center"              : 1차 기준 사진          "center1" ~ : 2차 기준 사진
+//  "Y+0.50 T+0.10 (2)"   : 동시 이동 (2차·3차)     "Y+0.50" / "T+0.10" : 1차 단독 이동
 bool parse_label(const std::string &stem, LabeledPhoto &photo) {
     static const std::regex re_center(R"(^center$)"), re_center_n(R"(^center\d+$)");
     static const std::regex re_mixed(R"(^Y([+-]?\d+(?:\.\d+)?)\s+T([+-]?\d+(?:\.\d+)?)\s*\(\d+\)$)");
@@ -33,6 +36,7 @@ bool parse_label(const std::string &stem, LabeledPhoto &photo) {
     return true;
 }
 
+// 폴더(하위 폴더 포함)의 라벨 사진 목록 — 이름 순, 같은 이름이면 bmp 우선
 std::vector<LabeledPhoto> list_labeled_photos(const std::string &dir) {
     std::map<std::string, std::string> files;   // 이름 → 경로 (bmp 우선)
     std::error_code ec;
@@ -62,12 +66,14 @@ std::vector<LabeledPhoto> list_labeled_photos(const std::string &dir) {
     return out;
 }
 
+// 이름으로 사진 찾기
 const LabeledPhoto *find_photo(const std::vector<LabeledPhoto> &photos, const std::string &stem) {
     for (const auto &p : photos)
         if (p.stem == stem) return &p;
     return nullptr;
 }
 
+// 학습 사진 : 지정 세트의 Θ 단독 사진 전부 + Y 단독 사진 중 y_grid_mm 배수 (기준 사진 · 동시 이동 사진 제외)
 bool is_training_photo(const LabeledPhoto &photo, int set, double y_grid_mm) {
     if (photo.is_reference || photo.set != set) return false;
     const bool y_only = photo.t_deg == 0.0 && photo.y_mm != 0.0, t_only = photo.y_mm == 0.0 && photo.t_deg != 0.0;
@@ -78,6 +84,7 @@ bool is_training_photo(const LabeledPhoto &photo, int set, double y_grid_mm) {
     return std::abs(k - std::round(k)) < 1e-6;
 }
 
+// 특징 표본 CSV 저장 (UTF-8 BOM, 엑셀에서 한글이 깨지지 않게)
 bool save_feature_csv(const std::string &path, const std::vector<FeatureSample> &samples) {
     std::ofstream f(fs::u8path(path));
     if (!f) return false;
@@ -86,6 +93,7 @@ bool save_feature_csv(const std::string &path, const std::vector<FeatureSample> 
     return true;
 }
 
+// 특징 표본 CSV 읽기 (save_feature_csv 형식)
 bool load_feature_csv(const std::string &path, std::vector<FeatureSample> &samples) {
     std::ifstream f(fs::u8path(path));
     if (!f) return false;

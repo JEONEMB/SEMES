@@ -8,12 +8,14 @@
 namespace ksh {
 
 namespace {
+// Keys(1981) 3차 회선 커널. a = −0.5 (정확도 3차) 또는 −0.75 (선명). |t| < 2 에서만 0 이 아님
 double keys_weight(double t, double a) {
     t = std::abs(t);
     if (t < 1.0) return ((a + 2.0) * t - (a + 3.0)) * t * t + 1.0;
     if (t < 2.0) return ((a * t - 5.0 * a) * t + 8.0 * a) * t - 4.0 * a;
     return 0.0;
 }
+// 정규화 sinc(x) = sin(πx) / (πx), x = 0 에서 1
 double sinc(double x) { return std::abs(x) < 1e-12 ? 1.0 : std::sin(CV_PI * x) / (CV_PI * x); }
 } // namespace
 
@@ -32,6 +34,7 @@ bool parse_kernel(const std::string &name, Kernel &kernel) {
     return true;
 }
 
+// 커널 → 설정 문자열 (기록·표시용)
 const char *kernel_name(Kernel kernel) {
     switch (kernel) {
     case Kernel::linear: return "linear";
@@ -44,10 +47,12 @@ const char *kernel_name(Kernel kernel) {
     return "?";
 }
 
+// 탭 반경 R : 한 점을 보간할 때 쓰는 이웃은 2R 개 (선형 2, 3차 커널 4, Lanczos3 6)
 int kernel_radius(Kernel kernel) {
     return kernel == Kernel::linear ? 1 : (kernel == Kernel::lanczos3 ? 3 : 2);
 }
 
+// 거리 t (px) 인 이웃의 가중치 φ(t)
 double kernel_weight(Kernel kernel, double t) {
     const double a = std::abs(t);
     switch (kernel) {
@@ -67,12 +72,20 @@ double kernel_weight(Kernel kernel, double t) {
     return 0.0;
 }
 
+// 사전 필터 극점 z
+//  B-스플라인·O-MOMS 커널은 화소 위치에서 φ(0) ≠ 1 이라 원래 화소값을 지나지 않음 →
+//  계수 c 를 미리 구해 Σ c[k]·φ(x − k) 가 화소값과 같아지게 함. 그 역필터의 극점이 z
+//  bspline3 : z = √3 − 2 ≈ −0.268,  omoms3 : z = (√105 − 13) / 8 ≈ −0.344
 double kernel_pole(Kernel kernel) {
     if (kernel == Kernel::bspline3) return std::sqrt(3.0) - 2.0;
     if (kernel == Kernel::omoms3) return (std::sqrt(105.0) - 13.0) / 8.0;
     return 0.0;
 }
 
+// 1차원 재귀 사전 필터 (Unser 1993) — 신호 s[0..n) 를 제자리에서 계수 c 로 바꿈
+//  ① 이득 (1 − z)(1 − 1/z) 곱하기
+//  ② 인과 방향 (왼→오) : c⁺[k] = s[k] + z·c⁺[k−1]   (c⁺[0] 은 거울 경계로 앞쪽 40개 합으로 근사)
+//  ③ 반인과 방향 (오→왼) : c[k] = z·(c[k+1] − c⁺[k])  (c[n−1] 은 거울 경계 식)
 void prefilter_1d(double *c, int n, double pole) {
     const double z = pole;
     const double gain = (1.0 - z) * (1.0 - 1.0 / z);
@@ -86,6 +99,8 @@ void prefilter_1d(double *c, int n, double pole) {
     for (int k = n - 2; k >= 0; --k) c[k] = z * (c[k + 1] - c[k]);   // 반인과 방향
 }
 
+// 2차원 영상 → 커널 계수 : 행마다 가로 사전 필터, 그다음 열마다 세로 사전 필터 (분리형)
+//  극점이 0 인 커널(선형, Keys, Lanczos)은 화소값을 그대로 지나므로 바꾸지 않음
 void to_kernel_coeffs(cv::Mat &image64, Kernel kernel) {
     const double z = kernel_pole(kernel);
     if (z == 0.0) return;

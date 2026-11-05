@@ -10,6 +10,7 @@
 
 namespace ksh {
 
+// 사진마다 읽기 → 크기 확인 → 특징 측정 (학습용, 사진 읽기 시간은 측정 시간에서 뺌)
 std::vector<PhotoFeatures> measure_photos(const std::vector<LabeledPhoto> &photos, const cv::Mat &ref32, const FeatureParams &params,
                                           std::ostream *progress) {
     std::vector<PhotoFeatures> out;
@@ -28,6 +29,7 @@ std::vector<PhotoFeatures> measure_photos(const std::vector<LabeledPhoto> &photo
     return out;
 }
 
+// 사진마다 그 세트의 기준 사진으로 자세 추정 (평가용)
 std::vector<PhotoEstimate> estimate_photos(const std::vector<LabeledPhoto> &photos, const std::map<int, cv::Mat> &ref32_by_set,
                                            const FeatureParams &params, const PoseModel &model, std::ostream *progress) {
     std::vector<PhotoEstimate> out;
@@ -44,6 +46,7 @@ std::vector<PhotoEstimate> estimate_photos(const std::vector<LabeledPhoto> &phot
     return out;
 }
 
+// 측정 성공한 사진만 학습 표본 (라벨 + s, d) 으로 변환
 std::vector<FeatureSample> to_samples(const std::vector<PhotoFeatures> &measured) {
     std::vector<FeatureSample> v;
     for (const auto &m : measured) {
