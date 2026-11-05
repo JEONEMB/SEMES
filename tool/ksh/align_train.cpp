@@ -123,7 +123,7 @@ int main(int argc, char **argv) {
     // 4) 저장
     std::ostringstream note;
     note << "align_train : 세트 " << tc.set << " 단독 축 사진 (Y " << tc.y_grid_mm << " mm 배수), 기준 " << tc.reference << ", Fine = "
-         << (cfg.features.fine.method == ksh::FineMethod::icgn ? std::string("icgn/") + ksh::kernel_name(cfg.features.fine.kernel) : std::string("opencv_ecc"))
+         << "icgn/" << ksh::kernel_name(cfg.features.fine.kernel)   // 정합 방법은 IC-GN 하나 (opencv_ecc 제거)
          << ", σ " << cfg.features.fine.gauss_sigma_px;
     if (!ksh::save_pose_model(out_path, model, note.str(), int(samples.size()))) { std::cerr << "모델 저장 실패 : " << out_path << "\n"; return 1; }
     std::cout << "\n모델 저장 : " << out_path << "\n  → 사용하려면 config/alignment.yml 의 model_file 을 이 파일로 바꾼다\n";
