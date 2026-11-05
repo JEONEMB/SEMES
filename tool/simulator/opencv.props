@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- =====================================================================================
+     opencv.props — 시뮬레이터 프로젝트 공통 OpenCV 설정 (콘솔 · MFC)
+       OpenCV 위치 : 환경 변수 OPENCV_DIR → 없으면 C:\opencv\build
+         OPENCV_DIR 은 ...\build 와 ...\build\x64\vc15 (흔한 설치 안내) 둘 다 인식
+       라이브러리 : opencv_world3415(d).lib, 빌드 뒤 opencv_world3415(d).dll 을 실행 파일 폴더로 복사
+     ===================================================================================== -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <OpenCVDir Condition="'$(OpenCVDir)'=='' and '$(OPENCV_DIR)'!='' and Exists('$(OPENCV_DIR)\include\opencv2')">$(OPENCV_DIR)</OpenCVDir>
+    <OpenCVDir Condition="'$(OpenCVDir)'=='' and '$(OPENCV_DIR)'!='' and Exists('$(OPENCV_DIR)\..\..\include\opencv2')">$(OPENCV_DIR)\..\..</OpenCVDir>
+    <OpenCVDir Condition="'$(OpenCVDir)'==''">C:\opencv\build</OpenCVDir>
+    <OpenCVSuffix Condition="'$(Configuration)'=='Debug'">d</OpenCVSuffix>
+    <OpenCVSuffix Condition="'$(Configuration)'!='Debug'"></OpenCVSuffix>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(OpenCVDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(OpenCVDir)\x64\vc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_world3415$(OpenCVSuffix).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /d "$(OpenCVDir)\x64\vc15\bin\opencv_world3415$(OpenCVSuffix).dll" "$(OutDir)"</Command>
+      <Message>opencv_world3415$(OpenCVSuffix).dll 을 실행 파일 폴더로 복사 ($(OpenCVDir))</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+</Project>
