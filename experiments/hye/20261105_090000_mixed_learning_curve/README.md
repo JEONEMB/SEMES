@@ -14,3 +14,37 @@
 - 571장은 이미 개발에 노출된 자료다. 이 검증으로 아무 자료, 새 날짜, 미촬영 범위를 항상 예측할 수 있다고 주장하지 않는다. 표본 수뿐 아니라 임의로 뽑힌 데이터 구성에 대한 민감도를 본다.
 
 실행 코드와 완료된 결과·해석은 이 폴더에 남긴다. 기존 11-04 결과와 운영 모듈은 보존한다.
+
+## 완료 결과와 실행
+
+[결과 보고](REPORT.md), [학습량별 8방법 전체 표](RESULTS_TABLE.md)를 본다. `results/aggregate.tsv`에는 정확도, 최악 조합, 최대오차, 시뮬레이션과 추론시간을 함께 남겼다.
+
+저장소 최상위, Windows 팀 환경에서 실행한다.
+
+```powershell
+$cmake = 'C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe'
+& $cmake -S experiments/hye/20261105_090000_mixed_learning_curve -B .batch_build/mixed_learning_curve -G 'Visual Studio 18 2026' -A x64 -T v141 -DOpenCV_DIR=C:/opencv/build
+& $cmake --build .batch_build/mixed_learning_curve --config Release --target learning_curve --parallel 4
+$env:PATH = 'C:/opencv/build/x64/vc15/bin;' + $env:PATH
+$exe = './.batch_build/mixed_learning_curve/Release/learning_curve.exe'
+$out = '.batch_build/new_mixed_learning_curve_results'
+& $exe evaluate . $out
+& $exe audit . $out
+& $exe benchmark . $out
+```
+
+기존 결과를 보존하기 위해 새 출력 경로를 사용한다. `evaluate`와 `audit`는 커밋한 이전 실험의 `results_with_bars/features.tsv`, 원본 메타데이터와 line_protocol.json을 사용하며 BMP는 필요 없다. `benchmark`에는 고정 30장의 원본 BMP가 필요하다. 이전 측정 파일의 SHA-256은 이전 실험의 artifact_hashes_with_bars.json과 대조한다.
+
+## 保存した記録
+
+- `dataset.tsv`: 사진 571장의 경로, 날짜, 원본 해시, 라벨과 반복 그룹.
+- `test_folds.tsv`: 분할 seed 3개 각각의 사진별 test fold.
+- `train_membership.tsv`: 195개 학습 집합의 모든 인덱스와 추출 순서. 작은 예산 집합은 큰 예산 집합의 부분집합이다.
+- `runs.tsv`: 1,560개 학습/평가 조건의 점수, 날짜 구성, 학습 Y/T 범위, 실패와 시간.
+- `predictions/`: 8방법×3seed, 총 24파일. 178,152회 평가의 사진별 예측과 2가지 20턴 결과.
+- `aggregate.tsv`: 8방법×7학습량. 가중 통과율, 최악/P05 조건 통과율, 최대오차, 시뮬레이션과 시간.
+- `full_models/`: 전체 train 조건의 fold 모델 120개. 소량 모델은 학습 집합과 코드로 재생성한다.
+- `observation_timing*.tsv`: 같은 30장에 대한 새로운 단일 작업 속도 측정.
+- `integrity.txt`, `audit.txt`, `reproducibility.json`: 실행 조건, 저장 기록의 독립 재집계, 재실행 일치.
+
+`runs.tsv`와 `aggregate.tsv`의 시간 열은 환경 부하에 따라 달라진다. 재현성 확인에서는 그 열만 제외했으며, 예측과 모델 등 148개 파일의 SHA-256은 완전히 일치했다. OpenCV 3.4.15/MSVC v141의 Windows에서 수행했고 macOS의 수치 일치와 속도는 미확인이다.
