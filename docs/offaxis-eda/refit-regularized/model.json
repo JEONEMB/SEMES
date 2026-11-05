@@ -1,0 +1,123 @@
+{
+  "model": {
+    "degree": 1,
+    "alpha": 0.0,
+    "x_center": [
+      58.08135460311601,
+      0.22879940085965897,
+      58.034030088400044,
+      0.21498387534992164,
+      58.2991905661838,
+      0.21299041913172856
+    ],
+    "y_center": [
+      0.35789473684210527,
+      0.6678947368421053
+    ],
+    "x_scale": [
+      63.65422520043826,
+      0.17343093467510723,
+      63.59176645264596,
+      0.1715650813729003,
+      63.902483632894736,
+      0.17564024536919964
+    ],
+    "feature_center": [
+      9.349246523159212e-17,
+      1.4413421723203787e-16,
+      -1.7140285292458556e-16,
+      -1.3244765907808884e-16,
+      -2.8826843446407574e-16,
+      2.1814908554038162e-16
+    ],
+    "feature_scale": [
+      0.9999999999999998,
+      0.9999999999999997,
+      1.0,
+      0.9999999999999999,
+      1.0,
+      0.9999999999999999
+    ],
+    "coefficients": [
+      [
+        -10852.105832589368,
+        9803.815495611088
+      ],
+      [
+        13.6728983141923,
+        -11.746987630540618
+      ],
+      [
+        20946.02787471847,
+        -18810.977819572363
+      ],
+      [
+        -0.6520013849878897,
+        -1.2062276827489697
+      ],
+      [
+        -10098.263981956674,
+        9092.211792794446
+      ],
+      [
+        -7.20917829617563,
+        5.756237872305061
+      ]
+    ]
+  },
+  "input_channels": [
+    "L_dx",
+    "L_dy",
+    "C_dx",
+    "C_dy",
+    "R_dx",
+    "R_dy"
+  ],
+  "tick_sizes": [
+    0.05,
+    0.01
+  ],
+  "coordinate_origin": "virtual training centroid, not constrained to a photographed center",
+  "source_measurement_reference": "center1; arbitrary translation removed by fitted x_center",
+  "source_sha256": {
+    "frames.csv": "e4392e07801671b6e8530c4363dddfb81f6599c0bfebf03ca41fc27722d9d8c3",
+    "qr_displacements.csv": "b577d9c60e1f8237b6a523985dfe18ce7f444deea7089943434b718240ef519e"
+  },
+  "final_parameters": {
+    "degree": 1,
+    "alpha": 0.0,
+    "mean_squared_tick_error": 7.7947395465431075
+  },
+  "metrics": [
+    {
+      "model": "previous_affine",
+      "y_rmse_mm": 0.14774727632839676,
+      "theta_rmse_deg": 0.026187355781182566,
+      "y_rmse_ticks": 2.954945526567935,
+      "theta_rmse_ticks": 2.6187355781182564,
+      "y_within_one_tick": 0.3333333333333333,
+      "theta_within_one_tick": 0.3157894736842105,
+      "both_within_one_tick": 0.2982456140350877,
+      "y_max_abs_mm": 0.4001956720698375,
+      "theta_max_abs_deg": 0.0692045315750153
+    },
+    {
+      "model": "nested_selected_ridge",
+      "y_rmse_mm": 0.14774727632839676,
+      "theta_rmse_deg": 0.026187355781182566,
+      "y_rmse_ticks": 2.954945526567935,
+      "theta_rmse_ticks": 2.6187355781182564,
+      "y_within_one_tick": 0.3333333333333333,
+      "theta_within_one_tick": 0.3157894736842105,
+      "both_within_one_tick": 0.2982456140350877,
+      "y_max_abs_mm": 0.4001956720698375,
+      "theta_max_abs_deg": 0.0692045315750153
+    }
+  ],
+  "validation": {
+    "outer_folds": 19,
+    "inner_folds": 18,
+    "translation_invariance_max_error": 5.934142066621462e-13
+  },
+  "limitations": "command labels; positive mixed poses only; no independent session test"
+}

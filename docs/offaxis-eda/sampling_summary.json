@@ -1,0 +1,26 @@
+{
+  "images": 341,
+  "resolved": 341,
+  "unresolved": 0,
+  "categories": {
+    "Y-only": 80,
+    "mixed": 57,
+    "new-reference": 3,
+    "reference": 1,
+    "theta-only": 200
+  },
+  "offaxis": 57,
+  "quadratic_design_columns": [
+    "1",
+    "Y",
+    "theta",
+    "Y^2",
+    "theta^2",
+    "Y*theta"
+  ],
+  "quadratic_design_rank": 6,
+  "coordinate_source": "filename nominal command, not independently measured truth",
+  "theta_unit": "degrees assumed; acquisition log required to confirm",
+  "time_source": "filesystem mtime only; not a confirmed acquisition timestamp",
+  "original_images_modified": false
+}

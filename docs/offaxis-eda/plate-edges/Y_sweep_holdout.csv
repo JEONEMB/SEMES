@@ -1,0 +1,4 @@
+model,validation,images,Y_rmse_ticks,yaw_rmse_ticks,both_within_tick
+QR6_nested,leave_entire_Y_sweep_out,57,3.9274781562340406,3.429551812344145,0.24561403508771928
+QR6_edges8_nested,leave_entire_Y_sweep_out,57,2.742349384073421,2.44083363402192,0.42105263157894735
+QR6_horizontal4_nested,leave_entire_Y_sweep_out,57,2.273021531036799,2.0660648090789238,0.3333333333333333

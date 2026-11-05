@@ -1,0 +1,21 @@
+{
+  "model": "QR6_common_shared4",
+  "features": 10,
+  "training_images": 57,
+  "coordinate_groups": 19,
+  "ticks": {
+    "Y_mm": 0.05,
+    "yaw_deg": 0.01
+  },
+  "image_size": [
+    3840,
+    2160
+  ],
+  "reference": "기준 위치/center1.bmp",
+  "source_hashes": {
+    "docs\\offaxis-eda\\common-background-edges\\models.json": "50630b51016175002823c91a08e1a547f1016df3e417beb5886873f0adc6785b",
+    "docs\\offaxis-eda\\common-background-edges\\edge_features.csv": "8591b666a4694d9176f34183bef0124325bbffbf7d76c6ffcb93c5587198bab0",
+    "docs\\offaxis-eda\\ppt-method-v2\\points.csv.gz": "219cad2b8f6ea5b52f5492c1aacafa57f9cbf9140299df3f98ab033fd88a3c28"
+  },
+  "scope": "Dataset-specific calibration; no cross-device generalization or closed-loop convergence validated."
+}

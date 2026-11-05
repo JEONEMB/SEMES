@@ -1,0 +1,21 @@
+{
+  "images": 341,
+  "points": 214830,
+  "point_count_per_frame": {
+    "630": 341
+  },
+  "fitting_acceptance": 0.6016245403342178,
+  "ecc_failures": 0,
+  "ecc_correlation_min": 0.9834665808369424,
+  "ecc_correlation_median": 0.992296857254035,
+  "method_dx_difference_rmse": 0.011220955441890449,
+  "method_dx_difference_max": 0.024666767550073132,
+  "common_repeat_dx_rms": 0.1357117376390132,
+  "individual_repeat_dx_rms": 0.07276902708255453,
+  "actual_y_nominal_max_difference": 8.326672684688674e-17,
+  "actual_theta_nominal_max_difference": 1.0000000000565112e-06,
+  "new_reference_actual": {
+    "y_actual": -1.3,
+    "theta_actual": -1.669999
+  }
+}
