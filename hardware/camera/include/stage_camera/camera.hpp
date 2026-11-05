@@ -30,7 +30,7 @@ namespace stage_camera {
 struct SettleOptions {
     int min_wait_ms = 200;         // 최소 대기 (진동이 시작되기 전 프레임으로 통과하는 것 방지)
     int timeout_ms = 5000;         // 이 시간 안에 안정되지 않으면 settled = false 로 반환
-    double max_shift_px = 0.3;     // 허용 흔들림, 원본(센서) 픽셀 기준
+    double max_shift_px = 0.5;     // 허용 흔들림, 원본(센서) 픽셀 기준 (정지 상태 측정 잡음 약 0.2)
     int stable_frames = 3;         // 연속으로 허용 범위 안이어야 하는 프레임 수
     double analysis_scale = 0.25;  // 비교용 축소 배율 (속도)
 };

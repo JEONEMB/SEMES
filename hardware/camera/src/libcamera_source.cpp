@@ -1,5 +1,6 @@
 #include "libcamera_source.hpp"
 
+#include <stdlib.h>
 #include <sys/mman.h>
 
 #include <algorithm>
@@ -23,6 +24,9 @@ namespace {
 
 LibcameraSource::LibcameraSource(const Options &opt) : opt_(opt)
 {
+    // libcamera 는 INFO/WARN 로그를 많이 찍는다. 사용자가 따로 정하지 않았으면 오류만 보이게 한다
+    // (환경 변수는 CameraManager 를 만들 때 읽힘, 덮어쓰지 않음)
+    setenv("LIBCAMERA_LOG_LEVELS", "*:ERROR", 0);
     cm_ = std::make_unique<CameraManager>();
     if (cm_->start())
         fail("CameraManager 시작 실패");
