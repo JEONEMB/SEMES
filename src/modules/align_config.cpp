@@ -9,6 +9,7 @@ namespace fs = std::filesystem;
 
 namespace {
 
+// ROI 목록 읽기 : - { name, cx_px, cy_px, hw_px [, hh_px] }
 std::vector<RoiSpec> read_rois(const cv::FileNode &n) {
     std::vector<RoiSpec> v;
     for (auto it = n.begin(); it != n.end(); ++it) {
@@ -22,6 +23,7 @@ std::vector<RoiSpec> read_rois(const cv::FileNode &n) {
     return v;
 }
 
+// 항목 읽기 도우미 : 항목이 없으면 fallback (기본값)
 std::string str(const cv::FileNode &n, const std::string &fallback = "") {
     if (n.empty()) return fallback;
     std::string s;
@@ -31,6 +33,7 @@ std::string str(const cv::FileNode &n, const std::string &fallback = "") {
 double num(const cv::FileNode &n, double fallback) { return n.empty() ? fallback : double(n); }
 int integer(const cv::FileNode &n, int fallback) { return n.empty() ? fallback : int(n); }
 
+// 허용 범위 { y_um, t_deg } 읽기
 Tolerance read_tol(const cv::FileNode &n, Tolerance fallback) {
     if (n.empty()) return fallback;
     return Tolerance{num(n["y_um"], fallback.y_um), num(n["t_deg"], fallback.t_deg)};
@@ -38,6 +41,7 @@ Tolerance read_tol(const cv::FileNode &n, Tolerance fallback) {
 
 } // namespace
 
+// 상대 경로 해석 : ① 절대 경로이거나 실행 폴더 기준으로 있으면 그대로 ② 아니면 설정 파일 폴더 기준 ③ 둘 다 없으면 원래 문자열
 std::string resolve_path(const std::string &config_path, const std::string &path) {
     if (path.empty()) return path;
     const fs::path p = fs::u8path(path);
@@ -49,8 +53,9 @@ std::string resolve_path(const std::string &config_path, const std::string &path
     return fs::exists(q, ec) ? q.u8string() : path;
 }
 
-// 이미지를 잘 물러왔는지 여부를 검사하는 함수
-// 인자 : 이미지 경로, 이미지 분석 구조체 변수, 표현할 에러메시지 변수, (모델이 필요한지 여부 - 헤더파일에 false로 정의)
+// 설정 파일(config/alignment.yml)과 보정식(model_file) 읽기
+// 인자 : 설정 파일 경로, 결과를 담을 설정 구조체, 실패 이유를 담을 문자열, 보정식이 꼭 있어야 하는지 (학습 도구는 false)
+// 반환 : 성공 true. 실패하면 false 와 error 에 이유 (cfg 는 바꾸지 않음)
 bool load_align_config(const std::string &path, AlignConfig &cfg, std::string &error, bool require_model) {
 
     cv::FileStorage f;      // openCV의 파일 저장 시스템
@@ -101,11 +106,8 @@ bool load_align_config(const std::string &path, AlignConfig &cfg, std::string &e
         // 방법과 커널을 설정
         const std::string method = str(fi["method"], "icgn"), kernel = str(fi["kernel"], "omoms3");
         
-        // 각 요청에 맞게 method를 설정
-        if (method == "icgn") fp.fine.method = FineMethod::icgn;
-        else if (method == "opencv_ecc") fp.fine.method = FineMethod::opencv_ecc;
-        // 알 수 없는 경우 에러메시지 설정 및 false 반환
-        else { error = "fine.method 을 알 수 없음 : " + method; return false; }
+        // 정합 방법은 IC-GN 하나 (이전 비교용 opencv_ecc 는 제거)
+        if (method != "icgn") { error = "fine.method 은 icgn 만 지원 : " + method; return false; }
         
         // 커널을 제대로 파악할 수 없다면 에러메시지 설정 및 false 반환
         if (!parse_kernel(kernel, fp.fine.kernel)) { error = "fine.kernel 을 알 수 없음 : " + kernel; return false; }
@@ -116,23 +118,27 @@ bool load_align_config(const std::string &path, AlignConfig &cfg, std::string &e
         fp.fine.eps_px = num(fi["eps_px"], fp.fine.eps_px);
         fp.fine.search_margin_px = integer(fi["search_margin_px"], fp.fine.search_margin_px);
         fp.fine.min_zncc = num(fi["min_zncc"], fp.fine.min_zncc);   // 정합 상관 하한 (없으면 0 = 검사 안 함)
-    } 
-
-    // 상세 설정 부분이 없다면 ECC 방법으로 대체
-    else {
-        fp.fine.method = FineMethod::opencv_ecc;   // 이전 형식 설정 파일 (fine 항목 없음) = OpenCV ECC
-    }
-
-    // ECC 설정
-    const cv::FileNode ecc = f["ecc"];
-    fp.fine.ecc_max_iter = integer(ecc["max_iter"], fp.fine.ecc_max_iter);
-    fp.fine.ecc_eps = num(ecc["eps"], fp.fine.ecc_eps);
+    }   // fine 항목이 없으면 FineParams 기본값 (IC-GN, O-MOMS3)
     fp.qr_rois = read_rois(f["qr_rois"]);
     fp.background_rois = read_rois(f["background_rois"]);
     if (fp.qr_rois.empty() || fp.background_rois.empty() || fp.coarse.window_px.area() == 0 || fp.wide_window_scale <= 0) {
         error = "설정 항목 누락 (coarse, qr_rois, background_rois, wide_window_scale) : " + path;
         return false;
     }
+    // ROI 반폭이 0 이하이면 영역이 비어 정합할 수 없음 → 설정 오류로 바로 알림
+    for (const auto *list : {&fp.qr_rois, &fp.background_rois})
+        for (const auto &r : *list)
+            if (r.half_width_px <= 0 || r.half_height_px < 0) { error = "ROI 반폭(hw_px)은 1 이상이어야 함 : " + r.name; return false; }
+
+    // 기준 사진 교체 시 ROI 재배치 (relocation 항목이 없으면 재배치하지 않음)
+    const cv::FileNode rl = f["relocation"];
+    c.relocation.enable = !rl.empty() && integer(rl["enable"], 1) != 0;
+    c.relocation.template_path = resolve_path(path, str(rl["template_path"]));
+    c.relocation.downscale = integer(rl["downscale"], c.relocation.downscale);
+    c.relocation.min_response = num(rl["min_response"], c.relocation.min_response);
+    c.relocation.max_shift_px = num(rl["max_shift_px"], c.relocation.max_shift_px);
+    c.relocation.max_spread_px = num(rl["max_spread_px"], c.relocation.max_spread_px);
+    if (c.relocation.enable && c.relocation.template_path.empty()) { error = "relocation.template_path 가 비어 있음 : " + path; return false; }
 
     // ④ 모델 : model_file 이 있으면 그 파일, 없으면 이 파일의 model:
     const std::string model_file = str(f["model_file"]);

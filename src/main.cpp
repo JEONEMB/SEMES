@@ -1,10 +1,9 @@
 ﻿// =====================================================================================
 // main.cpp — alignment() 사용 예 (제출 형식)
 //
-//  실행 방법 (작업 폴더 = 이 프로젝트 폴더)
-//   1) 인자 없음            : alignment.yml 의 demo.image 한 장을 추정하고 결과 창 표시
+//  실행 방법 (작업 폴더 = Code 폴더, config/alignment.yml 을 상대 경로로 찾음)
+//   1) 인자 없음            : alignment.yml 의 demo.image 한 장을 추정하고 결과 창 표시 (설치 점검용)
 //   2) <사진> [기준 사진]    : 지정한 사진 한 장 추정 (기준을 주지 않으면 reference_path)
-//  모델 학습은 align_train, 정확도 평가는 align_eval (tools/) 로 분리
 // =====================================================================================
 #include <iostream>
 #include <opencv2/opencv.hpp>
@@ -21,7 +20,9 @@
 #include <string>
 
 #ifdef _WIN32
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
 #include <windows.h>   // 콘솔 한글 출력 (UTF-8)
 #endif
 
@@ -94,19 +95,13 @@ int main(int argc, char **argv)
     // 현재 OpenCV 버전 출력
     std::cout << "OpenCV version: " << CV_VERSION << std::endl;
 
-    // 기존 안내문만 출력하고 종료되는 요소를 대신 안내
-    if (argc >= 2 && std::string(argv[1]) == "--eval") {
-        std::cerr << "평가는 align_eval 도구로 옮겼다 (tools/align_eval.cpp)\n";
-        return 1;
-    }
-
 
     ksh::AlignConfig cfg;   // 이미지 분석을 위한 변수
     std::string error;      // 에러 메시지를 담을 변수
 
     // 이미지 모두를 잘 불러왔는지 확인하는 조건문
     if (!ksh::load_align_config(kConfigPath, cfg, error) || !alignment_init(kConfigPath)) {
-        std::cerr << error << "\n설정 파일 " << kConfigPath << " 을 읽지 못함 (작업 폴더를 프로젝트 폴더로 설정)\n";
+        std::cerr << error << "\n설정 파일 " << kConfigPath << " 을 읽지 못함 (작업 폴더를 Code 폴더로 설정)\n";
         return 1;
     }
 
@@ -119,7 +114,7 @@ int main(int argc, char **argv)
     // 기준 사진 경로 (삼항 연산자 두 번 = 경우 세 가지)
     //  argc ≥ 3 (사진 + 기준 둘 다 줌)  → 두 번째 인자 argv[2]
     //  argc = 2 (사진만 줌)             → 빈 문자열 = 기준을 바꾸지 않음 → alignment_init 이 읽어 둔 reference_path 를 그대로 사용
-    //  argc = 1 (인자 없음, 데모)       → 설정의 demo.reference (데모 사진과 같은 날 찍은 center1)
+    //  argc = 1 (인자 없음, 데모)       → 설정의 demo.reference (비어 있으면 reference_path 그대로)
     //  기준 사진은 추정할 사진과 같은 날 찍은 것이어야 정확함 (날마다 원점이 조금씩 다름)
     const std::string ref_path = argc >= 3 ? argv[2] : (argc >= 2 ? std::string() : cfg.demo.reference);
 
@@ -127,9 +122,17 @@ int main(int argc, char **argv)
     //  cv::imread(..., IMREAD_GRAYSCALE) : 회색 1채널로 읽음. 파일이 없으면 빈 Mat
     //  alignment_set_reference : 빈 사진이거나 크기가 설정(3840×2160)과 다르면 false
     //  && 는 앞이 거짓이면 뒤를 실행하지 않으므로, ref_path 가 비어 있으면 사진을 읽지 않음
+    //  새 기준 사진이면 ROI 템플릿과 위상 상관으로 비교해 ROI 를 옮김 (실패 이유는 alignment_reference_info().message)
     if (!ref_path.empty() && !alignment_set_reference(ksh::read_image(ref_path, cv::IMREAD_GRAYSCALE))) {
-        std::cerr << "기준 사진을 읽지 못함 : " << ref_path << "\n";
+        std::cerr << "기준 사진 설정 실패 : " << ref_path << " — " << alignment_reference_info().message << "\n";
         return 1;
+    }
+    // 기준 사진의 ROI 재배치 결과 : 템플릿 대비 판 전체 이동과 QR 3개 이동 차이 (차이가 크면 회전·거리 변화 의심)
+    {
+        const ReferenceInfo &ri = alignment_reference_info();
+        if (ri.relocated)
+            std::cout << std::fixed << std::setprecision(2) << "Reference ROI   : shift (" << ri.shift_px.x << ", " << ri.shift_px.y
+                      << ") px, QR spread " << ri.qr_spread_px << " px" << std::defaultfloat << std::endl;
     }
 
     // 추정할 사진 읽기 (컬러로 읽어도 alignment 안에서 회색으로 바꿈. 결과 창에 색을 칠하려고 컬러로 읽음)

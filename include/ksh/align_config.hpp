@@ -7,6 +7,7 @@
 
 #include "ksh/features.hpp"
 #include "ksh/pose_model.hpp"
+#include "ksh/relocate.hpp"
 
 #include <opencv2/core.hpp>
 
@@ -17,8 +18,8 @@ namespace ksh {
 
 // 오차 임계값 구조체
 struct Tolerance {
-    double y_um = 45.0;
-    double t_deg = 0.005;
+    double y_um = 45.0;     // Y 허용 오차 [µm]
+    double t_deg = 0.005;   // Θ 허용 오차 [°]
 };
 
 // 학습 도구(align_train) 설정
@@ -46,18 +47,19 @@ struct EvaluationConfig {
 
 // 예제(main.cpp) 설정
 struct DemoConfig {
-    std::string image, reference;
-    int display_width_px = 1600;
+    std::string image, reference;     // 인자 없이 실행할 때의 사진 / 기준 사진 (비우면 reference_path)
+    int display_width_px = 1600;      // 결과 창 가로 크기
 };
 
 // 이미지 분석을 위한 구조체
 struct AlignConfig {
     std::string path;                 // 읽은 설정 파일 경로
     std::string reference_path;       // 기준(티칭) 사진
-    cv::Size image_size_px;
+    cv::Size image_size_px;           // 사진 크기 (기준 사진 크기 검사용, 3840 × 2160)
     FeatureParams features;           // ①②③
     std::string model_path;           // 비어 있으면 설정 파일 안의 model: 사용
     PoseModel model;                  // ④
+    RelocationParams relocation;      // 기준 사진 교체 시 ROI 재배치 (template_path 는 설정 파일 기준으로 해석한 경로)
     Tolerance tolerance;              // 프로젝트 기본 허용 범위
     Tolerance spec_tolerance;         // 과제 명세 허용 범위
     TrainingConfig training;
