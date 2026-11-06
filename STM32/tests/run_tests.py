@@ -45,7 +45,8 @@ for line in subprocess.check_output([nm, str(elf)], text=True).splitlines():
 blob = elf.read_bytes()
 phoff = struct.unpack_from('<I', blob, 28)[0]
 phsize, phnum = struct.unpack_from('<HH', blob, 42)
-test_names = (['TestTransport', 'TestApp', 'TestYMotor', 'TestYTest', 'TestPCJog', 'TestPhysicalHome', 'TestPhysicalApp']
+test_names = (['TestTransport', 'TestApp', 'TestYMotor', 'TestYTest', 'TestPCJog',
+               'TestPhysicalHome', 'TestHomeBoundaries', 'TestHomeStop', 'TestHomeService', 'TestPhysicalApp']
               if options.physical_home else
               ['TestTransport', 'TestYMotor', 'TestYTest', 'TestPCJog', 'TestUnconfigured']
               if options.unconfigured else
