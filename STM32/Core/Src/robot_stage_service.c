@@ -206,7 +206,8 @@ int RsService_Poll(RsService *s, RsFrame *reply)
     if (s->motor_started) s->steps = PositionSteps(s, &motor);
     if (result == RS_OK) {
         if (s->motion_request.type == RS_HOME) {
-            s->steps = s->commanded_um = 0; s->homed = 1; s->fault = 0;
+            s->steps = s->commanded_um = s->start_steps = s->target_um = 0;
+            s->homed = 1; s->fault = 0;
         } else s->commanded_um = s->target_um;
     } else {
         s->commanded_um = StepsToUm(s->steps);

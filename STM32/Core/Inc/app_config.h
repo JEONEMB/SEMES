@@ -20,10 +20,10 @@
 #define APP_Y_HOME_SEEK_PULSES 83200U /* 52mm bounded search, not 500mm */
 #define APP_Y_HOME_RELEASE_PULSES 3200U /* 2mm maximum to release a switch */
 #define APP_Y_HOME_SEEK_HZ 800U
-#define APP_Y_HOME_RELEASE_HZ 320U
-#define APP_Y_HOME_LATCH_HZ 160U
+#define APP_Y_HOME_RELEASE_HZ 160U /* 3200 pulses require about 20 seconds */
 #define APP_Y_HOME_TIMEOUT_MS 120000U
 #define APP_Y_HOME_STABLE_MS 10U
+#define APP_Y_HOME_SETTLE_TIMEOUT_MS 200U
 #if APP_Y_SWITCH_HOME && APP_Y_MANUAL_HOME
 #error "Choose physical HOME or manual-origin test, not both"
 #endif
