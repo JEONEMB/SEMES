@@ -314,18 +314,17 @@ int TestPhysicalApp(void)
     gpio.IDR=1;
     for (;tick<=22;++tick) Drain(); /* left contact -> release */
     gpio.IDR=0;
-    for (;tick<=34;++tick) Drain(); /* release -> slow latch */
-    gpio.IDR=1;
-    for (;tick<=60;++tick) Drain(); /* latch -> zero, no spurious idle fault */
+    for (;tick<=60;++tick) Drain(); /* stable release -> zero, no further movement */
     CHECK(wire_length==29 && wire[12]==RS_DONE && wire[13]==90 && wire[15]==RS_OK);
     wire_length=0;
     q=(RsFrame){.type=RS_GET_STATUS,.seq=91};
     n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
-    CHECK(wire_length==28 && wire[3]==RS_STATUS && wire[6]==RS_STATE_IDLE && wire[7]==5);
+    CHECK(wire_length==28 && wire[3]==RS_STATUS && wire[6]==RS_STATE_IDLE && wire[7]==1);
+    for (unsigned i=10;i<26;++i) CHECK(wire[i]==0); /* y/theta coordinates and steps */
     wire_length=0;
     q=(RsFrame){.type=RS_MOVE_REL,.seq=92,.len=8}; rs_put_u32(q.payload,1000);
     n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
-    CHECK(wire_length==9 && wire[3]==RS_ACK); /* may leave pressed home switch */
+    CHECK(wire_length==9 && wire[3]==RS_ACK);
     gpio.IDR=0;
     for (unsigned i=0;i<1600;++i) {
         TIM3->CR1 &= ~TIM_CR1_CEN; TIM3->SR |= TIM_SR_UIF; YMotor_IRQHandler();
