@@ -1,0 +1,13 @@
+feature_sha256 eb50259232386b63b5c1f77c4f1610dad0f783a2a8c86ff7e5e12f0310bc9a9d
+images 571
+source_dates_mixed true
+fold_seeds 20261105 20261106 20261107
+folds 5
+subset_repeats 2
+train_budgets 10 20 40 80 160 320 all
+fits 1560
+test_evaluations 178152
+train_test_intersection 0
+train_only_standardization true
+train_only_world_model true
+real_robot_trials 0

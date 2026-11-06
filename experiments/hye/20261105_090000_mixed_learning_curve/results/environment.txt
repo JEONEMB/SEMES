@@ -1,0 +1,5 @@
+OpenCV 3.4.15
+C++17
+OpenCV threads 1; sequential image worker 1
+initialization_ms 474.989
+MSVC 1916

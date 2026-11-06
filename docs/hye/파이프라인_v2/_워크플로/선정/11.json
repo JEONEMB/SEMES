@@ -1,0 +1,159 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/11_검증/논문/01_JCGM2012_BIPM_적합성판정_불확도",
+   "title": "Evaluation of measurement data, The role of measurement uncertainty in conformity assessment (JCGM 106:2012)",
+   "citation": "JCGM 106:2012. BIPM. doi:10.59161/JCGM106-2012",
+   "url": "https://doi.org/10.59161/JCGM106-2012",
+   "pdf_url": "https://www.bipm.org/documents/20126/2071204/JCGM_106_2012_E.pdf",
+   "questions": [
+    5,
+    1
+   ],
+   "why": "GUM은 불확도 계산까지만 다룬다. 이 문서는 허용 구간 판정에 불확도를 넣는 규칙(수용 구간, 보호대, 오판 위험)을 준다. |e|<=0.045 판정과 기준기 0.015 요구를 같은 틀로 설명한다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/11_검증/논문/02_Cepova2018_MSR_GaugeRR_방법비교",
+   "title": "Measurement System Analyses - Gauge Repeatability and Reproducibility Methods",
+   "citation": "Cepova L, Kovacikova A, Cep R, Klaput P, Mizera O (2018). Measurement Science Review 18(1):20-27. doi:10.1515/msr-2018-0004",
+   "url": "https://doi.org/10.1515/msr-2018-0004",
+   "pdf_url": "https://sciendo.com/pdf/10.1515/msr-2018-0004",
+   "questions": [
+    2,
+    3,
+    7
+   ],
+   "why": "Gage R&R 계산법(평균과 범위법, ANOVA법 등)을 같은 자료로 비교한다. 반복성과 재현성(날짜, 세션)을 나누는 계산을 고르는 근거. CC BY-NC-ND 공개."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/11_검증/논문/03_Steyerberg2016_JCE_내부외부검증",
+   "title": "Prediction models need appropriate internal, internal-external, and external validation",
+   "citation": "Steyerberg EW, Harrell FE (2016). J Clin Epidemiol 69:245-247. doi:10.1016/j.jclinepi.2015.04.005",
+   "url": "https://doi.org/10.1016/j.jclinepi.2015.04.005",
+   "pdf_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5578404/",
+   "questions": [
+    3,
+    4,
+    6
+   ],
+   "why": "장소 하나씩 빼는 내부-외부 검증을 제안한다. 날짜 하나씩 빼기, 로봇 하나씩 빼기와 같은 구조. 무작위 분할과 외부 검증을 구분하는 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/11_검증/논문/04_Kapoor2023_Patterns_자료누출_재현성",
+   "title": "Leakage and the reproducibility crisis in machine-learning-based science",
+   "citation": "Kapoor S, Narayanan A (2023). Patterns 4(9):100804. doi:10.1016/j.patter.2023.100804",
+   "url": "https://doi.org/10.1016/j.patter.2023.100804",
+   "pdf_url": "https://arxiv.org/pdf/2207.07048",
+   "questions": [
+    6
+   ],
+   "why": "자료 누출 유형 분류와 점검표를 준다. 같은 명령 반복 사진의 분할, 시험 center 사용, 파일명 정보 같은 누출 위험을 항목별로 감사하는 틀."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/11_검증/논문/05_Dwork2015_NIPS_재사용홀드아웃",
+   "title": "Generalization in Adaptive Data Analysis and Holdout Reuse",
+   "citation": "Dwork C, Feldman V, Hardt M, Pitassi T, Reingold O, Roth A (2015). Advances in Neural Information Processing Systems 28 (NIPS 2015). arXiv:1506.02629",
+   "url": "https://arxiv.org/abs/1506.02629",
+   "pdf_url": "https://arxiv.org/pdf/1506.02629",
+   "questions": [
+    6,
+    7
+   ],
+   "why": "같은 시험 자료를 보고 반복해 고치면 성적이 부풀려지는 것을 정량화하고 재사용 홀드아웃(Thresholdout)을 제안한다. 341/575장 노출 문제와 새 자료를 한 번만 쓰는 규칙의 근거."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/11_검증/특허/01_US11468590_CyberOptics_웨이퍼형티칭센서",
+   "title": "Wireless substrate-like teaching sensor for semiconductor processing",
+   "citation": "US11468590B2, CyberOptics Corporation. 출원 2019-04-19 (16/389,354), 등록 2022-10-11. 공개 US20190325601A1",
+   "url": "https://ppubs.uspto.gov/pubwebapp/ (US 11468590 B2)",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11468590",
+   "questions": [
+    1
+   ],
+   "why": "웨이퍼 모양 센서의 가장자리 카메라로 정렬 표식 위치를 재서 로봇에 돌려준다. 로봇 명령값과 별개인 독립 기준 측정 장치의 실제 사례."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/11_검증/특허/02_US11346751_SAS_MSA설계진단",
+   "title": "Interactive diagnostics for evaluating designs for measurement systems analysis",
+   "citation": "US11346751B1, SAS Institute Inc. 출원 2021-07-29 (17/388,519), 등록 2022-05-31",
+   "url": "https://ppubs.uspto.gov/pubwebapp/ (US 11346751 B1)",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11346751",
+   "questions": [
+    7,
+    2,
+    3
+   ],
+   "why": "MSA 전에 변동원을 분리하도록 시험 설계를 만들고 판정 가능성을 미리 진단한다. 반복, 날짜, 로봇별 촬영 수를 시험 전에 정하는 근거."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/11_검증/특허/03_US20130103174_Cummins_MSA판정규칙",
+   "title": "Measurement systems analysis system and method",
+   "citation": "US20130103174A1, Cummins Intellectual Property, Inc. 출원 2012-04-16 (13/448,315), 공개 2013-04-25. 등록 여부 확인 필요",
+   "url": "https://ppubs.uspto.gov/pubwebapp/ (US 20130103174 A1)",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/20130103174",
+   "questions": [
+    5,
+    2
+   ],
+   "why": "측정 변동을 정량해 판정 규칙 값을 계산하고 기준값과 비교해 측정 시스템의 능력을 판정한다. 우리 추정기를 측정기로 보고 능력 판정 규칙을 세우는 근거."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/01_JCGM2008_GUM_측정불확도표현지침/요약.md",
+   "why": "질문 5: A형, B형 불확도와 합성식. 기준기 불확도를 오차 예산에 넣는 틀"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/06_Kuric2018_MATEC_ISO9283_반복정밀도측정/요약.md",
+   "why": "질문 1, 2, 7: 외부 기준기로 ISO 9283 반복정밀도 측정, 정방향과 역방향 30회, 측정기는 한 자릿수 더 정밀"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/03_LeReun2022_Robotica_열드리프트_백래시_위치성능/요약.md",
+   "why": "질문 1, 2: 레이저 트래커로 실제 위치를 재야 백래시와 열 드리프트가 드러남"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/15_NIST_eHandbook_GaugeRR_측정시스템/요약.md",
+   "why": "질문 2, 3, 7: 반복, 일간, 런간 3단계 중첩 설계와 합성식"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/05_Varma2006_BMCBioinf_교차검증_모델선택_편향/요약.md",
+   "why": "질문 6: 선택에 쓴 CV 오차의 낙관 편향과 중첩 CV"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/08_Cawley2010_JMLR_모델선택_과적합_선택편향/요약.md",
+   "why": "질문 6: 모델 선택 과적합, 1장 차이 비교의 위험"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/13_Kyrki2004_ICRA_시각서보_측정오차전파/요약.md",
+   "why": "질문 2, 5: 측정 잡음이 최종 정지 위치 산포로 전파되는 해석"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/02_Wang2023_JMNM_비전웨이퍼본딩정렬_오차예산/요약.md",
+   "why": "질문 5: 비전 정렬 시스템의 오차 예산 절차"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/12_Sciacchitano2019_MST_PIV_불확도정량화/요약.md",
+   "why": "질문 5: 측정마다 사후 불확도를 붙이는 방법. 편향은 사후 지표로 안 잡혀 별도 시험이 필요"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/01_US11984340_TEL_검사웨이퍼_반복티칭_분산갱신/요약.md",
+   "why": "질문 1, 2: 카메라 달린 검사 웨이퍼로 놓인 결과를 따로 재고 반복 분산으로 확정"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/07_US12202151_CXMT_지그웨이퍼_로봇보정/요약.md",
+   "why": "질문 1: 센서 지그 웨이퍼로 로봇 위치를 외부에서 재고 보정 필요 여부 판정"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/특허/06_US7248931_ASM_고정기준점_드리프트측정/요약.md",
+   "why": "질문 3: 같은 영상의 고정 기준 대비 상대 측정으로 날짜 간 카메라 이동 상쇄"
+  }
+ ]
+}

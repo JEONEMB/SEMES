@@ -1,0 +1,145 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/c_선에지/논문/01_Hagara2011_Radioeng_erf적합_1D에지부화소",
+   "title": "Edge Detection with Sub-pixel Accuracy Based on Approximation of Edge with Erf Function",
+   "citation": "Hagara, M., Kulla, P. (2011). Radioengineering 20(2), 516-524.",
+   "url": "http://hdl.handle.net/11012/56869",
+   "pdf_url": "https://www.radioeng.cz/fulltexts/2011/11_02_516_524.pdf",
+   "questions": [
+    3,
+    4
+   ],
+   "why": "1차원 에지를 erf로 적합해 부화소 위치를 구하고 모멘트 기반 검출기 2종과 비교한다. 가로선 세로 프로파일(1차원 에지)에 직접 해당. PDF 첫 장에서 제목과 저자 확인."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/c_선에지/논문/02_GromponeVonGioi2017_IPOL_CannyDevernay_부화소에지",
+   "title": "A Sub-Pixel Edge Detector: an Implementation of the Canny/Devernay Algorithm",
+   "citation": "Grompone von Gioi, R., Randall, G. (2017). Image Processing On Line 7, 347-372. doi:10.5201/ipol.2017.216",
+   "url": "https://doi.org/10.5201/ipol.2017.216",
+   "pdf_url": "https://www.ipol.im/pub/art/2017/216/article.pdf",
+   "questions": [
+    3,
+    5,
+    8
+   ],
+   "why": "기울기 봉우리 2차 보간 부화소 에지의 공개 구현과 분석. 방법 비교의 기준선."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/c_선에지/논문/03_Yang2025_arXiv_면적적분_안정에지영역",
+   "title": "Subpixel Edge Localization Based on Converted Intensity Summation under Stable Edge Region",
+   "citation": "Yang, Y., Liang, G., Wang, X., Wang, K., Wang, C., Wu, X. (2025). arXiv:2502.16502",
+   "url": "http://arxiv.org/abs/2502.16502",
+   "pdf_url": "https://arxiv.org/pdf/2502.16502",
+   "questions": [
+    3,
+    4,
+    6
+   ],
+   "why": "화소 밝기를 국소 적분으로 보는 면적 효과 계열 부화소 에지와 안정 에지 영역으로 국소 간섭을 줄이는 방법. Trujillo-Pino 2013(원문 403)의 공개 대안."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/c_선에지/논문/04_GromponeVonGioi2012_IPOL_LSD_선분검출",
+   "title": "LSD: a Line Segment Detector",
+   "citation": "Grompone von Gioi, R., Jakubowicz, J., Morel, J.-M., Randall, G. (2012). Image Processing On Line 2, 35-55. doi:10.5201/ipol.2012.gjmr-lsd",
+   "url": "https://doi.org/10.5201/ipol.2012.gjmr-lsd",
+   "pdf_url": "https://www.ipol.im/pub/art/2012/gjmr-lsd/article.pdf",
+   "questions": [
+    6,
+    8
+   ],
+   "why": "매개변수 조정 없이 거짓 검출을 통제하는 선분 검출. 선 영역 위치, 각도 자동 추출과 Hough와의 차이 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/c_선에지/논문/05_Vakhitov2021_arXiv_점선불확도_자세추정",
+   "title": "Uncertainty-Aware Camera Pose Estimation from Points and Lines",
+   "citation": "Vakhitov, A., Ferraz Colomina, L., Agudo, A., Moreno-Noguer, F. (2021). arXiv:2107.03890",
+   "url": "http://arxiv.org/abs/2107.03890",
+   "pdf_url": "https://arxiv.org/pdf/2107.03890",
+   "questions": [
+    2,
+    7
+   ],
+   "why": "점과 선을 함께 쓰는 자세 추정에 특징별 불확도를 넣는다. QR 점과 가로선을 GLS로 섞는 현재 방식의 가중 근거."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/c_선에지/특허/01_US6408109B1_Cognex_부화소에지검출",
+   "title": "Apparatus and method for detecting and sub-pixel location of edges in a digital image",
+   "citation": "US6408109B1, Cognex Corporation, Silver, Garakani, Wallack, 출원 1996-10-07, 등록 2002-06-18",
+   "url": "https://patents.google.com/patent/US6408109B1/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/6408109",
+   "questions": [
+    3,
+    5,
+    8
+   ],
+   "why": "산업 비전의 부화소 에지 검출 대표 공보. USPTO 공보 PDF 첫 장 OCR로 서지 확인(Google Patents는 503 차단)."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/c_선에지/특허/02_US7567713B2_Mitutoyo_주사선보간_에지위치",
+   "title": "Method utilizing intensity interpolation for measuring edge locations in a high precision machine vision inspection system",
+   "citation": "US7567713B2, Mitutoyo Corporation, Yuhua Ding, 출원 2006-02-08, 등록 2009-07-28",
+   "url": "https://patents.google.com/patent/US7567713B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7567713",
+   "questions": [
+    5,
+    3
+   ],
+   "why": "주사선을 따라 밝기를 보간해 에지를 재면 주사 방향에 따른 부화소 편향이 준다. 기울어진 가로선을 세로로 훑는 블록 프로파일에 직접 해당. 공보 PDF 첫 장 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/c_선에지/특허/03_US10152780B2_Cognex_직선찾기_캘리퍼",
+   "title": "System and method for finding lines in an image with a vision system",
+   "citation": "US10152780B2, Cognex Corporation, Hsu, Jacobson, Li, 출원 2016-10-31, 등록 2018-12-11",
+   "url": "https://patents.google.com/patent/US10152780B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10152780",
+   "questions": [
+    6,
+    8
+   ],
+   "why": "기울기 투영으로 에지 점을 모아 직선을 적합하고 틀린 점을 버리는 상용 line finder. 48블록 측정을 직선으로 묶는 근거. 공보 PDF 첫 장 확인."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/05_US7265841_Canon_신호파형_중심오차보정/요약.md",
+   "why": "마크 신호 파형의 비대칭, 콘트라스트 지표로 중심 위치 계통 오차를 M = M1 − a E로 보정. 질문 4(에지 비대칭, 흐림 편향 보정)."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/03_US7352891_Canon_마크요소_정밀도선별/요약.md",
+   "why": "마크 요소 간격을 설계 간격과 비교해 틀린 요소를 버린다. 질문 6(48블록 중 틀린 블록 거르기)."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/01_Shimizu2005_IJCV_부화소추정오차상쇄/요약.md",
+   "why": "유사도 3점 포물선 보간의 pixel-locking과 상쇄법. 질문 3(프로파일 상호상관 봉우리 보간 편향)."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/02_Michaelis2016_MST_PIV_피크로킹저감/요약.md",
+   "why": "상관 봉우리 peak-locking 저감과 약한 흐림 효과. 질문 3, 4."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/11_Schreier2000_OptEng_보간_계통오차/요약.md",
+   "why": "보간 위상 오차에 의한 1 px 주기 사인형 편향. 질문 5(프로파일 재표본화 보간)."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/10_Pan2013_OLE_가우스전처리_편향저감/요약.md",
+   "why": "가우스 전처리로 보간 편향 저감. 질문 4, 5."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/04_Mallon2007_PRL_보정패턴_편향비교/요약.md",
+   "why": "에지 교차법은 원근에 불변, 왜곡에 영향. 에지법 검출 오차 수치. 질문 1, 4."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/15_Matrox_MIL_GeometricModelFinder_문서/요약.md",
+   "why": "에지 기반 기하 정합의 속도, 강건성, 부화소 정확도 교환. 질문 1, 8."
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/a_회귀ML/논문/01_Chen2010_IEEETSP_축소공분산_RBLW_OAS",
+   "title": "Shrinkage Algorithms for MMSE Covariance Estimation",
+   "citation": "Y. Chen, A. Wiesel, Y. C. Eldar, A. O. Hero, IEEE Transactions on Signal Processing, 2010, doi:10.1109/TSP.2010.2053029 (arXiv:0907.4698)",
+   "url": "https://arxiv.org/abs/0907.4698",
+   "pdf_url": "https://arxiv.org/pdf/0907.4698",
+   "questions": [
+    2
+   ],
+   "why": "표본이 적고 차원이 큰 경우의 공분산 축소(Ledoit-Wolf 개선판 RBLW, 반복법 OAS). 204차원 GLS 잡음 공분산 추정을 바로 바꿔 비교할 수 있다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/a_회귀ML/논문/02_Kramer2011_JASA_PLS_자유도",
+   "title": "The Degrees of Freedom of Partial Least Squares Regression",
+   "citation": "N. Krämer, M. Sugiyama, Journal of the American Statistical Association 106:697-705, 2011, doi:10.1198/jasa.2011.tm10107 (arXiv:1002.4112)",
+   "url": "https://arxiv.org/abs/1002.4112",
+   "pdf_url": "https://arxiv.org/pdf/1002.4112",
+   "questions": [
+    1,
+    7
+   ],
+   "why": "PLS 성분 수를 자유도로 정하는 방법. 유효 독립 정보 약 19와 모형 복잡도를 맞대고, Ridge와 PLS를 같은 축소 관점에서 비교하는 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/a_회귀ML/논문/03_Wang2004_AnnStat_Berkson오차_비선형회귀",
+   "title": "Estimation of nonlinear models with Berkson measurement errors",
+   "citation": "L. Wang, Annals of Statistics 32(6):2559-2579, 2004, doi:10.1214/009053604000000670 (arXiv:math/0508600)",
+   "url": "https://arxiv.org/abs/math/0508600",
+   "pdf_url": "https://arxiv.org/pdf/math/0508600",
+   "questions": [
+    3
+   ],
+   "why": "명령값 라벨은 정한 값 주위로 실제 위치가 흩어지는 Berkson형 오차다. 선형이면 계수 편향이 없고 비선형(6절편 곡선 역산)이면 편향이 생긴다는 구분과 보정 추정기의 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/a_회귀ML/논문/04_Bates2015_JSS_선형혼합효과_lme4",
+   "title": "Fitting Linear Mixed-Effects Models Using lme4",
+   "citation": "D. Bates, M. Mächler, B. Bolker, S. Walker, Journal of Statistical Software 67(1), 2015, doi:10.18637/jss.v067.i01 (arXiv:1406.5823)",
+   "url": "https://arxiv.org/abs/1406.5823",
+   "pdf_url": "https://arxiv.org/pdf/1406.5823",
+   "questions": [
+    4
+   ],
+   "why": "날짜, 세션별 영점(+0.44px 세로, 하루 안 0.84px 가로)을 무작위 절편으로 두고 REML로 추정하는 표준 방법. 현재 6절편 후보(고정 효과) 방식과 비교할 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/a_회귀ML/논문/05_Grinsztajn2022_NeurIPS_트리대딥러닝_표형자료",
+   "title": "Why do tree-based models still outperform deep learning on typical tabular data?",
+   "citation": "L. Grinsztajn, E. Oyallon, G. Varoquaux, NeurIPS 2022 Datasets and Benchmarks Track, doi:10.52202/068431-0037 (arXiv:2207.08815)",
+   "url": "https://arxiv.org/abs/2207.08815",
+   "pdf_url": "https://arxiv.org/pdf/2207.08815",
+   "questions": [
+    5,
+    6
+   ],
+   "why": "45개 표형 자료에서 트리, 부스팅, 신경망을 정확도와 시간으로 비교한 벤치마크와 신경망 약점(쓸모없는 특징, 회전 불변성) 분석. 기존 트리, 신경망 188/341 결과 해석과 ML 후보 선정에 쓴다."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/a_회귀ML/특허/01_US12631977B2_ASML_사선투영GLS_정렬모델",
+   "title": "Method for determining an alignment model based on an oblique fitting technique",
+   "citation": "US 12,631,977 B2, ASML Netherlands B.V. (발명자 M. E. Hulsebos), 등록 2026-05-19, 우선일 2019-05-03 (EP 19172514), PCT WO2020/224879, 선공개 US 2022/0276575 A1",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/12631977",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/12631977",
+   "questions": [
+    1,
+    2
+   ],
+   "why": "정렬 모델 적합에서 성분 간 crosstalk를 사선 내적 행렬 W의 일반화 최소제곱이나 사선 투영 P로 줄인다. Y와 T가 섞이는 공선성 문제, 영점 성분 분리와 같은 구조. USPTO 공보 표지 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/a_회귀ML/특허/02_US10161965B2_TSMC_이력오프셋_PLS회귀_정렬",
+   "title": "Method of test probe alignment control",
+   "citation": "US 10,161,965 B2, Taiwan Semiconductor Manufacturing Co., Ltd. (Chen 외), 등록 2018-12-25, 출원 2015-03-16 (US 13/495,421의 분할, US 9,000,798)",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10161965",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10161965",
+   "questions": [
+    1,
+    4
+   ],
+   "why": "이력 오프셋 보정값을 회귀해 정렬값을 정하고 결과로 이력을 갱신한다. 청구항 12, 19에 다중 회귀, MANOVA, PLS 회귀 명시. 기간별 영점 갱신과 PLS 사용의 산업 사례. 표지와 청구항 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/a_회귀ML/특허/03_US11626304B2_TSMC_신경망회귀_오버레이",
+   "title": "Machine learning on overlay management",
+   "citation": "US 11,626,304 B2, Taiwan Semiconductor Manufacturing Co., Ltd. (Lin 외), 등록 2023-04-11, 출원 2021-02-18 (US 16/405,702 계속, 가출원 62/692,208 2018-06-29)",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11626304",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11626304",
+   "questions": [
+    5,
+    7
+   ],
+   "why": "장비 위치, 웨이퍼 위치, 오버레이 측정으로 신경망 회귀 함수를 학습하고 실측과 비교해 검증하는 흐름. 위치 오차 회귀에 ML을 쓰는 산업 사례와 검증 절차 비교 대상. 표지 확인."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/12_Hoerl1970_Technometrics_능형회귀/요약.md",
+   "why": "질문 1: 공선성(Y, T 반응 cos 0.99999) 아래 계수 축소(Ridge)의 원전, ridge trace로 정규화 세기 선택."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/13_Xu2021_ICLR_신경망외삽/요약.md",
+   "why": "질문 5, 6: ReLU 신경망은 학습 범위 밖에서 선형으로 수렴해 외삽 실패. 사분면 외삽 문제와 구조 주입의 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/05_Varma2006_BMCBioinf_교차검증_모델선택_편향/요약.md",
+   "why": "질문 7: 모델 선택에 쓴 CV 성적의 낙관 편향과 중첩 CV. 회귀, ML 후보 비교의 분할 설계."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/08_Cawley2010_JMLR_모델선택_과적합_선택편향/요약.md",
+   "why": "질문 7: 선택 기준의 분산으로 생기는 모델 선택 과적합. 1장 차이 비교에 신뢰구간이 필요한 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/13_Kyrki2004_ICRA_시각서보_측정오차전파/요약.md",
+   "why": "질문 1, 3: 점 잡음이 추정값으로 전파되는 1차 해석. 선형 추정기 Cov = Wt Σ W 계산 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/01_JCGM2008_GUM_측정불확도표현지침/요약.md",
+   "why": "질문 3: 히스테리시스 방향을 알면 보정(F.2.2.2), 명령값 라벨 오차 예산 형식."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/03_LeReun2022_Robotica_열드리프트_백래시_위치성능/요약.md",
+   "why": "질문 3, 4: 명령값과 실제 위치가 열 드리프트, 백래시로 달라지는 사례. 라벨 오차 크기와 접근 방향 의존성(절편 변화)의 근거."
+  }
+ ]
+}

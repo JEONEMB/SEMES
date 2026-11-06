@@ -1,0 +1,16 @@
+﻿{
+    "total_bmp":  2859,
+    "timestamp":  "2026-11-04T12:23:43.2615788+09:00",
+    "destination_hashes_verified":  true,
+    "test_appearances_per_image":  1,
+    "source_hashes_verified":  true,
+    "source_images":  575,
+    "center_images":  4,
+    "duplicate_source_hashes":  0,
+    "status":  "complete",
+    "noncenter_images":  571,
+    "train_appearances_per_image":  4,
+    "group_count":  377,
+    "seed":  20261104,
+    "copied_fold_images":  2855
+}

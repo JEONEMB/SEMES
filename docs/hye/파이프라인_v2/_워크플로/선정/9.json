@@ -1,0 +1,144 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/9_정지/논문/01_Yoshimoto2017_PTEP_정지후잔진동_연속프레임평가",
+   "title": "Hyper-track selector nuclear emulsion readout system aimed at scanning an area of one thousand square meters",
+   "citation": "Yoshimoto M., Nakano T., Komatani R., Kawahara H. (2017). Progress of Theoretical and Experimental Physics, doi:10.1093/ptep/ptx131. arXiv:1704.06814",
+   "url": "https://arxiv.org/abs/1704.06814",
+   "pdf_url": "https://arxiv.org/pdf/1704.06814",
+   "questions": [
+    1,
+    3,
+    4,
+    6
+   ],
+   "why": "5절에서 스테이지가 엔코더 목표에 닿은 순간부터 30장(0.1 s)을 연속 촬영하고 프레임 사이 위치 차이로 정지 후 잔진동을 쟀다. 가속도 5 m/s2를 넘으면 0.12 s 안에 가라앉지 않아 가속도를 골랐다. 우리 B1(대기 시간별 반복 촬영) 실험 설계와 같다. 원문 PDF로 확인했다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/9_정지/논문/02_Njaastad2021_MIC_로봇카메라_잔진동_입력성형",
+   "title": "Residual vibration control for robotic 3D scanning with application to inspection of marine propellers",
+   "citation": "Njaastad E.B., Tysse G.O., Egeland O. (2021). Modeling, Identification and Control 42(2), 83-98. doi:10.4173/mic.2021.2.3",
+   "url": "https://www.mic-journal.no/ABS/MIC-2021-2-3",
+   "pdf_url": "https://www.mic-journal.no/PDF/2021/MIC-2021-2-3.pdf",
+   "questions": [
+    1,
+    4
+   ],
+   "why": "UR10 로봇에 막대로 단 카메라가 이동 뒤 흔들려 촬영 전 정착이 필요하다. ZV, ZVD, EI 입력 성형으로 잔진동을 줄였다. 고정 대기 대신 이동 궤적으로 정착 시간을 줄이는 방법. 오픈액세스이며 Crossref와 학회지 초록 페이지에서 서지를 확인했다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/9_정지/논문/03_Huang2022_JAMDSM_마커영상_진동측정",
+   "title": "Vision-based vibration measurement of machine tool",
+   "citation": "Huang, Kono, Toyoura (2022). Journal of Advanced Mechanical Design, Systems, and Manufacturing 16(1), JAMDSM0014. doi:10.1299/jamdsm.2022jamdsm0014",
+   "url": "https://www.jstage.jst.go.jp/article/jamdsm/16/1/16_2022jamdsm0014/_article",
+   "pdf_url": "https://www.jstage.jst.go.jp/article/jamdsm/16/1/16_2022jamdsm0014/_pdf",
+   "questions": [
+    3,
+    5
+   ],
+   "why": "마커와 고속 카메라로 공작기계 진동과 동적 운동 오차를 잰다. 에지, 임계 검출 방식과 조명이 분해능에 주는 영향을 본다. 카메라 영상만으로 정착 여부와 크기를 재는 측정 방법의 근거. Crossref로 서지 확인, J-STAGE 오픈액세스(DOAJ 등재). pdf_url은 J-STAGE 규칙으로 만든 주소라 받을 때 확인 필요."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/9_정지/논문/04_Czerwinski2009_OptExpress_앨런분산_측정시간_드리프트",
+   "title": "Quantifying Noise in Optical Tweezers by Allan Variance",
+   "citation": "Czerwinski F., Richardson A.C., Oddershede L.B. (2009). Optics Express 17, 13255. doi:10.1364/oe.17.013255",
+   "url": "https://doi.org/10.1364/oe.17.013255",
+   "pdf_url": "https://opg.optica.org/oe/fulltext.cfm?uri=oe-17-15-13255",
+   "questions": [
+    2,
+    5
+   ],
+   "why": "위치 측정 신호의 앨런 분산으로 최적 평균 시간을 고르고, 긴 시간에서 드리프트가 오차를 다시 키우는 지점을 찾는다. 정지 후 대기 시간과 여러 장 평균을 나누는 기준, 정지 중 드리프트를 재는 방법. Crossref로 서지 확인, Optics Express 오픈액세스. pdf_url은 확인 필요."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/9_정지/특허/01_US8352076_Canon_속도위치임계_셔터허가",
+   "title": "Robot with camera",
+   "citation": "US 8,352,076 B2, Canon Kabushiki Kaisha (발명자 Yuichi Someya), 출원 2010-05-25, 등록 2013-01-08, 우선권 JP 2009-133764",
+   "url": "https://patents.google.com/patent/US8352076B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/8352076",
+   "questions": [
+    1,
+    6
+   ],
+   "why": "카메라 속도가 임계 이하이고 예상 정지 위치와의 차이가 임계 이하일 때만 촬영을 허가한다. 진동이 충분히 가라앉을 때까지 고정 대기하는 종래 방식의 시간 낭비를 문제로 든다. USPTO 공보 첫 면에서 서지와 초록을 확인했다."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/9_정지/특허/02_US11534908_Fanuc_연속영상_진동량판정",
+   "title": "Operation adjustment apparatus for adjusting operation of robot apparatus and operation adjustment method for adjusting operation of robot apparatus",
+   "citation": "US 11,534,908 B2, FANUC Corporation (발명자 Kenshirou Oono, Makoto Yamada), 출원 2020-03-19, 등록 2022-12-27, 우선권 JP 2019-057062",
+   "url": "https://patents.google.com/patent/US11534908B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11534908",
+   "questions": [
+    3,
+    4
+   ],
+   "why": "제어 주기에 맞춰 연속 촬영하고, 목표 도달 뒤 연속 두 장의 손 위치 차이를 진동량으로 계산해 허용 범위를 넘으면 동작 프로그램을 고친다. 사진만으로 정착을 판정하는 방법. USPTO 공보 첫 면에서 서지와 초록을 확인했다(진동량 계산 내용은 웹 검색 발췌*, 본문 확인 필요)."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/9_정지/특허/03_US9718187_Canon_진동수렴시간_정지시간설정",
+   "title": "Robot controlling method, robot apparatus, program, recording medium, and method for manufacturing assembly component",
+   "citation": "US 9,718,187 B2, Canon Kabushiki Kaisha (발명자 Takahiro Ishikawa, Tsutomu Osaka, Shunsuke Kawamura), 출원 2015-06-08, 등록 2017-08-01, 우선권 JP 2014-120156",
+   "url": "https://patents.google.com/patent/US9718187B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/9718187",
+   "questions": [
+    1,
+    4,
+    6
+   ],
+   "why": "입력측 엔코더가 목표 각도에 닿은 때부터 출력측 엔코더로 계산한 끝단 진동폭이 수렴 범위에 들 때까지의 시간을 재어 로봇 정지 시간으로 설정한다. 정착 시간을 한 번 재서 고정하는 방법이며, 모터측 인포지션과 실제 끝단 정지가 다르다는 근거. 같은 계열 US10486309는 대표 1건만 골랐다. USPTO 공보 첫 면 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/9_정지/특허/04_US7791043_Hitachi_정지후드리프트_고정기구",
+   "title": "Stage mechanism, electron microscope having the stage mechanism and method of controlling positioning of stage mechanism",
+   "citation": "US 7,791,043 B2, Hitachi High-Technologies Corporation (발명자 Eiichi Seya, Takashi Nagamatsu), 출원 2008-02-27, 등록 2010-09-07, 우선권 JP 2007-053271",
+   "url": "https://patents.google.com/patent/US7791043B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7791043",
+   "questions": [
+    2
+   ],
+   "why": "위치 결정 뒤 압전 고정 기구로 스테이지를 눌러 정지 강성을 높여 진동과 드리프트를 줄인다. 멈춘 뒤에도 정지 위치가 시간에 따라 흐르는 정지 후 드리프트를 문제로 정의한다(초당 드리프트 수치는 웹 검색 발췌*, 본문 확인 필요). USPTO 공보 첫 면 확인."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/03_US9424646_Omron_2단계_비전위치결정/요약.md",
+   "why": "촬영, 이동, 정지, 재촬영 반복에서 매번 가감속, 정지, 정정 시간이 들어 느리다는 문제 설정. 질문 1(대기 시간 비용)."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/03_LeReun2022_Robotica_열드리프트_백래시_위치성능/요약.md",
+   "why": "산업용 로봇의 열 드리프트가 반복정밀도를 떨어뜨리며 시간에 따라 재야 한다는 근거. 질문 2(정지 중 드리프트)."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/특허/06_US7248931_ASM_고정기준점_드리프트측정/요약.md",
+   "why": "같은 영상 안 고정 기준과의 상대 거리로 드리프트를 재면 카메라, 로봇 기준 변동이 빠진다. 질문 2, 6(카메라 기준 정지 판정)."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/07_Ji2025_KSME_웨이퍼이송로봇_위치모니터링_자동티칭/요약.md",
+   "why": "웨이퍼 이송 로봇의 진동 변위를 비전 카메라로 실시간 계측. 질문 1, 3(카메라로 잔진동 측정)."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/15_NIST_eHandbook_GaugeRR_측정시스템/요약.md",
+   "why": "반복성, 재현성, 안정성, 드리프트를 나눠 특성화하는 절차. 질문 2, 5(대기 후 흔들림과 드리프트 평가 설계)."
+  },
+  {
+   "path": "docs/hye/파이프라인_v2/단계/1_촬영/논문/03_Yoon2023_Electronics_웨이퍼로봇_비대칭속도_정착시간",
+   "why": "1단계에서 이미 고른 웨이퍼 로봇 정착 시간 문헌. 중복 선정하지 않고 질문 1, 4에 링크로 재사용."
+  },
+  {
+   "path": "docs/hye/파이프라인_v2/단계/1_촬영/논문/04_Lavatelli2017_TIM_모션블러_DIC불확도",
+   "why": "1단계에서 고른 모션 블러와 영상 측정 불확도 문헌. 잔진동이 남은 채 찍을 때의 오차 근거로 질문 1, 3에 재사용."
+  },
+  {
+   "path": "docs/hye/파이프라인_v2/단계/1_촬영/특허/02_US9327488_SCREEN_정렬이송_촬영시점",
+   "why": "1단계에서 고른 기판 정렬 이송의 촬영 시점 특허(내용 확인 필요). 질문 1, 6에 링크로 재사용."
+  }
+ ]
+}

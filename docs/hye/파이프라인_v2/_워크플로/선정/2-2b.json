@@ -1,0 +1,161 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/b_영역/논문/01_Evangelidis2008_TPAMI_ECC_밝기불변정렬",
+   "title": "Parametric Image Alignment Using Enhanced Correlation Coefficient Maximization",
+   "citation": "G. D. Evangelidis, E. Z. Psarakis, IEEE TPAMI 30(10):1858-1865, 2008. doi:10.1109/TPAMI.2008.113",
+   "url": "https://doi.org/10.1109/TPAMI.2008.113",
+   "pdf_url": "https://inria.hal.science/hal-00864385/document",
+   "questions": [
+    1,
+    5,
+    7
+   ],
+   "why": "joint가 쓰는 ECC(OpenCV findTransformECC)의 원 논문. 밝기 이득과 오프셋에 불변인 기준, 정방향 가산과 역합성 해법, LK와 SIC 대비 잡음과 밝기 왜곡에서의 정확도와 수렴 비교. HAL 공식 API로 본문 파일 확인(HAL 웹페이지는 봇 확인이 떠서 API 주소 사용)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/b_영역/논문/02_Baker2004_IJCV_LK20년_역합성통합",
+   "title": "Lucas-Kanade 20 Years On: A Unifying Framework",
+   "citation": "S. Baker, I. Matthews, International Journal of Computer Vision 56(3):221-255, 2004. doi:10.1023/B:VISI.0000011205.11775.fd",
+   "url": "https://doi.org/10.1023/B:VISI.0000011205.11775.fd",
+   "pdf_url": "https://figshare.com/articles/Lucas-Kanade_20_years_on_a_unifying_framework_/6555452",
+   "questions": [
+    1,
+    3,
+    7
+   ],
+   "why": "control의 LK15와 GN, IC-GN의 공통 틀. 가산, 합성, 역합성 방식의 동치성, 계산량, 수렴 범위 비교. 팀 보고서 참고문헌 [2]로 번호만 인용되었고 문헌 폴더는 없었다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/b_영역/논문/03_Benhimane2004_IROS_ESM_평면호모그래피추적",
+   "title": "Real-time image-based tracking of planes using efficient second-order minimization",
+   "citation": "S. Benhimane, E. Malis, IEEE/RSJ IROS 2004, vol.1, pp.943-948. doi:10.1109/IROS.2004.1389474",
+   "url": "https://doi.org/10.1109/IROS.2004.1389474",
+   "pdf_url": "https://hal.science/hal-04655006/document",
+   "questions": [
+    1,
+    3,
+    7
+   ],
+   "why": "평면 판을 호모그래피로 직접 맞추는 ESM. 헤시안 없이 2차 수렴. QR 판 전체를 한 변환으로 맞추는 joint ECC 호모그래피의 대안 후보이자 속도 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/b_영역/논문/04_Ye2020_RemoteSens_영역정합_부화소12종비교",
+   "title": "Area-Based Dense Image Matching with Subpixel Accuracy for Remote Sensing Applications: Practical Analysis and Comparative Study",
+   "citation": "Z. Ye, Y. Xu, H. Chen, J. Zhu, X. Tong, U. Stilla, Remote Sensing 12(4):696, 2020. doi:10.3390/rs12040696",
+   "url": "https://doi.org/10.3390/rs12040696",
+   "pdf_url": "https://www.mdpi.com/2072-4292/12/4/696/pdf?version=1582775183",
+   "questions": [
+    1,
+    2,
+    4,
+    5
+   ],
+   "why": "상관 기반 유사도 2종, 부화소 방법 7종, 12개 영역 정합 알고리즘(NCC 피크 적합, 위상상관, 최소제곱 정합 등)을 같은 합성 영상과 실제 자료로 비교. 변위 의존 오차와 변위 무관 오차를 구분. 오픈액세스지만 curl에 403이 나서 브라우저 수동 확보 필요(우회하지 않음)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/b_영역/논문/05_Pham2005_SPIE_정합추정기_CRB_편향",
+   "title": "Performance of optimal registration estimators",
+   "citation": "T. Q. Pham, M. Bezuijen, L. J. van Vliet, K. Schutte, C. L. Luengo Hendriks, Proc. SPIE 5817, p.133, 2005. doi:10.1117/12.603304",
+   "url": "https://doi.org/10.1117/12.603304",
+   "pdf_url": "https://publications.tno.nl/publication/34617130/R2yQUi/schutte-2005-performance.pdf",
+   "questions": [
+    4,
+    6,
+    2
+   ],
+   "why": "정합 분산의 Cramer-Rao 하한을 유도하고, 반복 기울기 추정기가 편향을 거의 0으로 줄여 그 하한에 이른다고 보임. 다중 척도(거친 단계에서 세밀 단계로) 포함. 우리 점 잡음 0.009~0.015px가 이론 한계에 얼마나 가까운지 판단할 근거. TNO 공개본 PDF 200 확인(TU Delft 저장소는 응답 없음)."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/b_영역/특허/01_US6628845_NEC_위상상관_부화소정합",
+   "title": "Method for subpixel registration of images",
+   "citation": "US 6,628,845 B1, NEC Laboratories America (Stone, Orchard, Chang, Martucci), 출원 2000-03-15, 등록 2003-09-30",
+   "url": "https://patents.google.com/patent/US6628845B1/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/6628845",
+   "questions": [
+    1,
+    4
+   ],
+   "why": "창 함수를 곱한 두 영상의 푸리에 위상에서 엘리어싱 잡음이 적은 주파수만 골라 최소제곱으로 선형 위상을 맞춰 x, y 부화소 변위를 구함. 위상상관 부화소의 특허 구현. USPTO 공보 PDF 1쪽에서 서지와 초록 확인(Google Patents는 503으로 접근 못함)."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/b_영역/특허/02_US5548326_Cognex_SAD하강_부화소정합",
+   "title": "Efficient image registration",
+   "citation": "US 5,548,326 A, Cognex Corporation (David Michael), 출원 1994-08-31, 등록 1996-08-20",
+   "url": "https://patents.google.com/patent/US5548326A/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5548326",
+   "questions": [
+    1,
+    2,
+    7
+   ],
+   "why": "SAD 지표를 이웃 화소 변위에서만 계산하며 내려가 최소점을 찾고 2차원 수치 최적화로 부화소 위치를 구함. 반도체 웨이퍼 다이 비교용 산업 장비 방식으로 전체 탐색 없이 빠름. CIP인 US5640200(Golden template comparison)은 같은 계열이라 대표 1건만 선정. USPTO 공보 PDF 1쪽 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/b_영역/특허/03_US5629988_Sarnoff_되먹임워프_정밀정렬",
+   "title": "System and method for electronic image stabilization",
+   "citation": "US 5,629,988 A, David Sarnoff Research Center (Burt, Hanna), 출원 1994-10-28, 등록 1997-05-13",
+   "url": "https://patents.google.com/patent/US5629988A/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5629988",
+   "questions": [
+    2,
+    3
+   ],
+   "why": "되먹임 고리와 두 번째 영상 워프 단계로 변위 추정 안에서 정밀 정렬. 피라미드 기반 직접(영역) 정렬의 특허 구현으로, 반복 무늬 오매칭을 피하는 거친 단계에서 세밀 단계로 가는 방식과 전역 변환 정렬의 근거. USPTO 공보 PDF 1쪽 확인."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/01_Shimizu2005_IJCV_부화소추정오차상쇄/요약.md",
+   "why": "질문 4: SSD, SAD, NCC 3점 포물선 부화소 보간의 pixel-locking 분석과 반 화소 이동 상쇄법. NCC 부화소 편향 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/02_Michaelis2016_MST_PIV_피크로킹저감/요약.md",
+   "why": "질문 4: 상관 피크 보간과 화소 보간기에 따른 peak-locking 편향 곡선(피크 보간 0.04px, spline-6 약 0.001px), ±0.5px 상쇄(APLF)."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/06_Duncan2010_MST_이웃중앙값_이상치검출/요약.md",
+   "why": "질문 2: 영역 정합 변위 벡터의 이웃 중앙값 이상치 검출. 반복 무늬 오매칭 점을 찾는 방법."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/07_Pan2013_ExpMech_ICGN_고속DIC/요약.md",
+   "why": "질문 1, 5, 7: IC-GN과 ZNSSD 기준(밝기 이득, 오프셋 강건), 헤시안 미리 계산으로 속도 개선, 신뢰도 순 초기값 전달."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/09_Pan2013_OLE_렌즈왜곡_2DDIC오차/요약.md",
+   "why": "질문 3: 렌즈 왜곡이 2D DIC 변위에 주는 계통 오차. 한 영역 전체를 하나의 변환으로 맞출 때와 점별 측정의 차이를 볼 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/10_Pan2013_OLE_가우스전처리_편향저감/요약.md",
+   "why": "질문 4: 상관 전 5x5 가우스 전처리로 bicubic 보간 편향을 무시할 수준으로 줄임."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/11_Schreier2000_OptEng_보간_계통오차/요약.md",
+   "why": "질문 4: 반복 공간영역 상관의 보간 계통 오차(주기 1px 사인형, 1/4과 3/4px에서 최대)와 저감법."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/12_Sciacchitano2019_MST_PIV_불확도정량화/요약.md",
+   "why": "질문 6: 상관 기반 측정의 점별 사후 불확도(상관 통계, 피크 비, 영상 일치)와 peak-locking 검출 한계. 가중치와 품질 판정 연결."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/01_Irani1997_PAMI_영역정렬_회전제거_평면시차/요약.md",
+   "why": "질문 3: 한 평면 영역의 2D 파라메트릭 직접 정렬로 회전 영향을 지우고 잔여 시차를 분리. 전역 영역 정렬(joint 호모그래피)의 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/00002_문헌대장_v2.md",
+   "why": "위 기존 문헌의 등록 상태와 원문 확인 범위(초록만 확인 표시) 대조용. Baker & Matthews, Robinson & Milanfar는 팀 보고서 참고문헌 번호로만 있고 폴더가 없음을 확인."
+  },
+  {
+   "path": "docs/hye/파이프라인_v2/단계/2_측정/2-2_정밀측정/b_영역/조사방법론.md",
+   "why": "이번에 작성한 조사방법론. 질문 1~7, 검색 블록, 검색 기록 표(OpenAlex 13건, arXiv 6건, Google Patents 503 차단, USPTO 공보 PDF 확인 6건), 선정 이유와 제외 후보."
+  }
+ ]
+}
