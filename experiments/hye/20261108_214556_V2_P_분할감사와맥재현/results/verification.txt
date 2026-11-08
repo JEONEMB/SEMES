@@ -1,0 +1,3 @@
+Mixed evaluation image IDs, folds and training membership match committed Windows run
+All 56 mixed evaluation aggregate pass rates and denominators match
+64 holdout fits and 9136 predictions checked; no shared hashes, repeat groups or poses

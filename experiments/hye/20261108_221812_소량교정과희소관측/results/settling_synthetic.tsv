@@ -1,0 +1,10 @@
+n	dt_s	replicates	median_drift_relative_error	drift_detected	null_false_positive	median_allan_window_drift	frequency_status	median_freq_relative_error	median_zeta_relative_error	median_amplitude_relative_error	population_allan_window	median_trial_ms
+50	0.1	30	0.0110723	30	0	2	fitted	1.58603e-16	1.92747e-16	0.000450882	2	2.95873
+50	0.5	30	0.00261011	30	2	1	alias	nan	nan	nan	1	0.0090215
+50	1	30	0.00172464	30	1	1	alias	nan	nan	nan	1	0.0090415
+100	0.1	30	0.00674351	30	5	2	fitted	1.58603e-16	1.92747e-16	0.000364065	2	4.11854
+100	0.5	30	0.000741389	30	2	1	alias	nan	nan	nan	1	0.02325
+100	1	30	0.000453175	30	1	1	alias	nan	nan	nan	1	0.022584
+200	0.1	30	0.00106744	30	2	2	fitted	1.58603e-16	1.92747e-16	0.000481776	2	6.64462
+200	0.5	30	0.000282487	30	2	1	alias	nan	nan	nan	1	0.067916
+200	1	30	0.000133959	30	2	1	alias	nan	nan	nan	1	0.071417
