@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <random>
 #include <set>
+#include <tuple>
 
 namespace semes_study {
 namespace {
@@ -468,4 +469,150 @@ void run(const Path& directory, const Path& output) {
         }
     }
 }
+
+namespace {
+const char* residualBand(double t) {
+    const double magnitude = std::abs(t);
+    if (magnitude < 1e-9) return "0";
+    if (magnitude <= 0.01 + 1e-9) return "(0,0.01]";
+    if (magnitude <= 0.03 + 1e-9) return "(0.01,0.03]";
+    if (magnitude <= 0.1 + 1e-9) return "(0.03,0.10]";
+    if (magnitude <= 1 + 1e-9) return "(0.10,1.00]";
+    return ">1.00";
+}
+
+struct RouteScore {
+    int test = 0, valid = 0, yPass = 0, tPass = 0, both = 0;
+    int usedSingle = 0, singleYMiss = 0, singleTOutside = 0;
+    double maxY = 0, maxT = 0;
+};
+
+void tally(RouteScore& score, const Shot& shot, const cv::Vec2d& estimate, bool usedSingle) {
+    ++score.test;
+    if (!std::isfinite(estimate[0]) || !std::isfinite(estimate[1])) return;
+    ++score.valid;
+    const double ey = std::abs(shot.y - estimate[0]), et = std::abs(shot.t - estimate[1]);
+    const bool yPass = ey <= 0.045 + 1e-12, tPass = et <= 0.01 + 1e-12;
+    score.yPass += yPass;
+    score.tPass += tPass;
+    score.both += yPass && tPass;
+    score.usedSingle += usedSingle;
+    score.singleYMiss += usedSingle && !yPass;
+    score.singleTOutside += usedSingle && std::abs(shot.t) > 0.01 + 1e-12;
+    score.maxY = std::max(score.maxY, ey);
+    score.maxT = std::max(score.maxT, et);
+}
+
+cv::Vec2d estimate(const Model& model, const cv::Mat& observation) {
+    const double nan = std::numeric_limits<double>::quiet_NaN();
+    if (model.coefficients.empty() || observation.empty()) return {nan, nan};
+    return predict(model, observation);
+}
+
+Ids findPrescribed(const Cache& cache, const std::vector<std::pair<double, double>>& coordinates) {
+    Ids result;
+    for (const auto& [y, t] : coordinates) {
+        const auto found = std::find_if(cache.shots.begin(), cache.shots.end(), [&](const Shot& shot) {
+            return shot.set == "clean_20261014" && std::abs(shot.y-y) < 1e-9 && std::abs(shot.t-t) < 1e-9;
+        });
+        if (found == cache.shots.end()) throw std::runtime_error("Missing prescribed calibration pose");
+        result.push_back(found->idx);
+    }
+    return result;
+}
+} // namespace
+
+void runResidualT(const Path& directory, const Path& output) {
+    const Cache cache = a0::load(directory);
+    if (cache.n() != 575) throw std::runtime_error("Unexpected A0 image count");
+    std::filesystem::create_directories(output);
+    std::ofstream scores(output / "residual_t.tsv"), shots(output / "per_shot.tsv"), training(output / "calibration.tsv");
+    if (!scores || !shots || !training) throw std::runtime_error("Cannot create residual-T output");
+
+    const Points points = spread(cache, 9);
+    const Spec singleSpec{"qr9_mean", points, {}, false}, jointSpec{"qr9_bar48", points, lineBlocks(48), false};
+    std::vector<cv::Mat> singleObs, jointObs;
+    for (const Shot& shot : cache.shots) {
+        singleObs.push_back(observe(cache, shot, singleSpec));
+        jointObs.push_back(observe(cache, shot, jointSpec));
+    }
+    const Ids yAnchors = findPrescribed(cache, {{0, 0}, {-0.5, 0}, {0.5, 0}, {-1, 0}, {1, 0}});
+    const Ids tAnchors = findPrescribed(cache, {{0, -0.25}, {0, 0.25}, {0, -0.50}, {0, 0.50}});
+    const std::set<int> reservedY(yAnchors.begin(), yAnchors.end()), reservedT(tAnchors.begin(), tAnchors.end());
+
+    training << "setup\tmodel\tid\tdate\tgroup\tY\tT\n";
+    shots << "setup\tid\tdate\tgroup\tY\tT\tY_single\tY_joint\tT_joint\tgate003\tgate005\tgate010\n"
+          << std::setprecision(15);
+    scores << "setup\tdate\tabs_true_T_band\troute\ttest\tvalid\tpass_Y\tpass_T\tpass_both"
+              "\tused_single\tsingle_Y_miss\tsingle_true_abs_T_gt_0.01\tmax_Y\tmax_T\n"
+           << std::setprecision(12);
+    const std::array<double, 3> gates{0.003, 0.005, 0.010};
+    const std::array<std::string, 3> gateNames{"guard_0.003", "guard_0.005", "guard_0.010"};
+    for (const std::string setup : {"small", "wide", "full_cross_date"}) {
+        Ids yTrain, jointTrain;
+        if (setup == "full_cross_date") {
+            for (const auto& shot : cache.shots) if (shot.set == "clean_20261014") {
+                if (std::abs(shot.t) < 1e-9) yTrain.push_back(shot.idx);
+                jointTrain.push_back(shot.idx);
+            }
+        } else {
+            const int yCount = setup == "small" ? 3 : 5;
+            const int tCount = setup == "small" ? 2 : 4;
+            yTrain.assign(yAnchors.begin(), yAnchors.begin() + yCount);
+            jointTrain = yTrain;
+            jointTrain.insert(jointTrain.end(), tAnchors.begin(), tAnchors.begin() + tCount);
+        }
+        const auto build = [&](const std::string& name, const Ids& ids, const auto& obs, bool single) {
+            cv::Mat x, z;
+            pack(cache, obs, ids, x, z);
+            const Model model = fit(x, z, single ? "local_axis" : "local", {}, single ? 0 : -1);
+            if (model.coefficients.empty() || x.rows != static_cast<int>(ids.size()))
+                throw std::runtime_error("Calibration failure for " + setup + "/" + name);
+            for (const int id : ids) {
+                const Shot& shot = cache.shots[id];
+                if (single && std::abs(shot.t) > 1e-9) throw std::runtime_error("Single-axis training leaked nonzero T");
+                training << setup << '\t' << name << '\t' << id << '\t' << shot.set.substr(6) << '\t'
+                         << shot.group << '\t' << shot.y << '\t' << shot.t << '\n';
+            }
+            return model;
+        };
+        const Model single = build("single_y", yTrain, singleObs, true);
+        const Model joint = build("joint", jointTrain, jointObs, false);
+        std::map<std::tuple<std::string, std::string, std::string>, RouteScore> by;
+        for (const auto& shot : cache.shots) {
+            if (shot.condition == "center" || reservedY.count(shot.idx) || reservedT.count(shot.idx)) continue;
+            if (setup == "full_cross_date" && shot.set == "clean_20261014") continue;
+            const std::string date = shot.set.substr(6);
+            const auto a = estimate(single, singleObs[shot.idx]);
+            const auto b = estimate(joint, jointObs[shot.idx]);
+            const auto singleFitsGate = [&](double g) {
+                return std::isfinite(a[0]) && std::isfinite(b[0]) && std::isfinite(b[1]) && std::abs(b[1]) <= g;
+            };
+            const auto add = [&](const std::string& route, const cv::Vec2d& result, bool usedSingle) {
+                for (const std::string bucket : {std::string("all"), std::string(residualBand(shot.t))})
+                    tally(by[{date, bucket, route}], shot, result, usedSingle);
+            };
+            add("single_y_assume_T0", a, true);
+            add("joint", b, false);
+            for (size_t i = 0; i < gates.size(); ++i) {
+                const bool singleOK = singleFitsGate(gates[i]);
+                // Keep the measured joint T estimate when the single-axis path supplies Y.
+                add(gateNames[i], singleOK ? cv::Vec2d(a[0], b[1]) : b, singleOK);
+            }
+            shots << setup << '\t' << shot.idx << '\t' << date << '\t' << shot.group << '\t'
+                  << shot.y << '\t' << shot.t << '\t' << a[0] << '\t' << b[0] << '\t' << b[1];
+            for (const double g : gates) shots << '\t' << singleFitsGate(g);
+            shots << '\n';
+        }
+        for (const auto& [key, value] : by) {
+            const auto& [date, bin, route] = key;
+            const double nan = std::numeric_limits<double>::quiet_NaN();
+            scores << setup << '\t' << date << '\t' << bin << '\t' << route << '\t' << value.test
+                   << '\t' << value.valid << '\t' << value.yPass << '\t' << value.tPass << '\t' << value.both
+                   << '\t' << value.usedSingle << '\t' << value.singleYMiss << '\t' << value.singleTOutside
+                   << '\t' << (value.valid ? value.maxY : nan) << '\t' << (value.valid ? value.maxT : nan) << '\n';
+        }
+    }
+}
+
 } // namespace semes_study
