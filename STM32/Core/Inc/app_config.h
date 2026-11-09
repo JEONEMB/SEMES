@@ -19,8 +19,8 @@
 #define APP_Y_DEFAULT_SPEED_UM_S 100U
 #define APP_Y_HOME_SEEK_PULSES 83200U /* 52mm bounded search, not 500mm */
 #define APP_Y_HOME_RELEASE_PULSES 3200U /* 2mm maximum to release a switch */
-#define APP_Y_HOME_SEEK_HZ 800U
-#define APP_Y_HOME_RELEASE_HZ 160U /* 3200 pulses require about 20 seconds */
+#define APP_Y_HOME_SEEK_HZ 1600U /* about 1mm/s */
+#define APP_Y_HOME_RELEASE_HZ 800U /* about 0.5mm/s; 3200 pulses take about 4s */
 #define APP_Y_HOME_TIMEOUT_MS 120000U
 #define APP_Y_HOME_STABLE_MS 10U
 #define APP_Y_HOME_SETTLE_TIMEOUT_MS 200U
@@ -33,7 +33,7 @@
 #define APP_RX_POLL_BUDGET 128U
 #define APP_FW_MAJOR 0U
 #define APP_FW_MINOR 2U
-#define APP_FW_PATCH 0U
+#define APP_FW_PATCH 1U
 #define APP_SWITCH_STABLE_SAMPLES 10U
 
 /* Unknown is explicit; never use these sentinels for pulse conversion.

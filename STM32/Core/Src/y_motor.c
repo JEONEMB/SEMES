@@ -40,7 +40,9 @@ static void Enable(uint8_t enabled)
 static void Finish(YMotorState state)
 {
     YMotorPort_Abort();
-    Enable(0U);
+    /* Keep torque only between HOME seek and release. Never hold on a limit,
+     * STOP, error, ordinary MOVE/jog completion, or the final release edge. */
+    Enable(state == Y_MOTOR_SWITCH && homing_mode && homing_stop_high && !stop_requested);
     motor.state = state;
     stop_requested = 0U;
 }
@@ -133,6 +135,27 @@ YMotorResult YMotor_StartHoming(uint8_t dir_high, uint32_t pulses, uint32_t hz, 
 {
     if (stop_high > 1U) return Y_MOTOR_BAD_ARGUMENT;
     return Start(dir_high,pulses,hz,1U,stop_high);
+}
+
+YMotorResult YMotor_HoldHomeContact(void)
+{
+    uint32_t key = YMotorPort_Lock();
+    YMotorResult result = Y_MOTOR_OK;
+    if (motor.state == Y_MOTOR_RUNNING) result = Y_MOTOR_BUSY;
+    else if (!motor.ready) result = Y_MOTOR_NOT_READY;
+    else if (!Y_MOTOR_OUTPUT_ALLOWED) result = Y_MOTOR_LOCKED;
+    else if (YMotorPort_RawLimits() & 2U) result = Y_MOTOR_LIMIT_ACTIVE;
+    else {
+        YMotorPort_Abort();
+        homing_mode = homing_stop_high = 1U;
+        stop_requested = 0U;
+        motor.requested_pulses = motor.completed_pulses = motor.frequency_hz = 0U;
+        motor.state = Y_MOTOR_SWITCH;
+        motor.count_exact = 1U;
+        Enable(1U);
+    }
+    YMotorPort_Unlock(key);
+    return result;
 }
 
 void YMotor_Stop(void)

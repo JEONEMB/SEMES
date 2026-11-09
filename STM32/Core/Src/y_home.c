@@ -88,7 +88,10 @@ int YHome_Start(void)
     if (bits & 1U) {
         /* Already pressed: qualify contact without emitting a seek pulse.
          * A previous LIMIT/ABORTED motor state must not block HOME recovery. */
-        YMotor_Abort();
+        if (YMotor_HoldHomeContact() != Y_MOTOR_OK) {
+            Finish(Y_HOME_FAULT, Y_HOME_REASON_START_FAILED);
+            return 0;
+        }
         BeginStable(Y_HOME_PRESS_STABLE, started_ms, bits);
         Snapshot();
         return 1;
@@ -148,8 +151,10 @@ void YHome_Poll(void)
         BeginStable(phase == Y_HOME_SEEK ? Y_HOME_PRESS_STABLE : Y_HOME_RELEASE_STABLE,
                     now, bits);
     }
-    /* Both stability phases require stopped pulses and disabled driver. */
-    if (motor.state == Y_MOTOR_RUNNING || motor.enabled) {
+    /* Contact qualification keeps torque without STEP pulses. Final release
+     * qualifies with EN off, so success cannot conceal spring-back after disable. */
+    if (motor.state == Y_MOTOR_RUNNING ||
+        (phase == Y_HOME_RELEASE_STABLE && motor.enabled)) {
         Finish(Y_HOME_FAULT, Y_HOME_REASON_MOTOR_STATE);
         return;
     }
