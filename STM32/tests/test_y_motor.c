@@ -45,8 +45,21 @@ int TestYMotor(void)
 #if !Y_MOTOR_OUTPUT_ALLOWED
     CHECK(YMotor_Start(0,1,100) == Y_MOTOR_LOCKED);
     CHECK(YMotor_SetEnabled(1) == Y_MOTOR_LOCKED);
+    CHECK(YMotor_HoldHomeContact() == Y_MOTOR_LOCKED);
     CHECK(!(TIM3->CR1 & TIM_CR1_CEN));
 #else
+    /* A HOME contact hold must not emit any pulse, even with left limit active. */
+    gpio.IDR = 3;
+    CHECK(YMotor_HoldHomeContact() == Y_MOTOR_LIMIT_ACTIVE);
+    gpio.IDR = 1;
+    CHECK(YMotor_HoldHomeContact() == Y_MOTOR_OK);
+    for (unsigned i=0;i<1000;++i) Tick();
+    YMotor_GetStatus(&status);
+    CHECK(status.enabled && rises==0 && status.completed_pulses==0);
+    CHECK(!(TIM3->CR1 & TIM_CR1_CEN) &&
+          (TIM3->CCMR1 & TIM_CCMR1_OC1M)==TIM_OCMODE_FORCED_INACTIVE);
+    YMotor_Abort();
+    YMotor_GetStatus(&status); CHECK(!status.enabled);
     gpio.IDR = 1;
 #if Y_MOTOR_USE_LIMITS
     CHECK(YMotor_Start(0,1,100) == Y_MOTOR_LIMIT_ACTIVE);
@@ -59,6 +72,7 @@ int TestYMotor(void)
     CHECK(YMotor_Start(1,3,3200) == Y_MOTOR_OK);
     CHECK(TIM3->CCR1 >= 2000); /* first edge DIR/enable settling */
     CHECK(YMotor_Start(0,1,100) == Y_MOTOR_BUSY);
+    CHECK(YMotor_HoldHomeContact() == Y_MOTOR_BUSY);
     CHECK(YMotor_SetEnabled(0) == Y_MOTOR_BUSY);
     YMotor_Init(); /* no reset during active motion */
     for (unsigned p = 0; p < 3; ++p) {
