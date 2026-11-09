@@ -1,0 +1,21 @@
+{
+  "model_id": "full66_d1_r1e-07_noise0_tail1_legacy0",
+  "features": 66,
+  "training_images": 571,
+  "training_min": [
+    -2.0,
+    -1.0
+  ],
+  "training_max": [
+    2.0,
+    2.0
+  ],
+  "evidence": "Development data only; not independent deployment certification.",
+  "source_experiment": "experiments/hye/20261109_012514_정확도최대오차_5회반복정밀도",
+  "source_commit": "7982cef34a5bcc91e37522f29e3445bfded7e52d",
+  "source_state": "Experiment was uncommitted; model and evidence copied unchanged.",
+  "center.bmp_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+  "geometry.json_sha256": "25d635a7b239b7891954aa0b0381380709167ab2c44ed8bc0ec7b80269bf83ac",
+  "line_protocol.json_sha256": "526f34ec495941759efd7564351aed4227160258495448bb7b63683a1a241caa",
+  "weighted_linear66.yml_sha256": "3dabe5a59c539bbf9152403638e3de6dfb58026fe4030e8b1239d67daa5b630e"
+}
