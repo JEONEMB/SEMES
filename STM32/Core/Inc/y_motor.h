@@ -48,6 +48,8 @@ void YMotor_Init(void);
 YMotorResult YMotor_SetEnabled(uint8_t enabled);
 YMotorResult YMotor_Start(uint8_t dir_high, uint32_t pulses, uint32_t frequency_hz);
 YMotorResult YMotor_StartHoming(uint8_t dir_high, uint32_t pulses, uint32_t hz, uint8_t stop_high);
+/* HOME-only stationary hold while qualifying the left contact. No STEP output. */
+YMotorResult YMotor_HoldHomeContact(void);
 void YMotor_Stop(void);  /* finish the in-flight pulse, then disable EN */
 void YMotor_Decelerate(void); /* standard STOP: ramp down within remaining pulses */
 void YMotor_Abort(void); /* immediate disable; possibly incomplete final pulse */

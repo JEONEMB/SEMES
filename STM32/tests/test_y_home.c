@@ -35,16 +35,18 @@ int TestPhysicalHome(void)
     CHECK(YHome_State()==Y_HOME_IDLE && !(TIM3->CR1 & TIM_CR1_CEN));
     CHECK(YHome_Start());
     YMotorStatus m; YMotor_GetStatus(&m);
-    CHECK(m.state==Y_MOTOR_RUNNING && m.dir_high==0 && m.frequency_hz==800);
+    CHECK(m.state==Y_MOTOR_RUNNING && m.dir_high==0 && m.frequency_hz==1600);
     CHECK(m.requested_pulses==83200);
-    At(1,1); YMotor_GetStatus(&m); CHECK(m.state==Y_MOTOR_SWITCH && !m.enabled);
+    At(1,1); YMotor_GetStatus(&m); CHECK(m.state==Y_MOTOR_SWITCH && m.enabled);
     At(5,0); At(9,1); At(18,1);
     CHECK(y_home_debug.phase==Y_HOME_PRESS_STABLE && !(TIM3->CR1 & TIM_CR1_CEN));
+    CHECK(y_home_debug.enabled); /* retain torque through contact bounce */
     At(19,1); YMotor_GetStatus(&m);
-    CHECK(m.state==Y_MOTOR_RUNNING && m.dir_high==1 && m.frequency_hz==160);
+    CHECK(m.state==Y_MOTOR_RUNNING && m.dir_high==1 && m.frequency_hz==800);
     CHECK(m.requested_pulses==3200);
     At(20,0); At(24,1); At(25,0); At(34,0);
     CHECK(YHome_State()==Y_HOME_RUNNING && y_home_debug.phase==Y_HOME_RELEASE_STABLE);
+    CHECK(!y_home_debug.enabled); /* qualify final position after disabling EN */
     CHECK(!(TIM3->CR1 & TIM_CR1_CEN));
     At(35,0); CHECK(YHome_State()==Y_HOME_OK);
     YMotor_GetStatus(&m); CHECK(!m.enabled && m.dir_high==1 && m.state==Y_MOTOR_SWITCH);
@@ -54,6 +56,7 @@ int TestPhysicalHome(void)
     /* Initially pressed: no seek pulse; qualify first, release once, finish. */
     Reset(1); CHECK(YHome_Start());
     CHECK(y_home_debug.phase==Y_HOME_PRESS_STABLE && !(TIM3->CR1 & TIM_CR1_CEN));
+    CHECK(y_home_debug.enabled && y_home_debug.requested_pulses==0);
     At(9,1); CHECK(!(TIM3->CR1 & TIM_CR1_CEN));
     At(10,1); CHECK(y_home_debug.phase==Y_HOME_RELEASE && y_home_debug.dir_high==1);
     Pulses(7); At(54,0); At(64,0);
@@ -80,25 +83,27 @@ int TestHomeBoundaries(void)
     /* Contact on the final allowed seek pulse must enter release, not fail. */
     Reset(0); CHECK(YHome_Start());
     Pulses(APP_Y_HOME_SEEK_PULSES-1); gpio.IDR=1; CompletePulse();
-    At(104000,1); At(104010,1);
+    At(52000,1); At(52010,1);
+    CHECK(y_home_debug.enabled); /* IRQ contact stop also preserves torque */
     CHECK(YHome_State()==Y_HOME_RUNNING && y_home_debug.phase==Y_HOME_RELEASE);
-    At(104100,0); At(104110,0); CHECK(YHome_State()==Y_HOME_OK);
+    At(52100,0); At(52110,0); CHECK(YHome_State()==Y_HOME_OK);
     /* No contact: never output a pulse beyond the budget. */
-    Reset(0); CHECK(YHome_Start()); Pulses(APP_Y_HOME_SEEK_PULSES); At(104000,0);
+    Reset(0); CHECK(YHome_Start()); Pulses(APP_Y_HOME_SEEK_PULSES); At(52000,0);
     CHECK(YHome_State()==Y_HOME_FAULT && y_home_debug.reason==Y_HOME_REASON_TRAVEL_EXHAUSTED);
     CHECK(y_home_debug.completed_pulses==83200 && !(TIM3->CR1 & TIM_CR1_CEN));
 
-    /* No obsolete 10s timeout; release at the last of 3200 pulses (~20s) succeeds. */
+    /* Release at the last of 3200 pulses (~4s) succeeds. */
     Reset(1); CHECK(YHome_Start()); At(10,1);
     for (unsigned i=1;i<APP_Y_HOME_RELEASE_PULSES;++i) {
-        CompletePulse(); At(10+(i*1000U)/160U,1);
+        CompletePulse(); At(10+(i*1000U)/APP_Y_HOME_RELEASE_HZ,1);
         CHECK(YHome_State()==Y_HOME_RUNNING);
     }
-    gpio.IDR=0; CompletePulse(); At(20010,0); At(20020,0);
+    gpio.IDR=0; CompletePulse(); At(4010,0); At(4020,0);
     CHECK(YHome_State()==Y_HOME_OK && y_home_debug.completed_pulses==3200);
     Reset(1); CHECK(YHome_Start()); At(10,1);
-    Pulses(APP_Y_HOME_RELEASE_PULSES); At(20010,1);
+    Pulses(APP_Y_HOME_RELEASE_PULSES); At(4010,1);
     CHECK(YHome_State()==Y_HOME_FAULT && y_home_debug.reason==Y_HOME_REASON_TRAVEL_EXHAUSTED);
+    CHECK(!y_home_debug.enabled);
 
     /* Stability succeeds at exactly 200ms; bounce must restart the 10ms timer. */
     Reset(1); CHECK(YHome_Start()); At(10,1); At(20,0);
@@ -110,6 +115,7 @@ int TestHomeBoundaries(void)
     Reset(1); CHECK(YHome_Start()); At(1,0); At(201,0);
     CHECK(YHome_State()==Y_HOME_FAULT && y_home_debug.phase==Y_HOME_PRESS_STABLE);
     CHECK(y_home_debug.reason==Y_HOME_REASON_UNSTABLE);
+    CHECK(!y_home_debug.enabled); /* failed contact qualification releases hold */
 
     /* Global 120s remains strict; wraparound and stalled IRQ do not defeat it. */
     Reset(0); TestSetTime(0xffffff00U); CHECK(YHome_Start());
@@ -146,6 +152,7 @@ int TestHomeStop(void)
         CHECK(RsService_Poll(&s,&r) && r.type==RS_DONE && r.seq==1 && r.payload[0]==RS_STOPPED);
         CHECK(!s.homed && s.steps==1234 && !s.pending && !RsService_Poll(&s,&r));
         CHECK(!(TIM3->CR1&TIM_CR1_CEN) && y_home_debug.reason==Y_HOME_REASON_STOP);
+        CHECK(!y_home_debug.enabled);
     }
     /* Limit detected while stopping still wins over STOPPED. */
     Reset(1); RsService s; RsService_Init(&s);

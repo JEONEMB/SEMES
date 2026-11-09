@@ -107,7 +107,7 @@ int TestTransport(void)
     return 0;
 }
 
-static const uint8_t firmware_pong[] = {0xAA,0x55,1,0x85,1,4,1,0,2,0,0xC3,0x78};
+static const uint8_t firmware_pong[] = {0xAA,0x55,1,0x85,1,4,1,0,2,1,0xE2,0x68};
 
 int TestService(void)
 {
