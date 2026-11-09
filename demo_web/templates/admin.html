@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}시나리오 관리 · ALIGN{% endblock %}
+{% block scripts %}<script src="/static/admin.js" defer></script>{% endblock %}
+{% block nav %}<a class="nav-link" href="/">시연 화면 ↗</a><button id="logout" class="text-button">로그아웃</button>{% endblock %}
+{% block content %}
+<main class="admin-shell">
+  <div class="page-heading"><div><p class="eyebrow">관리자 전용</p><h1>시나리오 관리</h1><p class="subtitle">시작 위치와 보정 단계를 저장하고, 시험 후 시연에 사용하세요.</p></div><span class="pill" id="mode">연결 확인 중</span></div>
+  <div class="workflow"><span><b>01</b> 시나리오 저장</span><i>→</i><span><b>02</b> 시험 실행</span><i>→</i><span><b>03</b> 결과 검증</span><i>→</i><span><b>04</b> 시연 활성화</span></div>
+  <div class="device-grid">
+    <section class="panel device-panel">
+      <div class="panel-heading"><span>Y축 장치 연결 · 수동 시험</span><span class="tiny-label">T축 비활성</span></div>
+      <div class="device-body">
+        <form id="device-form"><div class="field-grid"><label>동작 모드<select id="device-mode"><option value="mock">모의 실행</option><option value="hardware">실물 Y축</option></select></label><label>연결 방식<select id="device-transport"><option value="driver">커널 드라이버 · /dev/robot_stage (rsctl과 동일)</option><option value="serial">USB 직접 연결 · ldattach 미사용 시만</option></select></label></div><button id="device-apply" class="button secondary small" type="submit">연결 적용</button></form>
+        <p id="device-message" class="device-message" role="status">연결 확인을 눌러 장치 상태를 조회하세요.</p>
+        <div class="test-metrics"><div><span>보고 Y 위치 · mm</span><strong id="device-y">—</strong></div><div><span>Y 원점</span><strong id="device-home">—</strong></div><div><span>Y 리밋</span><strong id="device-limit">—</strong></div></div>
+        <div class="manual-controls"><label>한 번 이동할 거리 (mm)<input id="jog-distance" type="number" min="0.001" max="1" step="0.001" value="0.100"></label><div class="field-grid"><button id="jog-minus" class="button secondary" disabled>−Y 이동</button><button id="jog-plus" class="button primary" disabled>+Y 이동</button></div><div class="field-grid"><button id="home-y" class="button secondary" disabled>Y 원점 복귀</button><button id="manual-stop" class="stop-button" disabled>■ 정지</button></div></div>
+        <p class="muted footnote">연결 적용은 장치를 움직이지 않습니다. <b>Y 원점 복귀는 모드와 관계없이 실제 STM32에서 실행합니다</b>(rsctl home 1과 동일, 모의 모드에서는 /dev/robot_stage 사용). ±이동 버튼은 선택한 모드에서 실행합니다. 수동 시험은 카메라 없이 가능하며 Trial에는 포함하지 않습니다.</p>
+      </div>
+    </section>
+    <section class="panel device-panel">
+      <div class="panel-heading"><span>카메라 해상도</span><span class="tiny-label">IMX477</span></div>
+      <form id="camera-form" class="device-body"><label>카메라 사용<select id="camera-enabled"><option value="false">사용 안 함</option><option value="true">Picamera2 연결</option></select></label><label>웹 전송 해상도<select id="camera-profile"><option value="full">원본 4056 × 3040 · 5 fps</option><option value="medium">축소 2028 × 1520 · 10 fps</option><option value="preview">미리보기 960 × 720 · 10 fps</option></select></label><label>렌즈 왜곡 보정<select id="camera-undistort"><option value="true">켜짐 · 저장된 캘리브레이션 적용</option><option value="false">꺼짐 · 원본 비교</option></select></label><button id="camera-apply" class="button secondary small" type="submit">카메라 적용 / 다시 연결</button><p id="camera-settings-status" class="device-message"></p><p class="muted footnote">저장된 IMX477 캘리브레이션으로 렌즈 왜곡을 보정합니다. 해상도는 유지하며 SEMES용 크롭·3840×2160 변환은 적용하지 않습니다. 해상도나 보정 설정을 바꾸면 시나리오 검증이 해제됩니다. 파라미터는 RMS 1.68px인 잠정값이며, 렌즈·초점 조건이 달라졌다면 재캘리브레이션이 필요합니다.</p></form>
+    </section>
+  </div>
+  <section class="panel console-panel">
+    <div class="panel-heading"><span>STM32 명령 · rsctl과 동일</span><span class="tiny-label">항상 실제 장치</span></div>
+    <div class="device-body">
+      <div class="console-row"><button type="button" data-cmd="ping" class="button secondary small">ping</button><button type="button" data-cmd="status" class="button secondary small">status</button><button type="button" data-cmd="config" class="button secondary small">config</button><button type="button" data-cmd="home" class="button secondary small">home 1</button><button type="button" data-cmd="stop" class="button small console-stop">■ stop</button></div>
+      <div class="console-row"><label>Y (µm)<input id="console-y" type="number" step="1" value="1000"></label><label>T (0.001°)<input id="console-t" type="number" step="1" value="0"></label><button type="button" data-cmd="move-rel" class="button primary small">move-rel</button><button type="button" data-cmd="move-abs" class="button secondary small">move-abs</button></div>
+      <div class="console-row"><label>Y 속도 (µm/s)<input id="console-vy" type="number" min="0" step="1" value="1000"></label><label>T 속도<input id="console-vt" type="number" min="0" step="1" value="0"></label><button type="button" data-cmd="speed" class="button secondary small">speed</button><button type="button" id="console-clear" class="text-button">출력 지우기</button></div>
+      <pre id="console-output" class="console-output" aria-live="polite"></pre>
+      <p class="muted footnote">터미널의 <code>sudo ./tools/rsctl</code>과 같은 명령을 서버 모드와 관계없이 실제 STM32로 보냅니다. 단위도 같습니다 (Y 1 = 1 µm, T 1 = 0.001°, 속도 0 = 유지). 원점·범위 검사는 STM32가 합니다. 현재 펌웨어는 T 값이 0이 아니면 거부합니다(BAD_PARAM).</p>
+    </div>
+  </section>
+  <details class="panel reference-panel"><summary>중앙 기준 설정 <span>기준 변경 시 모든 시나리오의 검증이 해제됩니다.</span></summary><form id="settings-form"><div class="field-grid four"><label>중앙 Y (mm)<input id="center-y" type="number" step="0.001" required></label><label>중앙 T (°)<input id="center-t" type="number" step="0.001" required></label><label>Y 허용 오차 (mm)<input id="tolerance-y" type="number" min="0" step="0.001" required></label><label>T 허용 오차 (°)<input id="tolerance-t" type="number" min="0" step="0.001" required></label></div><label>기준 메모<input id="reference-note" maxlength="2000" placeholder="카메라 배치, 크롭, 원점 기준 등을 기록하세요."></label><button class="button secondary small" type="submit">중앙 기준 저장</button><span class="muted" id="reference-version"></span></form></details>
+  <div class="admin-grid">
+    <aside class="panel scenario-sidebar"><div class="panel-heading"><span>시나리오 <b id="scenario-count">0</b></span><button id="new-scenario" class="icon-button" aria-label="새 시나리오">＋</button></div><div id="scenario-list" class="scenario-list"></div><div class="sidebar-tools"><button id="example" class="text-button">＋ 모의 예제 초안</button><a href="/api/admin/export" class="text-button">JSON 내보내기 ↓</a><label class="file-button">JSON 가져오기 ↑<input id="import-file" type="file" accept="application/json,.json" hidden></label><p>가져온 시나리오는 현재 중앙 기준으로 검사하고 초안으로 저장합니다.</p></div></aside>
+    <section class="panel editor"><div class="panel-heading"><span id="editor-heading">새 시나리오</span><span id="verification-badge" class="tiny-label">초안</span></div>
+      <form id="scenario-form">
+        <div class="field-grid name-fields"><label>시나리오 이름<input id="scenario-name" maxlength="80" placeholder="예: Y축 5단계 복귀" required></label><label>재생 순서<input id="scenario-order" type="number" min="0" max="9999" value="0" required></label></div>
+        <label>설명<input id="scenario-description" maxlength="2000" placeholder="시연 조건과 참고 사항"></label>
+        <div class="editor-section"><h2><span>01</span> 시작 위치</h2><p>Random 실행 시 이동할 절대 좌표입니다.</p><div class="field-grid"><label>Y (mm)<input id="start-y" type="number" step="0.001" required value="0"></label><label>T (°)<input id="start-t" type="number" step="0.001" required value="0"></label></div></div>
+        <div class="editor-section"><div class="section-row"><h2><span>02</span> 보정 단계</h2><span id="step-count" class="muted">0 / 20</span></div><p>각 단계의 상대 이동량입니다. 수락된 한 행이 Trial 1회가 됩니다.</p>
+          <div class="table-scroll"><table class="steps-table"><thead><tr><th>Trial</th><th>ΔY (mm)</th><th>ΔT (°)</th><th>대기 (ms)</th><th><span class="sr-only">순서 및 삭제</span></th></tr></thead><tbody id="steps-body"></tbody></table></div>
+          <button id="add-step" class="add-step" type="button">＋ 보정 단계 추가</button><div class="endpoint" id="endpoint">최종 예상 위치 —</div>
+        </div>
+        <div class="editor-actions"><button class="button primary" type="submit" id="save-scenario">초안 저장</button><button class="button secondary" type="button" id="duplicate">복제</button><button class="text-button danger" type="button" id="delete-scenario">삭제</button></div>
+        <p class="muted footnote">수정 후 저장하면 검증·활성화가 해제됩니다. 저장만으로 장치가 움직이지 않습니다.</p>
+      </form>
+    </section>
+    <aside class="panel test-panel"><div class="panel-heading"><span>시험 실행</span><button id="probe" class="text-button">연결 확인 ↻</button></div>
+      <div class="camera-view mini-camera"><img id="camera-feed" alt="실시간 장치 카메라 영상" hidden><div id="camera-empty" class="camera-empty"><strong>카메라 연결 대기</strong><span id="camera-message">카메라 미사용 모드</span></div><div class="crosshair" aria-hidden="true"></div></div>
+      <p class="hardware-note" id="hardware-note">T축 모터 미장착 · 실물 이동 비활성</p>
+      <div class="test-metrics"><div><span>TRIAL</span><strong id="test-trial">0 / 20</strong></div><div><span>Y 명령 · mm</span><strong id="test-y">0.000</strong></div><div><span>T 명령 · °</span><strong id="test-t">0.000</strong></div></div>
+      <div class="test-status"><strong id="status-title">대기</strong><p id="status-message">저장한 시나리오를 선택하세요.</p></div>
+      <div class="test-controls"><button id="test-prepare" class="button secondary" disabled>① 시작 위치로 이동</button><div class="field-grid"><button id="test-step" class="button secondary" disabled>한 단계</button><button id="test-auto" class="button primary" disabled>전체 보정</button></div><button id="test-stop" class="stop-button" disabled>■ 정지</button></div>
+      <div class="verify-box"><label class="checkbox-label"><input id="verify-confirm" type="checkbox"><span id="verify-label">시험 결과를 확인했습니다.</span></label><button id="verify" class="button secondary" disabled>② 검증 완료로 등록</button><button id="activate" class="button primary" disabled>③ 시연에 활성화</button></div>
+      <details class="run-log"><summary>실행 로그</summary><ol id="run-log"></ol></details>
+    </aside>
+  </div>
+  <section class="panel history-panel"><div class="panel-heading"><span>최근 실행 기록</span><button id="refresh-history" class="text-button">새로고침 ↻</button></div><div class="table-scroll"><table><thead><tr><th>시각</th><th>시나리오</th><th>모드</th><th>Trial</th><th>결과</th></tr></thead><tbody id="history-body"></tbody></table></div></section>
+</main>
+{% endblock %}
