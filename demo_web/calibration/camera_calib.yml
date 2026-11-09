@@ -1,0 +1,31 @@
+%YAML:1.0
+---
+image_width: 4056
+image_height: 3040
+pattern_cols: 11
+pattern_rows: 8
+square_mm: 15.
+images_used: 71
+rms_px: 1.6817590446238986e+00
+camera_matrix: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 4.0173041187027611e+03, 0., 2.1094831096329453e+03, 0.,
+       4.0198453729257421e+03, 1.5273619527031817e+03, 0., 0., 1. ]
+dist_coeffs: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [ -4.9526344426592367e-01, 3.5223407005390600e-01,
+       -1.7713028660153330e-03, 1.2376769572390998e-04,
+       -2.1833295812227407e-01 ]
+fov_x_deg: 5.3555652486515029e+01
+fov_y_deg: 4.1425505117687287e+01
+focal_mm: 6.2268213839892788e+00
+board_distance_median_mm: 2.5248979629008207e+02
+semes_crop_width: 3839
+semes_crop_height: 2026
+# 2026-11-03 HQ camera (IMX477) + 6mm CS lens, focus ~28-30cm locked, exposure 8.3ms
+# 71 photos (A4 12x9 15mm printed board; shaky 011,012,027,031,041,045 excluded), RMS 1.68 px
+# Provisional: RMS above 0.5 px target, likely paper board flatness/print limits
