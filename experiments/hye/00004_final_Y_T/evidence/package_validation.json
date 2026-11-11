@@ -1,0 +1,28 @@
+{
+  "package": "00004_final_Y_T",
+  "date": "2026-11-11",
+  "model_id": "final04_huber66_715_irls6_r1e-7",
+  "training_images": 715,
+  "cross_validation": {
+    "image_pass": 712,
+    "group_pass": 710,
+    "n": 715,
+    "baseline_prediction_max_difference": 0
+  },
+  "image_audit": {
+    "n": 16,
+    "failures": 0,
+    "max_feature_difference": 4.760636329592671e-13,
+    "max_prediction_difference": 6.283862319378386e-14
+  },
+  "contract_tests": {
+    "passed": 1,
+    "total": 1
+  },
+  "environment": "macOS arm64 OpenCV3.4.15",
+  "windows_v141_executed": false,
+  "new_machine_tested": false,
+  "actual_5_capture_repeat_tested": false,
+  "common_screw_shift_0_5px_pass": 0,
+  "known_max_T_error": 1.6772001152279976
+}
