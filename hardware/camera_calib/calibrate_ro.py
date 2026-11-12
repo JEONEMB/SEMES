@@ -8,7 +8,7 @@ calibrateCameraRO 는 보드의 실제 코너 위치(휨·인쇄 오차)를 같�
 사용 (Pi, picamera2 venv 에 OpenCV 4 필요):
   python3 calibrate_ro.py captures_YYYYMMDD --square 15 --out camera_calib.yml [--skip 013,027]
 
-- 코너 검출 결과는 <폴더>_sb.json 에 저장해 두고 다음 실행 때 다시 쓴다 (검출이 제일 오래 걸림).
+- 코너 검출 결과는 <폴더>_sb.json 에 저장해 두고 다음 실행 때 다시 쓴다 (검출이 제일 오래 걸림). 새로 찍은 사진만 추가로 검출한다.
 - 출력 yml 은 calibrate.cpp 와 같은 항목 + roll_deg(0) 이라 Rectifier 가 그대로 읽는다.
 - 사진은 정면만이 아니라 보드 면을 앞뒤로 20~30° 젖힌 것이 꼭 섞여야 한다 (없으면 fx 가 정해지지 않음).
   결과의 '젖힌 각도 분포'와 '무작위 70% 재계산 fx 범위'로 확인한다.
@@ -44,18 +44,23 @@ def main():
 
     cache = a.folder.rstrip('/') + '_sb.json'
     try:
-        pts = {k: np.array(v, np.float32) for k, v in json.load(open(cache)).items()}
-        print(f'코너 검출 결과 다시 사용: {cache}')
+        saved = json.load(open(cache))
     except OSError:
-        pts = {}
-        files = sorted(glob.glob(a.folder.rstrip('/') + '/calib_[0-9][0-9][0-9].png'))
-        for f in files:
-            ok, c = cv2.findChessboardCornersSB(cv2.imread(f, 0), pat, cv2.CALIB_CB_NORMALIZE_IMAGE
-                                                | cv2.CALIB_CB_EXHAUSTIVE | cv2.CALIB_CB_ACCURACY)
-            print(f'  {"OK  " if ok else "실패"} {f}')
-            if ok:
-                pts[f] = c.reshape(-1, 2)
-        json.dump({k: v.tolist() for k, v in pts.items()}, open(cache, 'w'))
+        saved = {}
+    # 이미 찾은 사진은 다시 쓰고, 새로 추가된 사진만 검출한다 (실패한 사진은 None 으로 기억)
+    pts = {}
+    files = sorted(glob.glob(a.folder.rstrip('/') + '/calib_[0-9][0-9][0-9].png'))
+    fresh = [f for f in files if f not in saved]
+    if len(fresh) < len(files):
+        print(f'코너 검출 결과 다시 사용: {cache} ({len(files) - len(fresh)}장)')
+    for f in fresh:
+        ok, c = cv2.findChessboardCornersSB(cv2.imread(f, 0), pat, cv2.CALIB_CB_NORMALIZE_IMAGE
+                                            | cv2.CALIB_CB_EXHAUSTIVE | cv2.CALIB_CB_ACCURACY)
+        print(f'  {"OK  " if ok else "실패"} {f}')
+        saved[f] = c.reshape(-1, 2).tolist() if ok else None
+    if fresh:
+        json.dump(saved, open(cache, 'w'))
+    pts = {f: np.array(v, np.float32) for f, v in saved.items() if v is not None and f in files}
     skip = set(s for s in a.skip.split(',') if s)
     names = sorted(n for n in pts if n[-7:-4] not in skip)
     if len(names) < 10:
