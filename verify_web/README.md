@@ -33,7 +33,7 @@ demo_web/.venv/bin/python -m verify_web serve --mode hardware --calib <캘리브
 | `--mode` | `mock` | 스테이지 `mock` / `hardware` |
 | `--transport` | `driver` | `driver` = `/dev/robot_stage`, `serial` = USB 직접 (데모 웹 `demo_web.stage` 를 그대로 사용) |
 | `--camera` | `picamera2` | `off` = 격자 무늬 가짜 영상 |
-| `--calib` | `demo_web/calibration/camera_calib.yml` | 데이터셋을 찍은 캘리브레이션과 같은 파일을 쓴다 |
+| `--calib` | `hardware/camera_calib/camera_calib.yml` (있으면) → `demo_web/calibration/camera_calib.yml` | 데이터셋을 찍은 캘리브레이션과 같은 파일을 쓴다. `roll_deg`(기울기 보정)도 읽는다 |
 | `--zoom` | 1.0 | 알고리즘 사진 배율. 데이터셋 촬영(`capture_dataset --zoom`)과 같게 |
 | `--exposure`, `--gain`, `--fps` | 8333, 2.0, 10 | 데이터셋 촬영 카메라 설정과 같음 (AWB 끔, 색 게인 3.3/1.4) |
 | `--algo` | `worker` | `worker` = `native/build/align_worker`, `mock` = 실제 오차 + 잡음 |

@@ -9,6 +9,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parent
+# 장비 캘리브레이션(hardware/camera_calib, roll_deg 포함)이 있으면 그것을, 없으면 데모 웹 것을 쓴다
+CALIB_CANDIDATES = (REPO / 'hardware' / 'camera_calib' / 'camera_calib.yml',
+                    REPO / 'demo_web' / 'calibration' / 'camera_calib.yml')
+DEFAULT_CALIB = next((c for c in CALIB_CANDIDATES if c.exists()), CALIB_CANDIDATES[-1])
 
 
 def main():
@@ -20,7 +24,8 @@ def main():
     p.add_argument('--transport', choices=['driver', 'serial'], default='driver',
                    help='실물 연결: robot_stage 드라이버(/dev/robot_stage) / USB 직접')
     p.add_argument('--camera', choices=['picamera2', 'off'], default='picamera2')
-    p.add_argument('--calib', type=Path, default=REPO / 'demo_web' / 'calibration' / 'camera_calib.yml')
+    p.add_argument('--calib', type=Path, default=DEFAULT_CALIB,
+                   help='기본: hardware/camera_calib/camera_calib.yml (있으면) → demo_web/calibration/camera_calib.yml')
     p.add_argument('--zoom', type=float, default=1.0, help='알고리즘 사진 배율 (데이터셋 촬영 --zoom 과 같게)')
     p.add_argument('--exposure', type=int, default=8333)
     p.add_argument('--gain', type=float, default=2.0)
