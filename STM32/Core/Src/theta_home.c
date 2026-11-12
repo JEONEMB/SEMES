@@ -79,6 +79,14 @@ int ThetaHome_Start(void)
         Finish(THETA_HOME_FAULT, THETA_HOME_REASON_NOT_READY);
         return 0;
     }
+    if (APP_THETA_MANUAL_HOME) {
+        /* Explicit HOME sets the stopped current position as the origin.
+         * Service commits coordinates/HOMED only on successful HOME completion.
+         * No STEP or switch qualification; raw input remains reportable. */
+        stop_requested = 0;
+        Finish(THETA_HOME_OK, THETA_HOME_REASON_NONE);
+        return 1;
+    }
     uint8_t bits = ThetaMotorPort_RawLimits();
     stop_requested = 0;
     state = THETA_HOME_RUNNING;

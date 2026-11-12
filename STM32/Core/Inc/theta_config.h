@@ -3,7 +3,10 @@
 /* Commissioning profile: SW1..6 OFF OFF ON ON OFF OFF, 24V, reduction 100:1.
  * 3200 pulses/motor revolution per SM-NK17 pulse manual. User requested EN High.
  * CCW=DIR High is a commissioning assumption: verify direction BEFORE HOME.
- * Positive=CCW from above; provisional -10..0deg envelope must fit mechanics. */
+ * Positive=CCW from above; +/-10deg relative to the manually selected origin. */
+#ifndef APP_THETA_MANUAL_HOME
+#define APP_THETA_MANUAL_HOME 1
+#endif
 #ifndef APP_THETA_ENABLED
 #define APP_THETA_ENABLED 1
 #endif
@@ -21,7 +24,7 @@
 #define APP_THETA_MIN_MDEG (-10000)
 #endif
 #ifndef APP_THETA_MAX_MDEG
-#define APP_THETA_MAX_MDEG 0
+#define APP_THETA_MAX_MDEG 10000
 #endif
 #ifndef APP_THETA_HOME_SEEK_MDEG
 #define APP_THETA_HOME_SEEK_MDEG 12000

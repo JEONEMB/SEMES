@@ -34,7 +34,7 @@
 #define APP_RX_POLL_BUDGET 128U
 #define APP_FW_MAJOR 0U
 #define APP_FW_MINOR 3U
-#define APP_FW_PATCH 0U
+#define APP_FW_PATCH 1U
 #define APP_SWITCH_STABLE_SAMPLES 10U
 
 /* Unknown is explicit; never use these sentinels for pulse conversion.
