@@ -3,6 +3,7 @@
 #include "y_motor.h"
 #include "y_test.h"
 #include "app_config.h"
+#include "theta_motor.h"
 #include <stddef.h>
 #define CHECK(condition) do { if (!(condition)) return __LINE__; } while (0)
 
@@ -107,7 +108,7 @@ int TestTransport(void)
     return 0;
 }
 
-static const uint8_t firmware_pong[] = {0xAA,0x55,1,0x85,1,4,1,0,2,1,0xE2,0x68};
+static const uint8_t firmware_pong[] = {0xaa,0x55,0x1,0x85,0x1,0x4,0x1,0x0,0x3,0x1,0xd3,0x5b};
 
 int TestService(void)
 {
@@ -164,6 +165,7 @@ int TestService(void)
 TestTimer timer1, timer3;
 TestGpio gpio;
 TestRcc test_rcc;
+uint32_t HAL_RCC_GetPCLK2Freq(void) { return 16000000U; }
 uint32_t HAL_RCC_GetPCLK1Freq(void) { return 16000000U; }
 void HAL_NVIC_DisableIRQ(int irq) { (void)irq; }
 void HAL_NVIC_ClearPendingIRQ(int irq) { (void)irq; }
@@ -182,7 +184,7 @@ void __set_PRIMASK(uint32_t state) { primask = state; }
 uint32_t HAL_GetTick(void) { return tick; }
 void TestSetTime(uint32_t now) { tick=now; }
 void HAL_GPIO_WritePin(TestGpio *port, uint32_t pin, uint32_t level)
-{ (void)port; (void)pin; gpio_level = level; }
+{ (void)port; if (pin==Y_EN_N_Pin) gpio_level = level; }
 void BSP_LED_Toggle(unsigned led) { (void)led; }
 HAL_StatusTypeDef HAL_UART_Receive_IT(UART_HandleTypeDef *u, uint8_t *p, uint16_t n)
 { (void)u; (void)n; rx_target = p; return HAL_OK; }
@@ -227,7 +229,12 @@ int TestUartDuringPulseBurst(void)
 int TestApp(void)
 {
     ResetApp();
+#if APP_THETA_ENABLED
+    CHECK(!(timer1.CR1 & TIM_CR1_CEN) && !timer1.DIER &&
+          (timer1.CCMR1 & TIM_CCMR1_OC1M)==TIM_OCMODE_FORCED_INACTIVE);
+#else
     CHECK(timer1.CCER == 0 && timer1.BDTR == 0 && timer1.CR1 == 0);
+#endif
     CHECK((timer3.CR1 & TIM_CR1_CEN) == 0 && gpio_level == 1);
     /* RX while TX is active cannot overwrite an in-flight packet. */
     Receive(vectors[0], 8); App_Poll();
@@ -393,6 +400,53 @@ int TestStandardApp(void)
     n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
     CHECK(wire_length==28 && wire[3]==RS_STATUS && !(wire[7]&1));
     YMotor_Abort(); Drain();
+#endif
+    return 0;
+}
+
+/* Exercise actual byte framing, application arbitration, and TX backpressure. */
+int TestThetaApp(void)
+{
+#if APP_THETA_ENABLED
+    ResetApp();
+    RsFrame q={.type=RS_HOME,.seq=101,.len=1,.payload={3}};
+    uint8_t bytes[RS_MAX_FRAME];
+    unsigned n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==9 && wire[3]==RS_ACK);
+    gpio.IDR=THETA_HOME_Pin|1;
+    for(tick=1;tick<=12;++tick) Drain();
+    gpio.IDR=0;
+    for(;tick<=24;++tick) Drain();
+    CHECK(wire_length==29 && wire[12]==RS_DONE && wire[13]==101 && wire[15]==RS_OK);
+    wire_length=0;
+    q=(RsFrame){.type=RS_MOVE_REL,.seq=102,.len=8};
+    rs_put_u32(q.payload,1000); rs_put_u32(q.payload+4,(uint32_t)-1000);
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==9 && wire[3]==RS_ACK);
+    wire_length=0;
+    q=(RsFrame){.type=Y_TEST_JOG,.seq=103,.len=9};
+    rs_put_u32(q.payload+1,1); rs_put_u32(q.payload+5,100);
+    n=RsFrame_Encode(&q,bytes); Receive(bytes,n); Drain();
+    CHECK(wire_length==10 && wire[3]==RS_NAK && wire[7]==RS_BUSY);
+    wire_length=0;
+    Receive(vectors[0],8); Drain();
+    CHECK(wire_length==12 && Equal(wire,firmware_pong,12));
+    wire_length=0;
+    /* Freeze the transmitter, fill queue with PONGs, then hit Y+ limit.
+     * Partner shutdown must not depend on space to enqueue DONE. */
+    for(unsigned i=0;i<30;++i) Receive(vectors[0],8);
+    for(unsigned i=0;i<10;++i) App_Poll();
+    gpio.IDR=2; App_Poll();
+    CHECK(!(TIM1->CR1&TIM_CR1_CEN) && !(TIM3->CR1&TIM_CR1_CEN));
+    Drain();
+    RsParser parser={0}; RsFrame r; unsigned done=0;
+    for(unsigned i=0;i<wire_length;++i) {
+        RsParser_Push(&parser,wire[i],0);
+        if(RsParser_Next(&parser,&r) && r.type==RS_DONE) {
+            ++done; CHECK(r.seq==102 && r.payload[0]==RS_LIMIT);
+        }
+    }
+    CHECK(done==1);
 #endif
     return 0;
 }

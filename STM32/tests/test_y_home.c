@@ -1,6 +1,7 @@
 #include "robot_stage_service.h"
 #include "y_home.h"
 #include "y_motor.h"
+#include "theta_motor.h"
 #include "app_config.h"
 #include "mock_hal.h"
 #define CHECK(x) do { if (!(x)) return __LINE__; } while (0)
@@ -17,7 +18,9 @@ static void At(uint32_t time, uint32_t inputs)
 static void Reset(uint32_t bits)
 {
     YMotor_Abort(); test_rcc.CFGR=test_rcc.DCKCFGR=0;
-    YMotor_Init(); YHome_Init(); gpio.IDR=bits; TestSetTime(0);
+    YMotor_Init(); YHome_Init();
+    if (APP_THETA_ENABLED) { ThetaMotor_Abort(); ThetaMotor_Init(); }
+    gpio.IDR=bits; TestSetTime(0);
 }
 static RsFrame Send(RsService *s, uint8_t type, uint8_t seq, uint8_t len, uint32_t value)
 {
