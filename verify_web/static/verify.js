@@ -178,7 +178,7 @@
   // ---------- 데모 웹 넘김 / 되찾기 ----------
   function overlay(text) { $('overlay-text').textContent = text; $('overlay').hidden = !text; }
 
-  $('secret').addEventListener('click', async () => {
+  $('btn-demo').addEventListener('click', async () => {
     overlay('데모 웹으로 전환 중…');
     if (events) events.close();
     $('video').removeAttribute('src');

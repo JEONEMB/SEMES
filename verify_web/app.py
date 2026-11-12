@@ -150,7 +150,7 @@ def create_app(runner, devices, demo):
 
     @app.post('/api/handoff')
     def handoff():
-        """숨은 버튼: 장치를 놓고 데모 웹을 띄운다."""
+        """`데모 웹으로` 버튼: 장치를 놓고 데모 웹을 띄운다."""
         if runner.busy():
             runner.stop()
             runner.wait_idle(15)

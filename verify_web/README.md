@@ -6,7 +6,7 @@
 - 매 회차 **알고리즘 추론값**과 **스테이지 실제 오차**(STATUS 위치 − 센터)를 나란히 기록한다. 둘의 차이가 알고리즘 오차다.
 - 모터 이동 중인지 아닌지(ACK~DONE 구간), 스테이지 위치, 원점·리밋 상태를 보여 준다.
 - 실시간 영상: 왜곡 보정 + SEMES 화각 크롭 + 확대(1·2·4배, 화면 중심/플레이트 중심)를 변환표 하나로 처리한 1280×720 흑백, 약 10fps.
-- **숨은 버튼**(화면 오른쪽 아래 모서리 44px): 누르면 카메라·STM32를 놓고 데모 웹을 띄워 그 화면으로 넘어간다. 이 앱 주소를 다시 열면 데모 웹을 끄고 장치를 다시 잡는다.
+- **상단 오른쪽 `데모 웹으로 →` 버튼**: 누르면 카메라·STM32를 놓고 데모 웹을 띄워 그 화면으로 넘어간다. 이 앱 주소를 다시 열면 데모 웹을 끄고 장치를 다시 잡는다.
 
 ## 실행 (저장소 루트)
 
@@ -23,7 +23,7 @@ demo_web/.venv/bin/python -m verify_web serve --mode hardware --calib <캘리브
 ```
 
 - 화면: `http://<파이 IP>:8090` (기본은 파이 안에서만 `127.0.0.1`). `--host 0.0.0.0` 이면 같은 망 누구나 조작할 수 있다.
-- 데모 웹은 숨은 버튼을 누를 때 `python -m demo_web serve --host <같은 host> --port 8080 --mode hardware` 로 뜬다. 바꾸려면 `--demo-args "--mode hardware --transport serial"`, `--demo-port`.
+- 데모 웹은 `데모 웹으로` 버튼을 누를 때 `python -m demo_web serve --host <같은 host> --port 8080 --mode hardware` 로 뜬다. 바꾸려면 `--demo-args "--mode hardware --transport serial"`, `--demo-port`.
 - 데모 웹이 따로 이미 떠 있으면(8080 사용 중) 넘기지 않고 오류를 보여 준다.
 
 ## 주요 옵션

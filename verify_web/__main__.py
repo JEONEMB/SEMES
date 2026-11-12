@@ -32,7 +32,7 @@ def main():
     p.add_argument('--algo-gray', action='store_true', help='알고리즘에 흑백 1채널로 넘김 (기본 BGR 3채널)')
     p.add_argument('--demo-port', type=int, default=8080)
     p.add_argument('--demo-args', default='--mode hardware',
-                   help='숨은 버튼으로 띄울 데모 웹 serve 추가 인자 (--host/--port 는 자동)')
+                   help='데모 웹으로 버튼으로 띄울 데모 웹 serve 추가 인자 (--host/--port 는 자동)')
     p.add_argument('--data-dir', type=Path, default=ROOT / 'instance')
     args = p.parse_args()
 
