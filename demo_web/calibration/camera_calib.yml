@@ -5,29 +5,28 @@ image_height: 3040
 pattern_cols: 11
 pattern_rows: 8
 square_mm: 15.
-images_used: 43
-rms_px: 0.6883238449170892
+images_used: 54
+rms_px: 0.7798684713481624
 camera_matrix: !!opencv-matrix
    rows: 3
    cols: 3
    dt: d
-   data: [ 3984.2973802892752, 0., 2120.2367341428303, 0.,
-       3983.401363252543, 1517.3010904948837, 0., 0., 1. ]
+   data: [ 3988.5456972551492, 0., 2111.0511562250567, 0.,
+       3987.6709078652984, 1508.9604659012284, 0., 0., 1. ]
 dist_coeffs: !!opencv-matrix
    rows: 1
    cols: 5
    dt: d
-   data: [ -0.49685884929396645, 0.34435794191189739,
-       -0.0011319328644027369, -0.00065639564346375661,
-       -0.18995397504491848 ]
-fov_x_deg: 53.952019644307626
-fov_y_deg: 41.772052429936572
-focal_mm: 6.1756609394483766
-board_distance_median_mm: 280.60969914879473
-semes_crop_width: 3808
-semes_crop_height: 2008
-roll_deg: 0.22
-# 2026-11-12 HQ camera (IMX477) + 6mm CS lens, refocused at rig distance (QR sharpness 2588), exposure 8333us gain 3.0
-# 43 photos (captures_20261112c: 29 frontal + 14 tilted 17-30 deg), findChessboardCornersSB + calibrateCameraRO (board points refined)
-# RMS 0.688 px; board non-planarity about +-0.9 mm absorbed by RO; 70% subsets fx 3979-3986
-# roll_deg: rotation about optical axis applied after undistortion (set after measuring rig tilt)
+   data: [ -0.50175050978289537, 0.35692602507060073,
+       -6.4876921248785177e-05, 4.6648311552005336e-05,
+       -0.20580028611654294 ]
+fov_x_deg: 53.902666671304814
+fov_y_deg: 41.731180209674861
+focal_mm: 6.1822458307454813
+board_distance_median_mm: 280.02768557843035
+semes_crop_width: 3812
+semes_crop_height: 2010
+roll_deg: 0.23
+# calibrate_ro.py: 54 photos in captures_20261112c, findChessboardCornersSB + calibrateCameraRO, RMS 0.780 px
+# roll_deg: rotation about optical axis applied after undistortion (+ = output turns clockwise). Measure on the rig, then edit.
+# 2026-11-12 refocused at rig distance (QR sharpness ~2590), exposure 8333us gain 3.0. 43 photos + 11 left/right edge photos. roll_deg 0.23 = background lines matched to SEMES center.bmp
