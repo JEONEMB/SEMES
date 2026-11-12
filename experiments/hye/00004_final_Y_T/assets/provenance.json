@@ -1,0 +1,27 @@
+{
+  "training_images": 715,
+  "training_min": [
+    -2.0,
+    -1.0
+  ],
+  "training_max": [
+    2.0,
+    2.0
+  ],
+  "scope": "All715 development photos fitted for deployment. Cross-validation evidence is separate.",
+  "model_id": "final04_huber66_715_irls6_r1e-7",
+  "features": 66,
+  "training_recipe": "shared normalized Huber IRLS6, ridge1e-7, no augmentation",
+  "observation_environment": "macOS arm64 OpenCV3.4.15; Windows v141 runtime not certified",
+  "source_experiment": "20261109_213700_나사흔들림_원인과_강건추론 baseline66",
+  "input_contract": "single3840x2160 uint8 image; no labels, date or filename in inference",
+  "feature_order": "QR-H54,bar-LS4,pin-GN8",
+  "created_date": "2026-11-11",
+  "known_limits": "common screw x+0.5px0/715; maxT1.677200; actual5captures/newmachine not validated",
+  "center.bmp_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+  "geometry.json_sha256": "25d635a7b239b7891954aa0b0381380709167ab2c44ed8bc0ec7b80269bf83ac",
+  "line_protocol.json_sha256": "97a3550a812efa8521ccdce08e88d06b7604c1d853ecc1b582ad47830fba3669",
+  "huber_linear66.yml_sha256": "b8eb8756974a9c412cfbe1ef70b80cdfb9ceb29d3e2d10c18033d2e094ebbfa0",
+  "training_features_sha256": "4dc0037428ad44dc81454becbc65ab5a50f910ff34e14f46e2e63463758d1dbc",
+  "packaging_note": "Line protocol JSON normalized CRLF to LF without data changes; .gitattributes fixes LF for hash-checked text assets."
+}
