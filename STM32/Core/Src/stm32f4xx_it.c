@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "y_motor.h"
+#include "theta_motor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -228,6 +229,11 @@ void EXTI15_10_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+void TIM1_UP_TIM10_IRQHandler(void)
+{
+    ThetaMotor_IRQHandler();
+}
+
 void TIM3_IRQHandler(void)
 {
   YMotor_IRQHandler();

@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "theta_config.h"
 #include "app.h"
 /* USER CODE END Includes */
 
@@ -353,7 +354,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(Y_EN_N_GPIO_Port, Y_EN_N_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(THETA_EN_GPIO_Port, THETA_EN_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(THETA_EN_GPIO_Port, THETA_EN_Pin,
+                    APP_THETA_EN_ACTIVE_HIGH == 0 ? GPIO_PIN_SET : GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(THETA_DIR_GPIO_Port, THETA_DIR_Pin, GPIO_PIN_RESET);
