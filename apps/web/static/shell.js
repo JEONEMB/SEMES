@@ -1,4 +1,4 @@
-// Top tabs. Each [data-panel] element is shown only on its tab. #eval opens the 평가 tab, #report or #report/<id> the 보고서 tab.
+// Top tabs. Each [data-panel] element is shown only on its tab. #eval opens the 평가 tab, #dist the 데이터 분포 tab, #report or #report/<id> the 보고서 tab.
 (() => {
   const tabs = document.querySelectorAll(".tab[data-tab]");
   // 보고서 탭의 보고서들. 경로는 static/index.html 기준
@@ -27,6 +27,12 @@
   function route() {
     const h = location.hash.slice(1);
     if (h === "eval") show("eval");
+    else if (h === "dist") {
+      show("dist");
+      // 4.7MB 페이지라 탭을 처음 열 때만 불러온다
+      const f = document.getElementById("distFrame");
+      if (!f.getAttribute("src")) f.setAttribute("src", f.dataset.src);
+    }
     else if (h === "report" || h.startsWith("report/")) { show("report"); openReport(h.split("/")[1]); }
     else show("service");
   }

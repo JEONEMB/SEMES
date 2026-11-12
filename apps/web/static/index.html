@@ -18,6 +18,7 @@
       <button class="tab is-active" data-tab="service" aria-current="page">서비스</button>
       <button class="tab" disabled>디지털 트윈<span class="tab-soon">준비 중</span></button>
       <button class="tab" data-tab="eval">평가</button>
+      <button class="tab" data-tab="dist">데이터 분포</button>
       <button class="tab" data-tab="report">보고서</button>
     </nav>
     <div class="topbar-right" data-panel="service">
@@ -205,6 +206,12 @@
   </main>
   </div>
 
+  <div class="panel" data-panel="dist" hidden>
+  <section class="report-view" id="distView">
+    <iframe class="report-frame" id="distFrame" title="데이터 분포" data-src="../../distribution/index.html"></iframe>
+  </section>
+  </div>
+
   <div class="panel" data-panel="report" hidden>
   <main class="report-wrap" id="reportList">
     <header class="report-head">
@@ -237,7 +244,7 @@
   </div>
 
   <script src="demo/data.js?v=20261029e"></script>
-  <script src="shell.js?v=20261029e"></script>
+  <script src="shell.js?v=20261112a"></script>
   <script src="app.js?v=20261029e"></script>
   <script src="eval.js?v=20261029e"></script>
 </body>
