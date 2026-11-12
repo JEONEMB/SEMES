@@ -30,6 +30,10 @@ SIDE_Y0, SIDE_Y1 = 190.0, 198.0   # 옆 받침 두께 방향 (판 양 끝, 화�
 SIDE_BOLT_Y = 194.0
 SIDE_BOLT_Z = (60.0, 220.0)
 FOOT_BACK = 140.0             # 판 뒷면에서 뒤로 (끝을 책상 모서리에 맞춰 클램프)
+# 옆 받침만 키워 판 전체(판·띠·플레이트 받침·QR)를 책상에서 이만큼 더 띄운다 (mm).
+# 판 좌표(구멍·띠·도면)는 그대로이고, 옆 받침의 책상 닿는 면만 -LIFT 로 내려간다.
+# 2026-11-12 실측: 원래 받침 위 QR 이 SEMES center.bmp 보다 화면 아래로 395 px(≈25.6 mm) 내려가 있었음.
+LIFT = 25.5
 STEP_DEPTH, STEP_H = S.STEP_DEPTH, S.STEP_H
 
 # 판 구멍 (Y, Z, 지름, 이름)
@@ -60,12 +64,14 @@ def strip_lower():
 
 def side_bracket(side):
     y0, y1 = sorted((side * SIDE_Y0, side * SIDE_Y1))
+    zd = -LIFT                                                                  # 책상 윗면
     prof = [
-        box(X_B - 40, X_PB + FOOT_BACK, y0, y1, 0, FOOT_T),                    # 발 (판이 위에 섬)
-        box(X_B - 8, X_B, y0, y1, 0, 24),                                       # 앞 턱 (판 아래 앞을 잡음)
-        box(X_PB, X_PB + 8, y0, y1, 0, 235),                                    # 기둥 (판 뒤)
-        prism_y([(X_PB + 7.9, 200), (X_PB + 7.9, 216), (X_PB + 140, FOOT_T - 0.1), (X_PB + 122, FOOT_T - 0.1)], y0, y1),   # 버팀대
-        box(X_PB + FOOT_BACK - 50, X_PB + FOOT_BACK, y0, y1, 0, 10),            # 클램프 자리
+        box(X_B - 40, X_PB + FOOT_BACK, y0, y1, zd, zd + FOOT_T),              # 발
+        box(X_B, X_PB, y0, y1, zd, BOARD_Z0),                                   # 판 자리 (판이 이 위에 섬)
+        box(X_B - 8, X_B, y0, y1, zd, 24),                                      # 앞 턱 (판 아래 앞을 잡음)
+        box(X_PB, X_PB + 8, y0, y1, zd, 235),                                   # 기둥 (판 뒤)
+        prism_y([(X_PB + 7.9, 200), (X_PB + 7.9, 216), (X_PB + 140, zd + FOOT_T - 0.1), (X_PB + 122, zd + FOOT_T - 0.1)], y0, y1),   # 버팀대
+        box(X_PB + FOOT_BACK - 50, X_PB + FOOT_BACK, y0, y1, zd, zd + 10),      # 클램프 자리
     ]
     p = union(prof)
     return p - union([cyl_x(side * SIDE_BOLT_Y, z, X_PB - 1, X_PB + 9, M4) for z in SIDE_BOLT_Z])
