@@ -3,6 +3,7 @@
 #include <opencv2/calib3d.hpp>
 #include <opencv2/imgproc.hpp>
 
+#include <cmath>
 #include <stdexcept>
 
 namespace stage_camera {
@@ -27,6 +28,13 @@ Rectifier::Rectifier(const std::string &calib_path, double zoom) : zoom_(zoom)
     input_size_ = cv::Size(w, h);
     K_.convertTo(K_, CV_64F);
     D_.convertTo(D_, CV_64F);
+    // 선택 항목: 광축 기준 기울기 보정 (없으면 0). 양수면 결과 사진이 시계 방향으로 돈다.
+    if (!fs["roll_deg"].empty())
+        fs["roll_deg"] >> roll_deg_;
+    const double a = roll_deg_ * CV_PI / 180.0;
+    R_ = (cv::Mat_<double>(3, 3) << std::cos(a), -std::sin(a), 0,
+          std::sin(a), std::cos(a), 0,
+          0, 0, 1);
 
     // 결과 사진의 카메라 행렬 = SEMES 규격, 렌즈 중심이 사진 가운데로 온다
     const cv::Size out = outputSize();
@@ -36,7 +44,7 @@ Rectifier::Rectifier(const std::string &calib_path, double zoom) : zoom_(zoom)
 
     // 먼저 실수형 변환표로 원본 바깥을 가리키는 픽셀이 있는지 센 뒤, 빠른 고정소수점 형식으로 바꾼다
     cv::Mat mx, my;
-    cv::initUndistortRectifyMap(K_, D_, cv::Mat(), K_out_, out, CV_32FC1, mx, my);
+    cv::initUndistortRectifyMap(K_, D_, R_, K_out_, out, CV_32FC1, mx, my);
     cv::Mat inside = (mx >= 0) & (mx <= w - 1) & (my >= 0) & (my <= h - 1);
     outside_fraction_ = 1.0 - static_cast<double>(cv::countNonZero(inside)) / inside.total();
     cv::convertMaps(mx, my, map1_, map2_, CV_16SC2);

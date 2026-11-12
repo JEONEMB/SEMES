@@ -42,14 +42,17 @@ public:
     const cv::Mat &distCoeffs() const { return D_; }
     const cv::Mat &targetMatrix() const { return K_out_; }  // 결과 사진 카메라 행렬
     double zoom() const { return zoom_; }
+    // 캘리브레이션 파일의 roll_deg (광축 기준 기울기 보정, 없으면 0). 양수면 결과 사진이 시계 방향으로 돈다
+    double rollDeg() const { return roll_deg_; }
     // 결과 사진 중 원본 바깥을 가리켜 검게 채워지는 픽셀 비율 (0 이 정상)
     double outsideFraction() const { return outside_fraction_; }
 
 private:
     cv::Size input_size_;
-    cv::Mat K_, D_, K_out_;
+    cv::Mat K_, D_, K_out_, R_;
     cv::Mat map1_, map2_;
     double zoom_ = 1.0;
+    double roll_deg_ = 0.0;
     double outside_fraction_ = 0.0;
 };
 
