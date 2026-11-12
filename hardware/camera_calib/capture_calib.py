@@ -18,6 +18,8 @@ from http import server
 from socketserver import ThreadingMixIn
 
 from PIL import Image
+import cv2
+import numpy as np
 from picamera2 import Picamera2
 from picamera2.encoders import JpegEncoder
 from picamera2.outputs import FileOutput
@@ -64,6 +66,7 @@ class Capturer:
         self.lock = threading.Lock()
         self.count = len([f for f in os.listdir(outdir) if f.endswith(".png")])
         self.meta = {"fom": 0, "exp": 0, "gain": 0}
+        self._win = None
 
     def on_frame(self, request):
         md = request.get_metadata()
@@ -71,25 +74,54 @@ class Capturer:
                      "exp": round(md.get("ExposureTime", 0) / 1000, 1),
                      "gain": round(md.get("AnalogueGain", 0), 2)}
 
-    def capture(self):
+    def _gray(self):
+        request = self.picam2.capture_request()
+        try:
+            rgb = request.make_array("main")
+            md = request.get_metadata()
+        finally:
+            request.release()
+        return cv2.cvtColor(rgb, cv2.COLOR_BGR2GRAY), md
+
+    def capture(self, still_px=0.3, timeout_s=4.0):
+        """멈춤 확인: 연속 프레임 이동량이 still_px(원본 px) 미만으로 2번 연속일 때만 저장.
+        (손으로 든 보드가 움직이면 롤링 셔터 때문에 사진이 휘어 칼리브레이션 오차가 커진다)"""
         with self.lock:
-            request = self.picam2.capture_request()
-            try:
-                rgb = request.make_array("main")
-                md = request.get_metadata()
-            finally:
-                request.release()
+            t0 = time.monotonic()
+            prev, still, shift, frames = None, 0, float("nan"), []
+            while time.monotonic() - t0 < timeout_s:
+                gray, md = self._gray()
+                small = cv2.resize(gray, (gray.shape[1] // 4, gray.shape[0] // 4), interpolation=cv2.INTER_AREA).astype(np.float32)
+                if prev is not None:
+                    if self._win is None:
+                        self._win = cv2.createHanningWindow((small.shape[1], small.shape[0]), cv2.CV_32F)
+                    (dx, dy), _ = cv2.phaseCorrelate(prev, small, self._win)
+                    shift = float(np.hypot(dx, dy) * 4)
+                    still = still + 1 if shift < still_px else 0
+                    frames = frames[-2:] + [gray] if still else [gray]
+                    if still >= 2:
+                        break
+                else:
+                    frames = [gray]
+                prev = small
+            else:
+                print(f"[ - ] 흔들림 {shift:.2f}px → 저장 안 함 (보드를 멈추고 다시)", flush=True)
+                return None, shift
+            # 멈춘 3장 평균 (노이즈 감소)
+            img = np.clip(np.mean(frames, axis=0) + 0.5, 0, 255).astype(np.uint8)
             self.count += 1
             name = f"calib_{self.count:03d}"
             path = os.path.join(self.outdir, name + ".png")
-            # main 스트림은 BGR 순서로 들어오므로 채널을 뒤집어 RGB 로 만든 뒤 흑백 변환
-            Image.fromarray(rgb[:, :, ::-1]).convert("L").save(path)
+            cv2.imwrite(path, img)
             keep = ("ExposureTime", "AnalogueGain", "DigitalGain", "Lux", "FocusFoM",
                     "ColourGains", "SensorTemperature", "ScalerCrop")
+            info = {k: md[k] for k in keep if k in md}
+            info["still_shift_px"] = round(shift, 3)
+            info["averaged_frames"] = len(frames)
             with open(os.path.join(self.outdir, name + ".json"), "w") as f:
-                json.dump({k: md[k] for k in keep if k in md}, f, default=list, indent=1)
-            print(f"[{self.count:3d}] {path}  선명도 {md.get('FocusFoM')}", flush=True)
-            return path
+                json.dump(info, f, default=list, indent=1)
+            print(f"[{self.count:3d}] {path}  멈춤 {shift:.2f}px  {time.monotonic() - t0:.1f}s", flush=True)
+            return path, shift
 
 
 def make_handler(cap, output):
@@ -111,9 +143,9 @@ def make_handler(cap, output):
                 self.send_body(json.dumps({**cap.meta, "count": cap.count}).encode(),
                                "application/json")
             elif self.path == "/capture":
-                path = cap.capture()
-                self.send_body(json.dumps({"file": os.path.basename(path),
-                                           "count": cap.count}).encode(), "application/json")
+                path, shift = cap.capture()
+                name = os.path.basename(path) if path else f"흔들림 {shift:.2f}px - 저장 안 함, 보드를 멈추고 다시"
+                self.send_body(json.dumps({"file": name, "count": cap.count}).encode(), "application/json")
             elif self.path == "/stream.mjpg":
                 self.send_response(200)
                 self.send_header("Cache-Control", "no-cache")
