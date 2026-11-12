@@ -54,13 +54,15 @@ void onSigint(int)
 void usage()
 {
     std::fprintf(stderr,
-                 "사용법: capture_dataset --plan set1|y|t|set2 -o 출력폴더 --calib camera_calib.yml\n"
+                 "사용법: capture_dataset --plan set1|y|t|set2|grid -o 출력폴더 --calib camera_calib.yml\n"
                  "                        (--center-here | --center Y_MM T_DEG) [선택]\n"
                  "\n"
                  "  계획\n"
                  "    set1  Y 단독 + Θ 단독 (학습, center.bmp)      y / t : 그중 한 축만\n"
                  "    set2  Y·Θ 동시 이동, 자세마다 --repeat 장 (평가, center1.bmp)\n"
+                 "    grid  Y·Θ 4사분면 격자, 'ㄹ'자 순서 (학습, center.bmp, Grid/\"Y+0.10 T-0.05 (1)\")\n"
                  "    --y-range MM (2.0)  --y-step MM (0.05)  --t-range DEG (1.0)  --t-step DEG (0.01)\n"
+                 "    --grid-y-step MM (0.1)  --grid-t-step DEG (0.05)   grid 간격 (범위는 --y-range/--t-range)\n"
                  "    --poses FILE.csv    set2 자세 목록 \"y_mm,t_deg\" (기본 20자세)   --repeat N (3)\n"
                  "    --center-name NAME  센터 사진 이름 (기본 set2 = center1, 그 밖 = center)\n"
                  "\n"
@@ -128,6 +130,7 @@ cv::Point2d shiftBetween(const cv::Mat &a, const cv::Mat &b, const cv::Rect &roi
 struct Options {
     std::string plan, out, poses_file, center_name, device = "/dev/robot_stage", home = "none";
     int32_t y_range = 2000, y_step = 50, t_range = 1000, t_step = 10;
+    int32_t grid_y_step = 100, grid_t_step = 50;
     int32_t approach_y = 200, approach_t = 100;
     int repeat = 3, average = 1, center_average = 4, settle_retries = 2, check_every = 100;
     bool center_here = false, have_center = false, raw = true, resume = false, dry_run = false;
@@ -341,6 +344,8 @@ int main(int argc, char **argv)
         else if (a == "--y-step") o.y_step = mustMilli("--y-step", val());
         else if (a == "--t-range") o.t_range = mustMilli("--t-range", val());
         else if (a == "--t-step") o.t_step = mustMilli("--t-step", val());
+        else if (a == "--grid-y-step") o.grid_y_step = mustMilli("--grid-y-step", val());
+        else if (a == "--grid-t-step") o.grid_t_step = mustMilli("--grid-t-step", val());
         else if (a == "--poses") o.poses_file = val();
         else if (a == "--repeat") o.repeat = std::atoi(val().c_str());
         else if (a == "--approach-y") o.approach_y = mustMilli("--approach-y", val());
@@ -403,11 +408,12 @@ int main(int argc, char **argv)
         }
         shots = planMixed(poses, o.repeat);
     }
+    if (o.plan == "grid") shots = planGrid(o.y_range, o.grid_y_step, o.t_range, o.grid_t_step);
     if (shots.empty() || o.out.empty() || o.repeat < 1 || o.average < 1 || o.center_average < 1) {
         usage();
         return 2;
     }
-    sortForTravel(shots);
+    if (o.plan != "grid") sortForTravel(shots);   // grid 는 planGrid 가 이미 'ㄹ'자 순서
     if (o.center_name.empty()) o.center_name = o.plan == "set2" ? "center1" : "center";
 
     Rel lo{0, 0}, hi{0, 0};

@@ -45,6 +45,11 @@ std::vector<ShotSpec> planT(int32_t range_mdeg, int32_t step_mdeg);
 // 세트 2: 동시 이동. 자세마다 repeat 장. 폴더·이름 "Y+0.50 T+0.10" / "Y+0.50 T+0.10 (1)"
 std::vector<ShotSpec> planMixed(const std::vector<Rel> &poses, int repeat);
 
+// 격자 (학습): Y -y_range~+y_range (y_step) × Θ -t_range~+t_range (t_step), 4사분면 모든 점 (센터 제외).
+//  'ㄹ'자 순서: Θ 오름차순 줄마다 Y 방향을 번갈아 (짝수 줄 Y 오름, 홀수 줄 Y 내림) — 이미 이 순서로 돌려준다.
+//  폴더 "Grid", 이름 "Y+0.10 T-0.05 (1)" (김성현 dataset.cpp 의 동시 이동 라벨 형식)
+std::vector<ShotSpec> planGrid(int32_t y_range_um, int32_t y_step_um, int32_t t_range_mdeg, int32_t t_step_mdeg);
+
 // 세트 2 기본 자세 20개: Y {0.05, 0.2, 0.5, 1.0} mm × Θ {0.01, 0.05, 0.2, 0.5, 1.0}°
 //  (SEMES 2차: 양의 Y 0.05~1 mm × Θ 0.01~2°. Θ 2° 는 학습 범위 ±1° 밖이라 기본에서 뺌)
 std::vector<Rel> defaultMixedPoses();
