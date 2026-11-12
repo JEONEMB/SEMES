@@ -73,6 +73,21 @@ class GeometryTest(unittest.TestCase):
         diff = np.abs(v.astype(int) - ref.astype(int))[20:-20, 20:-20]
         self.assertLess(diff.mean(), 3.0)
 
+    def test_roll_rotates_clockwise(self):
+        """roll_deg > 0 이면 결과 사진이 시계 방향(오른쪽이 내려감)으로 돈다. 가로세로 비 때문에 약 1.067배."""
+        import dataclasses
+        w, h = self.calib.size
+        img = np.zeros((h, w), np.uint8)
+        cy = int(round(self.calib.K[1, 2]))
+        cv2.line(img, (1000, cy), (3200, cy), 255, 9)
+        ys = []
+        for roll in (0.0, 1.0):
+            out = Rectifier(dataclasses.replace(self.calib, roll_deg=roll)).apply(img)
+            ys.append([int(np.argmax(out[:, x])) for x in (1200, 2700)])
+        self.assertLessEqual(abs(ys[0][1] - ys[0][0]), 1)
+        ang = np.degrees(np.arctan2(ys[1][1] - ys[1][0], 1500))
+        self.assertAlmostEqual(ang, 1.0 * SEMES_FY / SEMES_FX, delta=0.08)
+
     def test_view_zoom_keeps_plate_point_centered(self):
         view = ViewMapper(self.calib)
         view.set_view(4.0, (1907.0, 1065.0))

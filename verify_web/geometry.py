@@ -25,6 +25,13 @@ class Calibration:
     size: tuple          # (w, h) 센서 원본
     K: np.ndarray
     D: np.ndarray
+    roll_deg: float = 0.0  # 광축 기준 회전 보정 (카메라·판 기울기). 결과 사진이 이만큼 돌아간다
+
+    def R(self):
+        """initUndistortRectifyMap 의 R: 광축(z) 기준 회전. roll_deg > 0 이면 결과 사진이 시계 방향으로 돈다."""
+        a = np.radians(self.roll_deg)
+        c, s = np.cos(a), np.sin(a)
+        return np.array([[c, -s, 0], [s, c, 0], [0, 0, 1]], np.float64)
 
     @classmethod
     def load(cls, path):
@@ -35,11 +42,13 @@ class Calibration:
             size = (int(fs.getNode('image_width').real()), int(fs.getNode('image_height').real()))
             K = fs.getNode('camera_matrix').mat()
             D = fs.getNode('dist_coeffs').mat()
+            roll = fs.getNode('roll_deg')
+            roll = 0.0 if roll.empty() else float(roll.real())
         finally:
             fs.release()
         if size[0] <= 0 or size[1] <= 0 or K is None or K.shape != (3, 3) or D is None or D.size == 0:
             raise ValueError(f'image_width/height, camera_matrix, dist_coeffs 가 필요함: {path}')
-        return cls(size, K.astype(np.float64), D.astype(np.float64).reshape(-1))
+        return cls(size, K.astype(np.float64), D.astype(np.float64).reshape(-1), roll)
 
 
 def alg_matrix(zoom=1.0):
@@ -62,7 +71,7 @@ def view_matrix(zoom=1.0, view_zoom=1.0, center=None):
 
 def build_map(calib, K_out, size):
     """반환: (map1, map2, 원본 밖 비율). 형식은 빠른 고정소수점(CV_16SC2)."""
-    mx, my = cv2.initUndistortRectifyMap(calib.K, calib.D, None, K_out, size, cv2.CV_32FC1)
+    mx, my = cv2.initUndistortRectifyMap(calib.K, calib.D, calib.R(), K_out, size, cv2.CV_32FC1)
     w, h = calib.size
     inside = (mx >= 0) & (mx <= w - 1) & (my >= 0) & (my <= h - 1)
     m1, m2 = cv2.convertMaps(mx, my, cv2.CV_16SC2)
