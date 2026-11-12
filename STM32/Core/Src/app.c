@@ -4,6 +4,8 @@
 #include "y_motor.h"
 #include "y_test.h"
 #include "y_home.h"
+#include "theta_motor.h"
+#include "theta_home.h"
 
 static UART_HandleTypeDef *link;
 static uint8_t rx_byte;
@@ -40,6 +42,7 @@ static void DisablePulses(void)
     CLEAR_BIT(TIM1->BDTR, TIM_BDTR_MOE);
     CLEAR_BIT(TIM1->CR1, TIM_CR1_CEN);
     YMotor_Abort();
+    ThetaMotor_Abort();
 }
 
 static void PollSwitches(uint32_t now)
@@ -119,10 +122,10 @@ void App_Init(UART_HandleTypeDef *uart)
     for (unsigned i = 0; i < 3U; ++i) { candidate[i] = sample_count[i] = 0U; }
     RsParser_Reset(&parser);
     RsService_Init(&service);
-    /* Keep PC7 at generated Low; its physical disable meaning is UNKNOWN.
-     * Theta driver power must remain off during Y-only commissioning. */
+    /* Both timers remain stopped until an accepted command. */
     DisablePulses();
     YMotor_Init();
+    ThetaMotor_Init();
     YTest_Init();
     last_sample = HAL_GetTick();
     RsFrame boot;
@@ -184,6 +187,9 @@ void App_Poll(void)
 {
     YMotor_Poll();
     YHome_Poll();
+    ThetaMotor_Poll();
+    ThetaHome_Poll();
+    RsService_Maintain(&service);
     uint32_t now = HAL_GetTick();
     PollSwitches(now);
     RecoverRx();

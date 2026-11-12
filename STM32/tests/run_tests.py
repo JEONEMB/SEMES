@@ -19,6 +19,7 @@ args.add_argument('--motor-enabled', action='store_true', help='Enable pulse API
 args.add_argument('--with-switches', action='store_true', help='Test restored NC switch enforcement')
 args.add_argument('--unconfigured', action='store_true', help='Test explicit HOME-disabled configuration')
 args.add_argument('--physical-home', action='store_true', help='Test NC switch homing and production 0..500mm settings')
+args.add_argument('--theta', action='store_true', help='Production Theta and dual-axis tests')
 options = args.parse_args()
 out = root / 'build' / 'protocol-tests'
 out.mkdir(parents=True, exist_ok=True)
@@ -27,12 +28,15 @@ subprocess.run([
     options.gcc, '-std=c11', '-mcpu=cortex-m4', '-mthumb', '-mfloat-abi=soft',
     '-O0', '-g', '-Wall', '-Wextra', '-Werror', '-ffreestanding', '-fno-builtin',
     '-nostdlib', '-I.', '-ICore/Inc', '-Itests', '-include', 'tests/mock_hal.h',
+    '-DAPP_THETA_ENABLED=' + ('1' if options.theta else '0'),
     '-DY_MOTOR_OUTPUT_ALLOWED=' + ('1' if options.motor_enabled else '0'),
     '-DY_MOTOR_USE_LIMITS=' + ('1' if options.with_switches or options.physical_home else '0'),
     '-DAPP_Y_MANUAL_HOME=' + ('0' if options.unconfigured or options.physical_home else '1'),
     '-DAPP_Y_SWITCH_HOME=' + ('1' if options.physical_home else '0'),
     'Core/Src/robot_stage_transport.c', 'Core/Src/robot_stage_service.c',
     'Core/Src/app.c', 'Core/Src/y_motor.c', 'Core/Src/y_motor_tim.c', 'Core/Src/y_test.c', 'Core/Src/y_home.c',
+    'Core/Src/theta_motor.c', 'Core/Src/theta_motor_tim.c', 'Core/Src/theta_home.c',
+    'tests/test_theta.c',
     'tests/test_protocol.c', 'tests/test_y_motor.c', 'tests/test_standard_motion.c', 'tests/test_y_home.c', '-Ttests/test.ld',
     '-lgcc', '-o', str(elf),
 ], cwd=root, check=True)
@@ -51,6 +55,8 @@ test_names = (['TestTransport', 'TestApp', 'TestYMotor', 'TestYTest', 'TestPCJog
               ['TestTransport', 'TestYMotor', 'TestYTest', 'TestPCJog', 'TestUnconfigured']
               if options.unconfigured else
               ['TestTransport', 'TestService', 'TestApp', 'TestYMotor', 'TestYTest', 'TestPCJog', 'TestStandardMotion', 'TestStandardApp'])
+if options.theta:
+    test_names = ['TestTransport', 'TestApp', 'TestYMotor', 'TestYTest', 'TestPCJog', 'TestPhysicalHome', 'TestHomeBoundaries', 'TestHomeStop', 'TestPhysicalApp', 'TestThetaMotor', 'TestThetaHome', 'TestThetaService', 'TestDualAxes', 'TestThetaApp']
 for name in test_names:
     cpu = Uc(UC_ARCH_ARM, UC_MODE_THUMB | UC_MODE_MCLASS)
     cpu.mem_map(0x10000, 0x100000)

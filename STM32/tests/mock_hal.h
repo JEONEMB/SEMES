@@ -6,7 +6,7 @@
 #include <stdint.h>
 typedef struct { uint32_t ErrorCode, gState; } UART_HandleTypeDef;
 typedef struct { volatile uint32_t CCER, BDTR, CR1, CR2, SMCR, DIER,
-    CCMR1, CNT, SR, PSC, ARR, CCR1, EGR; } TestTimer;
+    CCMR1, CNT, SR, PSC, ARR, CCR1, EGR, RCR; } TestTimer;
 typedef struct { uint32_t CFGR, DCKCFGR; } TestRcc;
 extern TestRcc test_rcc;
 #define RCC (&test_rcc)
@@ -20,6 +20,13 @@ extern TestRcc test_rcc;
 #define TIM_DIER_UIE 1U
 #define TIM_SR_UIF 1U
 #define TIM3_IRQn 29
+#define TIM1_UP_TIM10_IRQn 25
+#define RCC_CFGR_PPRE2 (7U << 13)
+#define THETA_EN_GPIO_Port (&gpio)
+#define THETA_EN_Pin 128U
+#define THETA_DIR_GPIO_Port (&gpio)
+#define THETA_DIR_Pin 512U
+uint32_t HAL_RCC_GetPCLK2Freq(void);
 #define SET_BIT(reg, mask) ((reg) |= (mask))
 #define MODIFY_REG(reg, mask, value) ((reg) = ((reg) & ~(mask)) | (value))
 #define GPIOA (&gpio)
