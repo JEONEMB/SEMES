@@ -2,7 +2,7 @@
 (() => {
   const $ = id => document.getElementById(id);
   const fmt = (v, d = 3) => (v === null || v === undefined || Number.isNaN(v)) ? '—' : (v >= 0 ? '+' : '') + Number(v).toFixed(d);
-  let state = null, events = null, videoRetry = null, settingsDirty = false;
+  let state = null, events = null, videoRetry = null, settingsDirty = false, camOk = false;
 
   // ---------- API ----------
   async function api(path, body) {
@@ -23,7 +23,10 @@
     const img = $('video');
     img.src = '/video?t=' + Date.now();
   }
-  $('video').addEventListener('error', () => { clearTimeout(videoRetry); videoRetry = setTimeout(startVideo, 1500); });
+  // 카메라가 정상일 때만 다시 붙는다 (안 되는 동안 요청을 쌓지 않도록). 살아나면 render 에서 다시 시작.
+  const retryVideo = () => { clearTimeout(videoRetry); if (camOk) videoRetry = setTimeout(startVideo, 3000); };
+  $('video').addEventListener('error', retryVideo);
+  $('video').addEventListener('abort', retryVideo);
   $('video').addEventListener('load', () => { $('video-empty').hidden = true; });
   document.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click', () => setView({zoom: +b.dataset.zoom}, b)));
   document.querySelectorAll('[data-center]').forEach(b => b.addEventListener('click', () => setView({center: b.dataset.center}, b)));
@@ -54,6 +57,8 @@
     $('pill-camera').className = 'pill' + (cam.ok ? (cam.kind === 'fake' ? ' warn' : '') : ' bad');
     $('cam-info').textContent = cam.ok ? `${cam.fps} fps · ${cam.view_zoom}×` : '';
     const empty = !cam.ok;
+    if (cam.ok && !camOk) { camOk = true; startVideo(); }       // 카메라가 살아남
+    else if (!cam.ok && camOk) { camOk = false; clearTimeout(videoRetry); $('video').removeAttribute('src'); }
     $('video-empty').hidden = !empty;
     $('video-empty-msg').textContent = s.phase === 'released' ? '데모 웹이 카메라를 쓰는 중입니다.' : (cam.error || '카메라 연결을 기다리는 중');
     if (s.overlay) {
@@ -190,7 +195,7 @@
     events = new EventSource('/api/events');
     events.onmessage = e => render(JSON.parse(e.data));
     events.onerror = () => { $('pill-stage').textContent = '서버 재연결 중'; };
-    startVideo();
+    camOk = false;      // 첫 상태에서 카메라가 정상이면 영상 시작
   }
 
   async function boot() {

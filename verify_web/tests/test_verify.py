@@ -188,6 +188,42 @@ class WorkerTest(unittest.TestCase):
             WorkerAlgorithm('/nonexistent/align_worker')
 
 
+class VideoStreamTest(unittest.TestCase):
+    """카메라가 프레임을 안 줄 때 /video 가 작업 스레드를 붙잡고 있으면 안 된다 (숨은 버튼 먹통 원인)."""
+
+    def app_with(self, camera):
+        calib = Calibration.load(CALIB)
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        devices = Devices(camera, MockStage())
+        runner = Runner(devices, MockAlgorithm(), Rectifier(calib), Settings(Path(tmp.name) / 's.json'),
+                        Path(tmp.name) / 'runs')
+        demo = DemoLauncher(['true'], tmp.name, free_port(), Path(tmp.name) / 'demo.log')
+        return create_app(runner, devices, demo).test_client()
+
+    def test_no_frames_ends_response(self):
+        cam = FakeCamera(ViewMapper(Calibration.load(CALIB)))      # start() 안 함 = 프레임 없음
+        client = self.app_with(cam)
+        t0 = time.monotonic()
+        r = client.get('/video')
+        self.assertEqual(r.get_data(), b'')
+        self.assertLess(time.monotonic() - t0, 6)
+        self.assertEqual(cam.viewers, 0)
+
+    def test_stream_keeps_sending_without_new_frames(self):
+        cam = FakeCamera(ViewMapper(Calibration.load(CALIB)), fps=20).start()
+        self.addCleanup(cam.close)
+        client = self.app_with(cam)
+        r = client.get('/video', buffered=False)
+        it = iter(r.response)
+        self.assertTrue(next(it).startswith(b'--frame'))
+        cam.close()                         # 새 프레임이 끊겨도
+        t0 = time.monotonic()
+        self.assertTrue(next(it).startswith(b'--frame'))   # 1초 안에 마지막 프레임을 다시 보냄
+        self.assertLess(time.monotonic() - t0, 2.5)
+        r.close()
+
+
 class HandoffTest(unittest.TestCase):
     def test_launch_and_stop(self):
         port = free_port()

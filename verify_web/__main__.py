@@ -105,7 +105,7 @@ def main():
     print(f'확인 앱: http://{args.host}:{args.port}  · 스테이지 {args.mode}/{args.transport} · 카메라 {args.camera} '
           f'· 알고리즘 {args.algo}({args.algo_output}) · 데모 웹 포트 {args.demo_port}', flush=True)
     try:
-        serve(app, sockets=[listener], threads=16, channel_timeout=30,
+        serve(app, sockets=[listener], threads=32, channel_timeout=30,
               max_request_body_size=64 * 1024, outbuf_high_watermark=buffer)
     except KeyboardInterrupt:
         pass

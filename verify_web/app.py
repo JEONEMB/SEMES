@@ -10,6 +10,7 @@ from .runner import RunError
 ROOT = Path(__file__).resolve().parent
 FONTS = ROOT.parent / 'demo_web' / 'static' / 'fonts'      # 데모 웹 글꼴을 읽기만 함
 PLATE_CENTER = (1907.0, 1065.0)   # SEMES center.bmp 의 가운데 QR (알고리즘 좌표)
+NO_FRAME_GIVE_UP_S = 3            # 카메라 프레임이 이만큼(초) 없으면 영상 응답을 끝낸다
 
 
 def create_app(runner, devices, demo):
@@ -66,13 +67,19 @@ def create_app(runner, devices, demo):
             return jsonify(error='카메라 없음'), 503
 
         def stream():
+            # 무언가를 계속 보내야 브라우저가 끊은 연결을 알아채고 작업 스레드를 돌려받는다.
+            # 새 프레임이 없으면 1초마다 마지막 프레임을 다시 보내고, 프레임이 아예 없으면 끝낸다.
             cam.add_viewer(+1)
             try:
-                seq = 0
+                seq, empty = 0, 0
                 while devices.camera is cam:
-                    seq, jpg = cam.wait_jpeg(seq, timeout=2.0)
+                    seq, jpg = cam.wait_jpeg(seq, timeout=1.0)
                     if jpg is None:
+                        empty += 1
+                        if empty >= NO_FRAME_GIVE_UP_S:
+                            return
                         continue
+                    empty = 0
                     yield (b'--frame\r\nContent-Type: image/jpeg\r\nContent-Length: ' + str(len(jpg)).encode()
                            + b'\r\n\r\n' + jpg + b'\r\n')
             finally:

@@ -101,9 +101,14 @@ class _Base:
         return False, time.monotonic() - t0, shift
 
     def wait_jpeg(self, last_seq, timeout=2.0):
+        """새 JPEG 를 기다린다. 시간이 지나면 마지막 JPEG(없으면 None)를 돌려준다."""
+        deadline = time.monotonic() + timeout
         with self.cond:
-            if self.jpeg_seq <= last_seq:
-                self.cond.wait(timeout)
+            while self.jpeg_seq <= last_seq:
+                left = deadline - time.monotonic()
+                if left <= 0:
+                    break
+                self.cond.wait(left)
             return self.jpeg_seq, self.jpeg
 
     def add_viewer(self, delta):
