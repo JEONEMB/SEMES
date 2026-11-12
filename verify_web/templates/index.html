@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>알고리즘 동작 확인</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/static/verify.css">
+<script src="/static/verify.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="title"><span class="mark">◎</span><div><h1>알고리즘 동작 확인</h1><p>Y · Θ 보정 검증 · A507</p></div></div>
+  <div class="pills">
+    <span class="pill" id="pill-stage">스테이지 —</span>
+    <span class="pill" id="pill-algo">알고리즘 —</span>
+    <span class="pill" id="pill-camera">카메라 —</span>
+    <button class="btn demo" id="btn-demo" title="카메라·STM32를 넘기고 데모 웹(발표용)을 엽니다">데모 웹으로 →</button>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="panel camera-panel">
+    <div class="panel-head">
+      <span>실시간 영상 <small class="muted" id="cam-info"></small></span>
+      <div class="seg" role="group" aria-label="확대">
+        <button data-zoom="1" class="on">1×</button><button data-zoom="2">2×</button><button data-zoom="4">4×</button>
+      </div>
+      <div class="seg" role="group" aria-label="화면 중심">
+        <button data-center="image" class="on">화면 중심</button><button data-center="plate">플레이트</button>
+      </div>
+    </div>
+    <div class="video">
+      <img id="video" alt="실시간 카메라 영상 (왜곡 보정, SEMES 화각)">
+      <div class="crosshair" aria-hidden="true"></div>
+      <div class="plate-mark" id="plate-mark" aria-hidden="true" title="SEMES 기준 QR 위치"></div>
+      <div class="badge" id="motion-badge" data-moving="false"><i></i><span>정지</span></div>
+      <div class="video-empty" id="video-empty" hidden><strong>영상 없음</strong><span id="video-empty-msg"></span></div>
+    </div>
+    <div class="legend"><span><i class="l-red"></i>화면 중심</span><span><i class="l-ring"></i>SEMES 기준 QR 위치</span><span class="muted">왜곡 보정 · SEMES 화각 · 1280×720</span></div>
+  </section>
+
+  <section class="panel side">
+    <div class="trial">
+      <div><span class="label">회차</span><div class="trial-num"><strong id="trial">00</strong><span>/ <b id="trial-max">20</b></span></div></div>
+      <div class="result" id="result" hidden></div>
+    </div>
+    <progress id="trial-bar" max="20" value="0"></progress>
+
+    <ol class="steps" id="steps">
+      <li data-phase="settling">흔들림 대기</li><li data-phase="capturing">촬영</li><li data-phase="inferring">추론</li><li data-phase="moving">보정 이동</li>
+    </ol>
+    <div class="phase" id="phase-box" data-phase="idle"><span class="light"></span><div><strong id="phase">대기</strong><p id="message"></p></div></div>
+
+    <table class="values">
+      <thead><tr><th></th><th>추론</th><th>실제<small>스테이지</small></th><th>차이</th><th>명령</th></tr></thead>
+      <tbody>
+        <tr><th>Y <small>mm</small></th><td id="inf-y">—</td><td id="tru-y">—</td><td id="err-y">—</td><td id="cmd-y">—</td></tr>
+        <tr><th>Θ <small>°</small></th><td id="inf-t">—</td><td id="tru-t">—</td><td id="err-t">—</td><td id="cmd-t">—</td></tr>
+      </tbody>
+    </table>
+    <p class="note" id="values-note">추론 = 알고리즘이 본 센터 대비 위치 · 실제 = STATUS 위치 − 센터</p>
+
+    <div class="pos">
+      <div><span class="label">스테이지 위치</span><strong id="pos-y">—</strong><small>mm</small> <strong id="pos-t">—</strong><small>°</small></div>
+      <div class="flags" id="flags"></div>
+    </div>
+  </section>
+
+  <section class="panel controls">
+    <div class="row">
+      <button class="btn" id="btn-home">⌂ Y 원점 복귀</button>
+      <button class="btn" id="btn-goto-random">↝ 랜덤 시작 위치</button>
+      <label class="inline">Y <input id="start-y" type="number" step="0.01" value="0.50" inputmode="decimal"> mm</label>
+      <label class="inline">Θ <input id="start-t" type="number" step="0.01" value="0.00" inputmode="decimal"> °</label>
+      <button class="btn" id="btn-goto">→ 지정 위치로</button>
+    </div>
+    <div class="row">
+      <button class="btn primary" id="btn-run">⊕ 자동 보정 (최대 <span id="btn-max">20</span>회)</button>
+      <button class="btn" id="btn-step">한 단계</button>
+      <button class="btn" id="btn-measure">측정만</button>
+      <button class="btn danger" id="btn-stop">■ 정지</button>
+    </div>
+    <div class="row small">
+      <span class="muted">센터 (스테이지 좌표)</span><strong id="center">—</strong>
+      <button class="link" id="btn-center">현재 위치를 센터로</button>
+      <span class="muted">허용</span><strong id="tol">—</strong>
+    </div>
+  </section>
+
+  <section class="panel history">
+    <div class="panel-head"><span>회차별 기록 <small class="muted" id="run-id"></small></span>
+      <svg id="chart" viewBox="0 0 320 60" preserveAspectRatio="none" aria-label="회차별 Y 오차 그래프"></svg>
+      <span class="legend-mini"><i class="c-inf"></i>추론 Y <i class="c-tru"></i>실제 Y</span>
+    </div>
+    <div class="scroll">
+      <table class="hist">
+        <thead><tr><th>회차</th><th>추론 Y</th><th>실제 Y</th><th>차이 Y</th><th>추론 Θ</th><th>실제 Θ</th><th>차이 Θ</th><th>명령 Y</th><th>추론 ms</th><th>대기 s</th><th>판정</th></tr></thead>
+        <tbody id="hist-body"><tr><td colspan="11" class="muted">아직 기록이 없습니다.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <details class="panel settings">
+    <summary>설정</summary>
+    <form id="settings-form">
+      <label>허용 Y (mm)<input name="tol_y_mm" type="number" step="0.001"></label>
+      <label>허용 Θ (°)<input name="tol_t_deg" type="number" step="0.001"></label>
+      <label>최대 회차<input name="max_trials" type="number" step="1"></label>
+      <label>한 번 이동 한도 Y (mm)<input name="max_step_y_mm" type="number" step="0.1"></label>
+      <label>한 번 이동 한도 Θ (°)<input name="max_step_t_deg" type="number" step="0.1"></label>
+      <label>랜덤 범위 Y ± (mm)<input name="random_y_mm" type="number" step="0.1"></label>
+      <label>랜덤 범위 Θ ± (°)<input name="random_t_deg" type="number" step="0.1"></label>
+      <label>접근 거리 Y (mm)<input name="approach_y_mm" type="number" step="0.05"></label>
+      <label>평균 장수<input name="average" type="number" step="1"></label>
+      <label>안정 판정 (px)<input name="settle_px" type="number" step="0.05"></label>
+      <label>안정 대기 한도 (s)<input name="settle_timeout_s" type="number" step="0.5"></label>
+      <label>센터 Y (mm)<input name="center_y_mm" type="number" step="0.001"></label>
+      <label>센터 Θ (°)<input name="center_t_deg" type="number" step="0.001"></label>
+      <label class="check"><input name="enable_t" type="checkbox"> Θ 명령 보내기</label>
+      <label class="check"><input name="save_images" type="checkbox"> 회차 사진 저장</label>
+      <button class="btn primary" type="submit">저장</button>
+    </form>
+  </details>
+</main>
+
+<div class="overlay" id="overlay" hidden><div><span class="spinner"></span><strong id="overlay-text">전환 중…</strong></div></div>
+<div class="toast" id="toast" hidden></div></body>
+</html>
