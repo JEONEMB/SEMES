@@ -95,6 +95,6 @@ C++ 열: `대상`은 채택 경로(10-23 ECC+위아래 선) 이전 실험이라 
 - [부화소 정합 방법 3단계: 속도 측정 (초기화·cold·warm, 1스레드·기본 스레드)](20261029_132151_부화소정합_속도측정/결과/README.md)
 - [joint 구조점+상하선 vs ECC+상하선 (337 vs 328)](20261029_1329_구조점대ECC_같은fold비교/결과/README.md)
 
-지정된 전달 경로인 `00000_final_Y_T control`과 `00000_final_Y_T_joint`는 유지한다. 새 비교 결과가 나와도 자동 교체하지 않는다. 빌드에 사용할 모듈은 [selected_modules.cmake](../selected_modules.cmake)에서 경로로 고른다.
+2026-11-12 사용자 지시로 기존 final 폴더의 앞 번호를 첫 커밋 시각으로 바꾸고([directory_rename_20261112.json](directory_rename_20261112.json)), 1차 배포 모듈을 [00000_final_Y_T](00000_final_Y_T/README.md) 로 새로 두었다. 지정된 전달 경로인 `20261028_1327_final_Y_T control`과 `20261028_1258_final_Y_T_joint`는 유지한다. 새 비교 결과가 나와도 자동 교체하지 않는다. 빌드에 사용할 모듈은 [selected_modules.cmake](../selected_modules.cmake)에서 경로로 고른다.
 
 2026-10-28 실험 전체를 `experiments/`에서 `experiments/hye/`로 옮겼다. 현재 쓰는 README·CMake의 경로는 고쳤고, `results/`·스냅샷·manifest·log 안의 경로는 당시 기록이라 바꾸지 않았다. 폴더명을 바꾸기 전 생성한 CMake 빌드 폴더에는 이전 경로가 캐시돼 있을 수 있다. 해당 실험을 다시 빌드할 때는 새 빌드 디렉터리로 구성한다. 기존 빌드·결과를 삭제하지 않는다.

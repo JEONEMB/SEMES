@@ -4,8 +4,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV 3.4 REQUIRED)
 get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
-set(CONTROL "${REPO}/experiments/hye/00000_final_Y_T control")
-set(JOINT "${REPO}/experiments/hye/00000_final_Y_T_joint")
+set(CONTROL "${REPO}/experiments/hye/20261028_1327_final_Y_T control")
+set(JOINT "${REPO}/experiments/hye/20261028_1258_final_Y_T_joint")
 add_executable(compare_control src/main.cpp src/models.cpp
  "${CONTROL}/src/tracker.cpp" "${CONTROL}/src/spline.cpp" "${CONTROL}/src/model.cpp"
  "${JOINT}/src/observer.cpp" "${JOINT}/src/line_profile.cpp" "${JOINT}/third_party/ecc_compat.cpp")

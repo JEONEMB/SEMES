@@ -7,7 +7,7 @@ import numpy as np
 c = {int(r["id"]): r for r in csv.DictReader(open(sys.argv[1], encoding="utf-8"), delimiter="\t")}
 p = {int(r["id"]): r for r in csv.DictReader(open(sys.argv[2], encoding="utf-8"), delimiter="\t")}
 assert set(c) == set(p), "사진 목록이 다르다"
-cols = [k for k in next(iter(p.values())) if k != "id"]
+cols = [k for k in next(iter(p.values())) if k != "id" and k in next(iter(c.values()))]   # 두 표에 모두 있는 값만
 print(f"사진 {len(c)}장\n값\t최대 차(px)\tRMS 차(px)\t값의 표준편차")
 for k in cols:
     a = np.array([float(c[i][k]) for i in sorted(c)]); b = np.array([float(p[i][k]) for i in sorted(c)]); d = a - b

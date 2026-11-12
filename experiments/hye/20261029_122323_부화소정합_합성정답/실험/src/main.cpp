@@ -46,7 +46,7 @@ int main(int argc,char** argv){
         if(fs::exists(results))throw std::runtime_error("results already exists; refusing to overwrite: "+results.u8string());
         cv::setNumThreads(1);
         auto data14=repo/"data/clean/clean_20261014",data20=repo/fs::u8path(u8"data/clean/clean_20261020/기준 위치");
-        auto control=repo/fs::u8path(u8"experiments/hye/00000_final_Y_T control/assets");
+        auto control=repo/fs::u8path(u8"experiments/hye/20261028_1327_final_Y_T control/assets");
         if(legacy_control::sha256(data14/"center.bmp")!=kCenterSha)throw std::runtime_error("center.bmp hash mismatch");
         cv::Mat center=legacy_control::read_gray(data14/"center.bmp");
         auto points=load_points(control/"points.json");
@@ -97,7 +97,7 @@ int main(int argc,char** argv){
         for(auto& kv:own)ov<<Methods::name(kv.first)<<','<<kv.second[0]<<','<<kv.second[1]<<','<<kv.second[2]<<','<<kv.second[3]<<"\n";
 
         std::ofstream man((results/"manifest.json"));
-        man<<"{\n  \"center\": \"data/clean/clean_20261014/center.bmp\",\n  \"center_sha256\": \""<<kCenterSha<<"\",\n  \"points\": \"experiments/hye/00000_final_Y_T control/assets/points.json\",\n  \"points_sha256\": \""<<legacy_control::sha256(control/"points.json")
+        man<<"{\n  \"center\": \"data/clean/clean_20261014/center.bmp\",\n  \"center_sha256\": \""<<kCenterSha<<"\",\n  \"points\": \"experiments/hye/20261028_1327_final_Y_T control/assets/points.json\",\n  \"points_sha256\": \""<<legacy_control::sha256(control/"points.json")
            <<"\",\n  \"noise_source\": \"data/clean/clean_20261020/기준 위치/center1~3.bmp 평탄부 차이, 쌍별 σ 중앙값\",\n  \"noise_sigma_pairs\": ["<<sigmas[0]<<", "<<sigmas[1]<<", "<<sigmas[2]<<"],\n  \"noise_sigma\": "<<sigma
            <<",\n  \"opencv\": \""<<CV_VERSION<<"\",\n  \"threads\": 1,\n  \"conditions\": [\n";
         for(size_t i=0;i<conds.size();++i){auto& c=conds[i];man<<"    {\"name\": \""<<c.name<<"\", \"group\": \""<<c.group<<"\", \"tx\": "<<c.tx<<", \"ty\": "<<c.ty<<", \"angle_deg\": "<<c.angle_deg<<", \"scale\": "<<c.scale

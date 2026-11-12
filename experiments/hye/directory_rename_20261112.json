@@ -1,0 +1,25 @@
+[
+  {
+    "old": "00000_final_Y_T control",
+    "new": "20261028_1327_final_Y_T control",
+    "timestamp_basis": "첫 커밋 시각(git log --diff-filter=A). 모델을 개발한 시각이 아니다"
+  },
+  {
+    "old": "00000_final_Y_T_joint",
+    "new": "20261028_1258_final_Y_T_joint",
+    "timestamp_basis": "첫 커밋 시각(git log --diff-filter=A). 모델을 개발한 시각이 아니다"
+  },
+  {
+    "old": "00004_final_Y_T",
+    "new": "20261111_0944_final_Y_T",
+    "timestamp_basis": "첫 커밋 시각(git log --diff-filter=A). 모델을 개발한 시각이 아니다"
+  },
+  {
+    "old": "20261112_1907_새기준구성이Python뿐_값7개측정학습검증Cpp이식",
+    "new": "00000_final_Y_T",
+    "note": "실험 폴더를 배포 모듈로 다시 구성했다. 실험/v2tool/src 는 src, include, tool 로, 결과는 evidence 로 옮겼다"
+  },
+  {
+    "note": "2026-11-12 사용자 지시로 바꿨다. 살아 있는 코드와 문서의 경로는 새 이름으로 고쳤다. 이름을 바꾼 세 폴더의 내부 파일(해시로 묶인 자료), 결과·증거·스냅숏 폴더, 기록용 JSON, 휴지통의 옛 경로 문자열은 고치지 않았다. 그 안의 옛 이름은 이 표로 읽는다."
+  }
+]

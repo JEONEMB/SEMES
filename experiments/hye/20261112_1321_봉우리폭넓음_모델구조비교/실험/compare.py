@@ -11,7 +11,7 @@ import collections, csv, io, pathlib, subprocess
 import numpy as np
 
 COMMIT = "46152fd"
-EV = "experiments/hye/00004_final_Y_T/evidence"
+EV = "experiments/hye/20261111_0944_final_Y_T/evidence"
 HERE = pathlib.Path(__file__).resolve().parent.parent / "결과"
 QR = list(range(54)); BAR = [54, 55, 56, 57]; PIN = list(range(58, 66))
 QX, QY = QR[0::2], QR[1::2]; PX, PY = PIN[0::2], PIN[1::2]

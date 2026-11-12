@@ -58,7 +58,7 @@ int main() {
                                 fs::u8path("결과") / "cache" / "shots.csv");
         std::cout << "사진 " << shots.size() << "장\n";
 
-        variant::Tracker tracker(repo / "experiments" / "hye" / "00000_final_Y_T control" / "assets");
+        variant::Tracker tracker(repo / "experiments" / "hye" / "20261028_1327_final_Y_T control" / "assets");
         struct Case { const char* name; Strategy strategy; };
         const Case cases[] = {{"S_A 현재 단일 창 110x22", Strategy::Single},
                               {"S_B joint 식 단계 확장 110-260-512", Strategy::Escalate},

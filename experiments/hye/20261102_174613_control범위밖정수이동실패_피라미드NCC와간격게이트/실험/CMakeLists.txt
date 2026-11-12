@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV 3.4 REQUIRED)
 get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
-set(CONTROL "${REPO}/experiments/hye/00000_final_Y_T control")
+set(CONTROL "${REPO}/experiments/hye/20261028_1327_final_Y_T control")
 # 정밀화 단계는 채택 모듈의 spline.cpp 를 그대로 링크한다.
 # tracker.cpp 는 링크하지 않는다. 정수 이동 단계를 바꾼 복사본(src/tracker_variant.hpp)을 쓰기 때문이다.
 # 그 복사본이 원본과 같은지는 S_A 가 A0 캐시의 유효점 수를 재현하는지로 확인한다.

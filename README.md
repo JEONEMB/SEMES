@@ -74,8 +74,8 @@ $env:Path = "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common
 ```powershell
 ctest --test-dir build -C Release --output-on-failure
 .\build\control\Release\validate_control.exe `
-  "experiments/hye/00000_final_Y_T control" data/clean/clean_20261014 `
-  "experiments/hye/00000_final_Y_T control/results/NEW_VALIDATION_DIRECTORY"
+  "experiments/hye/20261028_1327_final_Y_T control" data/clean/clean_20261014 `
+  "experiments/hye/20261028_1327_final_Y_T control/results/NEW_VALIDATION_DIRECTORY"
 ```
 
 사진 폴더 전체를 채점하려면 `benchmark.exe`를 씁니다. 결과는 웹 평가 탭([apps/web](apps/web/README.md))에서 엽니다.
@@ -88,16 +88,16 @@ ctest --test-dir build -C Release --output-on-failure
 
 빌드 없이 기존 결과만 보려면 아래 파일을 엽니다.
 
-- joint 341장 재실행: [native_20261028_001/README.md](experiments/hye/00000_final_Y_T_joint/results/native_20261028_001/README.md)
-- control 280장 재현: [native_qr536_20261028_001/README.md](experiments/hye/00000_final_Y_T%20control/results/native_qr536_20261028_001/README.md)
+- joint 341장 재실행: [native_20261028_001/README.md](experiments/hye/20261028_1258_final_Y_T_joint/results/native_20261028_001/README.md)
+- control 280장 재현: [native_qr536_20261028_001/README.md](experiments/hye/20261028_1327_final_Y_T%20control/results/native_qr536_20261028_001/README.md)
 - QR536 상하선 비교 보고서: `experiments/hye/20261028_140538_control_QR536_상하선_비교/결과/report.html`을 브라우저로 엽니다.
 
 ## joint / control 모듈
 
 공개 함수 선언은 [alignment.hpp](include/alignment.hpp)에 있습니다. `Alignment_t`의 y,t는 추정값이며 로봇 명령이 아닙니다.
 
-- [1차 joint 구현·사용법](experiments/hye/00000_final_Y_T_joint/README.md)
-- [2차 QR536 control 구현·검증 도구](experiments/hye/00000_final_Y_T%20control/README.md)
+- [1차 joint 구현·사용법](experiments/hye/20261028_1258_final_Y_T_joint/README.md)
+- [2차 QR536 control 구현·검증 도구](experiments/hye/20261028_1327_final_Y_T%20control/README.md)
 - [호출 예제](src/main.cpp): 사진 읽기, 초기화, 모드에 따른 함수 호출
 
 빌드에 쓸 1차·2차 모듈은 [experiments/selected_modules.cmake](experiments/selected_modules.cmake)의 두 경로로 고릅니다. 이 파일만 고치면 다음 빌드에서 해당 모듈과 `assets/`가 사용됩니다.
@@ -116,7 +116,7 @@ ctest --test-dir build -C Release --output-on-failure
 
 ### joint 알고리즘 단계
 
-구현: [joint.cpp](experiments/hye/00000_final_Y_T_joint/src/joint.cpp), [observer.cpp](experiments/hye/00000_final_Y_T_joint/src/observer.cpp), [line_profile.cpp](experiments/hye/00000_final_Y_T_joint/src/line_profile.cpp)
+구현: [joint.cpp](experiments/hye/20261028_1258_final_Y_T_joint/src/joint.cpp), [observer.cpp](experiments/hye/20261028_1258_final_Y_T_joint/src/observer.cpp), [line_profile.cpp](experiments/hye/20261028_1258_final_Y_T_joint/src/line_profile.cpp)
 
 1. **입력 검사**: 3840×2160, 8비트 영상인지 확인하고 컬러면 회색조로 바꿉니다.
 2. **QR 대략 위치**: 기준 사진의 QR 3개 영역을 템플릿으로 NCC 탐색합니다. 탐색 반경을 130→260→512px로 넓히고, 3개 모두 상관 0.6 이상이면 멈춥니다.
@@ -128,7 +128,7 @@ ctest --test-dir build -C Release --output-on-failure
 
 ### control 알고리즘 단계
 
-구현: [control.cpp](experiments/hye/00000_final_Y_T%20control/src/control.cpp), [tracker.cpp](experiments/hye/00000_final_Y_T%20control/src/tracker.cpp), [spline.cpp](experiments/hye/00000_final_Y_T%20control/src/spline.cpp), [model.cpp](experiments/hye/00000_final_Y_T%20control/src/model.cpp). 함수별 흐름은 [FUNCTION_FLOW.md](experiments/hye/00000_final_Y_T%20control/docs/FUNCTION_FLOW.md)에 있습니다.
+구현: [control.cpp](experiments/hye/20261028_1327_final_Y_T%20control/src/control.cpp), [tracker.cpp](experiments/hye/20261028_1327_final_Y_T%20control/src/tracker.cpp), [spline.cpp](experiments/hye/20261028_1327_final_Y_T%20control/src/spline.cpp), [model.cpp](experiments/hye/20261028_1327_final_Y_T%20control/src/model.cpp). 함수별 흐름은 [FUNCTION_FLOW.md](experiments/hye/20261028_1327_final_Y_T%20control/docs/FUNCTION_FLOW.md)에 있습니다.
 
 1. **입력 검사**: joint와 같습니다.
 2. **QR 대략 위치**: QR별 NCC로 정수 픽셀 이동을 찾습니다.

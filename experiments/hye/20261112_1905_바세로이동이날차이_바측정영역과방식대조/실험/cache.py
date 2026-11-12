@@ -1,7 +1,7 @@
 import sys, json, pathlib, numpy as np, cv2
 sys.path.insert(0, "apps/distribution"); import reoof
 S = pathlib.Path(sys.argv[1]); E = pathlib.Path("experiments/hye/20261112_1504_QR요약54개_536점대조/결과")
-P = json.load(open(S / "f04/experiments/hye/00004_final_Y_T/assets/line_protocol.json", encoding="utf-8"))
+P = json.load(open(S / "f04/experiments/hye/20261111_0944_final_Y_T/assets/line_protocol.json", encoding="utf-8"))
 for r in P["regions"]: print(r)
 print({k: P["blocks"][0][k] for k in P["blocks"][0]}, len(P["blocks"]))
 for b in P["blocks"][::12]: print(b["id"], b["x0"], b["x1"], b["reference_y"], b["read_box"])

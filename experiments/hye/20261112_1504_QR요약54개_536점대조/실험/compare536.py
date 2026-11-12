@@ -3,7 +3,7 @@
 - 사진: 1~4차 중 536점이 모두 유효한 사진(T=+2.00 12장 제외), ID 702 제외.
 - 4차 536점은 이 실험의 `실험/measure630`(control tracker 를 그대로 링크한 C++ 도구)로 재서 `결과/cache_round4` 에 두었다.
   같은 도구로 1~3차 12장을 다시 재어 A0 캐시와 최대 차 0.0 px 임을 확인했다.
-- QR 54·바 4·나사 8: 커밋 46152fd `experiments/hye/00004_final_Y_T/evidence/training_features.tsv`
+- QR 54·바 4·나사 8: 커밋 46152fd `experiments/hye/20261111_0944_final_Y_T/evidence/training_features.tsv`
 - 536점 이동(dx, dy): `experiments/hye/20261102_124309_A0_.../결과/cache/disp.f32` (630점 중 selected=1 인 536점)
 - 분할: 00004 의 그룹 5-fold(같은 자세 반복은 한 fold). ID 420 은 라벨 T 0.32, fold 는 T+0.32 묶음과 같게 한다.
 - 학습식: 00004 model.cpp 와 같은 표준화 + ridge + Huber 6회. 주성분·규제 세기는 학습 fold 안에서만 정한다.
@@ -15,7 +15,7 @@
 import collections, csv, io, pathlib, subprocess
 import numpy as np
 
-COMMIT = "46152fd"; EV = "experiments/hye/00004_final_Y_T/evidence"
+COMMIT = "46152fd"; EV = "experiments/hye/20261111_0944_final_Y_T/evidence"
 ROOT = pathlib.Path(__file__).resolve().parents[4]
 A0 = ROOT / "experiments/hye/20261102_124309_A0_분할측정고정_계층분할과점측정캐시/결과/cache"
 OUT = pathlib.Path(__file__).resolve().parent.parent / "결과"

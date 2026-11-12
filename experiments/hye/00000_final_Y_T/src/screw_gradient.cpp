@@ -4,7 +4,7 @@
 #include <limits>
 #include <stdexcept>
 
-namespace v2 {
+namespace final00 {
 namespace {
 const cv::Point kCenters[4] = {{974, 1352}, {2864, 1358}, {1010, 1677}, {2817, 1681}};   // 00004 나사 조각 중심과 같다
 const int kHalf = 70, kSide = 2 * kHalf + 1, kMaskRadius = 45, kGaussian = 5, kIterations = 200;

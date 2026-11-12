@@ -62,14 +62,14 @@ CPP = dict(jy=np.array([float(pr[i][0]) for i in range(N)]), jt=np.array([float(
            cax=np.array([pr[i][2] for i in range(N)]), cval=np.array([float(pr[i][4]) for i in range(N)]))
 
 # ---------- 모듈 추정 (Python 이식) ----------
-JM = json.load(open(HYE / "00000_final_Y_T_joint" / "assets" / "both_model.json", encoding="utf-8"))["model"]
+JM = json.load(open(HYE / "20261028_1258_final_Y_T_joint" / "assets" / "both_model.json", encoding="utf-8"))["model"]
 J_O, J_P, J_I, J_S = np.array(JM["origin"]).reshape(-1), np.array(JM["projector"]), np.array(JM["initial"]), np.array(JM["scale"])
 def joint_predict(X):
     X = np.atleast_2d(X); h = X[:, 0:54:2].sum(1, keepdims=True) / 2700.0
     q = (np.concatenate([X, X * h], 1) - J_O) @ J_P @ J_I
     return q[:, 0] * J_S[0], q[:, 1] * J_S[1]
 
-CM = json.load(open(HYE / "00000_final_Y_T control" / "assets" / "model.json", encoding="utf-8"))
+CM = json.load(open(HYE / "20261028_1327_final_Y_T control" / "assets" / "model.json", encoding="utf-8"))
 PTS = json.load(open(HERE / "inputs" / "points.json"))["points"]
 SEL = np.array([p[3] for p in PTS], bool)
 _u = np.array([(p[0] - 1906) / 486 for p in PTS]); _v = np.array([(p[1] - 1070) / 122 for p in PTS])

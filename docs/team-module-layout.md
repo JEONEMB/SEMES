@@ -58,7 +58,7 @@ Alignment_t control(cv::Mat &src);
 - 입력: `cv::Mat` 한 장이다. 이번 구현은3840×2160 uint8의1/3/4채널을 받고 원본을 수정하지 않는다. 기준·모델은 작업 전 `initialize_joint()` 또는 `initialize_control()`로 각자 로드한다. 기존 `initialize_alignment()`는 두 모듈 초기화의 호환 진입점이다.
 - 출력: **추정한 `(y, t)`**를 `Alignment_t`의 두 필드에 담는다. 센터 목표값을 매번 고정 반환하는 계약이 아니다. 추정값과 이를 이용해 산출한 실행 명령은 구분하고, 단위·축 방향·부호·허용 범위를 구현 문서에서 명시해야 한다.
 - 상태: `Alignment_t` 두 필드는 유지한다. 별도 `alignment_diagnostics()`로 스레드별 최근 진단을 확인하며 오류는 예외로 전달한다. 측정 유효성을 자세 안정성 보증으로 해석하지 않는다.
-- 2026-10-28 구현: [alignment.cpp](../src/alignment.cpp)의 placeholder를 제거하고 기존 `alignment()`를 `joint()`에 위임했다. 함수 본문은 [joint.cpp](../experiments/hye/00000_final_Y_T_joint/src/joint.cpp)와 [control.cpp](../experiments/hye/00000_final_Y_T%20control/src/control.cpp)에 있다. 두 구현은 같은 공개 헤더를 include하며 CMake가 라이브러리로 연결한다.
+- 2026-10-28 구현: [alignment.cpp](../src/alignment.cpp)의 placeholder를 제거하고 기존 `alignment()`를 `joint()`에 위임했다. 함수 본문은 [joint.cpp](../experiments/hye/20261028_1258_final_Y_T_joint/src/joint.cpp)와 [control.cpp](../experiments/hye/20261028_1327_final_Y_T%20control/src/control.cpp)에 있다. 두 구현은 같은 공개 헤더를 include하며 CMake가 라이브러리로 연결한다.
 - [main.cpp](../src/main.cpp)는 이미지 경로와 모드를 받아 사진을 읽고 해당 모듈을 호출한다. 흰 영상 데모와 GUI 대기는 제거했다. 학습·평가는 별도 도구다.
 
 ## `control()`·`joint()`를 구현할 때

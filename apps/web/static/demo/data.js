@@ -3,8 +3,8 @@ window.SEMES_DEMO = {
  "generated": "2026-10-28 19:34",
  "source": "build/Release/main.exe 실행 결과 (시나리오 재생, 실제 촬영 아님)",
  "models": {
-  "joint": "00000_final_Y_T_joint",
-  "control": "00000_final_Y_T control",
+  "joint": "20261028_1258_final_Y_T_joint",
+  "control": "20261028_1327_final_Y_T control",
   "adopted": true
  },
  "rules": {

@@ -1,20 +1,20 @@
-// 새 기준 구성(값 7개)의 측정과 평가 도구.
-//   값 7개 = QR 536점 이동의 가로 평균 1 + 위·아래 바 기울기 2 + 나사 4개의 가로 이동(기울기 영상 맞춤) 4
+// 값 7개 구성(final00)의 측정·학습·평가 도구.
 //
 // 사용
-//   v2tool measure <00004 assets> <control assets> <photos.tsv> <출력 폴더>
-//       photos.tsv: "id<TAB>사진 경로" (UTF-8, 머리줄 없음). 출력: features7.tsv
-//   v2tool eval <features7.tsv> <labels.tsv> <splits.tsv> <출력 폴더>
+//   final00_tool measure <assets> <photos.tsv> <출력 폴더>
+//       photos.tsv: "id<TAB>사진 경로" (UTF-8, 머리줄 없음). 출력: features7.tsv. 모델 없이 값 7개만 잰다.
+//   final00_tool eval <features7.tsv> <labels.tsv> <splits.tsv> <출력 폴더>
 //       labels.tsv: id, source, Y_cmd, T_cmd, Y_abs, T_abs (절대 영점 라벨)
 //       splits.tsv: id, final, cv0..cv9, half0..half9 (자세 묶음 단위 분할, 마지막 확인 사진의 cv/half 는 -1)
-//       출력: eval.txt, model7.tsv
+//       출력: eval.txt, model7.tsv (전체 사진으로 학습한 계수. assets 에 넣는 파일)
+//   final00_tool predict <assets> <photos.tsv> <labels.tsv> <출력 폴더>
+//       공개 API(initialize_joint, joint)로 사진마다 (Y, T) 를 내고 라벨과 비교한다. 출력: predictions.tsv, predict.txt
 // 인자 경로는 ASCII 로 준다(목록 파일 안의 사진 경로는 한글이어도 된다). 기존 출력은 덮어쓰지 않는다.
-#include "screw_gradient.hpp"
+#include "final00.hpp"
 #include "huber_fit.hpp"
-#include "control_internal.hpp"
-#include "final04.hpp"
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/core/utility.hpp>
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -22,6 +22,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <vector>
 namespace fs = std::filesystem;
 
 namespace {
@@ -47,57 +48,31 @@ cv::Mat read_image(const fs::path& p) {
     std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
     return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
 }
-std::vector<unsigned char> selected_points(const fs::path& control_assets) {
-    cv::FileStorage file((control_assets / "points.json").u8string(), cv::FileStorage::READ);
-    if (!file.isOpened()) throw std::runtime_error("control points.json 이 없다");
-    std::vector<unsigned char> selected;
-    for (const auto& row : file["points"]) selected.push_back(static_cast<unsigned char>(int(row[3])));
-    if (selected.size() != 630 || std::count(selected.begin(), selected.end(), 1) != 536) throw std::runtime_error("630점 중 536점 선택이 아니다");
-    return selected;
-}
 
-int measure(const fs::path& assets04, const fs::path& assets_control, const fs::path& photos, const fs::path& out) {
+int measure(const fs::path& assets, const fs::path& photos, const fs::path& out) {
     if (fs::exists(out / "features7.tsv")) { std::cerr << "출력이 이미 있다\n"; return 3; }
     const auto rows = read_table(photos, false);
     const int n = int(rows.size());
-    const legacy_control::Tracker tracker(assets_control);
-    const auto selected = selected_points(assets_control);
-    const alignment_detail::Observer observer(assets04);
-    const cv::Mat center = alignment_detail::read_gray(assets04 / "center.bmp");
-    const final04_pin::Observer pins(center);
-    const v2::ScrewGradient screws(center);
-    const auto block_x = observer.block_centers();
-    std::vector<std::array<double, 11>> values(n); std::vector<int> valid(n, 0), ok(n, 0); std::vector<std::string> error(n);
+    const final00::Measurer measurer(assets.u8string());
+    std::vector<final00::Measurement> m(n); std::vector<int> ok(n, 0); std::vector<std::string> error(n);
     cv::setNumThreads(1);
 #pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < n; ++i) {
         try {
             const cv::Mat gray = read_image(fs::u8path(rows[i].at(1)));
             if (gray.empty()) throw std::runtime_error("사진을 읽지 못했다");
-            const auto tracks = tracker.measure(gray);
-            valid[i] = tracker.valid_selected(tracks);
-            if (valid[i] != 536) throw std::runtime_error("536점이 모두 유효하지 않다");
-            double dx = 0;
-            for (int p = 0; p < 630; ++p) if (selected[p]) dx += tracks.displacement.at<float>(p, 0);
-            const auto observation = observer.measure(gray);
-            const auto pin = pins.measure(gray);
-            const cv::Mat f66 = final04::features(observation.values, pin.displacement, block_x);
-            const cv::Mat screw = screws.measure(gray, pin.displacement);
-            if (!cv::checkRange(screw)) throw std::runtime_error("나사 기울기 영상 맞춤 실패");
-            values[i] = {dx / 536.0, f66.at<double>(55), f66.at<double>(57),
-                         screw.at<double>(0), screw.at<double>(2), screw.at<double>(4), screw.at<double>(6),
-                         screw.at<double>(1), screw.at<double>(3), screw.at<double>(5), screw.at<double>(7)};
-            ok[i] = 1;
+            m[i] = measurer.measure(gray); ok[i] = 1;
         } catch (const std::exception& e) { error[i] = e.what(); }
     }
     fs::create_directories(out);
-    std::ofstream f(out / "features7.tsv"); f << std::setprecision(17);
-    f << "id\tqr_dx_mean\tbar_tilt_upper\tbar_tilt_lower\tscrew1_x\tscrew2_x\tscrew3_x\tscrew4_x\tscrew1_y\tscrew2_y\tscrew3_y\tscrew4_y\tvalid536\tmeasured\terror\n";
+    std::ofstream f(out / "features7.tsv", std::ios::binary); f << std::setprecision(17) << "id";
+    for (const char* name : final00::kValueNames) f << '\t' << name;
+    f << "\tvalid536\tqr_correlation\tline_correlation\tmeasured\terror\n";
     int good = 0;
     for (int i = 0; i < n; ++i) {
         f << rows[i][0];
-        for (double v : values[i]) f << '\t' << (ok[i] ? v : std::numeric_limits<double>::quiet_NaN());
-        f << '\t' << valid[i] << '\t' << ok[i] << '\t' << error[i] << '\n'; good += ok[i];
+        for (double v : m[i].values) f << '\t' << (ok[i] ? v : std::numeric_limits<double>::quiet_NaN());
+        f << '\t' << m[i].valid_points << '\t' << m[i].qr_correlation << '\t' << m[i].line_correlation << '\t' << ok[i] << '\t' << error[i] << '\n'; good += ok[i];
     }
     std::cout << "measured " << good << "/" << n << "\n";
     return good == n ? 0 : 4;
@@ -112,7 +87,7 @@ Data load(const fs::path& features, const fs::path& labels, const fs::path& spli
     Data d; std::vector<std::array<double, 7>> x; std::vector<std::array<double, 2>> y;
     for (auto& r : read_table(features, true)) {
         const int id = std::stoi(r.at(0));
-        if (r.at(13) != "1") throw std::runtime_error("측정 실패 사진이 있다: id " + r[0]);
+        if (r.at(11) != "1") throw std::runtime_error("측정 실패 사진이 있다: id " + r[0]);
         const auto& l = lab.at(id); const auto& s = sp.at(id);
         d.id.push_back(id); d.source.push_back(l.at(1));
         x.push_back({std::stod(r[1]), std::stod(r[2]), std::stod(r[3]), std::stod(r[4]), std::stod(r[5]), std::stod(r[6]), std::stod(r[7])});
@@ -135,19 +110,19 @@ cv::Mat take(const cv::Mat& m, const std::vector<int>& index) {
 struct Score { int fail = 0, count = 0; double max_y = 0, max_t = 0, sum_y2 = 0, sum_t2 = 0; };
 // train 으로 학습해 test 를 채점한다.
 void score(const Data& d, const std::vector<int>& train, const std::vector<int>& test, Score& s) {
-    v2::LinearModel model; model.fit(take(d.x, train), take(d.y, train));
+    final00::LinearModel model; model.fit(take(d.x, train), take(d.y, train));
     const cv::Mat p = model.predict(take(d.x, test));
     for (int i = 0; i < int(test.size()); ++i) {
         const double ey = p.at<double>(i, 0) - d.y.at<double>(test[i], 0), et = p.at<double>(i, 1) - d.y.at<double>(test[i], 1);
-        s.fail += !v2::passes(ey, et); ++s.count; s.max_y = std::max(s.max_y, std::abs(ey)); s.max_t = std::max(s.max_t, std::abs(et)); s.sum_y2 += ey * ey; s.sum_t2 += et * et;
+        s.fail += !final00::passes(ey, et); ++s.count; s.max_y = std::max(s.max_y, std::abs(ey)); s.max_t = std::max(s.max_t, std::abs(et)); s.sum_y2 += ey * ey; s.sum_t2 += et * et;
     }
 }
 
 int evaluate(const fs::path& features, const fs::path& labels, const fs::path& splits, const fs::path& out) {
     if (fs::exists(out / "eval.txt")) { std::cerr << "출력이 이미 있다\n"; return 3; }
     const Data d = load(features, labels, splits); const int n = int(d.id.size());
-    std::vector<int> dev, fin, all;
-    for (int i = 0; i < n; ++i) { all.push_back(i); (d.final[i] ? fin : dev).push_back(i); }
+    std::vector<int> dev, fin;
+    for (int i = 0; i < n; ++i) (d.final[i] ? fin : dev).push_back(i);
     std::ostringstream o; o << std::fixed;
     o << "photos " << n << " dev " << dev.size() << " final " << fin.size() << "\n";
     // 주 검증: 개발 자료 섞은 80/20, 10회
@@ -193,17 +168,49 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
     // 마지막 확인
     { Score s; score(d, dev, fin, s);
       o << "final_check fails " << s.fail << "/" << s.count << std::setprecision(5) << " max|eY| " << s.max_y << " max|eT| " << s.max_t << "\n"; }
-    // 전체 702장으로 학습한 모델
-    v2::LinearModel model; model.fit(d.x, d.y);
-    { Score s; const cv::Mat p = model.predict(d.x);
-      for (int i = 0; i < n; ++i) s.fail += !v2::passes(p.at<double>(i, 0) - d.y.at<double>(i, 0), p.at<double>(i, 1) - d.y.at<double>(i, 1));
-      o << "all_photos_resubstitution fails " << s.fail << "/" << n << "\n"; }
+    // 전체 사진으로 학습한 모델
+    final00::LinearModel model; model.fit(d.x, d.y);
+    double min_y = 1e9, max_y = -1e9, min_t = 1e9, max_t = -1e9;
+    { int fail = 0; const cv::Mat p = model.predict(d.x);
+      for (int i = 0; i < n; ++i) {
+          fail += !final00::passes(p.at<double>(i, 0) - d.y.at<double>(i, 0), p.at<double>(i, 1) - d.y.at<double>(i, 1));
+          min_y = std::min(min_y, d.y.at<double>(i, 0)); max_y = std::max(max_y, d.y.at<double>(i, 0)); min_t = std::min(min_t, d.y.at<double>(i, 1)); max_t = std::max(max_t, d.y.at<double>(i, 1));
+      }
+      o << "all_photos_resubstitution fails " << fail << "/" << n << "\n"
+        << std::setprecision(6) << "label_range Y " << min_y << " " << max_y << " T " << min_t << " " << max_t << "\n"; }
     fs::create_directories(out);
-    { std::ofstream f(out / "eval.txt"); f << o.str(); }
-    std::ofstream m(out / "model7.tsv"); m << std::setprecision(17);
-    const char* names[7] = {"qr_dx_mean", "bar_tilt_upper", "bar_tilt_lower", "screw1_x", "screw2_x", "screw3_x", "screw4_x"};
+    { std::ofstream f(out / "eval.txt", std::ios::binary); f << o.str(); }
+    std::ofstream m(out / "model7.tsv", std::ios::binary); m << std::setprecision(17);
     m << "name\tmean\tscale\tweight_Y\tweight_T\n" << "intercept\t0\t1\t" << model.weights.at<double>(0, 0) << '\t' << model.weights.at<double>(0, 1) << '\n';
-    for (int j = 0; j < 7; ++j) m << names[j] << '\t' << model.mean.at<double>(j) << '\t' << model.scale.at<double>(j) << '\t' << model.weights.at<double>(j + 1, 0) << '\t' << model.weights.at<double>(j + 1, 1) << '\n';
+    for (int j = 0; j < 7; ++j) m << final00::kValueNames[j] << '\t' << model.mean.at<double>(j) << '\t' << model.scale.at<double>(j) << '\t' << model.weights.at<double>(j + 1, 0) << '\t' << model.weights.at<double>(j + 1, 1) << '\n';
+    std::cout << o.str();
+    return 0;
+}
+
+int predict(const fs::path& assets, const fs::path& photos, const fs::path& labels, const fs::path& out) {
+    if (fs::exists(out / "predictions.tsv")) { std::cerr << "출력이 이미 있다\n"; return 3; }
+    std::map<int, std::vector<std::string>> lab;
+    for (auto& r : read_table(labels, true)) lab[std::stoi(r.at(0))] = r;
+    const auto rows = read_table(photos, false);
+    initialize_joint(assets.u8string());
+    fs::create_directories(out);
+    std::ofstream f(out / "predictions.tsv", std::ios::binary); f << std::setprecision(17) << "id\tY\tT\tY_abs\tT_abs\tpass\tvalid\toutside_training_range\tmessage\n";
+    int valid = 0, pass = 0; double max_y = 0, max_t = 0;
+    cv::setNumThreads(1);
+    for (const auto& r : rows) {   // joint() 는 내부 잠금으로 한 번에 한 장만 처리한다
+        const int id = std::stoi(r.at(0)); const auto& l = lab.at(id); const double ly = std::stod(l.at(4)), lt = std::stod(l.at(5));
+        cv::Mat image = read_image(fs::u8path(r.at(1)));
+        try {
+            const Alignment_t p = joint(image); const auto d = alignment_diagnostics();
+            const bool okay = final00::passes(p.y - ly, p.t - lt); ++valid; pass += okay;
+            max_y = std::max(max_y, std::abs(p.y - ly)); max_t = std::max(max_t, std::abs(p.t - lt));
+            f << id << '\t' << p.y << '\t' << p.t << '\t' << ly << '\t' << lt << '\t' << okay << "\t1\t" << d.outside_training_range << "\t\n";
+        } catch (const std::exception& e) {
+            f << id << "\tnan\tnan\t" << ly << '\t' << lt << "\t0\t0\t0\t" << e.what() << '\n';
+        }
+    }
+    std::ostringstream o; o << "joint_api photos " << rows.size() << " valid " << valid << " pass " << pass << std::fixed << std::setprecision(5) << " max|eY| " << max_y << " max|eT| " << max_t << "\n";
+    { std::ofstream t(out / "predict.txt", std::ios::binary); t << o.str(); }
     std::cout << o.str();
     return 0;
 }
@@ -212,9 +219,10 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
 int main(int argc, char** argv) {
     try {
         const std::string mode = argc > 1 ? argv[1] : "";
-        if (mode == "measure" && argc == 6) return measure(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]));
+        if (mode == "measure" && argc == 5) return measure(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]));
         if (mode == "eval" && argc == 6) return evaluate(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]));
-        std::cerr << "usage: v2tool measure ASSETS04 ASSETS_CONTROL PHOTOS_TSV OUTDIR | v2tool eval FEATURES_TSV LABELS_TSV SPLITS_TSV OUTDIR\n";
+        if (mode == "predict" && argc == 6) return predict(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]));
+        std::cerr << "usage: final00_tool measure ASSETS PHOTOS_TSV OUTDIR | eval FEATURES_TSV LABELS_TSV SPLITS_TSV OUTDIR | predict ASSETS PHOTOS_TSV LABELS_TSV OUTDIR\n";
         return 2;
     } catch (const std::exception& e) { std::cerr << "error: " << e.what() << "\n"; return 1; }
 }

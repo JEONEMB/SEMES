@@ -1,7 +1,7 @@
 #pragma once
 #include <opencv2/core.hpp>
 
-namespace v2 {
+namespace final00 {
 // 나사 4개의 이동을 "기울기 영상 맞춤"으로 잰다.
 // 나사 주변 141×141 조각에서 밝기 변화 크기 영상(흐림 1.5 뒤 Sobel)을 만들고,
 // 센터 사진의 같은 영상과 반지름 45 px 안에서 ECC 평행이동으로 맞춘다.

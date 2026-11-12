@@ -96,7 +96,7 @@ struct LkNoGn{
 
 int main(){try{
     cv::setNumThreads(1);
-    auto repo=fs::u8path(REPO_DIR),exp=fs::u8path(EXPERIMENT_DIR),root=repo/"data/clean",control=repo/"experiments/hye/00000_final_Y_T control";
+    auto repo=fs::u8path(REPO_DIR),exp=fs::u8path(EXPERIMENT_DIR),root=repo/"data/clean",control=repo/"experiments/hye/20261028_1327_final_Y_T control";
     auto out=exp/"results_v2";require(!fs::exists(out),"results_v2 폴더가 이미 있다. 덮어쓰지 않는다");fs::create_directories(out/"models");
     // OpenCV FileStorage는 한글 경로에 쓰지 못하므로 모델은 영문 임시 폴더에 쓰고 마지막에 복사한다
     auto model_dir=fs::temp_directory_path()/"control_lk_models_20261029_v2";fs::remove_all(model_dir);fs::create_directories(model_dir);

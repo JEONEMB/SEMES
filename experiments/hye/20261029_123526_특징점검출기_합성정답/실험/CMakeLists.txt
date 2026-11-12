@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV 3.4 REQUIRED)
 get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
-set(CONTROL "${REPO}/experiments/hye/00000_final_Y_T control")
+set(CONTROL "${REPO}/experiments/hye/20261028_1327_final_Y_T control")
 # 합성 조건 생성기와 추적 방법은 1단계 실험의 소스를 그대로 쓴다 (같은 조건·같은 LK 설정).
 set(STAGE1 "${REPO}/experiments/hye/20261029_122323_부화소정합_합성정답/실험")
 add_executable(detector_synthetic src/main.cpp src/detectors.cpp "${STAGE1}/src/synth.cpp" "${STAGE1}/src/methods.cpp" "${CONTROL}/src/tracker.cpp" "${CONTROL}/src/spline.cpp")

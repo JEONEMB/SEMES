@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV 3.4 REQUIRED)
 get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
-set(CONTROL "${REPO}/experiments/hye/00000_final_Y_T control")
+set(CONTROL "${REPO}/experiments/hye/20261028_1327_final_Y_T control")
 # 정합 방법 9개는 1단계 실험 소스를 그대로 쓴다 (같은 설정).
 set(STAGE1 "${REPO}/experiments/hye/20261029_122323_부화소정합_합성정답/실험")
 add_executable(real_consistency src/main.cpp "${STAGE1}/src/synth.cpp" "${STAGE1}/src/methods.cpp" "${CONTROL}/src/tracker.cpp" "${CONTROL}/src/spline.cpp")

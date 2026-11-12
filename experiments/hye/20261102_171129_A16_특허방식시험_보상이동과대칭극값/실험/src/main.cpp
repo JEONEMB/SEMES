@@ -53,7 +53,7 @@ int main() {
         fs::create_directories(results);
         hye::begin_results();
         Cache c = load(cache_dir());
-        auto blocks = read_blocks(repo / fs::u8path(u8"experiments/hye/00000_final_Y_T_joint/assets/line_protocol.json"));
+        auto blocks = read_blocks(repo / fs::u8path(u8"experiments/hye/20261028_1258_final_Y_T_joint/assets/line_protocol.json"));
 
         // ================= 1부: 보상 이동 영점 시험 (PT-01) =================
         // 세션 안의 조건 쌍 (i, j) 마다 명령 차 (dY, dT) 와 실측 판 이동 차를 모은다.

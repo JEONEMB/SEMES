@@ -4,8 +4,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV 3.4 REQUIRED)
 get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
-set(CONTROL "${REPO}/experiments/hye/00000_final_Y_T control")
-set(JOINT   "${REPO}/experiments/hye/00000_final_Y_T_joint")
+set(CONTROL "${REPO}/experiments/hye/20261028_1327_final_Y_T control")
+set(JOINT   "${REPO}/experiments/hye/20261028_1258_final_Y_T_joint")
 set(COMMON  "${REPO}/experiments/hye/00001_common")
 # 측정은 채택 모듈의 소스를 그대로 링크한다 (새 측정기를 만들지 않는다).
 add_executable(a0 src/main.cpp

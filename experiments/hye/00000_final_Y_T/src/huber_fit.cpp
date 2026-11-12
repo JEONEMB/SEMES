@@ -3,7 +3,7 @@
 #include <cmath>
 #include <stdexcept>
 
-namespace v2 {
+namespace final00 {
 namespace {
 cv::Mat design(const cv::Mat& x, const cv::Mat& mean, const cv::Mat& scale) {
     cv::Mat a(x.rows, x.cols + 1, CV_64F);

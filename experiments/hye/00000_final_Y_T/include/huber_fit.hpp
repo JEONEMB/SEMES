@@ -1,7 +1,7 @@
 #pragma once
 #include <opencv2/core.hpp>
 
-namespace v2 {
+namespace final00 {
 // 00004 와 같은 학습식(표준화, 절편 제외 ridge 1e-7·n, 두 축 공유 Huber 가중 6회)을 임의의 값 개수에 쓴다.
 struct LinearModel {
     cv::Mat mean, scale;   // 1×p

@@ -21,7 +21,7 @@ const COMMON = `
 공통 맥락 (반드시 지킬 것)
 - 저장소: ${REPO} (브랜치 feature/hye/pipeline-v2). 계획: ${V2}/plan.md. 문헌 지침: ${REPO}/docs/hye/문헌연구/AGENTS.md. 알고리즘 규칙: ${REPO}/ALGORITHM_RULES.md. 먼저 이 세 파일을 읽는다.
 - 과제: 로봇이 작업하다 웨이퍼 투입 전에 센터 자리로 오면, 카메라 사진(3840x2160 8bit)의 QR 3개와 뒷벽 위·아래 가로선만으로 센터 대비 Y(mm)·T(회전 명령 단위) 편차를 추정하고, 이동·재촬영을 최대 20턴 반복해 |eY|,|eT| ≤ 0.045 안에 정지시킨다. 1차는 joint()로 T만, 2차는 control()로 Y. 나사·볼트·일반 배경은 관측에 쓰지 않는다.
-- 현재 모듈: ${REPO}/experiments/hye/00000_final_Y_T_joint (NCC→ECC 호모그래피 QR54 + 가로선 48블록 세로 프로파일 → 204차원 GLS), ${REPO}/experiments/hye/00000_final_Y_T control (NCC→LK15→17x17 스플라인 GN, 고정 536점, 센터 차감, P12, 6절편 후보 곡선 역산, Y-or-T).
+- 현재 모듈: ${REPO}/experiments/hye/20261028_1258_final_Y_T_joint (NCC→ECC 호모그래피 QR54 + 가로선 48블록 세로 프로파일 → 204차원 GLS), ${REPO}/experiments/hye/20261028_1327_final_Y_T control (NCC→LK15→17x17 스플라인 GN, 고정 536점, 센터 차감, P12, 6절편 후보 곡선 역산, Y-or-T).
 - 단계 캔버스(목적·해결할 질문·잠정 후보·사이 보정·평가·현재 상태): ${CANVAS} (JSON. 노드 id로 찾는다).
 - 핵심 수치: Y 1mm≈14.36px, T 1단위≈80.3px, 허용 ±0.045 = Y 0.65px. Y·T 영상 반응 cos 0.99999. 점 측정 잡음 0.009~0.015px, 536점의 유효 독립 정보 ≈19. 영점: 하루 안 가로 ≤0.84px(백래시 β −0.34px, 드리프트), 날짜 간 세로 +0.44px(카메라 이동, QR−가로선으로 상쇄, A15). 모든 자료는 명령한 자리에 멈춰 찍은 정지 사진이며 실제 작업 후 도착 사진은 없다. 341/575장은 개발에 노출된 자료다.
 - 금지: 원본·기존 결과·기존 final 폴더 수정 금지. data 커밋 금지. git 커밋/푸시 금지(메인이 한다). 봇 차단 우회 금지. 확인하지 못한 서지·수치를 지어내지 않는다(실제로 OpenAlex/arXiv/Google Patents 등에서 확인한 것만 등록). 시험 정답을 학습에 쓰지 않는다.
@@ -136,8 +136,8 @@ log(`단계 ${done.length}/${UNITS.length} 완료. 실패 단계: ${UNITS.filter
 const SUMMARY = JSON.stringify(done.map(d => ({ code: d.code, dir: d.dir, findings: d.exp?.findings, rec_control: d.exp?.recommendation_control, rec_joint: d.exp?.recommendation_joint, failed: d.exp?.failed })))
 
 const MODS = [
-  { key: 'control', old: `${REPO}/experiments/hye/00000_final_Y_T control`, neo: `${REPO}/experiments/hye/00000_final_v3_Y_T control`, v2: `${REPO}/experiments/hye/00000_final_v2_Y_T control`, role: '2차 Y 정렬(1차 후 T≈0). 원래 Y-or-T 출력. v3는 같은 공개 API(initialize_control, control, alignment_diagnostics)와 CMake 대상 semes_control, assets/ 구조를 유지한다.' },
-  { key: 'joint', old: `${REPO}/experiments/hye/00000_final_Y_T_joint`, neo: `${REPO}/experiments/hye/00000_final_v3_Y_T_joint`, v2: `${REPO}/experiments/hye/00000_final_v2_Y_T_joint`, role: '1차 T 정렬(Y도 함께 추정하지만 운용은 T만 사용). v3는 같은 공개 API(initialize_joint, joint, alignment_diagnostics)와 CMake 대상 semes_joint, assets/ 구조를 유지한다.' },
+  { key: 'control', old: `${REPO}/experiments/hye/20261028_1327_final_Y_T control`, neo: `${REPO}/experiments/hye/00000_final_v3_Y_T control`, v2: `${REPO}/experiments/hye/00000_final_v2_Y_T control`, role: '2차 Y 정렬(1차 후 T≈0). 원래 Y-or-T 출력. v3는 같은 공개 API(initialize_control, control, alignment_diagnostics)와 CMake 대상 semes_control, assets/ 구조를 유지한다.' },
+  { key: 'joint', old: `${REPO}/experiments/hye/20261028_1258_final_Y_T_joint`, neo: `${REPO}/experiments/hye/00000_final_v3_Y_T_joint`, v2: `${REPO}/experiments/hye/00000_final_v2_Y_T_joint`, role: '1차 T 정렬(Y도 함께 추정하지만 운용은 T만 사용). v3는 같은 공개 API(initialize_joint, joint, alignment_diagnostics)와 CMake 대상 semes_joint, assets/ 구조를 유지한다.' },
 ]
 
 phase('Design')
