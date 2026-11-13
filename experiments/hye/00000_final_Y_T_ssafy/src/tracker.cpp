@@ -41,7 +41,7 @@ Tracker::Tracker(const fs::path& assets){
         int id=int(points_.size());points_.emplace_back(x,y);regions_.push_back(k);selected_.push_back(static_cast<unsigned char>(selected));
         // Match Python's global->crop float32 cast before local QR subtraction.
         cv::Point2f crop(float(x-site::get().full_crop.x),float(y-site::get().full_crop.y));auto local=site::get().qr[k].tl()-site::get().full_crop.tl();
-        panels_[k].points.emplace_back(crop.x-float(local.x),crop.y-float(local.y));panels_[k].ids.push_back(id);
+        if(selected){panels_[k].points.emplace_back(crop.x-float(local.x),crop.y-float(local.y));panels_[k].ids.push_back(id);}   // 2026-11-13: 선택 안 된 94점은 추적하지 않는다(쓰지 않는 값, 점마다 독립이라 536점 결과는 같다)
     }
     if(std::count(selected_.begin(),selected_.end(),1)!=536)throw std::runtime_error("Expected fixed536 interior selection");
     for(int k=0;k<3;++k){auto original=reference_(site::get().qr[k]).clone();cv::GaussianBlur(original,panels_[k].blurred8,cv::Size(),.8);panels_[k].models=reference_models(original,panels_[k].points);}
