@@ -87,9 +87,9 @@
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     const cy = st.tol_y_mm, ct = st.tol_t_deg;
     const hist = s.history || [];
-    const off = stageOffset(s), goal = moveGoal(s);
-    const ys = [st.random_y_mm, ...hist.map(e => Math.abs(e.offset.y_mm)), off ? Math.abs(off[0]) : 0, goal ? Math.abs(goal[0]) : 0];
-    const ts = [st.random_t_deg, ...hist.map(e => Math.abs(e.offset.t_deg)), off ? Math.abs(off[1]) : 0, goal ? Math.abs(goal[1]) : 0];
+    const goal = s.moving ? moveGoal(s) : null;       // 지도는 카메라로 본 위치만 (스테이지 좌표는 백래시를 몰라 안 그림)
+    const ys = [st.random_y_mm, ...hist.map(e => Math.abs(e.offset.y_mm)), goal ? Math.abs(goal[0]) : 0];
+    const ts = [st.random_t_deg, ...hist.map(e => Math.abs(e.offset.t_deg)), goal ? Math.abs(goal[1]) : 0];
     const Ry = Math.max(...ys) * 1.08, Rt = Math.max(...ts) * 1.08;
     const f = (v, c, Rm) => Math.sign(v) * Math.log1p(Math.min(Math.abs(v), Rm) / c) / Math.log1p(Rm / c);
     const X = v => L + (f(v, cy, Ry) + 1) / 2 * (W - L - R);
@@ -118,8 +118,7 @@
           `<text class="pt-n" x="${x}" y="${y + 3}" text-anchor="middle">${e.trial || ''}</text>`;
       });
     }
-    if (goal) g += `<g class="goal"><line x1="${X(goal[0]) - 6}" y1="${Y(goal[1]) - 6}" x2="${X(goal[0]) + 6}" y2="${Y(goal[1]) + 6}"/><line x1="${X(goal[0]) - 6}" y1="${Y(goal[1]) + 6}" x2="${X(goal[0]) + 6}" y2="${Y(goal[1]) - 6}"/></g>`;
-    if (off) g += `<circle class="stage-pt${s.moving ? ' moving' : ''}" cx="${X(off[0])}" cy="${Y(off[1])}" r="9"/>`;
+    if (goal && s.moving) g += `<g class="goal"><line x1="${X(goal[0]) - 6}" y1="${Y(goal[1]) - 6}" x2="${X(goal[0]) + 6}" y2="${Y(goal[1]) + 6}"/><line x1="${X(goal[0]) - 6}" y1="${Y(goal[1]) + 6}" x2="${X(goal[0]) + 6}" y2="${Y(goal[1]) - 6}"/></g>`;
     svg.innerHTML = g;
   }
 
@@ -172,7 +171,7 @@
   }
   function renderFlow(s) {
     const next = s.busy ? 0 : flowStep(s), jobStep = {goto: 1, run: 2, step: 2}[s.job] || 0;
-    document.querySelectorAll('.flow-btn[data-step], .flow-input[data-step]').forEach(b => {
+    document.querySelectorAll('.flow-btn[data-step], .step-card[data-step]').forEach(b => {
       const n = +b.dataset.step;
       b.classList.toggle('next', n === next);
       b.classList.toggle('active', n === jobStep);
@@ -184,10 +183,10 @@
       li.className = n === jobStep ? 'on' : done[n] ? 'done' : n === next ? 'next' : '';
     });
     const st = s.settings;
-    $('input-hint').textContent = `센터 기준 · Y ±${st.max_step_y_mm} mm, Θ ±${st.max_step_t_deg}° 안`;
+    $('input-hint').textContent = `±${st.max_step_y_mm} mm, ±${st.max_step_t_deg}° 안`;
     ['start-y', 'start-t'].forEach(id => { $(id).disabled = s.busy; });
     $('start-t').closest('label').hidden = !st.enable_t;
-    $('random-hint').textContent = `Y ±${(st.random_y_mm * 0.4).toFixed(1)}~${st.random_y_mm} mm, Θ ±${(st.random_t_deg * 0.4).toFixed(1)}~${st.random_t_deg}°`;
+    $('random-hint').textContent = `무작위 Y ±${(st.random_y_mm * 0.4).toFixed(1)}~${st.random_y_mm} mm, Θ ±${(st.random_t_deg * 0.4).toFixed(1)}~${st.random_t_deg}°`;
     document.querySelectorAll('[data-slow]').forEach(b => b.classList.toggle('on', String(st.demo_slow) === b.dataset.slow));
     const sp = st.demo_slow ? [st.slow_y_mm_s, st.slow_t_deg_s] : [st.fast_y_mm_s, st.fast_t_deg_s];
     $('speed-info').textContent = `Y ${sp[0]} mm/s · Θ ${sp[1]}°/s` + (st.demo_slow && st.pause_s ? ` · 회차마다 ${st.pause_s}s 보여 줌` : '');

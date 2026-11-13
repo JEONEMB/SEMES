@@ -52,13 +52,17 @@
     </section>
 
     <section class="panel flow">
-      <div class="flow-one">
-        <button class="flow-btn" id="btn-goto-random" data-step="1"><b>1</b><span><strong>랜덤 위치로</strong><small id="random-hint">일부러 어긋나게</small></span></button>
-        <form class="flow-input" id="goto-form" data-step="1" autocomplete="off">
-          <span class="fi-title"><b>1</b>직접 입력 <small class="muted" id="input-hint">센터 기준</small></span>
-          <label>Y <input id="start-y" type="number" step="0.01" value="0.50" inputmode="decimal" required> mm</label>
-          <label>Θ <input id="start-t" type="number" step="0.01" value="0.20" inputmode="decimal" required> °</label>
-          <button class="btn" id="btn-goto" type="submit">이 위치로</button>
+      <div class="step-card" data-step="1">
+        <div class="step-head"><b>1</b><strong>시작 위치 잡기</strong><small>센터에서 일부러 어긋나게</small></div>
+        <form class="step-body" id="goto-form" autocomplete="off">
+          <button type="button" class="pick" id="btn-goto-random">랜덤 위치로</button>
+          <button type="submit" class="pick" id="btn-goto">입력한 위치로</button>
+          <small class="pick-note" id="random-hint"></small>
+          <div class="pick-inputs">
+            <label>Y <input id="start-y" type="number" step="0.01" value="0.50" inputmode="decimal" required> mm</label>
+            <label>Θ <input id="start-t" type="number" step="0.01" value="0.20" inputmode="decimal" required> °</label>
+            <small class="pick-note" id="input-hint"></small>
+          </div>
         </form>
       </div>
       <button class="flow-btn primary" id="btn-run" data-step="2"><b>2</b><span><strong>자동 보정 시작</strong><small>카메라로 보고 센터로 복귀</small></span></button>
@@ -90,14 +94,14 @@
       <div class="panel-head"><span>Y · Θ 지도 <small class="muted">가운데 초록 상자 = 허용 범위</small></span></div>
       <svg id="plot" viewBox="0 0 400 300" preserveAspectRatio="none" aria-label="센터 대비 Y·Θ 위치와 보정 경로"></svg>
       <div class="legend small">
-        <span><i class="p-stage"></i>스테이지</span><span><i class="p-cam"></i>카메라 판단 (회차)</span><span><i class="p-goal"></i>이동 목표</span>
+        <span><i class="p-cam"></i>카메라로 본 위치 (숫자 = 회차)</span><span><i class="p-goal"></i>이동 목표 (움직이는 동안)</span>
         <span class="muted">눈금은 가운데를 크게 보이게 늘림</span>
       </div>
     </section>
 
     <section class="panel progress-card">
       <ol class="flow-steps" id="flow-steps">
-        <li data-step="1"><b>1</b>랜덤 위치</li><li data-step="2"><b>2</b>자동 보정</li><li data-step="3"><b>✓</b>센터 OK</li>
+        <li data-step="1"><b>1</b>시작 위치</li><li data-step="2"><b>2</b>자동 보정</li><li data-step="3"><b>✓</b>센터 OK</li>
       </ol>
       <div class="phase" id="phase-box" data-phase="idle"><span class="light"></span><div><strong id="phase">대기</strong><p id="message"></p></div></div>
       <div class="trial-line">
