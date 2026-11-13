@@ -1,0 +1,21 @@
+{
+    "schema": "t_six_ensemble.v1",
+    "method": 7,
+    "tick_deg": 1.0000000000000000e-02,
+    "weights": {
+        "type_id": "opencv-matrix",
+        "rows": 1,
+        "cols": 5,
+        "dt": "d",
+        "data": [ 0.0, 0.0, 0.0, 1.0, 0.0 ]
+    },
+    "models": [
+        "fold4_members/model0.json",
+        "fold4_members/model1.json",
+        "fold4_members/model2.json",
+        "fold4_members/model3.json",
+        "fold4_members/model4.json"
+    ],
+    "min_t": -9.5487923796115248e-01,
+    "max_t": 1.9843396641897468e+00
+}

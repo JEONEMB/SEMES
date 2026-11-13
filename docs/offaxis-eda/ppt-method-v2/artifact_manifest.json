@@ -1,0 +1,186 @@
+{
+  "docs/offaxis-eda/ppt-method-v2/deck_content.json": {
+    "bytes": 21299,
+    "sha256": "66547d81029358cc37797018b16643e4cb470c60ab3ed3c48d3eb993a7e1d5a5"
+  },
+  "docs/offaxis-eda/ppt-method-v2/diagnostic_failures.csv": {
+    "bytes": 101,
+    "sha256": "78ecdb53416d739ff91b26caf4a7ecb1b12f1217b22a6c11675ed7521d426e9a"
+  },
+  "docs/offaxis-eda/ppt-method-v2/displacements.csv.gz": {
+    "bytes": 41270633,
+    "sha256": "94e9ad57ab038a6b7572ca7ead9cff97a1ec0db8ff5fa40ac3fb5e08ac508ad4"
+  },
+  "docs/offaxis-eda/ppt-method-v2/ecc.csv": {
+    "bytes": 499524,
+    "sha256": "67be374ac818b3f54c648ba9f044b0d809ea70fa8b8fafe121fc34acd12b80a4"
+  },
+  "docs/offaxis-eda/ppt-method-v2/ecc_noise.csv": {
+    "bytes": 5103,
+    "sha256": "f5bbbbd05f0406f1db56f5c07cb09d12259b799baa2c178b5872e12b5f7b3125"
+  },
+  "docs/offaxis-eda/ppt-method-v2/extraction.json": {
+    "bytes": 730,
+    "sha256": "b25c28845dab07c6f4a746d3ebfcca15480b163a1771d9f437890ab73724fdc6"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures.json": {
+    "bytes": 682,
+    "sha256": "ce737efcfe72baa34e55beeaed9fa238901fcee91cc5ae3ff35fa14bba352828"
+  },
+  "docs/offaxis-eda/ppt-method-v2/fitting_summary.csv": {
+    "bytes": 1639,
+    "sha256": "8fec4945eb8a59dc22bc8700ebf135c7476a2d940d32de9023b3a8b208102001"
+  },
+  "docs/offaxis-eda/ppt-method-v2/frames.csv": {
+    "bytes": 79287,
+    "sha256": "e4392e07801671b6e8530c4363dddfb81f6599c0bfebf03ca41fc27722d9d8c3"
+  },
+  "docs/offaxis-eda/ppt-method-v2/frame_linear_residuals.csv": {
+    "bytes": 263770,
+    "sha256": "027f91f21968d6ecbfc60cb9f0a925772fd84f072b956dd27583a7a2337258d7"
+  },
+  "docs/offaxis-eda/ppt-method-v2/groups.json": {
+    "bytes": 14293,
+    "sha256": "c225ef7b2f3032d2d2a9cccc97c5ded7fd55d2d72879f4a2cdcbd53b6662e544"
+  },
+  "docs/offaxis-eda/ppt-method-v2/input_integrity.json": {
+    "bytes": 93,
+    "sha256": "3eb33603119b7a5bec4bed3ee860eeadbe6162226bd0f4cb25e5231a9335a6b2"
+  },
+  "docs/offaxis-eda/ppt-method-v2/linear_fits.csv": {
+    "bytes": 10773,
+    "sha256": "34683ed22813ef43a75df122b9ce63276ca69da05c35221c697286946d8825f0"
+  },
+  "docs/offaxis-eda/ppt-method-v2/mean_displacements.csv": {
+    "bytes": 388940,
+    "sha256": "1d241148b4a347db7c9f5b350e4b362aac7bb225a6240aaeaceef77742fa9970"
+  },
+  "docs/offaxis-eda/ppt-method-v2/method_comparison.csv": {
+    "bytes": 4743,
+    "sha256": "587905f4226ef68bea810cd4c7fe51ce5d8898e614377b84ff459cb73bcac63e"
+  },
+  "docs/offaxis-eda/ppt-method-v2/numerical_validation.json": {
+    "bytes": 502,
+    "sha256": "8f1a8be8beaa3d4571aa4cd3906aa9ef71e8390d4807f2fa347553317424f9dc"
+  },
+  "docs/offaxis-eda/ppt-method-v2/patch_bounds.json": {
+    "bytes": 456,
+    "sha256": "f33799bb2c7fc480dac548dfa36bb3e814f99911a2cd1e2a91b9f0b4987e7290"
+  },
+  "docs/offaxis-eda/ppt-method-v2/patch_comparison.csv": {
+    "bytes": 112142,
+    "sha256": "f4ce61ab0c564368db389edb50fad12095c954eea93fe726cd57efe4664c3902"
+  },
+  "docs/offaxis-eda/ppt-method-v2/patch_differences.csv": {
+    "bytes": 14930,
+    "sha256": "1b4624b8b5fb66c0d3b5e25e3ecd3e80f2cd4cbd8cbd5ab62026c32ffda2501e"
+  },
+  "docs/offaxis-eda/ppt-method-v2/points.csv.gz": {
+    "bytes": 24799787,
+    "sha256": "219cad2b8f6ea5b52f5492c1aacafa57f9cbf9140299df3f98ab033fd88a3c28"
+  },
+  "docs/offaxis-eda/ppt-method-v2/point_linear_residuals.csv.gz": {
+    "bytes": 14266111,
+    "sha256": "bbe4876959d4e9b048ba5b495ba31516fd52f61db2e9c6c221f365cc61476838"
+  },
+  "docs/offaxis-eda/ppt-method-v2/point_noise.csv": {
+    "bytes": 1751441,
+    "sha256": "fa4047c1a8567cd21380440a4a6c2ffa4a362e1ab2d3246ec9a030cab95d2e15"
+  },
+  "docs/offaxis-eda/ppt-method-v2/presentation_validation.json": {
+    "bytes": 10685,
+    "sha256": "eac5a3aa9daee114e22b223d6ac0b9348f99f9cf3a2581bb55b45bfa0b23c31c"
+  },
+  "docs/offaxis-eda/ppt-method-v2/qr_displacements.csv": {
+    "bytes": 62466,
+    "sha256": "b577d9c60e1f8237b6a523985dfe18ce7f444deea7089943434b718240ef519e"
+  },
+  "docs/offaxis-eda/ppt-method-v2/README.md": {
+    "bytes": 4568,
+    "sha256": "2e3798b2888c6238bec786bd386e804fa1c2a3c06dae921fb072951a505f7a18"
+  },
+  "docs/offaxis-eda/ppt-method-v2/reference.json": {
+    "bytes": 413205,
+    "sha256": "a8a08a2ce2b05ea18aef578fc93af8dfe88aa015be9557b280083cff63dab396"
+  },
+  "docs/offaxis-eda/ppt-method-v2/reference_point_perturbation.csv": {
+    "bytes": 14269,
+    "sha256": "4409f3a3d9b96bc0e102923f405e6cfcd0770a4ca7044cbd0c86352fa01183b8"
+  },
+  "docs/offaxis-eda/ppt-method-v2/SEMES_02_혼합데이터EDA_동일방법_v2.pptx": {
+    "bytes": 4384094,
+    "sha256": "d40871306a3f6d86204f6dafaa75dd290c8eb9aca56501a42941144a17c2ed29"
+  },
+  "docs/offaxis-eda/ppt-method-v2/steps.csv": {
+    "bytes": 284644,
+    "sha256": "b20d84b56ac46541cda58f4e17ee2fcbcab7c6ece598c736d594ce7b207e96e7"
+  },
+  "docs/offaxis-eda/ppt-method-v2/step_statistics.csv": {
+    "bytes": 3382,
+    "sha256": "5bd46581b5d429a1fc7846fc4060a5ce5df6afafa56ce8a46249de1fa35faf19"
+  },
+  "docs/offaxis-eda/ppt-method-v2/summary.json": {
+    "bytes": 1304,
+    "sha256": "8c53837c9960d710725026503356ecd0adafaf7a0072d86168d2c5a4c47481b4"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/fit_group_maps.png": {
+    "bytes": 1538521,
+    "sha256": "6b0f6e5211b48ceaee4f1386ac879b49c7a484897f90bbd3849ee517f14f49ed"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/method_difference.png": {
+    "bytes": 45123,
+    "sha256": "3ae679561b500760b6d537d58c57a9c0c0464949e193f9f8b5e6a62488464cc1"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/noise_decomposition.png": {
+    "bytes": 170575,
+    "sha256": "4fa807c7d810e39b20649f05451cef998ada85aa7f42ce3f138991770cfaf0dc"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/patch_sensitivity.png": {
+    "bytes": 61033,
+    "sha256": "d57d1d534e1831feef01b0ba66c72dd6113b879830e5fb94b1afcdb4371f17d4"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/path_new_ECC.png": {
+    "bytes": 107567,
+    "sha256": "621c815178235e2eea9150b8377c0983b7629b5fc91cb5f3b3f2347fc95f6285"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/path_new_no_diagonal630.png": {
+    "bytes": 103718,
+    "sha256": "202801ec13d9fa402021cb23a5c0161cd998c9bcbee8b111dde0eeb233656182"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/path_old_ECC.png": {
+    "bytes": 118719,
+    "sha256": "b7dd494596c6ec146318394de09a165bf4fca12cd36aeae61b23dbf8dcb6efca"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/path_old_no_diagonal630.png": {
+    "bytes": 120539,
+    "sha256": "6f6d277aab6b0401a29195103448c49bfd6262fa46d30e7dab89a4ee9428a248"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/photo_ecc.png": {
+    "bytes": 410342,
+    "sha256": "13e2a1dc091fd322bfe39b59d33a60f14e68070e1f8f5e6b0bd866b6f8f8383b"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/photo_features.png": {
+    "bytes": 465971,
+    "sha256": "80355ab83619871fa6d3b197b709a4462811bee6a7d2d4964db4eef36c83babc"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/photo_reference.png": {
+    "bytes": 409867,
+    "sha256": "e6d09061e25259875d298073b86ea65bed290ae0271c6de0efb9fe133d67b2a7"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/point_noise_map.png": {
+    "bytes": 302570,
+    "sha256": "1b4817d6e27ff040ed58131c6bb157ac9aa10344c86dd87977fb79edc6594348"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/steps.png": {
+    "bytes": 97423,
+    "sha256": "88ef59d3676fb844a4fd024336c337454b2cdd4902dcc47a4433c13a67fa7162"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/timing_brightness.png": {
+    "bytes": 146517,
+    "sha256": "27a1cdb2e715dd45c36476d0aeb0267f1e7e99935eab66d161aa2e509c495bb4"
+  },
+  "docs/offaxis-eda/ppt-method-v2/figures/zero_intercepts.png": {
+    "bytes": 87658,
+    "sha256": "e94cb4c945ff220100e988704420bf6b769faaf75705198b0ca0662088ef3807"
+  }
+}

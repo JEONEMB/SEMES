@@ -1,0 +1,9 @@
+path,T_evaluation,method,source
+Y+0.05 T+0.32/Y+0.05 T+0.33 (3).bmp,0.32000000000000001,folder_and_sequence,label_crosschecks.csv
+Y+0.05 T+0.57/Y+0.05 T+0.57 (1).bmp,0.56916601335000738,local_sequence_median,label_crosschecks.csv
+Y+0.05 T+0.57/Y+0.05 T+0.57 (2).bmp,0.57088844379161696,local_sequence_median,label_crosschecks.csv
+Y+0.05 T+0.57/Y+0.05 T+0.57 (3).bmp,0.57014434149214144,local_sequence_median,label_crosschecks.csv
+Y+0.05 T+2.00/Y+0.05 T+2.00 (2).bmp,2.0046444902966085,repeat_dx_fixed_Y,final_repeat_diagnostics.csv + local_motion_jacobian.csv
+Y+0.10 T+0.10/Y+0.1 T+0.1 (2).bmp,0.10741192599108511,repeat_dx_fixed_Y,final_repeat_diagnostics.csv + local_motion_jacobian.csv
+Y+0.10 T+2.00/Y+0.1 T+2.0 (2).bmp,2.0046367894261161,repeat_dx_fixed_Y,final_repeat_diagnostics.csv + local_motion_jacobian.csv
+Y+1.00 T+2.00/Y+1.00 T+2.00 (2).bmp,2.0044032277595054,repeat_dx_fixed_Y,final_repeat_diagnostics.csv + local_motion_jacobian.csv

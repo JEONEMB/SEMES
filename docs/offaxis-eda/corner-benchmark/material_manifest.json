@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "noiseless_max_error_px": 5.070432962384075e-11,
+    "jacobian_relative_error": 1.6788136908795003e-10
+  },
+  "seconds": 65.56747698783875,
+  "source_sha256": "7c509df1c8919c5f921bbfc3b806317c1634f929b5f7032ee66b22b783d604e3",
+  "real_source_sha256": "6fd61bbc53ba5c9fc93862ebc25cf1c0efa11ed0324b1dd49bd09bfc7151e83a",
+  "note": "No held point enters projector calibration. Effective retreat is not independent ground truth."
+}

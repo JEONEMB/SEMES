@@ -1,0 +1,49 @@
+{
+  "all_nonreference": {
+    "images": 280,
+    "success": 280,
+    "y_rmse": 0.23561757700134406,
+    "theta_rmse": 0.042186306836876006,
+    "y_max_abs": 0.6793314576819953,
+    "theta_max_abs": 0.12145639234573369,
+    "joint_pass": 85
+  },
+  "train": {
+    "images": 186,
+    "success": 186,
+    "y_rmse": 0.23866998333899964,
+    "theta_rmse": 0.042825025104648175,
+    "y_max_abs": 0.6793314576819953,
+    "theta_max_abs": 0.12145639234573369,
+    "joint_pass": 59
+  },
+  "holdout": {
+    "images": 94,
+    "success": 94,
+    "y_rmse": 0.2294580754736446,
+    "theta_rmse": 0.040893070145906874,
+    "y_max_abs": 0.5764402776895097,
+    "theta_max_abs": 0.10253219390318213,
+    "joint_pass": 26
+  },
+  "reference": {
+    "images": 1,
+    "success": 1,
+    "y_rmse": 0.0,
+    "theta_rmse": 0.0,
+    "y_max_abs": 0.0,
+    "theta_max_abs": 0.0,
+    "joint_pass": 1
+  },
+  "execution": {
+    "images": 281,
+    "workers": 4,
+    "collection_seconds": 37.271316000002116,
+    "total_seconds": 37.70872230000168,
+    "frozen_model_sha256": "244d165992aeb4a9dfea26dfb9bbe5ba1d0c3c070191085c703007f460d6e722",
+    "model": "docs\\sequential-y-theta\\fourier-recheck\\fourier_experimental_model.json",
+    "known_session_offsets": true,
+    "filename_labels": true,
+    "real_mixed_validation": false
+  }
+}

@@ -1,0 +1,25 @@
+calibration,feature,path,Y_pred_ticks,yaw_pred_ticks
+full_axis_range,L630_full,기준 위치/center1.bmp,0.0,0.0
+full_axis_range,L630_full,기준 위치/center2.bmp,-3.0634658614715433,2.6380016235701644
+full_axis_range,L630_full,기준 위치/center3.bmp,-9.165396034489849,8.144453518045973
+full_axis_range,L630_centered,기준 위치/center1.bmp,0.0,0.0
+full_axis_range,L630_centered,기준 위치/center2.bmp,-1.923155833169948,-2.907238400676925
+full_axis_range,L630_centered,기준 위치/center3.bmp,-10.796415358941317,-8.702833617892479
+full_axis_range,three_QR_means,기준 위치/center1.bmp,0.0,0.0
+full_axis_range,three_QR_means,기준 위치/center2.bmp,-7.825645605481476,6.888308631512805
+full_axis_range,three_QR_means,기준 위치/center3.bmp,-17.766888647591227,15.821245002671873
+full_axis_range,frame_mean,기준 위치/center1.bmp,0.0,0.0
+full_axis_range,frame_mean,기준 위치/center2.bmp,-96.8088057509458,86.30374336836874
+full_axis_range,frame_mean,기준 위치/center3.bmp,-245.04558462619036,218.66256577911815
+central_axis_range,L630_full,기준 위치/center1.bmp,0.0,0.0
+central_axis_range,L630_full,기준 위치/center2.bmp,3.0014626676346627,-2.7852684665280987
+central_axis_range,L630_full,기준 위치/center3.bmp,2.143186656589889,-1.9554796427253962
+central_axis_range,L630_centered,기준 위치/center1.bmp,0.0,0.0
+central_axis_range,L630_centered,기준 위치/center2.bmp,2.5278106610387283,-2.683245981477228
+central_axis_range,L630_centered,기준 위치/center3.bmp,0.5296863833955855,-4.516302979689122
+central_axis_range,three_QR_means,기준 위치/center1.bmp,0.0,0.0
+central_axis_range,three_QR_means,기준 위치/center2.bmp,10.119789753385549,-9.161559380780044
+central_axis_range,three_QR_means,기준 위치/center3.bmp,25.367254203928933,-22.758943943682677
+central_axis_range,frame_mean,기준 위치/center1.bmp,0.0,0.0
+central_axis_range,frame_mean,기준 위치/center2.bmp,27.93200929591118,-25.117421281971076
+central_axis_range,frame_mean,기준 위치/center3.bmp,70.75197865503644,-63.41347747567447

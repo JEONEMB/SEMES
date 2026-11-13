@@ -1,0 +1,24 @@
+{
+  "kernel_value_gradient": "PASS",
+  "edge_rejected_as_2D_point": true,
+  "uniform_rejected": true,
+  "corner_rank2": true,
+  "analytic_scene_subpixel_tests": [
+    {
+      "dx": 0.27,
+      "dy": -0.36,
+      "error_px": 0.029305493903474433
+    },
+    {
+      "dx": -0.42,
+      "dy": 0.18,
+      "error_px": 0.01597505450356498
+    },
+    {
+      "dx": 0.11,
+      "dy": 0.41,
+      "error_px": 0.015861377267953964
+    }
+  ],
+  "uncertainty_note": "Schur-complement local covariance is conditional on patch/noise model, not a physical coverage guarantee."
+}

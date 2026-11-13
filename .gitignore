@@ -39,6 +39,24 @@ Desktop.ini
 *.swo
 *~
 
+# Raw acquisition inputs and local analysis scratch (curated results are tracked).
+/data/**/*.[bB][mM][pP]
+/data/**/*.txt
+/docs/offaxis-eda/smoke/
+/docs/offaxis-eda/raw/points.csv
+/docs/validation-runs/*
+!/docs/validation-runs/README.md
+/tool/qr-subpixel/build/
+/tool/qr-subpixel/results/
+/tool/qr-subpixel/pipeline-*/
+/docs/offaxis-eda/ppt-method-v2/smoke/
+
+# Local analysis dependencies and plotting cache
+/.analysis_packages/
+# Root-level generated validation output
+/result_*.png
+/result_*.csv
+
 # KSH ignore files
 .CLAUDE
 img

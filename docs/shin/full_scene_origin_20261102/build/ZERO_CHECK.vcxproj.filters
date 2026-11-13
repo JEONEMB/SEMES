@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\SSAFY\.codex\.chatgpt-projects\g-p-6acd86094480819191ba56d9b3676039\analysis\full_scene_origin_20261102\build\CMakeFiles\f308b08ec0a8dceee248bbbb1868881c\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{7BC154AA-2E7A-3278-B734-6B2F09A2CC8B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "checks": {
+    "341 frames, each 755 unique corners": true,
+    "630 non-diagonal corners per frame": true,
+    "center1 is exact displacement origin": true,
+    "published 630 mean equally weights every corner": true,
+    "linear residual sigma is sample std ddof1": true,
+    "mean point OLS residual equals mean-frame OLS residual": true,
+    "individual equals raw residual minus common": true,
+    "diagnostic failure retained for diagonal corners": true
+  }
+}

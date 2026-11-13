@@ -1,0 +1,44 @@
+{
+  "images": 57,
+  "coordinate_folds": 19,
+  "C_core_language": "C17",
+  "image_adapter": "C++17 OpenCV 3.4.15; decoding and coarse affine only",
+  "frozen_feature_C_metrics": {
+    "Y_rmse_mm": 0.0751688285729368,
+    "yaw_rmse_deg": 0.014019317345488716,
+    "both_within_tick": 0.5263157894736842
+  },
+  "raw_image_C_metrics": {
+    "Y_rmse_mm": 0.07445785660119637,
+    "yaw_rmse_deg": 0.013847428114632401,
+    "both_within_tick": 0.5263157894736842
+  },
+  "frozen_feature_max_C_Python_delta": [
+    3.250177904590146e-14,
+    7.105427357601002e-15
+  ],
+  "raw_image_C_Python_rmse_delta": [
+    0.007063254052575036,
+    0.0013445107413496283
+  ],
+  "raw_image_C_Python_max_abs_delta": [
+    0.018447783058197206,
+    0.00325976250542781
+  ],
+  "feature_max_abs_delta": {
+    "L_dx": 0.004147846744375627,
+    "L_dy": 0.003638402333115895,
+    "C_dx": 0.004414048333529763,
+    "C_dy": 0.0032650373363172225,
+    "R_dx": 0.004647521163764434,
+    "R_dy": 0.0032771948444357824,
+    "upper_position": 0.005247882051207894,
+    "upper_slope": 0.012721249271634427,
+    "lower_position": 0.0231525611116013,
+    "lower_slope": 0.016041768109054097
+  },
+  "Canny_used": false,
+  "original_images_modified": false,
+  "invalid_inputs_rejected": true,
+  "caution": "Held coordinate predictions use fold-specific models. Deployment API uses all57 fit. No closed-loop actuator validation."
+}

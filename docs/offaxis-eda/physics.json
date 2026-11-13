@@ -1,0 +1,166 @@
+{
+  "axis_assumption": "rotation axis normal to QR wall; Y tangent to wall",
+  "K_assumption": "square pixels, fixed principal point (1920,1080), no lens distortion; focal-length profile",
+  "parameter_order": [
+    "normal_x_over_z",
+    "normal_y_over_z",
+    "tangent_direction_angle",
+    "translation_per_mm_over_plane_distance",
+    "pivot_tangent_a_over_distance",
+    "pivot_tangent_b_over_distance"
+  ],
+  "input": "new-session mean ECC QR-center displacements versus sidecar coordinates minus new reference mean",
+  "train_coordinates": 14,
+  "holdout_coordinates": 5,
+  "models": [
+    {
+      "focal_fixed": 2000.0,
+      "parameters": [
+        0.005640134980011104,
+        -1.9999999999999998,
+        -0.008415213196517035,
+        -0.015183072920068347,
+        0.05590230775453125,
+        -3.0814116673400354
+      ],
+      "converged": true,
+      "train_rmse_xy": 0.9523400429046057,
+      "holdout_rmse_xy": 1.8740442180948642,
+      "jacobian_singular_values": [
+        56.913062274393425,
+        3.4674536664728084,
+        1.9335633720124281,
+        0.3649893573420489,
+        0.25282804796992464,
+        0.04248969872956817
+      ],
+      "jacobian_condition": 1339.4555380734714,
+      "parameter_boundary": [
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "focal_fixed": 4500.0,
+      "parameters": [
+        0.019445023718319385,
+        -1.9999999999999998,
+        -0.01879501450165864,
+        -0.006788947716983225,
+        -0.010740760730540411,
+        -0.27679200442664315
+      ],
+      "converged": true,
+      "train_rmse_xy": 0.9447032373173091,
+      "holdout_rmse_xy": 1.8577335899269325,
+      "jacobian_singular_values": [
+        127.2601325790263,
+        3.999473349160852,
+        3.048342647044224,
+        0.3739582855865012,
+        0.1496764172390944,
+        0.0603646566729465
+      ],
+      "jacobian_condition": 2108.1894537811595,
+      "parameter_boundary": [
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "focal_fixed": 8000.0,
+      "parameters": [
+        0.01723242688153714,
+        1.9999999999999998,
+        0.0145218784901364,
+        -0.0038466849932677714,
+        0.03330543280886344,
+        -3.293669612098385
+      ],
+      "converged": true,
+      "train_rmse_xy": 0.9438418680096562,
+      "holdout_rmse_xy": 1.8568021068744305,
+      "jacobian_singular_values": [
+        224.64634146802823,
+        9.753333631192959,
+        3.2210262678829586,
+        0.6382309486350727,
+        0.3196874264876831,
+        0.03335437626005126
+      ],
+      "jacobian_condition": 6735.1384333062315,
+      "parameter_boundary": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "focal_fitted": 19999.999999955042,
+      "parameters": [
+        0.022745267914995548,
+        1.9999999999999998,
+        0.019442798213786854,
+        -0.0015363351535843722,
+        0.00871445717601582,
+        -2.5164585330060785,
+        9.90348755253388
+      ],
+      "converged": true,
+      "train_rmse_xy": 0.9433412178593955,
+      "holdout_rmse_xy": 1.8557203952134802,
+      "jacobian_singular_values": [
+        562.4153763460707,
+        22.139508761654458,
+        6.408993866837887,
+        0.6138270888093467,
+        0.274310948706766,
+        0.04133970377845674,
+        0.00220111180126606
+      ],
+      "jacobian_condition": 255514.22513957464,
+      "parameter_boundary": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "same_split_empirical": [
+    {
+      "model": "quadratic_additive",
+      "parameters": 15,
+      "train_rmse_xy": 0.03548545235564571,
+      "holdout_rmse_xy": 0.21609301420111418
+    },
+    {
+      "model": "quadratic_interaction",
+      "parameters": 18,
+      "train_rmse_xy": 0.03472577630288292,
+      "holdout_rmse_xy": 0.23782358342046636
+    }
+  ],
+  "limits": [
+    "QR centers only; not a dense feature calibration",
+    "theta degree units assumed",
+    "camera-behind pivot normal component unobservable: (I-R)*(p+lambda*n)=(I-R)*p",
+    "absolute distance, focal length, and pivot depth are not separately identified",
+    "camera translation/rotation order is assumed, not confirmed by acquisition log",
+    "nonlinear fit is a conditional diagnostic; no accuracy certification"
+  ]
+}
