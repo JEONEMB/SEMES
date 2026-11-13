@@ -1,0 +1,26 @@
+{
+ "model_id": "final00_huber7_rig2day3638_avglabel_irls6_r1e-7",
+ "features": 7,
+ "feature_order": "qr_dx_mean,bar_tilt_upper,bar_tilt_lower,screw1_x,screw2_x,screw3_x,screw4_x",
+ "training_images": 3638,
+ "training_min": [
+  -2.00678,
+  -1.05479
+ ],
+ "training_max": [
+  2.31356,
+  0.98035
+ ],
+ "label_definition": "absolute zero: (Y mm, T deg) state whose 5 pose values (QR536 mean dx, 4 screw dx) are 0 against center.bmp (rig_1st/center.bmp). Per-set zero = median of (vision pose - command) over the set. rig_grid (2026-11-12 forward) and rig_grid_rev (2026-11-13 reverse order): command + set zero + mean of the two sets' zero-removed (vision - command) at the same pose. rig_1st: L2 of experiment 20261113_0950. Sign follows the rig stage command (opposite to SEMES).",
+ "training_recipe": "shared normalized Huber IRLS6, ridge1e-7, no augmentation",
+ "scope": "rig_1st 280 + rig_grid 1679 + rig_grid_rev 1679 = 3638 photos fitted (experiment 20261113_1345). rig_grid_rev values were measured against the rev center and moved to this center.bmp reference with constants averaged over 18 center photos. Experiment asset, not a delivery model.",
+ "observation_environment": "Windows x64, MSVC v141, OpenCV 3.4.15",
+ "input_contract": "single 3840x2160 uint8 image; no labels, date or filename in inference",
+ "created_date": "2026-11-13",
+ "known_limits": "labels still come from image values (forward/reverse average leaves sigma T ~4.3 mdeg label noise); two days only; this module's fixed center.bmp rejects photos whose bars moved >11.5 px (as on 2026-11-13); closed-loop return not validated",
+ "center.bmp_sha256": "1ccf649cdd959f31a512b3ede65fb1b58d417654593f87015af5410375fcfdb3",
+ "points.json_sha256": "6694eac2ca1081de57e0154bfdf9d657941cb3d897ebb3e0009b18894a6f4b9c",
+ "geometry.json_sha256": "e4a64861c241bffc1e7c392b55f97fc96ca8ad9b1687917bd4302e4f91cdb407",
+ "line_protocol.json_sha256": "cd3c0f334d5da88ca708fca6dc75ef9b6470cf2130d2be388630d976dec368b0",
+ "model7.tsv_sha256": "5fbb7294804275396c48350199898588c72e64fed2cc05620e0a0af779489cd9"
+}
