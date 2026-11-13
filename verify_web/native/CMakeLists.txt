@@ -26,8 +26,16 @@ set(ALGO_INCLUDES ${REPO_ROOT}/include CACHE STRING "alignment.hpp 가 있는 �
 #                              실행할 때 --config 로 모듈의 assets 폴더를 준다. 영점은 자료에 고정 (영점 등록 없음).
 set(HYE_DIR "" CACHE PATH "이혜원 알고리즘 저장소 형태 폴더")
 set(HYE_MODULE "" CACHE PATH "이혜원 모듈 폴더 (예: .../experiments/hye/00000_final_Y_T_ssafy)")
+#   -DQR_POSE_DIR=/path/experiments/shin/ssafy_qr_pose
+#                              신윤석 QR 전용 단일 프레임 추정 (src/alignment.cpp 의 qr_pose::estimate, include/qr_pose.hpp).
+#                              실행할 때 --config 로 config/qr_pose*.yml 을 준다 (없으면 빌드 때 경로의 config/qr_pose.yml).
+set(QR_POSE_DIR "" CACHE PATH "신윤석 ssafy_qr_pose 폴더")
 
-if(HYE_MODULE)
+if(QR_POSE_DIR)
+    set(USE_SOURCES ${QR_POSE_DIR}/src/alignment.cpp)
+    set(USE_INCLUDES ${QR_POSE_DIR}/include ${REPO_ROOT}/include)
+    message(STATUS "알고리즘: ${QR_POSE_DIR} (qr_pose::estimate, 고정 영점)")
+elseif(HYE_MODULE)
     file(GLOB HYE_SOURCES ${HYE_MODULE}/src/*.cpp ${HYE_MODULE}/third_party/*.cpp)
     set(USE_SOURCES ${HYE_DIR}/src/alignment.cpp ${HYE_DIR}/src/alignment_diagnostics.cpp ${HYE_SOURCES})
     set(USE_INCLUDES ${HYE_DIR}/include ${HYE_MODULE}/include)
@@ -46,7 +54,10 @@ endif()
 add_executable(align_worker align_worker.cpp ${USE_SOURCES})
 target_include_directories(align_worker PRIVATE ${USE_INCLUDES} ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(align_worker PRIVATE ${OpenCV_LIBS} Threads::Threads)
-if(HYE_MODULE)
+if(QR_POSE_DIR)
+    target_compile_definitions(align_worker PRIVATE ALGO_HAS_QR_POSE=1
+                               QR_POSE_DEFAULT_MODEL="${QR_POSE_DIR}/config/qr_pose.yml")
+elseif(HYE_MODULE)
     # 모듈 CMakeLists.txt 와 같은 정의 (tracker 이름공간 바꿈 포함)
     target_compile_definitions(align_worker PRIVATE ALGO_HAS_JOINT=1 NOMINMAX _USE_MATH_DEFINES
                                legacy_control=final00_tracking)

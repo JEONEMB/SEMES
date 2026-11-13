@@ -48,7 +48,7 @@ demo_web/.venv/bin/python -m verify_web serve --mode hardware --host 0.0.0.0 \
 
 화면의 **설정**에서 허용 오차(기본 Y ±0.045 mm, Θ ±0.01°), 최대 회차, 한 번 이동 한도(넘으면 움직이지 않고 멈춤), 랜덤 시작 범위, 접근 거리, 평균 장수, 안정 판정, Θ 명령 전송, 센터 좌표를 바꾼다. `verify_web/instance/settings.json` 에 저장된다.
 
-## 알고리즘 고르기 (성현 / 혜원)
+## 알고리즘 고르기 (성현 / 혜원 / 윤석)
 
 `verify_web/instance/algorithms.json` 이 있으면 화면 위쪽에서 알고리즘을 고를 수 있다 (형식: `algorithms.example.json`).
 바꾸면 실행기를 다시 띄우고 센터 기준·지난 기록을 지운다 (영점이 알고리즘마다 달라서). 고른 것은 설정에 남는다.
@@ -59,7 +59,9 @@ cmake -S verify_web/native -B verify_web/native/build_ksh -G Ninja -DALGO_DIR=$H
 # 혜원님 값 7개 모듈 (initialize_joint, 영점은 assets 에 고정). HYE_DIR = 저장소 형태 폴더, HYE_MODULE = 모듈 폴더
 cmake -S verify_web/native -B verify_web/native/build_hye -G Ninja -DHYE_DIR=$HOME/HYE_Algorithm \
       -DHYE_MODULE=$HOME/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy
-cmake --build verify_web/native/build_ksh && cmake --build verify_web/native/build_hye
+# 신윤석님 QR 전용 (qr_pose::estimate). --config = config/qr_pose*.yml, 영점은 그 파일의 센터 템플릿에 고정
+cmake -S verify_web/native -B verify_web/native/build_shin -G Ninja -DQR_POSE_DIR=$HOME/SHIN_Algorithm/experiments/shin/ssafy_qr_pose
+cmake --build verify_web/native/build_ksh && cmake --build verify_web/native/build_hye && cmake --build verify_web/native/build_shin
 ```
 
 - 실행기는 시작할 때 `READY ref roi` (영점 등록·위치 돌려줌) 또는 `READY` 를 알린다.
@@ -69,8 +71,8 @@ cmake --build verify_web/native/build_ksh && cmake --build verify_web/native/bui
 
 ## 보정 순서 (Y → Θ)
 
-설정 `sequential_axes` (화면의 '보정 순서'). 켜면 회차마다 두 축의 산출 보정량을 모두 보여 주되,
-Y 가 허용 밖이면 Y 만, Y 가 맞으면 Θ 만 움직인다. 안 움직이는 축은 접근점도 거치지 않는다.
+설정 `sequential_axes` (화면의 '보정 순서'). 켜면 한 회차(한 번 측정)에서 나온 두 축 보정량으로
+Y 를 먼저 옮기고 이어서 Θ 를 옮긴다 (다시 재지 않음). 안 움직이는 축은 접근점도 거치지 않는다.
 끄면 예전처럼 두 축을 함께 움직인다.
 
 ## 장비 조건 (2026-11-13)

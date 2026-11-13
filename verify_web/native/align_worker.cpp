@@ -16,10 +16,17 @@
 //   alignment_last_info / alignment_reference_info 가 있는 알고리즘 (CMake -DALGO_DIR=... 이 켬)
 // ALGO_HAS_JOINT: 이혜원 값 7개 모듈처럼 initialize_joint(자료 폴더) 를 먼저 부르고 alignment() 를 쓰는 알고리즘
 //   (CMake -DHYE_DIR=... -DHYE_MODULE=... 이 켬). 영점은 자료에 고정이라 ALGR 은 지원하지 않음
+// ALGO_HAS_QR_POSE: 신윤석 QR 전용 단일 프레임 추정 qr_pose::estimate (CMake -DQR_POSE_DIR=... 이 켬).
+//   --config 는 보정 파일(yml, 환경변수 QR_POSE_MODEL 로 넘김). 영점은 그 파일의 센터 템플릿에 고정
 //
 // 알고리즘 코드가 printf/std::cout 로 찍는 내용이 통신을 깨지 않도록
 // 표준 출력(fd 1)은 표준 에러로 돌리고, 통신은 따로 복제한 fd 로 한다.
 #include "alignment.hpp"
+#ifdef ALGO_HAS_QR_POSE
+#include "qr_pose.hpp"
+#include <cstdlib>
+#include <fstream>
+#endif
 
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -65,6 +72,20 @@ static std::string rois_text(const std::vector<AlignmentRoi> &rois)
 }
 #endif
 
+// 사진 한 장 → (y mm, t °). 알고리즘마다 진입 함수가 다르다
+static Alignment_t run_algorithm(cv::Mat &src)
+{
+#ifdef ALGO_HAS_QR_POSE
+    const qr_pose::Pose p = qr_pose::estimate(src);
+    Alignment_t r;
+    r.y = p.y_mm;
+    r.t = p.theta_deg;
+    return r;
+#else
+    return alignment(src);
+#endif
+}
+
 static std::string last_message()
 {
 #ifdef ALGO_HAS_REFERENCE
@@ -108,6 +129,16 @@ int main(int argc, char **argv)
         std::fprintf(proto, "ERR 초기화 실패: %s\n", one_line(e.what()).c_str());
         std::fflush(proto);
         return 4;
+    }
+    std::fprintf(proto, "READY\n");
+#elif defined(ALGO_HAS_QR_POSE)
+    if (!config.empty()) {
+        if (!std::ifstream(config)) {
+            std::fprintf(proto, "ERR 보정 파일을 열 수 없음: %s\n", config.c_str());
+            std::fflush(proto);
+            return 4;
+        }
+        setenv("QR_POSE_MODEL", config.c_str(), 1);   // 첫 estimate() 때 이 파일을 읽는다
     }
     std::fprintf(proto, "READY\n");
 #else
@@ -157,7 +188,7 @@ int main(int argc, char **argv)
 #endif
             } else {
                 const auto t0 = std::chrono::steady_clock::now();
-                const Alignment_t r = alignment(src);
+                const Alignment_t r = run_algorithm(src);
                 const double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - t0).count();
                 if (std::isnan(static_cast<double>(r.y)) || std::isnan(static_cast<double>(r.t)))
                     std::fprintf(proto, "ERR 측정 실패 %s\n", last_message().c_str());
