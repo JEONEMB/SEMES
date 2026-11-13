@@ -1,0 +1,29 @@
+%YAML:1.0
+---
+trainedOn: set1 first session
+rois:
+   -
+      name: wall_W2
+      zone: door_panel
+      cx: 2867
+      cy: 1357
+      hw: 60
+   -
+      name: wall_W3
+      zone: door_panel
+      cx: 1010
+      cy: 1677
+      hw: 60
+coef:
+   -
+      c: -5.6943190829375923e-01
+      a_Y: 1.4138594269587275e+01
+      b_T: 8.0061006185397929e+01
+      q_T2: 0.
+      sigma: 2.3145305724935861e-01
+   -
+      c: -1.0732000175937512e-01
+      a_Y: 3.0886913326425960e+00
+      b_T: -1.2127149741015726e+00
+      q_T2: 0.
+      sigma: 4.0399523770185852e-02

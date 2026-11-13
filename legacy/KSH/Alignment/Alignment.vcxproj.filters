@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="진입점">
+      <UniqueIdentifier>{fe8640bf-ca79-5844-86f0-2ca0ca940678}</UniqueIdentifier>
+      <Extensions>cpp;hpp</Extensions>
+    </Filter>
+    <Filter Include="ksh 모듈\헤더">
+      <UniqueIdentifier>{fcde30c5-9e04-5b7e-8d0b-0811bcb8897a}</UniqueIdentifier>
+      <Extensions>hpp</Extensions>
+    </Filter>
+    <Filter Include="ksh 모듈\소스">
+      <UniqueIdentifier>{58884f74-12ac-57e8-aa2b-69a42e45e4e8}</UniqueIdentifier>
+      <Extensions>cpp</Extensions>
+    </Filter>
+    <Filter Include="설정">
+      <UniqueIdentifier>{01fa484c-0c71-595f-a200-4b97bf971367}</UniqueIdentifier>
+      <Extensions>yml;md</Extensions>
+    </Filter>
+    <Filter Include="ksh 모듈">
+      <UniqueIdentifier>{fc098760-188f-5bd1-9aed-fee96ca03dfe}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp"><Filter>진입점</Filter></ClCompile>
+    <ClCompile Include="alignment.cpp"><Filter>진입점</Filter></ClCompile>
+    <ClCompile Include="ksh\src\align_config.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\batch.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\coarse_align.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\dataset.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\estimator.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\evaluation.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\features.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\fine_align.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\image_util.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\interp_kernel.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+    <ClCompile Include="ksh\src\pose_model.cpp"><Filter>ksh 모듈\소스</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="alignment.hpp"><Filter>진입점</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\align_config.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\batch.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\coarse_align.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\dataset.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\estimator.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\evaluation.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\features.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\fine_align.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\image_util.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\interp_kernel.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+    <ClInclude Include="ksh\include\ksh\pose_model.hpp"><Filter>ksh 모듈\헤더</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\alignment.yml"><Filter>설정</Filter></None>
+    <None Include="config\model_s1d1.yml"><Filter>설정</Filter></None>
+    <None Include="config\model_s3d2.yml"><Filter>설정</Filter></None>
+    <None Include="README.md"><Filter>설정</Filter></None>
+  </ItemGroup>
+</Project>

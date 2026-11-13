@@ -1,0 +1,16 @@
+# 2차 세트 — Stage 0 에서 실제 파일로 확인한 규칙 (초안, 사용자 확인 후 data/img/2nd/set.yaml 로 복사)
+set_id: set2_1015
+date: 2026-10-15
+type: [mixed]
+reference_images: ["기준 위치/center1.bmp", "기준 위치/center2.bmp", "기준 위치/center3.bmp"]
+time_source: mtime
+filename_rule:
+  - {glob: "기준 위치/center*.bmp", kind: reference, name_regex: '^center(?P<shot>\d+)$', y: 0.0, t: 0.0}
+  # 지령값은 폴더 이름(Y+a T+b)에서 읽는다. 파일 이름은 'Y+0.1 T+0.01 (1)' 처럼 자릿수가 달라 폴더 이름이 기준
+  - {glob: "Y*T*/*.bmp", kind: mixed, dir_regex: '^Y(?P<y>[+-]?\d+(?:\.\d+)?) T(?P<t>[+-]?\d+(?:\.\d+)?)$', name_regex: '\((?P<shot>\d+)\)$'}
+motor_log:
+  type: txt_absolute          # 같은 이름 .txt (기준은 centerN.txt.txt) : 'Y_Actual<TAB>T_Actual' 다음 줄에 절대 좌표
+  origin_from: reference      # 지령값 = txt 값 − 기준 위치 txt 값
+notes: "Y·Θ 동시 이동 19 조합 × 3장, 기준 영상 3장 (center3 은 촬영 중간 21:54)."
+# 라벨 확인용 배경 시차 추정 (정답 확인 도구로만 사용, 저장소 루트 기준 경로)
+label_reference_csv: "src/KSH/Hypothesis_2/Center_check/results/center/parallax_set2.csv"

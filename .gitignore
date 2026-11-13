@@ -49,9 +49,7 @@ Desktop.ini
 /tool/qr-subpixel/build/
 /tool/qr-subpixel/results/
 /tool/qr-subpixel/pipeline-*/
-__pycache__/
 /docs/offaxis-eda/ppt-method-v2/smoke/
-*.pyc
 
 # Local analysis dependencies and plotting cache
 /.analysis_packages/
@@ -59,6 +57,28 @@ __pycache__/
 /result_*.png
 /result_*.csv
 
-# Python analysis cache
+# KSH ignore files
+.CLAUDE
+img
+specification
+
+# MFC (Visual Studio) build output
+x64/
+Debug/
+Release/
+*.aps
+
+# Python 가상환경·캐시 (의존성은 각 폴더의 requirements.txt 로 기록)
+.venv/
+venv/
+env/
 __pycache__/
 *.pyc
+
+# 백업·캐시 (이전 판 코드·결과, 프로젝트 설정 사본, 계산 캐시 — 로컬에만 보관)
+backup/
+project_backup/
+cache/
+.cache/
+*.bak
+*.bak_*

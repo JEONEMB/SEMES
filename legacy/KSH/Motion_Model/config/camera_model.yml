@@ -1,0 +1,19 @@
+%YAML:1.0
+---
+# 운동 모델 설정 (motion model). 단위 : px, mm
+# 제원 : 렌즈 12 mm, 렌즈 앞면 ~ 플레이트 385 mm, 센서 4096 x 2160 -> 출력 3840 x 2160 (가로만 축소)
+# 실측 감도로 맞춘 기본값 : 플레이트 Y 14.25 px/mm, Θ 80.06 px/°, 아래 벽 Y 11.1 px/mm, 위 벽 13.1 px/mm
+# batch 실행 후 results/motion_model/camera_model_fitted.yml 을 이 파일로 복사하면 데이터 맞춤 모델로 표시
+fx: 5486.0            # 가로 초점거리 = 14.25 px/mm x 385 mm
+fy: 5852.0            # 세로 초점거리 = fx x 16/15 (가로 축소)
+cx: 1920.0
+cy: 1080.0
+k1: 0.0               # 방사 왜곡 (음수 = 술통형)
+z_plate: 385.0        # 카메라 ~ QR 플레이트 (mm)
+z_bg: 494.0           # 아래쪽 벽(door 쪽) 깊이 = fx / 11.1
+z_wall_upper: 418.0   # 위쪽 벽 깊이 = fx / 13.1
+axis_a: 63.1          # Θ 회전축 : 광학 중심에서 플레이트 쪽 (mm). Θ 감도 80.06 px/° 로 역산
+plate_center_x: 1901.3
+plate_center_y: 1068.4
+qr_pitch_mm: 18.0     # QR 중심 간격 = 13 + 5
+qr_size_mm: 13.0

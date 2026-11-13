@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}운영자 로그인 · ALIGN{% endblock %}
+{% block scripts %}<script src="/static/login.js" defer></script>{% endblock %}
+{% block nav %}<a class="nav-link" href="/">시연 화면 ↗</a>{% endblock %}
+{% block content %}
+<main class="login-shell"><section class="panel login-card"><p class="eyebrow">OPERATOR ACCESS</p><h1>운영자 로그인</h1><p class="subtitle">시나리오를 준비하고 시연을 제어합니다.</p>
+{% if configured %}<form id="login-form"><label>관리자 비밀번호<input type="password" id="password" autocomplete="current-password" required maxlength="512" autofocus></label><button class="button primary" type="submit">로그인 →</button><p id="login-error" class="error-text" role="alert"></p></form>
+{% else %}<div class="notice">관리자 비밀번호를 먼저 설정해 주세요.<p>파이 터미널에서 서버를 종료한 뒤 실행합니다.</p><code>demo_web/.venv/bin/python -m demo_web set-password</code></div>{% endif %}
+<a href="/" class="back-link">← 시연 화면으로</a></section></main>
+{% endblock %}
