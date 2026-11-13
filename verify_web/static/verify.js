@@ -294,8 +294,7 @@
     if (!settingsDirty) fillSettings(st);
   }
 
-  const axisLabel = e => e.within || !e.axis ? '—' : e.axis === 'y' ? '<span class="tag ax">Y만</span>' :
-    e.axis === 't' ? '<span class="tag ax">Θ만</span>' : '<span class="tag ax">Y·Θ</span>';
+  const axisLabel = e => e.within || !e.axis ? '—' : e.axis === 'y_then_t' ? '<span class="tag ax">Y → Θ</span>' : '<span class="tag ax">Y·Θ 함께</span>';
 
   // ---------- 알고리즘 고르기 ----------
   function renderAlgorithms(s) {
@@ -315,25 +314,27 @@
     api('/api/algorithm', {id: b.dataset.algo}).then(() => toast('알고리즘을 바꿨습니다', true)).catch(e => toast(e.message));
   });
 
-  // ---------- Y → Θ 차례 보정 ----------
+  // ---------- Y → Θ 차례 보정 (한 회차 안에서 Y 이동 → Θ 이동) ----------
   function renderAxisSteps(s) {
     const st = s.settings, seq = st.sequential_axes && st.enable_t, ol = $('axis-steps');
     document.querySelectorAll('[data-seq]').forEach(b => { b.classList.toggle('on', String(seq) === b.dataset.seq); b.disabled = s.busy || !st.enable_t; });
     ol.hidden = !seq;
     const last = s.run && s.history && s.history.length ? s.history[s.history.length - 1] : null;
-    const done = last && last.within;
-    const cur = !last ? null : done ? 'done' : last.axis;
+    const stage = s.axis_stage;                       // 'y' | 't' | null (이번 회차 이동 중 어느 단계)
+    const done = !stage && last && last.within;
     ol.querySelectorAll('li').forEach(li => {
       const ax = li.dataset.ax;
-      li.className = ax === cur ? (done ? 'done on' : 'on') : (ax === 'y' && cur === 't') || (done && ax !== 'done') ? 'done' : '';
+      li.className = done ? (ax === 'done' ? 'done on' : 'done') :
+        stage === 'y' ? (ax === 'y' ? 'on' : '') :
+        stage === 't' ? (ax === 't' ? 'on' : ax === 'y' ? 'done' : '') : '';
     });
-    // 산출 보정량: 두 축 다 보여 주고, 이번에 움직이는 축을 표시
-    const calc = $('calc'), e = last && !s.moving ? last : (s.moving && last ? last : null);
+    // 산출 보정량: 이번 회차에 한 번 잰 두 축 값을 그대로 보여 주고, 지금 어느 축을 옮기는지 표시
+    const calc = $('calc'), e = last;
     calc.hidden = !e || e.within;
     if (!calc.hidden) {
-      const which = e.axis === 'y' ? '이번엔 Y만 이동 (Θ 는 Y 가 맞은 뒤)' : e.axis === 't' ? '이번엔 Θ만 이동 (Y 는 허용 안)' : '두 축 함께 이동';
-      calc.innerHTML = `산출한 보정량 <b class="${e.axis === 't' ? 'dim' : ''}">Y ${fmt(e.command.y_mm)} mm</b> · ` +
-        `<b class="${e.axis === 'y' ? 'dim' : ''}">Θ ${fmt(e.command.t_deg)}°</b><span>${which}</span>`;
+      const which = !seq ? 'Y·Θ 함께 이동' : stage === 'y' ? '① Y 이동 중 → 다음 Θ' : stage === 't' ? '② Θ 이동 중 (Y 끝)' : 'Y 먼저, 이어서 Θ';
+      calc.innerHTML = `${e.label} 산출 보정량 <b class="${stage === 't' ? 'dim' : ''}">Y ${fmt(e.command.y_mm)} mm</b> · ` +
+        `<b class="${stage === 'y' ? 'dim' : ''}">Θ ${fmt(e.command.t_deg)}°</b><span>${which}</span>`;
     }
   }
   document.querySelectorAll('[data-seq]').forEach(b => b.addEventListener('click', () =>

@@ -43,7 +43,7 @@ DEFAULTS = dict(
     slow_y_mm_s=0.2, slow_t_deg_s=0.1,       # 천천히 (Θ 펌웨어 최소 0.018°/s)
     fast_y_mm_s=1.0, fast_t_deg_s=1.0,       # 빠르게 (펌웨어 기본 Θ 1°/s, Y 는 우리가 1 mm/s 로 올려 씀)
     pause_s=3.0,
-    sequential_axes=True,                    # Y 를 먼저 허용 안으로 맞춘 뒤 Θ 를 맞춘다 (보정량은 두 축 다 보여 줌)
+    sequential_axes=True,                    # 한 회차 안에서 Y 를 먼저 옮기고 이어서 Θ 를 옮긴다 (한 번 측정한 두 축 보정량 그대로)
     algorithm='',                            # 고른 알고리즘 id (algorithms.json). 빈 값 = 목록의 첫 번째                             # 천천히일 때 측정 결과를 보여 주고 움직이기까지 쉬는 시간
 )
 LIMITS = dict(tol_y_mm=(0.001, 1), tol_t_deg=(0.0001, 1), max_trials=(1, 100), max_step_y_mm=(0.01, 10),
@@ -146,7 +146,7 @@ class Runner:
         self.state = dict(phase='idle', message='', busy=False, job=None, moving=False,
                           position=None, flags=None, stage_state=None, stage_error=None,
                           run=None, last=None, history=[], measure=None, reference=None, aligned=None,
-                          rois_now=None, start=None, speed=None)
+                          rois_now=None, start=None, speed=None, axis_stage=None)
 
     # --- 상태 -----------------------------------------------------------------
     def _set(self, **kw):
@@ -295,10 +295,11 @@ class Runner:
         self.devices.stage.speed(um(y), um(t))
         self._set(speed=dict(mode=mode, y_mm_s=y, t_deg_s=t))
 
-    def _pause(self):
-        """천천히 모드: 측정 결과를 화면에서 볼 수 있게 잠깐 멈춘다 (정지 누르면 바로 끝)."""
+    def _pause(self, short=False):
+        """천천히 모드: 측정 결과를 화면에서 볼 수 있게 잠깐 멈춘다 (정지 누르면 바로 끝).
+        short: Y 이동과 Θ 이동 사이 (최대 1초)."""
         if self.settings['demo_slow'] and self.settings['pause_s'] > 0:
-            self.abort.wait(self.settings['pause_s'])
+            self.abort.wait(min(1.0, self.settings['pause_s']) if short else self.settings['pause_s'])
             self._check_abort()
 
     def _check_abort(self):
@@ -583,17 +584,10 @@ class Runner:
             self.cond.notify_all()
         entry, img = self._observe(label=f'{n}회차')
         entry['trial'] = n
-        # 이번에 움직일 축: 차례 보정이면 Y 가 허용 밖일 때 Y 만, Y 가 맞으면 Θ 만. 보정량(command)은 두 축 다 남긴다
+        # 한 회차 = 한 번 측정. 산출한 두 축 보정량을 그대로 쓰고, 차례 보정이면 Y 를 먼저 옮긴 뒤 이어서 Θ 를 옮긴다
         cy, ct = entry['command']['y_mm'], entry['command']['t_deg']
-        if entry['within']:
-            axis, ay, at = None, 0.0, 0.0
-        elif s['sequential_axes'] and s['enable_t']:
-            axis = 'y' if abs(entry['offset']['y_mm']) > s['tol_y_mm'] else 't'
-            ay, at = (cy, 0.0) if axis == 'y' else (0.0, ct)
-        else:
-            axis, ay, at = 'both', cy, ct
-        entry['axis'] = axis
-        entry['applied'] = dict(y_mm=r6(ay), t_deg=r6(at))
+        seq = s['sequential_axes'] and s['enable_t']
+        entry['axis'] = None if entry['within'] else ('y_then_t' if seq else 'both')
         if s['save_images']:
             d = self.runs_dir / self.state['run']['id']
             d.mkdir(parents=True, exist_ok=True)
@@ -608,20 +602,34 @@ class Runner:
         if entry['within'] or not move:
             return entry['within']
         self._pause()                # 천천히 모드: 화면에서 이번 측정을 보여 주고 움직인다
-        if abs(ay) > s['max_step_y_mm'] or abs(at) > s['max_step_t_deg']:
-            raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {ay:+.3f} mm (한도 ±{s["max_step_y_mm"]}), '
-                           f'Θ {at:+.3f}° (한도 ±{s["max_step_t_deg"]})')
-        if axis == 'y':
-            msg = f'Y 보정 이동: Y {cy:+.3f} mm  (산출한 Θ {ct:+.3f}° 는 Y 가 맞은 뒤)'
-        elif axis == 't':
-            msg = f'Θ 보정 이동: Θ {ct:+.3f}°  (Y {entry["offset"]["y_mm"]:+.3f} mm 는 허용 안)'
-        else:
-            msg = f'보정 이동: Y {cy:+.3f} mm, Θ {ct:+.3f}°'
+        if abs(cy) > s['max_step_y_mm'] or abs(ct) > s['max_step_t_deg']:
+            raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {cy:+.3f} mm (한도 ±{s["max_step_y_mm"]}), '
+                           f'Θ {ct:+.3f}° (한도 ±{s["max_step_t_deg"]})')
         pos = self.state.get('position')
-        if pos is None:      # STATUS 를 못 읽었으면 예전처럼 상대 이동 (접근 없음)
-            self._move(um(ay), um(at), relative=True, phase='moving', message=msg)
-        else:                # 지금 위치 + 명령 = 절대 목표, −쪽에서 접근 (움직이는 축만)
-            self._move_to(pos['y_mm'] + ay, pos['t_deg'] + at, phase='moving', message=msg)
+        if not seq:
+            msg = f'보정 이동: Y {cy:+.3f} mm, Θ {ct:+.3f}°'
+            if pos is None:      # STATUS 를 못 읽었으면 예전처럼 상대 이동 (접근 없음)
+                self._move(um(cy), um(ct), relative=True, phase='moving', message=msg)
+            else:                # 지금 위치 + 명령 = 절대 목표, −쪽에서 접근
+                self._move_to(pos['y_mm'] + cy, pos['t_deg'] + ct, phase='moving', message=msg)
+            return False
+        try:                     # ① Y 만 → ② Θ 만 (안 움직이는 축은 접근점도 거치지 않음)
+            self._set(axis_stage='y')
+            msg = f'① Y 보정 이동: Y {cy:+.3f} mm  (이어서 Θ {ct:+.3f}°)'
+            if pos is None:
+                self._move(um(cy), 0, relative=True, phase='moving', message=msg)
+            else:
+                self._move_to(pos['y_mm'] + cy, pos['t_deg'], phase='moving', message=msg)
+            self._pause(short=True)
+            self._set(axis_stage='t')
+            msg = f'② Θ 보정 이동: Θ {ct:+.3f}°  (Y {cy:+.3f} mm 이동 끝)'
+            now = self.state.get('position')
+            if pos is None or now is None:
+                self._move(0, um(ct), relative=True, phase='moving', message=msg)
+            else:
+                self._move_to(now['y_mm'], pos['t_deg'] + ct, phase='moving', message=msg)
+        finally:
+            self._set(axis_stage=None)
         return False
 
     @staticmethod
@@ -633,9 +641,9 @@ class Runner:
             if new:
                 w.writerow(['trial', 'time', 'raw_y', 'raw_t', 'offset_y_mm', 'offset_t_deg', 'cmd_y_mm', 'cmd_t_deg',
                             'truth_y_mm', 'truth_t_deg', 'err_y_mm', 'err_t_deg', 'within', 'truth_within',
-                            'infer_ms', 'settle_s', 'settled', 'shift_px', 'axis', 'applied_y_mm', 'applied_t_deg'])
+                            'infer_ms', 'settle_s', 'settled', 'shift_px', 'axis'])
             w.writerow([e.get('trial'), time.strftime('%H:%M:%S', time.localtime(e['ts'])), e['raw']['y'], e['raw']['t'],
                         e['offset']['y_mm'], e['offset']['t_deg'], e['command']['y_mm'], e['command']['t_deg'],
                         g(e['truth'], 'y_mm'), g(e['truth'], 't_deg'), g(e['error'], 'y_mm'), g(e['error'], 't_deg'),
                         e['within'], e['truth_within'], e['infer_ms'], e['settle_s'], e['settled'], e['shift_px'],
-                        e.get('axis') or '', g(e.get('applied'), 'y_mm'), g(e.get('applied'), 't_deg')])
+                        e.get('axis') or ''])

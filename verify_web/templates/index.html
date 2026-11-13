@@ -110,7 +110,7 @@
         <li data-step="1"><b>1</b>시작 위치</li><li data-step="2"><b>2</b>자동 보정</li><li data-step="3"><b>✓</b>센터 OK</li>
       </ol>
       <ol class="axis-steps" id="axis-steps" hidden>
-        <li data-ax="y"><b>1</b>Y 보정</li><li data-ax="t"><b>2</b>Θ 보정</li><li data-ax="done"><b>✓</b>Y·Θ 모두 허용 안</li>
+        <li data-ax="y"><b>1</b>Y 이동</li><li data-ax="t"><b>2</b>Θ 이동</li><li data-ax="done"><b>✓</b>Y·Θ 모두 허용 안</li>
       </ol>
       <div class="phase" id="phase-box" data-phase="idle"><span class="light"></span><div><strong id="phase">대기</strong><p id="message"></p></div></div>
       <div class="trial-line">
@@ -128,7 +128,7 @@
       <span class="muted small-note">카메라 = 알고리즘이 본 센터 대비 위치 · 스테이지 = STATUS 위치 − 센터</span></div>
     <div class="scroll">
       <table class="hist">
-        <thead><tr><th>회차</th><th>카메라 Y</th><th>카메라 Θ</th><th>스테이지 Y</th><th>스테이지 Θ</th><th>산출 보정량 Y</th><th>산출 보정량 Θ</th><th>이번 이동</th><th>추론 ms</th><th>판정</th></tr></thead>
+        <thead><tr><th>회차</th><th>카메라 Y</th><th>카메라 Θ</th><th>스테이지 Y</th><th>스테이지 Θ</th><th>산출 보정량 Y</th><th>산출 보정량 Θ</th><th>이동 순서</th><th>추론 ms</th><th>판정</th></tr></thead>
         <tbody id="hist-body"><tr><td colspan="10" class="muted">아직 기록이 없습니다.</td></tr></tbody>
       </table>
     </div>
@@ -175,7 +175,7 @@
         <label class="check"><input name="enable_t" type="checkbox"> Θ 명령 보내기</label>
         <label class="check"><input name="save_images" type="checkbox"> 회차 사진 저장</label>
         <label class="check"><input name="auto_reference" type="checkbox"> 시작할 때 센터 기준 자동</label>
-        <label class="check"><input name="sequential_axes" type="checkbox"> Y 먼저, Θ 나중 (차례로 보정)</label>
+        <label class="check"><input name="sequential_axes" type="checkbox"> 회차마다 Y 먼저 옮기고 이어서 Θ</label>
         <button class="btn primary" type="submit">설정 저장</button>
       </form>
     </div>

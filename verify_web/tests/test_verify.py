@@ -136,34 +136,34 @@ class RunnerTest(unittest.TestCase):
         self.assertTrue(all(0.4 * rt - 1e-3 <= abs(t) <= rt for t in ts))
         self.assertTrue(min(ys) < 0 < max(ys) and min(ts) < 0 < max(ts))
 
-    def test_sequential_y_then_theta(self):
-        self.settings.update(dict(sequential_axes=True, approach_t_deg=0.1))
-        r = self.runner(MockAlgorithm(noise_y_mm=0.002, noise_t_deg=0.0005, seed=4))
-        r.goto((0.8, 0.3)); r.wait_idle(30)
-        t_before = r.snapshot()['position']['t_deg']
-        r.run(None); r.wait_idle(60)
+    def test_sequential_y_then_theta_in_one_trial(self):
+        """한 회차 = 한 번 측정. 산출한 두 축 보정량으로 Y 를 먼저 옮기고 이어서 Θ 를 옮긴다 (Θ 이동 전에 다시 재지 않음)."""
+        moves, stages = [], []
+        orig = self.stage.start
+        def logged(y, t, relative=False, allow_t=False):
+            moves.append((y, t)); stages.append(r.state.get('axis_stage')); return orig(y, t, relative=relative, allow_t=allow_t)
+        self.stage.start = logged
+        self.settings.update(dict(auto_reference=False, sequential_axes=True))
+        r = self.runner(FixedAlgorithm(0.3, 0.05))          # 명령 (−0.3 mm, −0.05°)
+        r.step(); r.wait_idle(10)
         s = r.snapshot()
-        self.assertEqual(s['run']['result'], 'converged', s['message'])
-        h = s['history']
-        axes = [e['axis'] for e in h]
-        self.assertEqual(axes[0], 'y')                                   # Y 먼저
-        self.assertIn('t', axes)                                         # 그다음 Θ
-        self.assertLess(axes.index('t'), len(axes))
-        first = h[0]
-        self.assertEqual(first['applied']['t_deg'], 0.0)                 # Y 단계에서 Θ 는 안 보냄
-        self.assertNotEqual(first['command']['t_deg'], 0.0)              # 산출 보정량은 그대로 남김
-        k = axes.index('t')
-        self.assertAlmostEqual(h[k]['truth']['t_deg'], t_before - self.settings['center_t_deg'], places=3)   # Y 단계 동안 Θ 그대로
-        self.assertIsNone(h[-1]['axis'])
-        self.assertTrue(h[-1]['within'])
+        self.assertEqual(len(s['history']), 1)                         # 측정은 한 번
+        self.assertEqual(s['history'][0]['axis'], 'y_then_t')
+        # Y 만 (접근점 → 목표), 그다음 Θ 만 (접근점 → 목표)
+        self.assertEqual(moves, [(-500, 0), (-300, 0), (-300, -150), (-300, -50)], s['message'])
+        self.assertEqual(stages, ['y', 'y', 't', 't'])
+        self.assertIsNone(s['axis_stage'])
+        self.assertEqual(self.stage.position, (-300, -50))
 
-    def test_together_moves_both(self):
-        self.settings.update(dict(sequential_axes=False))
-        r = self.runner(MockAlgorithm(noise_y_mm=0.002, noise_t_deg=0.0005, seed=4))
-        r.run((0.8, 0.3)); r.wait_idle(60)
-        s = r.snapshot()
-        self.assertEqual(s['history'][0]['axis'], 'both')
-        self.assertEqual(s['history'][0]['applied'], s['history'][0]['command'])
+    def test_sequential_converges_like_together(self):
+        for seq in (True, False):
+            self.settings.update(dict(sequential_axes=seq))
+            r = self.runner(MockAlgorithm(noise_y_mm=0.002, noise_t_deg=0.0005, seed=4))
+            r.run((0.8, 0.3)); r.wait_idle(60)
+            s = r.snapshot()
+            self.assertEqual(s['run']['result'], 'converged', s['message'])
+            self.assertLessEqual(s['run']['trial'], 4)
+            self.assertEqual(s['history'][0]['axis'], 'y_then_t' if seq else 'both')
 
     def test_fixed_zero_algorithm_reference_is_display_only(self):
         class Fixed(MockAlgorithm):
@@ -301,12 +301,7 @@ class RunnerTest(unittest.TestCase):
         r.wait_idle(10)
         self.assertEqual(moves, [(-500, -150, False), (-300, -50, False)], r.snapshot()['message'])
         self.assertEqual(self.stage.position, (-300, -50))
-        # 차례 보정: Y 가 허용 밖이면 Y 만, Θ 는 접근점도 거치지 않고 그대로
-        moves.clear()
-        self.settings.update(dict(sequential_axes=True))
-        r.step()
-        r.wait_idle(10)
-        self.assertEqual(moves, [(-800, -50, False), (-600, -50, False)], r.snapshot()['message'])
+
 
     def test_reference_moves_to_center_and_registers(self):
         self.stage.position = (700, 200)
