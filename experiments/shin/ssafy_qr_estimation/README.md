@@ -2,16 +2,16 @@
 
 로컬에서 확인한 기준은 S15P31A507의 `origin/feature/lye/verify-demo-ui`
 `6ab989eb`입니다.
-이 브랜치에 QR 순차 보정 실행 경로를 포함했습니다.
+이 폴더에 QR 순차 보정 구현을 두고 확인 앱에서 불러옵니다.
 
 ## 연결부
 
-- `verify_web/qr_sequential/qr_observer.py`는 보정된 3840×2160 회색조 영상에서
+- `src/qr_observer.py`는 보정된 3840×2160 회색조 영상에서
   QR 3개의 가로 이동 중앙값을 읽습니다.
-- `verify_adapter.py`는 확인 앱의 `set_reference(image)`,
+- `src/verify_adapter.py`는 확인 앱의 `set_reference(image)`,
   `infer(image, truth)`, `status()`, `close()` 계약을 따릅니다.
   결과의 Y는 STATUS, Θ는 QR 기준입니다. 각 출처와 QR 변위를 회차 로그에 남깁니다.
-- `runner.py`는 카메라, 정착 대기, 상태 갱신, 이동, 중단을 기존 방식으로 관리합니다.
+- [`verify_web/runner.py`](../../../verify_web/runner.py)는 카메라, 정착 대기, 상태 갱신, 이동, 중단을 기존 방식으로 관리합니다.
   Y가 센터에서 0.005 mm 넘게 떨어져 있으면 Y부터 보정하고, 그 뒤에는 Θ만 보정합니다.
   Θ는 계산량의 100%, 한 명령에 최대 0.30°를 사용합니다.
   QR 가로 편차 0.30 px 이내를 두 번 연속 확인하고, 설정한 STATUS 허용오차도 확인합니다.

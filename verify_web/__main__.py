@@ -74,7 +74,7 @@ def main():
     devices = DeviceManager(camera_factory, lambda: make_stage(args.mode, args.transport))
     try:
         if args.algo == 'qr-sequential':
-            from .qr_sequential.verify_adapter import QRSequentialAlgorithm
+            from experiments.shin.ssafy_qr_estimation.src.verify_adapter import QRSequentialAlgorithm
             algorithm = QRSequentialAlgorithm()
         elif args.algo == 'mock':
             algorithm = MockAlgorithm()

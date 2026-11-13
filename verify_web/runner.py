@@ -544,7 +544,7 @@ class Runner:
         enable_t = s['enable_t']
         within = abs(offset[0]) <= s['tol_y_mm'] and (not enable_t or abs(offset[1]) <= s['tol_t_deg'])
         if sequential:
-            from .qr_sequential.sequential import QR_TOLERANCE_PX, theta_correction_mdeg
+            from experiments.shin.ssafy_qr_estimation.src.sequential import QR_TOLERANCE_PX, theta_correction_mdeg
             cap = min(300, int(s['max_step_t_deg'] * 1000))
             command = (-truth[0], 0.) if anchor else (
                 0., theta_correction_mdeg(r['qr_dx_px'], cap) / 1000)
