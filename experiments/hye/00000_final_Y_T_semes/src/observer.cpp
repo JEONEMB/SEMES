@@ -1,11 +1,7 @@
 #include "observer_internal.hpp"
 #include "ecc_compat.hpp"
-#ifdef _WIN32
-#include <windows.h>
-#include <bcrypt.h>
-#else
-#include <CommonCrypto/CommonDigest.h>
-#endif
+#include "site.hpp"
+#include "sha256.hpp"
 #include <fstream>
 #include <sstream>
 #include <iomanip>
@@ -13,27 +9,11 @@
 #include <cmath>
 #include <stdexcept>
 namespace alignment_detail {
-static const cv::Rect qr_boxes[]={cv::Rect(1552,969,184,198),cv::Rect(1809,971,184,198),cv::Rect(2067,973,185,198)};
 static cv::Mat translation(double x,double y){return (cv::Mat_<double>(3,3)<<1,0,x,0,1,y,0,0,1);}
 static cv::Point2d project(const cv::Mat& h,const cv::Point2d& p){double z=h.at<double>(2,0)*p.x+h.at<double>(2,1)*p.y+h.at<double>(2,2);return {(h.at<double>(0,0)*p.x+h.at<double>(0,1)*p.y+h.at<double>(0,2))/z,(h.at<double>(1,0)*p.x+h.at<double>(1,1)*p.y+h.at<double>(1,2))/z};}
 static std::vector<unsigned char> bytes(const fs::path& p){std::ifstream f(p,std::ios::binary);if(!f)throw std::runtime_error("Cannot read "+p.u8string());return {std::istreambuf_iterator<char>(f),std::istreambuf_iterator<char>()};}
 cv::Mat read_gray(const fs::path& p){auto m=cv::imdecode(bytes(p),cv::IMREAD_GRAYSCALE);if(m.empty())throw std::runtime_error("Cannot decode "+p.u8string());return m;}
-std::string sha256(const fs::path& p){
-#ifdef _WIN32
-
-    auto b=bytes(p);BCRYPT_ALG_HANDLE a=nullptr;BCRYPT_HASH_HANDLE h=nullptr;DWORD length=0,written=0;
-    if(BCryptOpenAlgorithmProvider(&a,BCRYPT_SHA256_ALGORITHM,nullptr,0)<0)throw std::runtime_error("SHA256 provider failure");
-    BCryptGetProperty(a,BCRYPT_OBJECT_LENGTH,reinterpret_cast<PUCHAR>(&length),sizeof(length),&written,0);std::vector<unsigned char> object(length),sum(32);
-    NTSTATUS status=BCryptCreateHash(a,&h,object.data(),length,nullptr,0,0);
-    if(status>=0)status=BCryptHashData(h,b.data(),ULONG(b.size()),0);
-    if(status>=0)status=BCryptFinishHash(h,sum.data(),32,0);
-    if(h)BCryptDestroyHash(h);BCryptCloseAlgorithmProvider(a,0);
-    if(status<0)throw std::runtime_error("SHA256 computation failure");std::ostringstream s;s<<std::hex<<std::setfill('0');for(auto v:sum)s<<std::setw(2)<<int(v);return s.str();
-#else
-    auto b=bytes(p);unsigned char sum[CC_SHA256_DIGEST_LENGTH];CC_SHA256(b.data(),CC_LONG(b.size()),sum);
-    std::ostringstream s;s<<std::hex<<std::setfill('0');for(auto v:sum)s<<std::setw(2)<<int(v);return s.str();
-#endif
-}
+std::string sha256(const fs::path& p){return final00_sha::sha256_hex(bytes(p));}   // 운영체제 라이브러리 없는 SHA-256 (리눅스 빌드)
 cv::Mat node_matrix(const cv::FileNode& n){
     if(!n.isSeq()||n.size()==0)throw std::runtime_error("Numeric array required");bool nested=n[0].isSeq();int rows=nested?int(n.size()):1,cols=nested?int(n[0].size()):int(n.size());cv::Mat m(rows,cols,CV_64F);
     if(cols==0)throw std::runtime_error("Nonempty matrix rows required");
@@ -43,12 +23,12 @@ cv::Mat node_matrix(const cv::FileNode& n){
     }return m;
 }
 Observer::Observer(const fs::path& assets){
-    auto center=assets/"center.bmp";if(sha256(center)!="01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685")throw std::runtime_error("Fixed center hash changed");
+    auto center=assets/"center.bmp";if(sha256(center)!=site::get().center_sha256)throw std::runtime_error("Fixed center hash changed");
     center_=read_gray(center);if(center_.size()!=cv::Size(3840,2160))throw std::runtime_error("Reference dimensions changed");
     cv::FileStorage geometry((assets/"geometry.json").u8string(),cv::FileStorage::READ);
     if(!geometry.isOpened())throw std::runtime_error("Missing geometry.json");
     for(auto it=geometry["corners"].begin();it!=geometry["corners"].end();++it){auto n=*it;int k=int(n["qr"])-1;if(k<0||k>2)throw std::runtime_error("Invalid reference QR region");reference_points_[k].push_back({double(n["cx"]),double(n["cy"])});}
-    size_t count=0;for(int k=0;k<3;++k){count+=reference_points_[k].size();templates_[k]=center_(qr_boxes[k]).clone();masks_[k]=cv::Mat::zeros(qr_boxes[k].size(),CV_8U);masks_[k](cv::Rect(6,6,qr_boxes[k].width-12,qr_boxes[k].height-12)).setTo(255);}if(count!=630)throw std::runtime_error("Expected630 reference check coordinates");
+    size_t count=0;for(int k=0;k<3;++k){count+=reference_points_[k].size();templates_[k]=center_(site::get().qr[k]).clone();masks_[k]=cv::Mat::zeros(site::get().qr[k].size(),CV_8U);masks_[k](cv::Rect(6,6,site::get().qr[k].width-12,site::get().qr[k].height-12)).setTo(255);}if(count!=630)throw std::runtime_error("Expected630 reference check coordinates");
     cv::FileStorage protocol((assets/"line_protocol.json").u8string(),cv::FileStorage::READ);if(!protocol.isOpened())throw std::runtime_error("Missing line protocol");
     for(auto it=protocol["blocks"].begin();it!=protocol["blocks"].end();++it){auto b=(*it)["read_box"];cv::Rect r(int(b[0]),int(b[1]),int(b[2])-int(b[0]),int(b[3])-int(b[1]));if(r.height!=49||r.width!=64||(r&cv::Rect(0,0,3840,2160))!=r)throw std::runtime_error("Invalid permitted line block");line_boxes_.push_back(r);reference_profiles_.push_back(line_profile(center_,r));}if(line_boxes_.size()!=48)throw std::runtime_error("Expected48 line blocks");
 }
@@ -57,10 +37,10 @@ Observation Observer::measure(const cv::Mat& input) const {
     if(input.empty()||input.depth()!=CV_8U||input.size()!=center_.size())throw std::invalid_argument("Input must be3840x2160 uint8 image");
     cv::Mat image;if(input.channels()==1)image=input;else if(input.channels()==3)cv::cvtColor(input,image,cv::COLOR_BGR2GRAY);else if(input.channels()==4)cv::cvtColor(input,image,cv::COLOR_BGRA2GRAY);else throw std::invalid_argument("Expected1/3/4 channels");
     cv::Point shifts[3];double scores[3];
-    for(int pad:{130,260,512}){for(int k=0;k<3;++k){auto b=qr_boxes[k];int x=std::max(0,b.x-pad),y=std::max(0,b.y-pad);cv::Rect window(x,y,std::min(image.cols,b.x+b.width+pad)-x,std::min(image.rows,b.y+b.height+pad)-y);cv::Mat c;cv::matchTemplate(image(window),templates_[k],c,cv::TM_CCOEFF_NORMED);cv::Point p;cv::minMaxLoc(c,nullptr,&scores[k],nullptr,&p);shifts[k]=p+window.tl()-b.tl();}if(*std::min_element(scores,scores+3)>=.6)break;}
+    for(int pad:{130,260,512}){for(int k=0;k<3;++k){auto b=site::get().qr[k];int x=std::max(0,b.x-pad),y=std::max(0,b.y-pad);cv::Rect window(x,y,std::min(image.cols,b.x+b.width+pad)-x,std::min(image.rows,b.y+b.height+pad)-y);cv::Mat c;cv::matchTemplate(image(window),templates_[k],c,cv::TM_CCOEFF_NORMED);cv::Point p;cv::minMaxLoc(c,nullptr,&scores[k],nullptr,&p);shifts[k]=p+window.tl()-b.tl();}if(*std::min_element(scores,scores+3)>=.6)break;}
     Observation out{cv::Mat(1,102,CV_64F),1.,1.};int feature=0;
     for(int k=0;k<3;++k){
-        if(scores[k]<.6)throw std::runtime_error("QR NCC below.6");auto b=qr_boxes[k];cv::Rect read(b.x+shifts[k].x-12,b.y+shifts[k].y-12,b.width+24,b.height+24);
+        if(scores[k]<.6)throw std::runtime_error("QR NCC below.6");auto b=site::get().qr[k];cv::Rect read(b.x+shifts[k].x-12,b.y+shifts[k].y-12,b.width+24,b.height+24);
         if((read&cv::Rect(0,0,image.cols,image.rows))!=read)throw std::runtime_error("QR crop outside image");cv::Mat local;translation(12,12).convertTo(local,CV_32F);
         double cc=semes::ecc5::findTransformECCWithMask(templates_[k],image(read),masks_[k],cv::Mat(read.size(),CV_8U,cv::Scalar(255)),local,cv::MOTION_HOMOGRAPHY,cv::TermCriteria(cv::TermCriteria::COUNT|cv::TermCriteria::EPS,200,1e-8),5);
         cv::Mat d;local.convertTo(d,CV_64F);cv::Mat h=translation(read.x,read.y)*d*translation(-b.x,-b.y);h/=h.at<double>(2,2);
@@ -71,5 +51,11 @@ Observation Observer::measure(const cv::Mat& input) const {
     }
     for(size_t k=0;k<line_boxes_.size();++k){auto fit=match_line(reference_profiles_[k],line_profile(image,line_boxes_[k]));if(!fit.valid)throw std::runtime_error("Line normal-profile match failed at block"+std::to_string(k));out.line_correlation=std::min(out.line_correlation,fit.correlation);out.values.at<double>(feature++)=fit.shift;}
     if(feature!=102||!cv::checkRange(out.values))throw std::runtime_error("Invalid observation vector");return out;
+}
+void Observer::measure_lines(const cv::Mat& image,cv::Mat& values,double& line_correlation) const {
+    if(image.empty()||image.type()!=CV_8UC1||image.size()!=center_.size())throw std::invalid_argument("Input must be3840x2160 uint8 grayscale image");
+    values=cv::Mat(1,int(line_boxes_.size()),CV_64F);line_correlation=1.;
+    for(size_t k=0;k<line_boxes_.size();++k){auto fit=match_line(reference_profiles_[k],line_profile(image,line_boxes_[k]));if(!fit.valid)throw std::runtime_error("Line normal-profile match failed at block"+std::to_string(k));line_correlation=std::min(line_correlation,fit.correlation);values.at<double>(int(k))=fit.shift;}
+    if(!cv::checkRange(values))throw std::runtime_error("Invalid line observation");
 }
 }
