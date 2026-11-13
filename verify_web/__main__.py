@@ -30,7 +30,7 @@ def main():
     p.add_argument('--exposure', type=int, default=8333)
     p.add_argument('--gain', type=float, default=3.0, help='데이터셋 촬영(2026-11-12)과 같게 3.0')
     p.add_argument('--fps', type=float, default=10.0)
-    p.add_argument('--algo', choices=['worker', 'mock'], default='worker')
+    p.add_argument('--algo', choices=['worker', 'mock', 'qr-sequential'], default='worker')
     p.add_argument('--algo-path', type=Path, default=ROOT / 'native' / 'build' / 'align_worker')
     p.add_argument('--algo-output', choices=['offset', 'command'], default='offset',
                    help='알고리즘 반환값: offset(센터 대비 위치, 명령 = 부호 반대) / command(보낼 명령)')
@@ -73,9 +73,14 @@ def main():
 
     devices = DeviceManager(camera_factory, lambda: make_stage(args.mode, args.transport))
     try:
-        algorithm = (MockAlgorithm() if args.algo == 'mock' else
-                     WorkerAlgorithm(args.algo_path, args.algo_output, args.algo_gray,
-                                     log_path=args.data_dir / 'align_worker.log', config=args.algo_config))
+        if args.algo == 'qr-sequential':
+            from .qr_sequential.verify_adapter import QRSequentialAlgorithm
+            algorithm = QRSequentialAlgorithm()
+        elif args.algo == 'mock':
+            algorithm = MockAlgorithm()
+        else:
+            algorithm = WorkerAlgorithm(args.algo_path, args.algo_output, args.algo_gray,
+                                        log_path=args.data_dir / 'align_worker.log', config=args.algo_config)
     except AlgorithmError as exc:
         p.error(f'{exc}\n  빌드: cmake -S verify_web/native -B verify_web/native/build -G Ninja && '
                 f'cmake --build verify_web/native/build   (또는 --algo mock)')

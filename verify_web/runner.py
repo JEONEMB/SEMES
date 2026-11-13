@@ -378,6 +378,9 @@ class Runner:
         if not s['enable_t']:
             pos = self.state.get('position')
             t_deg = pos['t_deg'] if pos else 0.0          # Θ 는 그대로 둔다
+        if self.algorithm.kind == 'qr-sequential':
+            self._move(um(y_mm), um(t_deg), relative=False, phase=phase, message=message)
+            return
         ay, at = s['approach_y_mm'], (s['approach_t_deg'] if s['enable_t'] else 0.0)
         if ay > 0 or at > 0:
             self._move(um(y_mm - ay), um(t_deg - at), relative=False, phase=phase, message=message,
@@ -411,6 +414,9 @@ class Runner:
                    max_trials=int(self.settings['max_trials']), result=None, result_label=None,
                    algorithm=self.algorithm.status()['kind'], center=dict(y_mm=self.settings['center_y_mm'],
                                                                          t_deg=self.settings['center_t_deg']))
+        if self.algorithm.kind == 'qr-sequential':
+            run['max_trials'] = min(run['max_trials'], 20)
+            run['moves'] = 0
         self._set(run=run, history=[], last=None)
         return run
 
@@ -454,8 +460,9 @@ class Runner:
             st = self.state['start']
             start = (st['y_mm'], st['t_deg'])
         run = self._new_run(start)
-        for n in range(1, run['max_trials'] + 1):
-            if self._trial(n, move=True):
+        sequential = self.algorithm.kind == 'qr-sequential'
+        for n in range(1, run['max_trials'] + 1 + int(sequential)):
+            if self._trial(n, move=not sequential or run['moves'] < run['max_trials']):
                 self._finish_run('converged', f'{n}회차에 허용 오차 안으로 들어옴')
                 self._set(phase='done', message=self.state['run']['result_label'], start=None)
                 return
@@ -468,8 +475,12 @@ class Runner:
             self._ensure_reference(come_back=True)
             run = self._new_run(None)
         n = run['trial'] + 1
-        if self._trial(n, move=True):
+        sequential = self.algorithm.kind == 'qr-sequential'
+        if self._trial(n, move=not sequential or run['moves'] < run['max_trials']):
             self._finish_run('converged', f'{n}회차에 허용 오차 안으로 들어옴')
+            self._set(phase='done', message=self.state['run']['result_label'])
+        elif sequential and n > run['max_trials']:
+            self._finish_run('max_trials', f'{run["max_trials"]}회 이동 안에 수렴하지 못함')
             self._set(phase='done', message=self.state['run']['result_label'])
         else:
             self._set(phase='idle', message=f'{n}회차 완료 (한 단계)')
@@ -478,12 +489,20 @@ class Runner:
         """센터로 (−쪽에서 접근) 가서 사진을 찍어 알고리즘 영점으로 등록한다. 그날·그 세션의 센터를 기준으로 삼기 위해."""
         if not hasattr(self.algorithm, 'set_reference'):
             raise RunError('이 알고리즘은 영점 등록을 지원하지 않습니다.')
+        if self.algorithm.kind == 'qr-sequential' and not self.settings['enable_t']:
+            raise RunError('QR 순차 보정에는 Θ 활성화가 필요합니다.')
         self._move_to(self.settings['center_y_mm'], self.settings['center_t_deg'], phase='positioning',
                       message='센터 기준을 잡으러 센터로 갑니다.')
         s = self.settings
         cam = self.devices.camera
+        if self.algorithm.kind == 'qr-sequential':
+            pos = self._refresh_status()
+            if pos is None or abs(pos[0] - um(s['center_y_mm'])) > 5 or abs(pos[1] - um(s['center_t_deg'])) > 1:
+                raise RunError('STATUS 센터 위치를 확인할 수 없습니다.')
         self._phase('settling')
-        cam.wait_settled(s['settle_px'], timeout=s['settle_timeout_s'])
+        stable, _, _ = cam.wait_settled(s['settle_px'], timeout=s['settle_timeout_s'])
+        if self.algorithm.kind == 'qr-sequential' and not stable:
+            raise RunError('센터 기준 촬영 전 안정화 실패')
         self._phase('capturing')
         gray, _ = cam.grab(max(4, int(s['average'])))
         img = self.rectifier.apply(gray)
@@ -514,12 +533,22 @@ class Runner:
         img = self.rectifier.apply(gray)
         truth = self._truth()
         self._phase('inferring')
-        r = self.algorithm.infer(img, truth)
+        sequential = self.algorithm.kind == 'qr-sequential'
+        if sequential and (not settled or truth is None or not s['enable_t']):
+            raise RunError('QR 순차 보정에는 안정화, STATUS, Θ 활성화가 필요합니다.')
+        anchor = sequential and abs(truth[0]) > .005
+        r = dict(y=truth[0], t=0., ms=0.) if anchor else self.algorithm.infer(img, truth)
         out = self.algorithm.output
         offset = (r['y'], r['t']) if out == 'offset' else (-r['y'], -r['t'])
         command = (-offset[0], -offset[1])
         enable_t = s['enable_t']
         within = abs(offset[0]) <= s['tol_y_mm'] and (not enable_t or abs(offset[1]) <= s['tol_t_deg'])
+        if sequential:
+            from .qr_sequential.sequential import QR_TOLERANCE_PX, theta_correction_mdeg
+            cap = min(300, int(s['max_step_t_deg'] * 1000))
+            command = (-truth[0], 0.) if anchor else (
+                0., theta_correction_mdeg(r['qr_dx_px'], cap) / 1000)
+            within = not anchor and abs(r['qr_dx_px']) <= QR_TOLERANCE_PX and within
         entry = dict(label=label, ts=time.time(), raw=dict(y=r6(r['y']), t=r6(r['t'])), output=out,
                      offset=dict(y_mm=r6(offset[0]), t_deg=r6(offset[1])),
                      command=dict(y_mm=r6(command[0]), t_deg=r6(command[1]) if enable_t else 0.0),
@@ -531,6 +560,9 @@ class Runner:
                      infer_ms=round(r.get('ms', 0), 1), settle_s=round(settle_s, 2), settled=settled,
                      shift_px=None if shift != shift else round(shift, 3), exposure_us=meta.get('exposure_us'),
                      rois=r.get('rois') or [])
+        if sequential:
+            entry.update(qr_dx_px=r.get('qr_dx_px'), y_source='status',
+                         theta_source='unmeasured' if anchor else 'qr')
         self._set(aligned=entry['within'], rois_now=entry['rois'])
         return entry, img
 
@@ -541,6 +573,9 @@ class Runner:
             self.version += 1
             self.cond.notify_all()
         entry, img = self._observe(label=f'{n}회차')
+        sequential = self.algorithm.kind == 'qr-sequential'
+        if sequential and entry['within']:
+            entry, img = self._observe(label=f'{n}회차 확인')
         entry['trial'] = n
         if s['save_images']:
             d = self.runs_dir / self.state['run']['id']
@@ -553,6 +588,10 @@ class Runner:
             self.state['last'] = entry
             self.version += 1
             self.cond.notify_all()
+        if sequential and entry['within']:
+            if not entry['truth_within']:
+                raise RunError('QR 정렬과 STATUS 원점이 일치하지 않습니다.')
+            return True
         if entry['within'] or not move:
             return entry['within']
         self._pause()                # 천천히 모드: 화면에서 이번 측정을 보여 주고 움직인다
@@ -561,6 +600,20 @@ class Runner:
             raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {cy:+.3f} mm (한도 ±{s["max_step_y_mm"]}), '
                            f'Θ {ct:+.3f}° (한도 ±{s["max_step_t_deg"]})')
         pos = self.state.get('position')
+        if sequential:
+            if pos is None:
+                raise RunError('QR 순차 보정 중 STATUS 읽기 실패')
+            ty = s['center_y_mm'] if entry['theta_source'] == 'unmeasured' else pos['y_mm']
+            tt = pos['t_deg'] + ct
+            if abs(tt - s['center_t_deg']) > 1.0500001:
+                raise RunError('Θ 목표가 QR 보정 범위를 벗어났습니다.')
+            target = (um(ty), um(tt))
+            if target == (um(pos['y_mm']), um(pos['t_deg'])):
+                raise RunError('QR 보정량이 스테이지 명령 분해능보다 작습니다.')
+            self._move(*target, relative=False, phase='moving', message='QR 순차 보정')
+            with self.cond:
+                self.state['run']['moves'] += 1
+            return False
         if pos is None:      # STATUS 를 못 읽었으면 예전처럼 상대 이동 (접근 없음)
             self._move(um(cy), um(ct), relative=True, phase='moving')
         else:                # 지금 위치 + 명령 = 절대 목표, −쪽에서 접근
