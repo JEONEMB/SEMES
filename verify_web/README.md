@@ -56,7 +56,7 @@ demo_web/.venv/bin/python -m verify_web serve --mode hardware --host 0.0.0.0 \
 ```bash
 # 성현님 (영점 등록 가능, ALGR)
 cmake -S verify_web/native -B verify_web/native/build_ksh -G Ninja -DALGO_DIR=$HOME/KSH_Algorithm/Code
-# 혜원님 값 7개 모듈 (initialize_joint, 영점은 assets 에 고정). HYE_DIR = 저장소 형태 폴더, HYE_MODULE = 모듈 폴더
+# 혜원님 모듈 (initialize_joint, 기본은 assets 의 절대 영점, set_joint_zero 로 그날 센터를 영점). HYE_DIR = 저장소 형태 폴더, HYE_MODULE = 모듈 폴더
 cmake -S verify_web/native -B verify_web/native/build_hye -G Ninja -DHYE_DIR=$HOME/HYE_Algorithm \
       -DHYE_MODULE=$HOME/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy
 # 신윤석님 QR 전용 (qr_pose::estimate). --config = config/qr_pose*.yml, 영점은 그 파일의 센터 템플릿에 고정
@@ -66,8 +66,9 @@ cmake --build verify_web/native/build_ksh && cmake --build verify_web/native/bui
 
 - 실행기는 시작할 때 `READY ref roi` (영점 등록·위치 돌려줌) 또는 `READY` 를 알린다.
 - 영점 등록이 없는 알고리즘은 '센터 기준' 때 화면 윤곽·차이 영상용 사진만 찍고 알고리즘의 고정 영점을 그대로 쓴다.
-- 2026-11-13 기준 혜원님 모듈(ed593c18)은 리눅스에서 그대로 빌드되지 않는다 (SHA-256 이 Windows/macOS 전용).
-  수정본을 받으면 위 명령으로 빌드한다.
+- 혜원님 모듈은 `feature/hye/ssafy-reference` 16e5d32e 부터 Pi 에서 그대로 빌드된다 (모듈 안내: `PORTING_PI.md`).
+  `include/joint_reference.hpp` 가 있으면 영점 등록(ALGR = `set_joint_zero`, 측정이 안 되면 `set_joint_reference` 뒤 다시)을 켠다.
+  Pi 확인 (2026-11-13): rig_grid_rev 센터 영점 Y 0.281931, T −0.0442237 (Windows 와 1e-6 안), 한 장 약 19 ms.
 
 ## 보정 순서 (Y → Θ)
 

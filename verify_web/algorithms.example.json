@@ -9,9 +9,10 @@
   },
   {
    "id": "hye",
-   "label": "혜원 (값 7개)",
+   "label": "혜원 (값 5개)",
    "path": "verify_web/native/build_hye/align_worker",
-   "config": "~/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy/assets"
+   "config": "~/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy/assets",
+   "gray": true
   },
   {
    "id": "shin",

@@ -15,13 +15,17 @@
 // ALGO_HAS_REFERENCE: 김성현 A507 버전처럼 alignment_init / alignment_set_reference /
 //   alignment_last_info / alignment_reference_info 가 있는 알고리즘 (CMake -DALGO_DIR=... 이 켬)
 // ALGO_HAS_JOINT: 이혜원 값 7개 모듈처럼 initialize_joint(자료 폴더) 를 먼저 부르고 alignment() 를 쓰는 알고리즘
-//   (CMake -DHYE_DIR=... -DHYE_MODULE=... 이 켬). 영점은 자료에 고정이라 ALGR 은 지원하지 않음
+//   (CMake -DHYE_DIR=... -DHYE_MODULE=... 이 켬). 기본은 자료의 절대 영점. ALGO_JOINT_ZERO(joint_reference.hpp 가 있는
+//   버전)면 ALGR = set_joint_zero (측정이 안 될 만큼 화면이 밀렸으면 set_joint_reference 뒤 다시)
 // ALGO_HAS_QR_POSE: 신윤석 QR 전용 단일 프레임 추정 qr_pose::estimate (CMake -DQR_POSE_DIR=... 이 켬).
 //   --config 는 보정 파일(yml, 환경변수 QR_POSE_MODEL 로 넘김). 영점은 그 파일의 센터 템플릿에 고정
 //
 // 알고리즘 코드가 printf/std::cout 로 찍는 내용이 통신을 깨지 않도록
 // 표준 출력(fd 1)은 표준 에러로 돌리고, 통신은 따로 복제한 fd 로 한다.
 #include "alignment.hpp"
+#ifdef ALGO_JOINT_ZERO
+#include "joint_reference.hpp"
+#endif
 #ifdef ALGO_HAS_QR_POSE
 #include "qr_pose.hpp"
 #include <cstdlib>
@@ -130,7 +134,11 @@ int main(int argc, char **argv)
         std::fflush(proto);
         return 4;
     }
+#ifdef ALGO_JOINT_ZERO
+    std::fprintf(proto, "READY ref\n");
+#else
     std::fprintf(proto, "READY\n");
+#endif
 #elif defined(ALGO_HAS_QR_POSE)
     if (!config.empty()) {
         if (!std::ifstream(config)) {
@@ -183,6 +191,16 @@ int main(int argc, char **argv)
                 } else {
                     std::fprintf(proto, "ERR %s\n", one_line(alignment_reference_info().message).c_str());
                 }
+#elif defined(ALGO_JOINT_ZERO)
+                Alignment_t z;
+                try {
+                    z = set_joint_zero(src);                 // 보통: 측정 기준은 그대로, 영점만 그 사진으로
+                } catch (const std::exception &) {
+                    set_joint_reference(src);               // 측정이 안 될 만큼 화면이 밀렸으면 측정 기준부터 다시
+                    z = set_joint_zero(src);
+                }
+                // 돌려주는 값 = 그 센터 사진의 절대 영점 기준 자세 (성현 alignment_set_reference 의 '학습 영점 대비' 와 같은 뜻)
+                std::fprintf(proto, "OK %.9g %.9g\n", static_cast<double>(z.y), static_cast<double>(z.t));
 #else
                 std::fprintf(proto, "ERR 이 알고리즘은 영점 등록을 지원하지 않음\n");
 #endif
