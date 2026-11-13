@@ -15,6 +15,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <vector>
+#include <limits>
 
 namespace final00 {
 namespace fs = std::filesystem;
@@ -54,7 +55,7 @@ ReferenceReport Measurer::set_reference(const cv::Mat& center) {
     const fs::path dir = fs::temp_directory_path() / ("final00_reference_" + std::to_string(stamp) + "_" + std::to_string(counter++));
     ReferenceReport rep;
     try {
-        rep = make_reference(fs::u8path(base_), center, dir);   // 언제나 원래 assets 에서 출발한다(이어 붙이지 않는다)
+        rep = make_reference(fs::u8path(base_), center, dir, use_bars_);   // 언제나 원래 assets 에서 출발한다(이어 붙이지 않는다)
         auto next = std::make_unique<Impl>(dir);              // site.json 을 새 값으로 읽는다
         impl_ = std::move(next); current_ = dir.u8string();
     } catch (...) {
@@ -73,10 +74,12 @@ Measurement Measurer::measure(const cv::Mat& image) const {
     m.valid_points = 3;
     // 바: 48칸 세로 이동만 잰다. 예전에는 observer.measure 로 값 7개에 쓰지 않는 QR NCC·ECC 호모그래피 3개까지 계산했다
     // (Windows 1스레드에서 약 700 ms 중 대부분). 바 값과 기울기 계산은 그대로라 결과가 같다.
-    cv::Mat lines; double line_correlation = 1;
-    impl_->observer.measure_lines(gray, lines, line_correlation);
-    cv::Mat qr102 = cv::Mat::zeros(1, 102, CV_64F);   // final04::features 의 입력 형식(앞 54칸은 쓰지 않는 QR 값)
-    lines.copyTo(qr102.colRange(54, 102));
+    cv::Mat qr102 = cv::Mat::zeros(1, 102, CV_64F);   // final04::features 의 입력 형식(앞 54칸은 쓰지 않는 QR 값, 뒤 48칸은 바)
+    double line_correlation = std::numeric_limits<double>::quiet_NaN();
+    if (use_bars_) {   // 바를 쓰지 않는 모델(값 5개)에서는 재지 않는다: 바 기울기 값은 0
+        cv::Mat lines; impl_->observer.measure_lines(gray, lines, line_correlation);
+        lines.copyTo(qr102.colRange(54, 102));
+    }
     // 나사 시작 위치: QR NCC 평균 이동 주변만 찾는다(예전에는 ±260 px 전체, 약 34 ms). 못 찾으면 전체에서 다시 찾는다.
     const auto pin = impl_->pins.measure(gray, cv::Point(int(std::lround(q.dx)), int(std::lround(q.dy))));
     const cv::Mat f66 = final04::features(qr102, pin.displacement, impl_->block_x);
@@ -115,6 +118,8 @@ Estimator::Estimator(const std::string& assets) : measurer_(assets) {
         weights_[row] = {wy, wt};
         if (row > 0) { mean_[row - 1] = mean; scale_[row - 1] = scale; }
     }
+    // 바 기울기 두 줄의 가중치가 모두 0 이면 바를 쓰지 않는 모델(값 5개)이다. 바를 재지 않는다(바 측정 실패, 바 칸 찾기가 없어진다).
+    if (weights_[2][0] == 0 && weights_[2][1] == 0 && weights_[3][0] == 0 && weights_[3][1] == 0) measurer_.set_use_bars(false);
 }
 
 std::array<double, 2> Estimator::raw(const Measurement& m) const {
@@ -126,14 +131,30 @@ std::array<double, 2> Estimator::raw(const Measurement& m) const {
     return {y, t};
 }
 
-ReferenceReport Estimator::set_reference(const std::vector<cv::Mat>& centers) {
-    if (centers.empty()) throw std::invalid_argument("기준 다시 잡기: 센터 사진이 없다");
+cv::Mat Estimator::average(const std::vector<cv::Mat>& centers) const {
+    if (centers.empty()) throw std::invalid_argument("센터 사진이 없다");
     cv::Mat sum = cv::Mat::zeros(2160, 3840, CV_64F);
     for (const auto& c : centers) { cv::Mat g = to_gray(c), d; g.convertTo(d, CV_64F); sum += d; }
     cv::Mat mean8; sum.convertTo(mean8, CV_8U, 1.0 / double(centers.size()));   // 화소 평균(반올림)
-    const auto rep = measurer_.set_reference(mean8);
-    offset_ = raw(measurer_.measure(mean8));   // 새 기준에서 그 사진의 값은 0 이므로 이것은 계수의 절편 몫이다
-    has_reference_ = true;
+    return mean8;
+}
+
+std::array<double, 2> Estimator::set_zero(const std::vector<cv::Mat>& centers) {
+    const cv::Mat img = average(centers);
+    const auto p = raw(measurer_.measure(img));          // 측정이 실패하면 예외, 영점은 그대로
+    zero_ = {p[0] + bridge_[0], p[1] + bridge_[1]};
+    return zero_;
+}
+
+ReferenceReport Estimator::set_reference(const std::vector<cv::Mat>& centers) {
+    const cv::Mat img = average(centers);
+    bool old_ok = false; std::array<double, 2> before{0, 0};
+    try { const auto p = raw(measurer_.measure(img)); before = {p[0] + bridge_[0], p[1] + bridge_[1]}; old_ok = true; } catch (const std::exception&) {}
+    ReferenceReport rep = measurer_.set_reference(img);   // 실패하면 예외, 이전 상태 그대로
+    const auto after = raw(measurer_.measure(img));
+    if (old_ok) bridge_ = {before[0] - after[0], before[1] - after[1]};   // 같은 사진이 바꾸기 전과 같은 값이 되게
+    else { bridge_ = {-after[0], -after[1]}; zero_ = {0, 0}; absolute_kept_ = false; }   // 절대 영점을 잃음: 이 사진이 (0, 0)
+    rep.absolute_kept = absolute_kept_; rep.bridge_y = bridge_[0]; rep.bridge_t = bridge_[1];
     return rep;
 }
 
@@ -141,9 +162,9 @@ Result Estimator::predict(const cv::Mat& image) const {
     Result r{};
     r.measurement = measurer_.measure(image);
     const auto p = raw(r.measurement);
-    const double y = p[0] - offset_[0], t = p[1] - offset_[1];
-    r.pose = {y, t};
-    r.outside_training_range = y < minimum_[0] || y > maximum_[0] || t < minimum_[1] || t > maximum_[1];
+    const double ay = p[0] + bridge_[0], at = p[1] + bridge_[1];   // 절대 영점 기준(측정 기준을 다시 잡았어도)
+    r.pose = {ay - zero_[0], at - zero_[1]};
+    r.outside_training_range = ay < minimum_[0] || ay > maximum_[0] || at < minimum_[1] || at > maximum_[1];
     return r;
 }
 }

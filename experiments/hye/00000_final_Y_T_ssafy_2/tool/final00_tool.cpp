@@ -7,10 +7,12 @@
 //       labels.tsv: id, source, Y_cmd, T_cmd, Y_abs, T_abs (절대 영점 라벨)
 //       splits.tsv: id, final, cv0..cv9, half0..half9 (자세 묶음 단위 분할, 마지막 확인 사진의 cv/half 는 -1)
 //       출력: eval.txt, model7.tsv (전체 사진으로 학습한 계수. assets 에 넣는 파일)
+//       맨 끝에 no-bars 를 붙이면 바 기울기를 빼고 값 5개로 학습한다(model7.tsv 의 바 두 줄은 가중치 0).
 //   final00_tool predict <assets> <photos.tsv> <labels.tsv> <출력 폴더>
 //       공개 API(initialize_joint, joint)로 사진마다 (Y, T) 를 내고 라벨과 비교한다. 출력: predictions.tsv, predict.txt
-//   final00_tool predict <assets> <photos.tsv> <labels.tsv> <출력 폴더> <기준 사진> [기준 사진 ...]
-//       먼저 set_joint_reference(기준 사진들) 로 기준을 다시 잡고 예측한다. 출력의 (0, 0) 은 등록한 센터다.
+//   final00_tool predict <assets> <photos.tsv> <labels.tsv> <출력 폴더> [ref=사진 ...] [zero=사진 ...]
+//       ref=(또는 그냥 경로): set_joint_reference 로 측정 기준을 다시 잡는다(절대 영점은 잇는다).
+//       zero=: set_joint_zero 로 영점을 그 사진으로 바꾼다(출력의 (0, 0) 이 그 사진). 둘 다 없으면 절대 영점.
 //   final00_tool register <assets> <출력 폴더> <기준 사진> [기준 사진 ...]
 //       기준 사진(여러 장이면 화소 평균)으로 새 측정 기준 자료를 출력 폴더에 쓰고 찾은 이동을 보인다.
 // 인자 경로는 ASCII 로 준다(목록 파일 안의 사진 경로는 한글이어도 된다). 기존 출력은 덮어쓰지 않는다.
@@ -123,9 +125,12 @@ void score(const Data& d, const std::vector<int>& train, const std::vector<int>&
     }
 }
 
-int evaluate(const fs::path& features, const fs::path& labels, const fs::path& splits, const fs::path& out) {
+int evaluate(const fs::path& features, const fs::path& labels, const fs::path& splits, const fs::path& out, bool no_bars = false) {
     if (fs::exists(out / "eval.txt")) { std::cerr << "출력이 이미 있다\n"; return 3; }
-    const Data d = load(features, labels, splits); const int n = int(d.id.size());
+    Data d = load(features, labels, splits); const int n = int(d.id.size());
+    // no_bars: 바 기울기 2개를 빼고 값 5개(QR 1 + 나사 4)로 학습·평가한다. model7.tsv 에는 바 두 줄을 가중치 0 으로 쓴다(측정기가 바를 재지 않는다).
+    const std::vector<int> used = no_bars ? std::vector<int>{0, 3, 4, 5, 6} : std::vector<int>{0, 1, 2, 3, 4, 5, 6};
+    if (no_bars) { cv::Mat x(n, int(used.size()), CV_64F); for (int j = 0; j < int(used.size()); ++j) d.x.col(used[j]).copyTo(x.col(j)); d.x = x; }
     std::vector<int> dev, fin;
     for (int i = 0; i < n; ++i) (d.final[i] ? fin : dev).push_back(i);
     std::ostringstream o; o << std::fixed;
@@ -187,7 +192,10 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
     { std::ofstream f(out / "eval.txt", std::ios::binary); f << o.str(); }
     std::ofstream m(out / "model7.tsv", std::ios::binary); m << std::setprecision(17);
     m << "name\tmean\tscale\tweight_Y\tweight_T\n" << "intercept\t0\t1\t" << model.weights.at<double>(0, 0) << '\t' << model.weights.at<double>(0, 1) << '\n';
-    for (int j = 0; j < 7; ++j) m << final00::kValueNames[j] << '\t' << model.mean.at<double>(j) << '\t' << model.scale.at<double>(j) << '\t' << model.weights.at<double>(j + 1, 0) << '\t' << model.weights.at<double>(j + 1, 1) << '\n';
+    for (int j = 0, u = 0; j < 7; ++j) {
+        if (u < int(used.size()) && used[u] == j) { m << final00::kValueNames[j] << '\t' << model.mean.at<double>(u) << '\t' << model.scale.at<double>(u) << '\t' << model.weights.at<double>(u + 1, 0) << '\t' << model.weights.at<double>(u + 1, 1) << '\n'; ++u; }
+        else m << final00::kValueNames[j] << "\t0\t1\t0\t0\n";   // 쓰지 않는 값(가중치 0)
+    }
     std::cout << o.str();
     return 0;
 }
@@ -197,7 +205,8 @@ std::string report_text(const final00::ReferenceReport& r) {
     o << "reference";
     for (int k = 0; k < 3; ++k) o << " QR" << k + 1 << " (" << r.qr_shift[k].x << ',' << r.qr_shift[k].y << ") ncc " << std::setprecision(4) << r.qr_ncc[k] << " ecc " << r.qr_ecc[k];
     for (int k = 0; k < 4; ++k) o << " screw" << k + 1 << " (" << r.screw_shift[k].x << ',' << r.screw_shift[k].y << ")";
-    o << " bar_upper " << r.bar_shift_min[0] << '~' << r.bar_shift_max[0] << " bar_lower " << r.bar_shift_min[1] << '~' << r.bar_shift_max[1] << " folder " << r.folder << '\n';
+    o << " bar_upper " << r.bar_shift_min[0] << '~' << r.bar_shift_max[0] << " bar_lower " << r.bar_shift_min[1] << '~' << r.bar_shift_max[1]
+      << " absolute_kept " << r.absolute_kept << " bridge " << std::setprecision(6) << r.bridge_y << ' ' << r.bridge_t << " folder " << r.folder << '\n';
     return o.str();
 }
 
@@ -205,6 +214,14 @@ std::vector<cv::Mat> read_images(char** first, char** last) {
     std::vector<cv::Mat> v;
     for (char** a = first; a != last; ++a) { cv::Mat m = read_image(fs::u8path(*a)); if (m.empty()) throw std::runtime_error(std::string("기준 사진을 읽지 못했다: ") + *a); v.push_back(m); }
     return v;
+}
+// predict 의 덧붙인 인자: "zero=경로" 는 영점 업데이트용, "ref=경로" 또는 그냥 경로는 측정 기준 다시 잡기용
+void split_extra(char** first, char** last, std::vector<cv::Mat>& reference, std::vector<cv::Mat>& zero) {
+    for (char** a = first; a != last; ++a) {
+        std::string s(*a); std::vector<cv::Mat>* to = &reference;
+        if (s.rfind("zero=", 0) == 0) { s = s.substr(5); to = &zero; } else if (s.rfind("ref=", 0) == 0) s = s.substr(4);
+        cv::Mat m = read_image(fs::u8path(s)); if (m.empty()) throw std::runtime_error("사진을 읽지 못했다: " + s); to->push_back(m);
+    }
 }
 
 int register_reference(const fs::path& assets, const fs::path& out, const std::vector<cv::Mat>& images) {
@@ -217,7 +234,7 @@ int register_reference(const fs::path& assets, const fs::path& out, const std::v
     return 0;
 }
 
-int predict(const fs::path& assets, const fs::path& photos, const fs::path& labels, const fs::path& out, const std::vector<cv::Mat>& reference = {}) {
+int predict(const fs::path& assets, const fs::path& photos, const fs::path& labels, const fs::path& out, const std::vector<cv::Mat>& reference = {}, const std::vector<cv::Mat>& zero = {}) {
     if (fs::exists(out / "predictions.tsv")) { std::cerr << "출력이 이미 있다\n"; return 3; }
     std::map<int, std::vector<std::string>> lab;
     for (auto& r : read_table(labels, true)) lab[std::stoi(r.at(0))] = r;
@@ -225,6 +242,7 @@ int predict(const fs::path& assets, const fs::path& photos, const fs::path& labe
     initialize_joint(assets.u8string());
     std::string ref_text;
     if (!reference.empty()) ref_text = report_text(set_joint_reference(reference));
+    if (!zero.empty()) { const Alignment_t z = set_joint_zero(zero); std::ostringstream s; s << std::setprecision(9) << "zero " << z.y << ' ' << z.t << " (절대 영점 기준)\n"; ref_text += s.str(); }
     fs::create_directories(out);
     std::ofstream f(out / "predictions.tsv", std::ios::binary); f << std::setprecision(17) << "id\tY\tT\tY_abs\tT_abs\tpass\tvalid\toutside_training_range\tmessage\n";
     int valid = 0, pass = 0; double max_y = 0, max_t = 0;
@@ -254,10 +272,11 @@ int main(int argc, char** argv) {
         const std::string mode = argc > 1 ? argv[1] : "";
         if (mode == "measure" && argc == 5) return measure(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]));
         if (mode == "eval" && argc == 6) return evaluate(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]));
+        if (mode == "eval" && argc == 7 && std::string(argv[6]) == "no-bars") return evaluate(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]), true);
         if (mode == "predict" && argc == 6) return predict(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]));
-        if (mode == "predict" && argc > 6) return predict(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]), read_images(argv + 6, argv + argc));
+        if (mode == "predict" && argc > 6) { std::vector<cv::Mat> ref, zero; split_extra(argv + 6, argv + argc, ref, zero); return predict(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]), ref, zero); }
         if (mode == "register" && argc > 4) return register_reference(fs::u8path(argv[2]), fs::u8path(argv[3]), read_images(argv + 4, argv + argc));
-        std::cerr << "usage: final00_tool measure ASSETS PHOTOS_TSV OUTDIR | eval FEATURES_TSV LABELS_TSV SPLITS_TSV OUTDIR | predict ASSETS PHOTOS_TSV LABELS_TSV OUTDIR [REFERENCE_IMAGE...] | register ASSETS OUTDIR REFERENCE_IMAGE...\n";
+        std::cerr << "usage: final00_tool measure ASSETS PHOTOS_TSV OUTDIR | eval FEATURES_TSV LABELS_TSV SPLITS_TSV OUTDIR [no-bars] | predict ASSETS PHOTOS_TSV LABELS_TSV OUTDIR [ref=IMAGE...] [zero=IMAGE...] | register ASSETS OUTDIR REFERENCE_IMAGE...\n";
         return 2;
     } catch (const std::exception& e) { std::cerr << "error: " << e.what() << "\n"; return 1; }
 }

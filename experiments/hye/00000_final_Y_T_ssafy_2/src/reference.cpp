@@ -65,7 +65,7 @@ void write_text(const fs::path& p, const std::string& s) {
 std::string rect_json(const cv::Rect& r) { std::ostringstream s; s << '[' << r.x << ", " << r.y << ", " << r.width << ", " << r.height << ']'; return s.str(); }
 }
 
-ReferenceReport make_reference(const fs::path& base, const cv::Mat& center_input, const fs::path& out) {
+ReferenceReport make_reference(const fs::path& base, const cv::Mat& center_input, const fs::path& out, bool relocate_bars) {
     const cv::Mat now = gray_of(center_input);
     const cv::Mat old = alignment_detail::read_gray(base / "center.bmp");
     const site::Geometry g0 = site::read(base);
@@ -138,7 +138,12 @@ ReferenceReport make_reference(const fs::path& base, const cv::Mat& center_input
 
     // 4. 바 48칸: 원래 기준 행 + QR 세로 이동의 절반 주변 ±20 행
     const int prior = int(std::nearbyint(mean_shift.y / 2));
-    std::ostringstream lp; lp << "{\"blocks\": [";
+    std::ostringstream lp;
+    rep.bar_shift_min[0] = rep.bar_shift_min[1] = rep.bar_shift_max[0] = rep.bar_shift_max[1] = 0;
+    if (!relocate_bars) {   // 바를 쓰지 않는 모델: 원래 바 칸을 그대로 둔다(측정기가 바를 재지 않는다)
+        std::ifstream f(base / "line_protocol.json", std::ios::binary); lp << f.rdbuf();
+    } else {
+    lp << "{\"blocks\": [";
     rep.bar_shift_min[0] = rep.bar_shift_min[1] = 1 << 20; rep.bar_shift_max[0] = rep.bar_shift_max[1] = -(1 << 20);
     {
         cv::FileStorage f((base / "line_protocol.json").u8string(), cv::FileStorage::READ); int n = 0;
@@ -159,6 +164,7 @@ ReferenceReport make_reference(const fs::path& base, const cv::Mat& center_input
         if (n != 48) throw std::runtime_error("기준 다시 잡기: 바 칸은 48개여야 한다");
     }
     lp << "], \"scope\": \"rows re-located on a new center by final00 reference\"}";
+    }
 
     // 5. 쓰기
     fs::create_directories(out);

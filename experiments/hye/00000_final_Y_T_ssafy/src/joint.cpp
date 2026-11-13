@@ -2,6 +2,7 @@
 #include "final00.hpp"
 #include "joint_reference.hpp"
 #include "detail/alignment_diagnostics.hpp"
+#include <cmath>
 #include <memory>
 #include <mutex>
 #include <stdexcept>
@@ -27,6 +28,27 @@ final00::ReferenceReport set_joint_reference(const std::vector<cv::Mat>& centers
 final00::ReferenceReport set_joint_reference(const cv::Mat& center) {
     return set_joint_reference(std::vector<cv::Mat>{center});
 }
+
+namespace {
+final00::Estimator& ready() {
+    if (!estimator) throw std::logic_error("Call initialize_joint(FINAL00_ASSETS) first");
+    return *estimator;
+}
+}
+
+Alignment_t set_joint_zero(const std::vector<cv::Mat>& centers) {
+    std::lock_guard<std::mutex> lock(context_mutex);
+    const auto z = ready().set_zero(centers);
+    return {z[0], z[1]};
+}
+Alignment_t set_joint_zero(const cv::Mat& center) { return set_joint_zero(std::vector<cv::Mat>{center}); }
+void set_joint_zero_value(double y, double t) {
+    std::lock_guard<std::mutex> lock(context_mutex);
+    if (!std::isfinite(y) || !std::isfinite(t)) throw std::invalid_argument("영점 값이 수가 아니다");
+    ready().set_zero_value(y, t);
+}
+void clear_joint_zero() { std::lock_guard<std::mutex> lock(context_mutex); ready().clear_zero(); }
+Alignment_t joint_zero() { std::lock_guard<std::mutex> lock(context_mutex); const auto z = ready().zero(); return {z[0], z[1]}; }
 
 Alignment_t joint(cv::Mat& src) {
     using namespace alignment_detail;

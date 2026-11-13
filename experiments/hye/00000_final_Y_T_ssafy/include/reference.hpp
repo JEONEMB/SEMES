@@ -17,10 +17,13 @@ struct ReferenceReport {
     cv::Point screw_shift[4];       // 나사 중심 이동 (px)
     int bar_shift_min[2], bar_shift_max[2];   // 위·아래 바 기준 행 이동의 범위 (px)
     std::string folder;             // 새 기준 자료 폴더
+    bool absolute_kept = true;      // Estimator::set_reference: 절대 영점을 이었는가
+    double bridge_y = 0, bridge_t = 0;   // Estimator::set_reference: 새 기준 출력에 더하는 값
 };
 
 // base: 원래 기준 자료 폴더(center.bmp, points.json, geometry.json, line_protocol.json, site.json).
 // center: 새 센터 사진(3840×2160 8비트, 1·3·4채널). out: 새 기준 자료를 쓸 폴더(없으면 만든다).
 // QR·나사·바를 찾지 못하면 예외를 던진다.
-ReferenceReport make_reference(const std::filesystem::path& base, const cv::Mat& center, const std::filesystem::path& out);
+// relocate_bars=false: 바 칸을 다시 찾지 않고 원래 line_protocol.json 을 그대로 쓴다(바를 쓰지 않는 모델, 값 5개).
+ReferenceReport make_reference(const std::filesystem::path& base, const cv::Mat& center, const std::filesystem::path& out, bool relocate_bars = true);
 }

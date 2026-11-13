@@ -53,6 +53,8 @@
 
 QR 값을 536점 추적 평균에서 QR 3개 NCC 포물선 평균으로 바꾸고 계수를 다시 학습했다(`evidence/eval_qrncc/`). 위 성적은 536점 계수(`evidence/eval/`)다. NCC 계수: 주 검증 탈락 16.9장(536점 15.3), rms Y 0.0102 T 0.0037, 마지막 확인 탈락 7/728, 세트 통째로 빼기 rig_grid_rev 91.2%(536점 92.5%). 역순 사진의 QR 값은 원래 기준 자료로 직접 잰 NCC 포물선이다.
 
+**바 기울기도 뺐다(값 5개, 2026-11-13 저녁).** `evidence/eval_qrncc5/`, 모델 `final00_huber7_qrncc5_rig2day3638_avglabel_irls6_r1e-7`: 주 검증 탈락 9.0장(값 7개 16.9), rms Y 0.0119 T 0.0040, 마지막 확인 탈락 2/728(값 7개 7), 세트 통째로 빼기 rig_1st 99.6%, rig_grid 91.4%, rig_grid_rev 91.3%.
+
 코드는 ssafy 와 같다. 그날 센터 사진으로 측정 기준을 다시 잡는 `set_joint_reference`, 쓰지 않던 QR 호모그래피를 뺀 측정(766 → 54~140 ms, 값은 비트까지 같음), 순수 C++ SHA-256 은 [ssafy README](../00000_final_Y_T_ssafy/README.md) 를 본다. 고친 뒤에도 정방향 격자 99장의 공개 API 결과가 고치기 전과 같다(97장 통과).
 
 ## 빌드
