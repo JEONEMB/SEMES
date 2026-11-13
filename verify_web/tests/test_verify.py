@@ -325,6 +325,47 @@ class KshWorkerTest(unittest.TestCase):
         w.close()
 
 
+class CenterViewTest(unittest.TestCase):
+    """센터 확인 화면: 차이 영상, 기준 윤곽 좌표."""
+
+    def test_diff_mode_is_gray_when_same_as_reference(self):
+        calib = Calibration.load(CALIB)
+        cam = FakeCamera(ViewMapper(calib))          # start() 안 함: _view_image 만 시험
+        img = cam.img
+        cam.set_mode('diff')
+        self.assertTrue(np.array_equal(cam._view_image(img), ViewMapper(calib).apply(img)))   # 기준 없으면 일반 영상
+        cam.set_reference(img)
+        d = cam._view_image(img)
+        self.assertEqual(int(np.abs(d.astype(int) - 128).max()), 0)        # 같으면 전부 회색
+        moved = np.roll(img, 30, axis=1)                                   # 판이 옮겨진 것처럼
+        self.assertGreater(int(np.abs(cam._view_image(moved).astype(int) - 128).max()), 100)
+        cam.set_mode('normal')
+        self.assertTrue(np.array_equal(cam._view_image(img), ViewMapper(calib).apply(img)))
+        with self.assertRaises(ValueError):
+            cam.set_mode('x')
+
+    def test_reference_quads_to_view_coordinates(self):
+        from verify_web.runner import find_qr_quads
+        img = cv2.imread('/home/pi/data/rig_eval/center1.bmp', 0) if Path('/home/pi/data/rig_eval/center1.bmp').exists() else None
+        if img is None:
+            self.skipTest('센터 사진 없음')
+        quads = find_qr_quads(img)
+        self.assertEqual(len(quads), 3)
+        self.assertLess(quads[0][0][0], quads[2][0][0])                  # 왼쪽부터
+        calib = Calibration.load(CALIB)
+        with tempfile.TemporaryDirectory() as d:
+            cam = FakeCamera(ViewMapper(calib))
+            devices = Devices(cam, MockStage())
+            runner = Runner(devices, MockAlgorithm(), Rectifier(calib), Settings(Path(d) / 's.json'), Path(d) / 'runs')
+            runner._set(reference=dict(ts=time.time(), zero_y_mm=0.0, zero_t_deg=0.0, qr_alg=quads))
+            client = create_app(runner, devices, DemoLauncher(['true'], d, free_port(), Path(d) / 'l')).test_client()
+            ov = client.get('/api/state').get_json()['overlay']
+            # 1× 화면 = 알고리즘 좌표 / 3 (가운데 기준)
+            self.assertAlmostEqual(ov['ref_qr'][1][0][0], (quads[1][0][0] - 1919.5) / 3 + 639.5, delta=0.2)
+            self.assertEqual(client.post('/api/view', json={'zoom': 1, 'mode': 'diff'}).status_code, 200)
+            self.assertEqual(cam.view_mode, 'diff')
+
+
 class HandoffTest(unittest.TestCase):
     def test_launch_and_stop(self):
         port = free_port()

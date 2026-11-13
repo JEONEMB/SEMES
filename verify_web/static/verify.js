@@ -30,7 +30,35 @@
   $('video').addEventListener('load', () => { $('video-empty').hidden = true; });
   document.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click', () => setView({zoom: +b.dataset.zoom}, b)));
   document.querySelectorAll('[data-center]').forEach(b => b.addEventListener('click', () => setView({center: b.dataset.center}, b)));
-  const view = {zoom: 1, center: 'image'};
+  const view = {zoom: 1, center: 'image', mode: 'normal'};
+  document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => setView({mode: b.dataset.mode}, b)));
+  let showOutline = true;
+  $('btn-outline').addEventListener('click', () => {
+    showOutline = !showOutline; $('btn-outline').classList.toggle('on', showOutline);
+    $('btn-outline').setAttribute('aria-pressed', showOutline); if (state) drawOverlay(state);
+  });
+  // 센터 기준 윤곽: 기준 사진의 QR 3개 테두리 + 가운데 십자 + 중심 잇는 선. 색 = 마지막 측정의 정렬 여부
+  function drawOverlay(s) {
+    const svg = $('ref-overlay'), badge = $('center-badge'), ov = s.overlay || {};
+    const quads = ov.ref_qr, cls = s.aligned === true ? 'ok' : s.aligned === false ? 'bad' : 'unknown';
+    badge.hidden = !quads;
+    if (!quads) {
+      svg.innerHTML = '';
+      if ((s.camera || {}).view_mode === 'diff') { badge.hidden = false; badge.className = 'center-badge unknown'; badge.textContent = '차이 영상: 센터 기준을 먼저 잡으세요'; }
+      return;
+    }
+    badge.className = 'center-badge ' + cls;
+    badge.textContent = (s.camera || {}).view_mode === 'diff' ? '차이 영상 · ' : '';
+    badge.textContent += cls === 'ok' ? '센터 OK' : cls === 'bad' ? '센터 벗어남' : (s.moving ? '이동 중' : '측정 전');
+    if (!showOutline) { svg.innerHTML = ''; return; }
+    const c = quads.map(q => [q.reduce((a, p) => a + p[0], 0) / 4, q.reduce((a, p) => a + p[1], 0) / 4]);
+    const side = Math.hypot(quads[1][1][0] - quads[1][0][0], quads[1][1][1] - quads[1][0][1]);
+    const [mx, my] = c[1], arm = side * 0.9;
+    svg.innerHTML = quads.map(q => `<polygon class="${cls}" points="${q.map(p => p.join(',')).join(' ')}"/>`).join('') +
+      `<line class="${cls}" x1="${c[0][0]}" y1="${c[0][1]}" x2="${c[2][0]}" y2="${c[2][1]}"/>` +
+      `<line class="${cls}" x1="${mx - arm}" y1="${my}" x2="${mx + arm}" y2="${my}"/>` +
+      `<line class="${cls}" x1="${mx}" y1="${my - arm}" x2="${mx}" y2="${my + arm}"/>`;
+  }
   function setView(change, btn) {
     Object.assign(view, change);
     btn.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === btn));
@@ -61,6 +89,7 @@
     else if (!cam.ok && camOk) { camOk = false; clearTimeout(videoRetry); $('video').removeAttribute('src'); }
     $('video-empty').hidden = !empty;
     $('video-empty-msg').textContent = s.phase === 'released' ? '데모 웹이 카메라를 쓰는 중입니다.' : (cam.error || '카메라 연결을 기다리는 중');
+    drawOverlay(s);
     if (s.overlay) {
       const [px, py] = s.overlay.plate, [vw, vh] = s.overlay.view_size;
       const m = $('plate-mark'); m.style.left = (px / vw * 100) + '%'; m.style.top = (py / vh * 100) + '%';

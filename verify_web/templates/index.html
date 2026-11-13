@@ -29,15 +29,21 @@
       <div class="seg" role="group" aria-label="화면 중심">
         <button data-center="image" class="on">화면 중심</button><button data-center="plate">플레이트</button>
       </div>
+      <div class="seg" role="group" aria-label="영상 종류">
+        <button data-mode="normal" class="on">일반</button><button data-mode="diff" title="지금 영상 − 센터 기준 사진. 정렬되면 판이 회색으로 사라짐">차이</button>
+      </div>
+      <button class="toggle on" id="btn-outline" aria-pressed="true" title="센터 기준 사진의 QR 위치를 영상 위에 그림">기준 윤곽</button>
     </div>
     <div class="video">
       <img id="video" alt="실시간 카메라 영상 (왜곡 보정, SEMES 화각)">
       <div class="crosshair" aria-hidden="true"></div>
+      <svg class="ref-overlay" id="ref-overlay" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+      <div class="center-badge" id="center-badge" hidden></div>
       <div class="plate-mark" id="plate-mark" aria-hidden="true" title="SEMES 기준 QR 위치"></div>
       <div class="badge" id="motion-badge" data-moving="false"><i></i><span>정지</span></div>
       <div class="video-empty" id="video-empty" hidden><strong>영상 없음</strong><span id="video-empty-msg"></span></div>
     </div>
-    <div class="legend"><span><i class="l-red"></i>화면 중심</span><span><i class="l-ring"></i>SEMES 기준 QR 위치</span><span class="muted">왜곡 보정 · SEMES 화각 · 1280×720</span></div>
+    <div class="legend"><span><i class="l-red"></i>화면 중심</span><span><i class="l-ring"></i>SEMES 기준 QR 위치</span><span><i class="l-ref"></i>센터 기준 윤곽 (초록 = 센터 OK, 빨강 = 벗어남, 노랑 = 다시 재야 함)</span><span class="muted">왜곡 보정 · SEMES 화각 · 1280×720</span></div>
   </section>
 
   <section class="panel side">

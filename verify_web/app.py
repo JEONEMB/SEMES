@@ -23,7 +23,11 @@ def create_app(runner, devices, demo):
         cam = devices.camera
         if cam:
             px, py = cam.view_point(*PLATE_CENTER)
-            s['overlay'] = dict(plate=[round(px, 1), round(py, 1)], view_size=[1280, 720])
+            ov = dict(plate=[round(px, 1), round(py, 1)], view_size=[1280, 720], ref_qr=None)
+            ref = s.get('reference') or {}
+            if ref.get('qr_alg'):        # 센터 기준 사진의 QR 3개 → 지금 화면 좌표 (확대·중심 반영)
+                ov['ref_qr'] = [[[round(v, 1) for v in cam.view_point(x, y)] for x, y in quad] for quad in ref['qr_alg']]
+            s['overlay'] = ov
         return s
 
     def body():
@@ -96,6 +100,8 @@ def create_app(runner, devices, demo):
         center = PLATE_CENTER if b.get('center') == 'plate' else None
         if devices.camera:
             devices.camera.set_view(zoom, center)
+            if 'mode' in b:
+                devices.camera.set_mode(b['mode'])
         return jsonify(ok=True)
 
     def offset_arg(v):

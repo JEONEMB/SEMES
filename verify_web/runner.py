@@ -15,6 +15,7 @@ import time
 from pathlib import Path
 
 import cv2
+import numpy as np
 
 PHASES = {
     'idle': '대기', 'homing': '원점 복귀 중', 'positioning': '시작 위치로 이동 중',
@@ -43,6 +44,25 @@ LIMITS = dict(tol_y_mm=(0.001, 1), tol_t_deg=(0.0001, 1), max_trials=(1, 100), m
               max_step_t_deg=(0.001, 5), random_y_mm=(0, 10), random_t_deg=(0, 5), approach_y_mm=(0, 2), approach_t_deg=(0, 1),
               average=(1, 16), settle_px=(0.05, 5), settle_timeout_s=(0.5, 30), reference_max_age_min=(1, 1440),
               center_y_mm=(-1000, 1000), center_t_deg=(-360, 360))
+
+
+_QR = None
+
+
+def find_qr_quads(img):
+    """알고리즘 좌표(3840×2160) 사진에서 QR 3개의 네 꼭짓점 (왼쪽부터). 못 찾으면 None. 화면 기준 윤곽용."""
+    global _QR
+    if _QR is None:
+        _QR = cv2.QRCodeDetectorAruco()
+    try:
+        ok, p = _QR.detectMulti(img)
+    except cv2.error:
+        return None
+    if not ok or p is None or len(p) != 3:
+        return None
+    q = p.reshape(-1, 4, 2)
+    q = q[np.argsort(q.mean(1)[:, 0])]
+    return [[[round(float(x), 2), round(float(y), 2)] for x, y in quad] for quad in q]
 
 
 class RunError(RuntimeError):
@@ -113,7 +133,7 @@ class Runner:
         self.job = None
         self.state = dict(phase='idle', message='', busy=False, job=None, moving=False,
                           position=None, flags=None, stage_state=None, stage_error=None,
-                          run=None, last=None, history=[], measure=None, reference=None)
+                          run=None, last=None, history=[], measure=None, reference=None, aligned=None)
 
     # --- 상태 -----------------------------------------------------------------
     def _set(self, **kw):
@@ -260,7 +280,8 @@ class Runner:
         if lim and not relative:
             if not (lim[0] <= y_um <= lim[1] and lim[2] <= t_mdeg <= lim[3]):
                 raise RunError(f'목표가 스테이지 한계 밖: Y {y_um / 1000:.3f} mm (한계 {lim[0] / 1000:.3f}~{lim[1] / 1000:.3f})')
-        self._set(moving=True, target=dict(y_mm=y_um / 1000, t_deg=t_mdeg / 1000, relative=relative))
+        self._set(moving=True, aligned=None,      # 움직이면 다시 재기 전까지 정렬 여부를 모른다
+                  target=dict(y_mm=y_um / 1000, t_deg=t_mdeg / 1000, relative=relative))
         try:
             # 절대 이동에서 Θ 가 꺼져 있으면 목표 Θ = 지금 Θ 라 그대로 보낸다
             stage.start(y_um, t_mdeg, relative=relative, allow_t=enable_t or not relative)
@@ -400,7 +421,8 @@ class Runner:
         img = self.rectifier.apply(gray)
         self._phase('inferring')
         z = self.algorithm.set_reference(img)
-        ref = dict(ts=time.time(), zero_y_mm=r6(z['y']), zero_t_deg=r6(z['t']))
+        ref = dict(ts=time.time(), zero_y_mm=r6(z['y']), zero_t_deg=r6(z['t']), qr_alg=find_qr_quads(img))
+        cam.set_reference(gray)                 # 차이 영상용 (센서 원본)
         if self.runs_dir:
             self.runs_dir.mkdir(parents=True, exist_ok=True)
             cv2.imwrite(str(self.runs_dir / f'reference_{time.strftime("%Y%m%d_%H%M%S")}.bmp'), img)
@@ -439,6 +461,7 @@ class Runner:
                                                               (not enable_t or abs(truth[1]) <= s['tol_t_deg'])),
                      infer_ms=round(r.get('ms', 0), 1), settle_s=round(settle_s, 2), settled=settled,
                      shift_px=None if shift != shift else round(shift, 3), exposure_us=meta.get('exposure_us'))
+        self._set(aligned=entry['within'])
         return entry, img
 
     def _trial(self, n, move):
