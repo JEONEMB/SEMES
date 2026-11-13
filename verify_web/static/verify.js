@@ -130,9 +130,10 @@
     if (!s.position) return null;
     return [s.position.y_mm - s.settings.center_y_mm, s.position.t_deg - s.settings.center_t_deg];
   }
-  function moveGoal(s) {
+  function moveGoal(s) {          // 최종 목표 (접근점을 거치는 중이면 그다음 목표)
     if (!s.target || s.target.relative) return null;
-    return [s.target.y_mm - s.settings.center_y_mm, s.target.t_deg - s.settings.center_t_deg];
+    const g = s.target.final || s.target;
+    return [g.y_mm - s.settings.center_y_mm, g.t_deg - s.settings.center_t_deg];
   }
 
   function lastSeen(s) {
@@ -151,7 +152,8 @@
     $('pos-label').textContent = seen ? `지금 위치 · 카메라로 본 센터와의 차이 (${seen.label})` : '지금 위치 · 스테이지 좌표 − 센터 (카메라로 재기 전)';
     card.dataset.ok = !v2 ? 'unknown' : s.moving ? 'moving' : seen ? (seen.within ? 'ok' : 'bad') : 'unknown';
     let sub = off ? `스테이지 좌표 기준: Y ${fmt(off[0])} mm, Θ ${fmt(off[1])}°` : '';
-    if (s.moving && goal) sub = `이동 중 → 목표 Y ${fmt(goal[0])} mm, Θ ${fmt(goal[1])}°`;
+    if (s.moving && goal) sub = (s.target.final ? '백래시 방지: −쪽 접근점을 거쳐서 → ' : '이동 중 → ') +
+      `목표 Y ${fmt(goal[0])} mm, Θ ${fmt(goal[1])}°`;
     $('pos-sub').textContent = sub;
     const v = $('verdict');
     const run = s.run;
@@ -170,7 +172,7 @@
   }
   function renderFlow(s) {
     const next = s.busy ? 0 : flowStep(s), jobStep = {goto: 1, run: 2, step: 2}[s.job] || 0;
-    document.querySelectorAll('.flow-btn[data-step]').forEach(b => {
+    document.querySelectorAll('.flow-btn[data-step], .flow-input[data-step]').forEach(b => {
       const n = +b.dataset.step;
       b.classList.toggle('next', n === next);
       b.classList.toggle('active', n === jobStep);
@@ -182,6 +184,9 @@
       li.className = n === jobStep ? 'on' : done[n] ? 'done' : n === next ? 'next' : '';
     });
     const st = s.settings;
+    $('input-hint').textContent = `센터 기준 · Y ±${st.max_step_y_mm} mm, Θ ±${st.max_step_t_deg}° 안`;
+    ['start-y', 'start-t'].forEach(id => { $(id).disabled = s.busy; });
+    $('start-t').closest('label').hidden = !st.enable_t;
     $('random-hint').textContent = `Y ±${(st.random_y_mm * 0.4).toFixed(1)}~${st.random_y_mm} mm, Θ ±${(st.random_t_deg * 0.4).toFixed(1)}~${st.random_t_deg}°`;
     document.querySelectorAll('[data-slow]').forEach(b => b.classList.toggle('on', String(st.demo_slow) === b.dataset.slow));
     const sp = st.demo_slow ? [st.slow_y_mm_s, st.slow_t_deg_s] : [st.fast_y_mm_s, st.fast_t_deg_s];
@@ -189,6 +194,41 @@
   }
   document.querySelectorAll('[data-slow]').forEach(b => b.addEventListener('click', () =>
     api('/api/settings', {demo_slow: b.dataset.slow === 'true'}).catch(e => toast(e.message))));
+
+  // ---------- 축별 이동 표시 ----------
+  // 이동 중에는 STM32 에 위치를 묻지 않으므로, 서버가 준 이동량÷속도(예상 시간)로 어느 축이 도는지 보여 준다
+  let clockSkew = 0;
+  function axisInfo(ax) {
+    const s = state, tg = s && s.target, a = tg && tg.axes;
+    if (!s || !s.moving || !a) return null;
+    const total = ax === 'y' ? a.y_s : a.t_s, d = ax === 'y' ? a.dy_mm : a.dt_deg;
+    if (!total) return {on: false, d, left: 0, frac: 1};
+    const el = Date.now() / 1000 + clockSkew - a.started;
+    return {on: el < total + 0.3, d, left: Math.max(0, total - el), frac: Math.min(1, el / total)};
+  }
+  function renderAxes() {
+    const s = state; if (!s) return;
+    const moving = !!s.moving || s.stage_state === 'moving' || s.stage_state === 'homing';
+    const homing = s.phase === 'homing';
+    const iy = homing ? {on: true} : axisInfo('y'), it = homing ? {on: false} : axisInfo('t');
+    const names = [iy && iy.on ? 'Y' : '', it && it.on ? 'Θ' : ''].filter(Boolean);
+    const badge = $('motion-badge'); badge.dataset.moving = moving;
+    badge.querySelector('span').textContent = !moving ? '모터 정지' : homing ? 'Y 원점 복귀 중' :
+      names.length ? `${names.join(' · ')} 이동 중` : '도착 중';
+    $('ax-y').dataset.on = !!(moving && iy && iy.on); $('ax-t').dataset.on = !!(moving && it && it.on);
+    $('ax-y').hidden = $('ax-t').hidden = !moving;
+    for (const [ax, info, unit, dp] of [['y', iy, 'mm', 3], ['t', it, '°', 3]]) {
+      const el = $('mv-' + ax);
+      el.hidden = !moving || homing || !info;
+      if (el.hidden) continue;
+      el.dataset.on = info.on;
+      el.querySelector('span').textContent = info.on
+        ? `${ax === 'y' ? 'Y' : 'Θ'} 이동 중 ${fmt(info.d, dp)} ${unit} · 약 ${info.left.toFixed(1)}초 남음`
+        : `${ax === 'y' ? 'Y' : 'Θ'} ${info.d ? '도착' : '그대로'}`;
+      el.querySelector('u').style.width = (info.frac * 100).toFixed(0) + '%';
+    }
+  }
+  setInterval(() => { if (state && state.moving) renderAxes(); }, 200);
 
   // ---------- 렌더 ----------
   function render(s) {
@@ -211,9 +251,8 @@
     $('video-empty').hidden = cam.ok;
     $('video-empty-msg').textContent = s.phase === 'released' ? '데모 웹이 카메라를 쓰는 중입니다.' : (cam.error || '카메라 연결을 기다리는 중');
     drawOverlay(s);
-    const moving = !!s.moving || s.stage_state === 'moving' || s.stage_state === 'homing';
-    const badge = $('motion-badge'); badge.dataset.moving = moving;
-    badge.querySelector('span').textContent = moving ? (s.phase === 'homing' ? '원점 복귀 중' : '모터 이동 중') : '모터 정지';
+    clockSkew = s.now ? s.now - Date.now() / 1000 : 0;
+    renderAxes();
 
     renderPosition(s);
     drawPlot(s);
@@ -289,7 +328,12 @@
   const startOffset = () => [Number($('start-y').value), Number($('start-t').value)];
   act('btn-home', '/api/home');
   act('btn-goto-random', '/api/goto', {offset: 'random'});
-  act('btn-goto', '/api/goto', () => ({offset: startOffset()}));
+  $('goto-form').addEventListener('submit', ev => {        // Enter 로도 이동
+    ev.preventDefault();
+    const [y, t] = startOffset();
+    if (!Number.isFinite(y) || !Number.isFinite(t)) { toast('Y, Θ 에 숫자를 넣으세요'); return; }
+    api('/api/goto', {offset: [y, t]}).catch(e => toast(e.message));
+  });
   act('btn-run', '/api/run', {});
   act('btn-step', '/api/step');
   act('btn-measure', '/api/measure');

@@ -38,7 +38,8 @@
       <div class="video-wrap"><div class="video">
         <img id="video" alt="실시간 카메라 영상 (왜곡 보정, SEMES 화각)">
         <svg class="ref-overlay" id="ref-overlay" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
-        <div class="badge" id="motion-badge" data-moving="false"><i></i><span>정지</span></div>
+        <div class="badge" id="motion-badge" data-moving="false"><i></i><span>정지</span>
+          <em class="axis" id="ax-y" data-on="false">Y</em><em class="axis" id="ax-t" data-on="false">Θ</em></div>
         <div class="center-badge" id="center-badge" hidden></div>
         <div class="video-empty" id="video-empty" hidden><strong>영상 없음</strong><span id="video-empty-msg"></span></div>
       </div></div>
@@ -51,7 +52,15 @@
     </section>
 
     <section class="panel flow">
-      <button class="flow-btn" id="btn-goto-random" data-step="1"><b>1</b><span><strong>랜덤 위치로</strong><small id="random-hint">일부러 어긋나게</small></span></button>
+      <div class="flow-one">
+        <button class="flow-btn" id="btn-goto-random" data-step="1"><b>1</b><span><strong>랜덤 위치로</strong><small id="random-hint">일부러 어긋나게</small></span></button>
+        <form class="flow-input" id="goto-form" data-step="1" autocomplete="off">
+          <span class="fi-title"><b>1</b>직접 입력 <small class="muted" id="input-hint">센터 기준</small></span>
+          <label>Y <input id="start-y" type="number" step="0.01" value="0.50" inputmode="decimal" required> mm</label>
+          <label>Θ <input id="start-t" type="number" step="0.01" value="0.20" inputmode="decimal" required> °</label>
+          <button class="btn" id="btn-goto" type="submit">이 위치로</button>
+        </form>
+      </div>
       <button class="flow-btn primary" id="btn-run" data-step="2"><b>2</b><span><strong>자동 보정 시작</strong><small>카메라로 보고 센터로 복귀</small></span></button>
       <button class="flow-btn stop" id="btn-stop"><b>■</b><span><strong>정지</strong><small>바로 멈춤</small></span></button>
       <div class="speed">
@@ -70,6 +79,8 @@
       <div class="pos-big">
         <div><span class="ax">Y</span><strong id="off-y">—</strong><small>mm</small></div>
         <div><span class="ax">Θ</span><strong id="off-t">—</strong><small>°</small></div>
+        <div class="axmove" id="mv-y" hidden><i></i><span></span><b><u></u></b></div>
+        <div class="axmove" id="mv-t" hidden><i></i><span></span><b><u></u></b></div>
       </div>
       <p class="pos-sub" id="pos-sub"></p>
       <div class="verdict" id="verdict">측정 전</div>
@@ -111,14 +122,11 @@
   </section>
 
   <details class="panel tools">
-    <summary>관리 도구 <small class="muted">센터 기준 · 원점 복귀 · 지정 위치 · 한 단계 · 측정만 · 센터 지정 · 설정</small></summary>
+    <summary>관리 도구 <small class="muted">센터 기준 · 원점 복귀 · 한 단계 · 측정만 · 센터 지정 · 설정</small></summary>
     <div class="tools-body">
       <div class="row">
         <button class="btn" id="btn-reference" title="센터로 가서 기준 사진을 다시 찍음 (랜덤 위치로를 누르면 없거나 오래됐을 때 자동)">⊙ 센터 기준 다시 찍기</button>
         <button class="btn" id="btn-home">⌂ Y 원점 복귀</button>
-        <label class="inline">Y <input id="start-y" type="number" step="0.01" value="0.50" inputmode="decimal"> mm</label>
-        <label class="inline">Θ <input id="start-t" type="number" step="0.01" value="0.00" inputmode="decimal"> °</label>
-        <button class="btn" id="btn-goto">→ 지정 위치로</button>
         <button class="btn" id="btn-step">한 단계 보정</button>
         <button class="btn" id="btn-measure">측정만</button>
         <button class="btn" id="btn-center">현재 위치를 센터로</button>

@@ -164,6 +164,7 @@ class Runner:
         cam = self.devices.camera
         s['camera'] = cam.health() if cam else dict(ok=False, error='카메라 없음 (데모 웹 사용 중일 수 있음)')
         s['version'] = version
+        s['now'] = time.time()          # 화면이 축별 이동 예상 시간을 서버 시계로 계산하도록
         return s
 
     def wait_change(self, version, timeout=15.0):
@@ -207,9 +208,22 @@ class Runner:
         self._launch('home', self._home)
 
     def goto(self, offset):
+        if offset != 'random':
+            self._check_start(*offset)
         self._launch('goto', self._goto_job, offset)
 
+    def _check_start(self, y, t):
+        """직접 입력한 시작 위치: 자동 보정 한 번 이동 한도 안이어야 보정이 중간에 멈추지 않는다."""
+        s = self.settings
+        if not (math.isfinite(y) and math.isfinite(t)):
+            raise RunError('Y, Θ 에 숫자를 넣으세요.')
+        if abs(y) > s['max_step_y_mm'] or (s['enable_t'] and abs(t) > s['max_step_t_deg']):
+            raise RunError(f'시작 위치는 센터에서 Y ±{s["max_step_y_mm"]} mm, Θ ±{s["max_step_t_deg"]}° 안으로 넣으세요 '
+                           f'(자동 보정 한 번 이동 한도).')
+
     def run(self, offset=None):
+        if isinstance(offset, tuple):
+            self._check_start(*offset)
         self._launch('run', self._run, offset)
 
     def step(self):
@@ -289,7 +303,7 @@ class Runner:
             return None
         return (pos[0] / 1000 - self.settings['center_y_mm'], pos[1] / 1000 - self.settings['center_t_deg'])
 
-    def _move(self, y_um, t_mdeg, relative, phase, message=''):
+    def _move(self, y_um, t_mdeg, relative, phase, message='', final=None):
         self._phase(phase, message)
         stage = self.devices.stage
         enable_t = self.settings['enable_t']
@@ -303,7 +317,9 @@ class Runner:
             if not (lim[0] <= y_um <= lim[1] and lim[2] <= t_mdeg <= lim[3]):
                 raise RunError(f'목표가 스테이지 한계 밖: Y {y_um / 1000:.3f} mm (한계 {lim[0] / 1000:.3f}~{lim[1] / 1000:.3f})')
         self._set(moving=True, aligned=None, rois_now=None,   # 움직이면 다시 재기 전까지 정렬 여부를 모른다
-                  target=dict(y_mm=y_um / 1000, t_deg=t_mdeg / 1000, relative=relative))
+                  target=dict(y_mm=y_um / 1000, t_deg=t_mdeg / 1000, relative=relative,
+                              axes=self._axis_plan(y_um, t_mdeg, relative),
+                              final=final))         # 접근점으로 가는 중이면 그다음 최종 목표 (화면 안내용)
         try:
             # 절대 이동에서 Θ 가 꺼져 있으면 목표 Θ = 지금 Θ 라 그대로 보낸다
             stage.start(y_um, t_mdeg, relative=relative, allow_t=enable_t or not relative)
@@ -315,6 +331,21 @@ class Runner:
         self._check_abort()          # 정지 요청으로 끊긴 이동은 오류가 아니라 '정지됨'
         if done['result'] != 0:
             raise RunError('이동 실패: ' + DONE_RESULTS.get(done['result'], str(done['result'])))
+
+    def _axis_plan(self, y_um, t_mdeg, relative):
+        """축마다 이동량과 예상 시간 (속도로 나눈 값, 가감속 빼고). 이동 중에는 STATUS 를 묻지 않아서
+        화면이 'Y 이동 중 / Θ 이동 중' 을 이 예상으로 보여 준다. 두 축은 동시에 출발한다."""
+        pos, sp = self.state.get('position'), self.state.get('speed')
+        if relative:
+            dy, dt = y_um / 1000, t_mdeg / 1000
+        elif pos:
+            dy, dt = y_um / 1000 - pos['y_mm'], t_mdeg / 1000 - pos['t_deg']
+        else:
+            return None
+        est = lambda d, v: round(abs(d) / v, 2) if v else None
+        return dict(started=time.time(), dy_mm=round(dy, 4), dt_deg=round(dt, 4),
+                    y_s=est(dy, sp and sp['y_mm_s']) if abs(dy) >= 0.0005 else 0.0,
+                    t_s=est(dt, sp and sp['t_deg_s']) if abs(dt) >= 0.0005 else 0.0)
 
     def _home(self):
         self._phase('homing')
@@ -349,7 +380,8 @@ class Runner:
             t_deg = pos['t_deg'] if pos else 0.0          # Θ 는 그대로 둔다
         ay, at = s['approach_y_mm'], (s['approach_t_deg'] if s['enable_t'] else 0.0)
         if ay > 0 or at > 0:
-            self._move(um(y_mm - ay), um(t_deg - at), relative=False, phase=phase, message=message)
+            self._move(um(y_mm - ay), um(t_deg - at), relative=False, phase=phase, message=message,
+                       final=dict(y_mm=y_mm, t_deg=t_deg))
         self._move(um(y_mm), um(t_deg), relative=False, phase=phase, message=message)
 
     def _goto(self, offset):

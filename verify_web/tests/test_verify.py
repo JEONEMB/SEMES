@@ -17,7 +17,7 @@ from verify_web.app import create_app
 from verify_web.camera import FakeCamera
 from verify_web.devices import DemoLauncher, DeviceManager
 from verify_web.geometry import ALG_SIZE, SEMES_FX, SEMES_FY, Calibration, Rectifier, ViewMapper, alg_matrix
-from verify_web.runner import Runner, Settings
+from verify_web.runner import Runner, RunError, Settings
 
 ROOT = Path(__file__).resolve().parents[2]
 CALIB = ROOT / 'demo_web' / 'calibration' / 'camera_calib.yml'
@@ -135,6 +135,28 @@ class RunnerTest(unittest.TestCase):
         self.assertTrue(all(0.4 * ry - 1e-3 <= abs(y) <= ry for y in ys))
         self.assertTrue(all(0.4 * rt - 1e-3 <= abs(t) <= rt for t in ts))
         self.assertTrue(min(ys) < 0 < max(ys) and min(ts) < 0 < max(ts))
+
+    def test_axis_plan_estimates_each_axis(self):
+        r = self.runner(MockAlgorithm())
+        r._set(position=dict(y_mm=20.0, t_deg=0.0), speed=dict(mode='slow', y_mm_s=0.2, t_deg_s=0.1))
+        a = r._axis_plan(21000, -300, relative=False)          # Y +1 mm (5 s), Θ −0.3° (3 s)
+        self.assertEqual((a['dy_mm'], a['dt_deg'], a['y_s'], a['t_s']), (1.0, -0.3, 5.0, 3.0))
+        a = r._axis_plan(20000, 50, relative=False)            # Y 그대로, Θ 만
+        self.assertEqual((a['y_s'], a['t_s']), (0.0, 0.5))
+
+    def test_direct_start_input_is_checked(self):
+        r = self.runner(MockAlgorithm())
+        with self.assertRaises(RunError):
+            r.goto((2.5, 0.0))                 # 한 번 이동 한도 2 mm 넘음
+        with self.assertRaises(RunError):
+            r.goto((0.5, -1.5))                # Θ 한도 1° 넘음
+        with self.assertRaises(RunError):
+            r.goto((float('nan'), 0.0))
+        r.goto((-0.75, 0.3)); r.wait_idle(30)
+        s = r.snapshot()
+        self.assertEqual(s['start'], dict(y_mm=-0.75, t_deg=0.3, reached=True))
+        self.assertAlmostEqual(s['position']['y_mm'], self.settings['center_y_mm'] - 0.75, places=3)
+        self.assertAlmostEqual(s['position']['t_deg'], self.settings['center_t_deg'] + 0.3, places=3)
 
     def test_demo_speed_and_pause(self):
         self.settings.update(dict(demo_slow=True, slow_y_mm_s=0.3, slow_t_deg_s=0.15, pause_s=0.4))
