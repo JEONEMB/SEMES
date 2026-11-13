@@ -50,6 +50,14 @@ void set_joint_zero_value(double y, double t) {
 void clear_joint_zero() { std::lock_guard<std::mutex> lock(context_mutex); ready().clear_zero(); }
 Alignment_t joint_zero() { std::lock_guard<std::mutex> lock(context_mutex); const auto z = ready().zero(); return {z[0], z[1]}; }
 
+void initialize_joint_method(const std::string& assets, const std::string& qr_method) {
+    auto next = std::make_unique<final00::Estimator>(assets, qr_method);   // 준비에 실패하면 이전 상태가 그대로 남는다
+    std::lock_guard<std::mutex> lock(context_mutex);
+    estimator = std::move(next);
+}
+std::string joint_qr_method() { std::lock_guard<std::mutex> lock(context_mutex); return ready().qr_method(); }
+std::string joint_model_id() { std::lock_guard<std::mutex> lock(context_mutex); return ready().model_id(); }
+
 Alignment_t joint(cv::Mat& src) {
     using namespace alignment_detail;
     reset_diagnostics("joint");
@@ -65,7 +73,7 @@ Alignment_t joint(cv::Mat& src) {
         d.tracked_points = 3;   // QR 3개 NCC (예전 536점 추적)
         d.valid_points = r.measurement.valid_points;
         set_diagnostics(r.outside_training_range, false,
-            "QR3 NCC parabola mean dx + bar tilt2 + screw gradient x4 linear estimate, absolute-zero labels. "
+            "QR mean dx (track536 or NCC parabola) + bar tilt2 (unless unused) + screw gradient x4 linear estimate, absolute-zero labels. "
             "Vertical displacements are not used; vertical faults, new-machine transfer and pose stability are not certified.");
         return r.pose;
     } catch (const std::exception& e) {

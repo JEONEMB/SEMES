@@ -176,7 +176,7 @@ ReferenceReport make_reference(const fs::path& base, const cv::Mat& center_input
     st << "{\n \"center_sha256\": \"" << final00_sha::sha256_hex(bmp) << "\",\n \"full_crop\": " << rect_json(g0.full_crop + crop_shift)
        << ",\n \"qr\": [" << rect_json(boxes[0]) << ", " << rect_json(boxes[1]) << ", " << rect_json(boxes[2]) << "],\n \"screws\": [";
     for (int k = 0; k < 4; ++k) st << (k ? ", " : "") << '[' << screws[k].x << ", " << screws[k].y << ']';
-    st << "],\n \"search_x\": " << g0.search_x << ",\n \"search_y\": " << g0.search_y << ",\n \"note\": \"final00 reference from " << base.filename().u8string() << "\"\n}\n";
+    st << "],\n \"search_x\": " << g0.search_x << ",\n \"search_y\": " << g0.search_y << ",\n \"qr_method\": \"" << g0.qr_method << "\",\n \"note\": \"final00 reference from " << base.filename().u8string() << "\"\n}\n";
     write_text(out / "site.json", st.str());
     rep.folder = out.u8string();
     return rep;

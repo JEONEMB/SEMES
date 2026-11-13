@@ -32,6 +32,8 @@ Geometry read(const std::filesystem::path& assets) {
         g.screws[k] = cv::Point(int(screws[k][0]), int(screws[k][1]));
     }
     g.search_x = int(f["search_x"]); g.search_y = int(f["search_y"]);
+    if (!f["qr_method"].empty()) f["qr_method"] >> g.qr_method;
+    if (g.qr_method != "track536" && g.qr_method != "ncc") throw std::runtime_error("site.json: qr_method 는 track536 또는 ncc 여야 한다");
     const cv::Rect image(0, 0, 3840, 2160);
     if (g.center_sha256.size() != 64 || g.search_x < 1 || g.search_y < 1 || (g.full_crop & image) != g.full_crop)
         throw std::runtime_error("site.json: 값이 잘못됐다");

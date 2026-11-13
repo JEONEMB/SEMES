@@ -1,4 +1,5 @@
 #include "final00.hpp"
+#include "control_internal.hpp"
 #include "observer_internal.hpp"
 #include "pin_observer.hpp"
 #include "qr_ncc.hpp"
@@ -22,6 +23,15 @@ namespace fs = std::filesystem;
 const char* const kValueNames[7] = {"qr_dx_mean", "bar_tilt_upper", "bar_tilt_lower", "screw1_x", "screw2_x", "screw3_x", "screw4_x"};
 
 namespace {
+std::vector<unsigned char> selected_points(const fs::path& assets) {
+    cv::FileStorage file((assets / "points.json").u8string(), cv::FileStorage::READ);
+    if (!file.isOpened()) throw std::runtime_error("points.json 이 없다");
+    std::vector<unsigned char> selected;
+    for (const auto& row : file["points"]) selected.push_back(static_cast<unsigned char>(int(row[3])));
+    if (selected.size() != 630 || std::count(selected.begin(), selected.end(), 1) != 536)
+        throw std::runtime_error("points.json: 630점 중 536점 선택이 아니다");
+    return selected;
+}
 cv::Mat to_gray(const cv::Mat& input) {
     if (input.empty() || input.depth() != CV_8U || input.size() != cv::Size(3840, 2160))
         throw std::invalid_argument("입력은 3840x2160 8비트 영상이어야 한다");
@@ -38,16 +48,26 @@ struct Measurer::Impl {
     bool site_loaded;   // 다른 멤버보다 먼저 site.json 을 읽는다
     alignment_detail::Observer observer;   // 센터 사진 해시 검사와 바 48칸
     cv::Mat center;
-    QrNcc qr;                              // QR 값 (2026-11-13: 536점 추적 대신 NCC 포물선)
+    QrNcc qr;                              // QR 값 qr_method = "ncc" (우리 장비): QR 3개 NCC 포물선
+    std::unique_ptr<legacy_control::Tracker> tracker;   // QR 값 qr_method = "track536" (SEMES): 536점 추적 평균
+    std::vector<unsigned char> selected;
     final04_pin::Observer pins;
     ScrewGradient screws;
     std::vector<double> block_x;
-    explicit Impl(const fs::path& assets)
+    std::string method;                    // 실제로 쓰는 QR 방식
+    // method: "" 이면 site.json 의 qr_method(없으면 track536), 아니면 "track536" 또는 "ncc"
+    Impl(const fs::path& assets, const std::string& requested)
         : site_loaded((site::load(assets), true)), observer(assets),
-          center(alignment_detail::read_gray(assets / "center.bmp")), qr(center), pins(center), screws(center), block_x(observer.block_centers()) {}
+          center(alignment_detail::read_gray(assets / "center.bmp")), qr(center), pins(center), screws(center), block_x(observer.block_centers()),
+          method(requested.empty() ? site::get().qr_method : requested) {
+        if (method != "track536" && method != "ncc") throw std::invalid_argument("QR 방식은 track536 또는 ncc 여야 한다: " + method);
+        if (method == "track536") { tracker = std::make_unique<legacy_control::Tracker>(assets); selected = selected_points(assets); }
+    }
 };
 
-Measurer::Measurer(const std::string& assets) : impl_(std::make_unique<Impl>(fs::u8path(assets))), base_(assets), current_(assets) {}
+Measurer::Measurer(const std::string& assets, const std::string& qr_method)
+    : impl_(std::make_unique<Impl>(fs::u8path(assets), qr_method)), base_(assets), current_(assets), method_(qr_method) {}
+const std::string& Measurer::qr_method() const { return impl_->method; }
 
 ReferenceReport Measurer::set_reference(const cv::Mat& center) {
     static std::atomic<unsigned> counter{0};
@@ -56,7 +76,7 @@ ReferenceReport Measurer::set_reference(const cv::Mat& center) {
     ReferenceReport rep;
     try {
         rep = make_reference(fs::u8path(base_), center, dir, use_bars_);   // 언제나 원래 assets 에서 출발한다(이어 붙이지 않는다)
-        auto next = std::make_unique<Impl>(dir);              // site.json 을 새 값으로 읽는다
+        auto next = std::make_unique<Impl>(dir, method_);     // site.json 을 새 값으로 읽는다. QR 방식은 그대로
         impl_ = std::move(next); current_ = dir.u8string();
     } catch (...) {
         site::load(fs::u8path(current_));                     // 이전 측정 기준의 화면 위치로 되돌린다
@@ -69,9 +89,19 @@ Measurer::~Measurer() = default;
 Measurement Measurer::measure(const cv::Mat& image) const {
     const cv::Mat gray = to_gray(image);
     // QR 값: QR 3개 NCC 이동(정수 + 3점 포물선)의 가로 평균. 예전 536점 추적(약 29 ms, 초기화 약 0.4 초)을 대신한다(실험 20261113_1700).
-    const QrShift q = impl_->qr.measure(gray);
+    // SEMES 사진에서는 NCC 포물선의 잡음(0.015~0.022 px)이 536점 추적보다 커서 주 검증 탈락 0.1 → 2.6 장이 됐다. 그래서 site.json 의 qr_method 로 고른다.
+    QrShift q{0, 0, 1};
     Measurement m{};
-    m.valid_points = 3;
+    if (impl_->tracker) {
+        const auto tracks = impl_->tracker->measure(gray);
+        m.valid_points = impl_->tracker->valid_selected(tracks);
+        if (m.valid_points != 536) throw std::runtime_error("QR 고정 536점 중 유효하지 않은 점이 있다 (유효 " + std::to_string(m.valid_points) + ")");
+        for (int p = 0; p < 630; ++p) if (impl_->selected[p]) { q.dx += tracks.displacement.at<float>(p, 0); q.dy += tracks.displacement.at<float>(p, 1); }
+        q.dx /= 536.0; q.dy /= 536.0; q.min_ncc = *std::min_element(tracks.ncc.begin(), tracks.ncc.end());
+    } else {
+        q = impl_->qr.measure(gray);
+        m.valid_points = 3;
+    }
     // 바: 48칸 세로 이동만 잰다. 예전에는 observer.measure 로 값 7개에 쓰지 않는 QR NCC·ECC 호모그래피 3개까지 계산했다
     // (Windows 1스레드에서 약 700 ms 중 대부분). 바 값과 기울기 계산은 그대로라 결과가 같다.
     cv::Mat qr102 = cv::Mat::zeros(1, 102, CV_64F);   // final04::features 의 입력 형식(앞 54칸은 쓰지 않는 QR 값, 뒤 48칸은 바)
@@ -91,12 +121,22 @@ Measurement Measurer::measure(const cv::Mat& image) const {
     return m;
 }
 
-Estimator::Estimator(const std::string& assets) : measurer_(assets) {
+Estimator::Estimator(const std::string& assets, const std::string& qr_method) : measurer_(assets, qr_method) {
     const fs::path root = fs::u8path(assets);
     cv::FileStorage f((root / "provenance.json").u8string(), cv::FileStorage::READ);
     if (!f.isOpened()) throw std::runtime_error("provenance.json 이 없다");
     std::string id; f["model_id"] >> id;
     if (id.rfind("final00_huber7_", 0) != 0 || int(f["features"]) != 7) throw std::runtime_error("모델 식별자가 다르다");   // 장비별 모델 이름을 받는다(원본은 SEMES 702장 모델 하나만 받는다)
+    // QR 방식마다 계수가 다르다. site.json 의 기본 방식이면 model7.tsv, 다른 방식이면 provenance 의 alt_models.<방식> 파일을 쓴다.
+    std::string model_file = "model7.tsv";
+    if (measurer_.qr_method() != site::read(root).qr_method) {
+        const auto alt = f["alt_models"][measurer_.qr_method()];
+        if (alt.empty()) throw std::runtime_error("이 assets 에는 QR 방식 " + measurer_.qr_method() + " 의 계수가 없다");
+        std::string file, sha; alt["file"] >> file; alt["sha256"] >> sha; alt["model_id"] >> id;
+        if (file.empty() || sha.size() != 64 || alignment_detail::sha256(root / file) != sha) throw std::runtime_error("자료 해시가 다르다: " + file);
+        model_file = file;
+    }
+    model_id_ = id;
     for (const std::string name : {"center.bmp", "points.json", "geometry.json", "line_protocol.json", "model7.tsv"}) {
         std::string expected; f[name + "_sha256"] >> expected;
         if (expected.size() != 64 || alignment_detail::sha256(root / name) != expected) throw std::runtime_error("자료 해시가 다르다: " + name);
@@ -107,7 +147,7 @@ Estimator::Estimator(const std::string& assets) : measurer_(assets) {
         minimum_[k] = double(f["training_min"][k]); maximum_[k] = double(f["training_max"][k]);
         if (!std::isfinite(minimum_[k]) || !std::isfinite(maximum_[k]) || minimum_[k] > maximum_[k]) throw std::runtime_error("학습 범위가 잘못됐다");
     }
-    std::ifstream model(root / "model7.tsv");
+    std::ifstream model(root / model_file);
     std::string line; std::getline(model, line);   // 머리줄
     for (int row = 0; row < 8; ++row) {
         if (!std::getline(model, line)) throw std::runtime_error("model7.tsv 의 행이 모자란다");

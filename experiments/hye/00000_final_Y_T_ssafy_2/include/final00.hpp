@@ -23,7 +23,9 @@ struct Measurement {
 class Measurer {
 public:
     // assets: center.bmp, points.json, geometry.json, line_protocol.json 이 있는 폴더(UTF-8 경로)
-    explicit Measurer(const std::string& assets);
+    // qr_method: "" 이면 assets/site.json 의 qr_method(없으면 "track536"). "track536"(QR 536점 추적) 또는 "ncc"(QR 3개 NCC 포물선)로 고를 수 있다.
+    explicit Measurer(const std::string& assets, const std::string& qr_method = "");
+    const std::string& qr_method() const;   // 실제로 쓰는 QR 방식
     ~Measurer();
     // image: 3840×2160 8비트, 1·3·4채널. 입력은 바꾸지 않는다. 측정이 성립하지 않으면 예외를 던진다.
     Measurement measure(const cv::Mat& image) const;
@@ -38,6 +40,7 @@ private:
     struct Impl;
     std::unique_ptr<Impl> impl_;
     std::string base_, current_;   // 원래 assets, 지금 측정 기준 자료 폴더
+    std::string method_;           // 요청한 QR 방식("" = site.json)
     bool use_bars_ = true;
 };
 
@@ -50,7 +53,10 @@ struct Result {
 class Estimator {
 public:
     // assets: Measurer 의 자료 + model7.tsv + provenance.json. 자료 해시가 provenance 와 다르면 예외를 던진다.
-    explicit Estimator(const std::string& assets);
+    // qr_method: "" 이면 site.json 의 기본 방식과 model7.tsv. 다른 방식을 고르면 provenance.json 의 alt_models.<방식> 계수를 쓴다(없으면 예외).
+    explicit Estimator(const std::string& assets, const std::string& qr_method = "");
+    const std::string& qr_method() const { return measurer_.qr_method(); }
+    const std::string& model_id() const { return model_id_; }
     // 출력 = 계수 출력 + 측정 기준 보정(bridge) − 영점(zero). 기본(아무 등록 없음)은 절대 영점: assets 의 center.bmp 와 같은 화면이 (0, 0).
     Result predict(const cv::Mat& image) const;
 
@@ -72,6 +78,7 @@ private:
     Measurer measurer_;
     std::array<double, 2> bridge_{{0, 0}}, zero_{{0, 0}};
     bool absolute_kept_ = true;
+    std::string model_id_;
     std::array<double, 7> mean_, scale_;
     std::array<std::array<double, 2>, 8> weights_;   // 첫 행은 절편. 열은 Y, T
     std::array<double, 2> minimum_, maximum_;

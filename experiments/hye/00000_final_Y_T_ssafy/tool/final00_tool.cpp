@@ -56,11 +56,15 @@ cv::Mat read_image(const fs::path& p) {
     return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
 }
 
-int measure(const fs::path& assets, const fs::path& photos, const fs::path& out) {
+std::string g_method;   // method= 인자 (QR 방식). 비면 site.json
+
+int measure(const fs::path& assets, const fs::path& photos, const fs::path& out, bool no_bars = false) {
     if (fs::exists(out / "features7.tsv")) { std::cerr << "출력이 이미 있다\n"; return 3; }
     const auto rows = read_table(photos, false);
     const int n = int(rows.size());
-    const final00::Measurer measurer(assets.u8string());
+    final00::Measurer measurer(assets.u8string(), g_method);
+    if (no_bars) measurer.set_use_bars(false);   // 바를 재지 않는다(바 기울기 값 0). 바가 밀려 측정이 실패하는 사진용
+    std::cout << "qr_method " << measurer.qr_method() << "\n";
     std::vector<final00::Measurement> m(n); std::vector<int> ok(n, 0); std::vector<std::string> error(n);
     cv::setNumThreads(1);
 #pragma omp parallel for schedule(dynamic)
@@ -239,8 +243,8 @@ int predict(const fs::path& assets, const fs::path& photos, const fs::path& labe
     std::map<int, std::vector<std::string>> lab;
     for (auto& r : read_table(labels, true)) lab[std::stoi(r.at(0))] = r;
     const auto rows = read_table(photos, false);
-    initialize_joint(assets.u8string());
-    std::string ref_text;
+    if (g_method.empty()) initialize_joint(assets.u8string()); else initialize_joint_method(assets.u8string(), g_method);
+    std::string ref_text = "qr_method " + joint_qr_method() + " model " + joint_model_id() + "\n";
     if (!reference.empty()) ref_text = report_text(set_joint_reference(reference));
     if (!zero.empty()) { const Alignment_t z = set_joint_zero(zero); std::ostringstream s; s << std::setprecision(9) << "zero " << z.y << ' ' << z.t << " (절대 영점 기준)\n"; ref_text += s.str(); }
     fs::create_directories(out);
@@ -267,16 +271,26 @@ int predict(const fs::path& assets, const fs::path& photos, const fs::path& labe
 }
 }
 
-int main(int argc, char** argv) {
+int main(int raw_argc, char** raw_argv) {
     try {
+        // 어디에든 method=track536 또는 method=ncc 를 붙이면 QR 방식을 고른다(measure, predict). 없으면 assets/site.json 의 qr_method.
+        std::vector<char*> kept;
+        for (int i = 0; i < raw_argc; ++i) {
+            const std::string s(raw_argv[i]);
+            if (s.rfind("method=", 0) == 0) g_method = s.substr(7);
+            else kept.push_back(raw_argv[i]);
+        }
+        const int argc = int(kept.size()); char** argv = kept.data();
         const std::string mode = argc > 1 ? argv[1] : "";
         if (mode == "measure" && argc == 5) return measure(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]));
+        if (mode == "measure" && argc == 6 && std::string(argv[5]) == "no-bars") return measure(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), true);
         if (mode == "eval" && argc == 6) return evaluate(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]));
         if (mode == "eval" && argc == 7 && std::string(argv[6]) == "no-bars") return evaluate(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]), true);
         if (mode == "predict" && argc == 6) return predict(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]));
         if (mode == "predict" && argc > 6) { std::vector<cv::Mat> ref, zero; split_extra(argv + 6, argv + argc, ref, zero); return predict(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]), ref, zero); }
         if (mode == "register" && argc > 4) return register_reference(fs::u8path(argv[2]), fs::u8path(argv[3]), read_images(argv + 4, argv + argc));
-        std::cerr << "usage: final00_tool measure ASSETS PHOTOS_TSV OUTDIR | eval FEATURES_TSV LABELS_TSV SPLITS_TSV OUTDIR [no-bars] | predict ASSETS PHOTOS_TSV LABELS_TSV OUTDIR [ref=IMAGE...] [zero=IMAGE...] | register ASSETS OUTDIR REFERENCE_IMAGE...\n";
+        std::cerr << "usage: final00_tool measure ASSETS PHOTOS_TSV OUTDIR [no-bars] | eval FEATURES_TSV LABELS_TSV SPLITS_TSV OUTDIR [no-bars] | predict ASSETS PHOTOS_TSV LABELS_TSV OUTDIR [ref=IMAGE...] [zero=IMAGE...] | register ASSETS OUTDIR REFERENCE_IMAGE..."
+                     "  (measure, predict 에 method=track536|ncc 를 붙이면 QR 방식을 고른다)\n";
         return 2;
     } catch (const std::exception& e) { std::cerr << "error: " << e.what() << "\n"; return 1; }
 }

@@ -6,10 +6,11 @@ if(NOT OpenCV_VERSION VERSION_EQUAL "3.4.15")
     message(WARNING "검증하지 않은 OpenCV 버전: ${OpenCV_VERSION}. 기준 성적을 그대로 쓰지 않는다")
 endif()
 
-# QR 값은 2026-11-13 부터 qr_ncc.cpp(QR 3개 NCC + 포물선)로 잰다. 예전 536점 추적(src/tracker.cpp, src/spline.cpp, 20261028_1327_final_Y_T control 복사본)은 빌드하지 않고 기록으로 둔다. QR·바 관측과 나사 초기 위치(observer, line_profile, pin_observer, model, ecc_compat)는
+# QR 값은 assets/site.json 의 qr_method 로 고른다: track536 = 536점 추적(src/tracker.cpp, src/spline.cpp, 20261028_1327_final_Y_T control 복사본, SEMES), ncc = qr_ncc.cpp(QR 3개 NCC + 포물선, 우리 장비). QR·바 관측과 나사 초기 위치(observer, line_profile, pin_observer, model, ecc_compat)는
 # 20261111_0944_final_Y_T 의 소스를 복사한 것이다. 새로 쓴 것은 joint.cpp, estimator.cpp, screw_gradient.cpp, huber_fit.cpp 다.
 add_library(semes_joint STATIC
     src/joint.cpp src/estimator.cpp src/screw_gradient.cpp src/site.cpp src/sha256.cpp src/reference.cpp src/qr_ncc.cpp
+    src/tracker.cpp src/spline.cpp
     src/observer.cpp src/line_profile.cpp src/pin_observer.cpp src/model.cpp
     third_party/ecc_compat.cpp)
 target_include_directories(semes_joint PUBLIC "${PROJECT_SOURCE_DIR}/include" ${OpenCV_INCLUDE_DIRS} PRIVATE include)
