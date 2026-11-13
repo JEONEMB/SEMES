@@ -36,10 +36,12 @@ DEFAULTS = dict(
     average=1,                               # 추론 사진 평균 장수
     settle_px=0.25, settle_timeout_s=6.0,
     save_images=True,
+    auto_reference=True,                     # 보정·측정을 시작할 때 센터 기준이 없거나 오래됐으면 먼저 잡는다
+    reference_max_age_min=60.0,              # 센터는 몇 시간에 0.01~0.02° 씩 밀려서 이보다 오래된 기준은 다시 잡는다
 )
 LIMITS = dict(tol_y_mm=(0.001, 1), tol_t_deg=(0.0001, 1), max_trials=(1, 100), max_step_y_mm=(0.01, 10),
               max_step_t_deg=(0.001, 5), random_y_mm=(0, 10), random_t_deg=(0, 5), approach_y_mm=(0, 2), approach_t_deg=(0, 1),
-              average=(1, 16), settle_px=(0.05, 5), settle_timeout_s=(0.5, 30),
+              average=(1, 16), settle_px=(0.05, 5), settle_timeout_s=(0.5, 30), reference_max_age_min=(1, 1440),
               center_y_mm=(-1000, 1000), center_t_deg=(-360, 360))
 
 
@@ -342,7 +344,26 @@ class Runner:
         (d / 'run.json').write_text(json.dumps(dict(run=run, settings=self.settings.values, history=hist),
                                                indent=1, ensure_ascii=False))
 
+    def _reference_needed(self):
+        s = self.settings
+        if not s['auto_reference'] or not hasattr(self.algorithm, 'set_reference'):
+            return False
+        ref = self.state.get('reference')
+        return ref is None or time.time() - ref['ts'] > s['reference_max_age_min'] * 60
+
+    def _ensure_reference(self, come_back):
+        """기준이 없거나 오래됐으면 센터에서 잡는다. come_back 이면 원래 자리로 (−쪽에서 접근해) 돌아온다."""
+        if not self._reference_needed():
+            return
+        pos = self._refresh_status() if come_back else None     # STATUS 로 지금 자리를 읽어 둔다 (µm, mdeg)
+        old = self.state.get('reference')
+        self._set(message='센터 기준이 ' + ('없어' if old is None else '오래돼') + ' 먼저 잡습니다.')
+        self._reference()
+        if pos is not None:
+            self._move_to(pos[0] / 1000, pos[1] / 1000, phase='positioning')
+
     def _run(self, offset):
+        self._ensure_reference(come_back=offset is None)   # 시작 위치로 갈 거면 돌아올 필요 없음
         start = self._goto(offset) if offset is not None else None
         run = self._new_run(start)
         for n in range(1, run['max_trials'] + 1):
@@ -356,6 +377,7 @@ class Runner:
     def _step(self):
         run = self.state.get('run')
         if not run or run.get('result'):
+            self._ensure_reference(come_back=True)
             run = self._new_run(None)
         n = run['trial'] + 1
         if self._trial(n, move=True):
@@ -386,6 +408,7 @@ class Runner:
                   message=f'센터 기준 등록: 학습 영점 대비 Y {z["y"] * 1000:+.1f} µm, Θ {z["t"]:+.4f}°')
 
     def _measure(self):
+        self._ensure_reference(come_back=True)
         entry, _ = self._observe(label='측정')
         self._set(measure=entry, phase='idle', message='측정만 했습니다 (이동 없음).')
 

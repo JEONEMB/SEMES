@@ -210,6 +210,41 @@ class RunnerTest(unittest.TestCase):
         r.wait_idle(10)
         self.assertEqual(self.stage.position, (-300, 120))   # Θ 는 그대로
 
+    def test_auto_reference_once_and_returns(self):
+        calls = []
+        class Counting(MockAlgorithm):
+            def set_reference(self, image):
+                calls.append(1); return super().set_reference(image)
+        self.stage.position = (700, 200)
+        r = self.runner(Counting(noise_y_mm=0.001, noise_t_deg=0.0005, seed=2))
+        r.step()                                   # 첫 보정 → 센터에서 기준을 잡고 원래 자리로 돌아와 시작
+        r.wait_idle(20)
+        s = r.snapshot()
+        self.assertEqual(len(calls), 1, s['message'])
+        self.assertIsNotNone(s['reference'])
+        self.assertAlmostEqual(s['history'][0]['truth']['y_mm'], 0.7, places=3)   # 첫 측정은 원래 자리에서
+        r.step()                                   # 같은 실행의 다음 단계 → 다시 안 잡음
+        r.wait_idle(20)
+        r.measure()                                # 기준이 아직 유효 → 다시 안 잡음
+        r.wait_idle(20)
+        self.assertEqual(len(calls), 1)
+        with r.cond:
+            r.state['reference']['ts'] -= 2 * 3600   # 2시간 지난 기준
+        r.measure()
+        r.wait_idle(20)
+        self.assertEqual(len(calls), 2)
+
+    def test_auto_reference_can_be_disabled(self):
+        calls = []
+        class Counting(MockAlgorithm):
+            def set_reference(self, image):
+                calls.append(1); return super().set_reference(image)
+        self.settings.update(dict(auto_reference=False))
+        r = self.runner(Counting(seed=3))
+        r.measure()
+        r.wait_idle(10)
+        self.assertEqual(calls, [])
+
     def test_settings_validation(self):
         with self.assertRaises(ValueError):
             self.settings.update(dict(max_trials=0))
