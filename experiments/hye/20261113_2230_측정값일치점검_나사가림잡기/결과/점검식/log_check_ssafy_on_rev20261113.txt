@@ -1,0 +1,5 @@
+photos 1698 threshold 7.44
+  no recentre: H median 4.63 p99 9.44 max 10.88 over 251/1698
+    worst value of over: screw1_x 4 screw2_x 246 screw4_x 1
+  recentre near-centre mean (11 photos): H median 2.46 p99 5.56 max 7.11 over 0/1698
+  recentre on photo id 300797: H median 2.52 p99 5.66 max 7.21 over 0/1698
