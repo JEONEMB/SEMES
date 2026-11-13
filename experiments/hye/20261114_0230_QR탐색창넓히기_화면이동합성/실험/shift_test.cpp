@@ -66,17 +66,22 @@ struct Row { int id; int shift; bool valid; double y, t, health, thr, ms; std::s
 
 int main(int argc, char** argv) {
     try {
-        if (argc != 5) { std::cerr << "shift_test <base_assets> <photos.tsv> <labels.tsv> <출력 폴더>\n"; return 2; }
+        if (argc != 5 && argc != 8) { std::cerr << "shift_test <base_assets> <photos.tsv> <labels.tsv> <출력 폴더>\n"; return 2; }
         const fs::path base = fs::u8path(argv[1]), out = fs::u8path(argv[4]);
         if (fs::exists(out / "shift_rows.tsv")) { std::cerr << "출력이 이미 있다\n"; return 3; }
         std::map<int, std::pair<double, double>> lab;
         for (auto& r : read_table(fs::u8path(argv[3]), true)) lab[std::stoi(r.at(0))] = {std::stod(r.at(4)), std::stod(r.at(5))};
-        const auto photos = read_table(fs::u8path(argv[2]), false);
-        const std::vector<int> shifts = {0, -50, 50, -100, 100, -150, 150, -200, 200, -250, 250};
+        auto photos = read_table(fs::u8path(argv[2]), false);
+        // 덧붙인 인자(2026-11-14 새벽): <창 목록> <이동 목록> <사진 간격>. 예: 1400 0,50,-50,400,-400 7
+        auto ints = [](const std::string& s) { std::vector<int> v; std::stringstream u(s); std::string a; while (std::getline(u, a, ',')) v.push_back(std::stoi(a)); return v; };
+        const std::vector<int> shifts = argc == 8 ? ints(argv[6]) : std::vector<int>{0, -50, 50, -100, 100, -150, 150, -200, 200, -250, 250};
+        const std::vector<int> windows = argc == 8 ? ints(argv[5]) : std::vector<int>{110, 250};
+        const int stride = argc == 8 ? std::stoi(argv[7]) : 1;
         std::ofstream rows_out(out.empty() ? "shift_rows.tsv" : (fs::create_directories(out), out / "shift_rows.tsv"), std::ios::binary);
         rows_out << std::setprecision(10) << "window\tid\tY_abs\tT_abs\tshift_px\tvalid\tY\tT\thealth\thealth_threshold\tms\tmessage\n";
         std::ostringstream summary; summary << std::fixed;
-        for (int window : {110, 250}) {
+        if (stride > 1) { std::vector<std::vector<std::string>> some; for (size_t i = 0; i < photos.size(); i += stride) some.push_back(photos[i]); photos = some; }
+        for (int window : windows) {
             const fs::path assets = make_assets(base, out, window);
             final00::Estimator est(assets.u8string());
             std::cout << "window " << window << " method " << est.qr_method() << " model " << est.model_id() << std::endl;
