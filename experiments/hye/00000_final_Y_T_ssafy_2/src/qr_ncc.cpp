@@ -9,9 +9,22 @@
 #include <string>
 
 namespace final00 {
+namespace {
+// NCC 전에 센터 조각과 사진을 가우시안 σ2 로 흐린다. 선명한 사진(SEMES)에서는 상관 봉우리가 뾰족해 3점 포물선이
+// 소수 위치에 따라 ±0.03 px 치우쳤다(S자). σ2 로 흐리면 치우침이 0.003 px 로 줄고 536점 추적과 같은 정확도가 된다(실험 20261113_2000).
+const double kBlur = 2.0;
+const int kMargin = 8;   // 흐림 커널 반경(σ2 → 6 px)보다 넓게 잘라 흐린 뒤 탐색 창만 쓴다(통째로 흐린 것과 같게)
+cv::Mat blurred_region(const cv::Mat& gray, const cv::Rect& r) {
+    const cv::Rect big = cv::Rect(r.x - kMargin, r.y - kMargin, r.width + 2 * kMargin, r.height + 2 * kMargin) & cv::Rect(0, 0, gray.cols, gray.rows);
+    cv::Mat b; cv::GaussianBlur(gray(big), b, cv::Size(0, 0), kBlur);
+    return b(r - big.tl()).clone();
+}
+}
+
 QrNcc::QrNcc(const cv::Mat& center) {
     if (center.type() != CV_8UC1 || center.size() != cv::Size(3840, 2160)) throw std::invalid_argument("QrNcc: 센터 사진은 3840x2160 8비트 회색이어야 한다");
-    for (int k = 0; k < 3; ++k) templates_[k] = center(site::get().qr[k]).clone();
+    cv::Mat blurred; cv::GaussianBlur(center, blurred, cv::Size(0, 0), kBlur);
+    for (int k = 0; k < 3; ++k) templates_[k] = blurred(site::get().qr[k]).clone();
 }
 
 QrShift QrNcc::measure(const cv::Mat& gray) const {
@@ -23,7 +36,7 @@ QrShift QrNcc::measure(const cv::Mat& gray) const {
     cv::parallel_for_(cv::Range(0, 3), [&](const cv::Range& range) { for (int k = range.start; k < range.end; ++k) try {
         const cv::Rect b = g.qr[k], search(b.x - g.search_x, b.y - g.search_y, b.width + 2 * g.search_x, b.height + 2 * g.search_y);
         if ((search & cv::Rect(0, 0, gray.cols, gray.rows)) != search) throw std::runtime_error("QR 탐색 창이 화면 밖이다");
-        cv::Mat c; cv::matchTemplate(gray(search), templates_[k], c, cv::TM_CCOEFF_NORMED);
+        cv::Mat c; cv::matchTemplate(blurred_region(gray, search), templates_[k], c, cv::TM_CCOEFF_NORMED);
         double best; cv::Point p; cv::minMaxLoc(c, nullptr, &best, nullptr, &p);
         if (best < .8) throw std::runtime_error("QR " + std::to_string(k + 1) + " NCC 가 낮다 (" + std::to_string(best) + ")");
         if (p.x <= 0 || p.y <= 0 || p.x >= c.cols - 1 || p.y >= c.rows - 1) throw std::runtime_error("QR " + std::to_string(k + 1) + " 이 탐색 창 끝에 걸렸다(움직임이 너무 크다)");
