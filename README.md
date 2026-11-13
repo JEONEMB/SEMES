@@ -15,7 +15,7 @@ cmake --build build --config Release
 
 ## 문서와 검증 결과
 
-- **기본 Y/T 추정:** [QR630 + 외부 수평 경계 Lanczos-3](modules/qrwithbar_lanczos/README.md). 실제 `alignment()`가 계산한 Y/T를 반환하며, 모델·기준은 실행파일 옆 `qrwithbar_assets`에 포함합니다.
+- **기본 Y/T 추정:** [QR630 + 외부 수평 경계 Lanczos-3](experiments/shin/qrwithbar_lanczos/README.md). 실제 `alignment()`가 계산한 Y/T를 반환하며, 모델·기준은 실행파일 옆 `qrwithbar_assets`에 포함합니다.
 - 기존 판 검출·QR 시각화는 `--detect-only` 디버그 경로로 보존합니다. 그 화면의 교점은 Lanczos 추정의 실제 측정점과 구분합니다.
 
 - [문서 목록](docs/README.md)

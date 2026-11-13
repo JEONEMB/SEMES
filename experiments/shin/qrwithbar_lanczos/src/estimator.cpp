@@ -71,6 +71,6 @@ std::string default_assets_directory() {
         auto beside=fs::path(std::wstring(name,length)).parent_path()/"qrwithbar_assets";
         if(fs::exists(beside/"model.json"))return beside.u8string();
     }
-    return (fs::current_path()/"modules/qrwithbar_lanczos/assets").u8string();
+    return (fs::current_path()/"experiments/shin/qrwithbar_lanczos/assets").u8string();
 }
 }

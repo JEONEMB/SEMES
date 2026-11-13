@@ -55,7 +55,7 @@ ctest --test-dir build -C Release --output-on-failure
 ## 원본 검증 재현
 
 ```powershell
-.\build\modules\qrwithbar_lanczos\Release\qrwithbar_validate.exe modules/qrwithbar_lanczos "IMAGE_ROOT" modules/qrwithbar_lanczos/results
+.\build\experiments\shin\qrwithbar_lanczos\Release\qrwithbar_validate.exe experiments/shin/qrwithbar_lanczos "IMAGE_ROOT" experiments/shin/qrwithbar_lanczos/results
 ```
 
 IMAGE_ROOT는manifest의상대경로57장이 있는폴더다. 원본해시·입력불변·10특징·19좌표보류출력의대응을 검사하고,일반배포모델 출력은별도열로저장한다. 영상데이터는검증입력으로별도제공한다.
@@ -63,7 +63,7 @@ IMAGE_ROOT는manifest의상대경로57장이 있는폴더다. 원본해시·입�
 같은보정계수를다시만들려면(개발용):
 
 ```powershell
-.\build\modules\qrwithbar_lanczos\Release\qrwithbar_train.exe modules/qrwithbar_lanczos "IMAGE_ROOT"
+.\build\experiments\shin\qrwithbar_lanczos\Release\qrwithbar_train.exe experiments/shin/qrwithbar_lanczos "IMAGE_ROOT"
 ```
 
 이도구는포함된Lanczos측정캐시57장과라벨로모델을계산한다. 새로운영상을학습시키는범용훈련기가아니다. 기준BMP의해시를검사하고무손실회색조PNG를생성한다. `assets/`는필수전달자료이며원본57장·TXT·검증전용계수는일반추론에필요하지않다.
