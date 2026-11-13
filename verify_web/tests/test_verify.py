@@ -204,6 +204,18 @@ class RunnerTest(unittest.TestCase):
         a = r._axis_plan(20000, 50, relative=False)            # Y 그대로, Θ 만
         self.assertEqual((a['y_s'], a['t_s']), (0.0, 0.5))
 
+    def test_step_slightly_over_limit_is_clamped(self):
+        self.settings.update(dict(auto_reference=False, sequential_axes=False, max_step_t_deg=1.0))
+        r = self.runner(FixedAlgorithm(0.1, -1.1))          # 명령 Θ +1.1° (한도 1.0 의 1.1배)
+        r.step(); r.wait_idle(10)
+        s = r.snapshot()
+        self.assertNotEqual(s['phase'], 'error', s['message'])
+        self.assertEqual(self.stage.position, (-100, 1000))             # Θ 는 한도만큼만
+        self.assertEqual(s['history'][0]['clamped'], dict(y_mm=-0.1, t_deg=1.0))
+        r2 = self.runner(FixedAlgorithm(0.1, -1.5))         # 1.5배 → 멈춤
+        r2.step(); r2.wait_idle(10)
+        self.assertEqual(r2.snapshot()['phase'], 'error')
+
     def test_direct_start_input_is_checked(self):
         r = self.runner(MockAlgorithm())
         with self.assertRaises(RunError):

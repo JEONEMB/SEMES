@@ -51,6 +51,7 @@ LIMITS = dict(tol_y_mm=(0.001, 1), tol_t_deg=(0.0001, 1), max_trials=(1, 100), m
               average=(1, 16), settle_px=(0.05, 5), settle_timeout_s=(0.5, 30), reference_max_age_min=(1, 1440),
               center_y_mm=(-1000, 1000), center_t_deg=(-360, 360), slow_y_mm_s=(0.01, 2), fast_y_mm_s=(0.01, 2),
               slow_t_deg_s=(0.02, 3.6), fast_t_deg_s=(0.02, 3.6), pause_s=(0, 10))
+STEP_CLAMP = 1.25     # 보정량이 한 번 이동 한도의 이 배수까지는 한도만큼만 옮기고, 넘으면 멈춘다
 RANDOM_MIN = 0.4      # 랜덤 시작은 범위의 40 % 이상 떨어지게 (너무 가까우면 시연에서 움직임이 안 보임)
 
 
@@ -602,9 +603,13 @@ class Runner:
         if entry['within'] or not move:
             return entry['within']
         self._pause()                # 천천히 모드: 화면에서 이번 측정을 보여 주고 움직인다
-        if abs(cy) > s['max_step_y_mm'] or abs(ct) > s['max_step_t_deg']:
-            raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {cy:+.3f} mm (한도 ±{s["max_step_y_mm"]}), '
-                           f'Θ {ct:+.3f}° (한도 ±{s["max_step_t_deg"]})')
+        ly, lt = s['max_step_y_mm'], s['max_step_t_deg']
+        if abs(cy) > ly * STEP_CLAMP or abs(ct) > lt * STEP_CLAMP:      # 한참 넘으면 잘못 본 것일 수 있어 멈춘다
+            raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {cy:+.3f} mm (한도 ±{ly}), Θ {ct:+.3f}° (한도 ±{lt})')
+        if abs(cy) > ly or abs(ct) > lt:          # 조금 넘으면 (시작을 한도 끝에 둔 경우 등) 한도만큼만 옮기고 다시 잰다
+            cy, ct = max(-ly, min(ly, cy)), max(-lt, min(lt, ct))
+            entry['clamped'] = dict(y_mm=r6(cy), t_deg=r6(ct))
+            self._set(message=f'보정량이 한도를 조금 넘어 한도만큼만 옮깁니다: Y {cy:+.3f} mm, Θ {ct:+.3f}°')
         pos = self.state.get('position')
         if not seq:
             msg = f'보정 이동: Y {cy:+.3f} mm, Θ {ct:+.3f}°'
