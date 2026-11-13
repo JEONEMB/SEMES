@@ -38,6 +38,10 @@ class DeviceManager:
             if self.stage is None:
                 try:
                     self.stage = self.stage_factory()
+                    try:   # STM32 가 리셋되면 Y 기본 속도가 0.1 mm/s 라 이동이 매우 느림 → 1 mm/s (Θ 는 그대로)
+                        self.stage.speed(1000, 0)
+                    except Exception as exc:
+                        errors.append(f'속도 설정 실패: {exc}')
                 except Exception as exc:
                     errors.append(f'스테이지: {exc}')
             self.error = ' / '.join(errors) or None

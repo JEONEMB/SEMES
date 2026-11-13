@@ -178,6 +178,38 @@ class RunnerTest(unittest.TestCase):
         self.assertEqual(self.stage.position, (0, 0))
         self.assertAlmostEqual(s['measure']['offset']['y_mm'], 0.5)
 
+    def test_correction_approaches_from_minus_side(self):
+        """보정 이동은 지금 위치+명령을 절대 목표로, −쪽 접근점(Y −0.2, Θ −0.1)을 거쳐 들어간다."""
+        moves = []
+        orig = self.stage.start
+        def logged(y, t, relative=False, allow_t=False):
+            moves.append((y, t, relative)); return orig(y, t, relative=relative, allow_t=allow_t)
+        self.stage.start = logged
+        r = self.runner(FixedAlgorithm(0.3, 0.05))          # 오프셋 → 명령 (−0.3 mm, −0.05°)
+        r.step()
+        r.wait_idle(10)
+        self.assertEqual(moves, [(-500, -150, False), (-300, -50, False)], r.snapshot()['message'])
+        self.assertEqual(self.stage.position, (-300, -50))
+
+    def test_reference_moves_to_center_and_registers(self):
+        self.stage.position = (700, 200)
+        algo = MockAlgorithm()
+        r = self.runner(algo)
+        r.reference()
+        r.wait_idle(10)
+        s = r.snapshot()
+        self.assertEqual(s['phase'], 'idle', s['message'])
+        self.assertEqual(self.stage.position, (0, 0))
+        self.assertEqual(s['reference']['zero_y_mm'], 0.0)
+
+    def test_theta_disabled_keeps_theta(self):
+        self.settings.update(dict(enable_t=False))
+        self.stage.position = (0, 120)
+        r = self.runner(FixedAlgorithm(0.3, 0.05))
+        r.step()
+        r.wait_idle(10)
+        self.assertEqual(self.stage.position, (-300, 120))   # Θ 는 그대로
+
     def test_settings_validation(self):
         with self.assertRaises(ValueError):
             self.settings.update(dict(max_trials=0))
@@ -237,6 +269,25 @@ class VideoStreamTest(unittest.TestCase):
         self.assertTrue(next(it).startswith(b'--frame'))   # 1초 안에 마지막 프레임을 다시 보냄
         self.assertLess(time.monotonic() - t0, 2.5)
         r.close()
+
+
+KSH = Path('/home/pi/KSH_Algorithm/Code')
+KSH_WORKER = ROOT / 'verify_web' / 'native' / 'build_ksh' / 'align_worker'
+
+
+@unittest.skipUnless(os.access(KSH_WORKER, os.X_OK) and (KSH / 'config' / 'alignment.yml').exists()
+                     and Path('/home/pi/data/rig_eval/center1.bmp').exists(), 'KSH 실행기·평가 데이터 없음')
+class KshWorkerTest(unittest.TestCase):
+    def test_matches_standalone_tool(self):
+        w = WorkerAlgorithm(KSH_WORKER, config=KSH / 'config' / 'alignment.yml')
+        z = w.set_reference(cv2.imread('/home/pi/data/rig_eval/center1.bmp', 0))
+        self.assertAlmostEqual(z['y'], -0.01433, places=4)
+        r = w.infer(cv2.imread('/home/pi/data/rig_eval/Y-1.13 T-0.61/Y-1.13 T-0.61 (1).bmp', 0))
+        self.assertAlmostEqual(r['y'], -1.0964, places=3)
+        self.assertAlmostEqual(r['t'], -0.6418, places=3)
+        with self.assertRaises(AlgorithmError):
+            w.infer(np.zeros((2160, 3840), np.uint8))       # 측정 실패는 NaN 이 아니라 오류
+        w.close()
 
 
 class HandoffTest(unittest.TestCase):

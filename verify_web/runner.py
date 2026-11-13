@@ -28,16 +28,17 @@ DEFAULTS = dict(
     center_y_mm=0.0, center_t_deg=0.0,       # 플레이트가 센터일 때의 스테이지 좌표
     tol_y_mm=0.045, tol_t_deg=0.01,          # 이 안이면 '보정 완료'
     max_trials=20,
-    enable_t=False,                          # Θ 명령 전송 (꺼져 있으면 Θ 는 0 으로 보내고 표시만)
+    enable_t=True,                           # Θ 명령 전송 (꺼져 있으면 Θ 는 그대로 두고 표시만)
     max_step_y_mm=2.0, max_step_t_deg=1.0,   # 추론값이 이보다 크면 움직이지 않고 멈춤
     random_y_mm=1.5, random_t_deg=0.5,       # 랜덤 시작 위치 범위 (±)
-    approach_y_mm=0.2,                       # 시작 위치는 이만큼 −쪽에서 접근 (데이터셋과 같음)
+    approach_y_mm=0.2,                       # 모든 이동은 이만큼 −쪽을 거쳐 +방향으로 접근 (데이터셋과 같음)
+    approach_t_deg=0.1,                      # Θ 도 마찬가지. 방향 전환 백래시 약 0.023° 를 피한다 (2026-11-13 시험)
     average=1,                               # 추론 사진 평균 장수
     settle_px=0.25, settle_timeout_s=6.0,
     save_images=True,
 )
 LIMITS = dict(tol_y_mm=(0.001, 1), tol_t_deg=(0.0001, 1), max_trials=(1, 100), max_step_y_mm=(0.01, 10),
-              max_step_t_deg=(0.001, 5), random_y_mm=(0, 10), random_t_deg=(0, 5), approach_y_mm=(0, 2),
+              max_step_t_deg=(0.001, 5), random_y_mm=(0, 10), random_t_deg=(0, 5), approach_y_mm=(0, 2), approach_t_deg=(0, 1),
               average=(1, 16), settle_px=(0.05, 5), settle_timeout_s=(0.5, 30),
               center_y_mm=(-1000, 1000), center_t_deg=(-360, 360))
 
@@ -110,7 +111,7 @@ class Runner:
         self.job = None
         self.state = dict(phase='idle', message='', busy=False, job=None, moving=False,
                           position=None, flags=None, stage_state=None, stage_error=None,
-                          run=None, last=None, history=[], measure=None)
+                          run=None, last=None, history=[], measure=None, reference=None)
 
     # --- 상태 -----------------------------------------------------------------
     def _set(self, **kw):
@@ -187,6 +188,9 @@ class Runner:
     def measure(self):
         self._launch('measure', self._measure)
 
+    def reference(self):
+        self._launch('reference', self._reference)
+
     def stop(self):
         self.abort.set()
         stage = self.devices.stage
@@ -245,7 +249,7 @@ class Runner:
         self._phase(phase)
         stage = self.devices.stage
         enable_t = self.settings['enable_t']
-        if not enable_t:
+        if not enable_t and relative:
             t_mdeg = 0
         try:
             lim = stage.limits()
@@ -256,7 +260,8 @@ class Runner:
                 raise RunError(f'목표가 스테이지 한계 밖: Y {y_um / 1000:.3f} mm (한계 {lim[0] / 1000:.3f}~{lim[1] / 1000:.3f})')
         self._set(moving=True, target=dict(y_mm=y_um / 1000, t_deg=t_mdeg / 1000, relative=relative))
         try:
-            stage.start(y_um, t_mdeg, relative=relative, allow_t=enable_t)
+            # 절대 이동에서 Θ 가 꺼져 있으면 목표 Θ = 지금 Θ 라 그대로 보낸다
+            stage.start(y_um, t_mdeg, relative=relative, allow_t=enable_t or not relative)
             done = stage.wait_done(timeout_ms=60000)
         finally:
             self._set(moving=False, target=None)
@@ -291,13 +296,21 @@ class Runner:
         y, t = offset
         return float(y), float(t) if self.settings['enable_t'] else 0.0
 
+    def _move_to(self, y_mm, t_deg, phase):
+        """절대 목표로. 항상 −쪽 접근점을 거쳐 +방향으로 마지막 접근 (백래시 방향 통일, 데이터셋과 같음)."""
+        s = self.settings
+        if not s['enable_t']:
+            pos = self.state.get('position')
+            t_deg = pos['t_deg'] if pos else 0.0          # Θ 는 그대로 둔다
+        ay, at = s['approach_y_mm'], (s['approach_t_deg'] if s['enable_t'] else 0.0)
+        if ay > 0 or at > 0:
+            self._move(um(y_mm - ay), um(t_deg - at), relative=False, phase=phase)
+        self._move(um(y_mm), um(t_deg), relative=False, phase=phase)
+
     def _goto(self, offset):
         y, t = self._resolve_offset(offset)
         cy, ct = self.settings['center_y_mm'], self.settings['center_t_deg']
-        a = self.settings['approach_y_mm']
-        if a > 0:
-            self._move(um(cy + y - a), um(ct + t), relative=False, phase='positioning')
-        self._move(um(cy + y), um(ct + t), relative=False, phase='positioning')
+        self._move_to(cy + y, ct + t, phase='positioning')
         return y, t
 
     def _goto_job(self, offset):
@@ -350,6 +363,27 @@ class Runner:
             self._set(phase='done', message=self.state['run']['result_label'])
         else:
             self._set(phase='idle', message=f'{n}회차 완료 (한 단계)')
+
+    def _reference(self):
+        """센터로 (−쪽에서 접근) 가서 사진을 찍어 알고리즘 영점으로 등록한다. 그날·그 세션의 센터를 기준으로 삼기 위해."""
+        if not hasattr(self.algorithm, 'set_reference'):
+            raise RunError('이 알고리즘은 영점 등록을 지원하지 않습니다.')
+        self._move_to(self.settings['center_y_mm'], self.settings['center_t_deg'], phase='positioning')
+        s = self.settings
+        cam = self.devices.camera
+        self._phase('settling')
+        cam.wait_settled(s['settle_px'], timeout=s['settle_timeout_s'])
+        self._phase('capturing')
+        gray, _ = cam.grab(max(4, int(s['average'])))
+        img = self.rectifier.apply(gray)
+        self._phase('inferring')
+        z = self.algorithm.set_reference(img)
+        ref = dict(ts=time.time(), zero_y_mm=r6(z['y']), zero_t_deg=r6(z['t']))
+        if self.runs_dir:
+            self.runs_dir.mkdir(parents=True, exist_ok=True)
+            cv2.imwrite(str(self.runs_dir / f'reference_{time.strftime("%Y%m%d_%H%M%S")}.bmp'), img)
+        self._set(reference=ref, phase='idle',
+                  message=f'센터 기준 등록: 학습 영점 대비 Y {z["y"] * 1000:+.1f} µm, Θ {z["t"]:+.4f}°')
 
     def _measure(self):
         entry, _ = self._observe(label='측정')
@@ -409,7 +443,11 @@ class Runner:
         if abs(cy) > s['max_step_y_mm'] or abs(ct) > s['max_step_t_deg']:
             raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {cy:+.3f} mm (한도 ±{s["max_step_y_mm"]}), '
                            f'Θ {ct:+.3f}° (한도 ±{s["max_step_t_deg"]})')
-        self._move(um(cy), um(ct), relative=True, phase='moving')
+        pos = self.state.get('position')
+        if pos is None:      # STATUS 를 못 읽었으면 예전처럼 상대 이동 (접근 없음)
+            self._move(um(cy), um(ct), relative=True, phase='moving')
+        else:                # 지금 위치 + 명령 = 절대 목표, −쪽에서 접근
+            self._move_to(pos['y_mm'] + cy, pos['t_deg'] + ct, phase='moving')
         return False
 
     @staticmethod
