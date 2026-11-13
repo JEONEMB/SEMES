@@ -1,7 +1,34 @@
 #include "pipeline_internal.hpp"
+#include "qrwithbar_lanczos.hpp"
+#include <mutex>
+#include <memory>
+#include <filesystem>
+namespace {
+std::mutex estimatorMutex;
+std::shared_ptr<const qrwithbar::Estimator> estimator;
+std::string estimatorAssets;
+std::shared_ptr<const qrwithbar::Estimator> getEstimator(const std::string& requested)
+{
+    std::lock_guard<std::mutex> lock(estimatorMutex);
+    if (requested.empty() && estimator) return estimator;
+    const auto path = requested.empty() ? qrwithbar::default_assets_directory() : requested;
+    if (!estimator || path != estimatorAssets) {
+        auto next = std::make_shared<const qrwithbar::Estimator>(path);
+        estimator = std::move(next);
+        estimatorAssets = path;
+    }
+    return estimator;
+}
+}
+void initialize_lanczos_alignment(const std::string& path)
+{
+    (void)getEstimator(path);
+}
 Alignment_t alignment(cv::Mat &source)
 {
-    return alignment(source, AlignmentOptions{}, nullptr);
+    AlignmentOptions options;
+    options.visualize = false; // Production estimate must not open debug windows.
+    return alignment(source, options, nullptr);
 }
 Alignment_t alignment(cv::Mat &source, const AlignmentOptions &options,
                       PlateDetectionResult *output)
@@ -14,6 +41,14 @@ Alignment_t alignment(cv::Mat &source, const AlignmentOptions &options,
     if (source.empty() || source.depth() != CV_8U)
     {
         CV_Error(cv::Error::StsBadArg, "Expected nonempty 8-bit image");
+    }
+    Alignment_t pose;
+    qrwithbar::Estimate estimated{};
+    if (options.estimatePose) {
+        estimated = getEstimator(options.poseAssetsDirectory)->estimate(source);
+        pose.y = estimated.y_mm;
+        pose.t = estimated.yaw_deg;
+        if (!options.visualize && !output) return pose;
     }
     cv::Mat image;
     if (source.channels() == 1)
@@ -34,6 +69,11 @@ Alignment_t alignment(cv::Mat &source, const AlignmentOptions &options,
     }
     auto geometry = detectPlate(image, options);
     PlateDetectionResult result;
+    result.poseEstimated = options.estimatePose;
+    if (options.estimatePose) {
+        result.poseFeatures = estimated.features;
+        result.poseMethod = "Lanczos-3 QR630 + common horizontal boundaries";
+    }
     result.found = geometry.found;
     result.score = geometry.score;
     result.searchRoi = geometry.searchRoi;
@@ -73,5 +113,5 @@ Alignment_t alignment(cv::Mat &source, const AlignmentOptions &options,
     {
         *output = std::move(result);
     }
-    return Alignment_t{};
+    return pose;
 }

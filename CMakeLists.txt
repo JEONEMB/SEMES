@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # OpenCV 3.4.x
 find_package(OpenCV 3.4 REQUIRED)
+enable_testing()
+add_subdirectory(experiments/shin/qrwithbar_lanczos)
 
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS
     "${PROJECT_SOURCE_DIR}/src/*.cpp"
@@ -18,7 +20,14 @@ target_include_directories(main PRIVATE
 )
 
 target_link_libraries(main PRIVATE
-    ${OpenCV_LIBS}
+    ${OpenCV_LIBS} qrwithbar_lanczos
+)
+target_compile_options(main PRIVATE /utf-8 /EHsc)
+target_compile_definitions(main PRIVATE NOMINMAX _CRT_SECURE_NO_WARNINGS)
+add_custom_command(TARGET main POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/experiments/shin/qrwithbar_lanczos/assets"
+        "$<TARGET_FILE_DIR:main>/qrwithbar_assets"
 )
 
 # OpenCV DLL을 실행파일 옆으로 자동 복사
