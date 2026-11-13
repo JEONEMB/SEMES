@@ -1,6 +1,9 @@
 #include "pin_observer.hpp"
 #include "site.hpp"
 #include <opencv2/imgproc.hpp>
+#include <opencv2/core/utility.hpp>
+#include <array>
+#include <exception>
 #include <cmath>
 #include <stdexcept>
 #include <algorithm>
@@ -27,17 +30,35 @@ Observer::Observer(const cv::Mat& center) {
     for(int k=0;k<4;++k)
         center(cv::Rect(site::get().screws[k].x-radius,site::get().screws[k].y-radius,side,side)).convertTo(templates_[k],CV_64F);
 }
-Measurement Observer::measure(const cv::Mat& image) const {
+bool Observer::find_peak(const cv::Mat& image,int k,cv::Point center_shift,int r,cv::Point& shift,double& ncc) const {
+    const auto c=site::get().screws[k]+center_shift;
+    cv::Rect window(c.x-radius-r,c.y-radius-r,side+2*r,side+2*r);
+    if((window&cv::Rect(0,0,image.cols,image.rows))!=window)return false;
+    cv::Mat t8,scores;templates_[k].convertTo(t8,CV_8U);
+    cv::matchTemplate(image(window),t8,scores,cv::TM_CCOEFF_NORMED);
+    cv::Point peak;cv::minMaxLoc(scores,nullptr,&ncc,nullptr,&peak);
+    shift=peak-cv::Point(r,r)+center_shift;
+    return peak.x>0&&peak.y>0&&peak.x<scores.cols-1&&peak.y<scores.rows-1;   // 창 끝 봉우리는 믿지 않는다
+}
+Measurement Observer::measure(const cv::Mat& image) const { return measure(image,cv::Point(0,0)); }
+Measurement Observer::measure(const cv::Mat& image,cv::Point hint) const {
     image_check(image);
     Measurement m{cv::Mat(1,8,CV_64F),cv::Mat(1,8,CV_64F)};
-    for(int k=0;k<4;++k) {
+    // 나사 4개는 서로 독립이라 동시에 계산한다(결과는 한 개씩 할 때와 같다). 예외는 모았다가 나사 순서대로 다시 던진다.
+    std::array<std::exception_ptr,4> errors;
+    cv::parallel_for_(cv::Range(0,4),[&](const cv::Range& range){ for(int k=range.start;k<range.end;++k) try {
         const auto c=site::get().screws[k];
-        cv::Rect window(c.x-radius-search,c.y-radius-search,side+2*search,side+2*search);
-        cv::Mat t8,scores;templates_[k].convertTo(t8,CV_8U);
-        cv::matchTemplate(image(window),t8,scores,cv::TM_CCOEFF_NORMED);
-        cv::Point peak;double ncc;cv::minMaxLoc(scores,nullptr,&ncc,nullptr,&peak);
+        cv::Point shift;double ncc=0;
+        const bool near=(hint!=cv::Point(0,0))&&find_peak(image,k,hint,60,shift,ncc)&&ncc>=.6;
+        if(!near){
+            cv::Rect window(c.x-radius-search,c.y-radius-search,side+2*search,side+2*search);
+            cv::Mat t8,scores;templates_[k].convertTo(t8,CV_8U);
+            cv::matchTemplate(image(window),t8,scores,cv::TM_CCOEFF_NORMED);
+            cv::Point peak;cv::minMaxLoc(scores,nullptr,&ncc,nullptr,&peak);shift=peak-cv::Point(search,search);
+        }
         if(ncc<.6)throw std::runtime_error("Pin NCC below 0.6 at patch "+std::to_string(k));
-        double dx=peak.x-search,dy=peak.y-search,rms=1e9;
+        const cv::Point peak=shift+cv::Point(search,search);
+        double dx=shift.x,dy=shift.y,rms=1e9;
         bool converged=false;
         // Forward-additive translation GN, gain/offset fitted at each step.
         // Match the template with current(c + displacement); positive dx means right.
@@ -62,7 +83,8 @@ Measurement Observer::measure(const cv::Mat& image) const {
             throw std::runtime_error("Pin refinement did not converge");
         m.displacement.at<double>(2*k)=dx;m.displacement.at<double>(2*k+1)=dy;
         m.quality.at<double>(2*k)=ncc;m.quality.at<double>(2*k+1)=rms;
-    }
+    } catch(...) { errors[k]=std::current_exception(); } });
+    for(auto& e:errors) if(e) std::rethrow_exception(e);
     return m;
 }
 }

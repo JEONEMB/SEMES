@@ -16,5 +16,7 @@ struct Geometry {
 };
 // assets: center.bmp 가 있는 폴더. 스레드를 만들기 전에 한 번 부른다.
 void load(const std::filesystem::path& assets);
+// site.json 을 읽기만 한다(지금 쓰는 값은 바꾸지 않는다). 없으면 원본 상수.
+Geometry read(const std::filesystem::path& assets);
 const Geometry& get();
 }

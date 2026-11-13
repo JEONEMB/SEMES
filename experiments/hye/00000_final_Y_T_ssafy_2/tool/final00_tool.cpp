@@ -9,8 +9,13 @@
 //       출력: eval.txt, model7.tsv (전체 사진으로 학습한 계수. assets 에 넣는 파일)
 //   final00_tool predict <assets> <photos.tsv> <labels.tsv> <출력 폴더>
 //       공개 API(initialize_joint, joint)로 사진마다 (Y, T) 를 내고 라벨과 비교한다. 출력: predictions.tsv, predict.txt
+//   final00_tool predict <assets> <photos.tsv> <labels.tsv> <출력 폴더> <기준 사진> [기준 사진 ...]
+//       먼저 set_joint_reference(기준 사진들) 로 기준을 다시 잡고 예측한다. 출력의 (0, 0) 은 등록한 센터다.
+//   final00_tool register <assets> <출력 폴더> <기준 사진> [기준 사진 ...]
+//       기준 사진(여러 장이면 화소 평균)으로 새 측정 기준 자료를 출력 폴더에 쓰고 찾은 이동을 보인다.
 // 인자 경로는 ASCII 로 준다(목록 파일 안의 사진 경로는 한글이어도 된다). 기존 출력은 덮어쓰지 않는다.
 #include "final00.hpp"
+#include "joint_reference.hpp"
 #include "huber_fit.hpp"
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/core/utility.hpp>
@@ -187,12 +192,39 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
     return 0;
 }
 
-int predict(const fs::path& assets, const fs::path& photos, const fs::path& labels, const fs::path& out) {
+std::string report_text(const final00::ReferenceReport& r) {
+    std::ostringstream o;
+    o << "reference";
+    for (int k = 0; k < 3; ++k) o << " QR" << k + 1 << " (" << r.qr_shift[k].x << ',' << r.qr_shift[k].y << ") ncc " << std::setprecision(4) << r.qr_ncc[k] << " ecc " << r.qr_ecc[k];
+    for (int k = 0; k < 4; ++k) o << " screw" << k + 1 << " (" << r.screw_shift[k].x << ',' << r.screw_shift[k].y << ")";
+    o << " bar_upper " << r.bar_shift_min[0] << '~' << r.bar_shift_max[0] << " bar_lower " << r.bar_shift_min[1] << '~' << r.bar_shift_max[1] << " folder " << r.folder << '\n';
+    return o.str();
+}
+
+std::vector<cv::Mat> read_images(char** first, char** last) {
+    std::vector<cv::Mat> v;
+    for (char** a = first; a != last; ++a) { cv::Mat m = read_image(fs::u8path(*a)); if (m.empty()) throw std::runtime_error(std::string("기준 사진을 읽지 못했다: ") + *a); v.push_back(m); }
+    return v;
+}
+
+int register_reference(const fs::path& assets, const fs::path& out, const std::vector<cv::Mat>& images) {
+    if (fs::exists(out / "site.json")) { std::cerr << "출력이 이미 있다\n"; return 3; }
+    cv::Mat sum = cv::Mat::zeros(2160, 3840, CV_64F);
+    for (const auto& m : images) { cv::Mat d; m.convertTo(d, CV_64F); sum += d; }
+    cv::Mat mean8; sum.convertTo(mean8, CV_8U, 1.0 / double(images.size()));
+    const auto r = final00::make_reference(assets, mean8, out);
+    std::cout << report_text(r);
+    return 0;
+}
+
+int predict(const fs::path& assets, const fs::path& photos, const fs::path& labels, const fs::path& out, const std::vector<cv::Mat>& reference = {}) {
     if (fs::exists(out / "predictions.tsv")) { std::cerr << "출력이 이미 있다\n"; return 3; }
     std::map<int, std::vector<std::string>> lab;
     for (auto& r : read_table(labels, true)) lab[std::stoi(r.at(0))] = r;
     const auto rows = read_table(photos, false);
     initialize_joint(assets.u8string());
+    std::string ref_text;
+    if (!reference.empty()) ref_text = report_text(set_joint_reference(reference));
     fs::create_directories(out);
     std::ofstream f(out / "predictions.tsv", std::ios::binary); f << std::setprecision(17) << "id\tY\tT\tY_abs\tT_abs\tpass\tvalid\toutside_training_range\tmessage\n";
     int valid = 0, pass = 0; double max_y = 0, max_t = 0;
@@ -210,6 +242,7 @@ int predict(const fs::path& assets, const fs::path& photos, const fs::path& labe
         }
     }
     std::ostringstream o; o << "joint_api photos " << rows.size() << " valid " << valid << " pass " << pass << std::fixed << std::setprecision(5) << " max|eY| " << max_y << " max|eT| " << max_t << "\n";
+    o << ref_text;
     { std::ofstream t(out / "predict.txt", std::ios::binary); t << o.str(); }
     std::cout << o.str();
     return 0;
@@ -222,7 +255,9 @@ int main(int argc, char** argv) {
         if (mode == "measure" && argc == 5) return measure(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]));
         if (mode == "eval" && argc == 6) return evaluate(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]));
         if (mode == "predict" && argc == 6) return predict(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]));
-        std::cerr << "usage: final00_tool measure ASSETS PHOTOS_TSV OUTDIR | eval FEATURES_TSV LABELS_TSV SPLITS_TSV OUTDIR | predict ASSETS PHOTOS_TSV LABELS_TSV OUTDIR\n";
+        if (mode == "predict" && argc > 6) return predict(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]), read_images(argv + 6, argv + argc));
+        if (mode == "register" && argc > 4) return register_reference(fs::u8path(argv[2]), fs::u8path(argv[3]), read_images(argv + 4, argv + argc));
+        std::cerr << "usage: final00_tool measure ASSETS PHOTOS_TSV OUTDIR | eval FEATURES_TSV LABELS_TSV SPLITS_TSV OUTDIR | predict ASSETS PHOTOS_TSV LABELS_TSV OUTDIR [REFERENCE_IMAGE...] | register ASSETS OUTDIR REFERENCE_IMAGE...\n";
         return 2;
     } catch (const std::exception& e) { std::cerr << "error: " << e.what() << "\n"; return 1; }
 }

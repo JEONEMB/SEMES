@@ -1,5 +1,6 @@
 #include "alignment.hpp"
 #include "final00.hpp"
+#include "joint_reference.hpp"
 #include "detail/alignment_diagnostics.hpp"
 #include <memory>
 #include <mutex>
@@ -17,6 +18,16 @@ void initialize_joint(const std::string& assets) {
     estimator = std::move(next);
 }
 
+final00::ReferenceReport set_joint_reference(const std::vector<cv::Mat>& centers) {
+    std::lock_guard<std::mutex> lock(context_mutex);
+    if (!estimator) throw std::logic_error("Call initialize_joint(FINAL00_ASSETS) first");
+    return estimator->set_reference(centers);
+}
+
+final00::ReferenceReport set_joint_reference(const cv::Mat& center) {
+    return set_joint_reference(std::vector<cv::Mat>{center});
+}
+
 Alignment_t joint(cv::Mat& src) {
     using namespace alignment_detail;
     reset_diagnostics("joint");
@@ -29,10 +40,10 @@ Alignment_t joint(cv::Mat& src) {
         d.minimum_qr_correlation = r.measurement.qr_correlation;
         d.minimum_line_correlation = r.measurement.line_correlation;
         d.selected_branch = "huber_linear7";
-        d.tracked_points = 536;
+        d.tracked_points = 3;   // QR 3개 NCC (예전 536점 추적)
         d.valid_points = r.measurement.valid_points;
         set_diagnostics(r.outside_training_range, false,
-            "QR536 mean dx + bar tilt2 + screw gradient x4 linear estimate, absolute-zero labels. "
+            "QR3 NCC parabola mean dx + bar tilt2 + screw gradient x4 linear estimate, absolute-zero labels. "
             "Vertical displacements are not used; vertical faults, new-machine transfer and pose stability are not certified.");
         return r.pose;
     } catch (const std::exception& e) {

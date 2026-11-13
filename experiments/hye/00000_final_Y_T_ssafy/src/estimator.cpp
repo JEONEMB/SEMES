@@ -1,8 +1,13 @@
 #include "final00.hpp"
-#include "control_internal.hpp"
+#include "observer_internal.hpp"
+#include "pin_observer.hpp"
+#include "qr_ncc.hpp"
 #include "final04.hpp"
 #include "screw_gradient.hpp"
 #include "site.hpp"
+#include "reference.hpp"
+#include <atomic>
+#include <chrono>
 #include <opencv2/imgproc.hpp>
 #include <algorithm>
 #include <cmath>
@@ -16,15 +21,6 @@ namespace fs = std::filesystem;
 const char* const kValueNames[7] = {"qr_dx_mean", "bar_tilt_upper", "bar_tilt_lower", "screw1_x", "screw2_x", "screw3_x", "screw4_x"};
 
 namespace {
-std::vector<unsigned char> selected_points(const fs::path& assets) {
-    cv::FileStorage file((assets / "points.json").u8string(), cv::FileStorage::READ);
-    if (!file.isOpened()) throw std::runtime_error("points.json 이 없다");
-    std::vector<unsigned char> selected;
-    for (const auto& row : file["points"]) selected.push_back(static_cast<unsigned char>(int(row[3])));
-    if (selected.size() != 630 || std::count(selected.begin(), selected.end(), 1) != 536)
-        throw std::runtime_error("points.json: 630점 중 536점 선택이 아니다");
-    return selected;
-}
 cv::Mat to_gray(const cv::Mat& input) {
     if (input.empty() || input.depth() != CV_8U || input.size() != cv::Size(3840, 2160))
         throw std::invalid_argument("입력은 3840x2160 8비트 영상이어야 한다");
@@ -39,36 +35,56 @@ cv::Mat to_gray(const cv::Mat& input) {
 
 struct Measurer::Impl {
     bool site_loaded;   // 다른 멤버보다 먼저 site.json 을 읽는다
-    legacy_control::Tracker tracker;
-    std::vector<unsigned char> selected;
-    alignment_detail::Observer observer;
+    alignment_detail::Observer observer;   // 센터 사진 해시 검사와 바 48칸
     cv::Mat center;
+    QrNcc qr;                              // QR 값 (2026-11-13: 536점 추적 대신 NCC 포물선)
     final04_pin::Observer pins;
     ScrewGradient screws;
     std::vector<double> block_x;
     explicit Impl(const fs::path& assets)
-        : site_loaded((site::load(assets), true)), tracker(assets), selected(selected_points(assets)), observer(assets),
-          center(alignment_detail::read_gray(assets / "center.bmp")), pins(center), screws(center), block_x(observer.block_centers()) {}
+        : site_loaded((site::load(assets), true)), observer(assets),
+          center(alignment_detail::read_gray(assets / "center.bmp")), qr(center), pins(center), screws(center), block_x(observer.block_centers()) {}
 };
 
-Measurer::Measurer(const std::string& assets) : impl_(std::make_unique<Impl>(fs::u8path(assets))) {}
+Measurer::Measurer(const std::string& assets) : impl_(std::make_unique<Impl>(fs::u8path(assets))), base_(assets), current_(assets) {}
+
+ReferenceReport Measurer::set_reference(const cv::Mat& center) {
+    static std::atomic<unsigned> counter{0};
+    const auto stamp = std::chrono::system_clock::now().time_since_epoch().count();
+    const fs::path dir = fs::temp_directory_path() / ("final00_reference_" + std::to_string(stamp) + "_" + std::to_string(counter++));
+    ReferenceReport rep;
+    try {
+        rep = make_reference(fs::u8path(base_), center, dir);   // 언제나 원래 assets 에서 출발한다(이어 붙이지 않는다)
+        auto next = std::make_unique<Impl>(dir);              // site.json 을 새 값으로 읽는다
+        impl_ = std::move(next); current_ = dir.u8string();
+    } catch (...) {
+        site::load(fs::u8path(current_));                     // 이전 측정 기준의 화면 위치로 되돌린다
+        throw;
+    }
+    return rep;
+}
 Measurer::~Measurer() = default;
 
 Measurement Measurer::measure(const cv::Mat& image) const {
     const cv::Mat gray = to_gray(image);
-    const auto tracks = impl_->tracker.measure(gray);
+    // QR 값: QR 3개 NCC 이동(정수 + 3점 포물선)의 가로 평균. 예전 536점 추적(약 29 ms, 초기화 약 0.4 초)을 대신한다(실험 20261113_1700).
+    const QrShift q = impl_->qr.measure(gray);
     Measurement m{};
-    m.valid_points = impl_->tracker.valid_selected(tracks);
-    if (m.valid_points != 536) throw std::runtime_error("QR 고정 536점 중 유효하지 않은 점이 있다 (유효 " + std::to_string(m.valid_points) + ")");
-    double dx = 0;
-    for (int p = 0; p < 630; ++p) if (impl_->selected[p]) dx += tracks.displacement.at<float>(p, 0);
-    const auto observation = impl_->observer.measure(gray);
-    const auto pin = impl_->pins.measure(gray);
-    const cv::Mat f66 = final04::features(observation.values, pin.displacement, impl_->block_x);
+    m.valid_points = 3;
+    // 바: 48칸 세로 이동만 잰다. 예전에는 observer.measure 로 값 7개에 쓰지 않는 QR NCC·ECC 호모그래피 3개까지 계산했다
+    // (Windows 1스레드에서 약 700 ms 중 대부분). 바 값과 기울기 계산은 그대로라 결과가 같다.
+    cv::Mat lines; double line_correlation = 1;
+    impl_->observer.measure_lines(gray, lines, line_correlation);
+    cv::Mat qr102 = cv::Mat::zeros(1, 102, CV_64F);   // final04::features 의 입력 형식(앞 54칸은 쓰지 않는 QR 값)
+    lines.copyTo(qr102.colRange(54, 102));
+    // 나사 시작 위치: QR NCC 평균 이동 주변만 찾는다(예전에는 ±260 px 전체, 약 34 ms). 못 찾으면 전체에서 다시 찾는다.
+    const auto pin = impl_->pins.measure(gray, cv::Point(int(std::lround(q.dx)), int(std::lround(q.dy))));
+    const cv::Mat f66 = final04::features(qr102, pin.displacement, impl_->block_x);
     const cv::Mat screw = impl_->screws.measure(gray, pin.displacement);
     if (!cv::checkRange(screw)) throw std::runtime_error("나사 기울기 영상 맞춤에 실패했다");
-    m.values = {dx / 536.0, f66.at<double>(55), f66.at<double>(57), screw.at<double>(0), screw.at<double>(2), screw.at<double>(4), screw.at<double>(6)};
-    m.qr_correlation = observation.qr_correlation; m.line_correlation = observation.line_correlation;
+    m.values = {q.dx, f66.at<double>(55), f66.at<double>(57), screw.at<double>(0), screw.at<double>(2), screw.at<double>(4), screw.at<double>(6)};
+    m.qr_correlation = q.min_ncc;   // QR 3개 NCC 봉우리의 최솟값
+    m.line_correlation = line_correlation;
     return m;
 }
 
@@ -101,14 +117,31 @@ Estimator::Estimator(const std::string& assets) : measurer_(assets) {
     }
 }
 
+std::array<double, 2> Estimator::raw(const Measurement& m) const {
+    double y = weights_[0][0], t = weights_[0][1];
+    for (int j = 0; j < 7; ++j) {
+        const double z = (m.values[j] - mean_[j]) / scale_[j];
+        y += weights_[j + 1][0] * z; t += weights_[j + 1][1] * z;
+    }
+    return {y, t};
+}
+
+ReferenceReport Estimator::set_reference(const std::vector<cv::Mat>& centers) {
+    if (centers.empty()) throw std::invalid_argument("기준 다시 잡기: 센터 사진이 없다");
+    cv::Mat sum = cv::Mat::zeros(2160, 3840, CV_64F);
+    for (const auto& c : centers) { cv::Mat g = to_gray(c), d; g.convertTo(d, CV_64F); sum += d; }
+    cv::Mat mean8; sum.convertTo(mean8, CV_8U, 1.0 / double(centers.size()));   // 화소 평균(반올림)
+    const auto rep = measurer_.set_reference(mean8);
+    offset_ = raw(measurer_.measure(mean8));   // 새 기준에서 그 사진의 값은 0 이므로 이것은 계수의 절편 몫이다
+    has_reference_ = true;
+    return rep;
+}
+
 Result Estimator::predict(const cv::Mat& image) const {
     Result r{};
     r.measurement = measurer_.measure(image);
-    double y = weights_[0][0], t = weights_[0][1];
-    for (int j = 0; j < 7; ++j) {
-        const double z = (r.measurement.values[j] - mean_[j]) / scale_[j];
-        y += weights_[j + 1][0] * z; t += weights_[j + 1][1] * z;
-    }
+    const auto p = raw(r.measurement);
+    const double y = p[0] - offset_[0], t = p[1] - offset_[1];
     r.pose = {y, t};
     r.outside_training_range = y < minimum_[0] || y > maximum_[0] || t < minimum_[1] || t > maximum_[1];
     return r;

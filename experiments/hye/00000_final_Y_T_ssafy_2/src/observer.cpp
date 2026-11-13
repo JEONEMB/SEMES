@@ -1,12 +1,7 @@
 #include "observer_internal.hpp"
 #include "ecc_compat.hpp"
 #include "site.hpp"
-#ifdef _WIN32
-#include <windows.h>
-#include <bcrypt.h>
-#else
-#include <CommonCrypto/CommonDigest.h>
-#endif
+#include "sha256.hpp"
 #include <fstream>
 #include <sstream>
 #include <iomanip>
@@ -18,22 +13,7 @@ static cv::Mat translation(double x,double y){return (cv::Mat_<double>(3,3)<<1,0
 static cv::Point2d project(const cv::Mat& h,const cv::Point2d& p){double z=h.at<double>(2,0)*p.x+h.at<double>(2,1)*p.y+h.at<double>(2,2);return {(h.at<double>(0,0)*p.x+h.at<double>(0,1)*p.y+h.at<double>(0,2))/z,(h.at<double>(1,0)*p.x+h.at<double>(1,1)*p.y+h.at<double>(1,2))/z};}
 static std::vector<unsigned char> bytes(const fs::path& p){std::ifstream f(p,std::ios::binary);if(!f)throw std::runtime_error("Cannot read "+p.u8string());return {std::istreambuf_iterator<char>(f),std::istreambuf_iterator<char>()};}
 cv::Mat read_gray(const fs::path& p){auto m=cv::imdecode(bytes(p),cv::IMREAD_GRAYSCALE);if(m.empty())throw std::runtime_error("Cannot decode "+p.u8string());return m;}
-std::string sha256(const fs::path& p){
-#ifdef _WIN32
-
-    auto b=bytes(p);BCRYPT_ALG_HANDLE a=nullptr;BCRYPT_HASH_HANDLE h=nullptr;DWORD length=0,written=0;
-    if(BCryptOpenAlgorithmProvider(&a,BCRYPT_SHA256_ALGORITHM,nullptr,0)<0)throw std::runtime_error("SHA256 provider failure");
-    BCryptGetProperty(a,BCRYPT_OBJECT_LENGTH,reinterpret_cast<PUCHAR>(&length),sizeof(length),&written,0);std::vector<unsigned char> object(length),sum(32);
-    NTSTATUS status=BCryptCreateHash(a,&h,object.data(),length,nullptr,0,0);
-    if(status>=0)status=BCryptHashData(h,b.data(),ULONG(b.size()),0);
-    if(status>=0)status=BCryptFinishHash(h,sum.data(),32,0);
-    if(h)BCryptDestroyHash(h);BCryptCloseAlgorithmProvider(a,0);
-    if(status<0)throw std::runtime_error("SHA256 computation failure");std::ostringstream s;s<<std::hex<<std::setfill('0');for(auto v:sum)s<<std::setw(2)<<int(v);return s.str();
-#else
-    auto b=bytes(p);unsigned char sum[CC_SHA256_DIGEST_LENGTH];CC_SHA256(b.data(),CC_LONG(b.size()),sum);
-    std::ostringstream s;s<<std::hex<<std::setfill('0');for(auto v:sum)s<<std::setw(2)<<int(v);return s.str();
-#endif
-}
+std::string sha256(const fs::path& p){return final00_sha::sha256_hex(bytes(p));}   // 운영체제 라이브러리 없는 SHA-256 (리눅스 빌드)
 cv::Mat node_matrix(const cv::FileNode& n){
     if(!n.isSeq()||n.size()==0)throw std::runtime_error("Numeric array required");bool nested=n[0].isSeq();int rows=nested?int(n.size()):1,cols=nested?int(n[0].size()):int(n.size());cv::Mat m(rows,cols,CV_64F);
     if(cols==0)throw std::runtime_error("Nonempty matrix rows required");
@@ -71,5 +51,11 @@ Observation Observer::measure(const cv::Mat& input) const {
     }
     for(size_t k=0;k<line_boxes_.size();++k){auto fit=match_line(reference_profiles_[k],line_profile(image,line_boxes_[k]));if(!fit.valid)throw std::runtime_error("Line normal-profile match failed at block"+std::to_string(k));out.line_correlation=std::min(out.line_correlation,fit.correlation);out.values.at<double>(feature++)=fit.shift;}
     if(feature!=102||!cv::checkRange(out.values))throw std::runtime_error("Invalid observation vector");return out;
+}
+void Observer::measure_lines(const cv::Mat& image,cv::Mat& values,double& line_correlation) const {
+    if(image.empty()||image.type()!=CV_8UC1||image.size()!=center_.size())throw std::invalid_argument("Input must be3840x2160 uint8 grayscale image");
+    values=cv::Mat(1,int(line_boxes_.size()),CV_64F);line_correlation=1.;
+    for(size_t k=0;k<line_boxes_.size();++k){auto fit=match_line(reference_profiles_[k],line_profile(image,line_boxes_[k]));if(!fit.valid)throw std::runtime_error("Line normal-profile match failed at block"+std::to_string(k));line_correlation=std::min(line_correlation,fit.correlation);values.at<double>(int(k))=fit.shift;}
+    if(!cv::checkRange(values))throw std::runtime_error("Invalid line observation");
 }
 }

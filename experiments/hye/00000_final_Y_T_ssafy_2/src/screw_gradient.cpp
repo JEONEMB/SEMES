@@ -1,6 +1,8 @@
 #include "screw_gradient.hpp"
 #include "site.hpp"
 #include <opencv2/imgproc.hpp>
+#include <opencv2/core/utility.hpp>
+#include <algorithm>
 #include <cmath>
 #include <limits>
 #include <stdexcept>
@@ -48,8 +50,11 @@ bool ecc_translation(const cv::Mat& template_blurred, const cv::Mat& current, co
     double rho = -1, last_rho = -kEpsilon;
     for (int iteration = 1; iteration <= kIterations && std::abs(rho - last_rho) >= kEpsilon; ++iteration) {
         double image_sum = 0, template_sum = 0; int valid = 0;
-        for (int y = 0; y < kSide; ++y)
-            for (int x = 0; x < kSide; ++x) {
+        // 마스크(반지름 45) 둘레 상자만 계산한다. 상자 밖은 기울기가 정확히 0 이고 마스크 밖이라 모든 합에 0 만 더하므로 결과가 같다.
+        const int reach = kMaskRadius + 3 + int(std::ceil(std::max(std::abs(tx), std::abs(ty))));
+        const int lo = std::max(0, kHalf - reach), hi = std::min(kSide - 1, kHalf + reach);
+        for (int y = lo; y <= hi; ++y)
+            for (int x = lo; x <= hi; ++x) {
                 const int i = y * kSide + x;
                 const double sx = x + tx, sy = y + ty;
                 warped[i] = bilinear(image, sx, sy); jx[i] = bilinear(gradient_x, sx, sy); jy[i] = bilinear(gradient_y, sx, sy);
@@ -61,7 +66,7 @@ bool ecc_translation(const cv::Mat& template_blurred, const cv::Mat& current, co
         const double image_mean = image_sum / valid, template_mean = template_sum / valid;
         double image_norm2 = 0, template_norm2 = 0, correlation = 0;
         double hxx = 0, hxy = 0, hyy = 0, ipx = 0, ipy = 0, tpx = 0, tpy = 0;
-        for (int i = 0; i < n; ++i) {
+        for (int y = lo; y <= hi; ++y) for (int x = lo; x <= hi; ++x) { const int i = y * kSide + x;
             if (inside[i]) {
                 warped[i] -= image_mean; zero_mean_template[i] = double(template_blurred.at<float>(i / kSide, i % kSide)) - template_mean;
                 image_norm2 += warped[i] * warped[i]; template_norm2 += zero_mean_template[i] * zero_mean_template[i]; correlation += zero_mean_template[i] * warped[i];
@@ -78,7 +83,7 @@ bool ecc_translation(const cv::Mat& template_blurred, const cv::Mat& current, co
         if (lambda_d <= 0) return false;
         const double lambda = lambda_n / lambda_d;
         double epx = 0, epy = 0;
-        for (int i = 0; i < n; ++i) { const double e = lambda * zero_mean_template[i] - warped[i]; epx += jx[i] * e; epy += jy[i] * e; }
+        for (int y = lo; y <= hi; ++y) for (int x = lo; x <= hi; ++x) { const int i = y * kSide + x; const double e = lambda * zero_mean_template[i] - warped[i]; epx += jx[i] * e; epy += jy[i] * e; }
         tx += (hyy * epx - hxy * epy) / det; ty += (hxx * epy - hxy * epx) / det;
     }
     return true;
@@ -106,15 +111,18 @@ cv::Mat ScrewGradient::measure(const cv::Mat& gray, const cv::Mat& initial8) con
     if (initial8.type() != CV_64F || initial8.total() != 8) throw std::invalid_argument("ScrewGradient: initial8 은 1x8 CV_64F");
     const double nan = std::numeric_limits<double>::quiet_NaN();
     cv::Mat out(1, 8, CV_64F, cv::Scalar(nan));
-    for (int k = 0; k < 4; ++k) {
-        const cv::Point offset(cvRound(initial8.at<double>(2 * k)), cvRound(initial8.at<double>(2 * k + 1)));
-        const cv::Rect roi = patch_rect(site::get().screws[k] + offset);
-        if ((roi & cv::Rect(0, 0, gray.cols, gray.rows)) != roi) continue;
-        double tx = 0, ty = 0;
-        if (!ecc_translation(templates_[k], gradient_magnitude(gray(roi)), mask_, tx, ty)) continue;   // 실패는 NaN 으로 둔다. 0 으로 숨기지 않는다.
-        out.at<double>(2 * k) = offset.x + tx;
-        out.at<double>(2 * k + 1) = offset.y + ty;
-    }
+    // 나사 4개는 서로 독립이라 동시에 계산한다(결과는 한 개씩 할 때와 같다).
+    cv::parallel_for_(cv::Range(0, 4), [&](const cv::Range& range) {
+        for (int k = range.start; k < range.end; ++k) {
+            const cv::Point offset(cvRound(initial8.at<double>(2 * k)), cvRound(initial8.at<double>(2 * k + 1)));
+            const cv::Rect roi = patch_rect(site::get().screws[k] + offset);
+            if ((roi & cv::Rect(0, 0, gray.cols, gray.rows)) != roi) continue;
+            double tx = 0, ty = 0;
+            if (!ecc_translation(templates_[k], gradient_magnitude(gray(roi)), mask_, tx, ty)) continue;   // 실패는 NaN 으로 둔다. 0 으로 숨기지 않는다.
+            out.at<double>(2 * k) = offset.x + tx;
+            out.at<double>(2 * k + 1) = offset.y + ty;
+        }
+    });
     return out;
 }
 }
