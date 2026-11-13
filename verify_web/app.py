@@ -1,5 +1,6 @@
 """확인 앱 웹 서버 (화면 1장 + JSON API + 실시간 영상 + 상태 스트림)."""
 import json
+import math
 import time
 from pathlib import Path
 
@@ -13,6 +14,62 @@ PLATE_CENTER = (1906.3, 1130.8)   # A507 센터 사진의 가운데 QR (알고�
 NO_FRAME_GIVE_UP_S = 3            # 카메라 프레임이 이만큼(초) 없으면 영상 응답을 끝낸다
 
 
+def _rigid(src, dst):
+    """src→dst 회전+이동 (최소제곱, 점 2개 이상). 반환: 점 변환 함수."""
+    n = len(src)
+    sx, sy = sum(p[0] for p in src) / n, sum(p[1] for p in src) / n
+    dx, dy = sum(p[0] for p in dst) / n, sum(p[1] for p in dst) / n
+    a = b = 0.0
+    for (x1, y1), (x2, y2) in zip(src, dst):
+        x1, y1, x2, y2 = x1 - sx, y1 - sy, x2 - dx, y2 - dy
+        a += x1 * x2 + y1 * y2
+        b += x1 * y2 - y1 * x2
+    th = math.atan2(b, a)
+    c, si = math.cos(th), math.sin(th)
+    return lambda x, y: (c * (x - sx) - si * (y - sy) + dx, si * (x - sx) + c * (y - sy) + dy)
+
+
+def make_overlay(cam, s):
+    """센터 기준(목표, 점선)과 지금(실선) 모양을 화면 좌표로.
+    QR: 기준 사진의 QR 테두리. 지금 모양 = 기준 테두리를 이번 측정의 QR 중심 3개에 맞춰 옮긴 것.
+    나사: 기준/지금 각각 알고리즘이 찾은 나사 중심에 원 (나사는 QR 과 깊이가 달라 따로 그린다)."""
+    vp = lambda x, y: [round(v, 1) for v in cam.view_point(x, y)]
+    scale = cam.view_point(1000, 0)[0] - cam.view_point(0, 0)[0]     # 알고리즘 1000 px → 화면 px
+    ov = dict(view_size=[1280, 720], target=None, now=None)
+    ref = s.get('reference') or {}
+    rois = {r['name']: r for r in ref.get('rois') or []}
+    qr_names = sorted((n for n in rois if n.upper().startswith('QR')), key=lambda n: rois[n]['center'][0])
+    screws = [n for n in rois if n not in qr_names]
+    quads = ref.get('qr_alg')
+    if not quads and qr_names:          # QR 테두리를 못 찾았으면 알고리즘 ROI 상자로
+        quads = []
+        for n in qr_names:
+            x, y, w, h = rois[n]['rect']
+            quads.append([[x, y], [x + w, y], [x + w, y + h], [x, y + h]])
+    if not quads and not screws:
+        return ov
+
+    def screw_circles(src):
+        out = []
+        for n in screws:
+            if n in src:
+                x, y, w, h = rois[n]['rect']
+                out.append(dict(name=n, c=vp(*src[n]['center']), r=round(min(w, h) * 0.3 * scale / 1000, 1)))
+        return out
+
+    ov['target'] = dict(qr=[[vp(x, y) for x, y in q] for q in quads or []], screws=screw_circles(rois))
+    now = {r['name']: r for r in s.get('rois_now') or []}
+    if now:
+        pairs = [n for n in qr_names if n in now]
+        qr_now = []
+        if quads and len(pairs) >= 2 and len(quads) == len(qr_names):
+            f = _rigid([rois[n]['center'] for n in pairs], [now[n]['center'] for n in pairs])
+            qr_now = [[vp(*f(x, y)) for x, y in q] for q in quads]
+        ov['now'] = dict(qr=qr_now, screws=screw_circles(now),
+                         dots=[vp(*now[n]['center']) for n in now])
+    return ov
+
+
 def create_app(runner, devices, demo):
     app = Flask(__name__, template_folder=str(ROOT / 'templates'), static_folder=str(ROOT / 'static'))
     app.config['JSON_AS_ASCII'] = False
@@ -22,12 +79,7 @@ def create_app(runner, devices, demo):
         s['demo'] = demo.status()
         cam = devices.camera
         if cam:
-            px, py = cam.view_point(*PLATE_CENTER)
-            ov = dict(plate=[round(px, 1), round(py, 1)], view_size=[1280, 720], ref_qr=None)
-            ref = s.get('reference') or {}
-            if ref.get('qr_alg'):        # 센터 기준 사진의 QR 3개 → 지금 화면 좌표 (확대·중심 반영)
-                ov['ref_qr'] = [[[round(v, 1) for v in cam.view_point(x, y)] for x, y in quad] for quad in ref['qr_alg']]
-            s['overlay'] = ov
+            s['overlay'] = make_overlay(cam, s)
         return s
 
     def body():

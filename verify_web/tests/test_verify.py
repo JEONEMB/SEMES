@@ -119,7 +119,7 @@ class RunnerTest(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.camera = FakeCamera(ViewMapper(self.calib), fps=20).start()
         self.stage = MockStage(duration=0.05)
-        self.settings = Settings(Path(self.tmp.name) / 's.json', dict(save_images=False, settle_timeout_s=2.0))
+        self.settings = Settings(Path(self.tmp.name) / 's.json', dict(save_images=False, settle_timeout_s=2.0, demo_slow=False))
 
     def tearDown(self):
         self.camera.close()
@@ -127,6 +127,33 @@ class RunnerTest(unittest.TestCase):
 
     def runner(self, algo):
         return Runner(Devices(self.camera, self.stage), algo, self.rect, self.settings, Path(self.tmp.name) / 'runs')
+
+    def test_random_start_is_far_enough_and_both_signs(self):
+        r = self.runner(MockAlgorithm())
+        ys, ts = zip(*(r._resolve_offset('random') for _ in range(200)))
+        ry, rt = self.settings['random_y_mm'], self.settings['random_t_deg']
+        self.assertTrue(all(0.4 * ry - 1e-3 <= abs(y) <= ry for y in ys))
+        self.assertTrue(all(0.4 * rt - 1e-3 <= abs(t) <= rt for t in ts))
+        self.assertTrue(min(ys) < 0 < max(ys) and min(ts) < 0 < max(ts))
+
+    def test_demo_speed_and_pause(self):
+        self.settings.update(dict(demo_slow=True, slow_y_mm_s=0.3, slow_t_deg_s=0.15, pause_s=0.4))
+        r = self.runner(MockAlgorithm(noise_y_mm=0.002, seed=3))
+        t0 = time.monotonic()
+        r.run((0.8, 0.0))
+        r.wait_idle(30)
+        s = r.snapshot()
+        self.assertEqual(s['run']['result'], 'converged', s['message'])
+        self.assertEqual(self.stage.speeds, (300, 150))                    # µm/s, mdeg/s
+        self.assertEqual(s['speed']['mode'], 'slow')
+        moves = sum(1 for e in s['history'] if not e['within'])
+        self.assertGreaterEqual(time.monotonic() - t0, 0.4 * moves)        # 이동 전마다 쉼
+        self.assertIsNone(s['start'])                                      # 보정 끝 → 다음은 ② 랜덤
+        self.settings.update(dict(demo_slow=False))
+        r.goto((0.5, 0.0)); r.wait_idle(30)
+        s = r.snapshot()
+        self.assertEqual(self.stage.speeds, (1000, 1000))
+        self.assertEqual(s['start'], dict(y_mm=0.5, t_deg=0.0, reached=True))
 
     def test_run_converges_and_records_truth(self):
         r = self.runner(MockAlgorithm(noise_y_mm=0.002, seed=3))
@@ -357,11 +384,28 @@ class CenterViewTest(unittest.TestCase):
             cam = FakeCamera(ViewMapper(calib))
             devices = Devices(cam, MockStage())
             runner = Runner(devices, MockAlgorithm(), Rectifier(calib), Settings(Path(d) / 's.json'), Path(d) / 'runs')
-            runner._set(reference=dict(ts=time.time(), zero_y_mm=0.0, zero_t_deg=0.0, qr_alg=quads))
+            c = [[sum(p[0] for p in q) / 4, sum(p[1] for p in q) / 4] for q in quads]
+            rois = [dict(name=n, rect=[int(x) - 96, int(y) - 103, 192, 206], center=[x, y])
+                    for n, (x, y) in zip(('QR_L', 'QR_C', 'QR_R'), c)]
+            rois += [dict(name='S_LB', rect=[891, 1621, 220, 180], center=[1001.1, 1711.7]),
+                     dict(name='S_RT', rect=[2677, 1331, 220, 180], center=[2787.4, 1421.8])]
+            runner._set(reference=dict(ts=time.time(), zero_y_mm=0.0, zero_t_deg=0.0, qr_alg=quads, rois=rois))
             client = create_app(runner, devices, DemoLauncher(['true'], d, free_port(), Path(d) / 'l')).test_client()
             ov = client.get('/api/state').get_json()['overlay']
             # 1× 화면 = 알고리즘 좌표 / 3 (가운데 기준)
-            self.assertAlmostEqual(ov['ref_qr'][1][0][0], (quads[1][0][0] - 1919.5) / 3 + 639.5, delta=0.2)
+            self.assertAlmostEqual(ov['target']['qr'][1][0][0], (quads[1][0][0] - 1919.5) / 3 + 639.5, delta=0.2)
+            self.assertEqual([k['name'] for k in ov['target']['screws']], ['S_LB', 'S_RT'])
+            self.assertAlmostEqual(ov['target']['screws'][0]['c'][0], (1001.1 - 1919.5) / 3 + 639.5, delta=0.2)
+            self.assertIsNone(ov['now'])
+            # 이번 측정에서 QR 이 오른쪽으로 30 px 옮겨졌으면 지금 테두리도 화면에서 10 px 오른쪽
+            now = [dict(r, center=[r['center'][0] + 30, r['center'][1]]) for r in rois]
+            runner._set(rois_now=now)
+            ov = client.get('/api/state').get_json()['overlay']
+            for qt, qn in zip(ov['target']['qr'], ov['now']['qr']):
+                for a, b in zip(qt, qn):
+                    self.assertAlmostEqual(b[0] - a[0], 10, delta=0.2)
+                    self.assertAlmostEqual(b[1] - a[1], 0, delta=0.2)
+            self.assertEqual(len(ov['now']['dots']), 5)
             self.assertEqual(client.post('/api/view', json={'zoom': 1, 'mode': 'diff'}).status_code, 200)
             self.assertEqual(cam.view_mode, 'diff')
 

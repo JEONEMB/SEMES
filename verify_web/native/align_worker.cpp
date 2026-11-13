@@ -4,9 +4,10 @@
 // 통신 (stdin/stdout, 바이너리 입력 + 한 줄 텍스트 출력)
 //   시작:  "READY\n"
 //   추론:  "ALGN" + uint32 width + uint32 height (리틀엔디언) + width*height 바이트 (8bit 흑백)
-//          → "OK <y> <t> <ms>\n"  또는  "ERR <메시지>\n" (측정 실패 = NaN 도 ERR)
+//          → "OK <y> <t> <ms>[ | 이름 x y w h cx cy; ...]\n"  또는  "ERR <메시지>\n" (측정 실패 = NaN 도 ERR)
+//          ROI 는 ALGO_HAS_REFERENCE 일 때만 (QR_L/QR_C/QR_R 사각형, 나사 S_LB/S_RT)
 //   영점:  "ALGR" + 같은 형식의 센터 사진 → alignment_set_reference
-//          → "OK <영점 y> <영점 t>\n"  또는  "ERR <메시지>\n"
+//          → "OK <영점 y> <영점 t>[ | ROI...]\n"  또는  "ERR <메시지>\n"
 //
 // 옵션: --gray         흑백 1채널 그대로 넘김 (기본은 SEMES BMP 를 imread 한 것과 같은 BGR 3채널)
 //       --config PATH  알고리즘 설정 파일 (alignment_init). ALGO_HAS_REFERENCE 로 빌드했을 때만
@@ -28,6 +29,7 @@
 #include <exception>
 #include <string>
 #include <unistd.h>
+#include <vector>
 
 static bool read_all(void *buf, size_t n)
 {
@@ -41,6 +43,24 @@ static std::string one_line(std::string s)
             c = ' ';
     return s;
 }
+
+#ifdef ALGO_HAS_REFERENCE
+// 측정한 QR·나사 위치 (알고리즘 좌표): " | 이름 x y w h cx cy; ..." — 화면에 무엇을 보고 계산했는지 그리기 위해
+static std::string rois_text(const std::vector<AlignmentRoi> &rois)
+{
+    std::string out;
+    char buf[160];
+    for (const AlignmentRoi &r : rois) {
+        if (!r.ok)
+            continue;
+        std::snprintf(buf, sizeof buf, "%s%s %d %d %d %d %.2f %.2f", out.empty() ? " | " : "; ", r.name.c_str(),
+                      r.ref_rect_px.x, r.ref_rect_px.y, r.ref_rect_px.width, r.ref_rect_px.height,
+                      r.center_px.x, r.center_px.y);
+        out += buf;
+    }
+    return out;
+}
+#endif
 
 static std::string last_message()
 {
@@ -114,7 +134,7 @@ int main(int argc, char **argv)
 #ifdef ALGO_HAS_REFERENCE
                 if (alignment_set_reference(src, false)) {
                     const ReferenceInfo &ri = alignment_reference_info();
-                    std::fprintf(proto, "OK %.9g %.9g\n", ri.zero_y_mm, ri.zero_t_deg);
+                    std::fprintf(proto, "OK %.9g %.9g%s\n", ri.zero_y_mm, ri.zero_t_deg, rois_text(ri.rois).c_str());
                 } else {
                     std::fprintf(proto, "ERR %s\n", one_line(alignment_reference_info().message).c_str());
                 }
@@ -128,7 +148,12 @@ int main(int argc, char **argv)
                 if (std::isnan(static_cast<double>(r.y)) || std::isnan(static_cast<double>(r.t)))
                     std::fprintf(proto, "ERR 측정 실패 %s\n", last_message().c_str());
                 else
+#ifdef ALGO_HAS_REFERENCE
+                    std::fprintf(proto, "OK %.9g %.9g %.3f%s\n", static_cast<double>(r.y), static_cast<double>(r.t), ms,
+                                 rois_text(alignment_last_info().rois).c_str());
+#else
                     std::fprintf(proto, "OK %.9g %.9g %.3f\n", static_cast<double>(r.y), static_cast<double>(r.t), ms);
+#endif
             }
         } catch (const std::exception &e) {
             std::fprintf(proto, "ERR %s\n", one_line(e.what()).c_str());

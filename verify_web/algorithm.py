@@ -21,6 +21,19 @@ class AlgorithmError(RuntimeError):
     pass
 
 
+def parse_rois(text):
+    """" | 이름 x y w h cx cy; ..." → [dict(name, rect=[x,y,w,h], center=[cx,cy])] (알고리즘 좌표)."""
+    out = []
+    for part in text.split(';'):
+        f = part.split()
+        if len(f) == 7:
+            try:
+                out.append(dict(name=f[0], rect=[int(v) for v in f[1:5]], center=[float(f[5]), float(f[6])]))
+            except ValueError:
+                pass
+    return out
+
+
 class MockAlgorithm:
     kind = 'mock'
     output = 'offset'
@@ -128,8 +141,9 @@ class WorkerAlgorithm:
         """센터 사진으로 영점 등록 (alignment_set_reference). 반환: 학습 영점 대비 센터 사진의 측정값."""
         line = self._send(b'ALGR', image, self.timeout_s)
         if line.startswith('OK '):
-            _, y, t = line.split()[:3]
-            self.reference = dict(y=float(y), t=float(t))
+            head, _, tail = line.partition(' | ')
+            _, y, t = head.split()[:3]
+            self.reference = dict(y=float(y), t=float(t), rois=parse_rois(tail))
             return self.reference
         self.last_error = line
         raise AlgorithmError(f'영점 등록 실패: {line}')
@@ -155,9 +169,10 @@ class WorkerAlgorithm:
         wall = (time.monotonic() - t0) * 1000
         if line.startswith('OK '):
             try:
-                _, y, t, ms = line.split()
+                head, _, tail = line.partition(' | ')
+                _, y, t, ms = head.split()
                 self.last_error = None
-                return dict(y=float(y), t=float(t), ms=float(ms), wall_ms=wall)
+                return dict(y=float(y), t=float(t), ms=float(ms), wall_ms=wall, rois=parse_rois(tail))
             except ValueError:
                 pass
         self.last_error = line
