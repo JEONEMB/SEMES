@@ -174,6 +174,7 @@ class RunnerTest(unittest.TestCase):
         self.settings.update(dict(demo_slow=False))
         r.goto((0.5, 0.0)); r.wait_idle(30)
         s = r.snapshot()
+        self.assertEqual((s['run'], s['history'], s['last'], s['aligned']), (None, [], None, None))   # 새 시연 → 지난 기록 지움
         self.assertEqual(self.stage.speeds, (1000, 1000))
         self.assertEqual(s['start'], dict(y_mm=0.5, t_deg=0.0, reached=True))
 

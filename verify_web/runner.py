@@ -395,9 +395,14 @@ class Runner:
 
     def _goto_job(self, offset):
         # 센터 기준(오늘의 센터 사진)이 없거나 오래됐으면 센터에 들른 김에 먼저 찍는다 → 시연 버튼은 '랜덤 → 보정' 두 개
+        self._clear_demo()
         self._ensure_reference(come_back=False)
         y, t = self._goto(offset)
         self._set(phase='idle', message=f'시작 위치 도착: 센터 + Y {y:+.3f} mm, Θ {t:+.3f}°')
+
+    def _clear_demo(self):
+        """새 시연: 지난 실행의 회차 기록·지도 경로·결과를 지운다 (파일로 남긴 run.json 은 그대로)."""
+        self._set(run=None, history=[], last=None, measure=None, aligned=None, rois_now=None)
 
     # --- 검증 ------------------------------------------------------------------
     def _new_run(self, start_offset=None):
