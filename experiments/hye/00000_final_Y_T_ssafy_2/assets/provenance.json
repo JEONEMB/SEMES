@@ -28,7 +28,11 @@
    "file": "model7_track536.tsv",
    "sha256": "80e2de46ecc61c6198441cbe8a94ad9d6093f31bedee0d28686551954bad35bb",
    "model_id": "final00_huber7_qr536v5_rig2day3638_avglabel_irls6_r1e-7",
-   "note": "same photos, labels and splits as the default model; QR value measured with track536"
+   "note": "same photos, labels and splits as the default model; QR value measured with track536",
+   "health_file": "health_track536.tsv",
+   "health_sha256": "86aaa63beb8c4846c8dcd70ea7e25f19a36b112aee9a79b665d566970921333d"
   }
- }
+ },
+ "health.tsv_sha256": "68c243736c7c8e91ae96820f877646b7006b33ab51828cb92443099986ffef02",
+ "health_note": "value-consistency check (experiment 20261113_2230): per used value, quadratic in model output (Y, T); scale = 1.4826 MAD; threshold = 1.5 x 99.9 percentile of training H. Fitted on the same photos as the model with final00_tool health (C++)."
 }
