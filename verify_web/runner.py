@@ -42,7 +42,9 @@ DEFAULTS = dict(
     demo_slow=True,                          # 시연 속도: 천천히 움직이고 회차마다 결과를 잠깐 보여 준다
     slow_y_mm_s=0.2, slow_t_deg_s=0.1,       # 천천히 (Θ 펌웨어 최소 0.018°/s)
     fast_y_mm_s=1.0, fast_t_deg_s=1.0,       # 빠르게 (펌웨어 기본 Θ 1°/s, Y 는 우리가 1 mm/s 로 올려 씀)
-    pause_s=3.0,                             # 천천히일 때 측정 결과를 보여 주고 움직이기까지 쉬는 시간
+    pause_s=3.0,
+    sequential_axes=True,                    # Y 를 먼저 허용 안으로 맞춘 뒤 Θ 를 맞춘다 (보정량은 두 축 다 보여 줌)
+    algorithm='',                            # 고른 알고리즘 id (algorithms.json). 빈 값 = 목록의 첫 번째                             # 천천히일 때 측정 결과를 보여 주고 움직이기까지 쉬는 시간
 )
 LIMITS = dict(tol_y_mm=(0.001, 1), tol_t_deg=(0.0001, 1), max_trials=(1, 100), max_step_y_mm=(0.01, 10),
               max_step_t_deg=(0.001, 5), random_y_mm=(0, 10), random_t_deg=(0, 5), approach_y_mm=(0, 2), approach_t_deg=(0, 1),
@@ -107,6 +109,9 @@ class Settings:
             if kind is bool:
                 if not isinstance(v, bool):
                     raise ValueError(f'{k}: true/false')
+            elif kind is str:
+                if not isinstance(v, str):
+                    raise ValueError(f'{k}: 문자열이 필요함')
             else:
                 try:
                     v = kind(v)
@@ -127,9 +132,10 @@ class Settings:
 
 
 class Runner:
-    def __init__(self, devices, algorithm, rectifier, settings, runs_dir):
+    def __init__(self, devices, algorithm, rectifier, settings, runs_dir, choices=None):
         self.devices = devices          # .stage, .camera, .ready (DeviceManager)
         self.algorithm = algorithm
+        self.choices = choices          # AlgorithmChoices (확인 앱에서 알고리즘 고르기) 또는 None
         self.rectifier = rectifier
         self.settings = settings
         self.runs_dir = Path(runs_dir)
@@ -161,6 +167,7 @@ class Runner:
         s['settings'] = dict(self.settings.values)
         s['devices'] = self.devices.status()
         s['algorithm'] = self.algorithm.status()
+        s['algorithms'] = self.choices.listing() if self.choices else None
         cam = self.devices.camera
         s['camera'] = cam.health() if cam else dict(ok=False, error='카메라 없음 (데모 웹 사용 중일 수 있음)')
         s['version'] = version
@@ -243,6 +250,27 @@ class Runner:
                 stage.stop()
             except Exception as exc:
                 self._set(message=f'STOP 실패: {exc}')
+
+    def select_algorithm(self, algo_id):
+        """다른 알고리즘으로 바꾼다. 영점·기록이 알고리즘마다 달라서 센터 기준과 지난 기록은 지운다."""
+        if not self.choices:
+            raise RunError('고를 수 있는 알고리즘 목록이 없습니다 (--algos).')
+        if self.busy():
+            raise RunError('작업 중에는 알고리즘을 바꿀 수 없습니다.')
+        self.algorithm = self.choices.select(algo_id)
+        self.settings.update(dict(algorithm=algo_id))
+        cam = self.devices.camera
+        if cam:
+            cam.set_reference(None)
+        label = self.choices.entry(algo_id).get('label', algo_id)
+        self._set(reference=None, run=None, history=[], last=None, measure=None, aligned=None, rois_now=None,
+                  start=None, phase='idle', message=f'알고리즘: {label}. 센터 기준은 다음 시작 때 새로 잡습니다.')
+
+    def supports_reference(self):
+        try:
+            return bool(getattr(self.algorithm, 'supports_reference', False))
+        except Exception:
+            return False
 
     def set_center_here(self):
         if self.busy():
@@ -379,6 +407,12 @@ class Runner:
             pos = self.state.get('position')
             t_deg = pos['t_deg'] if pos else 0.0          # Θ 는 그대로 둔다
         ay, at = s['approach_y_mm'], (s['approach_t_deg'] if s['enable_t'] else 0.0)
+        pos = self.state.get('position')
+        if pos:      # 안 움직이는 축은 접근점을 거치지 않는다 (차례 보정에서 Θ 를 그대로 두려고)
+            if abs(y_mm - pos['y_mm']) < 0.0005:
+                ay = 0.0
+            if abs(t_deg - pos['t_deg']) < 0.0005:
+                at = 0.0
         if ay > 0 or at > 0:
             self._move(um(y_mm - ay), um(t_deg - at), relative=False, phase=phase, message=message,
                        final=dict(y_mm=y_mm, t_deg=t_deg))
@@ -431,7 +465,7 @@ class Runner:
 
     def _reference_needed(self):
         s = self.settings
-        if not s['auto_reference'] or not hasattr(self.algorithm, 'set_reference'):
+        if not s['auto_reference']:      # 영점 등록이 없는 알고리즘도 화면용 센터 사진은 잡는다
             return False
         ref = self.state.get('reference')
         return ref is None or time.time() - ref['ts'] > s['reference_max_age_min'] * 60
@@ -475,9 +509,8 @@ class Runner:
             self._set(phase='idle', message=f'{n}회차 완료 (한 단계)')
 
     def _reference(self):
-        """센터로 (−쪽에서 접근) 가서 사진을 찍어 알고리즘 영점으로 등록한다. 그날·그 세션의 센터를 기준으로 삼기 위해."""
-        if not hasattr(self.algorithm, 'set_reference'):
-            raise RunError('이 알고리즘은 영점 등록을 지원하지 않습니다.')
+        """센터로 (−쪽에서 접근) 가서 사진을 찍어 알고리즘 영점으로 등록한다. 그날·그 세션의 센터를 기준으로 삼기 위해.
+        영점 등록이 없는 알고리즘(고정 영점)은 화면 윤곽·차이 영상용 사진만 잡는다."""
         self._move_to(self.settings['center_y_mm'], self.settings['center_t_deg'], phase='positioning',
                       message='센터 기준을 잡으러 센터로 갑니다.')
         s = self.settings
@@ -487,16 +520,24 @@ class Runner:
         self._phase('capturing')
         gray, _ = cam.grab(max(4, int(s['average'])))
         img = self.rectifier.apply(gray)
-        self._phase('inferring')
-        z = self.algorithm.set_reference(img)
+        fixed = not self.supports_reference()
+        if fixed:
+            z = dict(y=0.0, t=0.0, rois=[])
+        else:
+            self._phase('inferring')
+            z = self.algorithm.set_reference(img)
         ref = dict(ts=time.time(), zero_y_mm=r6(z['y']), zero_t_deg=r6(z['t']), qr_alg=find_qr_quads(img),
-                   rois=z.get('rois') or [])
+                   rois=z.get('rois') or [], fixed_zero=fixed)
         cam.set_reference(gray)                 # 차이 영상용 (센서 원본)
         if self.runs_dir:
             self.runs_dir.mkdir(parents=True, exist_ok=True)
             cv2.imwrite(str(self.runs_dir / f'reference_{time.strftime("%Y%m%d_%H%M%S")}.bmp'), img)
-        self._set(reference=ref, phase='idle', start=None, aligned=True, rois_now=ref['rois'],
-                  message=f'센터 기준 등록: 학습 영점 대비 Y {z["y"] * 1000:+.1f} µm, Θ {z["t"]:+.4f}°')
+        if fixed:
+            self._set(reference=ref, phase='idle', start=None, aligned=None, rois_now=None,
+                      message='센터 사진을 화면 윤곽용으로만 찍었습니다 (이 알고리즘은 자료에 고정된 영점을 씀).')
+        else:
+            self._set(reference=ref, phase='idle', start=None, aligned=True, rois_now=ref['rois'],
+                      message=f'센터 기준 등록: 학습 영점 대비 Y {z["y"] * 1000:+.1f} µm, Θ {z["t"]:+.4f}°')
 
     def _measure(self):
         self._ensure_reference(come_back=True)
@@ -542,6 +583,17 @@ class Runner:
             self.cond.notify_all()
         entry, img = self._observe(label=f'{n}회차')
         entry['trial'] = n
+        # 이번에 움직일 축: 차례 보정이면 Y 가 허용 밖일 때 Y 만, Y 가 맞으면 Θ 만. 보정량(command)은 두 축 다 남긴다
+        cy, ct = entry['command']['y_mm'], entry['command']['t_deg']
+        if entry['within']:
+            axis, ay, at = None, 0.0, 0.0
+        elif s['sequential_axes'] and s['enable_t']:
+            axis = 'y' if abs(entry['offset']['y_mm']) > s['tol_y_mm'] else 't'
+            ay, at = (cy, 0.0) if axis == 'y' else (0.0, ct)
+        else:
+            axis, ay, at = 'both', cy, ct
+        entry['axis'] = axis
+        entry['applied'] = dict(y_mm=r6(ay), t_deg=r6(at))
         if s['save_images']:
             d = self.runs_dir / self.state['run']['id']
             d.mkdir(parents=True, exist_ok=True)
@@ -556,16 +608,20 @@ class Runner:
         if entry['within'] or not move:
             return entry['within']
         self._pause()                # 천천히 모드: 화면에서 이번 측정을 보여 주고 움직인다
-        cy, ct = entry['command']['y_mm'], entry['command']['t_deg']
-        if abs(cy) > s['max_step_y_mm'] or abs(ct) > s['max_step_t_deg']:
-            raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {cy:+.3f} mm (한도 ±{s["max_step_y_mm"]}), '
-                           f'Θ {ct:+.3f}° (한도 ±{s["max_step_t_deg"]})')
+        if abs(ay) > s['max_step_y_mm'] or abs(at) > s['max_step_t_deg']:
+            raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {ay:+.3f} mm (한도 ±{s["max_step_y_mm"]}), '
+                           f'Θ {at:+.3f}° (한도 ±{s["max_step_t_deg"]})')
+        if axis == 'y':
+            msg = f'Y 보정 이동: Y {cy:+.3f} mm  (산출한 Θ {ct:+.3f}° 는 Y 가 맞은 뒤)'
+        elif axis == 't':
+            msg = f'Θ 보정 이동: Θ {ct:+.3f}°  (Y {entry["offset"]["y_mm"]:+.3f} mm 는 허용 안)'
+        else:
+            msg = f'보정 이동: Y {cy:+.3f} mm, Θ {ct:+.3f}°'
         pos = self.state.get('position')
         if pos is None:      # STATUS 를 못 읽었으면 예전처럼 상대 이동 (접근 없음)
-            self._move(um(cy), um(ct), relative=True, phase='moving')
-        else:                # 지금 위치 + 명령 = 절대 목표, −쪽에서 접근
-            self._move_to(pos['y_mm'] + cy, pos['t_deg'] + ct, phase='moving',
-                          message=f'보정 이동: Y {cy:+.3f} mm, Θ {ct:+.3f}°')
+            self._move(um(ay), um(at), relative=True, phase='moving', message=msg)
+        else:                # 지금 위치 + 명령 = 절대 목표, −쪽에서 접근 (움직이는 축만)
+            self._move_to(pos['y_mm'] + ay, pos['t_deg'] + at, phase='moving', message=msg)
         return False
 
     @staticmethod
@@ -577,8 +633,9 @@ class Runner:
             if new:
                 w.writerow(['trial', 'time', 'raw_y', 'raw_t', 'offset_y_mm', 'offset_t_deg', 'cmd_y_mm', 'cmd_t_deg',
                             'truth_y_mm', 'truth_t_deg', 'err_y_mm', 'err_t_deg', 'within', 'truth_within',
-                            'infer_ms', 'settle_s', 'settled', 'shift_px'])
+                            'infer_ms', 'settle_s', 'settled', 'shift_px', 'axis', 'applied_y_mm', 'applied_t_deg'])
             w.writerow([e.get('trial'), time.strftime('%H:%M:%S', time.localtime(e['ts'])), e['raw']['y'], e['raw']['t'],
                         e['offset']['y_mm'], e['offset']['t_deg'], e['command']['y_mm'], e['command']['t_deg'],
                         g(e['truth'], 'y_mm'), g(e['truth'], 't_deg'), g(e['error'], 'y_mm'), g(e['error'], 't_deg'),
-                        e['within'], e['truth_within'], e['infer_ms'], e['settle_s'], e['settled'], e['shift_px']])
+                        e['within'], e['truth_within'], e['infer_ms'], e['settle_s'], e['settled'], e['shift_px'],
+                        e.get('axis') or '', g(e.get('applied'), 'y_mm'), g(e.get('applied'), 't_deg')])

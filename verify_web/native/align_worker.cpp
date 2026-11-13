@@ -2,7 +2,7 @@
 // (알고리즘이 죽거나 멈춰도 웹 서버는 살아 있고, 다음 요청 때 다시 띄운다.)
 //
 // 통신 (stdin/stdout, 바이너리 입력 + 한 줄 텍스트 출력)
-//   시작:  "READY\n"
+//   시작:  "READY[ 기능...]\n"   기능: ref = 영점 등록(ALGR) 가능, roi = QR·나사 위치를 같이 돌려줌
 //   추론:  "ALGN" + uint32 width + uint32 height (리틀엔디언) + width*height 바이트 (8bit 흑백)
 //          → "OK <y> <t> <ms>[ | 이름 x y w h cx cy; ...]\n"  또는  "ERR <메시지>\n" (측정 실패 = NaN 도 ERR)
 //          ROI 는 ALGO_HAS_REFERENCE 일 때만 (QR_L/QR_C/QR_R 사각형, 나사 S_LB/S_RT)
@@ -10,10 +10,12 @@
 //          → "OK <영점 y> <영점 t>[ | ROI...]\n"  또는  "ERR <메시지>\n"
 //
 // 옵션: --gray         흑백 1채널 그대로 넘김 (기본은 SEMES BMP 를 imread 한 것과 같은 BGR 3채널)
-//       --config PATH  알고리즘 설정 파일 (alignment_init). ALGO_HAS_REFERENCE 로 빌드했을 때만
+//       --config PATH  알고리즘 설정 파일 (alignment_init) 또는 자료 폴더 (initialize_joint)
 //
 // ALGO_HAS_REFERENCE: 김성현 A507 버전처럼 alignment_init / alignment_set_reference /
 //   alignment_last_info / alignment_reference_info 가 있는 알고리즘 (CMake -DALGO_DIR=... 이 켬)
+// ALGO_HAS_JOINT: 이혜원 값 7개 모듈처럼 initialize_joint(자료 폴더) 를 먼저 부르고 alignment() 를 쓰는 알고리즘
+//   (CMake -DHYE_DIR=... -DHYE_MODULE=... 이 켬). 영점은 자료에 고정이라 ALGR 은 지원하지 않음
 //
 // 알고리즘 코드가 printf/std::cout 로 찍는 내용이 통신을 깨지 않도록
 // 표준 출력(fd 1)은 표준 에러로 돌리고, 통신은 따로 복제한 fd 로 한다.
@@ -27,6 +29,7 @@
 #include <cstdio>
 #include <cstring>
 #include <exception>
+#include <stdexcept>
 #include <string>
 #include <unistd.h>
 #include <vector>
@@ -95,12 +98,23 @@ int main(int argc, char **argv)
         std::fflush(proto);
         return 4;
     }
+    std::fprintf(proto, "READY ref roi\n");
+#elif defined(ALGO_HAS_JOINT)
+    try {
+        if (config.empty())
+            throw std::runtime_error("--config 로 자료(assets) 폴더를 주세요");
+        initialize_joint(config);
+    } catch (const std::exception &e) {
+        std::fprintf(proto, "ERR 초기화 실패: %s\n", one_line(e.what()).c_str());
+        std::fflush(proto);
+        return 4;
+    }
+    std::fprintf(proto, "READY\n");
 #else
     if (!config.empty())
         std::fprintf(stderr, "--config 무시: 이 알고리즘은 설정 파일 API 가 없음\n");
-#endif
-
     std::fprintf(proto, "READY\n");
+#endif
     std::fflush(proto);
 
     for (;;) {

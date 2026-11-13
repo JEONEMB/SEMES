@@ -12,7 +12,7 @@ import cv2
 import numpy as np
 
 from demo_web.stage import MockStage
-from verify_web.algorithm import AlgorithmError, MockAlgorithm, WorkerAlgorithm
+from verify_web.algorithm import AlgorithmChoices, AlgorithmError, MockAlgorithm, WorkerAlgorithm
 from verify_web.app import create_app
 from verify_web.camera import FakeCamera
 from verify_web.devices import DemoLauncher, DeviceManager
@@ -136,6 +136,66 @@ class RunnerTest(unittest.TestCase):
         self.assertTrue(all(0.4 * rt - 1e-3 <= abs(t) <= rt for t in ts))
         self.assertTrue(min(ys) < 0 < max(ys) and min(ts) < 0 < max(ts))
 
+    def test_sequential_y_then_theta(self):
+        self.settings.update(dict(sequential_axes=True, approach_t_deg=0.1))
+        r = self.runner(MockAlgorithm(noise_y_mm=0.002, noise_t_deg=0.0005, seed=4))
+        r.goto((0.8, 0.3)); r.wait_idle(30)
+        t_before = r.snapshot()['position']['t_deg']
+        r.run(None); r.wait_idle(60)
+        s = r.snapshot()
+        self.assertEqual(s['run']['result'], 'converged', s['message'])
+        h = s['history']
+        axes = [e['axis'] for e in h]
+        self.assertEqual(axes[0], 'y')                                   # Y 먼저
+        self.assertIn('t', axes)                                         # 그다음 Θ
+        self.assertLess(axes.index('t'), len(axes))
+        first = h[0]
+        self.assertEqual(first['applied']['t_deg'], 0.0)                 # Y 단계에서 Θ 는 안 보냄
+        self.assertNotEqual(first['command']['t_deg'], 0.0)              # 산출 보정량은 그대로 남김
+        k = axes.index('t')
+        self.assertAlmostEqual(h[k]['truth']['t_deg'], t_before - self.settings['center_t_deg'], places=3)   # Y 단계 동안 Θ 그대로
+        self.assertIsNone(h[-1]['axis'])
+        self.assertTrue(h[-1]['within'])
+
+    def test_together_moves_both(self):
+        self.settings.update(dict(sequential_axes=False))
+        r = self.runner(MockAlgorithm(noise_y_mm=0.002, noise_t_deg=0.0005, seed=4))
+        r.run((0.8, 0.3)); r.wait_idle(60)
+        s = r.snapshot()
+        self.assertEqual(s['history'][0]['axis'], 'both')
+        self.assertEqual(s['history'][0]['applied'], s['history'][0]['command'])
+
+    def test_fixed_zero_algorithm_reference_is_display_only(self):
+        class Fixed(MockAlgorithm):
+            supports_reference = False
+            def set_reference(self, image):
+                raise AssertionError('호출하면 안 됨')
+        r = self.runner(Fixed())
+        r.reference(); r.wait_idle(30)
+        s = r.snapshot()
+        self.assertEqual(s['phase'], 'idle', s['message'])
+        self.assertTrue(s['reference']['fixed_zero'])
+        self.assertEqual((s['reference']['zero_y_mm'], s['reference']['zero_t_deg']), (0.0, 0.0))
+
+    def test_select_algorithm_clears_reference(self):
+        with tempfile.TemporaryDirectory() as d:
+            choices = AlgorithmChoices([dict(id='a', label='가', path='mock'), dict(id='b', label='나', path='mock'),
+                                        dict(id='c', label='다', path='no/such/worker')], d)
+            r = Runner(Devices(self.camera, self.stage), choices.select('a'), self.rect, self.settings,
+                       Path(self.tmp.name) / 'runs', choices=choices)
+            r.reference(); r.wait_idle(30)
+            self.assertIsNotNone(r.snapshot()['reference'])
+            r.select_algorithm('b')
+            s = r.snapshot()
+            self.assertIsNone(s['reference'])
+            self.assertEqual(self.settings['algorithm'], 'b')
+            self.assertEqual([(a['id'], a['available'], a['current']) for a in s['algorithms']],
+                             [('a', True, False), ('b', True, True), ('c', False, False)])
+            with self.assertRaises(AlgorithmError):
+                r.select_algorithm('c')
+            with self.assertRaises(ValueError):
+                r.select_algorithm('zz')
+
     def test_axis_plan_estimates_each_axis(self):
         r = self.runner(MockAlgorithm())
         r._set(position=dict(y_mm=20.0, t_deg=0.0), speed=dict(mode='slow', y_mm_s=0.2, t_deg_s=0.1))
@@ -235,11 +295,18 @@ class RunnerTest(unittest.TestCase):
         def logged(y, t, relative=False, allow_t=False):
             moves.append((y, t, relative)); return orig(y, t, relative=relative, allow_t=allow_t)
         self.stage.start = logged
+        self.settings.update(dict(auto_reference=False, sequential_axes=False))
         r = self.runner(FixedAlgorithm(0.3, 0.05))          # 오프셋 → 명령 (−0.3 mm, −0.05°)
         r.step()
         r.wait_idle(10)
         self.assertEqual(moves, [(-500, -150, False), (-300, -50, False)], r.snapshot()['message'])
         self.assertEqual(self.stage.position, (-300, -50))
+        # 차례 보정: Y 가 허용 밖이면 Y 만, Θ 는 접근점도 거치지 않고 그대로
+        moves.clear()
+        self.settings.update(dict(sequential_axes=True))
+        r.step()
+        r.wait_idle(10)
+        self.assertEqual(moves, [(-800, -50, False), (-600, -50, False)], r.snapshot()['message'])
 
     def test_reference_moves_to_center_and_registers(self):
         self.stage.position = (700, 200)
@@ -365,6 +432,7 @@ KSH_WORKER = ROOT / 'verify_web' / 'native' / 'build_ksh' / 'align_worker'
 class KshWorkerTest(unittest.TestCase):
     def test_matches_standalone_tool(self):
         w = WorkerAlgorithm(KSH_WORKER, config=KSH / 'config' / 'alignment.yml')
+        self.assertTrue(w.supports_reference)              # READY ref roi
         z = w.set_reference(cv2.imread('/home/pi/data/rig_eval/center1.bmp', 0))
         self.assertAlmostEqual(z['y'], -0.01433, places=4)
         r = w.infer(cv2.imread('/home/pi/data/rig_eval/Y-1.13 T-0.61/Y-1.13 T-0.61 (1).bmp', 0))

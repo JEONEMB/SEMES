@@ -34,7 +34,7 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
 /* 영상 */
 .video-wrap{background:#11161f}
 /* 한 화면에 다 들어오게: 영상 높이 = 화면 높이 − (머리글·도구줄·범례·버튼) */
-.video{position:relative;aspect-ratio:16/9;width:min(100%,calc((100vh - 330px) * 16 / 9));margin:0 auto;background:#11161f;overflow:hidden}
+.video{position:relative;aspect-ratio:16/9;width:min(100%,calc((100vh - 415px) * 16 / 9));margin:0 auto;background:#11161f;overflow:hidden}
 .video img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
 .badge{position:absolute;top:12px;left:12px;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:4px;background:#ffffffe6;font-size:14px;font-weight:600;color:var(--ink)}
 .badge i{width:10px;height:10px;border-radius:50%;background:#99a7bb}
@@ -108,7 +108,7 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
 .pos-card[data-ok="ok"]{border-color:#1b7f4b}.pos-card[data-ok="ok"] strong{color:var(--green)}
 .pos-card[data-ok="bad"]{border-color:#e3b3b8}.pos-card[data-ok="moving"]{border-color:#efd3a6}.pos-card[data-ok="moving"] strong{color:var(--amber)}
 
-#plot{display:block;width:100%;height:clamp(220px,calc(100vh - 560px),520px);background:#fff}
+#plot{display:block;width:100%;height:clamp(200px,calc(100vh - 690px),520px);background:#fff}
 #plot .grid{stroke:#e7ecf3;stroke-width:1}#plot .axis{stroke:#b9c5d6;stroke-width:1}
 #plot .tk{font-size:11px;fill:#7d8da4;font-variant-numeric:tabular-nums}#plot .ax-l{font-size:12px;fill:var(--accent);font-weight:600}
 #plot .tolbox{fill:#e3f5ea;stroke:#1b7f4b;stroke-width:1.5}
@@ -120,6 +120,18 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
 .p-goal{width:10px;height:10px;background:linear-gradient(45deg,transparent 42%,var(--amber) 42% 58%,transparent 58%),linear-gradient(-45deg,transparent 42%,var(--amber) 42% 58%,transparent 58%)}
 
 .progress-card{padding:12px 16px 14px}
+.axis-steps{list-style:none;display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:6px;margin:8px 0 0;padding:0}
+.axis-steps li{display:flex;align-items:center;gap:6px;font-size:12px;padding:6px 8px;border-radius:4px;border:1px dashed #c8d2e1;color:var(--muted)}
+.axis-steps li b{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:10px;border:1px solid currentColor}
+.axis-steps li.on{border-style:solid;border-color:var(--amber);background:#fff3df;color:var(--amber);font-weight:700}
+.axis-steps li.done{border-style:solid;border-color:#bfe3cd;background:#e8f6ee;color:var(--green)}
+.axis-steps li.done.on{background:var(--green);border-color:var(--green);color:#fff}
+.calc{margin:0 0 10px;padding:8px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--line);font-size:13px;font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.calc b{font-weight:700;color:var(--ink)}.calc b.dim,.hist td.dim{color:#a7b2c2}.calc span{font-size:12px;color:var(--amber);font-weight:600}
+.algo-pick{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.algo-pick .seg button{padding:6px 12px;font-size:12px}
+.order-label{margin-left:14px}
+.tag.ax{background:#fff3df;color:var(--amber)}
 .flow-steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0;padding:0}
 .flow-steps li{display:flex;align-items:center;gap:6px;font-size:12px;padding:7px 8px;border-radius:4px;background:var(--surface2);border:1px solid var(--line);color:var(--muted)}
 .flow-steps li b{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:10px;border:1px solid currentColor}

@@ -256,6 +256,8 @@
     renderPosition(s);
     drawPlot(s);
     renderFlow(s);
+    renderAlgorithms(s);
+    renderAxisSteps(s);
 
     // 진행
     $('trial').textContent = run ? run.trial : 0;
@@ -292,15 +294,61 @@
     if (!settingsDirty) fillSettings(st);
   }
 
+  const axisLabel = e => e.within || !e.axis ? '—' : e.axis === 'y' ? '<span class="tag ax">Y만</span>' :
+    e.axis === 't' ? '<span class="tag ax">Θ만</span>' : '<span class="tag ax">Y·Θ</span>';
+
+  // ---------- 알고리즘 고르기 ----------
+  function renderAlgorithms(s) {
+    const list = s.algorithms, pick = $('algo-pick');
+    pick.hidden = !list || list.length < 2;
+    $('pill-algo').hidden = !pick.hidden;
+    if (pick.hidden) return;
+    const seg = $('algo-seg'), key = JSON.stringify(list) + s.busy;
+    if (seg.dataset.key === key) return;
+    seg.dataset.key = key;
+    seg.innerHTML = list.map(a => `<button data-algo="${a.id}" class="${a.current ? 'on' : ''}" ${a.available && !s.busy ? '' : 'disabled'} ` +
+      `title="${a.available ? '' : a.reason}">${a.label}</button>`).join('');
+  }
+  $('algo-seg').addEventListener('click', ev => {
+    const b = ev.target.closest('[data-algo]');
+    if (!b || b.classList.contains('on')) return;
+    api('/api/algorithm', {id: b.dataset.algo}).then(() => toast('알고리즘을 바꿨습니다', true)).catch(e => toast(e.message));
+  });
+
+  // ---------- Y → Θ 차례 보정 ----------
+  function renderAxisSteps(s) {
+    const st = s.settings, seq = st.sequential_axes && st.enable_t, ol = $('axis-steps');
+    document.querySelectorAll('[data-seq]').forEach(b => { b.classList.toggle('on', String(seq) === b.dataset.seq); b.disabled = s.busy || !st.enable_t; });
+    ol.hidden = !seq;
+    const last = s.run && s.history && s.history.length ? s.history[s.history.length - 1] : null;
+    const done = last && last.within;
+    const cur = !last ? null : done ? 'done' : last.axis;
+    ol.querySelectorAll('li').forEach(li => {
+      const ax = li.dataset.ax;
+      li.className = ax === cur ? (done ? 'done on' : 'on') : (ax === 'y' && cur === 't') || (done && ax !== 'done') ? 'done' : '';
+    });
+    // 산출 보정량: 두 축 다 보여 주고, 이번에 움직이는 축을 표시
+    const calc = $('calc'), e = last && !s.moving ? last : (s.moving && last ? last : null);
+    calc.hidden = !e || e.within;
+    if (!calc.hidden) {
+      const which = e.axis === 'y' ? '이번엔 Y만 이동 (Θ 는 Y 가 맞은 뒤)' : e.axis === 't' ? '이번엔 Θ만 이동 (Y 는 허용 안)' : '두 축 함께 이동';
+      calc.innerHTML = `산출한 보정량 <b class="${e.axis === 't' ? 'dim' : ''}">Y ${fmt(e.command.y_mm)} mm</b> · ` +
+        `<b class="${e.axis === 'y' ? 'dim' : ''}">Θ ${fmt(e.command.t_deg)}°</b><span>${which}</span>`;
+    }
+  }
+  document.querySelectorAll('[data-seq]').forEach(b => b.addEventListener('click', () =>
+    api('/api/settings', {sequential_axes: b.dataset.seq === 'true'}).catch(e => toast(e.message))));
+
   function renderHistory(h) {
     const body = $('hist-body');
-    if (!h.length) { body.innerHTML = '<tr><td colspan="9" class="muted">아직 기록이 없습니다.</td></tr>'; return; }
+    if (!h.length) { body.innerHTML = '<tr><td colspan="10" class="muted">아직 기록이 없습니다.</td></tr>'; return; }
     body.innerHTML = h.slice().reverse().map((e, i) => {
       const verdict = e.within ? (e.truth_within === false ? '<span class="tag warn">카메라만 OK</span>' : '<span class="tag ok">센터 OK</span>') : '<span class="tag no">보정 이동</span>';
       const t = e.truth || {};
       return `<tr class="${i === 0 ? 'last' : ''}"><td>${esc(e.label)}</td><td>${fmt(e.offset.y_mm)}</td><td>${fmt(e.offset.t_deg)}</td>` +
-        `<td>${fmt(t.y_mm)}</td><td>${fmt(t.t_deg)}</td><td>${e.within ? '—' : fmt(e.command.y_mm)}</td><td>${e.within ? '—' : fmt(e.command.t_deg)}</td>` +
-        `<td>${e.infer_ms}</td><td>${verdict}</td></tr>`;
+        `<td>${fmt(t.y_mm)}</td><td>${fmt(t.t_deg)}</td>` +
+        `<td class="${e.axis === 't' ? 'dim' : ''}">${e.within ? '—' : fmt(e.command.y_mm)}</td><td class="${e.axis === 'y' ? 'dim' : ''}">${e.within ? '—' : fmt(e.command.t_deg)}</td>` +
+        `<td>${axisLabel(e)}</td><td>${e.infer_ms}</td><td>${verdict}</td></tr>`;
     }).join('');
   }
 

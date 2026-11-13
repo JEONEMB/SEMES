@@ -37,6 +37,9 @@ def main():
     p.add_argument('--algo-gray', action='store_true', help='알고리즘에 흑백 1채널로 넘김 (기본 BGR 3채널)')
     p.add_argument('--algo-config', type=Path, default=None,
                    help='알고리즘 설정 파일 (예: ~/KSH_Algorithm/Code/config/alignment.yml). 영점 등록을 쓰는 알고리즘만')
+    p.add_argument('--algos', type=Path, default=None,
+                   help='고를 수 있는 알고리즘 목록 JSON (기본: <data-dir>/algorithms.json 이 있으면 그것). '
+                        '없으면 --algo-path/--algo-config 하나만 씀. 형식은 verify_web/algorithms.example.json')
     p.add_argument('--demo-port', type=int, default=8080)
     p.add_argument('--demo-args', default='--mode hardware',
                    help='데모 웹으로 버튼으로 띄울 데모 웹 serve 추가 인자 (--host/--port 는 자동)')
@@ -46,7 +49,7 @@ def main():
     import cv2
     cv2.setNumThreads(2)       # 영상·HTTP 처리에 코어를 남긴다
 
-    from .algorithm import MockAlgorithm, WorkerAlgorithm, AlgorithmError
+    from .algorithm import AlgorithmChoices, MockAlgorithm, AlgorithmError
     from .app import create_app
     from .camera import FakeCamera, PiCamera
     from .devices import DemoLauncher, DeviceManager
@@ -72,15 +75,33 @@ def main():
         return PiCamera(view, exposure_us=args.exposure, gain=args.gain, fps=args.fps)
 
     devices = DeviceManager(camera_factory, lambda: make_stage(args.mode, args.transport))
+    settings = Settings(args.data_dir / 'settings.json')
+    choices = None
+    algos_file = args.algos or (args.data_dir / 'algorithms.json')
     try:
-        algorithm = (MockAlgorithm() if args.algo == 'mock' else
-                     WorkerAlgorithm(args.algo_path, args.algo_output, args.algo_gray,
-                                     log_path=args.data_dir / 'align_worker.log', config=args.algo_config))
-    except AlgorithmError as exc:
+        if args.algo == 'mock':
+            algorithm = MockAlgorithm()
+        else:
+            if args.algos or algos_file.exists():
+                choices = AlgorithmChoices.load(algos_file, REPO, log_path=args.data_dir / 'align_worker.log')
+            else:
+                choices = AlgorithmChoices([dict(id='default', label=args.algo_path.parent.name, path=str(args.algo_path),
+                                                 config=str(args.algo_config) if args.algo_config else None,
+                                                 output=args.algo_output, gray=args.algo_gray)],
+                                           REPO, log_path=args.data_dir / 'align_worker.log')
+            listing = choices.listing()
+            usable = [a['id'] for a in listing if a['available']]
+            if not usable:
+                raise AlgorithmError('쓸 수 있는 알고리즘이 없음: ' + '; '.join(f"{a['id']}: {a['reason']}" for a in listing))
+            pick = settings['algorithm'] if settings['algorithm'] in usable else usable[0]
+            algorithm = choices.select(pick)
+            print('알고리즘: ' + ', '.join(f"{a['id']}{'*' if a['id'] == pick else ''}"
+                                         f"{'' if a['available'] else ' (없음: ' + a['reason'] + ')'}" for a in listing),
+                  flush=True)
+    except (AlgorithmError, ValueError, OSError) as exc:
         p.error(f'{exc}\n  빌드: cmake -S verify_web/native -B verify_web/native/build -G Ninja && '
                 f'cmake --build verify_web/native/build   (또는 --algo mock)')
-    settings = Settings(args.data_dir / 'settings.json')
-    runner = Runner(devices, algorithm, rectifier, settings, args.data_dir / 'runs')
+    runner = Runner(devices, algorithm, rectifier, settings, args.data_dir / 'runs', choices=choices)
     demo_cmd = [sys.executable, '-m', 'demo_web', 'serve', '--host', args.host, '--port', str(args.demo_port)]
     demo = DemoLauncher(demo_cmd + shlex.split(args.demo_args), REPO, args.demo_port,
                         args.data_dir / 'demo_web.log')
@@ -122,7 +143,7 @@ def main():
         runner.wait_idle(10)
         demo.stop()
         devices.close()
-        algorithm.close()
+        (choices or algorithm).close()
         lock.close()
 
 

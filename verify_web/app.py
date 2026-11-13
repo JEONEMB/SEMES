@@ -6,6 +6,7 @@ from pathlib import Path
 
 from flask import Flask, Response, jsonify, render_template, request, send_from_directory
 
+from .algorithm import AlgorithmError
 from .runner import RunError
 
 ROOT = Path(__file__).resolve().parent
@@ -196,6 +197,17 @@ def create_app(runner, devices, demo):
     @app.post('/api/stop')
     def stop():
         runner.stop()
+        return jsonify(ok=True)
+
+    @app.post('/api/algorithm')
+    def algorithm():
+        algo_id = body().get('id')
+        if not isinstance(algo_id, str):
+            raise ValueError('id 가 필요함')
+        try:
+            runner.select_algorithm(algo_id)
+        except AlgorithmError as exc:
+            raise RunError(str(exc)) from None
         return jsonify(ok=True)
 
     @app.post('/api/center-here')

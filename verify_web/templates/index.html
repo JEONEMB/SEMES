@@ -13,6 +13,7 @@
   <div class="title"><span class="mark">◎</span><div><h1>비전 Y · Θ 자동 정렬</h1><p>카메라로 보고 센터로 되돌리기 · A507</p></div></div>
   <div class="pills">
     <span class="pill" id="pill-stage">스테이지 —</span>
+    <div class="algo-pick" id="algo-pick" hidden><span>알고리즘</span><div class="seg" id="algo-seg" role="group" aria-label="알고리즘 고르기"></div></div>
     <span class="pill" id="pill-algo">알고리즘 —</span>
     <span class="pill" id="pill-camera">카메라 —</span>
     <button class="btn demo" id="btn-demo" title="카메라·STM32를 넘기고 데모 웹(발표용)을 엽니다">데모 웹으로 →</button>
@@ -73,6 +74,10 @@
           <button data-slow="true">천천히</button><button data-slow="false">빠르게</button>
         </div>
         <small class="muted" id="speed-info"></small>
+        <span class="label order-label">보정 순서</span>
+        <div class="seg big" role="group" aria-label="보정 순서">
+          <button data-seq="true">Y → Θ 차례로</button><button data-seq="false">동시에</button>
+        </div>
       </div>
     </section>
   </div>
@@ -87,6 +92,7 @@
         <div class="axmove" id="mv-t" hidden><i></i><span></span><b><u></u></b></div>
       </div>
       <p class="pos-sub" id="pos-sub"></p>
+      <div class="calc" id="calc" hidden></div>
       <div class="verdict" id="verdict">측정 전</div>
     </section>
 
@@ -102,6 +108,9 @@
     <section class="panel progress-card">
       <ol class="flow-steps" id="flow-steps">
         <li data-step="1"><b>1</b>시작 위치</li><li data-step="2"><b>2</b>자동 보정</li><li data-step="3"><b>✓</b>센터 OK</li>
+      </ol>
+      <ol class="axis-steps" id="axis-steps" hidden>
+        <li data-ax="y"><b>1</b>Y 보정</li><li data-ax="t"><b>2</b>Θ 보정</li><li data-ax="done"><b>✓</b>Y·Θ 모두 허용 안</li>
       </ol>
       <div class="phase" id="phase-box" data-phase="idle"><span class="light"></span><div><strong id="phase">대기</strong><p id="message"></p></div></div>
       <div class="trial-line">
@@ -119,8 +128,8 @@
       <span class="muted small-note">카메라 = 알고리즘이 본 센터 대비 위치 · 스테이지 = STATUS 위치 − 센터</span></div>
     <div class="scroll">
       <table class="hist">
-        <thead><tr><th>회차</th><th>카메라 Y</th><th>카메라 Θ</th><th>스테이지 Y</th><th>스테이지 Θ</th><th>보정 명령 Y</th><th>보정 명령 Θ</th><th>추론 ms</th><th>판정</th></tr></thead>
-        <tbody id="hist-body"><tr><td colspan="9" class="muted">아직 기록이 없습니다.</td></tr></tbody>
+        <thead><tr><th>회차</th><th>카메라 Y</th><th>카메라 Θ</th><th>스테이지 Y</th><th>스테이지 Θ</th><th>산출 보정량 Y</th><th>산출 보정량 Θ</th><th>이번 이동</th><th>추론 ms</th><th>판정</th></tr></thead>
+        <tbody id="hist-body"><tr><td colspan="10" class="muted">아직 기록이 없습니다.</td></tr></tbody>
       </table>
     </div>
   </section>
@@ -166,6 +175,7 @@
         <label class="check"><input name="enable_t" type="checkbox"> Θ 명령 보내기</label>
         <label class="check"><input name="save_images" type="checkbox"> 회차 사진 저장</label>
         <label class="check"><input name="auto_reference" type="checkbox"> 시작할 때 센터 기준 자동</label>
+        <label class="check"><input name="sequential_axes" type="checkbox"> Y 먼저, Θ 나중 (차례로 보정)</label>
         <button class="btn primary" type="submit">설정 저장</button>
       </form>
     </div>
