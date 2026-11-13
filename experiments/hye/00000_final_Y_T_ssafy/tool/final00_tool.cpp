@@ -20,6 +20,9 @@
 //       점검식 파일의 SHA-256 을 출력한다(provenance.json 의 health.tsv_sha256 또는 alt_models.<방식>.health_sha256 에 적는다).
 //   final00_tool health-check <model7.tsv> <health.tsv> <features7.tsv>
 //       다른 사진에서 점검값 분포, 기준 초과 수, 그날 영점 업데이트를 흉내 낸 경우(센터 근처 평균 / 센터 사진 1장)를 보인다.
+//   final00_tool range <features7.tsv> <labels.tsv> <splits.tsv> <출력 폴더> [no-bars]
+//       학습 범위 밖 예측 시험: 안쪽(|Y| ≤ 1, |T| ≤ 0.5)으로만 학습하고 바깥쪽을 예측한다. range.txt, predictions_range.tsv
+//   final00_tool eval 은 탈락 사진을 cv_failures.tsv 에도 남긴다(시험, 반복, 사진, 라벨, 예측, 오차).
 //   final00_tool register <assets> <출력 폴더> <기준 사진> [기준 사진 ...]
 //       기준 사진(여러 장이면 화소 평균)으로 새 측정 기준 자료를 출력 폴더에 쓰고 찾은 이동을 보인다.
 // 인자 경로는 ASCII 로 준다(목록 파일 안의 사진 경로는 한글이어도 된다). 기존 출력은 덮어쓰지 않는다.
@@ -130,13 +133,18 @@ cv::Mat take(const cv::Mat& m, const std::vector<int>& index) {
     return out;
 }
 struct Score { int fail = 0, count = 0; double max_y = 0, max_t = 0, sum_y2 = 0, sum_t2 = 0; };
-// train 으로 학습해 test 를 채점한다.
-void score(const Data& d, const std::vector<int>& train, const std::vector<int>& test, Score& s) {
+// 탈락 사진 기록 (2026-11-14): 어느 시험, 몇 번째 반복에서 어느 사진이 얼마나 틀렸는지
+struct Miss { std::string test; int repeat; int row; double py, pt; };
+// train 으로 학습해 test 를 채점한다. misses 가 있으면 탈락 사진을 남긴다.
+void score(const Data& d, const std::vector<int>& train, const std::vector<int>& test, Score& s,
+           std::vector<Miss>* misses = nullptr, const std::string& name = "", int repeat = 0) {
     final00::LinearModel model; model.fit(take(d.x, train), take(d.y, train));
     const cv::Mat p = model.predict(take(d.x, test));
     for (int i = 0; i < int(test.size()); ++i) {
         const double ey = p.at<double>(i, 0) - d.y.at<double>(test[i], 0), et = p.at<double>(i, 1) - d.y.at<double>(test[i], 1);
-        s.fail += !final00::passes(ey, et); ++s.count; s.max_y = std::max(s.max_y, std::abs(ey)); s.max_t = std::max(s.max_t, std::abs(et)); s.sum_y2 += ey * ey; s.sum_t2 += et * et;
+        const bool ok = final00::passes(ey, et);
+        s.fail += !ok; ++s.count; s.max_y = std::max(s.max_y, std::abs(ey)); s.max_t = std::max(s.max_t, std::abs(et)); s.sum_y2 += ey * ey; s.sum_t2 += et * et;
+        if (!ok && misses) misses->push_back({name, repeat, test[i], p.at<double>(i, 0), p.at<double>(i, 1)});
     }
 }
 
@@ -152,12 +160,13 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
     o << "photos " << n << " dev " << dev.size() << " final " << fin.size() << "\n";
     // 주 검증: 개발 자료 섞은 80/20, 10회
     std::vector<int> fails; double worst_y = 0, worst_t = 0, sy = 0, st = 0;
+    std::vector<Miss> misses;   // 탈락 사진 (cv_failures.tsv)
     for (int k = 0; k < 10; ++k) {
         Score s;
         for (int fold = 0; fold < 5; ++fold) {
             std::vector<int> train, test;
             for (int i : dev) (d.cv[i][k] == fold ? test : train).push_back(i);
-            score(d, train, test, s);
+            score(d, train, test, s, &misses, "main_cv", k);
         }
         fails.push_back(s.fail); worst_y = std::max(worst_y, s.max_y); worst_t = std::max(worst_t, s.max_t);
         sy += std::sqrt(s.sum_y2 / s.count); st += std::sqrt(s.sum_t2 / s.count);
@@ -173,7 +182,7 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
         for (int part = 0; part < 2; ++part) {
             std::vector<int> train, test;
             for (int i : dev) (d.half[i][k] == part ? test : train).push_back(i);
-            score(d, train, test, s);
+            score(d, train, test, s, &misses, "half", k);
         }
         fails.push_back(s.fail);
     }
@@ -186,12 +195,12 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
     for (const auto& name : sources) {
         std::vector<int> train, test;
         for (int i : dev) (d.source[i] == name ? test : train).push_back(i);
-        Score s; score(d, train, test, s); pass += s.count - s.fail;
+        Score s; score(d, train, test, s, &misses, "leave_" + name, 0); pass += s.count - s.fail;
         o << ' ' << name << ' ' << std::setprecision(1) << 100.0 * (s.count - s.fail) / s.count << '%';
     }
     o << " all " << std::setprecision(1) << 100.0 * pass / dev.size() << "%\n";
     // 마지막 확인
-    { Score s; score(d, dev, fin, s);
+    { Score s; score(d, dev, fin, s, &misses, "final_check", 0);
       o << "final_check fails " << s.fail << "/" << s.count << std::setprecision(5) << " max|eY| " << s.max_y << " max|eT| " << s.max_t << "\n"; }
     // 전체 사진으로 학습한 모델
     final00::LinearModel model; model.fit(d.x, d.y);
@@ -205,12 +214,81 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
         << std::setprecision(6) << "label_range Y " << min_y << " " << max_y << " T " << min_t << " " << max_t << "\n"; }
     fs::create_directories(out);
     { std::ofstream f(out / "eval.txt", std::ios::binary); f << o.str(); }
+    // 탈락 사진: 시험, 반복 번호, 사진 id, 회차, 라벨(절대 영점), 예측, 오차, 어느 쪽이 기준을 넘었는지
+    { std::ofstream f(out / "cv_failures.tsv", std::ios::binary); f << std::setprecision(6) << std::fixed;
+      f << "test\trepeat\tid\tsource\tY_abs\tT_abs\tY_pred\tT_pred\teY\teT\tover\n";
+      for (const auto& m : misses) {
+          const double ly = d.y.at<double>(m.row, 0), lt = d.y.at<double>(m.row, 1), ey = m.py - ly, et = m.pt - lt;
+          f << m.test << '\t' << m.repeat << '\t' << d.id[m.row] << '\t' << d.source[m.row] << '\t' << ly << '\t' << lt << '\t' << m.py << '\t' << m.pt << '\t' << ey << '\t' << et << '\t'
+            << (std::abs(ey) > 0.045 ? (std::abs(et) > 0.01 ? "Y,T" : "Y") : "T") << '\n';
+      } }
     std::ofstream m(out / "model7.tsv", std::ios::binary); m << std::setprecision(17);
     m << "name\tmean\tscale\tweight_Y\tweight_T\n" << "intercept\t0\t1\t" << model.weights.at<double>(0, 0) << '\t' << model.weights.at<double>(0, 1) << '\n';
     for (int j = 0, u = 0; j < 7; ++j) {
         if (u < int(used.size()) && used[u] == j) { m << final00::kValueNames[j] << '\t' << model.mean.at<double>(u) << '\t' << model.scale.at<double>(u) << '\t' << model.weights.at<double>(u + 1, 0) << '\t' << model.weights.at<double>(u + 1, 1) << '\n'; ++u; }
         else m << final00::kValueNames[j] << "\t0\t1\t0\t0\n";   // 쓰지 않는 값(가중치 0)
     }
+    std::cout << o.str();
+    return 0;
+}
+
+// ---- 학습 범위 밖 예측 시험 (2026-11-14, 실험 20261114_0130) ----
+// 안쪽(|Y| ≤ 1, |T| ≤ 0.5)으로만 학습하고 바깥쪽을 예측한다. 성현 님 평가처럼 범위가 넓을 때 오차가 어떻게 커지는지 흉내 낸다.
+int range_test(const fs::path& features, const fs::path& labels, const fs::path& splits, const fs::path& out, bool no_bars) {
+    if (fs::exists(out / "range.txt")) { std::cerr << "출력이 이미 있다\n"; return 3; }
+    Data d = load(features, labels, splits); const int n = int(d.id.size());
+    const std::vector<int> used = no_bars ? std::vector<int>{0, 3, 4, 5, 6} : std::vector<int>{0, 1, 2, 3, 4, 5, 6};
+    if (no_bars) { cv::Mat x(n, int(used.size()), CV_64F); for (int j = 0; j < int(used.size()); ++j) d.x.col(used[j]).copyTo(x.col(j)); d.x = x; }
+    std::map<int, double> qr_corr;   // 값 파일의 QR 상관(가장 낮은 QR)
+    for (auto& r : read_table(features, true)) if (r.at(11) == "1") qr_corr[std::stoi(r[0])] = std::stod(r.at(9));
+    auto Y = [&](int i) { return d.y.at<double>(i, 0); }; auto T = [&](int i) { return d.y.at<double>(i, 1); };
+    std::vector<int> inner, outer;
+    for (int i = 0; i < n; ++i) (std::abs(Y(i)) <= 1.0 && std::abs(T(i)) <= 0.5 ? inner : outer).push_back(i);
+    final00::LinearModel model; model.fit(take(d.x, inner), take(d.y, inner));
+    const cv::Mat p = model.predict(take(d.x, outer));
+    // 비교: 안쪽 사진끼리 5-fold (고정 시드)
+    std::vector<double> in_py(n), in_pt(n);
+    { cv::RNG rng(20261114); std::vector<int> fold(inner.size()); for (size_t k = 0; k < fold.size(); ++k) fold[k] = int(k % 5);
+      for (size_t k = fold.size(); k > 1; --k) std::swap(fold[k - 1], fold[size_t(rng.uniform(0, int(k)))]);
+      for (int f = 0; f < 5; ++f) {
+          std::vector<int> tr, te; for (size_t k = 0; k < inner.size(); ++k) (fold[k] == f ? te : tr).push_back(inner[k]);
+          final00::LinearModel m; m.fit(take(d.x, tr), take(d.y, tr)); const cv::Mat q = m.predict(take(d.x, te));
+          for (size_t k = 0; k < te.size(); ++k) { in_py[te[k]] = q.at<double>(int(k), 0); in_pt[te[k]] = q.at<double>(int(k), 1); }
+      } }
+    struct Acc { int n = 0, fail = 0; double sy = 0, st = 0, my = 0, mt = 0; void add(double ey, double et) { ++n; fail += !final00::passes(ey, et); sy += ey * ey; st += et * et; my = std::max(my, std::abs(ey)); mt = std::max(mt, std::abs(et)); } };
+    auto line = [](const std::string& name, const Acc& a) {
+        std::ostringstream o; o << std::fixed << std::setprecision(5) << name << " n " << a.n << " fails " << a.fail << " rmsY " << (a.n ? std::sqrt(a.sy / a.n) : 0) << " rmsT " << (a.n ? std::sqrt(a.st / a.n) : 0)
+                               << " max|eY| " << a.my << " max|eT| " << a.mt << "\n"; return o.str(); };
+    Acc in_acc, out_acc, bins[3];
+    for (int i : inner) in_acc.add(in_py[i] - Y(i), in_pt[i] - T(i));
+    // 비례 오차: 바깥쪽에서 eY = a + b·Y, eT = a + b·T 직선 기울기
+    double sY = 0, sY2 = 0, seY = 0, sYeY = 0, sT = 0, sT2 = 0, seT = 0, sTeT = 0;
+    fs::create_directories(out);
+    std::ofstream f(out / "predictions_range.tsv", std::ios::binary); f << std::fixed << std::setprecision(5);
+    f << "id\tsource\tregion\tY_given\tT_given\tY_pred\teY\tT_pred\teT\tpass\tqr_correlation\n";
+    for (int i : inner) f << d.id[i] << '\t' << d.source[i] << "\tinner_5fold\t" << Y(i) << '\t' << T(i) << '\t' << in_py[i] << '\t' << in_py[i] - Y(i) << '\t' << in_pt[i] << '\t' << in_pt[i] - T(i) << '\t' << final00::passes(in_py[i] - Y(i), in_pt[i] - T(i)) << '\t' << qr_corr[d.id[i]] << '\n';
+    for (int k = 0; k < int(outer.size()); ++k) {
+        const int i = outer[k]; const double py = p.at<double>(k, 0), pt = p.at<double>(k, 1), ey = py - Y(i), et = pt - T(i);
+        out_acc.add(ey, et);
+        const double dist = std::sqrt(Y(i) * Y(i) + 4 * T(i) * T(i));   // 이동량 (T 1° ≈ 2 mm 로 환산)
+        bins[dist < 1.5 ? 0 : dist < 2.0 ? 1 : 2].add(ey, et);
+        sY += Y(i); sY2 += Y(i) * Y(i); seY += ey; sYeY += Y(i) * ey; sT += T(i); sT2 += T(i) * T(i); seT += et; sTeT += T(i) * et;
+        f << d.id[i] << '\t' << d.source[i] << "\touter\t" << Y(i) << '\t' << T(i) << '\t' << py << '\t' << ey << '\t' << pt << '\t' << et << '\t' << final00::passes(ey, et) << '\t' << qr_corr[d.id[i]] << '\n';
+    }
+    const double m = double(outer.size());
+    const double slopeY = (m * sYeY - sY * seY) / (m * sY2 - sY * sY), slopeT = (m * sTeT - sT * seT) / (m * sT2 - sT * sT);
+    // QR 상관이 |T| 에 따라 떨어지는 정도 (모든 사진): 직선 맞춤 후 T 2° 에서의 값
+    double c0 = 0, c1 = 0, c2 = 0, cc = 0, ct = 0; int cn = 0; double cmin[4] = {1, 1, 1, 1};
+    for (int i = 0; i < n; ++i) { const double a = std::abs(T(i)), c = qr_corr[d.id[i]]; ++cn; c0 += a; c1 += a * a; cc += c; ct += a * c; const int b = std::min(3, int(a / 0.25)); cmin[b] = std::min(cmin[b], c); }
+    const double cslope = (cn * ct - c0 * cc) / (cn * c1 - c0 * c0), cint = (cc - cslope * c0) / cn;
+    std::ostringstream o; o << std::fixed << std::setprecision(5);
+    o << "train inner |Y|<=1 |T|<=0.5 : " << inner.size() << " photos, test outer : " << outer.size() << " photos" << (no_bars ? " (no bars, 5 values)" : " (7 values)") << "\n";
+    o << line("inner_5fold", in_acc) << line("outer", out_acc);
+    o << line("outer dist<1.5", bins[0]) << line("outer dist1.5-2", bins[1]) << line("outer dist>=2", bins[2]);
+    o << "outer proportional error: slope eY/Y " << slopeY << " (" << std::setprecision(2) << 100 * slopeY << "%), slope eT/T " << std::setprecision(5) << slopeT << " (" << std::setprecision(2) << 100 * slopeT << "%)\n";
+    o << std::setprecision(4) << "qr_correlation min by |T| bin [0,.25) [.25,.5) [.5,.75) [.75,1]: " << cmin[0] << ' ' << cmin[1] << ' ' << cmin[2] << ' ' << cmin[3]
+      << " | linear fit corr = " << cint << " + " << cslope << "·|T| -> at |T|=2: " << cint + 2 * cslope << "\n";
+    { std::ofstream t(out / "range.txt", std::ios::binary); t << o.str(); }
     std::cout << o.str();
     return 0;
 }
@@ -468,6 +546,8 @@ int main(int raw_argc, char** raw_argv) {
             std::string leave; if (argc == 7) { leave = argv[6]; if (leave.rfind("leave=", 0) != 0) throw std::invalid_argument("마지막 인자는 leave=회차"); leave = leave.substr(6); }
             return make_health(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]), leave);
         }
+        if (mode == "range" && (argc == 6 || (argc == 7 && std::string(argv[6]) == "no-bars")))
+            return range_test(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]), fs::u8path(argv[5]), argc == 7);
         if (mode == "health-check" && argc == 5) return check_health(fs::u8path(argv[2]), fs::u8path(argv[3]), fs::u8path(argv[4]));
         std::cerr << "usage: final00_tool measure ASSETS PHOTOS_TSV OUTDIR [no-bars] | eval FEATURES_TSV LABELS_TSV SPLITS_TSV OUTDIR [no-bars] | predict ASSETS PHOTOS_TSV LABELS_TSV OUTDIR [ref=IMAGE...] [zero=IMAGE...] | register ASSETS OUTDIR REFERENCE_IMAGE..."
                      " | health MODEL7_TSV FEATURES_TSV LABELS_TSV OUT_TSV [leave=SOURCE] | health-check MODEL7_TSV HEALTH_TSV FEATURES_TSV  (measure, predict 에 method=track536|ncc 를 붙이면 QR 방식을 고른다)\n";
