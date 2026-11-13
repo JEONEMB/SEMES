@@ -123,6 +123,8 @@
   }
 
   window.addEventListener('resize', () => { if (state) drawPlot(state); });
+  // 지도 칸 크기가 바뀌면 (칸 높이를 남는 만큼 채우므로) 다시 그린다
+  if (window.ResizeObserver) new ResizeObserver(() => { if (state) drawPlot(state); }).observe($('plot-box'));
 
   // ---------- 위치 ----------
   function stageOffset(s) {
