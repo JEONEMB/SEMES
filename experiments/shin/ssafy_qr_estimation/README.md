@@ -4,6 +4,11 @@
 `6ab989eb`입니다.
 이 폴더에 QR 순차 보정 구현을 두고 확인 앱에서 불러옵니다.
 
+## 폴더 구조
+
+QR 관측, 제어 계산, 확인 앱 어댑터는 이 실험의 `src/`에 있습니다.
+Lanczos QR+Bar 실험은 [별도 폴더](../qrwithbar_lanczos/README.md)에 있습니다.
+
 ## 연결부
 
 - `src/qr_observer.py`는 보정된 3840×2160 회색조 영상에서
