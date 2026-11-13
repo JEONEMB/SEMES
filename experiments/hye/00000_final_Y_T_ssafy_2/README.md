@@ -55,7 +55,17 @@ QR 값을 536점 추적 평균에서 QR 3개 NCC 포물선 평균으로 바꾸�
 
 **바 기울기도 뺐다(값 5개, 2026-11-13 저녁).** `evidence/eval_qrncc5/`, 모델 `final00_huber7_qrncc5_rig2day3638_avglabel_irls6_r1e-7`: 주 검증 탈락 9.0장(값 7개 16.9), rms Y 0.0119 T 0.0040, 마지막 확인 탈락 2/728(값 7개 7), 세트 통째로 빼기 rig_1st 99.6%, rig_grid 91.4%, rig_grid_rev 91.3%.
 
+**QR 방식 고르기**: 기본 ncc(흐림 σ2, 모델 `final00_huber7_qrnccb2v5_rig2day3638_avglabel_irls6_r1e-7`, 주 검증 탈락 10.5, 마지막 확인 2/728), `initialize_joint_method(assets, "track536")` 로 536점 추적 계수(`final00_huber7_qr536v5_rig2day3638_avglabel_irls6_r1e-7`, 주 검증 탈락 9.5, 마지막 확인 2/728)를 쓸 수 있다. 장단점과 속도는 ssafy README "QR 방식 고르기".
+
 코드는 ssafy 와 같다. 그날 센터 사진으로 측정 기준을 다시 잡는 `set_joint_reference`, 쓰지 않던 QR 호모그래피를 뺀 측정(766 → 54~140 ms, 값은 비트까지 같음), 순수 C++ SHA-256 은 [ssafy README](../00000_final_Y_T_ssafy/README.md) 를 본다. 고친 뒤에도 정방향 격자 99장의 공개 API 결과가 고치기 전과 같다(97장 통과).
+
+## 측정값 일치 점검 (2026-11-14)
+
+ssafy 와 같은 점검이다(설명은 [ssafy README](../00000_final_Y_T_ssafy/README.md) "측정값 일치 점검"). 점검식 `assets/health.tsv`(ncc), `health_track536.tsv` 는 이 모델과 같은 3638장으로 `final00_tool health` 가 만들었다. 기준값 5.42.
+
+- 두 날이 섞인 사진으로 만들어서 ssafy(7.44, 한 날)보다 나사 정상 흔들림이 크다(나사1 0.25 px 대 0.05 px). 즉 덜 예민하다.
+- 3638장 공개 API: 경고 0, 3624장 통과(점검 넣기 전과 같은 출력).
+- 기본은 경고만 남기고 값은 그대로 낸다. `set_joint_health_check(true)` 면 멈춘다.
 
 ## 빌드
 
