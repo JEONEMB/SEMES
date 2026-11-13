@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV REQUIRED)
 find_package(Threads REQUIRED)
 get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
-set(V2 "${REPO}/experiments/hye/v2_Y_T control")
+set(V2 "${REPO}/experiments/hye/20261104_1435_v2_control_강등")
 # v1 (20261028_1327_final_Y_T control 복사본, 바꾼 것: macOS 용 sha256) 과 v2 를 각각 따로 링크한다.
 add_executable(a23_v1 src/main.cpp "${REPO}/src/alignment_diagnostics.cpp" v1/src/control.cpp v1/src/tracker.cpp v1/src/spline.cpp v1/src/model.cpp)
 target_include_directories(a23_v1 PRIVATE v1/include "${REPO}/include" ${OpenCV_INCLUDE_DIRS})

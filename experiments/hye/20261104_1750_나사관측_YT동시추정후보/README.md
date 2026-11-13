@@ -15,7 +15,7 @@ final_pin::Estimator model(qr_assets_directory, trained_model_file);
 cv::Vec2d estimate = model.predict(grayscale_image);
 ```
 
-`qr_assets_directory`는 저장소의 `experiments/hye/v2_Y_T_joint/assets/`다. center, geometry, line_protocol 파일이 필요하며 Python이나 임시 디렉터리에 의존하지 않는다. 이 실험 빌드가 정의하는 `semes_joint`와 `semes_final_pin`을 링크한다. 기존 공개 alignment API와 기존 모델은 수정하지 않는다.
+`qr_assets_directory`는 저장소의 `experiments/hye/20261104_1435_v2_joint_강등/assets/`다. center, geometry, line_protocol 파일이 필요하며 Python이나 임시 디렉터리에 의존하지 않는다. 이 실험 빌드가 정의하는 `semes_joint`와 `semes_final_pin`을 링크한다. 기존 공개 alignment API와 기존 모델은 수정하지 않는다.
 
 ## 측정과 특징
 

@@ -10,7 +10,7 @@
 | 브랜치 | `feature/hye/ssafy-reference` (MR 대상 `chore/hye/merge`). 이 안내문이 들어간 커밋 이후 |
 | 모듈 폴더 | `experiments/hye/00000_final_Y_T_ssafy` |
 | 모델 | `final00_huber7_qrnccb2v5_rig20261112_1959_irls6_r1e-7` (11-12 장비 사진 1959장, 값 5개, QR 흐림 NCC) |
-| 다른 모델 | `00000_final_Y_T_ssafy_2` 는 코드가 같고 `assets/` 의 `model7.tsv`, `provenance.json` 만 다르다(두 날 3638장). `00000_final_Y_T_semes` 도 코드가 같고 SEMES 사진용 assets 다(QR 536점 추적, 바 사용). 바꿀 때는 assets 폴더만 바꾼다 |
+| 다른 모델 | `20261113_1509_ssafy2_두날평균라벨모듈` 는 코드가 같고 `assets/` 의 `model7.tsv`, `provenance.json` 만 다르다(두 날 3638장). `00000_final_Y_T_semes` 도 코드가 같고 SEMES 사진용 assets 다(QR 536점 추적, 바 사용). 바꿀 때는 assets 폴더만 바꾼다 |
 
 ## 2. 무엇을 하나 (요약)
 

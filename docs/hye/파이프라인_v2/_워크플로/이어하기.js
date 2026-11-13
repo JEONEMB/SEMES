@@ -133,8 +133,8 @@ log(`단계 ${done.length}/${UNITS.length} 완료. 실패 단계: ${UNITS.filter
 const SUMMARY = JSON.stringify(done.map(d => ({ code: d.code, dir: d.dir, findings: d.exp?.findings, rec_control: d.exp?.recommendation_control, rec_joint: d.exp?.recommendation_joint, failed: d.exp?.failed })))
 
 const MODS = [
-  { key: 'control', old: `${REPO}/experiments/hye/20261028_1327_final_Y_T control`, neo: `${REPO}/experiments/hye/00000_final_v3_Y_T control`, v2: `${REPO}/experiments/hye/v2_Y_T control`, role: '2차 Y 정렬(1차 후 T≈0). 원래 Y-or-T 출력. v3는 같은 공개 API(initialize_control, control, alignment_diagnostics)와 CMake 대상 semes_control, assets/ 구조를 유지한다.' },
-  { key: 'joint', old: `${REPO}/experiments/hye/20261028_1258_final_Y_T_joint`, neo: `${REPO}/experiments/hye/00000_final_v3_Y_T_joint`, v2: `${REPO}/experiments/hye/v2_Y_T_joint`, role: '1차 T 정렬(Y도 함께 추정하지만 운용은 T만 사용). v3는 같은 공개 API(initialize_joint, joint, alignment_diagnostics)와 CMake 대상 semes_joint, assets/ 구조를 유지한다.' },
+  { key: 'control', old: `${REPO}/experiments/hye/20261028_1327_final_Y_T control`, neo: `${REPO}/experiments/hye/00000_final_v3_Y_T control`, v2: `${REPO}/experiments/hye/20261104_1435_v2_control_강등`, role: '2차 Y 정렬(1차 후 T≈0). 원래 Y-or-T 출력. v3는 같은 공개 API(initialize_control, control, alignment_diagnostics)와 CMake 대상 semes_control, assets/ 구조를 유지한다.' },
+  { key: 'joint', old: `${REPO}/experiments/hye/20261028_1258_final_Y_T_joint`, neo: `${REPO}/experiments/hye/00000_final_v3_Y_T_joint`, v2: `${REPO}/experiments/hye/20261104_1435_v2_joint_강등`, role: '1차 T 정렬(Y도 함께 추정하지만 운용은 T만 사용). v3는 같은 공개 API(initialize_joint, joint, alignment_diagnostics)와 CMake 대상 semes_joint, assets/ 구조를 유지한다.' },
 ]
 
 phase('Design')

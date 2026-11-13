@@ -1,6 +1,6 @@
 add_library(semes_final_pin STATIC src/final_pin.cpp src/estimator.cpp)
 target_include_directories(semes_final_pin PUBLIC include ${OpenCV_INCLUDE_DIRS})
-target_include_directories(semes_final_pin PRIVATE ../v2_Y_T_joint/include)
+target_include_directories(semes_final_pin PRIVATE ../20261104_1435_v2_joint_강등/include)
 target_link_libraries(semes_final_pin PUBLIC semes_joint ${OpenCV_LIBS})
 target_compile_features(semes_final_pin PUBLIC cxx_std_17)
 if(MSVC)

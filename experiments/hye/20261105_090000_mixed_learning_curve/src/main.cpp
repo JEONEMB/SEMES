@@ -28,7 +28,7 @@ static std::vector<Row> load(const fs::path&root,std::string&hash){
     for(auto n:provenance["files"])if(std::string(n["path"])==rel)expected=std::string(n["sha256"]);
     if(expected.empty()||hash!=expected)throw std::runtime_error("Frozen feature SHA256 mismatch");
     std::map<std::string,std::vector<std::string>> truth;std::ifstream labels(root/"data/fivefold_seed20261104/_metadata/images.csv");std::string l;std::getline(labels,l);while(std::getline(labels,l)){auto v=split(l,',');if(v.size()!=11)throw std::runtime_error("Bad original metadata");truth["data/clean/clean_"+v[0]+"/"+v[2]]=v;}
-    cv::FileStorage protocol((root/"experiments/hye/v2_Y_T_joint/assets/line_protocol.json").u8string(),cv::FileStorage::READ);std::vector<double> bx;
+    cv::FileStorage protocol((root/std::filesystem::u8path(u8"experiments/hye/20261104_1435_v2_joint_강등/assets/line_protocol.json")).u8string(),cv::FileStorage::READ);std::vector<double> bx;
     for(auto n:protocol["blocks"]){auto b=n["read_box"];bx.push_back((double(b[0])+double(b[2]))/2.);}
     std::ifstream in(root/fs::u8path(rel));std::getline(in,l);std::vector<Row> rows;std::set<std::string> hashes;
     while(std::getline(in,l)){auto v=split(l,'\t');if(v.size()!=16)throw std::runtime_error("Bad feature row");Row r;r.id=std::stoi(v[0]);r.date=v[1];r.path=v[2];r.hash=v[3];r.group=v[4];r.y=std::stod(v[5]);r.t=std::stod(v[6]);
@@ -112,7 +112,7 @@ static void audit(const fs::path&out,const std::vector<Row>&rows){
     std::ofstream report(out/"audit.txt");report<<std::setprecision(17)<<"train_memberships "<<memberships<<"\ntrain_configurations "<<members.size()<<"\nserialized_train_test_intersection 0\nnested_budgets_verified true\nunique_prediction_keys "<<identities.size()<<"\nruns_verified "<<nruns<<"\naggregates_verified "<<nagg<<"\nfull_models_reloaded "<<loaded.size()<<"\nmodel_reload_prediction_max_difference "<<parity<<"\n";std::cout<<"Audit passed; model parity "<<parity<<std::endl;
 }
 static void benchmark(const fs::path&root,const fs::path&out,const std::vector<Row>&rows){
-    auto assets=root/"experiments/hye/v2_Y_T_joint/assets";auto t=Clock::now();alignment_detail::Observer qr(assets);auto center=alignment_detail::read_gray(assets/"center.bmp");final_pin::Observer pin(center);double init=ms(t);qr.measure(center);pin.measure(center);
+    auto assets=root/std::filesystem::u8path(u8"experiments/hye/20261104_1435_v2_joint_강등/assets");auto t=Clock::now();alignment_detail::Observer qr(assets);auto center=alignment_detail::read_gray(assets/"center.bmp");final_pin::Observer pin(center);double init=ms(t);qr.measure(center);pin.measure(center);
     std::vector<int> ids;for(int i=0;i<int(rows.size());++i)ids.push_back(i);ids=shuffled(ids,20261105u^0x12345678u);
     std::ofstream raw(out/"observation_timing.tsv"),summary(out/"observation_timing_summary.tsv");raw<<std::setprecision(17)<<"index\tdecode_ms\tqr_bars_ms\tpin_ms\n";std::vector<double> costs[3];
     for(int j=0;j<30;++j){auto&r=rows[ids[j]];auto path=root/fs::u8path(r.path);if(alignment_detail::sha256(path)!=r.hash)throw std::runtime_error("Timing image hash mismatch");t=Clock::now();auto image=alignment_detail::read_gray(path);double decode=ms(t);t=Clock::now();qr.measure(image);double q=ms(t);t=Clock::now();pin.measure(image);double p=ms(t);raw<<r.id<<'\t'<<decode<<'\t'<<q<<'\t'<<p<<'\n';costs[0].push_back(decode+q);costs[1].push_back(decode+p);costs[2].push_back(decode+q+p);}

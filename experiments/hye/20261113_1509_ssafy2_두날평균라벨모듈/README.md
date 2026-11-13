@@ -1,11 +1,11 @@
-# 00000_final_Y_T_ssafy_2 — 값 7개 Y·T 추정 모듈 (우리 장비, 두 날 정방향·역순 평균 라벨)
+# 20261113_1509_ssafy2_두날평균라벨모듈 — 값 7개 Y·T 추정 모듈 (우리 장비, 두 날 정방향·역순 평균 라벨)
 
 2026-11-13 사용자 지시로 만들었다. 코드와 측정 기준 자료는 [00000_final_Y_T_ssafy](../00000_final_Y_T_ssafy/README.md) 와 같다. 다른 것은 계수(`assets/model7.tsv`)와 출처 기록(`assets/provenance.json`)뿐이다.
 만든 과정은 실험 [20261113_1345_역순격자로라벨보정확인_정방향보정값옮겨적용](../20261113_1345_역순격자로라벨보정확인_정방향보정값옮겨적용/결과/결과.md) 에 있다.
 
 ## ssafy 와 무엇이 다른가
 
-| 항목 | 00000_final_Y_T_ssafy | 00000_final_Y_T_ssafy_2 |
+| 항목 | 00000_final_Y_T_ssafy | 20261113_1509_ssafy2_두날평균라벨모듈 |
 |---|---|---|
 | 학습 사진 | 1959장 (rig_1st 280, rig_grid 1679, 11-12) | **3638장** (위 + rig_grid_rev 1679, 11-13 역순) |
 | 격자 라벨 | L2: 같은 세트의 이웃 사진으로 만든 보정 | **같은 자세를 반대 순서로 찍은 두 세트의 평균** |
@@ -72,7 +72,7 @@ ssafy 와 같은 점검이다(설명은 [ssafy README](../00000_final_Y_T_ssafy/
 저장소 루트에서:
 
 ```
-cmake -S experiments/hye/00000_final_Y_T_ssafy_2/tool/standalone -B .batch_build/ssafy2 -G "Visual Studio 18 2026" -A x64 -T v141 -DOpenCV_DIR="C:/opencv/build"
+cmake -S experiments/hye/20261113_1509_ssafy2_두날평균라벨모듈/tool/standalone -B .batch_build/ssafy2 -G "Visual Studio 18 2026" -A x64 -T v141 -DOpenCV_DIR="C:/opencv/build"
 cmake --build .batch_build/ssafy2 --config Release
 ```
 
