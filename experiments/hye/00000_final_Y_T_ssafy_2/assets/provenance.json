@@ -1,7 +1,7 @@
 {
- "model_id": "final00_huber7_qrncc5_rig2day3638_avglabel_irls6_r1e-7",
+ "model_id": "final00_huber7_qrnccb2v5_rig2day3638_avglabel_irls6_r1e-7",
  "features": 7,
- "feature_order": "qr_ncc_dx_mean,(bar_tilt_upper unused),(bar_tilt_lower unused),screw1_x,screw2_x,screw3_x,screw4_x",
+ "feature_order": "qr_ncc_blur2_dx_mean,(bar_tilt_upper unused),(bar_tilt_lower unused),screw1_x,screw2_x,screw3_x,screw4_x",
  "training_images": 3638,
  "training_min": [
   -2.00678,
@@ -12,7 +12,7 @@
   0.98035
  ],
  "label_definition": "absolute zero: (Y mm, T deg) state whose 5 pose values (QR536 mean dx, 4 screw dx) are 0 against center.bmp (rig_1st/center.bmp). Per-set zero = median of (vision pose - command) over the set. rig_grid (2026-11-12 forward) and rig_grid_rev (2026-11-13 reverse order): command + set zero + mean of the two sets' zero-removed (vision - command) at the same pose. rig_1st: L2 of experiment 20261113_0950. Sign follows the rig stage command (opposite to SEMES).",
- "training_recipe": "shared normalized Huber IRLS6, ridge1e-7, no augmentation. 5 values: QR NCC parabola mean dx + 4 screw gradient dx; bar tilts not used (weights 0, not measured), 2026-11-13. Previous model final00_huber7_qrncc_rig2day3638_avglabel_irls6_r1e-7",
+ "training_recipe": "shared normalized Huber IRLS6, ridge1e-7, no augmentation. 5 values: QR NCC (Gaussian sigma 2 blur before NCC, 3-point parabola) mean dx + 4 screw gradient dx; bar tilts unused. 2026-11-13. Previous model final00_huber7_qrncc5_rig2day3638_avglabel_irls6_r1e-7",
  "scope": "rig_1st 280 + rig_grid 1679 + rig_grid_rev 1679 = 3638 photos fitted (experiment 20261113_1345). rig_grid_rev values were measured against the rev center and moved to this center.bmp reference with constants averaged over 18 center photos. Experiment asset, not a delivery model.",
  "observation_environment": "Windows x64, MSVC v141, OpenCV 3.4.15",
  "input_contract": "single 3840x2160 uint8 image; no labels, date or filename in inference",
@@ -22,5 +22,13 @@
  "points.json_sha256": "6694eac2ca1081de57e0154bfdf9d657941cb3d897ebb3e0009b18894a6f4b9c",
  "geometry.json_sha256": "e4a64861c241bffc1e7c392b55f97fc96ca8ad9b1687917bd4302e4f91cdb407",
  "line_protocol.json_sha256": "cd3c0f334d5da88ca708fca6dc75ef9b6470cf2130d2be388630d976dec368b0",
- "model7.tsv_sha256": "d9c15d286c8c82a539ecdfaa3b1d0c66878806b72c7ffc94cc73efdd851c7266"
+ "model7.tsv_sha256": "944b6e3d98709adc4fe7e0cd31148e3d79d98324ac435d99145171642703e137",
+ "alt_models": {
+  "track536": {
+   "file": "model7_track536.tsv",
+   "sha256": "80e2de46ecc61c6198441cbe8a94ad9d6093f31bedee0d28686551954bad35bb",
+   "model_id": "final00_huber7_qr536v5_rig2day3638_avglabel_irls6_r1e-7",
+   "note": "same photos, labels and splits as the default model; QR value measured with track536"
+  }
+ }
 }

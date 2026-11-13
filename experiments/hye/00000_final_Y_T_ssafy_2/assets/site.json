@@ -46,5 +46,6 @@
  ],
  "search_x": 125,
  "search_y": 22,
- "note": "rig 20261112. center.bmp = rig_1st/center.bmp. Made by make_rig_assets.py"
+ "note": "rig 20261112. center.bmp = rig_1st/center.bmp. Made by make_rig_assets.py",
+ "qr_method": "ncc"
 }
