@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>알고리즘 동작 확인</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/static/verify.css">
+<script src="/static/verify.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="title"><span class="mark">◎</span><div><h1>비전 Y · Θ 자동 정렬</h1><p>카메라로 보고 센터로 되돌리기 · A507</p></div></div>
+  <div class="pills">
+    <span class="pill" id="pill-stage">스테이지 —</span>
+    <span class="pill" id="pill-algo">알고리즘 —</span>
+    <span class="pill" id="pill-camera">카메라 —</span>
+    <button class="btn demo" id="btn-demo" title="카메라·STM32를 넘기고 데모 웹(발표용)을 엽니다">데모 웹으로 →</button>
+  </div>
+</header>
+
+<main class="shell">
+  <div class="left">
+    <section class="panel camera-panel">
+      <div class="panel-head">
+        <span>카메라 <small class="muted" id="cam-info"></small></span>
+        <div class="seg" role="group" aria-label="확대">
+          <button data-zoom="1" class="on">1×</button><button data-zoom="2">2×</button><button data-zoom="4">4×</button>
+        </div>
+        <div class="seg" role="group" aria-label="확대 중심">
+          <button data-center="image" class="on">화면 중심</button><button data-center="plate">QR 중심</button>
+        </div>
+        <div class="seg" role="group" aria-label="영상 종류">
+          <button data-mode="normal" class="on">일반</button><button data-mode="diff" title="지금 영상 − 센터 기준 사진. 정렬되면 판이 회색으로 사라짐">차이</button>
+        </div>
+        <button class="toggle on" id="btn-outline" aria-pressed="true" title="목표(점선)와 지금(실선) 위치를 영상 위에 그림">윤곽</button>
+      </div>
+      <div class="video-wrap"><div class="video">
+        <img id="video" alt="실시간 카메라 영상 (왜곡 보정, SEMES 화각)">
+        <svg class="ref-overlay" id="ref-overlay" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+        <div class="badge" id="motion-badge" data-moving="false"><i></i><span>정지</span>
+          <em class="axis" id="ax-y" data-on="false">Y</em><em class="axis" id="ax-t" data-on="false">Θ</em></div>
+        <div class="center-badge" id="center-badge" hidden></div>
+        <div class="video-empty" id="video-empty" hidden><strong>영상 없음</strong><span id="video-empty-msg"></span></div>
+      </div></div>
+      <div class="legend">
+        <span><i class="l-target"></i>목표 (센터 기준)</span>
+        <span><i class="l-now"></i>지금 (마지막 측정)</span>
+        <span><i class="l-qr"></i>QR 3개</span><span><i class="l-screw"></i>나사 2개</span>
+        <span class="muted">초록 = 허용 안 · 빨강 = 벗어남 · 이동 중엔 목표만</span>
+      </div>
+    </section>
+
+    <section class="panel flow">
+      <div class="step-card" data-step="1">
+        <div class="step-head"><b>1</b><strong>시작 위치 잡기</strong><small>센터에서 일부러 어긋나게</small></div>
+        <form class="step-body" id="goto-form" autocomplete="off">
+          <button type="button" class="pick" id="btn-goto-random">랜덤 위치로</button>
+          <button type="submit" class="pick" id="btn-goto">입력한 위치로</button>
+          <small class="pick-note" id="random-hint"></small>
+          <div class="pick-inputs">
+            <label>Y <input id="start-y" type="number" step="0.01" value="0.50" inputmode="decimal" required> mm</label>
+            <label>Θ <input id="start-t" type="number" step="0.01" value="0.20" inputmode="decimal" required> °</label>
+            <small class="pick-note" id="input-hint"></small>
+          </div>
+        </form>
+      </div>
+      <button class="flow-btn primary" id="btn-run" data-step="2"><b>2</b><span><strong>자동 보정 시작</strong><small>카메라로 보고 센터로 복귀</small></span></button>
+      <button class="flow-btn stop" id="btn-stop"><b>■</b><span><strong>정지</strong><small>바로 멈춤</small></span></button>
+      <div class="speed">
+        <span class="label">움직임</span>
+        <div class="seg big" role="group" aria-label="움직임 속도">
+          <button data-slow="true">천천히</button><button data-slow="false">빠르게</button>
+        </div>
+        <small class="muted" id="speed-info"></small>
+      </div>
+    </section>
+  </div>
+
+  <div class="right">
+    <section class="panel pos-card" id="pos-card" data-ok="unknown">
+      <span class="label" id="pos-label">지금 위치</span>
+      <div class="pos-big">
+        <div><span class="ax">Y</span><strong id="off-y">—</strong><small>mm</small></div>
+        <div><span class="ax">Θ</span><strong id="off-t">—</strong><small>°</small></div>
+        <div class="axmove" id="mv-y" hidden><i></i><span></span><b><u></u></b></div>
+        <div class="axmove" id="mv-t" hidden><i></i><span></span><b><u></u></b></div>
+      </div>
+      <p class="pos-sub" id="pos-sub"></p>
+      <div class="verdict" id="verdict">측정 전</div>
+    </section>
+
+    <section class="panel plot-card">
+      <div class="panel-head"><span>Y · Θ 지도 <small class="muted">가운데 초록 상자 = 허용 범위</small></span></div>
+      <svg id="plot" viewBox="0 0 400 300" preserveAspectRatio="none" aria-label="센터 대비 Y·Θ 위치와 보정 경로"></svg>
+      <div class="legend small">
+        <span><i class="p-cam"></i>카메라로 본 위치 (숫자 = 회차)</span><span><i class="p-goal"></i>이동 목표 (움직이는 동안)</span>
+        <span class="muted">눈금은 가운데를 크게 보이게 늘림</span>
+      </div>
+    </section>
+
+    <section class="panel progress-card">
+      <ol class="flow-steps" id="flow-steps">
+        <li data-step="1"><b>1</b>시작 위치</li><li data-step="2"><b>2</b>자동 보정</li><li data-step="3"><b>✓</b>센터 OK</li>
+      </ol>
+      <div class="phase" id="phase-box" data-phase="idle"><span class="light"></span><div><strong id="phase">대기</strong><p id="message"></p></div></div>
+      <div class="trial-line">
+        <span class="label">회차</span><strong id="trial">0</strong><span class="muted">/ <span id="trial-max">20</span></span>
+        <ol class="steps" id="steps">
+          <li data-phase="settling">흔들림 대기</li><li data-phase="capturing">촬영</li><li data-phase="inferring">추론</li><li data-phase="moving">보정 이동</li>
+        </ol>
+      </div>
+      <div class="result" id="result" hidden></div>
+    </section>
+  </div>
+
+  <section class="panel history">
+    <div class="panel-head"><span>회차별 기록 <small class="muted" id="run-id"></small></span>
+      <span class="muted small-note">카메라 = 알고리즘이 본 센터 대비 위치 · 스테이지 = STATUS 위치 − 센터</span></div>
+    <div class="scroll">
+      <table class="hist">
+        <thead><tr><th>회차</th><th>카메라 Y</th><th>카메라 Θ</th><th>스테이지 Y</th><th>스테이지 Θ</th><th>보정 명령 Y</th><th>보정 명령 Θ</th><th>추론 ms</th><th>판정</th></tr></thead>
+        <tbody id="hist-body"><tr><td colspan="9" class="muted">아직 기록이 없습니다.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <details class="panel tools">
+    <summary>관리 도구 <small class="muted">센터 기준 · 원점 복귀 · 한 단계 · 측정만 · 센터 지정 · 설정</small></summary>
+    <div class="tools-body">
+      <div class="row">
+        <button class="btn" id="btn-reference" title="센터로 가서 기준 사진을 다시 찍음 (랜덤 위치로를 누르면 없거나 오래됐을 때 자동)">⊙ 센터 기준 다시 찍기</button>
+        <button class="btn" id="btn-home">⌂ Y 원점 복귀</button>
+        <button class="btn" id="btn-step">한 단계 보정</button>
+        <button class="btn" id="btn-measure">측정만</button>
+        <button class="btn" id="btn-center">현재 위치를 센터로</button>
+      </div>
+      <div class="row small">
+        <span class="muted">센터 (스테이지 좌표)</span><strong id="center">—</strong>
+        <span class="muted">허용</span><strong id="tol">—</strong>
+        <span class="muted">센터 기준</span><strong id="refinfo">—</strong>
+        <span class="muted">스테이지 원래 좌표</span><strong id="pos-raw">—</strong>
+        <span class="flags" id="flags"></span>
+      </div>
+      <form id="settings-form">
+        <label>허용 Y (mm)<input name="tol_y_mm" type="number" step="0.001"></label>
+        <label>허용 Θ (°)<input name="tol_t_deg" type="number" step="0.001"></label>
+        <label>최대 회차<input name="max_trials" type="number" step="1"></label>
+        <label>랜덤 범위 Y ± (mm)<input name="random_y_mm" type="number" step="0.1"></label>
+        <label>랜덤 범위 Θ ± (°)<input name="random_t_deg" type="number" step="0.1"></label>
+        <label>천천히 Y (mm/s)<input name="slow_y_mm_s" type="number" step="0.05"></label>
+        <label>천천히 Θ (°/s)<input name="slow_t_deg_s" type="number" step="0.05"></label>
+        <label>빠르게 Y (mm/s)<input name="fast_y_mm_s" type="number" step="0.1"></label>
+        <label>빠르게 Θ (°/s)<input name="fast_t_deg_s" type="number" step="0.1"></label>
+        <label>회차 사이 쉬기 (s, 천천히)<input name="pause_s" type="number" step="0.5"></label>
+        <label>한 번 이동 한도 Y (mm)<input name="max_step_y_mm" type="number" step="0.1"></label>
+        <label>한 번 이동 한도 Θ (°)<input name="max_step_t_deg" type="number" step="0.1"></label>
+        <label>접근 거리 Y (mm)<input name="approach_y_mm" type="number" step="0.05"></label>
+        <label>접근 거리 Θ (°)<input name="approach_t_deg" type="number" step="0.01"></label>
+        <label>평균 장수<input name="average" type="number" step="1"></label>
+        <label>안정 판정 (px)<input name="settle_px" type="number" step="0.05"></label>
+        <label>안정 대기 한도 (s)<input name="settle_timeout_s" type="number" step="0.5"></label>
+        <label>센터 Y (mm)<input name="center_y_mm" type="number" step="0.001"></label>
+        <label>센터 Θ (°)<input name="center_t_deg" type="number" step="0.001"></label>
+        <label>센터 기준 유효 시간 (분)<input name="reference_max_age_min" type="number" step="5"></label>
+        <label class="check"><input name="enable_t" type="checkbox"> Θ 명령 보내기</label>
+        <label class="check"><input name="save_images" type="checkbox"> 회차 사진 저장</label>
+        <label class="check"><input name="auto_reference" type="checkbox"> 시작할 때 센터 기준 자동</label>
+        <button class="btn primary" type="submit">설정 저장</button>
+      </form>
+    </div>
+  </details>
+</main>
+
+<div class="overlay" id="overlay" hidden><div><span class="spinner"></span><strong id="overlay-text">전환 중…</strong></div></div>
+<div class="toast" id="toast" hidden></div></body>
+</html>

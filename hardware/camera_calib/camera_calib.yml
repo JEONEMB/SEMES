@@ -1,0 +1,32 @@
+%YAML:1.0
+---
+image_width: 4056
+image_height: 3040
+pattern_cols: 11
+pattern_rows: 8
+square_mm: 15.
+images_used: 54
+rms_px: 0.7798684713481624
+camera_matrix: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 3988.5456972551492, 0., 2111.0511562250567, 0.,
+       3987.6709078652984, 1508.9604659012284, 0., 0., 1. ]
+dist_coeffs: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [ -0.50175050978289537, 0.35692602507060073,
+       -6.4876921248785177e-05, 4.6648311552005336e-05,
+       -0.20580028611654294 ]
+fov_x_deg: 53.902666671304814
+fov_y_deg: 41.731180209674861
+focal_mm: 6.1822458307454813
+board_distance_median_mm: 280.02768557843035
+semes_crop_width: 3812
+semes_crop_height: 2010
+roll_deg: 0.23
+# calibrate_ro.py: 54 photos in captures_20261112c, findChessboardCornersSB + calibrateCameraRO, RMS 0.780 px
+# roll_deg: rotation about optical axis applied after undistortion (+ = output turns clockwise). Measure on the rig, then edit.
+# 2026-11-12 refocused at rig distance (QR sharpness ~2590), exposure 8333us gain 3.0. 43 photos + 11 left/right edge photos. roll_deg 0.23 = background lines matched to SEMES center.bmp

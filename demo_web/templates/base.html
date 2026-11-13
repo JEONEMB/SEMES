@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf }}">
+  <meta name="theme-color" content="#ffffff">
+  <title>{% block title %}SSAFY X SEMES = A507{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/common.js" defer></script>
+  {% block scripts %}{% endblock %}
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="시연 화면">SSAFY X SEMES = A507</a>
+    <nav>{% block nav %}{% endblock %}</nav>
+  </header>
+  {% block content %}{% endblock %}
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

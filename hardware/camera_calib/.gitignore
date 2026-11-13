@@ -1,0 +1,6 @@
+build/
+captures/
+*_undistort.png
+*_semes3840.png
+captures_*/
+captures_*_sb.json
