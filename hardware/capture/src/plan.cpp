@@ -98,6 +98,26 @@ std::vector<ShotSpec> planMixed(const std::vector<Rel> &poses, int repeat)
     return out;
 }
 
+std::vector<ShotSpec> planGrid(int32_t y_range_um, int32_t y_step_um, int32_t t_range_mdeg, int32_t t_step_mdeg)
+{
+    std::vector<ShotSpec> out;
+    if (y_range_um < 0 || t_range_mdeg < 0 || y_step_um <= 0 || t_step_mdeg <= 0) return out;
+    const int32_t ny = y_range_um / y_step_um, nt = t_range_mdeg / t_step_mdeg;
+    for (int32_t i = -nt; i <= nt; ++i) {
+        const bool forward = ((i + nt) % 2) == 0;     // 첫 줄은 Y 오름차순, 다음 줄은 내림차순 ('ㄹ')
+        for (int32_t j = -ny; j <= ny; ++j) {
+            const int32_t k = forward ? j : -j;
+            if (k == 0 && i == 0) continue;            // 센터는 따로 찍는다
+            ShotSpec s;
+            s.rel = {k * y_step_um, i * t_step_mdeg};
+            s.dir = "Grid";
+            s.stem = "Y" + fmtMilli(s.rel.y_um) + " T" + fmtMilli(s.rel.t_mdeg) + " (1)";
+            out.push_back(s);
+        }
+    }
+    return out;
+}
+
 std::vector<Rel> defaultMixedPoses()
 {
     std::vector<Rel> out;
