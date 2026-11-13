@@ -22,6 +22,7 @@
 //       다른 사진에서 점검값 분포, 기준 초과 수, 그날 영점 업데이트를 흉내 낸 경우(센터 근처 평균 / 센터 사진 1장)를 보인다.
 //   final00_tool range <features7.tsv> <labels.tsv> <splits.tsv> <출력 폴더> [no-bars]
 //       학습 범위 밖 예측 시험: 안쪽(|Y| ≤ 1, |T| ≤ 0.5)으로만 학습하고 바깥쪽을 예측한다. range.txt, predictions_range.tsv
+//   eval, range 에 use=0,3,4,5,6 처럼 붙이면 그 값만 써서 학습·평가한다(번호: 0 QR, 1 위 바, 2 아래 바, 3~6 나사 1~4).
 //   final00_tool eval 은 탈락 사진을 cv_failures.tsv 에도 남긴다(시험, 반복, 사진, 라벨, 예측, 오차).
 //   final00_tool register <assets> <출력 폴더> <기준 사진> [기준 사진 ...]
 //       기준 사진(여러 장이면 화소 평균)으로 새 측정 기준 자료를 출력 폴더에 쓰고 찾은 이동을 보인다.
@@ -71,6 +72,7 @@ cv::Mat read_image(const fs::path& p) {
 
 std::string g_method;   // method= 인자 (QR 방식). 비면 site.json
 bool g_health_stop = false;   // health=stop 인자: 측정값 일치 점검에 걸린 사진에서 멈춘다(predict)
+std::vector<int> g_use;       // use=0,3,4 인자: eval·range 에서 쓸 값 번호(kValueNames 순서). 비면 no-bars 여부로 정함
 
 int measure(const fs::path& assets, const fs::path& photos, const fs::path& out, bool no_bars = false) {
     if (fs::exists(out / "features7.tsv")) { std::cerr << "출력이 이미 있다\n"; return 3; }
@@ -152,8 +154,8 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
     if (fs::exists(out / "eval.txt")) { std::cerr << "출력이 이미 있다\n"; return 3; }
     Data d = load(features, labels, splits); const int n = int(d.id.size());
     // no_bars: 바 기울기 2개를 빼고 값 5개(QR 1 + 나사 4)로 학습·평가한다. model7.tsv 에는 바 두 줄을 가중치 0 으로 쓴다(측정기가 바를 재지 않는다).
-    const std::vector<int> used = no_bars ? std::vector<int>{0, 3, 4, 5, 6} : std::vector<int>{0, 1, 2, 3, 4, 5, 6};
-    if (no_bars) { cv::Mat x(n, int(used.size()), CV_64F); for (int j = 0; j < int(used.size()); ++j) d.x.col(used[j]).copyTo(x.col(j)); d.x = x; }
+    const std::vector<int> used = !g_use.empty() ? g_use : no_bars ? std::vector<int>{0, 3, 4, 5, 6} : std::vector<int>{0, 1, 2, 3, 4, 5, 6};   // use= 가 있으면 그 값만
+    if (used.size() != 7) { cv::Mat x(n, int(used.size()), CV_64F); for (int j = 0; j < int(used.size()); ++j) d.x.col(used[j]).copyTo(x.col(j)); d.x = x; }
     std::vector<int> dev, fin;
     for (int i = 0; i < n; ++i) (d.final[i] ? fin : dev).push_back(i);
     std::ostringstream o; o << std::fixed;
@@ -237,8 +239,8 @@ int evaluate(const fs::path& features, const fs::path& labels, const fs::path& s
 int range_test(const fs::path& features, const fs::path& labels, const fs::path& splits, const fs::path& out, bool no_bars) {
     if (fs::exists(out / "range.txt")) { std::cerr << "출력이 이미 있다\n"; return 3; }
     Data d = load(features, labels, splits); const int n = int(d.id.size());
-    const std::vector<int> used = no_bars ? std::vector<int>{0, 3, 4, 5, 6} : std::vector<int>{0, 1, 2, 3, 4, 5, 6};
-    if (no_bars) { cv::Mat x(n, int(used.size()), CV_64F); for (int j = 0; j < int(used.size()); ++j) d.x.col(used[j]).copyTo(x.col(j)); d.x = x; }
+    const std::vector<int> used = !g_use.empty() ? g_use : no_bars ? std::vector<int>{0, 3, 4, 5, 6} : std::vector<int>{0, 1, 2, 3, 4, 5, 6};   // use= 가 있으면 그 값만
+    if (used.size() != 7) { cv::Mat x(n, int(used.size()), CV_64F); for (int j = 0; j < int(used.size()); ++j) d.x.col(used[j]).copyTo(x.col(j)); d.x = x; }
     std::map<int, double> qr_corr;   // 값 파일의 QR 상관(가장 낮은 QR)
     for (auto& r : read_table(features, true)) if (r.at(11) == "1") qr_corr[std::stoi(r[0])] = std::stod(r.at(9));
     auto Y = [&](int i) { return d.y.at<double>(i, 0); }; auto T = [&](int i) { return d.y.at<double>(i, 1); };
@@ -531,6 +533,7 @@ int main(int raw_argc, char** raw_argv) {
             const std::string s(raw_argv[i]);
             if (s.rfind("method=", 0) == 0) g_method = s.substr(7);
             else if (s == "health=stop") g_health_stop = true;
+            else if (s.rfind("use=", 0) == 0) { std::stringstream u(s.substr(4)); std::string v; while (std::getline(u, v, ',')) { const int k = std::stoi(v); if (k < 0 || k > 6) throw std::invalid_argument("use= 는 0~6"); g_use.push_back(k); } std::sort(g_use.begin(), g_use.end()); }
             else kept.push_back(raw_argv[i]);
         }
         const int argc = int(kept.size()); char** argv = kept.data();
