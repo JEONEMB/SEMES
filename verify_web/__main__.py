@@ -28,13 +28,15 @@ def main():
                    help='기본: hardware/camera_calib/camera_calib.yml (있으면) → demo_web/calibration/camera_calib.yml')
     p.add_argument('--zoom', type=float, default=1.0, help='알고리즘 사진 배율 (데이터셋 촬영 --zoom 과 같게)')
     p.add_argument('--exposure', type=int, default=8333)
-    p.add_argument('--gain', type=float, default=2.0)
+    p.add_argument('--gain', type=float, default=3.0, help='데이터셋 촬영(2026-11-12)과 같게 3.0')
     p.add_argument('--fps', type=float, default=10.0)
     p.add_argument('--algo', choices=['worker', 'mock'], default='worker')
     p.add_argument('--algo-path', type=Path, default=ROOT / 'native' / 'build' / 'align_worker')
     p.add_argument('--algo-output', choices=['offset', 'command'], default='offset',
                    help='알고리즘 반환값: offset(센터 대비 위치, 명령 = 부호 반대) / command(보낼 명령)')
     p.add_argument('--algo-gray', action='store_true', help='알고리즘에 흑백 1채널로 넘김 (기본 BGR 3채널)')
+    p.add_argument('--algo-config', type=Path, default=None,
+                   help='알고리즘 설정 파일 (예: ~/KSH_Algorithm/Code/config/alignment.yml). 영점 등록을 쓰는 알고리즘만')
     p.add_argument('--demo-port', type=int, default=8080)
     p.add_argument('--demo-args', default='--mode hardware',
                    help='데모 웹으로 버튼으로 띄울 데모 웹 serve 추가 인자 (--host/--port 는 자동)')
@@ -73,7 +75,7 @@ def main():
     try:
         algorithm = (MockAlgorithm() if args.algo == 'mock' else
                      WorkerAlgorithm(args.algo_path, args.algo_output, args.algo_gray,
-                                     log_path=args.data_dir / 'align_worker.log'))
+                                     log_path=args.data_dir / 'align_worker.log', config=args.algo_config))
     except AlgorithmError as exc:
         p.error(f'{exc}\n  빌드: cmake -S verify_web/native -B verify_web/native/build -G Ninja && '
                 f'cmake --build verify_web/native/build   (또는 --algo mock)')

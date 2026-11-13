@@ -9,7 +9,7 @@ from .runner import RunError
 
 ROOT = Path(__file__).resolve().parent
 FONTS = ROOT.parent / 'demo_web' / 'static' / 'fonts'      # 데모 웹 글꼴을 읽기만 함
-PLATE_CENTER = (1907.0, 1065.0)   # SEMES center.bmp 의 가운데 QR (알고리즘 좌표)
+PLATE_CENTER = (1906.3, 1130.8)   # A507 센터 사진의 가운데 QR (알고리즘 좌표, SEMES 는 1907, 1065)
 NO_FRAME_GIVE_UP_S = 3            # 카메라 프레임이 이만큼(초) 없으면 영상 응답을 끝낸다
 
 
@@ -123,6 +123,11 @@ def create_app(runner, devices, demo):
     @app.post('/api/step')
     def step():
         runner.step()
+        return jsonify(ok=True)
+
+    @app.post('/api/reference')
+    def reference():
+        runner.reference()
         return jsonify(ok=True)
 
     @app.post('/api/measure')

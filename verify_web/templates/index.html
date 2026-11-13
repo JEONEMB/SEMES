@@ -70,6 +70,7 @@
   <section class="panel controls">
     <div class="row">
       <button class="btn" id="btn-home">⌂ Y 원점 복귀</button>
+      <button class="btn" id="btn-reference" title="센터로 가서(−쪽에서 접근) 사진을 찍어 알고리즘 영점으로 등록">⊙ 센터 기준 잡기</button>
       <button class="btn" id="btn-goto-random">↝ 랜덤 시작 위치</button>
       <label class="inline">Y <input id="start-y" type="number" step="0.01" value="0.50" inputmode="decimal"> mm</label>
       <label class="inline">Θ <input id="start-t" type="number" step="0.01" value="0.00" inputmode="decimal"> °</label>
@@ -85,6 +86,7 @@
       <span class="muted">센터 (스테이지 좌표)</span><strong id="center">—</strong>
       <button class="link" id="btn-center">현재 위치를 센터로</button>
       <span class="muted">허용</span><strong id="tol">—</strong>
+      <span class="muted">센터 기준</span><strong id="refinfo">—</strong>
     </div>
   </section>
 
@@ -112,6 +114,7 @@
       <label>랜덤 범위 Y ± (mm)<input name="random_y_mm" type="number" step="0.1"></label>
       <label>랜덤 범위 Θ ± (°)<input name="random_t_deg" type="number" step="0.1"></label>
       <label>접근 거리 Y (mm)<input name="approach_y_mm" type="number" step="0.05"></label>
+      <label>접근 거리 Θ (°)<input name="approach_t_deg" type="number" step="0.01"></label>
       <label>평균 장수<input name="average" type="number" step="1"></label>
       <label>안정 판정 (px)<input name="settle_px" type="number" step="0.05"></label>
       <label>안정 대기 한도 (s)<input name="settle_timeout_s" type="number" step="0.5"></label>

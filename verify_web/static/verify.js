@@ -110,9 +110,11 @@
         .map(([n, bit, cls]) => `<span class="${f & bit ? cls : ''}">${n}</span>`).join('');
     $('center').textContent = `Y ${st.center_y_mm.toFixed(3)} mm · Θ ${st.center_t_deg.toFixed(3)}°`;
     $('tol').textContent = `±${tolY} mm` + (st.enable_t ? ` · ±${tolT}°` : '');
+    const ref = s.reference;
+    $('refinfo').textContent = ref ? `${new Date(ref.ts * 1000).toLocaleTimeString()} 등록 (학습 영점 대비 Y ${fmt(ref.zero_y_mm * 1000, 1)} µm, Θ ${fmt(ref.zero_t_deg, 4)}°)` : '없음 — 학습 영점 사용';
     // 버튼
     const ready = dev.ready && s.phase !== 'released';
-    ['btn-home', 'btn-goto-random', 'btn-goto', 'btn-run', 'btn-step', 'btn-measure', 'btn-center']
+    ['btn-home', 'btn-reference', 'btn-goto-random', 'btn-goto', 'btn-run', 'btn-step', 'btn-measure', 'btn-center']
       .forEach(id => { $(id).disabled = !ready || s.busy; });
     $('btn-stop').disabled = !ready;
     // 기록
@@ -172,6 +174,7 @@
   act('btn-run', '/api/run', {});
   act('btn-step', '/api/step');
   act('btn-measure', '/api/measure');
+  act('btn-reference', '/api/reference');
   act('btn-stop', '/api/stop');
   act('btn-center', '/api/center-here');
 

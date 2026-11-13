@@ -37,6 +37,9 @@ class MockAlgorithm:
         t = truth[1] + self.rng.gauss(0, self.noise[1])
         return dict(y=y, t=t, ms=(time.monotonic() - t0) * 1000)
 
+    def set_reference(self, image):
+        return dict(y=0.0, t=0.0)
+
     def status(self):
         return dict(kind=self.kind, output=self.output, ready=True, detail='모의 추론 (실제 오차 + 잡음)')
 
@@ -47,19 +50,20 @@ class MockAlgorithm:
 class WorkerAlgorithm:
     kind = 'worker'
 
-    def __init__(self, path, output='offset', gray=False, timeout_s=30.0, log_path=None):
+    def __init__(self, path, output='offset', gray=False, timeout_s=30.0, log_path=None, config=None):
         self.path = Path(path)
         if not os.access(self.path, os.X_OK):
             raise AlgorithmError(f'알고리즘 실행기가 없음: {self.path} (verify_web/native 를 빌드하세요)')
         if output not in ('offset', 'command'):
             raise ValueError('output 은 offset 또는 command')
         self.output, self.gray, self.timeout_s = output, gray, timeout_s
+        self.config = str(config) if config else None   # 알고리즘 설정 파일 (alignment_init 에 넘김)
         self.log_path = log_path
         self.proc = None
         self.last_error = None
 
     def _start(self):
-        args = [str(self.path)] + (['--gray'] if self.gray else [])
+        args = [str(self.path)] + (['--gray'] if self.gray else []) + (['--config', self.config] if self.config else [])
         err = open(self.log_path, 'ab') if self.log_path else subprocess.DEVNULL
         try:
             self.proc = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=err)
@@ -101,6 +105,34 @@ class WorkerAlgorithm:
                 except Exception:
                     pass
             self.proc = None
+
+    def _send(self, magic, image, timeout):
+        if image is None or image.ndim != 2:
+            raise AlgorithmError('8bit 흑백 사진이 필요함')
+        if self.proc is not None and self.proc.poll() is not None:
+            self._kill()
+        if self.proc is None:
+            self._start()
+        h, w = image.shape
+        try:
+            self.proc.stdin.write(magic + struct.pack('<II', w, h))
+            self.proc.stdin.write(memoryview(image if image.flags['C_CONTIGUOUS'] else image.copy()))
+            self.proc.stdin.flush()
+            return self._readline(timeout)
+        except (AlgorithmError, OSError) as exc:
+            self._kill()
+            self.last_error = str(exc)
+            raise AlgorithmError(str(exc)) from exc
+
+    def set_reference(self, image):
+        """센터 사진으로 영점 등록 (alignment_set_reference). 반환: 학습 영점 대비 센터 사진의 측정값."""
+        line = self._send(b'ALGR', image, self.timeout_s)
+        if line.startswith('OK '):
+            _, y, t = line.split()[:3]
+            self.reference = dict(y=float(y), t=float(t))
+            return self.reference
+        self.last_error = line
+        raise AlgorithmError(f'영점 등록 실패: {line}')
 
     def infer(self, image, truth=None):
         if image is None or image.ndim != 2:

@@ -15,11 +15,17 @@
 cmake -S verify_web/native -B verify_web/native/build -G Ninja
 cmake --build verify_web/native/build
 
+# 1-1) 김성현 A507 알고리즘으로 빌드 (영점 등록 포함). Code 폴더 = src/ include/ config/
+cmake -S verify_web/native -B verify_web/native/build_ksh -G Ninja -DALGO_DIR=/home/pi/KSH_Algorithm/Code
+cmake --build verify_web/native/build_ksh
+
 # 2) 장치 없이 화면·흐름 시험
 demo_web/.venv/bin/python -m verify_web serve --mode mock --camera off --algo mock
 
-# 3) 실물 (robot_stage 드라이버 + 카메라 + 실제 알고리즘)
-demo_web/.venv/bin/python -m verify_web serve --mode hardware --calib <캘리브레이션.yml> --host 0.0.0.0
+# 3) 실물 (robot_stage 드라이버 + 카메라 + 김성현 알고리즘)
+demo_web/.venv/bin/python -m verify_web serve --mode hardware --host 0.0.0.0 \
+    --algo-path verify_web/native/build_ksh/align_worker \
+    --algo-config /home/pi/KSH_Algorithm/Code/config/alignment.yml
 ```
 
 - 화면: `http://<파이 IP>:8090` (기본은 파이 안에서만 `127.0.0.1`). `--host 0.0.0.0` 이면 같은 망 누구나 조작할 수 있다.
@@ -42,9 +48,21 @@ demo_web/.venv/bin/python -m verify_web serve --mode hardware --calib <캘리브
 
 화면의 **설정**에서 허용 오차(기본 Y ±0.045 mm, Θ ±0.01°), 최대 회차, 한 번 이동 한도(넘으면 움직이지 않고 멈춤), 랜덤 시작 범위, 접근 거리, 평균 장수, 안정 판정, Θ 명령 전송, 센터 좌표를 바꾼다. `verify_web/instance/settings.json` 에 저장된다.
 
+## 장비 조건 (2026-11-13)
+
+- 카메라 게인 기본 3.0, 노출 8333 µs — 데이터셋 촬영과 같다. 알고리즘이 그 밝기로 학습됐다.
+- **모든 이동은 −쪽 접근점(Y −0.2 mm, Θ −0.1°)을 거쳐 +방향으로 들어간다.** Θ 는 방향을 바꾸면 약 0.023° 빈 구간(백래시)이 있고,
+  같은 방향으로 접근하면 반복 정밀도가 0.002° 다 (`~/data/theta_test_20261113/REPORT.md`). 데이터셋도 이 방향으로 찍었다.
+- 보정 이동은 상대 이동이 아니라 "STATUS 위치 + 명령" 을 절대 목표로 보낸다 (접근점을 계산하려고).
+- 장치를 잡을 때 Y 속도를 1 mm/s 로 맞춘다 (STM32 리셋 뒤 기본 0.1 mm/s).
+- **센터 기준 잡기**: 센터로 가서 찍은 사진을 알고리즘 영점으로 등록한다 (`alignment_set_reference`). 센터는 몇 시간에 0.01~0.02° 씩 밀리므로
+  검증을 시작할 때마다 먼저 누른다. 안 누르면 알고리즘 설정 파일의 영점(학습 데이터 센터)을 쓴다.
+- 측정 실패(QR·나사를 못 찾음)는 NaN 이 아니라 오류로 돌아오고, 그 회차에서 멈춘다.
+
 ## 검증 순서
 
-1. **Y 원점 복귀** → 플레이트를 센터에 맞춘 뒤 **현재 위치를 센터로** (또는 설정에 데이터셋 촬영 `--center` 값 입력).
+1. **Y 원점 복귀** → 플레이트를 센터에 맞춘 뒤 **현재 위치를 센터로** (또는 설정에 센터 좌표 입력) → **센터 기준 잡기**.
+   STM32 가 리셋되면 원점이 0.4 mm 쯤 달라질 수 있으니, 센터 좌표는 알고리즘으로 다시 찾는다 (센터에서 "측정만" → 그만큼 옮겨 다시 측정).
 2. **랜덤 시작 위치** 또는 Y/Θ 를 넣고 **지정 위치로**. 시작 위치는 데이터셋과 같이 `접근 거리`만큼 −쪽에서 들어온다.
 3. **자동 보정** (끝까지) / **한 단계** (한 회차씩) / **측정만** (이동 없이 추론만).
 4. 결과: 추론이 허용 안으로 들어오면 완료. 이때 실제 오차가 허용 밖이면 `실제는 허용 밖!` 으로 표시한다.
