@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="실행"><UniqueIdentifier>{07a42cd3-24aa-4097-9bcc-f6e1fb5d0b86}</UniqueIdentifier></Filter>
+    <Filter Include="시뮬레이터 공용 (core)"><UniqueIdentifier>{9aab4038-9546-49cd-a542-4a96ec6a05ec}</UniqueIdentifier></Filter>
+    <Filter Include="모델 (Alignment)"><UniqueIdentifier>{27242429-f1a5-4e28-ae17-ae7127a0e480}</UniqueIdentifier></Filter>
+    <Filter Include="설정"><UniqueIdentifier>{3f78dbf3-b4a7-41e3-9e8d-26351d26aace}</UniqueIdentifier></Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp"><Filter>실행</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_config.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_world.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_runner.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_draw.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_paths.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_estimator.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\alignment.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\align_config.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\batch.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\coarse_align.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\dataset.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\estimator.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\evaluation.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\features.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\fine_align.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\image_util.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\interp_kernel.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\pose_model.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\relocate.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\core\sim_config.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_world.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_runner.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_draw.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_paths.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_estimator.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\sdk\sim_plugin.h"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\..\..\include\alignment.hpp"><Filter>모델 (Alignment)</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\config\simulator.yml"><Filter>설정</Filter></None>
+    <None Include="..\README.md"><Filter>설정</Filter></None>
+  </ItemGroup>
+</Project>

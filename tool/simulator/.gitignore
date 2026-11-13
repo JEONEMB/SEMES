@@ -1,0 +1,13 @@
+# 시뮬레이터 생성물 · 개인 파일 (소스만 올림)
+build/
+dist/
+results/
+plugins/
+sdk/build/
+world/_backup/
+# 팀원 플러그인 소스는 각자 관리 (README 만 올림)
+sdk/team/*/
+!sdk/team/README.md
+*.user
+*.aps
+x64/

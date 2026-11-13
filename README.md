@@ -12,6 +12,7 @@
 | `src/main.cpp` | 예제 실행 파일 (사진 한 장 추정 + 결과 창) |
 | `src/modules/*.cpp` | 알고리즘 모듈 구현 |
 | `tool/ksh/` | `align_train` (보정식 학습) · `align_eval` (정확도 평가) |
+| `tool/simulator/` | 영점 맞춤 시뮬레이터 최신 판 (콘솔 + MFC + 플러그인 SDK) — 루트의 `include/` · `src/` 정렬 알고리즘을 그대로 컴파일 |
 | `config/` | `alignment.yml` (모든 설정값) · `model_s1d1.yml`, `model_s3d2.yml` (학습된 보정식) |
 | `data/img/1st·2nd·3rd/` | 팀 공통 사진 (저장소에 올리지 않음) |
 | `docs/KSH/` | 알고리즘 설명 (`alignment/README.md` : 처리 흐름 · 모듈 · 검증 결과) |
