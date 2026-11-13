@@ -1,0 +1,29 @@
+{
+    "model_id":  "final00_huber7_qrnccb2v5_702_irls6_r1e-7",
+    "features":  7,
+    "feature_order":  "qr_dx_mean,bar_tilt_upper,bar_tilt_lower,screw1_x,screw2_x,screw3_x,screw4_x",
+    "training_images":  702,
+    "training_min":  [
+                         -2.0372,
+                         -1.00023
+                     ],
+    "training_max":  [
+                         1.9628,
+                         1.01252
+                     ],
+    "label_definition":  "absolute zero: (Y,T) relative to the pose whose image equals center.bmp; per-session command offsets removed",
+    "training_recipe":  "shared normalized Huber IRLS6, ridge1e-7, no augmentation",
+    "scope":  "All 702 in-range development photos fitted for deployment (ID 702 and T=+2.00 photos excluded). Cross-validation evidence is in evidence/.",
+    "observation_environment":  "Windows x64, MSVC v141, OpenCV 3.4.15",
+    "input_contract":  "single 3840x2160 uint8 image; no labels, date or filename in inference",
+    "created_date":  "2026-11-12",
+    "known_limits":  "vertical displacements are not used, so vertical faults are not detected; photos without all 536 valid QR points are rejected; new-machine transfer and closed-loop return are not validated",
+    "center.bmp_sha256":  "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+    "points.json_sha256":  "e826d499832c6821507e2b40a05ef7f9bd00a0ef86932c8562513320e67a7a33",
+    "geometry.json_sha256":  "25d635a7b239b7891954aa0b0381380709167ab2c44ed8bc0ec7b80269bf83ac",
+    "line_protocol.json_sha256":  "97a3550a812efa8521ccdce08e88d06b7604c1d853ecc1b582ad47830fba3669",
+    "model7.tsv_sha256":  "6bed9363de23eebe8144cf00831449fb0964db9f8f145f0a9cbd06e0d38a10d9",
+    "health.tsv_sha256":  "c298abcc22b62d0fa08a1163a32d0d0a5640cb3003dea75eaa43951bfa1fa5f9",
+    "health_note":  "value-consistency check (experiment 20261113_2230): per used value, quadratic in model output (Y, T); scale = 1.4826 MAD; threshold = 1.5 x 99.9 percentile of training H. Fitted on the same photos as the model with final00_tool health (C++).",
+    "note_experiment":  "experiment 20261114_0230 only: SEMES 702 blur NCC 5 values (no bars)"
+}
