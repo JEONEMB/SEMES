@@ -22,3 +22,8 @@ target_compile_definitions(perturb_test PRIVATE NOMINMAX _USE_MATH_DEFINES legac
 if(MSVC)
     target_compile_options(perturb_test PRIVATE /utf-8 /EHsc /openmp)
 endif()
+# 결과 요약 (OpenCV 없이 표준 C++ 만)
+add_executable(perturb_summary perturb_summary.cpp)
+if(MSVC)
+    target_compile_options(perturb_summary PRIVATE /utf-8 /EHsc)
+endif()
