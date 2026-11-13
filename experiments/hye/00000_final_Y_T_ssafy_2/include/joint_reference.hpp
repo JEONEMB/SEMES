@@ -35,3 +35,14 @@ Alignment_t joint_zero();                        // 지금 영점 (절대 영점
 //   바꾸기 전 기준으로 잴 수 없을 만큼 밀렸으면 절대 영점을 잃는다: 그 사진이 (0, 0) 이 되고 영점은 지워진다(report.absolute_kept = false).
 final00::ReferenceReport set_joint_reference(const cv::Mat& center);
 final00::ReferenceReport set_joint_reference(const std::vector<cv::Mat>& centers);
+//
+// [측정값 일치 점검] (2026-11-13, 실험 20261113_2230) 늘 계산한다. 기본은 멈추지 않고 경고만 남긴다(사용자 지시).
+//   QR·나사(SEMES 는 바도) 값이 한 자세로 함께 설명되지 않으면, joint() 는 값을 그대로 내고 alignment_diagnostics() 에 경고를 남긴다:
+//     normalized_cost_margin(점검값 / 기준값) > 1, message 가 "WARNING 측정값이 서로 맞지 않는다(...)" 로 시작, model_cost = 점검값.
+//   호출하는 쪽(확인 앱)은 joint() 뒤에 normalized_cost_margin > 1 이면 경고를 보여 준다. 나사 하나가 가려지거나 반사되면 Y 가 최대 3 mm 틀린
+//   값이 경고와 함께 나온다(교란 시험). set_joint_health_check(true) 면 같은 경우에 예외를 던진다(멈춤).
+//   set_joint_zero 와 set_joint_reference 는 그 센터 사진의 잔차를 점검의 0 으로 삼는다. 날이 바뀌어 화면이 조금 달라지면(11-13 카메라 처짐)
+//   영점을 다시 잡지 않은 채로는 경고가 많이 난다(11-13 사진 15%). 그날 영점 업데이트를 하면 3/1680 이었다.
+//   화면 전체가 같이 바뀌는 변화(카메라 회전, 가로 밀림, 판–나사 밀림)는 값들이 서로 맞아서 잡지 못한다. 그건 영점 업데이트로 없앤다.
+void set_joint_health_check(bool enabled);   // true 면 점검에 걸린 사진에서 예외를 던진다(기본 false: 경고만)
+bool joint_health_check();

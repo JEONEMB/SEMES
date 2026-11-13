@@ -3,6 +3,7 @@
 #include "reference.hpp"
 #include <vector>
 #include <array>
+#include <limits>
 #include <memory>
 #include <string>
 
@@ -48,6 +49,13 @@ struct Result {
     Alignment_t pose;
     Measurement measurement;
     bool outside_training_range;
+    // 측정값 일치 점검(2026-11-13, 실험 20261113_2230). 자세는 Y, T 두 개인데 값은 5~7개라, 정상이면 값들이 한 자세로 함께 설명된다.
+    // health = max_j |값_j − 2차식_j(출력 자세) − 기준 잔차_j| / 정상 흔들림_j. health_threshold 를 넘으면 값 하나가 다른 값과 맞지 않는다(나사 가림·반사 등).
+    // assets 에 점검식이 없으면 둘 다 NaN 이고 점검하지 않는다. 화면 전체가 같이 바뀌는 변화(회전, 가로 밀림, 판–나사 밀림)는 잡지 못한다(영점 업데이트의 몫).
+    double health = std::numeric_limits<double>::quiet_NaN();
+    double health_threshold = std::numeric_limits<double>::quiet_NaN();
+    int health_worst = -1;           // 가장 맞지 않는 값의 kValueNames 번호
+    bool health_failed() const { return health > health_threshold; }   // NaN 이면 false
 };
 
 class Estimator {
@@ -72,8 +80,15 @@ public:
     // 바꾸기 전 기준으로 잴 수 없으면 절대 영점을 잃는다: 그 사진이 (0, 0) 이 되고 영점은 지워진다(report.absolute_kept = false).
     ReferenceReport set_reference(const std::vector<cv::Mat>& centers);
     bool absolute_kept() const { return absolute_kept_; }
+    // 측정값 일치 점검식이 있는지. set_zero 와 set_reference 는 그 센터 사진의 잔차를 기준 잔차로 삼는다(그날 화면 상태를 0 으로).
+    bool has_health() const { return !health_.empty(); }
 private:
+    struct HealthRow { int value; std::array<double, 6> c; double scale; };   // 값 = c·(1, Y, T, Y², YT, T²)
     std::array<double, 2> raw(const Measurement& m) const;
+    std::array<double, 7> residual(const Measurement& m) const;   // 점검에 쓰는 값만 채운다(나머지 0)
+    std::vector<HealthRow> health_;
+    double health_threshold_ = std::numeric_limits<double>::quiet_NaN();
+    std::array<double, 7> health_offset_{};
     cv::Mat average(const std::vector<cv::Mat>& centers) const;
     Measurer measurer_;
     std::array<double, 2> bridge_{{0, 0}}, zero_{{0, 0}};
