@@ -36,7 +36,8 @@ HTML 보고서를 작성·수정할 때는 [보고서 기준 형식](docs/report
 
 ## 최종 정리 작업 위치
 
-- `experiments/hye/00000_final_Y_T/` (2026-11-12 사용자 지시로 추가한 1차 배포 모듈. 값 7개, 절대 영점 기준)
+- `experiments/hye/00000_final_Y_T_semes/` (2026-11-12 사용자 지시로 추가한 1차 배포 모듈. 값 7개, 절대 영점 기준, SEMES 사진 702장 학습. 2026-11-13 이름 변경 전 `00000_final_Y_T`)
+- `experiments/hye/00000_final_Y_T_ssafy/` (2026-11-13 사용자 지시. 위 모듈에서 화면 위치를 `assets/site.json` 에서 읽게 한 우리 장비용. 장비 사진 1959장, 보정 라벨 L2 학습)
 - `experiments/hye/20261028_1258_final_Y_T_joint/` (2026-11-12 이름 변경 전 `00000_final_Y_T_joint`)
 - `experiments/hye/20261028_1327_final_Y_T control/` (2026-11-12 이름 변경 전 `00000_final_Y_T control`)
 - `experiments/hye/20261111_0944_final_Y_T/` (2026-11-12 이름 변경 전 `00004_final_Y_T`)

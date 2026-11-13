@@ -1,4 +1,4 @@
-# 00000_final_Y_T — 값 7개 Y·T 추정 모듈 (1차 joint)
+# 00000_final_Y_T_semes — 값 7개 Y·T 추정 모듈 (1차 joint, SEMES 사진 학습)
 
 2026-11-12 작성. `experiments/selected_modules.cmake` 의 `SEMES_JOINT_DIR` 이 이 폴더를 가리킨다. `alignment()` 와 `joint()` 가 이 모듈로 계산한다.
 
@@ -44,7 +44,7 @@
 저장소 루트 빌드는 [개발환경](../../../docs/windows-setup.md) 을 따른다. 이 모듈과 도구만 빌드하려면 저장소 루트에서:
 
 ```
-cmake -S experiments/hye/00000_final_Y_T/tool/standalone -B .batch_build/final00 -G "Visual Studio 18 2026" -A x64 -T v141 -DOpenCV_DIR="C:/opencv/build"
+cmake -S experiments/hye/00000_final_Y_T_semes/tool/standalone -B .batch_build/final00 -G "Visual Studio 18 2026" -A x64 -T v141 -DOpenCV_DIR="C:/opencv/build"
 cmake --build .batch_build/final00 --config Release
 ```
 

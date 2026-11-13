@@ -6,5 +6,5 @@
 #   2차(control): CMakeLists.txt가 semes_control 대상을 만들고 initialize_control()·control()을 구현한다.
 #   두 모듈 모두 실행 자료를 assets/ 폴더에 둔다.
 
-set(SEMES_JOINT_DIR   "experiments/hye/00000_final_Y_T")
+set(SEMES_JOINT_DIR   "experiments/hye/00000_final_Y_T_semes")
 set(SEMES_CONTROL_DIR "experiments/hye/20261028_1327_final_Y_T control")
