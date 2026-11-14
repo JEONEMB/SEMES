@@ -32,7 +32,7 @@ if(MSVC)
 endif()
 
 # ---- tools/try: 써 보기, 빌드 확인, 문서 그림 ----
-foreach(name measure_one show_steps check_photos check_setup make_figures)
+foreach(name measure_one show_steps check_photos check_setup)
     add_program(${name} tools/try/${name}.cpp alignment)
     target_include_directories(${name} PRIVATE src)   # show_steps, make_figures 는 단계 함수를 직접 부른다
 endforeach()
@@ -72,3 +72,7 @@ endif()
 foreach(name make_environment_images make_site_images check_new_installation)
     add_program(${name} tools/environment/${name}.cpp alignment scene_effects)
 endforeach()
+
+if(WIN32)
+    add_program(make_figures tools/try/make_figures.cpp tools_common scene_effects gdi32)
+endif()
