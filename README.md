@@ -203,7 +203,7 @@ docs/                        문서 3개와 그림
   - 영점 (`zero`)
   - 기준을 다시 잡은 결과 (새 QR·나사 위치, 영점을 잇는 값 `carry_over`)
   - 값 일치 점검의 기준 어긋남 (`baselines`)
-- **위치**: [src/alignment.cpp](src/alignment.cpp#L38) 38~50줄 `struct State`
+- **위치**: [src/alignment.cpp](src/alignment.cpp#L44) 44~56줄 `struct State`
 - **다시 넣을 수 있는 것**: 영점 값만 `set_zero_value(y, t)` 로 넣을 수 있다. 이때 점검의 기준 어긋남은 0 이 된다.
 - **바꾸려면**
   - 코드 수정 없이: 켤 때마다 센터 사진으로 `set_zero_from_photos` 를 다시 부른다. 기준을 다시 잡았던 장비라면 그 앞에 `set_reference_from_photos` 도 부른다. 가장 단순하고 안전하다.
@@ -212,7 +212,7 @@ docs/                        문서 3개와 그림
 ### 9-5. 여러 스레드, 여러 카메라
 
 - **지금**: 상태가 프로그램 전체에 하나뿐이고(`state`), 모든 공개 함수가 같은 잠금(`state_mutex`)을 건다. 여러 스레드에서 불러도 안전하지만 **한 번에 한 장씩** 잰다. 카메라 여러 대를 각각 다른 기준으로 재는 구조는 지원하지 않는다.
-- **위치**: [src/alignment.cpp](src/alignment.cpp#L52) 52~53줄
+- **위치**: [src/alignment.cpp](src/alignment.cpp#L58) 58~59줄
 - **바꾸려면**
   - 카메라마다 프로그램(프로세스)을 따로 띄운다. 코드 수정이 없다.
   - 한 프로그램에서 하려면 `State` 와 잠금을 클래스 멤버로 옮기고, 공개 함수 6개를 그 클래스의 함수로 바꾼다. 단계 코드(`src/steps/`)는 이미 상태를 갖지 않아서 고칠 필요가 없다.
@@ -226,7 +226,7 @@ docs/                        문서 3개와 그림
 ### 9-7. 실패를 알리는 방식
 
 - **지금**: 어떤 함수도 예외를 던지지 않는다. 결과의 `status` 로 알리고, 실패면 `y_mm`, `t_deg` 가 NaN 이다. 안에서 생긴 예외도 잡아서 `E_INTERNAL` 로 돌려준다.
-- **위치**: [src/alignment.cpp](src/alignment.cpp#L67) 67줄 `failed`
+- **위치**: [src/alignment.cpp](src/alignment.cpp#L79) 79줄 `failed`
 - **바꾸려면**: 라이브러리는 그대로 두고, 부르는 쪽에서 `status == Status::Failed` 일 때 예외를 던지는 감싸는 함수를 만드는 것을 권한다.
 
 ### 9-8. 숫자 형식
