@@ -1,6 +1,6 @@
 // 평가: 속도
 //
-// 사용: measure_speed <data 폴더> <사진 폴더 또는 prepared 폴더> <출력 폴더> [--count 사진 수]
+// 사용: measure_speed <model 폴더> <사진 폴더 또는 tables 폴더> <출력 폴더> [--count 사진 수]
 //
 // 재는 것 (무엇을 쟀는지 분명하게)
 //   - initialize 한 번 걸리는 시간
@@ -62,7 +62,7 @@ std::string environment(const char* name) { const char* value = std::getenv(name
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc < 4) { std::cerr << "사용: measure_speed <data 폴더> <사진 폴더 또는 prepared 폴더> <출력 폴더> [--count 사진 수]\n"; return 2; }
+    if (argc < 4) { std::cerr << "사용: measure_speed <model 폴더> <사진 폴더 또는 tables 폴더> <출력 폴더> [--count 사진 수]\n"; return 2; }
     const std::string data_folder = argv[1];
     const fs::path input = fs::u8path(argv[2]), output = fs::u8path(argv[3]);
     size_t count = 0;

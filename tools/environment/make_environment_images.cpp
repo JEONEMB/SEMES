@@ -1,6 +1,6 @@
 // 화면 변화 한 가지씩: 카메라가 볼 화면을 기준 사진으로 만들고, 그 화면에서 지금 알고리즘이 어떻게 반응하는지 잰다.
 //
-// 사용: make_environment_images <data 폴더> <출력 폴더>
+// 사용: make_environment_images <model 폴더> <출력 폴더>
 //   출력: 화면마다 env_<번호>.png (판 둘레를 잘라 절반 크기), 한눈에 보기 overview.png, 알고리즘 반응 표 results.tsv
 //
 // 주의
@@ -59,7 +59,7 @@ cv::Mat busy_background(const cv::Mat& gray, const Layout& layout) {
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc != 3) { std::cerr << "사용: make_environment_images <data 폴더> <출력 폴더>\n"; return 2; }
+    if (argc != 3) { std::cerr << "사용: make_environment_images <model 폴더> <출력 폴더>\n"; return 2; }
     const fs::path data = fs::u8path(argv[1]), out = fs::u8path(argv[2]);
     fs::create_directories(out);
     if (alignment::initialize(data.u8string()).status == alignment::Status::Failed) return 1;

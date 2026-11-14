@@ -1,6 +1,6 @@
 // 평가: 정확도 (학습에 안 쓴 사진으로만 시험한다)
 //
-// 사용: evaluate_accuracy <prepared 폴더> <출력 폴더>
+// 사용: evaluate_accuracy <tables 폴더> <출력 폴더>
 //
 // 시험 (나사 4개 조합의 계수, 시험마다 새로 학습)
 //   1. 섞음:        마지막 확인 사진을 뺀 나머지를 5묶음으로 나눠 돌아가며 시험, 나누기를 바꿔 10번
@@ -12,7 +12,7 @@
 //   - 받은 정답 (파일 이름의 명령값 그대로). 영점 없이 / 그 회차에서 영점을 잡고
 //       영점: 그 회차의 명령 (0, 0) 사진이 있으면 그 사진들, 없으면 명령값을 아는 센터 근처(|Y| <= 0.25, |T| <= 0.05) 사진 5장
 //             으로 평균(측정 − 명령)을 구한다. 5장은 200번 뽑아 평균. 영점에 쓴 사진은 채점에서 뺀다
-//   - 학습 정답 (명령 − 그 회차의 영점 어긋남, prepared/labels.tsv)
+//   - 학습 정답 (명령 − 그 회차의 영점 어긋남, tables/labels.tsv)
 #include "common/dataset.hpp"
 #include "common/pose_model.hpp"
 #include "common/tables.hpp"
@@ -102,12 +102,12 @@ std::string percent(double value) { std::ostringstream o; o << std::fixed << std
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc < 3) { std::cerr << "사용: evaluate_accuracy <prepared 폴더> <출력 폴더>\n"; return 2; }
-    const fs::path prepared = fs::u8path(argv[1]), output = fs::u8path(argv[2]);
+    if (argc < 3) { std::cerr << "사용: evaluate_accuracy <tables 폴더> <출력 폴더>\n"; return 2; }
+    const fs::path tables = fs::u8path(argv[1]), output = fs::u8path(argv[2]);
     std::vector<DatasetPhoto> photos;
     std::vector<SessionZero> sessions;
     std::string error;
-    if (!load_prepared(prepared, photos, sessions, error)) { std::cerr << error << "\n"; return 1; }
+    if (!load_tables(tables, photos, sessions, error)) { std::cerr << error << "\n"; return 1; }
     if (!make_empty_folder(output, error)) { std::cerr << error << "\n"; return 1; }
 
     std::vector<const DatasetPhoto*> usable, development, final_check;

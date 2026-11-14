@@ -23,7 +23,7 @@ bool read_required(const fs::path& path, Table& table, std::string& error) {
 
 }   // namespace
 
-bool load_prepared(const fs::path& folder, std::vector<DatasetPhoto>& photos, std::vector<SessionZero>& sessions, std::string& error) {
+bool load_tables(const fs::path& folder, std::vector<DatasetPhoto>& photos, std::vector<SessionZero>& sessions, std::string& error) {
     Table photo_table, feature_table, label_table, split_table, session_table;
     if (!read_required(folder / "photos.tsv", photo_table, error) || !read_required(folder / "features.tsv", feature_table, error) ||
         !read_required(folder / "labels.tsv", label_table, error) || !read_required(folder / "splits.tsv", split_table, error) ||

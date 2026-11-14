@@ -2,7 +2,7 @@
 // QR 판 정렬 측정: 사진 한 장에서 판이 기준 위치에서 얼마나 벗어났는지 (Y mm, T 도) 를 잰다.
 //
 // 쓰는 순서
-//   1. alignment::initialize("data 폴더")            한 번
+//   1. alignment::initialize("model 폴더")            한 번
 //   2. alignment::set_zero_from_photos(명령 0 사진들)  날마다, 카메라, 조명, 판을 건드린 뒤 (권장)
 //   3. alignment::measure_alignment(사진)            사진마다
 //

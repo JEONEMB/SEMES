@@ -1,5 +1,5 @@
 #pragma once
-// dataset/prepared/ 의 표를 읽어 사진 한 장씩 묶는다 (prepare_dataset 이 만든 것).
+// data/new_photos/tables/ 의 표를 읽어 사진 한 장씩 묶는다 (prepare_dataset 이 만든 것).
 //
 //   photos.tsv    id, session, path, command_y_mm, command_t_deg
 //   features.tsv  id, measured, qr, screw1, screw2, screw3, screw4   (못 찾은 나사는 nan)
@@ -36,7 +36,7 @@ struct SessionZero {
     int photos = 0;
 };
 
-// prepared 폴더를 읽는다. 실패하면 false 와 이유.
-bool load_prepared(const std::filesystem::path& folder, std::vector<DatasetPhoto>& photos, std::vector<SessionZero>& sessions, std::string& error);
+// tables 폴더를 읽는다. 실패하면 false 와 이유.
+bool load_tables(const std::filesystem::path& folder, std::vector<DatasetPhoto>& photos, std::vector<SessionZero>& sessions, std::string& error);
 
 }   // namespace tools

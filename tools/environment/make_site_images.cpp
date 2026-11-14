@@ -2,7 +2,7 @@
 // 환경을 알아보게 하는 물체(레일, 선반, 웨이퍼 등)를 판 아래 몸체와 위쪽 빈 곳에 그린다.
 // 그 화면에서 지금 알고리즘이 어떻게 반응하는지도 잰다.
 //
-// 사용: make_site_images <data 폴더> <출력 폴더>
+// 사용: make_site_images <model 폴더> <출력 폴더>
 //   출력: site_<A~J>.png, 한눈에 보기 site_overview.png, 반응 표 site_results.tsv
 //
 // 주의
@@ -110,7 +110,7 @@ cv::Mat yellow_tint(const cv::Mat& bgr) {
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc != 3) { std::cerr << "사용: make_site_images <data 폴더> <출력 폴더>\n"; return 2; }
+    if (argc != 3) { std::cerr << "사용: make_site_images <model 폴더> <출력 폴더>\n"; return 2; }
     const fs::path data = fs::u8path(argv[1]), out = fs::u8path(argv[2]);
     fs::create_directories(out);
     if (alignment::initialize(data.u8string()).status == alignment::Status::Failed) return 1;

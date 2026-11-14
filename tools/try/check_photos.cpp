@@ -1,5 +1,5 @@
 // 확인: 사진 여러 장을 재서 표로 쓰고, 기대값 표가 있으면 비교한다.
-// 사용: check_photos <data 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px] [아래로 옮길 px]
+// 사용: check_photos <model 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px] [아래로 옮길 px]
 //   사진 목록.tsv : 번호<TAB>사진 경로  (머리줄 없음)
 //   기대값.tsv    : 번호<TAB>Y<TAB>T    (머리줄 없음)
 //   가로·아래로 옮길 px: 사진을 통째로 옮겨 큰 이동이나 카메라 처짐을 흉내 낼 때 (기본 0). 기대값이 없으면 - 를 넣는다
@@ -53,7 +53,7 @@ cv::Mat moved(const cv::Mat& photo, int right, int down) {
 
 int main(int argc, char** argv) {
     if (argc < 4) {
-        std::cerr << "사용: check_photos <data 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px] [아래로 옮길 px]\n";
+        std::cerr << "사용: check_photos <model 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px] [아래로 옮길 px]\n";
         return 2;
     }
     if (alignment::initialize(argv[1]).status == alignment::Status::Failed) return 1;

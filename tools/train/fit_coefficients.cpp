@@ -1,11 +1,11 @@
-// 학습: dataset/prepared/ → 새 data 폴더 (coefficients/, checks/, reference.json, center.bmp)
+// 학습: data/new_photos/tables/ → 새 model 폴더 (coefficients/, checks/, reference.json, center.bmp)
 //
-// 사용: fit_coefficients <prepared 폴더> <새 data 폴더> [--data <지금 data 폴더>]
-//   새 data 폴더는 비어 있어야 한다 (덮어쓰지 않는다). 평가로 확인한 뒤 사람이 data/ 에 복사한다.
-//   --data 를 안 주면 "data". 기준 사진과 QR, 나사 위치는 그대로 가져온다 (측정값을 잰 기준이라 바꾸면 안 된다).
+// 사용: fit_coefficients <tables 폴더> <새 model 폴더> [--data <지금 model 폴더>]
+//   새 model 폴더는 비어 있어야 한다 (덮어쓰지 않는다). 평가로 확인한 뒤 사람이 data/model/ 에 복사한다.
+//   --data 를 안 주면 "data/model". 기준 사진과 QR, 나사 위치는 그대로 가져온다 (측정값을 잰 기준이라 바꾸면 안 된다).
 //
 // 하는 일
-//   1. 계수: 나사 조합 16가지마다 Y, T 선형식 (common/pose_model.hpp 의 식). 학습 사진 = prepared 의 usable 사진 전부
+//   1. 계수: 나사 조합 16가지마다 Y, T 선형식 (common/pose_model.hpp 의 식). 학습 사진 = tables 의 usable 사진 전부
 //   2. 점검식: 나사 2개 이상 조합 11가지마다, 값마다 "이 Y, T 라면 이 값이어야 한다" 2차식
 //        기대값 = c1 + cY·Y + cT·T + cYY·Y² + cYT·Y·T + cTT·T²   (Y, T = 그 조합의 계수로 낸 값)
 //        scale  = 1.4826 × (잔차 − 잔차 가운데값)의 절댓값 가운데값   (정상 사진에서 흔들리는 정도)
@@ -143,15 +143,15 @@ bool write_reference(const fs::path& from_data, const fs::path& to_data, double 
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc < 3) { std::cerr << "사용: fit_coefficients <prepared 폴더> <새 data 폴더> [--data <지금 data 폴더>]\n"; return 2; }
-    const fs::path prepared = fs::u8path(argv[1]), output = fs::u8path(argv[2]);
-    fs::path current_data = "data";
+    if (argc < 3) { std::cerr << "사용: fit_coefficients <tables 폴더> <새 model 폴더> [--data <지금 model 폴더>]\n"; return 2; }
+    const fs::path tables = fs::u8path(argv[1]), output = fs::u8path(argv[2]);
+    fs::path current_data = "data/model";
     for (int a = 3; a + 1 < argc; ++a) if (std::string(argv[a]) == "--data") current_data = fs::u8path(argv[a + 1]);
 
     std::vector<DatasetPhoto> photos;
     std::vector<SessionZero> sessions;
     std::string error;
-    if (!load_prepared(prepared, photos, sessions, error)) { std::cerr << error << "\n"; return 1; }
+    if (!load_tables(tables, photos, sessions, error)) { std::cerr << error << "\n"; return 1; }
     if (!make_empty_folder(output, error)) { std::cerr << error << "\n"; return 1; }
 
     std::vector<Values> values;

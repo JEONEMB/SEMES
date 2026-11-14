@@ -3,8 +3,8 @@
 //   (나) 바뀐 화면으로 기준 사진과 QR, 나사 위치를 새로 등록하면 움직인 사진까지 맞게 재는지
 // 를 잰다. 계수(px → mm)는 바꾸지 않는다.
 //
-// 사용: check_new_installation <data 폴더> <예제 사진 목록 list.tsv> <기대값 expected.tsv> <작업 폴더> <출력 폴더>
-//   작업 폴더에는 경우마다 새 data 폴더(기준 사진, reference.json, 계수 복사)를 만든다. 영문 경로를 쓴다.
+// 사용: check_new_installation <model 폴더> <예제 사진 목록 list.tsv> <기대값 expected.tsv> <작업 폴더> <출력 폴더>
+//   작업 폴더에는 경우마다 새 model 폴더(기준 사진, reference.json, 계수 복사)를 만든다. 영문 경로를 쓴다.
 //   출력: installation_results.tsv, installation_<경우>.png (몇 가지 경우의 화면)
 //
 // 바꾸는 순서 (같은 변화를 기준 사진과 움직인 사진에 똑같이)
@@ -91,7 +91,7 @@ Layout transform_layout(const Layout& l, const Case& c, cv::Size photo) {
     return out;
 }
 
-// 새 data 폴더: 바뀐 기준 사진, 새 위치, 계수와 점검식은 그대로 복사
+// 새 model 폴더: 바뀐 기준 사진, 새 위치, 계수와 점검식은 그대로 복사
 void write_registered_data(const fs::path& from, const fs::path& to, const cv::Mat& center, const Layout& l) {
     fs::create_directories(to);
     std::vector<unsigned char> bytes;
@@ -131,7 +131,7 @@ const char* status_name(alignment::Status s) { return s == alignment::Status::Ok
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc != 6) { std::cerr << "사용: check_new_installation <data 폴더> <list.tsv> <expected.tsv> <작업 폴더> <출력 폴더>\n"; return 2; }
+    if (argc != 6) { std::cerr << "사용: check_new_installation <model 폴더> <list.tsv> <expected.tsv> <작업 폴더> <출력 폴더>\n"; return 2; }
     const fs::path data = fs::u8path(argv[1]), work = fs::u8path(argv[4]), out = fs::u8path(argv[5]);
     fs::create_directories(work);
     fs::create_directories(out);

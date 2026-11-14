@@ -18,7 +18,7 @@
 ```cpp
 #include "alignment.hpp"
 
-alignment::initialize("data");                                   // 한 번
+alignment::initialize("data/model");                                   // 한 번
 alignment::Result r = alignment::measure_alignment(photo);       // 사진마다
 // r.y_mm, r.t_deg  → 보정 이동은 (−r.y_mm, −r.t_deg)
 // r.status, r.message → 경고나 실패가 있으면 여기에
@@ -45,14 +45,14 @@ cmake --build build --config Release
 예제 사진 5장으로 값이 맞는지 본다(폴더 맨 위에서 실행).
 
 ```
-build/Release/check_photos data tests/photos/list.tsv out.tsv tests/photos/expected.tsv
+build/Release/check_photos data/model data/sample/list.tsv out.tsv data/sample/expected.tsv
 → 기대값과 비교 5장: Y 차이 최대 0.00000000 mm, T 차이 최대 0.00000000 도
 ```
 
 사진 한 장의 단계별 값을 본다.
 
 ```
-build/Release/measure_one data tests/photos/sample_1.png
+build/Release/measure_one data/model data/sample/sample_1.png
 ```
 
 ## 3. 폴더
@@ -71,12 +71,21 @@ src/
     find_new_reference       기준 사진 다시 잡기
   common/reference           기준 사진과 QR·나사 위치
 config/settings.json         설정 (기본값과 설명)
-data/                        기준 사진, 위치, 계수, 점검식
-examples/measure_one.cpp     사진 한 장 재 보기
-examples/show_steps.cpp      단계마다의 값을 모두 찍기 (옮긴 코드와 비교할 때)
-tests/                       확인 프로그램과 예제 사진·기대값
-tool/make_figures.cpp        문서의 그림 만들기
-docs/                        문서 3개와 그림
+data/
+  model/                     측정할 때 읽는 파일: 기준 사진, 위치, 계수, 점검식 (장비에는 이것만 보낸다)
+  new_photos/                설비에서 받은 사진을 넣는 곳 (Git 에 올리지 않음)
+  sample/                    확인용 예제 사진 5장과 기대값
+tools/
+  try/                       써 보기와 확인
+    measure_one                사진 한 장 재 보기
+    show_steps                 단계마다의 값을 모두 찍기 (옮긴 코드와 비교할 때)
+    check_photos, check_setup  예제 사진으로 빌드가 맞는지 확인
+    make_figures               문서의 그림 만들기
+  train/                     계수를 다시 만들 때: prepare_dataset, fit_coefficients
+  evaluate/                  성능을 잴 때: evaluate_accuracy, measure_speed, score_photos
+  environment/               다른 설치 환경의 화면을 만들어 반응 보기
+  common/                    도구가 같이 쓰는 코드
+docs/                        문서와 그림
 ```
 
 **읽는 순서**: `include/alignment.hpp` → `src/alignment.cpp` 의 `measure_alignment` → `steps/01` → `02` → `03` → `04`. 각 단계의 `.hpp` 맨 위에 그 단계가 하는 일을 적어 두었다.
@@ -145,7 +154,7 @@ docs/                        문서 3개와 그림
 | `W_VALUES_DISAGREE` | 점검값(값마다 \|측정값 − 기대값 − 기준 어긋남\| ÷ scale 중 가장 큰 것)이 그 나사 조합의 `threshold` 를 넘었다 (4개 다 쓰면 5.195). 나사 2개 이상 조합에만 점검식이 있다. `fail_on_disagreement` 가 0(기본)일 때 | **틀렸을 수 있다.** 나사 하나가 가려져 엉뚱하게 재진 경우(점검이 없으면 Y 최대 3 mm 틀림), Y 가 0.1 mm 넘게 틀린 경우는 모두 이 경고가 났다(자체 장비 사진). 0.1 mm 아래의 오차는 못 잡을 수 있다. 정상 사진의 괜한 경고: SEMES 702장 0장, 영점을 날마다 잡으면 0.2% | 1. 콘솔에 `[경고 W_VALUES_DISAGREE] (QR 또는 나사 번호) 값이 다른 값들과 맞지 않습니다. 가림·반사·이물을 확인하세요. 모든 사진에서 나오면 영점을 다시 잡으세요`<br>2. 이 값으로 보정하지 않는다<br>3. 가림, 반사, 이물을 확인하고 `measure_alignment` 를 다시 부른다<br>4. 계속 나오면 센터에서 `set_zero_from_photos` 를 부른다 | `src/alignment.cpp:187`, 점검 `src/steps/04_check_result.cpp:71` |
 | `W_SCREW_MISSING` | 좌우 나사가 남아 정밀 계수를 썼지만, 설정에서 쓰기로 한 나사 중 못 찾은 것이 있다 | 작다. 나사 하나를 가렸을 때 가리기 전과 Y 0.007 mm, T 0.0006도 차이 | 1. 콘솔에 `[경고 W_SCREW_MISSING] 나사 N 을 찾지 못해 나머지 나사로 계산했습니다. 가림·이물을 확인하세요`<br>2. 그 값으로 보정해도 된다<br>3. 다음 측정 전에 나사의 가림, 이물을 확인한다 | `src/alignment.cpp:191` |
 | `W_FAR` | ±250 px 창에서도 다 못 찾아, 사진 전체 폭에서 QR 3개를 모두 찾았다 | **검증 전.** 사진을 통째로 옮긴 합성 시험에서는 ±600 px 까지 값이 나왔다. 실제로 멀리 간 자세(렌즈 가장자리 왜곡, 원근 변화)에서는 확인하지 못했다. 더 확인하려면: 실제 큰 자세 사진으로 구간별 오차를 잰다 | 1. 콘솔에 `[경고 W_FAR] QR 이 기준에서 250 px 넘게 떨어져 있습니다. 값이 부정확할 수 있으니 옮긴 뒤 다시 측정하세요`<br>2. 로봇을 (−`y_mm`, −`t_deg`) 만큼 옮긴다<br>3. `measure_alignment` 를 다시 부른다<br>4. 경고가 없어질 때까지 반복한다 | `src/alignment.cpp:193` |
-| `W_OUT_OF_RANGE` | 영점을 빼기 전 값(계산값 + 기준을 다시 잡을 때 이어 붙인 값)이 `data/reference.json` 의 학습 범위(Y −2.0372 ~ 1.9628 mm, T −1.00023 ~ 1.01252도) 밖이다 | 떨어질 수 있다. 범위 밖 예측 시험에서 Y 는 비례 오차 0.3%(허용오차 밖 없음), T 는 가장자리에서 1~1.5% 크게 읽었다. 예: T 2도면 0.02~0.03도 틀려 허용오차를 넘는다. 실제 범위 밖 사진으로는 확인하지 못했다 | 1. 콘솔에 `[경고 W_OUT_OF_RANGE] 학습한 범위(Y ±2 mm, T ±1도) 밖입니다. 오차가 커질 수 있으니 옮긴 뒤 다시 측정하세요`<br>2. 로봇을 (−`y_mm`, −`t_deg`) 만큼 옮긴다<br>3. `measure_alignment` 를 다시 부른다<br>4. 범위 안에 들어오면 그 값은 정밀값이다 | `src/alignment.cpp:195`, 판정 `src/steps/04_check_result.cpp:84` |
+| `W_OUT_OF_RANGE` | 영점을 빼기 전 값(계산값 + 기준을 다시 잡을 때 이어 붙인 값)이 `data/model/reference.json` 의 학습 범위(Y −2.0372 ~ 1.9628 mm, T −1.00023 ~ 1.01252도) 밖이다 | 떨어질 수 있다. 범위 밖 예측 시험에서 Y 는 비례 오차 0.3%(허용오차 밖 없음), T 는 가장자리에서 1~1.5% 크게 읽었다. 예: T 2도면 0.02~0.03도 틀려 허용오차를 넘는다. 실제 범위 밖 사진으로는 확인하지 못했다 | 1. 콘솔에 `[경고 W_OUT_OF_RANGE] 학습한 범위(Y ±2 mm, T ±1도) 밖입니다. 오차가 커질 수 있으니 옮긴 뒤 다시 측정하세요`<br>2. 로봇을 (−`y_mm`, −`t_deg`) 만큼 옮긴다<br>3. `measure_alignment` 를 다시 부른다<br>4. 범위 안에 들어오면 그 값은 정밀값이다 | `src/alignment.cpp:195`, 판정 `src/steps/04_check_result.cpp:84` |
 | `W_ZERO_RESET` | `set_reference_from_photos` 에서, 그 사진을 바꾸기 전 기준으로 QR 이나 좌우 나사를 재지 못했다. 그 사진을 새 (0, 0) 으로 삼고 영점도 0 으로 되돌린다. 이 함수의 결과에만 붙는다 | 영점이 바뀐다. 그 센터 사진이 실제 센터가 아니면 이후 모든 값이 그만큼 치우친다 | 1. 콘솔에 `[경고 W_ZERO_RESET] 이전 기준으로는 잴 수 없어 영점을 이을 수 없었습니다. 이 사진을 (0, 0) 으로 삼았습니다`<br>2. 영점이 바뀌었음을 기록한다<br>3. 로봇이 실제 센터에 있는지 확인하고, 필요하면 `set_zero_from_photos` 를 부른다 | `src/alignment.cpp:367` |
 
 ### 5-3. 실패 (값이 없다, 멈춘다)
@@ -153,7 +162,7 @@ docs/                        문서 3개와 그림
 | 코드 | 조건 | 예상되는 위험 | 다음 할 일 | 위치 |
 |---|---|---|---|---|
 | `E_SETTINGS` | (`initialize`) 설정 파일을 열지 못했다. `screws` 에 1~4 밖의 번호가 있다. 왼쪽(1, 3)이나 오른쪽(2, 4) 나사가 하나도 없다. 설정 파일 경로를 비우면 기본값을 쓰고 오류가 나지 않는다 | 시작할 수 없다. 그 전에 성공한 상태가 있으면 그대로 남는다 | 1. 콘솔에 `[실패 E_SETTINGS] 설정 파일을 읽지 못했습니다: (경로)` 또는 `설정의 screws 는 1~4 여야 합니다` 등<br>2. 로봇을 멈춘다<br>3. 설정 파일 경로와 값을 고친 뒤 `initialize` 를 다시 부른다 | `src/alignment.cpp:252`, `src/setup/settings.cpp:6` |
-| `E_DATA` | (`initialize`) `center.bmp` 를 못 읽었거나 3840×2160 이 아니다. `reference.json` 을 못 열었거나, QR 3개와 나사 4개가 아니거나, QR 상자가 사진 밖이다. 계수 파일 16개 중 하나라도 없거나 잘못됐다. 점검식 파일이 잘못됐다(없는 것은 건너뛴다). 초기화 중 예외가 났다 | 시작할 수 없다 | 1. 콘솔에 `[실패 E_DATA] center.bmp 를 읽지 못했습니다: (경로). 받은 data 폴더를 그대로 다시 복사해 주세요` 등<br>2. 로봇을 멈춘다<br>3. 받은 `data` 폴더를 영문 경로에 그대로 다시 복사하고 `initialize` 를 다시 부른다 | `src/alignment.cpp:253~255, 261` |
+| `E_DATA` | (`initialize`) `center.bmp` 를 못 읽었거나 3840×2160 이 아니다. `reference.json` 을 못 열었거나, QR 3개와 나사 4개가 아니거나, QR 상자가 사진 밖이다. 계수 파일 16개 중 하나라도 없거나 잘못됐다. 점검식 파일이 잘못됐다(없는 것은 건너뛴다). 초기화 중 예외가 났다 | 시작할 수 없다 | 1. 콘솔에 `[실패 E_DATA] center.bmp 를 읽지 못했습니다: (경로). 받은 model 폴더를 그대로 다시 복사해 주세요` 등<br>2. 로봇을 멈춘다<br>3. 받은 `data` 폴더를 영문 경로에 그대로 다시 복사하고 `initialize` 를 다시 부른다 | `src/alignment.cpp:253~255, 261` |
 | `E_NOT_INITIALIZED` | `initialize` 가 한 번도 성공하지 않은 상태에서 `measure_alignment`, `set_zero_from_photos`, `set_reference_from_photos` 를 불렀다 | 잴 수 없다 | 1. 콘솔에 `[실패 E_NOT_INITIALIZED] 먼저 initialize 를 불러 주세요`<br>2. 로봇을 멈춘다<br>3. `initialize` 를 부른 뒤 다시 시작한다 | `src/alignment.cpp:270, 293, 338` |
 | `E_PHOTO` | 사진이 비었다. 3840×2160 이 아니다. 8비트가 아니다. 채널이 1, 3, 4 가 아니다. (`set_zero_from_photos`, `set_reference_from_photos`) 사진을 한 장도 넘기지 않았거나 하나라도 위 형식이 아니다 | 잴 수 없다. 영점, 기준은 그대로다 | 1. 콘솔에 `[실패 E_PHOTO] 사진 형식이 다릅니다 (받은 크기 W×H). 3840×2160 8비트 사진을 넣어 주세요` 등<br>2. 로봇을 멈춘다<br>3. 카메라 설정(해상도, 비트 수)을 확인한다 | `src/alignment.cpp:274, 297, 342`, `src/common/reference.cpp:45, 58` |
 | `E_QR_NOT_FOUND` | ±110 px, ±250 px, 사진 전체 폭 어디에서도 QR 을 하나도 찾지 못했다 | 잴 수 없다. 판이 카메라 시야 밖이거나 QR 이 모두 가려졌다. 사진을 통째로 옮긴 시험에서는 2300 px 에서 이 실패가 났다 | 1. 콘솔에 `[실패 E_QR_NOT_FOUND] QR 을 찾지 못했습니다. QR 이 카메라 안에 보이는지, 가려지거나 반사되지 않았는지 확인해 주세요`<br>2. 로봇을 멈춘다<br>3. 판을 카메라 안으로 되돌리는 방법은 SEMES 와 정할 것 (수동 이동, 마지막 위치로 복귀 등) | `src/alignment.cpp:278` |
@@ -194,7 +203,7 @@ docs/                        문서 3개와 그림
 - 계수는 SEMES 사진(Y ±2 mm, T ±1도)으로 학습했다. 그 밖에서는 T 를 1~1.5% 크게 읽는 경향이 있었다.
 - QR 판과 나사 사이가 통째로 밀리면(판 재조립) 사진만으로는 알 수 없다. 판을 손댄 뒤에는 영점을 다시 잡는다.
 - 536점 추적(QR 을 더 정밀하게 재는 다른 방법)과 바 기울기는 이 폴더에 아직 넣지 않았다.
-- data 폴더 경로에 한글이 있으면 Windows 에서 설정·위치 파일을 읽지 못할 수 있다. 영문 경로에 둔다.
+- `data/model` 폴더 경로에 한글이 있으면 Windows 에서 설정·위치 파일을 읽지 못할 수 있다. 영문 경로에 둔다.
 
 ## 9. 옮길 때 신경 쓸 점
 
@@ -212,14 +221,14 @@ docs/                        문서 3개와 그림
 ### 9-2. 사진 크기와 카메라 조건
 
 - **지금**: 사진은 3840×2160 8비트만 받는다. QR 상자와 나사 중심은 기준 사진의 **px 절대 좌표**로 박혀 있다.
-- **위치**: 크기는 [src/common/reference.hpp](src/common/reference.hpp#L9) 9~10줄 `kPhotoWidth`, `kPhotoHeight`. 좌표는 `data/reference.json` 의 `qr`, `screws`
+- **위치**: 크기는 [src/common/reference.hpp](src/common/reference.hpp#L9) 9~10줄 `kPhotoWidth`, `kPhotoHeight`. 좌표는 `data/model/reference.json` 의 `qr`, `screws`
 - **바꾸려면**
   - 화면이 조금 밀린 정도(카메라가 처지거나 살짝 움직임)면 코드는 그대로 두고 `set_reference_from_photos` 를 부른다(6절).
   - 해상도나 잘라내기(ROI)를 바꾸면 상수만 바꿔서는 안 된다. 기준 사진, 좌표, 계수를 모두 새 조건으로 다시 만들어야 한다(9-3).
 
 ### 9-3. 계수를 다시 만들어야 하는 경우
 
-- **지금**: `data/coefficients/` 와 `data/checks/` 는 SEMES 사진 702장(Y ±2 mm, T ±1도)으로 학습한 결과다. **학습 코드는 이 패키지에 들어 있지 않다.**
+- **지금**: `data/model/coefficients/` 와 `data/model/checks/` 는 SEMES 사진 702장(Y ±2 mm, T ±1도)으로 학습한 결과다. **학습 코드는 이 패키지에 들어 있지 않다.**
 - **다시 만들어야 하는 때**: 카메라, 렌즈, 카메라와 판 사이 거리, QR 판이나 나사 배치가 바뀌었을 때. 영점이나 기준을 다시 잡는 것으로는 해결되지 않는다.
 - **바꾸려면**: 새 조건에서 Y, T 를 알고 있는 사진을 모아 계수를 다시 학습해야 한다. 학습 코드와 방법은 요청하면 따로 전달한다. 파일 형식은 지금 파일의 머리줄 설명을 따르면 코드는 고치지 않아도 된다.
 
@@ -287,5 +296,5 @@ docs/                        문서 3개와 그림
 ### 9-13. 옮긴 뒤 확인하는 법
 
 1. 단계를 하나 옮길 때마다 `show_steps` 출력과 비교한다. 단계별 확인 값은 [docs/2_포팅안내서.md](docs/2_포팅안내서.md) 에 있다.
-2. 다 옮긴 뒤 예제 5장의 최종 값을 `tests/photos/expected_steps.tsv` 와 비교한다. 소수 4자리까지 맞으면 된다.
+2. 다 옮긴 뒤 예제 5장의 최종 값을 `data/sample/expected_steps.tsv` 와 비교한다. 소수 4자리까지 맞으면 된다.
 3. 영점과 기준 다시 잡기는 `check_setup` 과 같은 순서로 확인한다.

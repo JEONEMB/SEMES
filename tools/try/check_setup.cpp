@@ -1,6 +1,6 @@
 // 확인: 영점 잡기, 기준 다시 잡기, 나사 가림이 설명대로 동작하는지 본다.
-// 사용: check_setup <data 폴더> <사진 목록.tsv>
-//   사진 목록.tsv : 번호<TAB>사진 경로  (머리줄 없음). 기준 사진은 data 폴더의 center.bmp 를 쓴다.
+// 사용: check_setup <model 폴더> <사진 목록.tsv>
+//   사진 목록.tsv : 번호<TAB>사진 경로  (머리줄 없음). 기준 사진은 model 폴더의 center.bmp 를 쓴다.
 #include "alignment.hpp"
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
@@ -57,7 +57,7 @@ struct Tally {
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc != 3) { std::cerr << "사용: check_setup <data 폴더> <사진 목록.tsv>\n"; return 2; }
+    if (argc != 3) { std::cerr << "사용: check_setup <model 폴더> <사진 목록.tsv>\n"; return 2; }
     const std::string data = argv[1];
     const auto paths = read_photo_paths(argv[2]);
     const cv::Mat center = read_photo(data + "/center.bmp");
