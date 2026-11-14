@@ -203,7 +203,7 @@ void add_notices(Result& result, const Measured& measured, const AgreementResult
     if (measured.qr.search == QrSearch::FullWidth)
         add_notice(result, Status::Warning, "W_FAR", "QR 이 기준에서 " + px_text(kWideHalfWidth) + " 넘게 떨어져 있습니다. 값이 부정확할 수 있으니 옮긴 뒤 다시 측정하세요");
     if (!in_range)
-        add_notice(result, Status::Warning, "W_OUT_OF_RANGE", "학습한 범위(" + trained_range_text(state.reference) + ") 밖입니다. 오차가 커질 수 있으니 옮긴 뒤 다시 측정하세요");
+        add_notice(result, Status::Warning, "W_OUT_OF_RANGE", "학습한 범위(" + trained_range_text(state.reference) + ") 밖입니다");
     if (measured.qr.search == QrSearch::Wide)
         add_info(result, "N_WIDE_SEARCH", "QR 이 " + px_text(kNarrowHalfWidth) + " 넘게 움직여 넓은 창(±" + px_text(kWideHalfWidth) + ")으로 찾았습니다");
 }
