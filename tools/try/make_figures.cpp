@@ -153,20 +153,16 @@ cv::Mat draw(const Example& example, const Reference& reference, const Parts& pa
         write_text(image, example.call, {28, 81}, 17, kWhite);
     const int right = image.cols - 26, label = right - 170;
     write_text(image, example.edited ? "원본 명령값" : "라벨", {label, 18}, 20, kWhite, true);
-    if (step >= 5) {
-        const char* heading = example.call == "set_reference_from_photos" ? "갱신 결과" :
-                              example.day_zero && example.call == "measure_alignment" ? "영점 적용 측정값" : "측정";
-        write_text(image, heading, {right, 18}, 20, kWhite, true);
-    }
+    const char* heading = example.call == "set_reference_from_photos" ? "갱신 결과" :
+                          example.day_zero && example.call == "measure_alignment" ? "영점 적용 측정값" : "측정";
+    write_text(image, heading, {right, 18}, 20, kWhite, true);
     for (int axis = 0; axis < 2; ++axis) {
         const int y = 47 + axis * 30;
         write_text(image, axis == 0 ? "Y (mm)" : "T (°)", {label - 175, y}, 20, kWhite);
         const double command = axis == 0 ? example.source.command_y_mm : example.source.command_t_deg;
         write_text(image, example.source.has_command ? number(command) : "—", {label, y}, 23, kWhite, true);
-        if (step >= 5) {
-            const double value = axis == 0 ? result.y_mm : result.t_deg;
-            write_text(image, number(value), {right, y}, 23, kWhite, true);
-        }
+        const double value = axis == 0 ? result.y_mm : result.t_deg;
+        write_text(image, step >= 5 && std::isfinite(value) ? number(value) : "-", {right, y}, 23, kWhite, true);
     }
     if (step >= 5 && !example.day_zero && example.call == "measure_alignment")
         write_text(image, "촬영일 영점 미적용", {32, 101}, 17, kWhite);
@@ -209,6 +205,94 @@ void frame(const fs::path& output, const std::vector<cv::Mat>& pictures) {
     for (int k = 0; k < int(pictures.size()); ++k)
         pictures[k].copyTo(sheet(cv::Rect(gap + k % cols * (w + gap), gap + k / cols * (h + gap), w, h)));
     scene::save_png(output, sheet);
+}
+
+// ---- 탐색 창 그림: QR 마다 한 줄씩, 그 QR 을 찾는 창과 찾은 자리를 보여 준다 ----
+
+const int kWindowCropX = 1150, kWindowCropWidth = 1500;   // px. 사진에서 QR 3개와 넓은 창이 다 들어오는 가로 구간
+const int kWindowMargin = 44;                             // px. 창 위아래로 더 보여 주는 여백 (치수 글자 자리)
+const int kWindowTop = 104, kWindowLabelHeight = 40, kWindowGap = 14;   // 그림 px. 제목, QR 이름 줄, 줄 사이
+const double kWindowScale = double(kFigureSize.width) / kWindowCropWidth;
+
+void dashed_box(cv::Mat& image, const cv::Rect& box, const cv::Scalar& color) {
+    const cv::Point corners[] = {box.tl(), {box.br().x, box.y}, box.br(), {box.x, box.br().y}};
+    for (int i = 0; i < 4; ++i) {
+        const cv::Point a = corners[i], b = corners[(i + 1) % 4];
+        const double length = cv::norm(b - a);
+        for (double pos = 0; pos < length; pos += 14)
+            cv::line(image, a + (b - a) * (pos / length), a + (b - a) * (std::min(pos + 8, length) / length), color, 2, cv::LINE_AA);
+    }
+}
+
+// QR 하나를 가로 ±half_width 로 찾는 창 (01_find_qr 의 find_one 과 같은 식)
+cv::Rect search_window(const cv::Rect& qr_box, int half_width) {
+    return cv::Rect(qr_box.x - half_width, qr_box.y - kSearchHalfHeight, qr_box.width + 2 * half_width, qr_box.height + 2 * kSearchHalfHeight);
+}
+
+// window_figure: 탐색 창 그림 한 장
+//   입력: gray (회색 사진), half_width (창 반너비 px), title, subtitle, show_narrow (좁은 창을 빨간 점선으로 같이 그릴지)
+//   출력: 그림 (QR 1, 2, 3 을 위에서부터 한 줄씩)
+cv::Mat window_figure(const Reference& reference, const cv::Mat& gray, int half_width, const std::string& title,
+                      const std::string& subtitle, bool show_narrow) {
+    const QrFinder finder(reference);
+    const int strip_source = reference.qr[0].height + 2 * (kSearchHalfHeight + kWindowMargin);
+    const int strip_height = cvRound(strip_source * kWindowScale);
+    cv::Mat sheet(kWindowTop + 3 * (kWindowLabelHeight + strip_height + kWindowGap), kFigureSize.width, CV_8UC3, cv::Scalar(24, 24, 24));
+    write_text(sheet, title, {28, 16}, 32, kWhite);
+    write_text(sheet, subtitle, {28, 62}, 20, kWhite);
+    const int right = sheet.cols - 28;
+    write_text(sheet, "노랑 = 탐색 창", {right, 14}, 19, kYellow, true);
+    write_text(sheet, "초록 = 찾은 자리", {right, 40}, 19, kGreen, true);
+    write_text(sheet, "흰 점선 = 기준 사진에서의 자리", {right, 66}, 19, kWhite, true);
+
+    for (int k = 0; k < 3; ++k) {
+        const cv::Rect box = reference.qr[k];
+        const int strip_y = box.y - kSearchHalfHeight - kWindowMargin;
+        // 사진 좌표의 상자를 이 줄의 그림 좌표로 옮긴다
+        const auto on_strip = [&](const cv::Rect& r) {
+            return cv::Rect(cvRound((r.x - kWindowCropX) * kWindowScale), cvRound((r.y - strip_y) * kWindowScale),
+                            cvRound(r.width * kWindowScale), cvRound(r.height * kWindowScale));
+        };
+        const QrFinder::Match match = finder.find_one(gray, k, half_width);
+        const bool narrow_found = finder.find_one(gray, k, kNarrowHalfWidth).found;
+
+        cv::Mat small, strip;
+        cv::resize(gray(cv::Rect(kWindowCropX, strip_y, kWindowCropWidth, strip_source)), small, cv::Size(sheet.cols, strip_height), 0, 0, cv::INTER_AREA);
+        cv::cvtColor(small, strip, cv::COLOR_GRAY2BGR);
+        const cv::Rect window = on_strip(search_window(box, half_width)) & cv::Rect(0, 0, strip.cols, strip.rows);
+        cv::Mat dimmed = strip * 0.38;   // 창 밖은 어둡게
+        strip(window).copyTo(dimmed(window));
+        strip = dimmed;
+
+        if (show_narrow) dashed_box(strip, on_strip(search_window(box, kNarrowHalfWidth)), kRed);
+        cv::rectangle(strip, window, kYellow, 2, cv::LINE_AA);
+        const cv::Rect original = on_strip(box);
+        dashed_box(strip, original, kWhite);
+        if (match.found)
+            cv::rectangle(strip, on_strip(cv::Rect(cvRound(box.x + match.dx), cvRound(box.y + match.dy), box.width, box.height)), kGreen, 3, cv::LINE_AA);
+
+        // 치수: 기준 상자 끝에서 창 끝까지
+        const int arrow_y = window.br().y + 12;
+        const std::string size_text = std::to_string(half_width) + " px";
+        cv::arrowedLine(strip, {original.x, arrow_y}, {window.x, arrow_y}, kYellow, 2, cv::LINE_AA, 0, 12.0 / std::max(1, original.x - window.x));
+        cv::arrowedLine(strip, {original.br().x, arrow_y}, {window.br().x, arrow_y}, kYellow, 2, cv::LINE_AA, 0, 12.0 / std::max(1, window.br().x - original.br().x));
+        write_text(strip, size_text, {(original.x + window.x) / 2 - 30, arrow_y + 5}, 18, kYellow);
+        write_text(strip, size_text, {(original.br().x + window.br().x) / 2 - 30, arrow_y + 5}, 18, kYellow);
+
+        const int y = kWindowTop + k * (kWindowLabelHeight + strip_height + kWindowGap);
+        write_text(sheet, "QR " + std::to_string(k + 1), {28, y + 6}, 24, kWhite);
+        if (match.found) {
+            std::ostringstream similarity;
+            similarity << std::fixed << std::setprecision(2) << match.similarity;
+            write_text(sheet, "찾음   가로 이동 " + number(match.dx, 1) + " px   닮은 정도 " + similarity.str(), {120, y + 9}, 20, kGreen);
+        } else {
+            write_text(sheet, "못 찾음", {120, y + 9}, 20, kRed);
+        }
+        if (show_narrow && !narrow_found)
+            write_text(sheet, "빨간 점선 = 좁은 창 (±" + std::to_string(kNarrowHalfWidth) + " px). 여기서는 못 찾았다", {right, y + 9}, 20, kRed, true);
+        strip.copyTo(sheet(cv::Rect(0, y + kWindowLabelHeight, sheet.cols, strip_height)));
+    }
+    return sheet;
 }
 
 } // namespace
@@ -365,6 +449,16 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
         }
         scene::save_png(output / "step" / ("0" + std::to_string(step) + ".png"), draw(example, reference, parts, step));
     }
+
+    // 1단계의 탐색 창 두 가지. 넓은 창은 같은 사진을 오른쪽으로 옮겨서 보여 준다 (재현용 이미지)
+    const int window_shift_px = 180;
+    const std::string narrow_px = std::to_string(kNarrowHalfWidth), wide_px = std::to_string(kWideHalfWidth);
+    scene::save_png(output / "step" / "03_narrow.png", window_figure(reference, base.photo, kNarrowHalfWidth,
+        "좁은 창: QR 상자 양옆 ±" + narrow_px + " px",
+        "평소에 쓰는 창. QR 마다 기준 자리 양옆 " + narrow_px + " px, 위아래 " + std::to_string(kSearchHalfHeight) + " px 안에서만 찾는다", false));
+    scene::save_png(output / "step" / "03_wide.png", window_figure(reference, scene::shift(base.photo, window_shift_px, 0), kWideHalfWidth,
+        "넓은 창: QR 상자 양옆 ±" + wide_px + " px",
+        "좁은 창에서 3개를 다 못 찾았을 때만 쓴다. 재현용 이미지 (사진을 오른쪽으로 " + std::to_string(window_shift_px) + " px 옮김)", true));
 
     std::map<std::string, bool> generated;
     const auto augmented = [&](const cv::Mat& photo, const std::string& description) {

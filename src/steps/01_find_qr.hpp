@@ -14,6 +14,7 @@ namespace alignment {
 // 가로 탐색 창 (QR 상자 양옆으로 이만큼). 알림 문구도 이 값으로 만든다
 const int kNarrowHalfWidth = 110;   // px. 평소
 const int kWideHalfWidth = 250;     // px. 평소 창에서 3개를 다 못 찾았을 때
+const int kSearchHalfHeight = 22;   // px. 세로 탐색 창 (QR 상자 위아래로 이만큼). 창 너비와 상관없이 같다
 
 enum class QrSearch {
     Narrow,      // ±110 px 에서 3개 모두 찾음 (평소)

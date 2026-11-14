@@ -6,6 +6,7 @@
 |---|---|
 | 입력과 변환 | [입력 사진](step/01.png), [회색 영상](step/02.png) |
 | 위치 찾기 | [QR 탐색](step/03.png), [나사 탐색](step/04.png) |
+| QR 탐색 창 | [좁은 창 ±110 px](step/03_narrow.png), [넓은 창 ±250 px](step/03_wide.png) |
 | 계산 | [Y, T 계산](step/05.png), [영점 차감](step/06.png) |
 | 판정과 출력 | [결과 점검](step/07.png), [출력](step/08.png) |
 
