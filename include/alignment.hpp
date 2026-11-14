@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 // QR 판 정렬 측정: 사진 한 장에서 판이 기준 위치에서 얼마나 벗어났는지 (Y mm, T 도) 를 잰다.
 //
 // 쓰는 순서
@@ -26,7 +26,7 @@ struct Result {
     double t_deg = 0;    // 기준 각도에서 벗어난 양. 보정 회전 = -t_deg
     Status status = Status::Ok;
     std::string code;    // 가장 중요한 알림의 코드 (예: "W_SCREW_MISSING"). 알릴 것이 없으면 빈 문자열
-    std::string message; // 사람이 읽는 설명과 해야 할 일. 알릴 것이 없으면 빈 문자열
+    std::string message; // 관측한 조건과 처리 결과. 알릴 것이 없으면 빈 문자열
                          // 정상(Ok)이어도 참고 알림(코드가 N_ 로 시작)이 있으면 code, message 가 채워진다
 
     // 아래는 확인용 (옮긴 코드가 맞는지 단계별로 비교할 때 쓴다)

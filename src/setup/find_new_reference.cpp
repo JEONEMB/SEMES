@@ -1,4 +1,4 @@
-#include "setup/find_new_reference.hpp"
+﻿#include "setup/find_new_reference.hpp"
 #include <opencv2/imgproc.hpp>
 #include <cmath>
 
@@ -65,13 +65,13 @@ bool find_new_reference(const Reference& old_reference, const cv::Mat& new_photo
     new_reference.photo = new_photo.clone();
     for (int k = 0; k < 3; ++k) {
         if (!find_qr_box(old_reference.photo, new_photo, old_reference.qr[k], new_reference.qr[k])) {
-            error = "새 센터 사진에서 QR " + std::to_string(k + 1) + " 을 찾지 못했습니다";
+            error = "새 기준 사진에서 QR " + std::to_string(k + 1) + " 미검출";
             return false;
         }
     }
     for (int k = 0; k < 4; ++k) {
         if (!find_screw_center(new_photo, old_reference.screw[k], new_reference.screw[k])) {
-            error = "새 센터 사진에서 나사 " + std::to_string(k + 1) + " 를 찾지 못했습니다";
+            error = "새 기준 사진에서 나사 " + std::to_string(k + 1) + " 중심 미확보";
             return false;
         }
     }
