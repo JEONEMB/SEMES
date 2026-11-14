@@ -22,10 +22,11 @@ if(MSVC)
 endif()
 
 # 예제와 확인 프로그램
-foreach(program examples/measure_one tests/check_photos tests/check_setup)
+foreach(program examples/measure_one examples/show_steps tests/check_photos tests/check_setup tool/make_figures)
     get_filename_component(name ${program} NAME)
     add_executable(${name} ${program}.cpp)
     target_link_libraries(${name} PRIVATE alignment)
+    target_include_directories(${name} PRIVATE src)   # show_steps, make_figures 는 단계 함수를 직접 부른다
     if(MSVC)
         target_compile_options(${name} PRIVATE /utf-8 /EHsc)
     endif()
