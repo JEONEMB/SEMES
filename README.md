@@ -30,7 +30,7 @@ alignment::Result r = alignment::measure_alignment(photo);       // 사진마다
 |---|---|---|
 | QR 재는 법 | 흐림 NCC | (고정) |
 | 나사 | 4개 모두 | `config/settings.json` 의 `screws` |
-| 영점 | 기준 사진과 같은 화면이 (0, 0) | `set_zero_from_photos` |
+| 영점 | 절대 영점(학습한 모든 회차의 공통 0)이 (0, 0). 매일 명령 0 사진으로 다시 잡는다 ([docs/4_영점잡기.md](docs/4_영점잡기.md)) | `set_zero_from_photos` |
 | QR 탐색 | ±110 px → 못 찾으면 ±250 px → 사진 전체 폭 | (자동) |
 | 값이 서로 안 맞을 때 | 경고만 | `fail_on_disagreement` |
 | 알림 출력 | 콘솔(stderr) | `log_file` |
@@ -157,7 +157,7 @@ docs/                        문서 3개와 그림
 | `E_NOT_INITIALIZED` | `initialize` 가 한 번도 성공하지 않은 상태에서 `measure_alignment`, `set_zero_from_photos`, `set_reference_from_photos` 를 불렀다 | 잴 수 없다 | 1. 콘솔에 `[실패 E_NOT_INITIALIZED] 먼저 initialize 를 불러 주세요`<br>2. 로봇을 멈춘다<br>3. `initialize` 를 부른 뒤 다시 시작한다 | `src/alignment.cpp:270, 293, 338` |
 | `E_PHOTO` | 사진이 비었다. 3840×2160 이 아니다. 8비트가 아니다. 채널이 1, 3, 4 가 아니다. (`set_zero_from_photos`, `set_reference_from_photos`) 사진을 한 장도 넘기지 않았거나 하나라도 위 형식이 아니다 | 잴 수 없다. 영점, 기준은 그대로다 | 1. 콘솔에 `[실패 E_PHOTO] 사진 형식이 다릅니다 (받은 크기 W×H). 3840×2160 8비트 사진을 넣어 주세요` 등<br>2. 로봇을 멈춘다<br>3. 카메라 설정(해상도, 비트 수)을 확인한다 | `src/alignment.cpp:274, 297, 342`, `src/common/reference.cpp:45, 58` |
 | `E_QR_NOT_FOUND` | ±110 px, ±250 px, 사진 전체 폭 어디에서도 QR 을 하나도 찾지 못했다 | 잴 수 없다. 판이 카메라 시야 밖이거나 QR 이 모두 가려졌다. 사진을 통째로 옮긴 시험에서는 2300 px 에서 이 실패가 났다 | 1. 콘솔에 `[실패 E_QR_NOT_FOUND] QR 을 찾지 못했습니다. QR 이 카메라 안에 보이는지, 가려지거나 반사되지 않았는지 확인해 주세요`<br>2. 로봇을 멈춘다<br>3. 판을 카메라 안으로 되돌리는 방법은 SEMES 와 정할 것 (수동 이동, 마지막 위치로 복귀 등) | `src/alignment.cpp:278` |
-| `E_ZERO` | (`set_zero_from_photos`) 센터 사진(여러 장이면 평균)에서 QR 을 못 찾았거나, 좌우 나사를 못 찾아 정밀 계수를 쓸 수 없다 | 영점을 바꾸지 못한다. 이전 영점이 그대로다 | 1. 콘솔에 `[실패 E_ZERO] 센터 사진에서 QR 과 좌우 나사를 찾지 못해 영점을 바꾸지 않았습니다. 화면이 많이 밀렸으면 set_reference_from_photos 를 먼저 불러 주세요`<br>2. 로봇을 멈춘다<br>3. 센터 사진(가림, 반사)을 확인하고, 화면이 밀렸으면 `set_reference_from_photos` 를 먼저 부른 뒤 `set_zero_from_photos` 를 다시 부른다 | `src/alignment.cpp:301` |
+| `E_ZERO` | (`set_zero_from_photos`) 영점 사진(여러 장이면 평균)에서 QR 을 못 찾았거나, 좌우 나사를 못 찾아 정밀 계수를 쓸 수 없다 | 영점을 바꾸지 못한다. 이전 영점이 그대로다 | 1. 콘솔에 `[실패 E_ZERO] 영점 사진에서 QR 과 좌우 나사를 찾지 못해 영점을 바꾸지 않았습니다. 화면이 많이 밀렸으면 set_reference_from_photos 를 먼저 불러 주세요`<br>2. 로봇을 멈춘다<br>3. 영점 사진(가림, 반사)을 확인하고, 화면이 밀렸으면 `set_reference_from_photos` 를 먼저 부른 뒤 `set_zero_from_photos` 를 다시 부른다 | `src/alignment.cpp:301` |
 | `E_REFERENCE` | (`set_reference_from_photos`) 새 센터 사진에서 QR 상자를 못 찾았다(±120 px, NCC 0.5 이하). 나사 중심을 못 찾았다(범위가 사진 밖이거나 테두리가 없다). 또는 새 기준으로 QR 이나 좌우 나사를 재지 못해 원래 기준으로 되돌렸다 | 기준을 바꾸지 못한다. 이전 기준이 그대로다 | 1. 콘솔에 `[실패 E_REFERENCE] 새 센터 사진에서 QR N 을 찾지 못했습니다. 기준은 바꾸지 않았습니다` 또는 `새 기준으로 QR 과 좌우 나사를 재지 못했습니다. 기준은 바꾸지 않았습니다`<br>2. 로봇을 멈춘다<br>3. 판이 센터에 있고 QR, 나사가 모두 보이는지 확인한 뒤 다시 부른다 | `src/alignment.cpp:349, 354` |
 | `E_INTERNAL` | 측정, 영점, 기준 함수 안에서 예상하지 못한 예외가 났다 | 잴 수 없다 | 1. 콘솔에 `[실패 E_INTERNAL] 측정 중 오류: (내용)` 등<br>2. 로봇을 멈춘다<br>3. 로그와 그 사진을 보내 준다 | `src/alignment.cpp:284, 312, 375` |
 | `W_VALUES_DISAGREE` (실패로 설정) | 위 경고와 조건이 같고 `config/settings.json` 의 `fail_on_disagreement` 가 1 이다 | 경고와 같다. 지금 코드는 실패여도 `y_mm`, `t_deg` 를 채워서 돌려준다 | 1. 콘솔에 `[실패 W_VALUES_DISAGREE] …`<br>2. 로봇을 멈춘다 (값이 있어도 쓰지 않는다)<br>3. 가림, 반사를 확인한 뒤 다시 잰다 | `src/alignment.cpp:187` |
@@ -168,7 +168,7 @@ docs/                        문서 3개와 그림
 
 | 함수 | 하는 일 | 언제 |
 |---|---|---|
-| `set_zero_from_photos(센터 사진들)` | 이 사진의 자세를 (0, 0) 으로 삼는다. 5~10장을 넘기면 평균을 쓴다 | 날마다. 카메라·조명·판을 건드린 뒤에는 꼭 |
+| `set_zero_from_photos(명령 0 사진들)` | 로봇을 명령 0 으로 보내 찍은 사진의 자세를 (0, 0) 으로 삼는다. 5~10장을 넘기면 평균을 쓴다. 명령값을 모르는 "센터 사진"은 쓰지 않는다 ([docs/4_영점잡기.md](docs/4_영점잡기.md)) | 날마다. 카메라·조명·판을 건드린 뒤에는 꼭 |
 | `set_zero_value(y, t)` / `clear_zero()` | 적어 둔 영점을 다시 넣기 / 처음 영점으로 되돌리기 | 프로그램을 다시 켰을 때 |
 | `set_reference_from_photos(센터 사진들)` | QR·나사 위치를 이 사진에서 다시 찾는다. 영점은 이어진다 | 화면이 많이 밀려 QR·나사를 못 찾을 때만 |
 
@@ -232,7 +232,7 @@ docs/                        문서 3개와 그림
 - **위치**: [src/alignment.cpp](src/alignment.cpp#L44) 44~56줄 `struct State`
 - **다시 넣을 수 있는 것**: 영점 값만 `set_zero_value(y, t)` 로 넣을 수 있다. 이때 점검의 기준 어긋남은 0 이 된다.
 - **바꾸려면**
-  - 코드 수정 없이: 켤 때마다 센터 사진으로 `set_zero_from_photos` 를 다시 부른다. 기준을 다시 잡았던 장비라면 그 앞에 `set_reference_from_photos` 도 부른다. 가장 단순하고 안전하다.
+  - 코드 수정 없이: 켤 때마다 명령 0 사진으로 `set_zero_from_photos` 를 다시 부른다. 기준을 다시 잡았던 장비라면 그 앞에 `set_reference_from_photos` 도 부른다. 가장 단순하고 안전하다.
   - 코드 수정: `alignment.cpp` 에 `state.reference`, `state.zero`, `state.carry_over`, `state.baselines` 를 파일로 쓰고 읽는 함수를 더하고 `include/alignment.hpp` 에 선언한다. 기준 사진은 `center.bmp`, 위치는 `reference.json` 형식으로 쓰면 그 폴더를 `initialize` 에 그대로 넘길 수 있다.
 
 ### 9-5. 여러 스레드, 여러 카메라

@@ -285,20 +285,20 @@ Result measure_alignment(const cv::Mat& photo) {
     }
 }
 
-// set_zero_from_photos: 센터 사진들로 영점 다시 잡기
-//   입력: center_photos (센터에서 찍은 사진 여러 장)
+// set_zero_from_photos: 명령 0 에서 찍은 사진들로 영점 다시 잡기
+//   입력: zero_photos (로봇을 명령 0 으로 보내 찍은 사진 여러 장)
 //   출력: Result (성공하면 새 영점의 y_mm/t_deg, 실패하면 에러 코드와 메시지)
-Result set_zero_from_photos(const std::vector<cv::Mat>& center_photos) {
+Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos) {
     std::lock_guard<std::mutex> lock(state_mutex);
     if (!state.ready) return failed("E_NOT_INITIALIZED", "먼저 initialize 를 불러 주세요");
     try {
         cv::Mat gray;
         std::string error;
-        if (!average_gray(center_photos, gray, error)) return failed("E_PHOTO", error);
+        if (!average_gray(zero_photos, gray, error)) return failed("E_PHOTO", error);
 
         const Measured measured = measure_values(gray);
         if (!measured.has_value || !measured.set->precise)
-            return failed("E_ZERO", "센터 사진에서 QR 과 좌우 나사를 찾지 못해 영점을 바꾸지 않았습니다. 화면이 많이 밀렸으면 set_reference_from_photos 를 먼저 불러 주세요");
+            return failed("E_ZERO", "영점 사진에서 QR 과 좌우 나사를 찾지 못해 영점을 바꾸지 않았습니다. 화면이 많이 밀렸으면 set_reference_from_photos 를 먼저 불러 주세요");
 
         state.zero.y_mm = measured.raw.y_mm + state.carry_over.y_mm;
         state.zero.t_deg = measured.raw.t_deg + state.carry_over.t_deg;
