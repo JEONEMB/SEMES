@@ -34,8 +34,11 @@ const double kTrainedRangeYmm = 2.0;       // 학습에 쓰는 명령 범위
 const double kTrainedRangeTdeg = 1.0;
 const double kFinalCheckShare = 0.2;       // 마지막 확인용으로 떼는 묶음 비율
 const unsigned kSplitSeed = 20261114;      // 나누기 씨앗 (누가 돌려도 같은 나누기)
-const int kOutlierRounds = 3;               // 명령값과 측정이 크게 어긋나는 사진을 빼고 다시 맞추는 횟수
-const double kOutlierLimit = 10.0;          // 정상 흔들림의 몇 배를 넘으면 "명령값이 의심스러운 사진"으로 보나
+const int kOutlierRounds = 3;               // 값이 식에서 크게 벗어난 사진을 영점 맞추기에서 빼고 다시 맞추는 횟수
+const double kOutlierLimit = 10.0;          // 정상 흔들림의 몇 배를 넘으면 영점 맞추기에서 빼나
+const double kCommandErrorYmm = 0.2;        // 사진이 보여 주는 자세와 이름의 명령이 이보다 크게 다르면 "명령값이 틀린 사진"
+const double kCommandErrorTdeg = 0.1;       //   (통과 기준 0.045 mm, 0.01 도보다 훨씬 커서 측정 오차로는 생기지 않는 크기)
+const int kPoseTerms = 5;                   // 영점 맞추기 식의 자세 항: Y, T, Y², YT, T²
 
 struct PreparedPhoto {
     std::string session;
@@ -44,11 +47,9 @@ struct PreparedPhoto {
     Values values{};
     bool all_screws = false;
     bool in_range = false;
-    bool command_mismatch = false;   // 명령값과 측정이 크게 어긋남 (이름의 명령값이 틀렸을 수 있음)
+    bool command_mismatch = false;   // 사진이 보여 주는 자세가 이름의 명령과 크게 다름 (이름의 명령값이 틀렸을 수 있음)
     bool usable() const { return measured && all_screws && in_range && !command_mismatch; }
 };
-
-std::map<std::string, std::pair<double, double>> fit_session_zeros(const std::vector<const PreparedPhoto*>& used, const std::vector<std::string>& sessions, cv::Mat& residual);
 
 double median_of(std::vector<double> v) {
     std::sort(v.begin(), v.end());
@@ -56,65 +57,83 @@ double median_of(std::vector<double> v) {
     return n % 2 ? v[n / 2] : 0.5 * (v[n / 2 - 1] + v[n / 2]);
 }
 
-// 3. 회차마다 영점 어긋남을 거꾸로 구한다.
-//    명령값과 측정이 크게 어긋나는 사진(이름의 명령값이 틀렸을 수 있는 사진)은 맞추기에서 빼고 suspicious 에 표시한다.
-std::map<std::string, std::pair<double, double>> estimate_session_zeros(const std::vector<PreparedPhoto>& photos, const std::vector<std::string>& sessions, std::vector<int>& suspicious) {
-    suspicious.assign(photos.size(), 0);
-    std::map<std::string, std::pair<double, double>> zeros;
-    for (int round = 0; round < kOutlierRounds + 1; ++round) {
-        std::vector<int> used_index;
-        for (int i = 0; i < int(photos.size()); ++i) if (photos[i].usable() && !suspicious[i]) used_index.push_back(i);
-        std::vector<const PreparedPhoto*> used;
-        for (int i : used_index) used.push_back(&photos[i]);
-        cv::Mat residual;
-        zeros = fit_session_zeros(used, sessions, residual);
-        if (round == kOutlierRounds) break;
-        // 값마다 가운데값 기반 흔들림으로 나눈 어긋남이 kOutlierLimit 을 넘는 사진을 뺀다
-        bool removed = false;
-        std::vector<double> spread(kValueCount);
-        for (int k = 0; k < kValueCount; ++k) {
-            std::vector<double> column;
-            for (int i = 0; i < residual.rows; ++i) column.push_back(std::abs(residual.at<double>(i, k)));
-            spread[k] = std::max(1.4826 * median_of(column), 1e-9);
-        }
-        for (int i = 0; i < residual.rows; ++i)
-            for (int k = 0; k < kValueCount; ++k)
-                if (std::abs(residual.at<double>(i, k)) / spread[k] > kOutlierLimit) { suspicious[used_index[i]] = 1; removed = true; break; }
-        if (!removed) break;
-    }
-    return zeros;
+// 모든 회차를 함께 맞춘 식.  값 = 자세 항 5개(Y, T, Y², YT, T²) + 회차마다 다른 상수
+struct ZeroFit {
+    cv::Mat coefficients;                                      // 값마다 한 줄, (자세 항 5 + 회차 수) 칸
+    std::map<std::string, std::pair<double, double>> zeros;    // 회차 → 영점 어긋남 (Y mm, T 도)
+};
+
+cv::Mat fit_terms(const PreparedPhoto& photo, const std::vector<std::string>& sessions) {
+    const double y = photo.file.command_y_mm, t = photo.file.command_t_deg;
+    const double pose[kPoseTerms] = {y, t, y * y, y * t, t * t};
+    cv::Mat terms = cv::Mat::zeros(1, kPoseTerms + int(sessions.size()), CV_64F);
+    for (int q = 0; q < kPoseTerms; ++q) terms.at<double>(q) = pose[q];
+    terms.at<double>(kPoseTerms + int(std::find(sessions.begin(), sessions.end(), photo.session) - sessions.begin())) = 1;
+    return terms;
 }
 
-std::map<std::string, std::pair<double, double>> fit_session_zeros(const std::vector<const PreparedPhoto*>& used, const std::vector<std::string>& sessions, cv::Mat& residual) {
+ZeroFit fit_session_zeros(const std::vector<const PreparedPhoto*>& used, const std::vector<std::string>& sessions) {
     const int n = int(used.size()), s_count = int(sessions.size());
-    const int pose_terms = 5;   // Y, T, Y², YT, T²
-    cv::Mat design = cv::Mat::zeros(n, pose_terms + s_count, CV_64F);
-    for (int i = 0; i < n; ++i) {
-        const double y = used[i]->file.command_y_mm, t = used[i]->file.command_t_deg;
-        const double terms[pose_terms] = {y, t, y * y, y * t, t * t};
-        for (int q = 0; q < pose_terms; ++q) design.at<double>(i, q) = terms[q];
-        const int s = int(std::find(sessions.begin(), sessions.end(), used[i]->session) - sessions.begin());
-        design.at<double>(i, pose_terms + s) = 1;
-    }
-    cv::Mat slope(kValueCount, 2, CV_64F), constant(kValueCount, s_count, CV_64F);
-    residual = cv::Mat(n, kValueCount, CV_64F);
+    cv::Mat design(n, kPoseTerms + s_count, CV_64F);
+    for (int i = 0; i < n; ++i) fit_terms(*used[i], sessions).copyTo(design.row(i));
+    ZeroFit fit;
+    fit.coefficients = cv::Mat(kValueCount, kPoseTerms + s_count, CV_64F);
     for (int k = 0; k < kValueCount; ++k) {
         cv::Mat value(n, 1, CV_64F), fitted;
         for (int i = 0; i < n; ++i) value.at<double>(i) = used[i]->values[k];
         cv::solve(design, value, fitted, cv::DECOMP_SVD);
-        const cv::Mat predicted = design * fitted;
-        for (int i = 0; i < n; ++i) residual.at<double>(i, k) = value.at<double>(i) - predicted.at<double>(i);
-        slope.at<double>(k, 0) = fitted.at<double>(0);
-        slope.at<double>(k, 1) = fitted.at<double>(1);
-        for (int s = 0; s < s_count; ++s) constant.at<double>(k, s) = fitted.at<double>(pose_terms + s);
+        cv::Mat(fitted.t()).copyTo(fit.coefficients.row(k));
     }
-    std::map<std::string, std::pair<double, double>> zeros;
+    const cv::Mat slope = fit.coefficients.colRange(0, 2);   // 값이 Y, T 에 따라 변하는 정도
     for (int s = 0; s < s_count; ++s) {
-        cv::Mat zero;   // slope · zero = −constant  (그 명령에서 모든 값이 0)
-        cv::solve(slope, -constant.col(s), zero, cv::DECOMP_SVD);
-        zeros[sessions[s]] = {zero.at<double>(0), zero.at<double>(1)};
+        cv::Mat zero;   // slope · zero = −회차 상수  (그 명령에서 모든 값이 0)
+        cv::solve(slope, -fit.coefficients.col(kPoseTerms + s), zero, cv::DECOMP_SVD);
+        fit.zeros[sessions[s]] = {zero.at<double>(0), zero.at<double>(1)};
     }
-    return zeros;
+    return fit;
+}
+
+// 사진의 값 − 식이 말하는 값 (값마다 하나)
+cv::Mat residual_of(const ZeroFit& fit, const PreparedPhoto& photo, const std::vector<std::string>& sessions) {
+    const cv::Mat predicted = fit.coefficients * fit_terms(photo, sessions).t();
+    cv::Mat residual(kValueCount, 1, CV_64F);
+    for (int k = 0; k < kValueCount; ++k) residual.at<double>(k) = photo.values[k] - predicted.at<double>(k);
+    return residual;
+}
+
+// 사진이 보여 주는 자세가 이름의 명령과 얼마나 다른가 (Y mm, T 도). 값의 어긋남을 자세로 바꾼 것
+std::pair<double, double> command_error(const ZeroFit& fit, const PreparedPhoto& photo, const std::vector<std::string>& sessions) {
+    cv::Mat pose;
+    cv::solve(fit.coefficients.colRange(0, 2), residual_of(fit, photo, sessions), pose, cv::DECOMP_SVD);
+    return {pose.at<double>(0), pose.at<double>(1)};
+}
+
+// 3. 회차마다 영점 어긋남을 거꾸로 구한다.
+//    값이 식에서 크게 벗어난 사진은 영점 맞추기에서만 빼고 left_out 에 표시한다 (학습, 평가에는 그대로 쓴다).
+ZeroFit estimate_session_zeros(const std::vector<PreparedPhoto>& photos, const std::vector<std::string>& sessions, std::vector<int>& left_out) {
+    left_out.assign(photos.size(), 0);
+    ZeroFit fit;
+    for (int round = 0; round < kOutlierRounds + 1; ++round) {
+        std::vector<int> used_index;
+        for (int i = 0; i < int(photos.size()); ++i) if (photos[i].usable() && !left_out[i]) used_index.push_back(i);
+        std::vector<const PreparedPhoto*> used;
+        for (int i : used_index) used.push_back(&photos[i]);
+        fit = fit_session_zeros(used, sessions);
+        if (round == kOutlierRounds) break;
+        // 값마다 가운데값 기반 흔들림으로 나눈 어긋남이 kOutlierLimit 을 넘는 사진을 뺀다
+        std::vector<cv::Mat> residual;
+        for (const PreparedPhoto* p : used) residual.push_back(residual_of(fit, *p, sessions));
+        bool removed = false;
+        for (int k = 0; k < kValueCount; ++k) {
+            std::vector<double> column;
+            for (const cv::Mat& r : residual) column.push_back(std::abs(r.at<double>(k)));
+            const double spread = std::max(1.4826 * median_of(column), 1e-9);
+            for (size_t i = 0; i < used.size(); ++i)
+                if (column[i] / spread > kOutlierLimit) { left_out[used_index[i]] = 1; removed = true; }
+        }
+        if (!removed) break;
+    }
+    return fit;
 }
 
 // 5. 시험 나누기
@@ -190,11 +209,18 @@ int main(int argc, char** argv) {
     }
 
     // 3, 4, 5
-    std::vector<int> mismatch;
-    const auto zeros = estimate_session_zeros(photos, sessions, mismatch);
-    std::vector<std::string> mismatch_names;
-    for (int i = 0; i < int(photos.size()); ++i)
-        if (mismatch[i]) { photos[i].command_mismatch = true; mismatch_names.push_back(photos[i].session + "/" + photos[i].file.name); }
+    std::vector<int> left_out;
+    const ZeroFit fit = estimate_session_zeros(photos, sessions, left_out);
+    const auto& zeros = fit.zeros;
+    // 영점 맞추기에서 빠진 사진 가운데 명령이 정말 틀려 보이는 것만 학습, 평가에서 뺀다
+    std::vector<std::string> mismatch_names, kept_names;
+    for (int i = 0; i < int(photos.size()); ++i) {
+        if (!left_out[i]) continue;
+        const auto error = command_error(fit, photos[i], sessions);
+        const std::string line = photos[i].session + "/" + photos[i].file.name + "  (사진이 보여 주는 자세 − 명령: Y " + format_number(error.first, 3) + " mm, T " + format_number(error.second, 3) + " 도)";
+        photos[i].command_mismatch = std::abs(error.first) > kCommandErrorYmm || std::abs(error.second) > kCommandErrorTdeg;
+        (photos[i].command_mismatch ? mismatch_names : kept_names).push_back(line);
+    }
     std::vector<int> final_check;
     std::vector<std::array<int, kRepeatCount>> folds;
     make_splits(photos, final_check, folds);
@@ -242,11 +268,13 @@ int main(int argc, char** argv) {
     report << "사진 " << photos.size() << "장 (회차 " << sessions.size() << "개)\n"
            << "  학습, 평가에 쓰는 사진 " << usable << "장 (그중 마지막 확인용 " << final_count << "장)\n"
            << "  빼는 사진: 측정 실패 " << failed << ", 나사를 다 못 찾음 " << missing_screw << ", 명령이 학습 범위(|Y| <= 2, |T| <= 1) 밖 " << out_of_range
-           << ", 명령값과 측정이 크게 어긋남 " << mismatch_names.size() << "\n\n"
+           << ", 명령값이 틀려 보임 " << mismatch_names.size() << "\n\n"
            << "회차별 영점 어긋남 (명령 − 학습 정답. 그날 로봇 0 과 절대 영점의 차이)\n";
     for (const std::string& s : sessions) report << "  " << s << "  Y " << format_number(zeros.at(s).first, 5) << " mm, T " << format_number(zeros.at(s).second, 5) << " 도\n";
-    report << "\n명령값과 측정이 크게 어긋나 뺀 사진 (이름의 명령값이 틀렸을 수 있다. 사진을 확인하세요) " << mismatch_names.size() << "장\n";
+    report << "\n명령값이 틀려 보여 뺀 사진 (자세 차이가 Y " << format_number(kCommandErrorYmm) << " mm 또는 T " << format_number(kCommandErrorTdeg) << " 도를 넘음. 사진을 확인하세요) " << mismatch_names.size() << "장\n";
     for (const std::string& s : mismatch_names) report << "  " << s << "\n";
+    report << "\n영점 맞추기에서만 뺀 사진 (값이 식에서 벗어났지만 명령은 맞음. 학습, 평가에는 씀) " << kept_names.size() << "장\n";
+    for (const std::string& s : kept_names) report << "  " << s << "\n";
     report << "\n건너뛴 파일 " << skipped.size() << "개\n";
     for (const std::string& s : skipped) report << "  " << s << "\n";
     report.close();
