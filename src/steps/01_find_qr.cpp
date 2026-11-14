@@ -8,8 +8,6 @@ namespace {
 
 const double kBlurSigma = 2.0;        // px. NCC 전에 흐리는 정도
 const int kBlurMargin = 8;            // px. 흐림이 창 가장자리에서 달라지지 않게 이만큼 넓게 잘라 흐린다
-const int kNarrowHalfWidth = 110;     // px. 평소 탐색 창 (가로 ±)
-const int kWideHalfWidth = 250;       // px. 넓힌 탐색 창
 const int kSearchHalfHeight = 22;     // px. 세로 탐색 창 (세로 ±)
 const double kMinSimilarity = 0.8;    // NCC 가 이보다 낮으면 QR 이 아니라고 본다
 

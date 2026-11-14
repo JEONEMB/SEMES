@@ -32,8 +32,8 @@ int main(int argc, char** argv) {
     const QrFinder qr_finder(reference);
     std::cout << "[1단계] find_qr_shift\n";
     for (int k = 0; k < 3; ++k) {
-        const QrFinder::Match match = qr_finder.find_one(gray, k, 110);
-        std::cout << "  QR " << k + 1 << " (창 ±110): 찾음 " << match.found << ", dx " << match.dx << ", dy " << match.dy << ", 닮은 정도 " << match.similarity << "\n";
+        const QrFinder::Match match = qr_finder.find_one(gray, k, kNarrowHalfWidth);
+        std::cout << "  QR " << k + 1 << " (창 ±" << kNarrowHalfWidth << "): 찾음 " << match.found << ", dx " << match.dx << ", dy " << match.dy << ", 닮은 정도 " << match.similarity << "\n";
     }
     const QrShift qr = qr_finder.find_qr_shift(gray);
     std::cout << "  결과: dx " << qr.dx << ", dy " << qr.dy << ", 찾은 QR " << qr.found_count << "개, 탐색 단계 " << int(qr.search) << " (0 좁게, 1 넓게, 2 전체 폭, 3 일부, 4 못 찾음)\n";

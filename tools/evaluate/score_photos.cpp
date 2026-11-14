@@ -15,6 +15,7 @@
 //   summary.txt  전체, 폴더별 통과율, 최대 오차, 상태별 개수
 #include "alignment.hpp"
 #include "common/photo_files.hpp"
+#include "common/pose_model.hpp"   // 통과 기준 kToleranceYmm, kToleranceTdeg
 #include "common/tables.hpp"
 #include <algorithm>
 #include <chrono>
@@ -58,7 +59,7 @@ int main(int argc, char** argv) {
     }
     const fs::path photo_folder = fs::u8path(argv[1]), output = fs::u8path(argv[2]);
     std::string data_folder = "data/model";
-    double tolerance_y = 0.045, tolerance_t = 0.01;
+    double tolerance_y = kToleranceYmm, tolerance_t = kToleranceTdeg;   // 기본은 학습, 평가와 같은 통과 기준
     fs::path answers_file;
     for (int a = 3; a + 1 < argc; ++a) {
         const std::string option = argv[a];
