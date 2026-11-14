@@ -57,8 +57,9 @@ std::mutex state_mutex;
 // ------------------------------------------------------------------------------------------------
 
 void report(const Result& result) {
-    if (result.status == Status::Ok) return;
-    const std::string line = std::string(result.status == Status::Failed ? "[실패 " : "[경고 ") + result.code + "] " + result.message;
+    if (result.message.empty()) return;
+    const char* level = result.status == Status::Failed ? "[실패 " : result.status == Status::Warning ? "[경고 " : "[알림 ";
+    const std::string line = level + result.code + "] " + result.message;
     std::cerr << line << std::endl;
     if (!state.settings.log_file.empty()) std::ofstream(state.settings.log_file, std::ios::app) << line << "\n";
 }
@@ -79,6 +80,12 @@ Result failed(const std::string& code, const std::string& message) {
 void add_notice(Result& result, Status status, const std::string& code, const std::string& message) {
     if (result.code.empty()) result.code = code;
     if (status == Status::Failed || result.status == Status::Ok) result.status = status;
+    result.message += (result.message.empty() ? "" : " / ") + message;
+}
+
+// 참고 알림을 하나 더한다. 상태는 바꾸지 않는다 (값은 정상).
+void add_info(Result& result, const std::string& code, const std::string& message) {
+    if (result.code.empty()) result.code = code;
     result.message += (result.message.empty() ? "" : " / ") + message;
 }
 
@@ -159,6 +166,8 @@ void add_notices(Result& result, const Measured& measured, const AgreementResult
         add_notice(result, Status::Warning, "W_FAR", "QR 이 기준에서 250 px 넘게 떨어져 있습니다. 값이 부정확할 수 있으니 옮긴 뒤 다시 측정하세요");
     if (!in_range)
         add_notice(result, Status::Warning, "W_OUT_OF_RANGE", "학습한 범위(Y ±2 mm, T ±1도) 밖입니다. 오차가 커질 수 있으니 옮긴 뒤 다시 측정하세요");
+    if (measured.qr.search == QrSearch::Wide)
+        add_info(result, "N_WIDE_SEARCH", "QR 이 110 px 넘게 움직여 넓은 창(±250 px)으로 찾았습니다");
 }
 
 Result make_result(const Measured& measured) {

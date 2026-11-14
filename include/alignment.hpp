@@ -23,8 +23,9 @@ struct Result {
     double y_mm = 0;     // 기준 위치에서 벗어난 양. 보정 이동 = −y_mm
     double t_deg = 0;    // 기준 각도에서 벗어난 양. 보정 회전 = −t_deg
     Status status = Status::Ok;
-    std::string code;    // 가장 중요한 알림의 코드 (예: "W_SCREW_MISSING"). 정상이면 빈 문자열
-    std::string message; // 사람이 읽는 설명과 해야 할 일. 정상이면 빈 문자열
+    std::string code;    // 가장 중요한 알림의 코드 (예: "W_SCREW_MISSING"). 알릴 것이 없으면 빈 문자열
+    std::string message; // 사람이 읽는 설명과 해야 할 일. 알릴 것이 없으면 빈 문자열
+                         // 정상(Ok)이어도 참고 알림(N_…)이 있으면 code, message 가 채워진다
 
     // 아래는 확인용 (옮긴 코드가 맞는지 단계별로 비교할 때 쓴다)
     double qr_shift_px = 0;          // 1단계: QR 3개의 가로 이동 평균
