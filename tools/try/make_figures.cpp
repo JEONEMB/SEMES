@@ -153,20 +153,16 @@ cv::Mat draw(const Example& example, const Reference& reference, const Parts& pa
         write_text(image, example.call, {28, 81}, 17, kWhite);
     const int right = image.cols - 26, label = right - 170;
     write_text(image, example.edited ? "원본 명령값" : "라벨", {label, 18}, 20, kWhite, true);
-    if (step >= 5) {
-        const char* heading = example.call == "set_reference_from_photos" ? "갱신 결과" :
-                              example.day_zero && example.call == "measure_alignment" ? "영점 적용 측정값" : "측정";
-        write_text(image, heading, {right, 18}, 20, kWhite, true);
-    }
+    const char* heading = example.call == "set_reference_from_photos" ? "갱신 결과" :
+                          example.day_zero && example.call == "measure_alignment" ? "영점 적용 측정값" : "측정";
+    write_text(image, heading, {right, 18}, 20, kWhite, true);
     for (int axis = 0; axis < 2; ++axis) {
         const int y = 47 + axis * 30;
         write_text(image, axis == 0 ? "Y (mm)" : "T (°)", {label - 175, y}, 20, kWhite);
         const double command = axis == 0 ? example.source.command_y_mm : example.source.command_t_deg;
         write_text(image, example.source.has_command ? number(command) : "—", {label, y}, 23, kWhite, true);
-        if (step >= 5) {
-            const double value = axis == 0 ? result.y_mm : result.t_deg;
-            write_text(image, number(value), {right, y}, 23, kWhite, true);
-        }
+        const double value = axis == 0 ? result.y_mm : result.t_deg;
+        write_text(image, step >= 5 && std::isfinite(value) ? number(value) : "-", {right, y}, 23, kWhite, true);
     }
     if (step >= 5 && !example.day_zero && example.call == "measure_alignment")
         write_text(image, "촬영일 영점 미적용", {32, 101}, 17, kWhite);
