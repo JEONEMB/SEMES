@@ -13,23 +13,12 @@
 
 using namespace alignment;
 
-int main(int argc, char** argv) {
-    if (argc != 3) { std::cerr << "사용: show_steps <model 폴더> <사진>\n"; return 2; }
-    const std::string data = argv[1];
-    std::string error;
-    Reference reference;
-    std::vector<CoefficientSet> sets;
-    std::vector<AgreementCheck> checks;
-    cv::Mat gray;
-    if (!load_reference(data, reference, error) || !load_coefficient_sets(data, sets, error) || !load_agreement_checks(data, checks, error) ||
-        !to_gray(alignment::read_photo(argv[2]), gray, error)) {
-        std::cerr << error << "\n";
-        return 1;
-    }
-    std::cout << std::fixed << std::setprecision(6);
+namespace {
 
-    // ---- 1단계 ----
-    const QrFinder qr_finder(reference);
+const char* const kValueLabels[kValueCount] = {"QR", "나사 1", "나사 2", "나사 3", "나사 4"};   // 화면에 찍는 이름
+
+// 1단계: QR 3개를 하나씩 찾은 값과, 합친 결과를 찍는다.
+QrShift print_qr_step(const QrFinder& qr_finder, const cv::Mat& gray) {
     std::cout << "[1단계] find_qr_shift\n";
     for (int k = 0; k < 3; ++k) {
         const QrFinder::Match match = qr_finder.find_one(gray, k, kNarrowHalfWidth);
@@ -37,13 +26,13 @@ int main(int argc, char** argv) {
     }
     const QrShift qr = qr_finder.find_qr_shift(gray);
     std::cout << "  결과: dx " << qr.dx << ", dy " << qr.dy << ", 찾은 QR " << qr.found_count << "개, 탐색 단계 " << int(qr.search) << " (0 좁게, 1 넓게, 2 전체 폭, 3 일부, 4 못 찾음)\n";
-    if (qr.search == QrSearch::NotFound) return 1;
+    return qr;
+}
 
-    // ---- 2단계 ----
-    const ScrewFinder screw_finder(reference);
+// 2단계: 나사마다 세 단계(대략 → 밝기 → 테두리)의 값을 찍고, 찾은 나사의 가로 이동을 values[1~4] 에 넣는다.
+std::array<bool, 4> print_screw_step(const ScrewFinder& screw_finder, const cv::Mat& gray, const QrShift& qr, double values[kValueCount]) {
     const cv::Point expected(int(std::lround(qr.dx)), int(std::lround(qr.dy)));
     std::cout << "[2단계] find_screw_shifts  (QR 이동을 반올림한 예상 이동: " << expected.x << ", " << expected.y << ")\n";
-    double values[5] = {qr.dx, 0, 0, 0, 0};
     std::array<bool, 4> found{};
     for (int k = 0; k < 4; ++k) {
         cv::Point located;
@@ -58,31 +47,62 @@ int main(int argc, char** argv) {
         found[k] = true;
         values[k + 1] = dx;
     }
+    return found;
+}
 
-    // ---- 3단계 ----
-    const CoefficientSet* set = choose_coefficient_set(sets, found);
-    std::cout << "[3단계] compute_yt  (계수 조합 screws_" << set->screws << ")\n";
-    const char* names[5] = {"QR", "나사 1", "나사 2", "나사 3", "나사 4"};
-    for (int i = 0; i < 5; ++i) {
-        if (set->weight_y[i] == 0 && set->weight_t[i] == 0) continue;
-        const double normalized = (values[i] - set->mean[i]) / set->scale[i];
-        std::cout << "  " << names[i] << ": 값 " << values[i] << " → 정규화 " << normalized << " → Y 에 " << set->weight_y[i] * normalized << ", T 에 " << set->weight_t[i] * normalized << "\n";
+// 3단계: 값마다 Y, T 에 얼마씩 더해지는지와 결과를 찍는다.
+YT print_yt_step(const CoefficientSet& set, const double values[kValueCount]) {
+    std::cout << "[3단계] compute_yt  (계수 조합 screws_" << set.screws << ")\n";
+    for (int i = 0; i < kValueCount; ++i) {
+        if (set.weight_y[i] == 0 && set.weight_t[i] == 0) continue;
+        const double normalized = (values[i] - set.mean[i]) / set.scale[i];
+        std::cout << "  " << kValueLabels[i] << ": 값 " << values[i] << " → 정규화 " << normalized << " → Y 에 " << set.weight_y[i] * normalized << ", T 에 " << set.weight_t[i] * normalized << "\n";
     }
-    const YT yt = compute_yt(*set, values);
-    std::cout << "  절편 Y " << set->intercept_y << ", T " << set->intercept_t << "\n";
+    const YT yt = compute_yt(set, values);
+    std::cout << "  절편 Y " << set.intercept_y << ", T " << set.intercept_t << "\n";
     std::cout << "  결과: Y " << yt.y_mm << " mm, T " << yt.t_deg << " 도  (영점을 빼기 전)\n";
+    return yt;
+}
 
-    // ---- 4단계 ----
+// 4단계: 값마다 기대값과의 차이, 점검값, 학습 범위 안인지를 찍는다. check 가 nullptr 이면 점검식이 없는 조합.
+void print_check_step(const AgreementCheck* check, const Reference& reference, const double values[kValueCount], const YT& yt) {
     std::cout << "[4단계] check_values_agree, check_in_trained_range\n";
-    if (const AgreementCheck* check = find_agreement_check(checks, set->screws)) {
-        double differences[5];
+    if (check) {
+        double differences[kValueCount];
         expected_differences(*check, values, yt.y_mm, yt.t_deg, differences);
         for (const AgreementCheck::Row& row : check->rows)
-            std::cout << "  " << names[row.value_index] << ": 측정값 − 기대값 " << differences[row.value_index] << " px, 평소 흔들림 " << row.usual_spread << " → " << std::abs(differences[row.value_index]) / row.usual_spread << "\n";
-        const double no_baseline[5] = {};
+            std::cout << "  " << kValueLabels[row.value_index] << ": 측정값 − 기대값 " << differences[row.value_index] << " px, 평소 흔들림 " << row.usual_spread << " → "
+                      << std::abs(differences[row.value_index]) / row.usual_spread << "\n";
+        const double no_baseline[kValueCount] = {};
         const AgreementResult agreement = check_values_agree(*check, values, yt.y_mm, yt.t_deg, no_baseline);
         std::cout << "  점검값 " << agreement.value << " (기준 " << agreement.limit << ") → " << (agreement.agrees() ? "서로 맞음" : "서로 맞지 않음") << "\n";
     }
     std::cout << "  학습 범위 안: " << (check_in_trained_range(reference, yt.y_mm, yt.t_deg) ? "예" : "아니오") << "\n";
+}
+
+}   // namespace
+
+int main(int argc, char** argv) {
+    if (argc != 3) { std::cerr << "사용: show_steps <model 폴더> <사진>\n"; return 2; }
+    const std::string model_folder = argv[1];
+    std::string error;
+    Reference reference;
+    std::vector<CoefficientSet> sets;
+    std::vector<AgreementCheck> checks;
+    cv::Mat gray;
+    if (!load_reference(model_folder, reference, error) || !load_coefficient_sets(model_folder, sets, error) || !load_agreement_checks(model_folder, checks, error) ||
+        !to_gray(alignment::read_photo(argv[2]), gray, error)) {
+        std::cerr << error << "\n";
+        return 1;
+    }
+    std::cout << std::fixed << std::setprecision(6);
+
+    const QrShift qr = print_qr_step(QrFinder(reference), gray);
+    if (qr.search == QrSearch::NotFound) return 1;
+    double values[kValueCount] = {qr.dx, 0, 0, 0, 0};
+    const std::array<bool, 4> found = print_screw_step(ScrewFinder(reference), gray, qr, values);
+    const CoefficientSet* set = choose_coefficient_set(sets, found);
+    const YT yt = print_yt_step(*set, values);
+    print_check_step(find_agreement_check(checks, set->screws), reference, values, yt);
     return 0;
 }
