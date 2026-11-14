@@ -13,8 +13,10 @@
 //   4. 학습용 정답 = 명령 − 그 회차의 영점 어긋남  (받은 명령값은 photos.tsv 에 그대로 남긴다)
 //   5. 시험 나누기: 같은 회차의 같은 명령 자세는 한 묶음. 20% 를 마지막 확인용으로 떼고, 나머지를 5묶음 × 10번
 #include "alignment.hpp"
+#include "common/console.hpp"
 #include "common/dataset.hpp"
 #include "common/photo_files.hpp"
+#include "common/progress.hpp"
 #include "common/tables.hpp"
 #include <opencv2/core.hpp>
 #include <algorithm>
@@ -180,19 +182,24 @@ std::vector<PreparedPhoto> measure_all_photos(const fs::path& photo_root, const 
             photo.session = session;
             photo.file = file;
             photo.in_range = std::abs(file.command_y_mm) <= kTrainedRangeYmm + 1e-9 && std::abs(file.command_t_deg) <= kTrainedRangeTdeg + 1e-9;
-            alignment::clear_zero();
-            const alignment::Result r = alignment::measure_alignment(alignment::read_photo(file.path.u8string()));
-            photo.measured = r.status != alignment::Status::Failed;
-            photo.values[0] = r.qr_shift_px;
-            photo.all_screws = photo.measured;
-            for (int k = 0; k < 4; ++k) {
-                photo.values[k + 1] = r.screw_shift_px[k];
-                if (!std::isfinite(r.screw_shift_px[k])) photo.all_screws = false;
-            }
             photos.push_back(photo);
         }
-        std::cerr << "  " << session << " 측정 끝\n";
     }
+    ProgressBar bar("사진 재는 중", int(photos.size()));
+    const QuietWarnings quiet;   // 사진마다 나오는 경고 줄은 화면에 내지 않는다 (결과에는 남는다)
+    for (PreparedPhoto& photo : photos) {
+        alignment::clear_zero();
+        const alignment::Result r = alignment::measure_alignment(alignment::read_photo(photo.file.path.u8string()));
+        photo.measured = r.status != alignment::Status::Failed;
+        photo.values[0] = r.qr_shift_px;
+        photo.all_screws = photo.measured;
+        for (int k = 0; k < 4; ++k) {
+            photo.values[k + 1] = r.screw_shift_px[k];
+            if (!std::isfinite(r.screw_shift_px[k])) photo.all_screws = false;
+        }
+        bar.step();
+    }
+    bar.finish();
     return photos;
 }
 
@@ -282,6 +289,7 @@ void write_report(const fs::path& path, const std::vector<PreparedPhoto>& photos
 }   // namespace
 
 int main(int argc, char** argv) {
+    use_korean_console();
     if (argc < 2) { std::cerr << "사용: prepare_dataset <사진 폴더> [--data <model 폴더>]\n"; return 2; }
     const fs::path photo_root = fs::u8path(argv[1]), tables = photo_root / kTableFolder;
     std::string model_folder = "data/model";

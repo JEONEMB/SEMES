@@ -9,6 +9,7 @@
 //   2. 점검식: 나사 2개 이상 조합 11가지마다, 값마다 "이 Y, T 라면 이 값이어야 한다" 2차식
 //   3. reference.json 의 학습 범위 = 학습 사진 정답의 최소, 최대
 #include "common/coefficient_fit.hpp"
+#include "common/console.hpp"
 #include "common/dataset.hpp"
 #include "common/tables.hpp"
 #include <opencv2/core.hpp>
@@ -97,6 +98,7 @@ bool write_reference_file(const fs::path& from_model, const fs::path& to_model, 
 }   // namespace
 
 int main(int argc, char** argv) {
+    use_korean_console();
     Arguments arguments;
     if (!read_arguments(argc, argv, arguments)) { std::cerr << "사용: fit_coefficients <tables 폴더> <새 model 폴더> [--data <지금 model 폴더>]\n"; return 2; }
     std::vector<DatasetPhoto> photos;

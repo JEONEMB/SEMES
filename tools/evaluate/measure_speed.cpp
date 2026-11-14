@@ -8,6 +8,7 @@
 //   - OpenCV 스레드 1개, 4개 각각. 스레드 설정마다 첫 1장은 준비 시간이라 뺀다
 //   - 중앙값, 95% 지점, 최대
 #include "alignment.hpp"
+#include "common/console.hpp"
 #include "common/photo_files.hpp"
 #include "common/tables.hpp"
 #include <opencv2/core/utility.hpp>
@@ -62,6 +63,7 @@ std::string environment(const char* name) { const char* value = std::getenv(name
 }   // namespace
 
 int main(int argc, char** argv) {
+    use_korean_console();
     if (argc < 4) { std::cerr << "사용: measure_speed <model 폴더> <사진 폴더 또는 tables 폴더> <출력 폴더> [--count 사진 수]\n"; return 2; }
     const std::string data_folder = argv[1];
     const fs::path input = fs::u8path(argv[2]), output = fs::u8path(argv[3]);

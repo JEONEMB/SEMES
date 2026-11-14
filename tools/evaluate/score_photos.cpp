@@ -20,6 +20,7 @@
 #include "common/coefficient_fit.hpp"   // 통과 기준 kToleranceYmm, kToleranceTdeg
 #include "common/console.hpp"
 #include "common/photo_files.hpp"
+#include "common/progress.hpp"
 #include "common/tables.hpp"
 #include <algorithm>
 #include <chrono>
@@ -171,6 +172,7 @@ struct Scores {
     std::map<std::string, Counts> by_folder;
     std::map<std::string, int> by_status, by_code;
     double worst_y = 0, worst_t = 0;   // 최대 오차 (영점 잡음, 실패 제외)
+    std::vector<double> times_ms;      // 사진마다 측정 함수에 걸린 시간 (사진 읽기 제외)
 };
 
 // 사진을 한 장씩 재서 results.csv 에 한 줄씩 쓰고 점수를 모은다.
@@ -179,11 +181,14 @@ Scores measure_photos(const std::vector<PhotoFile>& scored, const Zero& zero, co
     csv << "\xEF\xBB\xBF";   // 엑셀이 한글을 읽게
     csv << "사진,폴더,정답 Y,정답 T,측정 Y,측정 T,오차 Y,오차 T,통과,영점 없이 측정 Y,영점 없이 측정 T,영점 없이 통과,상태,코드,메시지,시간 ms\n";
     Scores scores;
+    ProgressBar bar("사진 재는 중", int(scored.size()));
+    const QuietWarnings quiet;   // 사진마다 나오는 경고 줄은 화면에 내지 않는다 (results.csv 의 코드, 메시지 열에 남는다)
     for (const PhotoFile& p : scored) {
         const cv::Mat image = alignment::read_photo(p.path.u8string());
         const auto start = std::chrono::steady_clock::now();
         const alignment::Result r = alignment::measure_alignment(image);
         const double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
+        scores.times_ms.push_back(ms);
         const std::string folder = fs::relative(p.path.parent_path(), arguments.photo_folder).u8string();
         const bool failed = r.status == alignment::Status::Failed;
         const double error_y = r.y_mm - p.command_y_mm, error_t = r.t_deg - p.command_t_deg;
@@ -206,8 +211,17 @@ Scores measure_photos(const std::vector<PhotoFile>& scored, const Zero& zero, co
             << number(r.y_mm, 4) << ',' << number(r.t_deg, 5) << ',' << number(error_y, 4) << ',' << number(error_t, 5) << ',' << (ok ? 1 : 0) << ','
             << number(raw_y, 4) << ',' << number(raw_t, 5) << ',' << (ok_raw ? 1 : 0) << ',' << status_name(r.status) << ',' << csv_cell(r.code) << ','
             << csv_cell(r.message) << ',' << number(ms, 1) << '\n';
+        bar.step();
     }
+    bar.finish();
     return scores;
+}
+
+// 한 장에 걸린 시간의 가운데값과 최대
+std::string speed_text(std::vector<double> times_ms) {
+    if (times_ms.empty()) return "잰 사진이 없음";
+    std::sort(times_ms.begin(), times_ms.end());
+    return "한 장에 가운데값 " + number(times_ms[times_ms.size() / 2], 1) + " ms, 가장 오래 걸린 사진 " + number(times_ms.back(), 1) + " ms";
 }
 
 std::string summary_text(const PhotoGroups& groups, const Zero& zero, const Scores& scores, const Arguments& arguments) {
@@ -224,6 +238,7 @@ std::string summary_text(const PhotoGroups& groups, const Zero& zero, const Scor
     for (const auto& s : scores.by_status) summary << "  " << s.first << " " << s.second << "\n";
     summary << "\n코드별 (README 5절)\n";
     for (const auto& c : scores.by_code) summary << "  " << c.first << " " << c.second << "\n";
+    summary << "\n속도 (측정 함수만, 사진 읽기 제외)\n  " << speed_text(scores.times_ms) << "\n";
     if (!groups.no_answer.empty()) {
         summary << "\n정답이 없어 뺀 사진\n";
         for (const PhotoFile& p : groups.no_answer) summary << "  " << p.name << "\n";
@@ -303,10 +318,10 @@ bool confirm(const Arguments& arguments, const PhotoGroups& groups) {
 }   // namespace
 
 int main(int argc, char** argv) {
+    use_korean_console();
     const bool guided = argc == 1;
     Arguments arguments;
     if (guided) {
-        use_korean_console();
         std::cout << "정렬 측정 평가: 사진을 재서 파일 이름의 명령값과 비교합니다.\n";
         arguments.zero_path = ask_zero_photos();
         arguments.photo_folder = ask_photo_folder();

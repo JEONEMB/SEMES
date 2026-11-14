@@ -14,6 +14,7 @@
 //             으로 평균(측정 − 명령)을 구한다. 5장은 200번 뽑아 평균. 영점에 쓴 사진은 채점에서 뺀다
 //   - 학습 정답 (명령 − 그 회차의 영점 어긋남, tables/labels.tsv)
 #include "common/coefficient_fit.hpp"
+#include "common/console.hpp"
 #include "common/dataset.hpp"
 #include "common/tables.hpp"
 #include <algorithm>
@@ -213,6 +214,7 @@ void test_outside_range(const Photos& usable) {
 }   // namespace
 
 int main(int argc, char** argv) {
+    use_korean_console();
     if (argc < 3) { std::cerr << "사용: evaluate_accuracy <tables 폴더> <출력 폴더>\n"; return 2; }
     const fs::path tables = fs::u8path(argv[1]), output = fs::u8path(argv[2]);
     std::vector<DatasetPhoto> photos;
