@@ -1,5 +1,7 @@
-#include "setup/settings.hpp"
+﻿#include "setup/settings.hpp"
 #include <opencv2/core.hpp>
+#include <filesystem>
+#include <fstream>
 
 namespace alignment {
 
@@ -7,8 +9,20 @@ bool load_settings(const std::string& settings_file, Settings& settings, std::st
     settings = Settings();
     if (settings_file.empty()) return true;
 
-    cv::FileStorage file(settings_file, cv::FileStorage::READ);
-    if (!file.isOpened()) { error = "설정 파일을 읽지 못했습니다: " + settings_file; return false; }
+    const auto unreadable = [&] {
+        error = "설정 파일을 읽지 못했습니다: " + settings_file;
+        return false;
+    };
+    std::ifstream input(std::filesystem::u8path(settings_file), std::ios::binary);
+    if (!input.is_open()) { input.clear(); input.open(settings_file, std::ios::binary); }
+    if (!input) return unreadable();
+    const std::string contents((std::istreambuf_iterator<char>(input)), {});
+    cv::FileStorage file;
+    try {
+        if (!file.open(contents, cv::FileStorage::READ | cv::FileStorage::MEMORY)) return unreadable();
+    } catch (const cv::Exception&) {
+        return unreadable();
+    }
 
     const cv::FileNode screws = file["screws"];
     if (!screws.empty()) {
