@@ -807,7 +807,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_warning_W_QR_PARTIAL_title",
+                      "id":  "case_warning_W_QR_PARTIAL_title",
                       "type":  "text",
                       "text":  "W_QR_PARTIAL\n\n![[코드정리_warning_W_QR_PARTIAL.jpg|592]]",
                       "x":  9680,
@@ -817,7 +817,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_fail_E_DATA",
+                      "id":  "case_fail_E_DATA",
                       "type":  "text",
                       "text":  "### E_DATA\n\ninitialize에서 기준 사진, 위치 정보, 계수 또는 점검식을 읽거나 검증하지 못함.",
                       "x":  8990,
@@ -827,7 +827,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_REFERENCE_title",
+                      "id":  "case_fail_E_REFERENCE_title",
                       "type":  "text",
                       "text":  "E_REFERENCE\n\n![[코드정리_fail_E_REFERENCE.jpg|592]]",
                       "x":  10370,
@@ -837,7 +837,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_W_VALUES_DISAGREE_title",
+                      "id":  "case_fail_W_VALUES_DISAGREE_title",
                       "type":  "text",
                       "text":  "W_VALUES_DISAGREE\n\n![[코드정리_fail_W_VALUES_DISAGREE.jpg|592]]",
                       "x":  11060,
@@ -847,7 +847,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_QR_NOT_FOUND_title",
+                      "id":  "case_fail_E_QR_NOT_FOUND_title",
                       "type":  "text",
                       "text":  "E_QR_NOT_FOUND\n\n![[코드정리_fail_E_QR_NOT_FOUND.jpg|592]]",
                       "x":  8990,
@@ -857,7 +857,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_warning_W_COARSE_title",
+                      "id":  "case_warning_W_COARSE_title",
                       "type":  "text",
                       "text":  "W_COARSE\n\n![[코드정리_warning_W_COARSE.jpg|592]]",
                       "x":  10370,
@@ -876,7 +876,7 @@
                       "height":  390
                   },
                   {
-                      "id":  "semes_warning_W_SCREW_MISSING_title",
+                      "id":  "case_warning_W_SCREW_MISSING_title",
                       "type":  "text",
                       "text":  "W_SCREW_MISSING\n\n![[코드정리_warning_W_SCREW_MISSING.jpg|592]]",
                       "x":  11060,
@@ -906,7 +906,7 @@
                       "color":  "4"
                   },
                   {
-                      "id":  "semes_fail_E_INTERNAL",
+                      "id":  "case_fail_E_INTERNAL",
                       "type":  "text",
                       "text":  "### E_INTERNAL\n\n측정, 영점 설정 또는 기준 갱신 중 예외가 발생함.",
                       "x":  10370,
@@ -916,7 +916,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_NOT_INITIALIZED",
+                      "id":  "case_fail_E_NOT_INITIALIZED",
                       "type":  "text",
                       "text":  "### E_NOT_INITIALIZED\n\n초기화 성공 전에 측정, 영점 설정 또는 기준 갱신을 호출함.",
                       "x":  9680,
@@ -926,7 +926,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_ZERO_title",
+                      "id":  "case_fail_E_ZERO_title",
                       "type":  "text",
                       "text":  "E_ZERO\n\n![[코드정리_fail_E_ZERO.jpg|592]]",
                       "x":  9680,
@@ -966,7 +966,7 @@
                       "color":  "6"
                   },
                   {
-                      "id":  "semes_warning_W_VALUES_DISAGREE_title",
+                      "id":  "case_warning_W_VALUES_DISAGREE_title",
                       "type":  "text",
                       "text":  "W_VALUES_DISAGREE\n\n![[코드정리_warning_W_VALUES_DISAGREE.jpg|592]]",
                       "x":  8300,
@@ -976,7 +976,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_warning_W_OUT_OF_RANGE_title",
+                      "id":  "case_warning_W_OUT_OF_RANGE_title",
                       "type":  "text",
                       "text":  "W_OUT_OF_RANGE\n\n![[코드정리_warning_W_OUT_OF_RANGE.jpg|592]]",
                       "x":  8990,
@@ -986,7 +986,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_warning_W_ZERO_RESET_title",
+                      "id":  "case_warning_W_ZERO_RESET_title",
                       "type":  "text",
                       "text":  "W_ZERO_RESET\n\n![[코드정리_warning_W_ZERO_RESET.jpg|592]]",
                       "x":  9680,
@@ -996,7 +996,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_warning_N_WIDE_SEARCH_title",
+                      "id":  "case_warning_N_WIDE_SEARCH_title",
                       "type":  "text",
                       "text":  "N_WIDE_SEARCH\n\n![[코드정리_warning_N_WIDE_SEARCH.jpg|592]]",
                       "x":  8300,
@@ -1006,7 +1006,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_warning_W_FAR_title",
+                      "id":  "case_warning_W_FAR_title",
                       "type":  "text",
                       "text":  "W_FAR\n\n![[코드정리_warning_W_FAR.jpg|592]]",
                       "x":  8990,
@@ -1026,7 +1026,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_fail_E_PHOTO_title",
+                      "id":  "case_fail_E_PHOTO_title",
                       "type":  "text",
                       "text":  "E_PHOTO\n\n![[코드정리_fail_E_PHOTO.jpg|592]]",
                       "x":  8300,
@@ -1036,7 +1036,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_SETTINGS",
+                      "id":  "case_fail_E_SETTINGS",
                       "type":  "text",
                       "text":  "### E_SETTINGS\n\ninitialize에서 설정 파일을 읽을 수 없거나 나사 설정이 유효하지 않음.",
                       "x":  8300,

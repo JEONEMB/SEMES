@@ -807,7 +807,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_warning_W_QR_PARTIAL_title",
+                      "id":  "case_warning_W_QR_PARTIAL_title",
                       "type":  "text",
                       "text":  "W_QR_PARTIAL\n\n![[코드정리_warning_W_QR_PARTIAL.jpg|592]]",
                       "x":  9680,
@@ -817,7 +817,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_fail_E_DATA",
+                      "id":  "case_fail_E_DATA",
                       "type":  "text",
                       "text":  "### E_DATA\n\ninitialize에서 기준 사진, 위치 정보, 계수 또는 점검식을 읽거나 검증하지 못함.",
                       "x":  8990,
@@ -827,7 +827,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_REFERENCE_title",
+                      "id":  "case_fail_E_REFERENCE_title",
                       "type":  "text",
                       "text":  "E_REFERENCE\n\n![[코드정리_fail_E_REFERENCE.jpg|592]]",
                       "x":  10370,
@@ -837,7 +837,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_W_VALUES_DISAGREE_title",
+                      "id":  "case_fail_W_VALUES_DISAGREE_title",
                       "type":  "text",
                       "text":  "W_VALUES_DISAGREE\n\n![[코드정리_fail_W_VALUES_DISAGREE.jpg|592]]",
                       "x":  11060,
@@ -847,7 +847,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_QR_NOT_FOUND_title",
+                      "id":  "case_fail_E_QR_NOT_FOUND_title",
                       "type":  "text",
                       "text":  "E_QR_NOT_FOUND\n\n![[코드정리_fail_E_QR_NOT_FOUND.jpg|592]]",
                       "x":  8990,
@@ -857,7 +857,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_warning_W_COARSE_title",
+                      "id":  "case_warning_W_COARSE_title",
                       "type":  "text",
                       "text":  "W_COARSE\n\n![[코드정리_warning_W_COARSE.jpg|592]]",
                       "x":  10370,
@@ -876,7 +876,7 @@
                       "height":  390
                   },
                   {
-                      "id":  "semes_warning_W_SCREW_MISSING_title",
+                      "id":  "case_warning_W_SCREW_MISSING_title",
                       "type":  "text",
                       "text":  "W_SCREW_MISSING\n\n![[코드정리_warning_W_SCREW_MISSING.jpg|592]]",
                       "x":  11060,
@@ -906,7 +906,7 @@
                       "color":  "4"
                   },
                   {
-                      "id":  "semes_fail_E_INTERNAL",
+                      "id":  "case_fail_E_INTERNAL",
                       "type":  "text",
                       "text":  "### E_INTERNAL\n\n측정, 영점 설정 또는 기준 갱신 중 예외가 발생함.",
                       "x":  10370,
@@ -916,7 +916,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_NOT_INITIALIZED",
+                      "id":  "case_fail_E_NOT_INITIALIZED",
                       "type":  "text",
                       "text":  "### E_NOT_INITIALIZED\n\n초기화 성공 전에 측정, 영점 설정 또는 기준 갱신을 호출함.",
                       "x":  9680,
@@ -926,7 +926,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_ZERO_title",
+                      "id":  "case_fail_E_ZERO_title",
                       "type":  "text",
                       "text":  "E_ZERO\n\n![[코드정리_fail_E_ZERO.jpg|592]]",
                       "x":  9680,
@@ -966,7 +966,7 @@
                       "color":  "6"
                   },
                   {
-                      "id":  "semes_warning_W_VALUES_DISAGREE_title",
+                      "id":  "case_warning_W_VALUES_DISAGREE_title",
                       "type":  "text",
                       "text":  "W_VALUES_DISAGREE\n\n![[코드정리_warning_W_VALUES_DISAGREE.jpg|592]]",
                       "x":  8300,
@@ -976,7 +976,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_warning_W_OUT_OF_RANGE_title",
+                      "id":  "case_warning_W_OUT_OF_RANGE_title",
                       "type":  "text",
                       "text":  "W_OUT_OF_RANGE\n\n![[코드정리_warning_W_OUT_OF_RANGE.jpg|592]]",
                       "x":  8990,
@@ -986,7 +986,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_warning_W_ZERO_RESET_title",
+                      "id":  "case_warning_W_ZERO_RESET_title",
                       "type":  "text",
                       "text":  "W_ZERO_RESET\n\n![[코드정리_warning_W_ZERO_RESET.jpg|592]]",
                       "x":  9680,
@@ -998,7 +998,7 @@
                   {
                       "id":  "te0",
                       "type":  "text",
-                      "text":  "## 학습과 평가가 같이 쓰는 코드\n**언제** 직접 실행하지 않는다. 학습과 평가 프로그램이 불러 쓴다\n\n\u003e **파일** `tools/common/`\n\u003e **함수** 아래 여섯 파일",
+                      "text":  "## 공통 코드\n학습·평가가 함께 부른다.\n`tools/common/`\n전처리는 아래 데이터 묶음.",
                       "x":  -870,
                       "y":  8519,
                       "width":  1120,
@@ -1006,7 +1006,7 @@
                       "color":  "4"
                   },
                   {
-                      "id":  "semes_warning_N_WIDE_SEARCH_title",
+                      "id":  "case_warning_N_WIDE_SEARCH_title",
                       "type":  "text",
                       "text":  "N_WIDE_SEARCH\n\n![[코드정리_warning_N_WIDE_SEARCH.jpg|592]]",
                       "x":  8300,
@@ -1016,7 +1016,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_warning_W_FAR_title",
+                      "id":  "case_warning_W_FAR_title",
                       "type":  "text",
                       "text":  "W_FAR\n\n![[코드정리_warning_W_FAR.jpg|592]]",
                       "x":  8990,
@@ -1036,7 +1036,7 @@
                       "color":  "2"
                   },
                   {
-                      "id":  "semes_fail_E_PHOTO_title",
+                      "id":  "case_fail_E_PHOTO_title",
                       "type":  "text",
                       "text":  "E_PHOTO\n\n![[코드정리_fail_E_PHOTO.jpg|592]]",
                       "x":  8300,
@@ -1046,7 +1046,7 @@
                       "color":  "1"
                   },
                   {
-                      "id":  "semes_fail_E_SETTINGS",
+                      "id":  "case_fail_E_SETTINGS",
                       "type":  "text",
                       "text":  "### E_SETTINGS\n\ninitialize에서 설정 파일을 읽을 수 없거나 나사 설정이 유효하지 않음.",
                       "x":  8300,
@@ -1078,7 +1078,7 @@
                   {
                       "id":  "tc1",
                       "type":  "text",
-                      "text":  "### 사진 한 장 재 보기 measure_one\nY, T 와 상태를 찍는다. 영점으로 쓸 사진을 같이 줄 수 있다\n\n\u003e **파일** `tools/try/measure_one.cpp`\n\u003e **함수** `main` → `initialize`, `set_zero_from_photos`, `measure_alignment` → `status_name`\n\u003e **누가 쓰나** SEMES 도 쓴다 (받아서 처음 돌려 볼 때)",
+                      "text":  "### 사진 한 장 재 보기 measure_one\nY, T 와 상태를 찍는다. 영점으로 쓸 사진을 같이 줄 수 있다\n\n\u003e **파일** `tools/try/measure_one.cpp`\n\u003e **함수** `main` → `initialize`, `set_zero_from_photos`, `measure_alignment` → `status_name`\n\u003e **누가 쓰나** 기업 측도 쓴다 (받아서 처음 돌려 볼 때)",
                       "x":  1800,
                       "y":  5575,
                       "width":  1120,
@@ -1098,7 +1098,7 @@
                   {
                       "id":  "tc2",
                       "type":  "text",
-                      "text":  "### 단계마다 값 보기 show_steps\n코드를 다른 곳으로 옮겼을 때 한 단계씩 값을 비교한다\n\n\u003e **파일** `tools/try/show_steps.cpp`\n\u003e **함수** `main` → `print_qr_step` → `print_screw_step` → `print_yt_step` → `print_check_step`\n\u003e **단계 함수를 직접 부른다** `QrFinder::find_qr_shift`, `ScrewFinder::find_screw_shifts`, `choose_coefficient_set`, `compute_yt`, `check_values_agree`\n\u003e **누가 쓰나** SEMES 도 쓴다 (코드를 옮긴 뒤 값을 비교할 때)",
+                      "text":  "### 단계마다 값 보기 show_steps\n코드를 다른 곳으로 옮겼을 때 한 단계씩 값을 비교한다\n\n\u003e **파일** `tools/try/show_steps.cpp`\n\u003e **함수** `main` → `print_qr_step` → `print_screw_step` → `print_yt_step` → `print_check_step`\n\u003e **단계 함수를 직접 부른다** `QrFinder::find_qr_shift`, `ScrewFinder::find_screw_shifts`, `choose_coefficient_set`, `compute_yt`, `check_values_agree`\n\u003e **누가 쓰나** 기업 측도 쓴다 (코드를 옮긴 뒤 값을 비교할 때)",
                       "x":  3580,
                       "y":  5575,
                       "width":  1120,
@@ -1108,7 +1108,7 @@
                   {
                       "id":  "tc3",
                       "type":  "text",
-                      "text":  "### 여러 장을 기대값과 비교 check_photos\n예제 5장의 결과가 기대값과 같은지 본다. 빌드 확인용\n\n\u003e **파일** `tools/try/check_photos.cpp`\n\u003e **함수** `main` → `read_table` → `moved` (사진을 통째로 옮길 때) → `measure_alignment`\n\u003e **읽는 것** `data/sample/list.tsv`, `expected.tsv`\n\u003e **부르는 측정 함수** `initialize`, `read_photo`, `measure_alignment`\n\u003e **누가 쓰나** SEMES 도 쓴다 (빌드 확인)",
+                      "text":  "### 여러 장을 기대값과 비교 check_photos\n예제 5장의 결과가 기대값과 같은지 본다. 빌드 확인용\n\n\u003e **파일** `tools/try/check_photos.cpp`\n\u003e **함수** `main` → `read_table` → `moved` (사진을 통째로 옮길 때) → `measure_alignment`\n\u003e **읽는 것** `data/sample/list.tsv`, `expected.tsv`\n\u003e **부르는 측정 함수** `initialize`, `read_photo`, `measure_alignment`\n\u003e **누가 쓰나** 기업 측도 쓴다 (빌드 확인)",
                       "x":  1800,
                       "y":  5978,
                       "width":  1120,
@@ -1168,7 +1168,7 @@
                   {
                       "id":  "ta2",
                       "type":  "text",
-                      "text":  "### 2. 표로 계수와 점검식을 만든다\n나사 조합 16가지마다 Y, T 식을, 나사 2개 이상 조합 11가지마다 점검식을 만든다. 학습 범위도 적는다\n\n**학습 정답은 보정한 라벨이다** (`collect_training_photos` 가 `label_y_mm`, `label_t_deg` 를 쓴다). 이유: 날마다 로봇 0 이 달라서, 받은 명령값 그대로 학습하면 그 차이가 계수에 섞인다. 처음 보는 날 통과율이 보정한 라벨로 학습하면 95.3%, 받은 명령값으로 학습하면 89.5% 였다 (채점은 둘 다 받은 명령값, 그날 영점을 잡은 뒤)\n\n\u003e **파일** `tools/train/fit_coefficients.cpp`\n\u003e **함수** `main` → `read_arguments` → `collect_training_photos` → `fit_all_sets` → `write_reference_file`\n\u003e **안에서 부르는 함수** (`tools/common/coefficient_fit.cpp`) `standardize`, `solve_huber`, `fit_agreement_check`, `write_coefficient_file`, `write_agreement_file`\n\u003e **같이 쓰는 코드** `coefficient_fit`, `dataset`, `tables`, `console`\n\u003e **부르는 측정 함수** 없다 (표만 읽는다)",
+                      "text":  "### 2. 보정한 학습 정답으로 최종 모델 생성\n`usable` 사진 전체로 나사 조합 16가지의 Y·T 계수와 점검식 11가지를 만든다.\n\n**학습 정답은 `label_y_mm`, `label_t_deg`이다.**\n이 데이터는 715장 중 범위 밖 12장과 명령 불일치 의심 1장을 학습에서 제외하여 **702장 전량**을 사용한다. 최종 모델을 만들 때는 `final_check` 표시가 있어도 포함한다.\n\n\u003e **파일** `tools/train/fit_coefficients.cpp`\n\u003e **함수** `collect_training_photos` → `fit_all_sets` → `write_reference_file`\n\u003e **계수 학습** `standardize` → `solve_huber`\n\u003e **주의** 최종 학습 사진에 다시 대입한 점수는 독립 평가가 아니다.",
                       "x":  -1760,
                       "y":  5683,
                       "width":  1120,
@@ -1258,7 +1258,7 @@
                   {
                       "id":  "tb4",
                       "type":  "text",
-                      "text":  "### 정확도 시험 evaluate_accuracy\n학습에 안 쓴 사진으로만 시험한다. 시험마다 계수를 새로 만든다\n\n**채점 정답은 받은 명령값 그대로다.** 학습에 쓴 보정한 라벨로 채점한 점수도 같이 나오지만, 기준은 받은 명령값이다\n\n\u003e **파일** `tools/evaluate/evaluate_accuracy.cpp`\n\u003e **함수** `main` → `test_mixed_folds` (5묶음, 10번) → `test_final_check` (떼어 둔 사진) → `test_unseen_sessions` → `score_session` → `rate_with_zero` (처음 보는 날) → `test_outside_range` (범위 밖)\n\u003e **안에서 부르는 함수** `train`, `passes_learned_answer`, `percent`, `print`. **읽는 것** `\u003c사진 폴더\u003e/tables/`\n\u003e **같이 쓰는 코드** `coefficient_fit`, `dataset`, `tables`, `console`\n\u003e **부르는 측정 함수** 없다 (표만 읽는다. 사진을 다시 재지 않는다)\n\u003e **누가 쓰나** SEMES 도 쓴다. `train` 의 세 번째 단계로도 돈다",
+                      "text":  "### 정확도 시험 evaluate_accuracy\n시험마다 계수를 새로 맞춘다. **시험별 채점 정답을 구분해서 읽는다.**\n\n섞음·마지막 확인·범위 밖 시험은 보정 학습 라벨로 재는 내부 진단이다. 처음 보는 날 시험에는 원본 명령 기준의 영점 전·후 점수도 있다.\n\n이번 정정 반영 독립 평가는 아래 데이터 묶음의 별도 실험을 본다. 학습 묶음에서만 라벨을 만들고, 평가는 원본 명령으로 한다.\n\n\u003e **파일** `tools/evaluate/evaluate_accuracy.cpp`\n\u003e **함수** `test_mixed_folds`, `test_final_check`, `test_unseen_sessions`, `test_outside_range`\n\u003e **주의** 모든 시험을 원본 명령 채점으로 해석하지 않는다.",
                       "x":  -1760,
                       "y":  6796,
                       "width":  1120,
@@ -1268,7 +1268,7 @@
                   {
                       "id":  "tb5",
                       "type":  "text",
-                      "text":  "### 속도 측정 measure_speed\n준비 한 번, 사진 읽기, 측정을 나눠 잰다. 스레드 1개와 4개 따로, 가운뎃값과 95% 지점과 최대\n\n\u003e **파일** `tools/evaluate/measure_speed.cpp`\n\u003e **함수** `main` → `photo_paths` → `initialize`, `read_photo`, `measure_alignment` → `milliseconds_since`, `quantile_of`, `summary`\n\u003e **나오는 것** `speed_report.txt`, `times.tsv`\n\u003e **같이 쓰는 코드** `photo_files`, `tables`, `console`\n\u003e **누가 쓰나** SEMES 도 쓴다 (장비 컴퓨터에서 다시 잴 때)",
+                      "text":  "### 속도 측정 measure_speed\n준비 한 번, 사진 읽기, 측정을 나눠 잰다. 스레드 1개와 4개 따로, 가운뎃값과 95% 지점과 최대\n\n\u003e **파일** `tools/evaluate/measure_speed.cpp`\n\u003e **함수** `main` → `photo_paths` → `initialize`, `read_photo`, `measure_alignment` → `milliseconds_since`, `quantile_of`, `summary`\n\u003e **나오는 것** `speed_report.txt`, `times.tsv`\n\u003e **같이 쓰는 코드** `photo_files`, `tables`, `console`\n\u003e **누가 쓰나** 기업 측도 쓴다 (장비 컴퓨터에서 다시 잴 때)",
                       "x":  -1760,
                       "y":  7327,
                       "width":  1120,
@@ -1328,7 +1328,7 @@
                   {
                       "id":  "ta0",
                       "type":  "text",
-                      "text":  "## 학습: 계수를 다시 만들 때\n**언제** 카메라, 렌즈, 거리, 판이 바뀌었거나, 영점을 잡아도 정확도가 낮을 때\n\n\u003e **파일** `tools/train/train.cpp`\n\u003e **함수** `main` → `ask_photo_folder` → `list_sessions`, `total_photos` → `new_result_folder` → `confirm` → `run_program` (3번) → `print_finished`\n\u003e **넣는 것** `data/new_photos/\u003c촬영 날짜\u003e/` 에 받은 사진을 이름 그대로\n\u003e **같이 쓰는 코드** `console`, `photo_files`\n\u003e **누가 쓰나** SEMES 도 쓴다 (계수를 다시 만들 때)",
+                      "text":  "## 학습: 계수를 다시 만들 때\n**언제** 카메라, 렌즈, 거리, 판이 바뀌었거나, 영점을 잡아도 정확도가 낮을 때\n\n\u003e **파일** `tools/train/train.cpp`\n\u003e **함수** `main` → `ask_photo_folder` → `list_sessions`, `total_photos` → `new_result_folder` → `confirm` → `run_program` (3번) → `print_finished`\n\u003e **넣는 것** `data/new_photos/\u003c촬영 날짜\u003e/` 에 받은 사진을 이름 그대로\n\u003e **같이 쓰는 코드** `console`, `photo_files`\n\u003e **누가 쓰나** 기업 측도 쓴다 (계수를 다시 만들 때)",
                       "x":  -3540,
                       "y":  5280,
                       "width":  1120,
@@ -1338,7 +1338,7 @@
                   {
                       "id":  "ta1",
                       "type":  "text",
-                      "text":  "### 1. 사진을 모두 재서 표로 만든다\n파일 이름에서 명령값을 읽고, 실사용과 같은 함수로 QR 과 나사의 이동을 잰다. 촬영한 날마다 로봇 0 이 얼마나 어긋났는지도 구한다\n\n**학습 정답을 여기서 만든다.** 받은 명령값에 그날 로봇 0 의 어긋남을 반영해 보정한 값이다 (표의 `label_y_mm`, `label_t_deg`). 받은 명령값은 따로 그대로 둔다 (`command_y_mm`, `command_t_deg`)\n\n\u003e **파일** `tools/train/prepare_dataset.cpp`\n\u003e **함수** `main` → `measure_all_photos` → `measure_alignment` → `estimate_session_zeros` → `fit_session_zeros` → `fit_terms`, `residual_of`, `command_error` → `mark_command_mismatch` → `make_splits` → `write_tables`, `write_report`\n\u003e **나오는 것** `\u003c사진 폴더\u003e/tables/`\n\u003e **같이 쓰는 코드** `photo_files`, `dataset`, `tables`, `console`, `progress`\n\u003e **부르는 측정 함수** `initialize`, `clear_zero`, `read_photo`, `measure_alignment`",
+                      "text":  "### 1. 사진 측정과 데이터 전처리\n원본 명령을 보존하고, 확인된 정정·제외 규칙을 적용한다. 영상에서 QR·나사 이동을 측정한 뒤 학습 회차의 영점을 추정한다.\n\n**학습 정답 = 확인된 명령 − 회차 영점. 평가 정답 = 원본 명령.**\n이 캔버스 맨 아래 **데이터 준비와 전처리** 묶음에 정정·제외·자료별 역할을 풀어 적었다.\n\n\u003e **파일** `tools/train/prepare_dataset.cpp`, `tools/common/data_preprocessing.cpp`\n\u003e **함수** `load_preprocessing_rules` → `measure_all_photos` → `apply_dataset_preprocessing` → `estimate_session_zeros` → `mark_command_mismatch` → `make_splits` → `write_tables`, `write_preprocessing_table`\n\u003e **규칙** `config/data_preprocessing.tsv`",
                       "x":  -3540,
                       "y":  5683,
                       "width":  1120,
@@ -1358,7 +1358,7 @@
                   {
                       "id":  "tb1",
                       "type":  "text",
-                      "text":  "### 사진 채점 score_photos\n사진을 재서 파일 이름의 명령값(정답)과 비교한다. 인자 없이 실행하면 물어보며 진행한다\n\n**채점 정답은 받은 명령값 그대로다** (파일 이름의 명령값). 보정하지 않는다\n\n\u003e **파일** `tools/evaluate/score_photos.cpp`\n\u003e **함수** `main` → `read_arguments` 또는 `ask_zero_photos`, `ask_photo_folder`, `confirm` → `initialize_model` → `read_answer_table` (정답표를 줄 때) → `group_photos` → `photos_at` → `set_zero` → `measure_photos` → `summary_text`\n\u003e **부르는 측정 함수** `initialize`, `set_zero_from_photos`, `measure_alignment`\n\u003e **같이 쓰는 코드** `photo_files`, `coefficient_fit`, `tables`, `console`, `progress`\n\u003e **누가 쓰나** SEMES 도 쓴다 (새 사진을 직접 채점할 때)",
+                      "text":  "### 사진 채점 score_photos\n사진을 재서 파일 이름의 명령값(정답)과 비교한다. 인자 없이 실행하면 물어보며 진행한다\n\n**채점 정답은 받은 명령값 그대로다** (파일 이름의 명령값). 보정하지 않는다\n\n\u003e **파일** `tools/evaluate/score_photos.cpp`\n\u003e **함수** `main` → `read_arguments` 또는 `ask_zero_photos`, `ask_photo_folder`, `confirm` → `initialize_model` → `read_answer_table` (정답표를 줄 때) → `group_photos` → `photos_at` → `set_zero` → `measure_photos` → `summary_text`\n\u003e **부르는 측정 함수** `initialize`, `set_zero_from_photos`, `measure_alignment`\n\u003e **같이 쓰는 코드** `photo_files`, `coefficient_fit`, `tables`, `console`, `progress`\n\u003e **누가 쓰나** 기업 측도 쓴다 (새 사진을 직접 채점할 때)",
                       "x":  -3540,
                       "y":  6796,
                       "width":  1120,
@@ -1368,7 +1368,7 @@
                   {
                       "id":  "ov_tools",
                       "type":  "text",
-                      "text":  "# 도구\n`src/` 의 측정 함수를 불러 쓰는 프로그램들이다. 측정 방법 자체는 여기에 없다\n\n**읽는 법** 묶음 안에서는 왼쪽에서 오른쪽으로: 넣는 것(파랑) → 프로그램(초록) → 나오는 것(파랑). 굵은 화살표는 자료가 넘어가는 길이다\n가운데 보라색 카드가 측정 함수이고, 양쪽 묶음이 모두 이것을 부른다. 보라색 화살표는 \"측정 함수를 부른다\", 회색 점선 모양 화살표는 \"실행한다\" 또는 \"불러 쓴다\"\n\n초록 = 하는 일, 노랑 = 갈림길 (예 / 아니오), 파랑 = 자료 (넣는 것, 나온 결과), 주황 = 경고 (계속 진행), 보라 = 측정 함수\n카드마다 **누가 쓰나** 줄에 SEMES 도 쓰는 프로그램인지, 우리가 확인하거나 문서를 만들 때만 쓰는지 적었다",
+                      "text":  "# 도구\n`src/` 의 측정 함수를 불러 쓰는 프로그램들이다. 측정 방법 자체는 여기에 없다\n\n**읽는 법** 묶음 안에서는 왼쪽에서 오른쪽으로: 넣는 것(파랑) → 프로그램(초록) → 나오는 것(파랑). 굵은 화살표는 자료가 넘어가는 길이다\n가운데 보라색 카드가 측정 함수이고, 양쪽 묶음이 모두 이것을 부른다. 보라색 화살표는 \"측정 함수를 부른다\", 회색 점선 모양 화살표는 \"실행한다\" 또는 \"불러 쓴다\"\n\n초록 = 하는 일, 노랑 = 갈림길 (예 / 아니오), 파랑 = 자료 (넣는 것, 나온 결과), 주황 = 경고 (계속 진행), 보라 = 측정 함수\n카드마다 **누가 쓰나** 줄에 기업 측도 쓰는 프로그램인지, 우리가 확인하거나 문서를 만들 때만 쓰는지 적었다\n\n**데이터 정정·학습 제외·영점 보정은 맨 아래 「데이터 준비와 전처리」 묶음에서 확인한다.**",
                       "x":  -4260,
                       "y":  4640,
                       "width":  9680,
@@ -1378,7 +1378,7 @@
                   {
                       "id":  "dph",
                       "type":  "text",
-                      "text":  "### 받은 사진\n`data/new_photos/\u003c촬영 날짜\u003e/`\n파일 이름에 명령값이 있다 (`Y+0.05 T+0.01.bmp`)",
+                      "text":  "### 원본 715장\n사진·파일명 보존\n정정·제외는 표에 기록",
                       "x":  -4080,
                       "y":  5683,
                       "width":  420,
@@ -1388,7 +1388,7 @@
                   {
                       "id":  "dtb",
                       "type":  "text",
-                      "text":  "### 표가 생김\n`\u003c사진 폴더\u003e/tables/`\n사진마다 명령값, QR 과 나사의 이동, 날마다의 영점 어긋남\n\n정답이 두 가지 들어 있다: **받은 명령값**(평가 정답)과 **보정한 라벨**(학습 정답)",
+                      "text":  "### 표가 생김\n`\u003c표 폴더\u003e/`\n원본 명령·확인값·학습 정답을 분리한다.\n상세는 아래 데이터 묶음.",
                       "x":  -2300,
                       "y":  5683,
                       "width":  420,
@@ -1518,6 +1518,145 @@
                       "width":  9680,
                       "height":  4445,
                       "label":  "도구: tools/ (측정 함수를 불러 쓰는 프로그램들)"
+                  },
+                  {
+                      "id":  "data_intro",
+                      "type":  "text",
+                      "x":  -4260,
+                      "y":  9785,
+                      "width":  9680,
+                      "height":  240,
+                      "text":  "# 데이터 준비와 전처리\n원본 715장을 보존하고, **확인된 명령 정정 → 학습 대상 선택 → 학습 회차 영점 보정 → 최종 702장 학습**으로 이어진다.\n이번 독립 평가의 정답은 파일에서 읽은 원본 명령이다. 기존 도구의 보정 라벨 진단 점수와 구분한다. 아래의 숫자 ID는 이번 자료의 행 번호이며, 실제 정정 규칙은 회차·파일 경로·예상 원본값으로 찾는다.",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "g_data_preprocessing",
+                      "type":  "group",
+                      "x":  -4260,
+                      "y":  10145,
+                      "width":  9680,
+                      "height":  2860,
+                      "label":  "데이터 준비와 전처리 — 원본 보존, 학습 정답과 평가 정답 분리"
+                  },
+                  {
+                      "id":  "data_raw715",
+                      "type":  "text",
+                      "x":  -4140,
+                      "y":  10255,
+                      "width":  2920,
+                      "height":  460,
+                      "text":  "## 1. 원본 715장과 원본 명령 보존\n사진 파일과 파일명을 바꾸거나 삭제하지 않는다.\n\n`photos.tsv`: `command_y_mm`, `command_t_deg`\n파일명에서 읽은 값 그대로이며 이번 독립 평가의 정답이다.\n\n`features.tsv`: QR 1개 요약값 + 나사 4개 이동량\n명령값 정정이나 영점 보정으로 영상 특징을 바꾸지 않는다.",
+                      "color":  "5"
+                  },
+                  {
+                      "id":  "data_verified_rules",
+                      "type":  "text",
+                      "x":  -980,
+                      "y":  10255,
+                      "width":  2920,
+                      "height":  460,
+                      "text":  "## 2. 근거 있는 규칙만 적용\n**420번:** 학습에 쓸 T 명령 `+0.33 → +0.32°`\n동봉 장비 기록으로 확인. 같은 자세 반복 사진의 그룹도 +0.32로 묶는다.\n\n**702번:** 명령과 영상 자세 불일치 의심 → `training_allowed = 0`\n확정 오탈자로 간주해 임의로 정답을 고치지 않는다.\n\n\u003e `config/data_preprocessing.tsv`\n\u003e `load_preprocessing_rules` → `apply_preprocessing_rule`\n\u003e 회차 + 상대 경로 + 예상 원본값 확인; 근거는 `provenance`에 기록",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "data_three_values",
+                      "type":  "text",
+                      "x":  2180,
+                      "y":  10255,
+                      "width":  2920,
+                      "height":  460,
+                      "text":  "## 값의 역할 세 가지\n**원본 명령(raw)** → 이번 독립 평가의 정답으로 유지\n**확인된 명령(verified)** → 학습 범위·영점 추정·동일 자세 그룹\n**학습 정답(label)** → verified − 학습 회차 영점\n\n420번의 예:\n원본 T=+0.33 / 확인값 T=+0.32 / 학습 정답 T=+0.32−회차 영점\n\n\u003e 원본: `photos.tsv`\n\u003e 확인값·적용 근거: `preprocessing.tsv`\n\u003e 학습 정답: `labels.tsv`",
+                      "color":  "5"
+                  },
+                  {
+                      "id":  "data_train_scope",
+                      "type":  "text",
+                      "x":  2180,
+                      "y":  10855,
+                      "width":  2920,
+                      "height":  600,
+                      "text":  "## 3. 학습에 쓸 행을 정한다\n`usable = 측정 성공 ∧ 나사 4개 ∧ 범위 안 ∧ 규칙 허용 ∧ 명령 불일치 아님`\n\n현재 자료의 학습 대상:\n**715 − 범위 밖 12 − 명령 불일치 의심 1 = 702장**\n\n- T=+2° 12장: 명목 범위 Y±2 mm, T±1° 밖이므로 학습 제외\n- 702번: 규칙으로 학습·영점 추정 제외\n- 제외는 행과 파일의 삭제가 아니다. 원본과 평가 결과는 남는다.\n\n\u003e `PreparedPhoto::usable`, `training_allowed`, `in_range`\n\u003e 실제 사용 여부는 `preprocessing.tsv`의 `training_used`",
+                      "color":  "3"
+                  },
+                  {
+                      "id":  "data_training_zero",
+                      "type":  "text",
+                      "x":  -980,
+                      "y":  10855,
+                      "width":  2920,
+                      "height":  600,
+                      "text":  "## 4. 학습 회차의 영점 어긋남 추정\n확인된 명령(verified)과 영상 특징으로 회차별 영점을 구한다.\n\n`특징 = Y·T의 1차/2차 항 + 회차별 상수`\n회차 상수를 영상의 Y·T 변화율로 역산해 영점으로 바꾼다.\n\n큰 잔차는 영점 추정에서만 제외하고 다시 맞춘다. 명령 불일치 기준까지 넘은 경우에만 최종 학습 제외로 표시한다.\n**영점 추정에서 빠졌어도 명령이 맞는 사진은 학습에 다시 포함한다.**\n\n\u003e `estimate_session_zeros` → `fit_session_zeros`\n\u003e `mark_command_mismatch`\n\u003e 교차검증 때는 현재 학습 묶음만으로 다시 추정한다.",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "data_training_labels",
+                      "type":  "text",
+                      "x":  -4140,
+                      "y":  10855,
+                      "width":  2920,
+                      "height":  600,
+                      "text":  "## 5. 학습 정답을 만든다\n**`label_y = verified_y − session_zero_y`**\n**`label_t = verified_t − session_zero_t`**\n\n그날의 명령 0 어긋남이 계수에 섞이지 않도록 학습 정답을 보정한다.\n영상 특징·사진·원본 평가 명령은 그대로 둔다.\n\n\u003e 학습 입력: `features.tsv` + `labels.tsv`\n\u003e `collect_training_photos`가 `label_y_mm`, `label_t_deg`를 사용\n\u003e `photos.tsv`의 원본 명령은 이 단계에서 덮어쓰지 않는다.\n\n**학습 정답 보정과 실제 사용 시 그날의 출력 영점 설정은 서로 다른 단계다.**",
+                      "color":  "5"
+                  },
+                  {
+                      "id":  "data_fit702",
+                      "type":  "text",
+                      "x":  -4140,
+                      "y":  11615,
+                      "width":  2920,
+                      "height":  520,
+                      "text":  "## 6. 최종 모델은 702장 전량 학습\n확인된 정정과 제외 규칙을 적용한 `usable` 전체를 사용한다.\n`final_check` 표시는 검증용 구분이며 최종 모델 생성에서는 제외하지 않는다.\n\n- Y·T 계수: 나사 조합별 16개\n- 일치 점검식: 11개\n- 학습 범위와 기준 사진\n\n\u003e `fit_coefficients` → `collect_training_photos` → `fit_all_sets`\n\u003e 새 모델은 별도 폴더에 저장; 배포 `data/model`은 자동 교체하지 않는다.\n\u003e 이 702장에 재대입한 정확도는 학습 결과 점검이다.",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "data_cv_separation",
+                      "type":  "text",
+                      "x":  -980,
+                      "y":  11615,
+                      "width":  2920,
+                      "height":  520,
+                      "text":  "## 성능 검증은 학습 전에 분리\n같은 회차·같은 확인값(verified)의 반복 사진을 한 그룹으로 묶는다.\n\n학습 / 영점용 / 평가 사진을 먼저 나누고, 학습 회차 영점과 계수를 **현재 학습 사진만으로** 다시 구한다.\n평가 사진의 명령값이나 결과를 보고 학습 제외·보정량을 정하지 않는다.\n\n\u003e 그룹 기준: 회차 + verified Y·T\n\u003e 검증 코드: `experiments/20261115_corrected_training_raw_eval/run_experiment.py`\n\u003e 학습 실행: `fit_pair.exe`; 원본 명령 평가: 위 실험 코드\n\u003e 이 경로는 작업공간 최상위 기준이다.\n\u003e 전체 자료로 미리 만든 학습 라벨을 가져온 점수와 구분한다.",
+                      "color":  "3"
+                  },
+                  {
+                      "id":  "data_raw_evaluation",
+                      "type":  "text",
+                      "x":  2180,
+                      "y":  11615,
+                      "width":  2920,
+                      "height":  520,
+                      "text":  "## 이번 독립 평가: 원본 명령 그대로\n**오차 = 측정 출력 − 원본 명령(raw)**\n420번도 원본 T=+0.33을 기준으로 채점한다.\n\n별도 영점 사진의 `평균(측정−원본 명령)`만 출력에서 뺀다. 평가 정답은 수정하지 않는다.\n\n- T=+2° 12장도 평가에 남긴다.\n- 의심 702번 포함 결과와 별도 분리 결과를 함께 표시한다.\n- 학습 사진 재대입과 독립 평가를 구분한다.\n\n\u003e 이번 결과: 작업공간 `experiments/20261115_corrected_training_raw_eval/results/metrics.tsv`\n\u003e `evaluate_accuracy`의 보정 라벨 점수는 별도 내부 진단이다.",
+                      "color":  "5"
+                  },
+                  {
+                      "id":  "data_audit_table",
+                      "type":  "text",
+                      "x":  -4140,
+                      "y":  12295,
+                      "width":  2920,
+                      "height":  570,
+                      "text":  "## 전처리 적용 내역을 남긴다\n**`preprocessing.tsv` — 원본 715행을 모두 기록**\n\n식별: `id`, `session`, `relative_path`\n명령: `raw_y_mm`, `raw_t_deg`, `verified_y_mm`, `verified_t_deg`\n학습: `training_allowed`, `training_used`, `exclusion_reason`\n규칙: `rule_id`, `reason`, `provenance`\n영점: `zero_fit_excluded`\n\n이 표를 보면 무엇을 고쳤는지, 왜 학습에서 빠졌는지, 영점 추정에서만 빠졌는지를 구분할 수 있다.\n\n\u003e `write_preprocessing_table` (`tools/train/prepare_dataset.cpp`)\n\u003e 설정 규칙: `config/data_preprocessing.tsv`",
+                      "color":  "5"
+                  },
+                  {
+                      "id":  "data_exclusion_meaning",
+                      "type":  "text",
+                      "x":  -980,
+                      "y":  12295,
+                      "width":  2920,
+                      "height":  570,
+                      "text":  "## “제외”의 범위를 구분한다\n**규칙으로 학습 제외**: 702번. 원본·평가 행 보존\n**범위 때문에 학습 제외**: T=+2° 12장. 외삽 평가에 사용\n**영점 추정에서만 제외**: 큰 잔차. 명령이 맞으면 최종 학습에는 포함\n**검증용 예약**: 학습·영점·평가 사이에 같은 사진을 섞지 않기 위한 분리\n\n사진을 디스크에서 지우는 단계는 없다.\n“점수가 나쁘다”는 이유로 평가 행을 사후 삭제하지 않는다.\n\n\u003e 정정은 `verified_*`에만 반영\n\u003e 제외 판단은 `training_used`, `exclusion_reason`, `zero_fit_excluded`로 추적",
+                      "color":  "2"
+                  },
+                  {
+                      "id":  "data_paths_checks",
+                      "type":  "text",
+                      "x":  2180,
+                      "y":  12295,
+                      "width":  2920,
+                      "height":  570,
+                      "text":  "## 규칙과 캐시가 맞는지 확인\n**규칙** `config/data_preprocessing.tsv`\n**모듈** `tools/common/data_preprocessing.hpp/.cpp`\n**생성** `prepare_dataset.cpp` → `write_preprocessing_metadata`\n\n표 폴더에 적용 규칙 사본 `preprocessing_rules.tsv`와 버전 `preprocessing_version.txt`를 저장한다.\n`validate_preprocessing_cache`가 적용 내역·버전·현재 규칙과의 일치를 검사한다.\n\n- `train`: 오래된 캐시를 재사용하지 않고 새 결과 폴더의 `tables/`에 다시 생성\n- `fit_coefficients`: 규칙과 다른 캐시는 오류로 차단\n- 기존 표·원본 사진은 삭제하지 않는다.\n\n\u003e `prepare_dataset \u003c사진 폴더\u003e --output \u003c새 표 폴더\u003e --rules \u003c규칙.tsv\u003e`",
+                      "color":  "4"
                   }
               ],
     "edges":  [
@@ -2737,6 +2876,114 @@
                       "fromSide":  "right",
                       "toNode":  "te4",
                       "toSide":  "right"
+                  },
+                  {
+                      "id":  "data_e01",
+                      "fromNode":  "data_raw715",
+                      "fromSide":  "right",
+                      "toNode":  "data_verified_rules",
+                      "toSide":  "left",
+                      "label":  "원본을 읽는다",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "data_e02",
+                      "fromNode":  "data_verified_rules",
+                      "fromSide":  "right",
+                      "toNode":  "data_three_values",
+                      "toSide":  "left",
+                      "label":  "확인값을 별도로 만든다",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "data_e03",
+                      "fromNode":  "data_three_values",
+                      "fromSide":  "bottom",
+                      "toNode":  "data_train_scope",
+                      "toSide":  "top",
+                      "label":  "학습에 쓸 확인값",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "data_e04",
+                      "fromNode":  "data_train_scope",
+                      "fromSide":  "left",
+                      "toNode":  "data_training_zero",
+                      "toSide":  "right",
+                      "label":  "현재 학습 대상만",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "data_e05",
+                      "fromNode":  "data_training_zero",
+                      "fromSide":  "left",
+                      "toNode":  "data_training_labels",
+                      "toSide":  "right",
+                      "label":  "회차 영점",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "data_e06",
+                      "fromNode":  "data_training_labels",
+                      "fromSide":  "bottom",
+                      "toNode":  "data_fit702",
+                      "toSide":  "top",
+                      "label":  "보정한 학습 정답",
+                      "color":  "4"
+                  },
+                  {
+                      "id":  "data_e07",
+                      "fromNode":  "data_cv_separation",
+                      "fromSide":  "top",
+                      "toNode":  "data_training_zero",
+                      "toSide":  "bottom",
+                      "label":  "독립 검증: 분리 후 학습 묶음마다 재추정",
+                      "color":  "3"
+                  },
+                  {
+                      "id":  "data_e08",
+                      "fromNode":  "data_cv_separation",
+                      "fromSide":  "right",
+                      "toNode":  "data_raw_evaluation",
+                      "toSide":  "left",
+                      "label":  "평가 묶음 + 별도 영점 묶음",
+                      "color":  "3"
+                  },
+                  {
+                      "id":  "data_e09",
+                      "fromNode":  "data_three_values",
+                      "fromSide":  "right",
+                      "toNode":  "data_raw_evaluation",
+                      "toSide":  "right",
+                      "label":  "원본 평가 명령 유지",
+                      "color":  "5"
+                  },
+                  {
+                      "id":  "data_e10",
+                      "fromNode":  "data_fit702",
+                      "fromSide":  "bottom",
+                      "toNode":  "data_audit_table",
+                      "toSide":  "top",
+                      "label":  "학습 사용 여부 기록",
+                      "color":  "5"
+                  },
+                  {
+                      "id":  "data_e11",
+                      "fromNode":  "data_exclusion_meaning",
+                      "fromSide":  "left",
+                      "toNode":  "data_audit_table",
+                      "toSide":  "right",
+                      "label":  "삭제 대신 사유 기록",
+                      "color":  "2"
+                  },
+                  {
+                      "id":  "data_e12",
+                      "fromNode":  "data_paths_checks",
+                      "fromSide":  "left",
+                      "toNode":  "data_exclusion_meaning",
+                      "toSide":  "right",
+                      "label":  "규칙 적용 여부 확인",
+                      "color":  "4"
                   }
               ]
 }
