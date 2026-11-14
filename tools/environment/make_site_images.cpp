@@ -24,7 +24,6 @@ using namespace scene;
 
 namespace {
 
-const double kToleranceYmm = 0.045, kToleranceTdeg = 0.01;
 const double kFocalPx = 4492;
 const cv::Rect kBody(1360, 1260, 1110, 590);   // 판 아래 몸체 (측정 창 밖)
 
@@ -107,17 +106,9 @@ cv::Mat yellow_tint(const cv::Mat& bgr) {
     return out;
 }
 
-}   // namespace
-
-int main(int argc, char** argv) {
-    if (argc != 3) { std::cerr << "사용: make_site_images <model 폴더> <출력 폴더>\n"; return 2; }
-    const fs::path data = fs::u8path(argv[1]), out = fs::u8path(argv[2]);
-    fs::create_directories(out);
-    if (alignment::initialize(data.u8string()).status == alignment::Status::Failed) return 1;
-    const cv::Mat center = alignment::read_photo((data / "center.bmp").u8string());
-    const Layout L = read_layout(data);
-
-    const std::vector<Site> sites = {
+// 설치 자리 목록 (번호, 그림에 쓰는 이름, 바뀐 점, 기준 사진을 바꾸는 함수, 노란 조명인지)
+std::vector<Site> list_sites() {
+    return {
         {"A", "A. OHT port teaching", "port height -0.5%, vertical shake 7 px, ceiling light, dust",
          [](const cv::Mat& g0, const Layout&) {
              cv::Mat g = spots(side_light(motion_blur(scale_rotate(g0, 0.995, 0), 7, false), 0.85, 1.15), 8, 15, 35, false, kSeed);
@@ -159,6 +150,30 @@ int main(int argc, char** argv) {
              cv::Mat g = side_light(ghost(g0, 60, 0, 0.2), 0.6, 1.3);
              draw_glass_edges(g); return g; }},
     };
+}
+
+// 한눈에 보기: 그림들을 2열로 붙여 절반 크기로 줄인다
+cv::Mat make_overview(const std::vector<cv::Mat>& thumbnails) {
+    const int columns = 2, th = thumbnails[0].rows;
+    cv::Mat overview(int((thumbnails.size() + columns - 1) / columns) * th, columns * thumbnails[0].cols, CV_8UC3, cv::Scalar(255, 255, 255));
+    for (size_t i = 0; i < thumbnails.size(); ++i)
+        thumbnails[i].copyTo(overview(cv::Rect(int(i % columns) * thumbnails[0].cols, int(i / columns) * th, thumbnails[0].cols, th)));
+    cv::Mat small;
+    cv::resize(overview, small, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
+    return small;
+}
+
+}   // namespace
+
+int main(int argc, char** argv) {
+    if (argc != 3) { std::cerr << "사용: make_site_images <model 폴더> <출력 폴더>\n"; return 2; }
+    const fs::path data = fs::u8path(argv[1]), out = fs::u8path(argv[2]);
+    fs::create_directories(out);
+    if (alignment::initialize(data.u8string()).status == alignment::Status::Failed) return 1;
+    const cv::Mat center = alignment::read_photo((data / "center.bmp").u8string());
+    const Layout L = read_layout(data);
+
+    const std::vector<Site> sites = list_sites();
 
     alignment::clear_zero();
     const alignment::Result base = alignment::measure_alignment(center);
@@ -186,13 +201,6 @@ int main(int argc, char** argv) {
         thumbnails.push_back(framed);
         std::cout << site.id << "  " << status << " " << r.code << "  dY " << dy << "  dT " << dt << "\n";
     }
-
-    const int columns = 2, th = thumbnails[0].rows;
-    cv::Mat overview(int((thumbnails.size() + columns - 1) / columns) * th, columns * thumbnails[0].cols, CV_8UC3, cv::Scalar(255, 255, 255));
-    for (size_t i = 0; i < thumbnails.size(); ++i)
-        thumbnails[i].copyTo(overview(cv::Rect(int(i % columns) * thumbnails[0].cols, int(i / columns) * th, thumbnails[0].cols, th)));
-    cv::Mat small;
-    cv::resize(overview, small, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
-    save_png(out / "site_overview.png", small);
+    save_png(out / "site_overview.png", make_overview(thumbnails));
     return 0;
 }

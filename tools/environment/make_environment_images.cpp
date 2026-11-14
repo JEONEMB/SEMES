@@ -23,7 +23,6 @@ using namespace scene;
 
 namespace {
 
-const double kToleranceYmm = 0.045, kToleranceTdeg = 0.01;
 const double kFocalPx = 4492;   // 카메라 초점거리 추정값 (사진으로 추정, 실험 20261102_141140)
 
 struct Change {
@@ -56,6 +55,58 @@ cv::Mat busy_background(const cv::Mat& gray, const Layout& layout) {
     return out;
 }
 
+// 화면 변화 목록 (번호, 묶음, 그림에 쓰는 이름, 기준 사진을 바꾸는 함수)
+std::vector<Change> list_changes(const Layout& L) {
+    return {
+        {"01", "geometry", "Distance +0.5% (scale)", [=](const cv::Mat& g) { return scale_rotate(g, 1.005, 0); }},
+        {"02", "geometry", "Distance -2% (scale)", [=](const cv::Mat& g) { return scale_rotate(g, 0.98, 0); }},
+        {"03", "geometry", "Other install +5% (scale)", [=](const cv::Mat& g) { return scale_rotate(g, 1.05, 0); }},
+        {"04", "geometry", "Camera roll 0.05 deg", [=](const cv::Mat& g) { return scale_rotate(g, 1, 0.05); }},
+        {"05", "geometry", "Camera roll 2 deg", [=](const cv::Mat& g) { return scale_rotate(g, 1, 2); }},
+        {"06", "geometry", "Camera tilt 2 deg (perspective)", [=](const cv::Mat& g) { return tilt(g, 2, kFocalPx); }},
+        {"07", "geometry", "Camera sag 15 px down", [=](const cv::Mat& g) { return shift(g, 0, 15); }},
+        {"08", "geometry", "Camera sag 40 px down", [=](const cv::Mat& g) { return shift(g, 0, 40); }},
+        {"10", "geometry", "Lens distortion (barrel)", [=](const cv::Mat& g) { return distort(g, 0.02); }},
+        {"11", "target", "QR content changed (1 of 3)", [=](const cv::Mat& g) { return replace_qr(g, L.qr[1], kSeed); }},
+        {"12", "target", "QR content changed (all 3)", [=](const cv::Mat& g) { cv::Mat m = g; for (int k = 0; k < 3; ++k) m = replace_qr(m, L.qr[k], kSeed + k); return m; }},
+        {"13", "target", "Screw 2 missing", [=](const cv::Mat& g) { return remove_screw(g, L.screw[1]); }},
+        {"14", "target", "Screw 2 different head", [=](const cv::Mat& g) { return different_screw(g, L.screw[1]); }},
+        {"15", "target", "Busy background", [=](const cv::Mat& g) { return busy_background(g, L); }},
+        {"16", "light", "Dark x0.4", [=](const cv::Mat& g) { return brightness(g, 0.4, 0); }},
+        {"17", "light", "Bright x1.8 (saturated)", [=](const cv::Mat& g) { return brightness(g, 1.8, 0); }},
+        {"18", "light", "Yellow room (low contrast)", [=](const cv::Mat& g) { return gamma(brightness(g, 0.55, 70), 1.3); }},
+        {"19", "light", "Side light 0.5 -> 1.4", [=](const cv::Mat& g) { return side_light(g, 0.5, 1.4); }},
+        {"20", "light", "Glare on QR 2", [=](const cv::Mat& g) { return glare(g, L.qr[1].tl() + cv::Point(90, 100), 45, 230); }},
+        {"21", "light", "Glare on screw 2", [=](const cv::Mat& g) { return glare(g, L.screw[1] + cv::Point(10, -10), 25, 230); }},
+        {"22", "light", "Flicker banding 15%", [=](const cv::Mat& g) { return banding(g, 0.15, 90); }},
+        {"23", "environment", "Defocus sigma 2", [=](const cv::Mat& g) { return defocus(g, 2); }},
+        {"24", "environment", "Defocus sigma 4", [=](const cv::Mat& g) { return defocus(g, 4); }},
+        {"25", "environment", "Motion blur 15 px (horizontal)", [=](const cv::Mat& g) { return motion_blur(g, 15, true); }},
+        {"26", "environment", "Motion blur 15 px (vertical)", [=](const cv::Mat& g) { return motion_blur(g, 15, false); }},
+        {"27", "environment", "Heat shimmer 1.5 px", [=](const cv::Mat& g) { return heat_shimmer(g, 1.5, 120, kSeed); }},
+        {"28", "environment", "Fog / condensation", [=](const cv::Mat& g) { return fog(g, 0.45, 3); }},
+        {"29", "environment", "Chemical droplets", [=](const cv::Mat& g) { return spots(g, 25, 12, 40, true, kSeed); }},
+        {"30", "environment", "Dust on lens", [=](const cv::Mat& g) { return spots(g, 15, 15, 45, false, kSeed + 7); }},
+        {"31", "environment", "Plasma glow + window ghost", [=](const cv::Mat& g) { return glow_from_top(ghost(g, 40, 25, 0.18), 70, 600, 500); }},
+        {"32", "environment", "Sensor noise sigma 12", [=](const cv::Mat& g) { return noise(g, 12, kSeed); }},
+        {"33", "environment", "JPEG quality 20", [=](const cv::Mat& g) { return jpeg(g, 20); }},
+        {"34", "occlusion", "Robot arm + cable", [=](const cv::Mat& g) { return occlude_arm(g); }},
+    };
+}
+
+// 한눈에 보기: 작은 그림들을 5열로 붙인다
+cv::Mat make_overview(const std::vector<cv::Mat>& thumbnails) {
+    const int columns = 5, tw = 488, th = 210;
+    const int rows = int((thumbnails.size() + columns - 1) / columns);
+    cv::Mat overview(rows * th, columns * tw, CV_8UC3, cv::Scalar(255, 255, 255));
+    for (size_t i = 0; i < thumbnails.size(); ++i) {
+        cv::Mat small;
+        cv::resize(thumbnails[i], small, cv::Size(tw - 6, th - 6), 0, 0, cv::INTER_AREA);
+        small.copyTo(overview(cv::Rect(int(i % columns) * tw + 3, int(i / columns) * th + 3, tw - 6, th - 6)));
+    }
+    return overview;
+}
+
 }   // namespace
 
 int main(int argc, char** argv) {
@@ -66,41 +117,7 @@ int main(int argc, char** argv) {
     const cv::Mat center = alignment::read_photo((data / "center.bmp").u8string());
     const Layout L = read_layout(data);
 
-    const std::vector<Change> changes = {
-        {"01", "geometry", "Distance +0.5% (scale)", [&](const cv::Mat& g) { return scale_rotate(g, 1.005, 0); }},
-        {"02", "geometry", "Distance -2% (scale)", [&](const cv::Mat& g) { return scale_rotate(g, 0.98, 0); }},
-        {"03", "geometry", "Other install +5% (scale)", [&](const cv::Mat& g) { return scale_rotate(g, 1.05, 0); }},
-        {"04", "geometry", "Camera roll 0.05 deg", [&](const cv::Mat& g) { return scale_rotate(g, 1, 0.05); }},
-        {"05", "geometry", "Camera roll 2 deg", [&](const cv::Mat& g) { return scale_rotate(g, 1, 2); }},
-        {"06", "geometry", "Camera tilt 2 deg (perspective)", [&](const cv::Mat& g) { return tilt(g, 2, kFocalPx); }},
-        {"07", "geometry", "Camera sag 15 px down", [&](const cv::Mat& g) { return shift(g, 0, 15); }},
-        {"08", "geometry", "Camera sag 40 px down", [&](const cv::Mat& g) { return shift(g, 0, 40); }},
-        {"10", "geometry", "Lens distortion (barrel)", [&](const cv::Mat& g) { return distort(g, 0.02); }},
-        {"11", "target", "QR content changed (1 of 3)", [&](const cv::Mat& g) { return replace_qr(g, L.qr[1], kSeed); }},
-        {"12", "target", "QR content changed (all 3)", [&](const cv::Mat& g) { cv::Mat m = g; for (int k = 0; k < 3; ++k) m = replace_qr(m, L.qr[k], kSeed + k); return m; }},
-        {"13", "target", "Screw 2 missing", [&](const cv::Mat& g) { return remove_screw(g, L.screw[1]); }},
-        {"14", "target", "Screw 2 different head", [&](const cv::Mat& g) { return different_screw(g, L.screw[1]); }},
-        {"15", "target", "Busy background", [&](const cv::Mat& g) { return busy_background(g, L); }},
-        {"16", "light", "Dark x0.4", [&](const cv::Mat& g) { return brightness(g, 0.4, 0); }},
-        {"17", "light", "Bright x1.8 (saturated)", [&](const cv::Mat& g) { return brightness(g, 1.8, 0); }},
-        {"18", "light", "Yellow room (low contrast)", [&](const cv::Mat& g) { return gamma(brightness(g, 0.55, 70), 1.3); }},
-        {"19", "light", "Side light 0.5 -> 1.4", [&](const cv::Mat& g) { return side_light(g, 0.5, 1.4); }},
-        {"20", "light", "Glare on QR 2", [&](const cv::Mat& g) { return glare(g, L.qr[1].tl() + cv::Point(90, 100), 45, 230); }},
-        {"21", "light", "Glare on screw 2", [&](const cv::Mat& g) { return glare(g, L.screw[1] + cv::Point(10, -10), 25, 230); }},
-        {"22", "light", "Flicker banding 15%", [&](const cv::Mat& g) { return banding(g, 0.15, 90); }},
-        {"23", "environment", "Defocus sigma 2", [&](const cv::Mat& g) { return defocus(g, 2); }},
-        {"24", "environment", "Defocus sigma 4", [&](const cv::Mat& g) { return defocus(g, 4); }},
-        {"25", "environment", "Motion blur 15 px (horizontal)", [&](const cv::Mat& g) { return motion_blur(g, 15, true); }},
-        {"26", "environment", "Motion blur 15 px (vertical)", [&](const cv::Mat& g) { return motion_blur(g, 15, false); }},
-        {"27", "environment", "Heat shimmer 1.5 px", [&](const cv::Mat& g) { return heat_shimmer(g, 1.5, 120, kSeed); }},
-        {"28", "environment", "Fog / condensation", [&](const cv::Mat& g) { return fog(g, 0.45, 3); }},
-        {"29", "environment", "Chemical droplets", [&](const cv::Mat& g) { return spots(g, 25, 12, 40, true, kSeed); }},
-        {"30", "environment", "Dust on lens", [&](const cv::Mat& g) { return spots(g, 15, 15, 45, false, kSeed + 7); }},
-        {"31", "environment", "Plasma glow + window ghost", [&](const cv::Mat& g) { return glow_from_top(ghost(g, 40, 25, 0.18), 70, 600, 500); }},
-        {"32", "environment", "Sensor noise sigma 12", [&](const cv::Mat& g) { return noise(g, 12, kSeed); }},
-        {"33", "environment", "JPEG quality 20", [&](const cv::Mat& g) { return jpeg(g, 20); }},
-        {"34", "occlusion", "Robot arm + cable", [&](const cv::Mat& g) { return occlude_arm(g); }},
-    };
+    const std::vector<Change> changes = list_changes(L);
 
     alignment::clear_zero();
     const alignment::Result base = alignment::measure_alignment(center);
@@ -124,16 +141,6 @@ int main(int argc, char** argv) {
         thumbnails.push_back(labeled);
         std::cout << change.id << " " << change.title << "  " << status << " " << r.code << "  dY " << dy << "  dT " << dt << "\n";
     }
-
-    // 한눈에 보기 (5열)
-    const int columns = 5, tw = 488, th = 210;
-    const int rows = int((thumbnails.size() + columns - 1) / columns);
-    cv::Mat overview(rows * th, columns * tw, CV_8UC3, cv::Scalar(255, 255, 255));
-    for (size_t i = 0; i < thumbnails.size(); ++i) {
-        cv::Mat small;
-        cv::resize(thumbnails[i], small, cv::Size(tw - 6, th - 6), 0, 0, cv::INTER_AREA);
-        small.copyTo(overview(cv::Rect(int(i % columns) * tw + 3, int(i / columns) * th + 3, tw - 6, th - 6)));
-    }
-    save_png(out / "overview.png", overview);
+    save_png(out / "overview.png", make_overview(thumbnails));
     return 0;
 }

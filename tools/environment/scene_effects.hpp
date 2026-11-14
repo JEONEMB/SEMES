@@ -9,6 +9,7 @@ namespace scene {
 
 const cv::Rect kView(700, 800, 2440, 1050);   // 문서 그림에 쓰는 판 둘레 (사진 3840×2160 기준)
 const unsigned kSeed = 20261115;              // 무작위 무늬를 만들 때 쓰는 씨앗 (누가 돌려도 같은 그림)
+const double kToleranceYmm = 0.045, kToleranceTdeg = 0.01;   // 통과 기준 (tools/common/coefficient_fit.hpp 와 같은 값)
 
 struct Layout {
     cv::Rect qr[3];        // QR 상자, 왼쪽부터
