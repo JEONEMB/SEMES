@@ -1,5 +1,5 @@
 // 예제: 사진 한 장을 넣고 Y, T 와 단계별 값을 본다.
-// 사용: measure_one <data 폴더> <사진> [영점으로 쓸 센터 사진]
+// 사용: measure_one <model 폴더> <사진> [영점으로 쓸 센터 사진]
 #include "alignment.hpp"
 #include <opencv2/imgcodecs.hpp>
 #include <fstream>
@@ -24,7 +24,7 @@ const char* status_name(alignment::Status status) {
 
 int main(int argc, char** argv) {
     if (argc < 3) {
-        std::cerr << "사용: measure_one <data 폴더> <사진> [영점으로 쓸 센터 사진]\n";
+        std::cerr << "사용: measure_one <model 폴더> <사진> [영점으로 쓸 센터 사진]\n";
         return 2;
     }
     const alignment::Result ready = alignment::initialize(argv[1]);

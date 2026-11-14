@@ -4,7 +4,17 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV REQUIRED)   # OpenCV 3.4.15 에서 확인했다
 
-# 라이브러리: include/alignment.hpp 의 함수들
+# 실행 파일 하나를 만든다: add_program(이름 소스 라이브러리…)
+function(add_program name source)
+    add_executable(${name} ${source})
+    target_link_libraries(${name} PRIVATE ${ARGN})
+    if(MSVC)
+        target_compile_options(${name} PRIVATE /utf-8 /EHsc)
+        target_compile_definitions(${name} PRIVATE NOMINMAX)
+    endif()
+endfunction()
+
+# ---- 측정 라이브러리: include/alignment.hpp 의 함수들 (src/) ----
 add_library(alignment STATIC
     src/alignment.cpp
     src/common/reference.cpp
@@ -21,7 +31,13 @@ if(MSVC)
     target_compile_definitions(alignment PRIVATE NOMINMAX _CRT_SECURE_NO_WARNINGS)
 endif()
 
-# 학습, 평가 도구 (tools/). 공개 함수(include/alignment.hpp)만 쓴다
+# ---- tools/try: 써 보기, 빌드 확인, 문서 그림 ----
+foreach(name measure_one show_steps check_photos check_setup make_figures)
+    add_program(${name} tools/try/${name}.cpp alignment)
+    target_include_directories(${name} PRIVATE src)   # show_steps, make_figures 는 단계 함수를 직접 부른다
+endforeach()
+
+# ---- tools/common: 학습, 평가 도구가 같이 쓰는 코드. 공개 함수(include/alignment.hpp)만 쓴다 ----
 add_library(tools_common STATIC
     tools/common/photo_files.cpp
     tools/common/tables.cpp
@@ -33,37 +49,24 @@ if(MSVC)
     target_compile_options(tools_common PRIVATE /utf-8 /EHsc)
     target_compile_definitions(tools_common PRIVATE NOMINMAX)
 endif()
-foreach(tool prepare_dataset fit_coefficients evaluate_accuracy measure_speed score_photos)
-    add_executable(${tool} tools/${tool}.cpp)
-    target_link_libraries(${tool} PRIVATE tools_common)
-    if(MSVC)
-        target_compile_options(${tool} PRIVATE /utf-8 /EHsc)
-        target_compile_definitions(${tool} PRIVATE NOMINMAX)
-    endif()
+
+# ---- tools/train: 계수를 다시 만들 때 ----
+foreach(name prepare_dataset fit_coefficients)
+    add_program(${name} tools/train/${name}.cpp tools_common)
 endforeach()
 
-# 적용 환경 화면 만들기 (tool/). 기준 사진을 바꿔 다른 환경에서 카메라가 볼 화면을 만들고 알고리즘 반응을 잰다
-add_library(scene_effects STATIC tool/scene_effects.cpp)
-target_include_directories(scene_effects PUBLIC tool ${OpenCV_INCLUDE_DIRS})
+# ---- tools/evaluate: 성능을 잴 때 ----
+foreach(name evaluate_accuracy measure_speed score_photos)
+    add_program(${name} tools/evaluate/${name}.cpp tools_common)
+endforeach()
+
+# ---- tools/environment: 다른 설치 환경에서 카메라가 볼 화면을 만들고 알고리즘 반응을 잰다 ----
+add_library(scene_effects STATIC tools/environment/scene_effects.cpp)
+target_include_directories(scene_effects PUBLIC tools/environment ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(scene_effects PUBLIC ${OpenCV_LIBS})
 if(MSVC)
     target_compile_options(scene_effects PRIVATE /utf-8 /EHsc)
 endif()
-foreach(tool make_environment_images make_site_images check_new_installation)
-    add_executable(${tool} tool/${tool}.cpp)
-    target_link_libraries(${tool} PRIVATE alignment scene_effects)
-    if(MSVC)
-        target_compile_options(${tool} PRIVATE /utf-8 /EHsc)
-    endif()
-endforeach()
-
-# 예제와 확인 프로그램
-foreach(program examples/measure_one examples/show_steps tests/check_photos tests/check_setup tool/make_figures)
-    get_filename_component(name ${program} NAME)
-    add_executable(${name} ${program}.cpp)
-    target_link_libraries(${name} PRIVATE alignment)
-    target_include_directories(${name} PRIVATE src)   # show_steps, make_figures 는 단계 함수를 직접 부른다
-    if(MSVC)
-        target_compile_options(${name} PRIVATE /utf-8 /EHsc)
-    endif()
+foreach(name make_environment_images make_site_images check_new_installation)
+    add_program(${name} tools/environment/${name}.cpp alignment scene_effects)
 endforeach()

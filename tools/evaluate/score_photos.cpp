@@ -1,6 +1,6 @@
 // 평가: 명령값 기준 채점 (엑셀로 열어 손으로 확인하는 표)
 //
-// 사용: score_photos <사진 폴더> <출력 폴더> [--data <data 폴더>] [--tolerance-y 0.045] [--tolerance-t 0.01] [--answers 정답표.tsv]
+// 사용: score_photos <사진 폴더> <출력 폴더> [--data <model 폴더>] [--tolerance-y 0.045] [--tolerance-t 0.01] [--answers 정답표.tsv]
 //
 // 정답
 //   - 기본: 파일 이름의 명령값 ("Y+0.05 T+0.01 (2).bmp" → Y 0.05, T 0.01)
@@ -53,11 +53,11 @@ const char* status_name(alignment::Status status) {
 
 int main(int argc, char** argv) {
     if (argc < 3) {
-        std::cerr << "사용: score_photos <사진 폴더> <출력 폴더> [--data <data 폴더>] [--tolerance-y 0.045] [--tolerance-t 0.01] [--answers 정답표.tsv]\n";
+        std::cerr << "사용: score_photos <사진 폴더> <출력 폴더> [--data <model 폴더>] [--tolerance-y 0.045] [--tolerance-t 0.01] [--answers 정답표.tsv]\n";
         return 2;
     }
     const fs::path photo_folder = fs::u8path(argv[1]), output = fs::u8path(argv[2]);
-    std::string data_folder = "data";
+    std::string data_folder = "data/model";
     double tolerance_y = 0.045, tolerance_t = 0.01;
     fs::path answers_file;
     for (int a = 3; a + 1 < argc; ++a) {

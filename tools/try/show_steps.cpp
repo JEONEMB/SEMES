@@ -1,6 +1,6 @@
 // 예제: 사진 한 장이 단계마다 어떤 값을 내는지 모두 찍는다.
 // 코드를 다른 곳으로 옮길 때, 옮긴 코드의 값과 한 단계씩 비교하는 데 쓴다 (docs/2_포팅안내서.md).
-// 사용: show_steps <data 폴더> <사진>
+// 사용: show_steps <model 폴더> <사진>
 #include "common/reference.hpp"
 #include "steps/01_find_qr.hpp"
 #include "steps/02_find_screws.hpp"
@@ -25,7 +25,7 @@ cv::Mat read_photo(const std::string& path) {
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc != 3) { std::cerr << "사용: show_steps <data 폴더> <사진>\n"; return 2; }
+    if (argc != 3) { std::cerr << "사용: show_steps <model 폴더> <사진>\n"; return 2; }
     const std::string data = argv[1];
     std::string error;
     Reference reference;

@@ -1,6 +1,6 @@
 // 문서(docs/)에 넣는 그림을 실제 사진으로 만든다.
-// 사용: make_figures <data 폴더> <Y 가 큰 사진> <T 가 큰 사진> <출력 폴더>
-//   예: make_figures data tests/photos/sample_3.png tests/photos/sample_5.png docs/images
+// 사용: make_figures <model 폴더> <Y 가 큰 사진> <T 가 큰 사진> <출력 폴더>
+//   예: make_figures data/model data/sample/sample_3.png data/sample/sample_5.png docs/images
 // 그림 안의 글자는 영어다 (OpenCV 가 한글을 그리지 못한다). 설명은 문서 본문에 한글로 적는다.
 #include "common/reference.hpp"
 #include "steps/01_find_qr.hpp"
@@ -202,7 +202,7 @@ cv::Mat figure_covered_screw(const std::string& data, const cv::Mat& photo) {
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc != 5) { std::cerr << "사용: make_figures <data 폴더> <Y 가 큰 사진> <T 가 큰 사진> <출력 폴더>\n"; return 2; }
+    if (argc != 5) { std::cerr << "사용: make_figures <model 폴더> <Y 가 큰 사진> <T 가 큰 사진> <출력 폴더>\n"; return 2; }
     Reference reference;
     std::string error;
     if (!load_reference(argv[1], reference, error)) { std::cerr << error << "\n"; return 1; }

@@ -250,9 +250,9 @@ Result initialize(const std::string& data_folder, const std::string& settings_fi
         State fresh;
         std::string error;
         if (!load_settings(settings_file, fresh.settings, error)) return failed("E_SETTINGS", error);
-        if (!load_reference(data_folder, fresh.reference, error)) return failed("E_DATA", error + ". 받은 data 폴더를 그대로 다시 복사해 주세요");
-        if (!load_coefficient_sets(data_folder, fresh.coefficient_sets, error)) return failed("E_DATA", error + ". 받은 data 폴더를 그대로 다시 복사해 주세요");
-        if (!load_agreement_checks(data_folder, fresh.agreement_checks, error)) return failed("E_DATA", error + ". 받은 data 폴더를 그대로 다시 복사해 주세요");
+        if (!load_reference(data_folder, fresh.reference, error)) return failed("E_DATA", error + ". 받은 model 폴더를 그대로 다시 복사해 주세요");
+        if (!load_coefficient_sets(data_folder, fresh.coefficient_sets, error)) return failed("E_DATA", error + ". 받은 model 폴더를 그대로 다시 복사해 주세요");
+        if (!load_agreement_checks(data_folder, fresh.agreement_checks, error)) return failed("E_DATA", error + ". 받은 model 폴더를 그대로 다시 복사해 주세요");
         state = std::move(fresh);
         use_reference(Reference(state.reference));
         state.ready = true;

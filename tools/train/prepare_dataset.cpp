@@ -1,8 +1,8 @@
-// 사진 → 학습, 평가용 표 (dataset/prepared/)
+// 사진 → 학습, 평가용 표 (data/new_photos/tables/)
 //
-// 사용: prepare_dataset <dataset 폴더> [--data <data 폴더>]
-//   <dataset 폴더>/photos/<회차>/…  에 SEMES 에서 받은 사진을 이름 그대로 넣는다 (dataset/README.md).
-//   --data 를 안 주면 "data" (실사용과 같은 기준 사진으로 잰다).
+// 사용: prepare_dataset <사진 폴더> [--data <model 폴더>]
+//   <사진 폴더>/<회차>/…  에 SEMES 에서 받은 사진을 이름 그대로 넣는다 (data/new_photos/README.md). 표는 <사진 폴더>/tables/ 에 쓴다.
+//   --data 를 안 주면 "data/model" (실사용과 같은 기준 사진으로 잰다).
 //
 // 하는 일
 //   1. 회차 폴더마다 사진을 찾고 파일 이름에서 명령값을 읽는다 (못 읽는 이름은 건너뛰고 보고서에 적는다)
@@ -39,6 +39,7 @@ const double kOutlierLimit = 10.0;          // 정상 흔들림의 몇 배를 �
 const double kCommandErrorYmm = 0.2;        // 사진이 보여 주는 자세와 이름의 명령이 이보다 크게 다르면 "명령값이 틀린 사진"
 const double kCommandErrorTdeg = 0.1;       //   (통과 기준 0.045 mm, 0.01 도보다 훨씬 커서 측정 오차로는 생기지 않는 크기)
 const int kPoseTerms = 5;                   // 영점 맞추기 식의 자세 항: Y, T, Y², YT, T²
+const char* const kTableFolder = "tables";   // 사진 폴더 안에 표를 쓰는 폴더 이름
 
 struct PreparedPhoto {
     std::string session;
@@ -172,18 +173,19 @@ void make_splits(const std::vector<PreparedPhoto>& photos, std::vector<int>& fin
 }   // namespace
 
 int main(int argc, char** argv) {
-    if (argc < 2) { std::cerr << "사용: prepare_dataset <dataset 폴더> [--data <data 폴더>]\n"; return 2; }
-    const fs::path dataset = fs::u8path(argv[1]);
-    std::string data_folder = "data";
+    if (argc < 2) { std::cerr << "사용: prepare_dataset <사진 폴더> [--data <model 폴더>]\n"; return 2; }
+    const fs::path photo_root = fs::u8path(argv[1]);
+    std::string data_folder = "data/model";
     for (int a = 2; a + 1 < argc; ++a) if (std::string(argv[a]) == "--data") data_folder = argv[a + 1];
 
-    const fs::path photo_root = dataset / "photos", prepared = dataset / "prepared";
+    const fs::path tables = photo_root / kTableFolder;
     std::string error;
-    if (!make_empty_folder(prepared, error)) { std::cerr << error << "\n"; return 1; }
+    if (!make_empty_folder(tables, error)) { std::cerr << error << "\n"; return 1; }
     if (alignment::initialize(data_folder).status == alignment::Status::Failed) return 1;
 
     // 1, 2. 사진 찾기, 재기
-    const std::vector<std::string> sessions = list_subfolders(photo_root);
+    std::vector<std::string> sessions = list_subfolders(photo_root);
+    sessions.erase(std::remove(sessions.begin(), sessions.end(), std::string(kTableFolder)), sessions.end());   // 표 폴더는 회차가 아니다
     if (sessions.empty()) { std::cerr << "사진 폴더가 없습니다: " << photo_root.u8string() << " (회차마다 폴더를 만들어 넣으세요)\n"; return 1; }
     std::vector<PreparedPhoto> photos;
     std::vector<std::string> skipped;
@@ -226,9 +228,9 @@ int main(int argc, char** argv) {
     make_splits(photos, final_check, folds);
 
     // 표 쓰기
-    std::ofstream photo_table(prepared / "photos.tsv", std::ios::binary), feature_table(prepared / "features.tsv", std::ios::binary),
-        label_table(prepared / "labels.tsv", std::ios::binary), split_table(prepared / "splits.tsv", std::ios::binary),
-        session_table(prepared / "sessions.tsv", std::ios::binary);
+    std::ofstream photo_table(tables / "photos.tsv", std::ios::binary), feature_table(tables / "features.tsv", std::ios::binary),
+        label_table(tables / "labels.tsv", std::ios::binary), split_table(tables / "splits.tsv", std::ios::binary),
+        session_table(tables / "sessions.tsv", std::ios::binary);
     photo_table << "id\tsession\tpath\tcommand_y_mm\tcommand_t_deg\n";
     feature_table << "id\tmeasured\tqr\tscrew1\tscrew2\tscrew3\tscrew4\n";
     label_table << "id\tlabel_y_mm\tlabel_t_deg\n";
@@ -255,7 +257,7 @@ int main(int argc, char** argv) {
     }
 
     // 보고서
-    std::ofstream report(prepared / "prepare_report.txt", std::ios::binary);
+    std::ofstream report(tables / "prepare_report.txt", std::ios::binary);
     int usable = 0, failed = 0, missing_screw = 0, out_of_range = 0, final_count = 0;
     for (int i = 0; i < int(photos.size()); ++i) {
         const PreparedPhoto& p = photos[i];
@@ -278,7 +280,7 @@ int main(int argc, char** argv) {
     report << "\n건너뛴 파일 " << skipped.size() << "개\n";
     for (const std::string& s : skipped) report << "  " << s << "\n";
     report.close();
-    std::ifstream echo(prepared / "prepare_report.txt", std::ios::binary);
+    std::ifstream echo(tables / "prepare_report.txt", std::ios::binary);
     std::cout << echo.rdbuf();
     return 0;
 }

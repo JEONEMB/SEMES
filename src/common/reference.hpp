@@ -17,7 +17,7 @@ struct Reference {
     double trained_t_deg[2] = {0, 0};   // 계수를 학습한 T 범위
 };
 
-// data 폴더의 center.bmp 와 reference.json 을 읽는다. 실패하면 false 와 이유.
+// model 폴더의 center.bmp 와 reference.json 을 읽는다. 실패하면 false 와 이유.
 bool load_reference(const std::string& data_folder, Reference& reference, std::string& error);
 
 // 사진을 회색으로 바꾼다. 크기나 형식이 다르면 false 와 이유.
