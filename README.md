@@ -62,6 +62,12 @@ build/Release/measure_one data/model data/sample/sample_1.png
 build/Release/score_photos
 ```
 
+받은 사진으로 계수를 새로 만든다. 인자 없이 실행하면 사진 폴더를 묻고, 사진 재기부터 정확도 확인까지 차례로 한다. 지금 쓰는 `data/model` 은 바꾸지 않는다 (`docs/0_전체안내.md` 3-1).
+
+```
+build/Release/train
+```
+
 ## 3. 폴더
 
 ```
@@ -89,7 +95,7 @@ tools/
     show_steps                 단계마다의 값을 모두 찍기 (옮긴 코드와 비교할 때)
     check_photos, check_setup  예제 사진으로 빌드가 맞는지 확인
     make_figures               문서의 그림 만들기
-  train/                     계수를 다시 만들 때: prepare_dataset, fit_coefficients
+  train/                     계수를 다시 만들 때: train (물어보며 한 번에), prepare_dataset, fit_coefficients
   evaluate/                  성능을 잴 때: evaluate_accuracy, measure_speed, score_photos
   environment/               다른 설치 환경의 화면을 만들어 반응 보기
   common/                    도구가 같이 쓰는 코드
