@@ -1,18 +1,9 @@
-// 평가: 정확도 (학습에 안 쓴 사진으로만 시험한다)
-//
+// 학습에 사용하지 않은 사진으로 정확도 평가
 // 사용: evaluate_accuracy <tables 폴더> <출력 폴더>
-//
-// 시험 (나사 4개 조합의 계수, 시험마다 새로 학습)
-//   1. 섞음:        마지막 확인 사진을 뺀 나머지를 5묶음으로 나눠 돌아가며 시험, 나누기를 바꿔 10번
-//   2. 마지막 확인: 나머지 전부로 학습, 떼어 둔 마지막 확인 사진으로 한 번
-//   3. 처음 보는 날: 회차 하나를 통째로 빼고 학습, 그 회차로 시험 (회차마다)
-//   4. 범위 밖:     안쪽(|Y| <= 1, |T| <= 0.5)으로만 학습, 바깥을 시험
-//
-// 채점 정답 두 가지
-//   - 받은 정답 (파일 이름의 명령값 그대로). 영점 없이 / 그 회차에서 영점을 잡고
-//       영점: 그 회차의 명령 (0, 0) 사진이 있으면 그 사진들, 없으면 명령값을 아는 센터 근처(|Y| <= 0.25, |T| <= 0.05) 사진 5장
-//             으로 평균(측정 − 명령)을 구한다. 5장은 200번 뽑아 평균. 영점에 쓴 사진은 채점에서 뺀다
-//   - 학습 정답 (명령 − 그 회차의 영점 어긋남, tables/labels.tsv)
+// 시험: 5묶음 × 10회, 최종 검증, 회차 제외, 학습 범위 밖
+// 정답: 파일명 명령값과 영점 보정 정답(labels.tsv)
+// 회차 영점: 명령 (0, 0) 사진 우선. 없으면 근접 명령 사진 5장, 200회 추출
+// 영점 사진: 채점 제외
 #include "common/coefficient_fit.hpp"
 #include "common/console.hpp"
 #include "common/dataset.hpp"
@@ -39,6 +30,9 @@ const unsigned kZeroSeed = 20261114;
 
 using Photos = std::vector<const DatasetPhoto*>;
 
+// train: 시험에 쓸 이동량 계산식 생성
+//   입력: photos (학습용 사진)
+//   출력: 나사 4개 조합의 이동량 계산식
 alignment::CoefficientSet train(const Photos& photos) {
     std::vector<Values> values;
     std::vector<double> y, t;
@@ -50,7 +44,9 @@ alignment::CoefficientSet train(const Photos& photos) {
     return fit_coefficient_set(kEvaluatedScrews, values, y, t);
 }
 
-// 학습 정답으로 채점해서 통과인지
+// passes_learned_answer: 학습 정답 기준 채점
+//   입력: set (이동량 계산식), photo (시험 사진 자료)
+//   출력: 허용오차 이내이면 true
 bool passes_learned_answer(const alignment::CoefficientSet& set, const DatasetPhoto& photo) {
     const alignment::YT pose = predict(set, photo.values);
     return passes(pose.y_mm - photo.label_y_mm, pose.t_deg - photo.label_t_deg);
@@ -58,22 +54,33 @@ bool passes_learned_answer(const alignment::CoefficientSet& set, const DatasetPh
 
 struct Count {
     int passed = 0, total = 0;
+    // add: 채점 결과 한 건 반영
+    //   입력: ok (통과 여부)
+    //   출력: 없음 (전체 수와 통과 수 갱신)
     void add(bool ok) { ++total; passed += ok; }
 };
 
 std::ostringstream report_text;
+// print: 평가 결과 한 줄 기록
+//   입력: line (결과 문자열)
+//   출력: 없음 (화면과 보고서 출력)
 void print(const std::string& line) {
     std::cout << line << "\n";
     report_text << line << "\n";
 }
 
+// percent: 백분율 표시
+//   입력: value (백분율 값)
+//   출력: 백분율 문자열
 std::string percent(double value) {
     std::ostringstream text;
     text << std::fixed << std::setprecision(1) << value << "%";
     return text.str();
 }
 
-// ---- 1. 섞음 ----
+// test_mixed_folds: 5묶음을 번갈아 시험에 사용, 10회 반복
+//   입력: development (개발용 사진)
+//   출력: 없음 (검증 결과 출력)
 void test_mixed_folds(const Photos& development) {
     std::vector<int> fails;
     Count total;
@@ -105,7 +112,9 @@ void test_mixed_folds(const Photos& development) {
     for (const auto& s : by_session) print("      " + s.first + "  " + format_rate(s.second.passed, s.second.total));
 }
 
-// ---- 2. 마지막 확인 ----
+// test_final_check: 분리한 사진으로 최종 검증
+//   입력: development (학습용), final_check (검증용)
+//   출력: 없음 (검증 결과 출력)
 void test_final_check(const Photos& development, const Photos& final_check) {
     const alignment::CoefficientSet set = train(development);
     Count count;
@@ -114,12 +123,14 @@ void test_final_check(const Photos& development, const Photos& final_check) {
           format_rate(count.passed, count.total));
 }
 
-// ---- 3. 처음 보는 날 ----
+// 3. 처음 보는 날
 
-// 한 회차의 측정값 (사진 → 계수로 낸 Y, T)
+// 한 회차의 측정값 (사진 -> 계산식으로 구한 Y, T)
 using Measured = std::map<const DatasetPhoto*, alignment::YT>;
 
-// used_for_zero 사진들로 영점(평균(측정 − 명령))을 잡고, 나머지를 받은 정답으로 채점한 통과율 (%)
+// rate_with_zero: 회차 영점 보정 후 채점
+//   입력: test (시험 사진), measured (측정 결과), used_for_zero (영점 추정용 사진)
+//   출력: 영점 사진을 제외한 통과율(%)
 double rate_with_zero(const Photos& test, const Measured& measured, const Photos& used_for_zero) {
     double zero_y = 0, zero_t = 0;
     for (const DatasetPhoto* p : used_for_zero) {
@@ -138,10 +149,13 @@ double rate_with_zero(const Photos& test, const Measured& measured, const Photos
 
 struct SessionResult {
     Count learned_answer, received_no_zero;
-    double received_with_zero = -1;   // 통과율 (%). 영점을 못 잡았으면 −1
+    double received_with_zero = -1;   // 통과율 (%). 영점을 못 잡았으면 -1
     std::string zero_note;
 };
 
+// score_session: 한 촬영 회차의 정확도 평가
+//   입력: set (계산식), test (시험 사진)
+//   출력: 영점 적용 전후의 통과율
 SessionResult score_session(const alignment::CoefficientSet& set, const Photos& test) {
     SessionResult result;
     Measured measured;
@@ -174,6 +188,9 @@ SessionResult score_session(const alignment::CoefficientSet& set, const Photos& 
     return result;
 }
 
+// test_unseen_sessions: 학습에 빠진 촬영 회차로 시험
+//   입력: usable (사용 가능 사진), sessions (회차 목록)
+//   출력: 없음 (회차별 시험 결과 출력)
 void test_unseen_sessions(const Photos& usable, const std::vector<SessionZero>& sessions) {
     print("\n[3] 처음 보는 날 (회차 하나를 빼고 학습)");
     print("    회차        사진  받은 정답, 영점 없음   받은 정답, 그날 영점   학습 정답");
@@ -190,13 +207,15 @@ void test_unseen_sessions(const Photos& usable, const std::vector<SessionZero>& 
     }
 }
 
-// ---- 4. 범위 밖 ----
+// test_outside_range: 학습 범위 밖 평가
+//   입력: usable (사용 가능한 사진)
+//   출력: 없음 (범위별 오차와 통과율 출력)
 void test_outside_range(const Photos& usable) {
     Photos inner, outer;
     for (const DatasetPhoto* p : usable) (std::abs(p->label_y_mm) <= kInnerYmm && std::abs(p->label_t_deg) <= kInnerTdeg ? inner : outer).push_back(p);
     const alignment::CoefficientSet set = train(inner);
     Count count;
-    double yy = 0, ye = 0, tt = 0, te = 0;   // 오차 = k × 정답 의 기울기 k (비례 오차)
+    double yy = 0, ye = 0, tt = 0, te = 0;   // 명령값이 커질수록 오차가 커지는 비율
     for (const DatasetPhoto* p : outer) {
         const alignment::YT pose = predict(set, p->values);
         count.add(passes(pose.y_mm - p->label_y_mm, pose.t_deg - p->label_t_deg));
@@ -211,8 +230,11 @@ void test_outside_range(const Photos& usable) {
     print(line.str());
 }
 
-}   // namespace
+}   // 파일 내부
 
+// main: 학습에 사용하지 않은 사진으로 정확도 평가
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
     use_korean_console();
     if (argc < 3) { std::cerr << "사용: evaluate_accuracy <tables 폴더> <출력 폴더>\n"; return 2; }

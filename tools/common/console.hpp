@@ -1,19 +1,27 @@
 #pragma once
-// 화면에 묻고 답을 받는 도구 (물어보며 진행하는 프로그램에서 쓴다).
+// 대화형 도구의 한글 명령 창 입력과 출력
 #include <string>
 
 namespace tools {
 
-// 한글이 깨지지 않게 화면 출력을 UTF-8 로 맞춘다 (Windows 콘솔). 프로그램을 시작할 때 한 번 부른다.
+// use_korean_console: Windows 명령 창의 한글 표시 설정
+//   입력: 없음
+//   출력: 없음 (Windows 명령 창의 한글 출력 방식 변경)
 void use_korean_console();
 
-// 한 줄을 입력받는다 (UTF-8 로 돌려준다). 앞뒤 빈칸과, 경로를 끌어다 놓을 때 붙는 따옴표는 뗀다.
+// read_answer: 사용자 입력 한 줄 읽기
+//   입력: 키보드 입력
+//   출력: 한글을 지원하는 UTF-8 문자열. 앞뒤 공백과 경로 따옴표 제거
 std::string read_answer();
 
-// question 을 보여 주고 한 줄을 입력받는다.
+// ask: 질문과 답변 입력
+//   입력: question (질문)
+//   출력: 입력 문자열
 std::string ask(const std::string& question);
 
-// question 을 보여 주고 y 또는 n 을 받는다 (그냥 Enter 는 y).
+// ask_yes: 실행 여부 확인
+//   입력: question (질문)
+//   출력: y 또는 Enter이면 true
 bool ask_yes(const std::string& question);
 
-}   // namespace tools
+}   // tools

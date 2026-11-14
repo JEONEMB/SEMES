@@ -1,23 +1,48 @@
-﻿#include "common/reference.hpp"
+// 기준 자료 읽기와 입력 영상 변환
+#include "common/reference.hpp"
 #include "alignment.hpp"
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 #include <filesystem>
 #include <fstream>
+#include <cstdint>
+#include <limits>
 #include <vector>
 
 namespace alignment {
 
-// 파일을 바이트로 읽어 풀어낸다 (cv::imread 는 한글 경로를 못 읽는다).
-// 경로를 UTF-8 로 열어 보고, 안 열리면 받은 글자 그대로(Windows 기본 문자 집합) 다시 연다.
+// read_photo: 한글 경로 사진 읽기
+//   입력: path (UTF-8 우선, 실패 시 원래 경로 사용)
+//   출력: 회색 Mat. 읽기 실패 시 빈 Mat, 해석 예외 가능
 cv::Mat read_photo(const std::string& path) {
     std::ifstream file;
-    try { file.open(std::filesystem::u8path(path), std::ios::binary); } catch (const std::exception&) {}
-    if (!file.is_open()) { file.clear(); file.open(path, std::ios::binary); }
-    const std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
+    const auto mode = std::ios::binary | std::ios::ate;
+    try { file.open(std::filesystem::u8path(path), mode); } catch (const std::exception&) {}
+    if (!file.is_open()) { file.clear(); file.open(path, mode); }
+    if (!file.is_open()) return cv::Mat();
+
+    const std::streamoff length = file.tellg();
+    if (length <= 0) return cv::Mat();
+    const auto size = static_cast<std::uintmax_t>(length);
+    std::vector<unsigned char> bytes;
+    // imdecode의 파일 바이트 배열은 int 범위의 Mat 크기로 표현된다.
+    if (size > static_cast<std::uintmax_t>((std::numeric_limits<int>::max)()) ||
+        size > static_cast<std::uintmax_t>((std::numeric_limits<std::streamsize>::max)()) ||
+        size > static_cast<std::uintmax_t>(bytes.max_size())) return cv::Mat();
+
+    bytes.resize(static_cast<std::size_t>(size));
+    file.seekg(0, std::ios::beg);
+    if (!file) return cv::Mat();
+    // 확인한 길이를 한 번에 읽고, 일부만 읽힌 파일은 해석하지 않는다.
+    const auto count = static_cast<std::streamsize>(size);
+    file.read(reinterpret_cast<char*>(bytes.data()), count);
+    if (!file || file.gcount() != count) return cv::Mat();
+    return cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
 }
 
+// load_reference: 기준 자료 읽기
+//   입력: data_folder (center.bmp, reference.json)
+//   출력: 성공 여부, reference (기준 사진과 위치), error (실패 사유)
 bool load_reference(const std::string& data_folder, Reference& reference, std::string& error) {
     reference.photo = read_photo(data_folder + "/center.bmp");
     if (reference.photo.empty()) { error = "center.bmp 를 읽지 못했습니다: " + data_folder; return false; }
@@ -39,6 +64,9 @@ bool load_reference(const std::string& data_folder, Reference& reference, std::s
     return true;
 }
 
+// to_gray: 회색 영상 변환
+//   입력: photo (3840x2160, 밝기 0~255의 회색 또는 컬러 BGR, BGRA)
+//   출력: 성공 여부, gray (회색 사진), error (실패 사유)
 bool to_gray(const cv::Mat& photo, cv::Mat& gray, std::string& error) {
     if (photo.empty()) { error = "사진이 비어 있습니다"; return false; }
     if (photo.cols != kPhotoWidth || photo.rows != kPhotoHeight) {
@@ -56,6 +84,9 @@ bool to_gray(const cv::Mat& photo, cv::Mat& gray, std::string& error) {
     return true;
 }
 
+// average_gray: 여러 사진의 같은 위치 밝기 평균
+//   입력: photos (같은 크기의 입력 사진 목록)
+//   출력: 성공 여부, gray (평균 회색 사진), error (실패 사유)
 bool average_gray(const std::vector<cv::Mat>& photos, cv::Mat& gray, std::string& error) {
     if (photos.empty()) { error = "사진이 한 장도 없습니다"; return false; }
     cv::Mat sum = cv::Mat::zeros(kPhotoHeight, kPhotoWidth, CV_64F);
@@ -69,4 +100,4 @@ bool average_gray(const std::vector<cv::Mat>& photos, cv::Mat& gray, std::string
     return true;
 }
 
-}   // namespace alignment
+}   // alignment

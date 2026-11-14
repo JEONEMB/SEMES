@@ -1,19 +1,8 @@
 #pragma once
-// 계수와 점검식의 학습. data/model/coefficients/, data/model/checks/ 의 파일을 만든 식과 같다.
-// 학습한 결과는 측정 코드의 자료형(alignment::CoefficientSet, alignment::AgreementCheck) 그대로이고,
-// 예측도 측정 코드의 함수(alignment::compute_yt)를 쓴다. 그래서 학습, 평가, 실사용의 계산이 같다.
-//
-// 계수 (Y, T 를 계산하는 선형식)
-//   1. 값마다 평균(mean)과 표준편차(scale)로 표준화한다
-//   2. Y = 절편 + Σ weight_Y × (값 − mean) / scale,  T 도 같은 식
-//   3. 계수는 두 축을 함께 보는 Huber 가중 최소제곱으로 6번 고쳐 구한다 (가끔 섞인 이상한 사진에 끌려가지 않게)
-//      사진마다 r = max(|Y 오차| / 통과 기준 Y, |T 오차| / 통과 기준 T), 가중치 = min(1, 1 / r)
-//   4. 절편을 뺀 계수에 아주 작은 ridge (1e-7 × 사진 수) 를 더해 계산을 안정시킨다
-//
-// 점검식 (값마다 "이 Y, T 라면 이 값이어야 한다")
-//   기대값 = c1 + cY·Y + cT·T + cYY·Y² + cYT·Y·T + cTT·T²   (Y, T = 그 조합의 계수로 낸 값)
-//   scale  = 1.4826 × (잔차 − 잔차 가운데값)의 절댓값 가운데값   (정상 사진에서 흔들리는 정도)
-//   기준값 = 1.5 × (학습 사진 점검값의 99.9% 지점)
+// 사용할 나사별로 이동량 계산식과 이상 여부 확인식 생성
+// 학습: 측정값과 정답으로 계산식의 숫자 결정. 큰 오차의 영향 축소
+// 확인식: 계산한 자세에서 예상되는 QR과 나사 이동량
+// 이상 판정 기준: 학습 점검값의 상위 0.1% 경계 × 1.5
 #include "steps/03_compute_yt.hpp"
 #include "steps/04_check_result.hpp"
 #include <array>
@@ -23,30 +12,50 @@
 
 namespace tools {
 
-using alignment::kValueCount;              // 값 5개: [0] QR, [1~4] 나사 1~4 가로 이동 (px)
+using alignment::kValueCount;              // 측정값 5개(px): QR, 나사 1~4
 using alignment::kValueNames;
 using Values = std::array<double, kValueCount>;
 
-const double kToleranceYmm = 0.045;        // 통과 기준 (학습, 평가, 채점이 모두 이 값을 쓴다)
+const double kToleranceYmm = 0.045;        // 학습과 평가 공통 허용오차
 const double kToleranceTdeg = 0.01;
+
+// passes: 두 방향의 오차가 허용 범위인지 확인
+//   입력: error_y_mm (Y 오차), error_t_deg (T 오차)
+//   출력: 두 오차 모두 허용 범위 안이면 true
 bool passes(double error_y_mm, double error_t_deg);
 
-extern const char* const kScrewSetNames[16];     // 계수 파일을 만드는 나사 조합 16가지 ("1234", "134", …, "none")
+extern const char* const kScrewSetNames[16];     // 계산식 파일을 만드는 나사 조합 16가지 ("1234", "134", ..., "none")
 extern const char* const kCheckSetNames[11];     // 점검식을 만드는 11가지 (나사 2개 이상)
+// has_agreement_check: 이상 여부 확인 대상인지 조회
+//   입력: screws (사용할 나사 번호)
+//   출력: 대상 조합이면 true
 bool has_agreement_check(const std::string& screws);
 
-// 나사 조합 screws 의 계수를 학습한다. values[i] 와 정답 (truth_y[i], truth_t[i]) 가 사진 한 장.
+// fit_coefficient_set: 사진별 정답에 맞는 이동량 계산식 생성
+//   입력: screws (사용 나사), values (측정값), truth_y와 truth_t (사진별 정답)
+//   출력: CoefficientSet (Y와 T 계산용 숫자)
+//   조건: 사진마다 측정값과 정답 한 쌍, 빈 자료와 NaN, 무한대 제외
 alignment::CoefficientSet fit_coefficient_set(const std::string& screws, const std::vector<Values>& values,
                                               const std::vector<double>& truth_y, const std::vector<double>& truth_t);
 
-// 계수로 Y, T 를 낸다 (측정 코드의 compute_yt 그대로).
+// predict: 사진 속 이동량으로 판의 이동량 계산
+//   입력: set (이동량 계산식), values (QR과 나사 이동량)
+//   출력: YT (Y 이동량 mm, T 회전량 도)
 alignment::YT predict(const alignment::CoefficientSet& set, const Values& values);
 
-// 그 조합의 점검식을 학습한다.
+// fit_agreement_check: QR과 나사 측정값의 이상 여부 확인식 생성
+//   입력: set (이동량 계산식), values (학습 사진의 측정값)
+//   출력: AgreementCheck (예상 이동량 계산식과 이상 판정 기준)
 alignment::AgreementCheck fit_agreement_check(const alignment::CoefficientSet& set, const std::vector<Values>& values);
 
-// 측정 코드가 읽는 형식으로 쓴다 (photo_count 는 파일 머리말에 적는 학습 사진 수).
+// write_coefficient_file: 이동량 계산용 숫자 저장
+//   입력: path (저장 경로), set (계산식), photo_count (학습 사진 수)
+//   출력: 없음 (탭으로 열을 나눈 TSV 파일 저장)
 void write_coefficient_file(const std::filesystem::path& path, const alignment::CoefficientSet& set, int photo_count);
+
+// write_agreement_file: 이상 여부 확인용 숫자 저장
+//   입력: path (저장 경로), check (확인식), photo_count (학습 사진 수)
+//   출력: 없음 (탭으로 열을 나눈 TSV 파일 저장)
 void write_agreement_file(const std::filesystem::path& path, const alignment::AgreementCheck& check, int photo_count);
 
-}   // namespace tools
+}   // tools

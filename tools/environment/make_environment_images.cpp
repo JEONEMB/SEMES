@@ -1,12 +1,7 @@
-// 화면 변화 한 가지씩: 카메라가 볼 화면을 기준 사진으로 만들고, 그 화면에서 지금 알고리즘이 어떻게 반응하는지 잰다.
-//
+// 개별 환경 변화의 합성 영상과 측정 반응
 // 사용: make_environment_images <model 폴더> <출력 폴더>
-//   출력: 화면마다 env_<번호>.png (판 둘레를 잘라 절반 크기), 한눈에 보기 overview.png, 알고리즘 반응 표 results.tsv
-//
-// 주의
-//   - 실제 촬영이 아니라 기준 사진(판이 움직이지 않은 화면)을 바꾼 합성 화면이다.
-//   - 판은 그대로이므로 이상적인 출력 변화는 0 이다. 출력이 변했다면 그만큼 "화면 변화 때문에 틀린 값"이다.
-//   - 그림 안의 글자는 영어다 (OpenCV 가 한글을 그리지 못한다).
+// 출력: env_<번호>.png, overview.png, results.tsv
+// 고정 자세의 합성 실험. 그림 제목은 영어(OpenCV 기본 글꼴)
 #include "alignment.hpp"
 #include "scene_effects.hpp"
 #include <opencv2/imgproc.hpp>
@@ -26,11 +21,13 @@ namespace {
 const double kFocalPx = 4492;   // 카메라 초점거리 추정값 (사진으로 추정, 실험 20261102_141140)
 
 struct Change {
-    std::string id, group, title;     // title 은 그림에 쓰는 영어 이름
+    std::string id, group, title;     // title은 그림에 쓰는 영어 이름
     std::function<cv::Mat(const cv::Mat&)> make;
 };
 
-// 로봇 팔(사각형)과 케이블(선)이 화면을 가림
+// occlude_arm: 로봇 팔과 케이블 가림 합성
+//   입력: gray (회색 사진)
+//   출력: 가림 영상
 cv::Mat occlude_arm(const cv::Mat& gray) {
     cv::Mat out = gray.clone();
     const std::vector<cv::Point> arm = {{700, 1500}, {1600, 1150}, {1700, 1330}, {800, 1750}};
@@ -39,7 +36,9 @@ cv::Mat occlude_arm(const cv::Mat& gray) {
     return out;
 }
 
-// 판 둘레 배경에 다른 물체, 표가 많음 (QR 줄과 나사 둘레는 그대로)
+// busy_background: 측정 영역 밖 배경 물체 합성
+//   입력: gray (회색 사진), layout (QR과 나사 위치)
+//   출력: 배경 변경 영상
 cv::Mat busy_background(const cv::Mat& gray, const Layout& layout) {
     cv::Mat out = gray.clone();
     std::mt19937 random(kSeed);
@@ -55,7 +54,9 @@ cv::Mat busy_background(const cv::Mat& gray, const Layout& layout) {
     return out;
 }
 
-// 화면 변화 목록 (번호, 묶음, 그림에 쓰는 이름, 기준 사진을 바꾸는 함수)
+// list_changes: 개별 환경 조건 구성
+//   입력: L (QR과 나사 위치)
+//   출력: 변환 조건 목록
 std::vector<Change> list_changes(const Layout& L) {
     return {
         {"01", "geometry", "Distance +0.5% (scale)", [=](const cv::Mat& g) { return scale_rotate(g, 1.005, 0); }},
@@ -94,7 +95,9 @@ std::vector<Change> list_changes(const Layout& L) {
     };
 }
 
-// 한눈에 보기: 작은 그림들을 5열로 붙인다
+// make_overview: 사례 그림 5열 배치
+//   입력: thumbnails (작게 줄인 사례 그림 목록)
+//   출력: 전체 요약 영상
 cv::Mat make_overview(const std::vector<cv::Mat>& thumbnails) {
     const int columns = 5, tw = 488, th = 210;
     const int rows = int((thumbnails.size() + columns - 1) / columns);
@@ -107,8 +110,11 @@ cv::Mat make_overview(const std::vector<cv::Mat>& thumbnails) {
     return overview;
 }
 
-}   // namespace
+}   // 파일 내부
 
+// main: 개별 환경 변화의 합성 영상과 측정 반응
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
     if (argc != 3) { std::cerr << "사용: make_environment_images <model 폴더> <출력 폴더>\n"; return 2; }
     const fs::path data = fs::u8path(argv[1]), out = fs::u8path(argv[2]);

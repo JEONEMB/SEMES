@@ -1,49 +1,50 @@
 #pragma once
-// 3단계: QR 이동과 나사 이동으로 Y(mm), T(도) 를 계산한다.
-//
-// 원리
-//   - 판이 회전(T)하면 QR 과 나사가 화면에서 거의 같이 움직인다 (1도에 약 80 px)
-//   - 판이 Y 로 움직이면 QR 과 나사가 다르게 움직인다 (1 mm 에 QR 약 14 px, 나사 약 11 px)
-//   그래서 "전체가 얼마나 움직였나" 로 T 를, "QR 과 나사가 얼마나 다르게 움직였나" 로 Y 를 안다.
-//
-// 계산식 (계수는 사진 702장으로 미리 학습해 data/coefficients/ 에 있다)
-//   Y = intercept_Y + Σ weight_Y × (값 − mean) / scale        T 도 같은 식
-//
-// 찾은 나사 조합마다 계수가 따로 있다 (screws_1234, screws_134, …, screws_none).
+// 3단계: QR과 나사 이동량(px) -> Y(mm), T(도)
+// 계산: 각 측정값의 크기 조정 -> 항목별 곱셈 -> 합계에 기본값 추가
+// 계산식: <모델 폴더>/coefficients/의 나사 조합별 파일
 #include <array>
 #include <string>
 #include <vector>
 
 namespace alignment {
 
-// 값: 사진 한 장에서 재는 가로 이동 5개. 순서는 [0] QR, [1~4] 나사 1~4 (px)
+// 가로 이동량 5개(px): [0] QR, [1~4] 나사
 const int kValueCount = 5;
-const char* const kValueNames[kValueCount] = {"qr", "screw1", "screw2", "screw3", "screw4"};   // 계수, 점검식 파일에 쓰는 이름
+const char* const kValueNames[kValueCount] = {"qr", "screw1", "screw2", "screw3", "screw4"};   // 계산식, 점검식 파일에 쓰는 이름
 
-// 값 이름 → 값 번호. 모르는 이름이면 −1.
+// value_index_of: 측정값 이름 조회
+//   입력: name (qr, screw1~screw4)
+//   출력: 값 번호 0~4. 미등록 이름은 -1
 int value_index_of(const std::string& name);
 
 struct CoefficientSet {
     std::string screws;                    // 쓰는 나사 번호 (예: "1234", "13", "none")
-    std::array<bool, 4> uses_screw{};      // 나사마다 쓰는지
-    bool precise = false;                  // 왼쪽·오른쪽 나사가 모두 있어 정밀한 조합인지 (아니면 대략값)
-    double intercept_y = 0, intercept_t = 0;
-    // 값 순서: [0] QR, [1~4] 나사 1~4. 쓰지 않는 값은 weight 가 0.
+    std::array<bool, 4> uses_screw{};      // 나사별 사용 여부
+    bool precise = false;                  // 좌우 나사 확보 여부. false이면 대략값
+    double intercept_y = 0, intercept_t = 0;   // 각 항목의 합계에 마지막으로 더할 기본값
+    // 값 순서: [0] QR, [1~4] 나사 1~4. 쓰지 않는 값은 weight가 0.
+    // mean: 평균, scale: 퍼진 정도, weight_y와 weight_t: Y와 T 계산에 곱할 값
     double mean[kValueCount] = {}, scale[kValueCount] = {1, 1, 1, 1, 1}, weight_y[kValueCount] = {}, weight_t[kValueCount] = {};
 };
 
 struct YT {
-    double y_mm = 0;
-    double t_deg = 0;
+    double y_mm = 0;    // Y 이동량(mm)
+    double t_deg = 0;   // T 회전량(도)
 };
 
-// data/coefficients/ 의 모든 조합을 읽는다. 실패하면 false 와 이유.
+// load_coefficient_sets: 나사 16조합의 계산식 읽기
+//   입력: data_folder (모델 폴더)
+//   출력: 성공 여부, sets (계산식 목록), error (실패 사유)
 bool load_coefficient_sets(const std::string& data_folder, std::vector<CoefficientSet>& sets, std::string& error);
 
-// 찾은 나사(found)에 맞는 조합을 고른다. 없으면 nullptr.
+// choose_coefficient_set: 검출 나사에 맞는 계산식 선택
+//   입력: sets (계산식 목록), found (나사별 검출 여부)
+//   출력: 해당 조합의 계산식. 없으면 nullptr(없음)
 const CoefficientSet* choose_coefficient_set(const std::vector<CoefficientSet>& sets, const std::array<bool, 4>& found);
 
-// values: 위 값 5개
+// compute_yt: 이동량에서 Y, T 계산
+//   입력: set (조합 계산식), values (QR, 나사 1~4의 가로 이동 px)
+//   출력: YT (영점 차감 전 mm와 도)
 YT compute_yt(const CoefficientSet& set, const double values[kValueCount]);
 
-}   // namespace alignment
+}   // alignment

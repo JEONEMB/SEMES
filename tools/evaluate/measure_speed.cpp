@@ -1,12 +1,7 @@
-// 평가: 속도
-//
-// 사용: measure_speed <model 폴더> <사진 폴더 또는 tables 폴더> <출력 폴더> [--count 사진 수]
-//
-// 재는 것 (무엇을 쟀는지 분명하게)
-//   - initialize 한 번 걸리는 시간
-//   - 사진마다: 사진 읽기(파일 → 회색 사진), 측정(measure_alignment), 둘을 더한 것
-//   - OpenCV 스레드 1개, 4개 각각. 스레드 설정마다 첫 1장은 준비 시간이라 뺀다
-//   - 중앙값, 95% 지점, 최대
+// 사진 읽기와 측정 속도 평가
+// 사용: measure_speed <model 폴더> <사진 또는 tables 폴더> <출력 폴더> [--count 사진 수]
+// 조건: 동시 작업 수 1개와 4개 비교. 설정별 첫 사진 집계 제외
+// 집계: 초기화 시간, 읽기 시간, 측정 시간의 중앙값, 95% 지점, 최댓값
 #include "alignment.hpp"
 #include "common/console.hpp"
 #include "common/photo_files.hpp"
@@ -28,10 +23,16 @@ namespace {
 
 const int kThreadSettings[] = {1, 4};
 
+// milliseconds_since: 경과 시간 계산
+//   입력: start (시작 시각)
+//   출력: 경과 시간(ms)
 double milliseconds_since(Clock::time_point start) {
     return std::chrono::duration<double, std::milli>(Clock::now() - start).count();
 }
 
+// quantile_of: 정렬한 값의 지정 비율 경계 계산
+//   입력: v (숫자 목록), q (위치 비율, 0~1)
+//   출력: 해당 위치의 값. 0.5는 가운데, 0.95는 95% 경계
 double quantile_of(std::vector<double> v, double q) {
     std::sort(v.begin(), v.end());
     const double position = q * (v.size() - 1);
@@ -39,6 +40,9 @@ double quantile_of(std::vector<double> v, double q) {
     return low + 1 < v.size() ? v[low] + (position - low) * (v[low + 1] - v[low]) : v[low];
 }
 
+// summary: 측정 시간 요약
+//   입력: times (사진별 소요 시간)
+//   출력: 가운데 값, 95% 경계, 최대 시간 문자열
 std::string summary(const std::vector<double>& times) {
     std::ostringstream text;
     text << std::fixed << std::setprecision(1) << "중앙값 " << quantile_of(times, 0.5) << " ms, 95% " << quantile_of(times, 0.95)
@@ -46,6 +50,9 @@ std::string summary(const std::vector<double>& times) {
     return text.str();
 }
 
+// photo_paths: 측정 대상 사진 경로 수집
+//   입력: input (사진 폴더 또는 표 폴더)
+//   출력: 사진 경로 목록
 std::vector<fs::path> photo_paths(const fs::path& input) {
     std::vector<fs::path> paths;
     Table table;
@@ -58,10 +65,16 @@ std::vector<fs::path> photo_paths(const fs::path& input) {
     return paths;
 }
 
+// environment: 컴퓨터 실행 환경 정보 읽기
+//   입력: name (환경 변수 이름)
+//   출력: 설정값. 없으면 알 수 없음 표시
 std::string environment(const char* name) { const char* value = std::getenv(name); return value ? value : "(알 수 없음)"; }
 
-}   // namespace
+}   // 파일 내부
 
+// main: 사진 읽기와 측정 속도 평가
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
     use_korean_console();
     if (argc < 4) { std::cerr << "사용: measure_speed <model 폴더> <사진 폴더 또는 tables 폴더> <출력 폴더> [--count 사진 수]\n"; return 2; }
@@ -97,7 +110,7 @@ int main(int argc, char** argv) {
             alignment::measure_alignment(photo);
             const double measure_ms = milliseconds_since(measure_start);
             table << threads << '\t' << paths[i].filename().u8string() << '\t' << read_ms << '\t' << measure_ms << '\n';
-            if (i == 0) continue;   // 준비 시간
+            if (i == 0) continue;   // 첫 실행의 준비 시간 제외
             read_times.push_back(read_ms);
             measure_times.push_back(measure_ms);
             total_times.push_back(read_ms + measure_ms);

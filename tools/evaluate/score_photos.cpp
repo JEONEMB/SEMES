@@ -1,21 +1,10 @@
-// 평가: 사진을 재서 파일 이름의 명령값과 비교한다 (엑셀로 열어 손으로 확인하는 표를 만든다)
-//
-// 쓰는 법 두 가지
-//   1. 물어보며 진행:  score_photos            (인자 없이 실행. 영점 사진, 평가할 폴더를 차례로 묻고 확인한 뒤 평가한다)
-//   2. 한 줄로 실행:   score_photos <사진 폴더> <출력 폴더> [--zero <영점 사진 폴더 또는 파일>] [--data <model 폴더>]
-//                                   [--tolerance-y 0.045] [--tolerance-t 0.01] [--answers 정답표.tsv]
-//
-// 정답
-//   - 기본: 파일 이름의 명령값 ("Y+0.05 T+0.01 (2).bmp" → Y 0.05, T 0.01)
-//   - --answers: 탭으로 나눈 표 (머리줄: file	y_mm	t_deg). file 은 파일 이름
-// 영점 (하루치 사진마다 따로 잡아야 한다. 여러 날 사진은 날마다 따로 실행한다)
-//   - --zero 를 주면 그 사진들로 영점을 잡는다 (로봇을 명령 0 으로 보내 찍은 사진 5~10장)
-//   - 안 주면 사진 폴더 안의 정답이 (0, 0) 인 사진들로 영점을 잡고, 그 사진은 채점에서 뺀다
-//   - 둘 다 없으면 영점 없이 채점하고, 결과 맨 위에 경고를 적는다
-//   - 두 점수(영점 없음, 영점 잡음)를 항상 같이 낸다
-// 출력
-//   results.csv  한 줄 = 사진 한 장 (엑셀에서 바로 열림)
-//   summary.txt  전체, 폴더별 통과율, 최대 오차, 상태별 개수
+// 사진 측정값과 명령값 비교
+// 사용: score_photos <사진 폴더> <출력 폴더> [--zero <영점 사진>] [--data <model 폴더>]
+//       [--tolerance-y 0.045] [--tolerance-t 0.01] [--answers 정답표.tsv]
+// 인자 생략: 대화형 실행
+// 정답: 파일명 또는 --answers의 file, y_mm, t_deg 열
+// 영점: 회차별 설정. --zero 우선, 없으면 폴더의 정답 (0, 0) 사진 사용
+// 출력: results.csv, summary.txt. 영점 사진은 채점 제외
 #include "alignment.hpp"
 #include "common/coefficient_fit.hpp"   // 통과 기준 kToleranceYmm, kToleranceTdeg
 #include "common/console.hpp"
@@ -37,17 +26,20 @@ using namespace tools;
 
 namespace {
 
-const char* const kResultFolder = "data/results/eval";   // 물어보며 진행할 때 결과를 두는 곳 (그 아래에 실행마다 폴더 하나)
+const char* const kResultFolder = "data/results/eval";   // 대화형 실행할 때 결과를 두는 곳 (그 아래에 실행마다 폴더 하나)
 const char* const kNoZeroWarning =
     "경고: 영점 사진이 없어 영점 없이 채점했다. 그날 로봇 0 이 절대 영점에서 어긋난 만큼(우리 사진에서 Y 0.04 ~ 0.13 mm) 치우칠 수 있다";
 
 struct Arguments {
     fs::path photo_folder, output, answers_file;
-    fs::path zero_path;                  // 영점 사진 폴더 또는 파일. 비어 있으면 사진 폴더 안의 정답 (0, 0) 사진을 쓴다
+    fs::path zero_path;                  // 영점 사진 경로. 미지정 시 정답 (0, 0) 사진
     std::string model_folder = "data/model";
     double tolerance_y = kToleranceYmm, tolerance_t = kToleranceTdeg;   // 기본은 학습, 평가와 같은 통과 기준
 };
 
+// read_arguments: 실행할 때 받은 설정 읽기
+//   입력: argc (인자 수), argv (입력값 목록)
+//   출력: 성공 여부, arguments (실행 설정)
 bool read_arguments(int argc, char** argv, Arguments& arguments) {
     if (argc < 3) return false;
     arguments.photo_folder = fs::u8path(argv[1]);
@@ -65,12 +57,18 @@ bool read_arguments(int argc, char** argv, Arguments& arguments) {
 
 struct Counts { int passed = 0, total = 0; };
 
+// csv_cell: CSV 한 칸에 넣을 글자 정리
+//   입력: text (원본 문자열)
+//   출력: 쉼표와 따옴표를 처리한 저장용 문자열
 std::string csv_cell(const std::string& text) {
     std::string quoted = "\"";
     for (char c : text) quoted += (c == '"') ? std::string("\"\"") : std::string(1, c);
     return quoted + "\"";
 }
 
+// number: 측정값을 정해진 자리까지 표시
+//   입력: value (측정값), digits (소수 자릿수)
+//   출력: 표시용 숫자 문자열
 std::string number(double value, int digits) {
     if (!std::isfinite(value)) return "";
     std::ostringstream text;
@@ -78,15 +76,20 @@ std::string number(double value, int digits) {
     return text.str();
 }
 
+// status_name: 측정 상태를 글자로 표시
+//   입력: status (정상, 경고, 실패 상태)
+//   출력: 상태 이름 문자열
 const char* status_name(alignment::Status status) {
     return status == alignment::Status::Ok ? "정상" : status == alignment::Status::Warning ? "경고" : "실패";
 }
 
-// ------------------------------------------------------------------------------------------------
+//
 // 사진 모으기: 채점할 사진, 영점 사진, 정답 없는 사진
-// ------------------------------------------------------------------------------------------------
+//
 
-// 정답표(--answers)의 값으로 사진의 정답을 바꾼다. 표에 없는 사진은 정답 없음이 된다.
+// read_answer_table: 별도 정답표 적용
+//   입력: answers_file, photos (사진 목록)
+//   출력: 성공 여부, 수정한 photos. 표에 없으면 정답 없음
 bool read_answer_table(const fs::path& answers_file, std::vector<PhotoFile>& photos) {
     Table answers;
     if (!read_table(answers_file, answers)) return false;
@@ -103,7 +106,9 @@ bool read_answer_table(const fs::path& answers_file, std::vector<PhotoFile>& pho
     return true;
 }
 
-// 폴더면 그 안의 사진 모두, 파일이면 그 사진 한 장
+// photos_at: 사진 경로 수집
+//   입력: path (폴더 또는 파일)
+//   출력: 폴더의 사진 목록 또는 사진 한 장
 std::vector<PhotoFile> photos_at(const fs::path& path) {
     if (fs::is_directory(path)) return find_photos(path);
     std::vector<PhotoFile> photos;
@@ -121,7 +126,9 @@ struct PhotoGroups {
     bool zero_given = false;   // 영점 사진을 따로 받았는지 (아니면 정답 (0, 0) 사진을 골라 쓴 것)
 };
 
-// zero_path 가 있으면 그 사진들이 영점 사진이고, 없으면 정답이 (0, 0) 인 사진들이 영점 사진이다. 영점 사진은 채점하지 않는다.
+// group_photos: 채점 사진과 영점 사진 분리
+//   입력: photos (사진 목록), zero_path (미지정 시 정답 (0, 0) 사진)
+//   출력: PhotoGroups. 영점 사진은 채점 제외
 PhotoGroups group_photos(const std::vector<PhotoFile>& photos, const fs::path& zero_path) {
     PhotoGroups groups;
     groups.zero_given = !zero_path.empty();
@@ -139,16 +146,19 @@ PhotoGroups group_photos(const std::vector<PhotoFile>& photos, const fs::path& z
     return groups;
 }
 
-// ------------------------------------------------------------------------------------------------
-// 영점 잡기와 채점
-// ------------------------------------------------------------------------------------------------
+//
+// 영점 설정과 채점
+//
 
 struct Zero {
-    bool is_set = false;          // 영점을 잡았는지
+    bool is_set = false;          // 영점을 설정했는지
     double y_mm = 0, t_deg = 0;   // 잡은 영점 (못 잡았으면 0, 0)
     std::string note;             // 요약 맨 위에 적는 설명 또는 경고
 };
 
+// set_zero: 평가용 영점 설정
+//   입력: groups (영점용과 평가용 사진)
+//   출력: 영점 설정 여부, Y와 T, 안내 문구
 Zero set_zero(const PhotoGroups& groups) {
     Zero zero;
     if (groups.zero_photos.empty()) { zero.note = kNoZeroWarning; return zero; }
@@ -172,17 +182,19 @@ struct Scores {
     std::map<std::string, Counts> by_folder;
     std::map<std::string, int> by_status, by_code;
     double worst_y = 0, worst_t = 0;   // 최대 오차 (영점 잡음, 실패 제외)
-    std::vector<double> times_ms;      // 사진마다 측정 함수에 걸린 시간 (사진 읽기 제외)
+    std::vector<double> times_ms;      // 사진마다 측정 함수에 소요 시간 (사진 읽기 제외)
 };
 
-// 사진을 한 장씩 재서 results.csv 에 한 줄씩 쓰고 점수를 모은다.
+// measure_photos: 사진 측정과 채점
+//   입력: scored (채점 사진), zero (영점 설정 결과), arguments (실행 설정)
+//   출력: Scores, results.csv 저장
 Scores measure_photos(const std::vector<PhotoFile>& scored, const Zero& zero, const Arguments& arguments) {
     std::ofstream csv(arguments.output / "results.csv", std::ios::binary);
-    csv << "\xEF\xBB\xBF";   // 엑셀이 한글을 읽게
+    csv << "\xEF\xBB\xBF";   // Excel 한글 인식용 UTF-8 BOM
     csv << "사진,폴더,정답 Y,정답 T,측정 Y,측정 T,오차 Y,오차 T,통과,영점 없이 측정 Y,영점 없이 측정 T,영점 없이 통과,상태,코드,메시지,시간 ms\n";
     Scores scores;
     ProgressBar bar("사진 재는 중", int(scored.size()));
-    const QuietWarnings quiet;   // 사진마다 나오는 경고 줄은 화면에 내지 않는다 (results.csv 의 코드, 메시지 열에 남는다)
+    const QuietWarnings quiet;   // 화면 경고 생략. results.csv에 알림 유지
     for (const PhotoFile& p : scored) {
         const cv::Mat image = alignment::read_photo(p.path.u8string());
         const auto start = std::chrono::steady_clock::now();
@@ -217,19 +229,24 @@ Scores measure_photos(const std::vector<PhotoFile>& scored, const Zero& zero, co
     return scores;
 }
 
-// 한 장에 걸린 시간의 가운데값과 최대
+// speed_text: 측정 시간 요약
+//   입력: times_ms
+//   출력: 중앙값과 최댓값 문자열
 std::string speed_text(std::vector<double> times_ms) {
     if (times_ms.empty()) return "잰 사진이 없음";
     std::sort(times_ms.begin(), times_ms.end());
     return "한 장에 가운데값 " + number(times_ms[times_ms.size() / 2], 1) + " ms, 가장 오래 걸린 사진 " + number(times_ms.back(), 1) + " ms";
 }
 
+// summary_text: 평가 결과 요약
+//   입력: groups (사진 묶음), zero (영점), scores (점수), arguments (설정)
+//   출력: 통과율과 오차 요약 문자열
 std::string summary_text(const PhotoGroups& groups, const Zero& zero, const Scores& scores, const Arguments& arguments) {
     std::ostringstream summary;
     summary << zero.note << "\n\n"
             << "통과 기준: |Y 오차| <= " << arguments.tolerance_y << " mm 그리고 |T 오차| <= " << arguments.tolerance_t << " 도\n"
             << "채점한 사진 " << groups.scored.size() << "장 (영점 사진 " << groups.zero_photos.size() << "장, 정답이 없어 뺀 사진 " << groups.no_answer.size() << "장)\n\n";
-    const char* const scored_with = zero.is_set ? "영점 잡음" : "영점 없음";   // 영점을 못 잡았으면 두 점수가 같아서 한 줄만 낸다
+    const char* const scored_with = zero.is_set ? "영점 잡음" : "영점 없음";   // 영점 미설정 시 중복 점수 생략
     if (zero.is_set) summary << "통과율 (영점 잡음): " << format_rate(scores.with_zero.passed, scores.with_zero.total) << "\n";
     summary << "통과율 (영점 없음): " << format_rate(scores.without_zero.passed, scores.without_zero.total) << "\n"
             << "최대 오차 (" << scored_with << ", 실패 제외): Y " << number(scores.worst_y, 4) << " mm, T " << number(scores.worst_t, 5) << " 도\n\n폴더별 (" << scored_with << ")\n";
@@ -246,11 +263,13 @@ std::string summary_text(const PhotoGroups& groups, const Zero& zero, const Scor
     return summary.str();
 }
 
-// ------------------------------------------------------------------------------------------------
-// 물어보며 진행 (인자 없이 실행했을 때)
-// ------------------------------------------------------------------------------------------------
+//
+// 대화형 실행 (인자 없이 실행했을 때)
+//
 
-// 측정 준비 (model 폴더 읽기). 물어보며 진행할 때는 못 읽으면 경로를 다시 묻는다.
+// initialize_model: 모델 준비
+//   입력: arguments (실행 설정), guided (대화형 여부)
+//   출력: 성공 여부. 대화형 실패 시 경로 재입력
 bool initialize_model(Arguments& arguments, bool guided) {
     while (alignment::initialize(arguments.model_folder).status == alignment::Status::Failed) {
         if (!guided) return false;
@@ -261,7 +280,9 @@ bool initialize_model(Arguments& arguments, bool guided) {
     return true;
 }
 
-// [1/3] 영점 사진을 묻는다. 그냥 Enter 면 비워 둔다 (사진 폴더 안의 정답 (0, 0) 사진을 쓰거나 영점 없이 채점).
+// ask_zero_photos: 영점 사진 경로 입력
+//   입력: 키보드 입력
+//   출력: 경로. Enter이면 미지정
 fs::path ask_zero_photos() {
     std::cout << "\n[1/3] 영점 사진\n"
               << "  영점을 잡지 않으면 그날 로봇의 0 위치와 기준의 차이만큼 모든 값이 치우칩니다 (우리가 받은 사진에서 Y 0.04 ~ 0.13 mm).\n"
@@ -279,7 +300,9 @@ fs::path ask_zero_photos() {
     }
 }
 
-// [2/3] 평가할 사진 폴더를 묻는다. 그 전에 파일 이름 규칙을 알려 준다.
+// ask_photo_folder: 파일명 규칙 안내와 사진 폴더 입력
+//   입력: 키보드 입력
+//   출력: 사진 폴더 경로
 fs::path ask_photo_folder() {
     std::cout << "\n[2/3] 평가할 사진\n"
               << "  사진 파일 이름에 로봇 명령값이 들어 있어야 합니다. 이 값을 정답으로 씁니다 (Y 는 mm, T 는 도, 부호를 꼭 붙임).\n"
@@ -295,7 +318,9 @@ fs::path ask_photo_folder() {
     }
 }
 
-// 결과 폴더 이름: data/results/eval/<사진 폴더 이름>_<날짜_시각>
+// default_output_folder: 기본 결과 경로 생성
+//   입력: photo_folder (사진 폴더)
+//   출력: data/results/eval/<사진 폴더명>_<날짜_시각>
 fs::path default_output_folder(const fs::path& photo_folder) {
     const std::time_t now = std::time(nullptr);
     char stamp[32];
@@ -303,7 +328,9 @@ fs::path default_output_folder(const fs::path& photo_folder) {
     return fs::path(kResultFolder) / fs::u8path(fs::absolute(photo_folder).lexically_normal().filename().u8string() + "_" + stamp);
 }
 
-// [3/3] 무엇을 할지 보여 주고 시작해도 되는지 묻는다.
+// confirm: 평가 시작 확인
+//   입력: arguments (실행 설정), groups (용도별 사진 묶음)
+//   출력: 진행 동의 여부
 bool confirm(const Arguments& arguments, const PhotoGroups& groups) {
     std::cout << "\n[3/3] 확인\n"
               << "  평가할 사진: " << groups.scored.size() << "장 (" << arguments.photo_folder.u8string() << ")\n";
@@ -315,8 +342,11 @@ bool confirm(const Arguments& arguments, const PhotoGroups& groups) {
     return ask_yes("  시작할까요? (Enter 또는 y = 시작, n = 그만) > ");
 }
 
-}   // namespace
+}   // 파일 내부
 
+// main: 사진 측정값과 명령값 비교
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
     use_korean_console();
     const bool guided = argc == 1;

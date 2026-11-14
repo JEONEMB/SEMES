@@ -1,12 +1,6 @@
 #pragma once
-// 오래 걸리는 일의 진행 상황을 한 줄로 보여 준다.
-//
-//   사진 재는 중  [############------------]  352/715장  49%  남은 시간 약 0분 40초
-//
-// 쓰는 법
-//   ProgressBar bar("사진 재는 중", 사진 수);
-//   for (사진마다) { …; bar.step(); }
-//   bar.finish();
+// 처리 건수, 진행률, 남은 시간 표시
+// 사용: ProgressBar 생성 -> 항목마다 step() -> 완료 시 finish()
 #include <chrono>
 #include <iostream>
 #include <string>
@@ -15,22 +9,36 @@ namespace tools {
 
 class ProgressBar {
 public:
+    // ProgressBar: 진행 표시 시작
+    //   입력: label (작업명), total (전체 건수)
+    //   출력: 진행 상황을 표시할 도구
     ProgressBar(const std::string& label, int total);
-    void step();     // 하나 끝날 때마다 부른다
-    void finish();   // 다 끝나면 부른다 (걸린 시간을 적고 줄을 바꾼다)
+
+    // step: 처리 건수 증가
+    //   입력: 없음
+    //   출력: 없음 (진행 표시 갱신)
+    void step();
+
+    // finish: 진행 표시 완료
+    //   입력: 없음
+    //   출력: 없음 (경과 시간 표시와 줄바꿈)
+    void finish();
 
 private:
+    // draw: 진행 표시 출력
+    //   입력: done (완료 여부)
+    //   출력: 없음 (화면 또는 파일 출력)
     void draw(bool done);
 
     std::string label_;
     int total_ = 0, count_ = 0;
-    int last_tenth_ = 0;                                    // 화면이 아닐 때(파일로 저장) 10% 마다 한 줄씩 쓰려고
-    bool on_screen_ = false;                                // 출력이 화면인지 (화면이면 같은 줄을 고쳐 쓴다)
+    int last_tenth_ = 0;                                    // 파일 출력용 10% 구간 번호
+    bool on_screen_ = false;                                // 화면 출력 여부. 화면이면 같은 줄 갱신
     std::chrono::steady_clock::time_point start_, last_draw_;
 };
 
-// 살아 있는 동안 측정 함수의 알림(경고, 실패 한 줄씩)이 화면에 나오지 않게 한다. 진행 줄이 깨지지 않게 하려고 쓴다.
-// 알림은 결과(Result 의 code, message)에는 그대로 들어 있다.
+// 이 객체가 있는 동안 화면의 오류 알림 숨김
+// Result의 code와 message는 유지
 class QuietWarnings {
 public:
     QuietWarnings();
@@ -40,4 +48,4 @@ private:
     std::streambuf* saved_ = nullptr;
 };
 
-}   // namespace tools
+}   // tools

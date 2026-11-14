@@ -1,16 +1,8 @@
-// 새 설치 시험: QR 내용, QR 인쇄 크기, 카메라와 판 사이 거리가 바뀐 곳에서
-//   (가) 지금 기준과 계수를 그대로 쓰면 어떻게 되는지
-//   (나) 바뀐 화면으로 기준 사진과 QR, 나사 위치를 새로 등록하면 움직인 사진까지 맞게 재는지
-// 를 잰다. 계수(px → mm)는 바꾸지 않는다.
-//
-// 사용: check_new_installation <model 폴더> <예제 사진 목록 list.tsv> <기대값 expected.tsv> <작업 폴더> <출력 폴더>
-//   작업 폴더에는 경우마다 새 model 폴더(기준 사진, reference.json, 계수 복사)를 만든다. 영문 경로를 쓴다.
-//   출력: installation_results.tsv, installation_<경우>.png (몇 가지 경우의 화면)
-//
-// 바꾸는 순서 (같은 변화를 기준 사진과 움직인 사진에 똑같이)
-//   1. QR 내용: 바꿀 QR 의 안쪽 칸을 무작위 무늬로 (움직인 사진에서는 QR 이 움직인 자리에)
-//   2. QR 인쇄 크기: QR 3개를 둘러싼 영역을 그 가운데 둘레로 키우거나 줄임
-//   3. 거리: 사진 전체를 사진 가운데 둘레로 키우거나 줄임 (카메라가 다가가거나 멀어짐)
+// QR 내용, 인쇄 크기, 촬영 거리 변경 후 기준 재등록 효과 비교
+// 사용: check_new_installation <model 폴더> <list.tsv> <expected.tsv> <작업 폴더> <출력 폴더>
+// 변환 순서: QR 내용 -> QR 크기 -> 화면 배율. 이동량 계산식 유지
+// 출력: installation_results.tsv, installation_<경우>.png
+// 작업 폴더: 경우별 모델 생성용 영문 경로
 #include "alignment.hpp"
 #include "scene_effects.hpp"
 #include <opencv2/imgcodecs.hpp>
@@ -35,6 +27,9 @@ const double kDistanceScales[] = {0.98, 1.0, 1.02};   // 화면 배율 (0.98 = �
 struct Case {
     int content = 0;
     double qr_size = 1, distance = 1;
+    // name: 실험 조건을 파일명으로 표시
+    //   입력: 없음 (QR 변경 수, 크기, 거리 조건 사용)
+    //   출력: 조건을 구분할 이름 문자열
     std::string name() const {
         std::ostringstream text;
         text << "qr" << content << "_size" << std::fixed << std::setprecision(1) << qr_size << "_dist" << std::setprecision(2) << distance;
@@ -44,7 +39,9 @@ struct Case {
 
 struct SamplePhoto { cv::Mat gray; double expected_y = 0, expected_t = 0, qr_shift_px = 0; };
 
-// 기준 사진에 QR 내용, 크기 변화를 준다 (거리 변화 전)
+// change_qrs: 기준 사진의 QR 내용과 크기 변경
+//   입력: reference (기준 사진), l (QR과 나사 위치), c (변경 조건)
+//   출력: 변환한 기준 영상
 cv::Mat change_qrs(const cv::Mat& reference, const Layout& l, const Case& c) {
     cv::Mat g = reference;
     const int order[3] = {1, 0, 2};   // 1개만 바꿀 때는 가운데 QR
@@ -54,9 +51,9 @@ cv::Mat change_qrs(const cv::Mat& reference, const Layout& l, const Case& c) {
     return g;
 }
 
-// 사진 한 장에 같은 변화를 준다. qr_dx = 그 사진에서 QR 이 기준보다 가로로 움직인 양 (소수 px)
-//   QR 내용, 크기가 바뀌면: 바뀐 기준 화면을 qr_dx 만큼 옮겨 QR 자리에 붙인다 (판이 그만큼 평행이동한 것과 같음)
-//   거리가 바뀌면: 사진 전체를 사진 가운데 둘레로 키우거나 줄인다
+// apply_case: 사진에 동일 환경 변화 적용
+//   입력: gray (사진), changed_reference (바꾼 기준 사진), l (위치), c (조건), qr_dx (QR 이동 px)
+//   출력: QR 변환 후 화면 배율을 적용한 영상
 cv::Mat apply_case(const cv::Mat& gray, const cv::Mat& changed_reference, const Layout& l, const Case& c, double qr_dx) {
     cv::Mat g = gray.clone();
     if (c.content > 0 || c.qr_size != 1) {
@@ -73,7 +70,9 @@ cv::Mat apply_case(const cv::Mat& gray, const cv::Mat& changed_reference, const 
     return g;
 }
 
-// 기준 사진에서 QR, 나사 위치가 어디로 가는지
+// transform_layout: 변환 후 QR과 나사 좌표 계산
+//   입력: l (원래 위치), c (변경 조건), photo (영상 크기)
+//   출력: Layout (변환 후 QR과 나사 위치)
 Layout transform_layout(const Layout& l, const Case& c, cv::Size photo) {
     const cv::Point2d center(photo.width / 2.0, photo.height / 2.0);
     auto by_distance = [&](cv::Point2d q) { return center + c.distance * (q - center); };
@@ -90,7 +89,9 @@ Layout transform_layout(const Layout& l, const Case& c, cv::Size photo) {
     return out;
 }
 
-// 새 model 폴더: 바뀐 기준 사진, 새 위치, 계수와 점검식은 그대로 복사
+// write_registered_data: 실험용 모델 저장
+//   입력: from과 to (원본과 저장 폴더), center (새 기준 사진), l (새 위치)
+//   출력: 없음 (기준 교체, 계산식과 점검식 복사)
 void write_registered_data(const fs::path& from, const fs::path& to, const cv::Mat& center, const Layout& l) {
     fs::create_directories(to);
     std::vector<unsigned char> bytes;
@@ -110,6 +111,9 @@ void write_registered_data(const fs::path& from, const fs::path& to, const cv::M
     }
 }
 
+// read_tsv: 탭으로 구분한 표 읽기
+//   입력: path (파일 경로)
+//   출력: 행별 문자열 목록
 std::vector<std::vector<std::string>> read_tsv(const fs::path& path) {
     std::ifstream file(path, std::ios::binary);
     std::vector<std::vector<std::string>> rows;
@@ -125,9 +129,14 @@ std::vector<std::vector<std::string>> read_tsv(const fs::path& path) {
     return rows;
 }
 
+// status_name: 측정 상태를 글자로 표시
+//   입력: status (정상, 경고, 실패 상태)
+//   출력: 상태 이름 문자열
 const char* status_name(alignment::Status s) { return s == alignment::Status::Ok ? "Ok" : s == alignment::Status::Warning ? "Warning" : "Failed"; }
 
-// 예제 사진마다 기대값과, 지금 기준으로 잰 QR 이동을 읽는다 (변화를 같은 자리에 주려고)
+// read_samples: 예제와 예상값 읽기
+//   입력: list_file (사진 목록 파일), expected_file (정답 파일)
+//   출력: 사진별 예상값과 기존 QR 이동량
 std::vector<SamplePhoto> read_samples(const fs::path& list_file, const fs::path& expected_file) {
     std::vector<SamplePhoto> samples;
     const auto expected = read_tsv(expected_file);
@@ -146,9 +155,12 @@ std::vector<SamplePhoto> read_samples(const fs::path& list_file, const fs::path&
 // 새로 등록한 뒤 예제 사진을 잰 결과
 struct SampleScore {
     int failed = 0, passed = 0;
-    double worst_y = 0, worst_t = 0;   // 기대값과의 차이 최대
+    double worst_y = 0, worst_t = 0;   // 예상값과의 차이 최대
 };
 
+// score_samples: 환경을 바꾼 사진의 측정 오차 확인
+//   입력: samples (예제), changed_qrs (바꾼 기준), layout (위치), c (변경 조건)
+//   출력: 실패 수와 기대값 대비 최대 차이
 SampleScore score_samples(const std::vector<SamplePhoto>& samples, const cv::Mat& changed_qrs, const Layout& layout, const Case& c) {
     SampleScore score;
     for (const SamplePhoto& s : samples) {
@@ -162,7 +174,9 @@ SampleScore score_samples(const std::vector<SamplePhoto>& samples, const cv::Mat
     return score;
 }
 
-// 문서에 넣을 그림으로 저장하는 경우인지
+// is_shown_in_document: 문서 그림 대상 확인
+//   입력: c (실험 조건)
+//   출력: 그림 대상이면 true
 bool is_shown_in_document(const Case& c) {
     return (c.qr_size != 1 && c.distance == 1 && c.content == 0) || (c.content == 3 && c.qr_size == 1.2 && c.distance == 0.98) ||
            (c.content == 1 && c.qr_size == 1 && c.distance == 1);
@@ -170,7 +184,9 @@ bool is_shown_in_document(const Case& c) {
 
 struct Folders { fs::path model, work, out; };
 
-// 한 경우를 (가) 그대로 쓸 때와 (나) 새로 등록할 때로 재서 표에 한 줄 쓴다.
+// check_case: 기준 유지와 재등록 결과 비교
+//   입력: c (조건), center (기준 사진), layout (위치), samples (예제), base (기준 결과), 저장 경로와 표
+//   출력: 없음 (결과 표와 사례 그림 저장)
 void check_case(const Case& c, const cv::Mat& center, const Layout& layout, const std::vector<SamplePhoto>& samples, const alignment::Result& base,
                 const Folders& folders, std::ostream& table) {
     // (가) 그대로 쓰면
@@ -195,8 +211,11 @@ void check_case(const Case& c, const cv::Mat& center, const Layout& layout, cons
                  labeled_view(changed_center, "QR changed " + std::to_string(c.content) + ", QR size x" + std::to_string(c.qr_size).substr(0, 3) + ", distance x" + std::to_string(c.distance).substr(0, 4)));
 }
 
-}   // namespace
+}   // 파일 내부
 
+// main: QR 내용, 인쇄 크기, 촬영 거리 변경 후 기준 재등록 효과 비교
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
     if (argc != 6) { std::cerr << "사용: check_new_installation <model 폴더> <list.tsv> <expected.tsv> <작업 폴더> <출력 폴더>\n"; return 2; }
     const Folders folders{fs::u8path(argv[1]), fs::u8path(argv[4]), fs::u8path(argv[5])};

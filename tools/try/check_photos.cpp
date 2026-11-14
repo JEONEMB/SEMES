@@ -1,8 +1,7 @@
-// 확인: 사진 여러 장을 재서 표로 쓰고, 기대값 표가 있으면 비교한다.
-// 사용: check_photos <model 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px] [아래로 옮길 px]
-//   사진 목록.tsv : 번호<TAB>사진 경로  (머리줄 없음)
-//   기대값.tsv    : 번호<TAB>Y<TAB>T    (머리줄 없음)
-//   가로·아래로 옮길 px: 사진을 통째로 옮겨 큰 이동이나 카메라 처짐을 흉내 낼 때 (기본 0). 기대값이 없으면 - 를 넣는다
+// 사진 목록 측정과 예상값 비교
+// 사용: check_photos <model 폴더> <사진 목록.tsv> <출력.tsv> [예상값.tsv] [오른쪽 px] [아래쪽 px]
+// 목록: 번호<TAB>경로. 예상값: 번호<TAB>Y<TAB>T. 모두 헤더 없음
+// 이동량 기본값: 0. 예상값 생략 후 이동량 지정 시 - 사용
 #include "alignment.hpp"
 #include <opencv2/imgproc.hpp>
 #include <algorithm>
@@ -17,13 +16,16 @@
 
 namespace {
 
+// read_table: 사진 목록 또는 정답표 읽기
+//   입력: path (표 경로)
+//   출력: 행별 문자열 목록
 std::vector<std::vector<std::string>> read_table(const std::string& path) {
     std::ifstream file(path);
     std::vector<std::vector<std::string>> rows;
     std::string line;
     while (std::getline(file, line)) {
         if (!line.empty() && line.back() == '\r') line.pop_back();
-        if (rows.empty() && line.size() >= 3 && (unsigned char)line[0] == 0xEF) line = line.substr(3);   // UTF-8 표시 3바이트
+        if (rows.empty() && line.size() >= 3 && (unsigned char)line[0] == 0xEF) line = line.substr(3);   // UTF-8 BOM 3바이트
         if (line.empty()) continue;
         std::vector<std::string> cells;
         std::string cell;
@@ -34,6 +36,9 @@ std::vector<std::vector<std::string>> read_table(const std::string& path) {
     return rows;
 }
 
+// moved: 사진 전체 이동
+//   입력: photo (원본), right (오른쪽 px), down (아래쪽 px)
+//   출력: 이동한 사진
 cv::Mat moved(const cv::Mat& photo, int right, int down) {
     if ((right == 0 && down == 0) || photo.empty()) return photo;
     const cv::Mat move = (cv::Mat_<double>(2, 3) << 1, 0, right, 0, 1, down);
@@ -42,8 +47,11 @@ cv::Mat moved(const cv::Mat& photo, int right, int down) {
     return moved;
 }
 
-}   // namespace
+}   // 파일 내부
 
+// main: 사진 목록 측정과 예상값 비교
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
     if (argc < 4) {
         std::cerr << "사용: check_photos <model 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px] [아래로 옮길 px]\n";
