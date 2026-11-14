@@ -56,6 +56,12 @@ build/Release/check_photos data/model data/sample/list.tsv out.tsv data/sample/e
 build/Release/measure_one data/model data/sample/sample_1.png
 ```
 
+받은 사진으로 정확도를 평가한다. 인자 없이 실행하면 영점 사진, 평가할 폴더를 차례로 묻고, 끝나면 결과를 저장한 곳을 알려 준다 (`docs/0_전체안내.md` 3-3).
+
+```
+build/Release/score_photos
+```
+
 ## 3. 폴더
 
 ```
@@ -76,6 +82,7 @@ data/
   model/                     측정할 때 읽는 파일: 기준 사진, 위치, 계수, 점검식 (장비에는 이것만 보낸다)
   new_photos/                설비에서 받은 사진을 넣는 곳 (Git 에 올리지 않음)
   sample/                    확인용 예제 사진 5장과 기대값
+  results/                   도구가 만든 결과: train/ (새로 학습한 계수), eval/ (평가 결과). Git 에 올리지 않음
 tools/
   try/                       써 보기와 확인
     measure_one                사진 한 장 재 보기
