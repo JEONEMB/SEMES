@@ -1,220 +1,477 @@
-// 문서(docs/)에 넣는 그림을 실제 사진으로 만든다.
-// 사용: make_figures <model 폴더> <Y 가 큰 사진> <T 가 큰 사진> <출력 폴더>
-//   예: make_figures data/model data/sample/sample_3.png data/sample/sample_5.png docs/images
-// 그림 안의 글자는 영어다 (OpenCV 가 한글을 그리지 못한다). 설명은 문서 본문에 한글로 적는다.
+﻿// 사용: make_figures [모델_폴더 실촬영_폴더 출력_폴더]
+// 인자를 생략하면 패키지 루트의 data/model, data/new_photos, docs/시각화를 쓴다.
+#include "figure_text.hpp"
+#include "alignment.hpp"
+#include "common/photo_files.hpp"
 #include "common/reference.hpp"
+#include "scene_effects.hpp"
 #include "steps/01_find_qr.hpp"
 #include "steps/02_find_screws.hpp"
-#include "alignment.hpp"
 #include <opencv2/imgcodecs.hpp>
-#include <opencv2/imgproc.hpp>
+
+#include <algorithm>
+#include <cmath>
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <map>
 #include <sstream>
 
+namespace fs = std::filesystem;
 using namespace alignment;
 
 namespace {
 
-const cv::Scalar kGreen(60, 200, 60), kRed(50, 50, 230), kBlue(230, 140, 40), kYellow(40, 220, 240), kWhite(255, 255, 255), kBlack(0, 0, 0);
+const cv::Scalar kWhite(248, 249, 250), kRed(104, 111, 255), kYellow(90, 222, 255), kGreen(144, 230, 103);
+const cv::Size kFigureSize(1440, 810);
 
-void save(const std::string& folder, const std::string& name, const cv::Mat& picture) {
-    std::vector<unsigned char> bytes;
-    cv::imencode(".png", picture, bytes);
-    std::ofstream(folder + "/" + name, std::ios::binary).write(reinterpret_cast<const char*>(bytes.data()), std::streamsize(bytes.size()));
-    std::cout << name << " " << picture.cols << "x" << picture.rows << "\n";
+std::string number(double value, int digits = 4) {
+    if (!std::isfinite(value)) return "—";
+    std::ostringstream out;
+    out << std::fixed << std::showpos << std::setprecision(digits) << value;
+    return out.str();
 }
 
-cv::Mat to_color(const cv::Mat& gray) {
-    cv::Mat color;
-    cv::cvtColor(gray, color, cv::COLOR_GRAY2BGR);
-    return color;
+struct Parts {
+    QrShift qr;
+    std::array<QrFinder::Match, 3> matches;
+    std::array<ScrewShift, 4> screws{};
+    std::string search;
+};
+
+Parts inspect(const Reference& reference, const cv::Mat& photo) {
+    Parts parts;
+    if (photo.size() != kPhotoRect.size()) return parts;
+    const QrFinder finder(reference);
+    for (int width : {kNarrowHalfWidth, kWideHalfWidth, 0}) {
+        int count = 0;
+        for (int k = 0; k < 3; ++k) {
+            parts.matches[k] = finder.find_one(photo, k, width);
+            count += parts.matches[k].found;
+        }
+        if (!parts.search.empty()) parts.search += "   ";
+        parts.search += (width ? "±" + std::to_string(width) + " px" : "전체 폭") + "  " + std::to_string(count) + "/3";
+        if (count == 3) break;
+    }
+    parts.qr = finder.find_qr_shift(photo);
+    if (parts.qr.found_count > 0)
+        parts.screws = ScrewFinder(reference).find_screw_shifts(photo, parts.qr.dx, parts.qr.dy, {true, true, true, true});
+    return parts;
 }
 
-// 글자 뒤에 어두운 바탕을 깔아 어디서나 읽히게 한다.
-void label(cv::Mat& picture, const std::string& text, cv::Point at, const cv::Scalar& color, double size = 1.0) {
-    int baseline = 0;
-    const cv::Size box = cv::getTextSize(text, cv::FONT_HERSHEY_SIMPLEX, size, 2, &baseline);
-    cv::rectangle(picture, cv::Rect(at.x - 4, at.y - box.height - 6, box.width + 8, box.height + baseline + 8), kBlack, -1);
-    cv::putText(picture, text, at, cv::FONT_HERSHEY_SIMPLEX, size, color, 2, cv::LINE_AA);
+void dashed_line(cv::Mat& image, cv::Point a, cv::Point b) {
+    const double length = cv::norm(b - a);
+    for (double pos = 0; pos < length; pos += 12)
+        cv::line(image, a + (b - a) * (pos / length), a + (b - a) * (std::min(pos + 7, length) / length), kRed, 1, cv::LINE_AA);
 }
 
-std::string number(double value, int digits = 2) {
-    std::ostringstream text;
-    text << std::fixed << std::setprecision(digits) << value;
-    return text.str();
-}
+struct Example {
+    tools::PhotoFile source;
+    cv::Mat photo;
+    Result result;
+    std::string description;
+    std::string call = "measure_alignment";
+    bool edited = false;
+    bool zero_photo = false;
+    double zero_y = 0;
+    double zero_t = 0;
+    bool day_zero = false;
+};
 
-// 그림 1: 사진에서 보는 곳 (QR 3개, 나사 4개, QR 탐색 창)
-cv::Mat figure_overview(const Reference& reference) {
-    const cv::Rect view(700, 800, 2440, 1050);
-    cv::Mat picture = to_color(reference.photo);
+void draw_parts(cv::Mat& image, const Reference& reference, const Parts& parts, const cv::Scalar& ink,
+                bool show_screws, bool missing_qr_only) {
+    const double scale = double(image.cols) / kPhotoWidth;
     for (int k = 0; k < 3; ++k) {
-        const cv::Rect box = reference.qr[k];
-        cv::rectangle(picture, cv::Rect(box.x - 110, box.y - 22, box.width + 220, box.height + 44), kYellow, 2);
-        cv::rectangle(picture, box, kGreen, 4);
-        label(picture, "QR " + std::to_string(k + 1), cv::Point(box.x, box.y - 40), kGreen, 1.3);
+        const auto& match = parts.matches[k];
+        if (missing_qr_only && match.found) continue;
+        const auto& original = reference.qr[k];
+        const cv::Point top(cvRound((original.x + (match.found ? match.dx : parts.qr.dx)) * scale),
+                            cvRound((original.y + (match.found ? match.dy : parts.qr.dy)) * scale));
+        const cv::Rect box(top, cv::Size(cvRound(original.width * scale), cvRound(original.height * scale)));
+        const auto& color = match.found ? ink : kRed;
+        if (match.found) {
+            for (int x : {box.x - 3, box.br().x + 3}) {
+                for (int y : {box.y - 3, box.br().y + 3}) {
+                    const cv::Point corner(x, y);
+                    cv::line(image, corner, corner + cv::Point(x < box.x ? 12 : -12, 0), color, 1, cv::LINE_AA);
+                    cv::line(image, corner, corner + cv::Point(0, y < box.y ? 12 : -12), color, 1, cv::LINE_AA);
+                }
+            }
+        } else {
+            const cv::Point corners[] = {box.tl(), {box.br().x, box.y}, box.br(), {box.x, box.br().y}};
+            for (int i = 0; i < 4; ++i) dashed_line(image, corners[i], corners[(i + 1) % 4]);
+        }
+        write_text(image, "QR " + std::to_string(k + 1), top - cv::Point(0, 22), 18, color);
     }
+    if (!show_screws || missing_qr_only || parts.qr.found_count == 0) return;
     for (int k = 0; k < 4; ++k) {
-        cv::circle(picture, reference.screw[k], 45, kRed, 4);
-        label(picture, "screw " + std::to_string(k + 1), reference.screw[k] + cv::Point(-90, -65), kRed, 1.3);
+        const auto& screw = parts.screws[k];
+        const cv::Point at(cvRound((reference.screw[k].x + (screw.found ? screw.dx : parts.qr.dx)) * scale),
+                           cvRound((reference.screw[k].y + (screw.found ? screw.dy : parts.qr.dy)) * scale));
+        const int radius = cvRound(45 * scale);
+        const auto& color = screw.found ? ink : kRed;
+        if (screw.found) {
+            cv::circle(image, at, radius, color, 1, cv::LINE_AA);
+        } else {
+            for (int angle = 0; angle < 360; angle += 45)
+                cv::ellipse(image, at, {radius, radius}, 0, angle, angle + 26, color, 1, cv::LINE_AA);
+        }
+        write_text(image, "나사 " + std::to_string(k + 1), at - cv::Point(radius, radius + 23), 18, color);
     }
-    label(picture, "yellow: QR search window (+-110 px)", cv::Point(view.x + 30, view.y + 60), kYellow, 1.3);
-    return picture(view).clone();
 }
 
-// 그림 2: 판이 움직이면 QR 과 나사가 어떻게 움직이나 (화살표는 20배 확대)
-cv::Mat figure_motion(const Reference& reference, const cv::Mat& photo, const std::string& title) {
-    const QrFinder qr_finder(reference);
-    const ScrewFinder screw_finder(reference);
-    const QrShift qr = qr_finder.find_qr_shift(photo);
-    const auto screws = screw_finder.find_screw_shifts(photo, qr.dx, qr.dy, {true, true, true, true});
-    const cv::Rect view(700, 800, 2440, 1050);
-    cv::Mat picture = to_color(photo);
-    // 화살표가 그림 안에 들어오도록 확대 배율을 정한다 (가장 긴 화살표가 약 600 px)
-    const double magnify = std::max(1.0, std::floor(std::min(20.0, 600.0 / std::max(1.0, std::abs(qr.dx)))));
-    for (int k = 0; k < 3; ++k) {
-        const cv::Point center = (reference.qr[k].tl() + reference.qr[k].br()) / 2;
-        cv::arrowedLine(picture, center, center + cv::Point(int(qr.dx * magnify), 0), kGreen, 8, cv::LINE_AA, 0, 0.08);
+cv::Mat draw(const Example& example, const Reference& reference, const Parts& parts, int step = 8,
+             bool show_parts = true) {
+    cv::Mat small, image;
+    cv::resize(example.photo, small, kFigureSize, 0, 0, cv::INTER_AREA);
+    if (small.channels() == 1) cv::cvtColor(small, image, cv::COLOR_GRAY2BGR);
+    else image = small;
+    const auto& result = example.result;
+    const bool failed = result.status == Status::Failed;
+    const auto& color = failed ? kRed : example.zero_photo ? kGreen : kYellow;
+    // 글자가 놓이는 모서리만 어둡게 해 장비와 검출 위치의 밝기를 살린다.
+    for (int y = 0; y < image.rows; ++y) {
+        const double top = std::clamp((170.0 - y) / 65.0, 0.0, 1.0);
+        const double bottom = std::clamp((y - image.rows + 126.0) / 55.0, 0.0, 1.0);
+        if (top == 0 && bottom == 0) continue;
+        auto* row = image.ptr<cv::Vec3b>(y);
+        for (int x = 0; x < image.cols; ++x) {
+            const double left = std::clamp((760.0 - x) / 210.0, 0.0, 1.0);
+            const double right = std::clamp((x - 900.0) / 140.0, 0.0, 1.0);
+            const double shade = 0.57 * std::max(top * std::max(left, right), bottom * left);
+            row[x] *= 1.0 - shade;
+        }
     }
-    label(picture, "QR moved " + number(qr.dx) + " px", cv::Point(1640, 1230), kGreen, 1.4);
-    for (int k = 0; k < 4; ++k) {
-        if (!screws[k].found) continue;
-        cv::arrowedLine(picture, reference.screw[k], reference.screw[k] + cv::Point(int(screws[k].dx * magnify), 0), kRed, 8, cv::LINE_AA, 0, 0.08);
-        label(picture, number(screws[k].dx) + " px", reference.screw[k] + cv::Point(-90, 110), kRed, 1.3);
+    const bool detection_step = step == 3 || step == 4 || step == 8;
+    if (show_parts && detection_step && !parts.search.empty())
+        draw_parts(image, reference, parts, color, step >= 4, result.code == "W_QR_PARTIAL");
+
+    write_text(image, example.description, {28, 21}, 27, kWhite);
+    if (example.edited) write_text(image, "재현용 이미지", {28, 56}, 17, kWhite);
+    if (example.call != "measure_alignment")
+        write_text(image, example.call, {28, 81}, 17, kWhite);
+    const int right = image.cols - 26, label = right - 170;
+    write_text(image, example.edited ? "원본 명령값" : "라벨", {label, 18}, 20, kWhite, true);
+    if (step >= 5) {
+        const char* heading = example.call == "set_reference_from_photos" ? "갱신 결과" :
+                              example.day_zero && example.call == "measure_alignment" ? "영점 적용 측정값" : "측정";
+        write_text(image, heading, {right, 18}, 20, kWhite, true);
     }
-    double screw_mean = 0;
-    for (const ScrewShift& screw : screws) screw_mean += screw.dx / 4;
-    label(picture, title, cv::Point(view.x + 30, view.y + 60), kWhite, 1.5);
-    label(picture, "QR - screws = " + number(qr.dx - screw_mean) + " px   (arrows x" + number(magnify, 0) + ")", cv::Point(view.x + 30, view.y + 130), kYellow, 1.4);
-    return picture(view).clone();
-}
-
-// 그림 3: 1단계. 기준 QR 조각, 새 사진의 탐색 창, 닮은 정도 지도와 가장 닮은 자리
-cv::Mat figure_qr_step(const Reference& reference, const cv::Mat& photo) {
-    const cv::Rect box = reference.qr[0];
-    const cv::Rect window(box.x - 110, box.y - 22, box.width + 220, box.height + 44);
-    cv::Mat blurred_reference, blurred_photo, similarity;
-    cv::GaussianBlur(reference.photo, blurred_reference, cv::Size(0, 0), 2.0);
-    cv::GaussianBlur(photo, blurred_photo, cv::Size(0, 0), 2.0);
-    cv::matchTemplate(blurred_photo(window), blurred_reference(box), similarity, cv::TM_CCOEFF_NORMED);
-    double best = 0;
-    cv::Point peak;
-    cv::minMaxLoc(similarity, nullptr, &best, nullptr, &peak);
-
-    cv::Mat template_picture = to_color(blurred_reference(box));
-    cv::Mat window_picture = to_color(blurred_photo(window));
-    cv::rectangle(window_picture, cv::Rect(peak.x, peak.y, box.width, box.height), kGreen, 2);
-    cv::rectangle(window_picture, cv::Rect(110, 22, box.width, box.height), kYellow, 1);
-
-    cv::Mat map8, map_color;
-    cv::normalize(similarity, map8, 0, 255, cv::NORM_MINMAX, CV_8U);
-    cv::applyColorMap(map8, map_color, cv::COLORMAP_JET);
-    cv::resize(map_color, map_color, cv::Size(), 2, 4, cv::INTER_NEAREST);
-    cv::circle(map_color, cv::Point(peak.x * 2, peak.y * 4), 9, kWhite, 2);
-
-    const int gap = 30, top = 70;
-    cv::Mat canvas(top + std::max({template_picture.rows, window_picture.rows, map_color.rows}) + 20, template_picture.cols + window_picture.cols + map_color.cols + 4 * gap, CV_8UC3, cv::Scalar(30, 30, 30));
-    int x = gap;
-    template_picture.copyTo(canvas(cv::Rect(x, top, template_picture.cols, template_picture.rows)));
-    label(canvas, "A. reference", cv::Point(x, 40), kWhite, 0.7);
-    x += template_picture.cols + gap;
-    window_picture.copyTo(canvas(cv::Rect(x, top, window_picture.cols, window_picture.rows)));
-    label(canvas, "B. new photo (green = found)", cv::Point(x, 40), kWhite, 0.7);
-    x += window_picture.cols + gap;
-    map_color.copyTo(canvas(cv::Rect(x, top, map_color.cols, map_color.rows)));
-    label(canvas, "C. similarity map (peak " + number(best, 3) + ")", cv::Point(x, 40), kWhite, 0.7);
-    return canvas;
-}
-
-// 그림 4: 2단계. 나사 조각, 테두리 그림, 맞추는 원
-cv::Mat figure_screw_step(const Reference& reference) {
-    const cv::Point center = reference.screw[0];
-    const cv::Rect area(center.x - 70, center.y - 70, 141, 141);
-    cv::Mat as_float, blurred, slope_x, slope_y, strength, strength8;
-    reference.photo(area).convertTo(as_float, CV_32F);
-    cv::GaussianBlur(as_float, blurred, cv::Size(0, 0), 1.5);
-    cv::Sobel(blurred, slope_x, CV_32F, 1, 0, 3);
-    cv::Sobel(blurred, slope_y, CV_32F, 0, 1, 3);
-    cv::magnitude(slope_x, slope_y, strength);
-    cv::normalize(strength, strength8, 0, 255, cv::NORM_MINMAX, CV_8U);
-
-    cv::Mat patch = to_color(reference.photo(area)), edges = to_color(strength8), masked = to_color(strength8);
-    cv::rectangle(patch, cv::Rect(70 - 45, 70 - 45, 91, 91), kYellow, 1);
-    cv::circle(masked, cv::Point(70, 70), 45, kRed, 1);
-    const int zoom = 3, gap = 30, top = 70;
-    cv::Mat canvas(top + 141 * zoom + 20, 3 * 141 * zoom + 4 * gap, CV_8UC3, cv::Scalar(30, 30, 30));
-    const char* titles[3] = {"A. screw 1 (yellow = 91 px patch)", "B. edge picture", "C. circle used for matching"};
-    cv::Mat pictures[3] = {patch, edges, masked};
-    for (int i = 0; i < 3; ++i) {
-        cv::Mat big;
-        cv::resize(pictures[i], big, cv::Size(), zoom, zoom, cv::INTER_NEAREST);
-        const int x = gap + i * (141 * zoom + gap);
-        big.copyTo(canvas(cv::Rect(x, top, big.cols, big.rows)));
-        label(canvas, titles[i], cv::Point(x, 40), kWhite, 0.7);
+    for (int axis = 0; axis < 2; ++axis) {
+        const int y = 47 + axis * 30;
+        write_text(image, axis == 0 ? "Y (mm)" : "T (°)", {label - 175, y}, 20, kWhite);
+        const double command = axis == 0 ? example.source.command_y_mm : example.source.command_t_deg;
+        write_text(image, example.source.has_command ? number(command) : "—", {label, y}, 23, kWhite, true);
+        if (step >= 5) {
+            const double value = axis == 0 ? result.y_mm : result.t_deg;
+            write_text(image, number(value), {right, y}, 23, kWhite, true);
+        }
     }
-    return canvas;
+    if (step >= 5 && !example.day_zero && example.call == "measure_alignment")
+        write_text(image, "촬영일 영점 미적용", {32, 101}, 17, kWhite);
+    if (step >= 7) {
+        const std::string status = failed ? "실패" : result.status == Status::Warning ? "경고" : "정상";
+        const auto& status_color = failed ? kRed : result.status == Status::Warning ? kYellow : kWhite;
+        write_text(image, "상태: " + status, {right, 110}, 19, status_color, true);
+    }
+    const int caption = image.rows - 68;
+    if (show_parts && step == 3 && !parts.search.empty())
+        write_text(image, "QR 탐색   " + parts.search, {28, caption}, 20, kWhite);
+    if (show_parts && step == 4 && parts.qr.found_count > 0) {
+        std::string shifts;
+        for (int k = 0; k < 4; ++k)
+            shifts += "    " + std::to_string(k + 1) + "   " + number(parts.screws[k].found ? parts.screws[k].dx : NAN, 2);
+        write_text(image, "나사 가로 이동 (px)" + shifts, {32, caption}, 20, kWhite);
+    }
+    if (step == 5 && !result.screws_used.empty())
+        write_text(image, "계산에 사용한 나사   " + result.screws_used, {32, caption}, 20, kWhite);
+    if (step == 6 && example.day_zero)
+        write_text(image, "적용한 촬영일 영점   Y " + number(example.zero_y) + " mm   T " +
+                   number(example.zero_t) + "°", {32, caption}, 20, kWhite);
+    if (step == 7 && example.call == "measure_alignment" && std::isfinite(result.check_limit))
+        write_text(image, "일치 점검값 " + number(result.check_value) + "   한계 " + number(result.check_limit), {32, caption}, 20, kWhite);
+    if (step >= 7 && !result.code.empty()) {
+        std::string message = result.message.substr(0, result.message.find(" / "));
+        if (result.code == "W_OUT_OF_RANGE") message = "영점 차감 전 판정값이 학습 범위를 초과";
+        write_text(image, result.code, {28, caption}, 22, color);
+        write_text(image, message, {28, caption + 29}, 18, kWhite);
+    }
+    return image;
 }
 
-// 그림 5: 탐색 창 세 단계 (좁게, 넓게, 사진 전체 폭)
-cv::Mat figure_search_windows(const Reference& reference) {
-    cv::Mat picture = to_color(reference.photo);
-    const cv::Rect box = reference.qr[1];
-    cv::rectangle(picture, cv::Rect(0, box.y - 22, kPhotoWidth, box.height + 44), kRed, 6);
-    cv::rectangle(picture, cv::Rect(box.x - 250, box.y - 22, box.width + 500, box.height + 44), kBlue, 6);
-    cv::rectangle(picture, cv::Rect(box.x - 110, box.y - 22, box.width + 220, box.height + 44), kYellow, 6);
-    cv::rectangle(picture, box, kGreen, 5);
-    label(picture, "1. +-110 px", cv::Point(box.x - 110, box.y - 60), kYellow, 1.6);
-    label(picture, "2. +-250 px", cv::Point(box.x - 250, box.y + box.height + 110), kBlue, 1.6);
-    label(picture, "3. full width", cv::Point(60, box.y - 60), kRed, 1.6);
-    cv::Mat small;
-    cv::resize(picture(cv::Rect(0, 760, kPhotoWidth, 700)), small, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
-    return small;
+void frame(const fs::path& output, const std::vector<cv::Mat>& pictures) {
+    if (pictures.empty()) return;
+    const int w = kFigureSize.width, h = kFigureSize.height, gap = 20;
+    const int cols = pictures.size() > 1 ? 2 : 1;
+    const int rows = (int(pictures.size()) + cols - 1) / cols;
+    cv::Mat sheet(rows * h + (rows + 1) * gap, cols * w + (cols + 1) * gap, CV_8UC3, cv::Scalar(24, 24, 24));
+    for (int k = 0; k < int(pictures.size()); ++k)
+        pictures[k].copyTo(sheet(cv::Rect(gap + k % cols * (w + gap), gap + k / cols * (h + gap), w, h)));
+    scene::save_png(output, sheet);
 }
 
-// 그림 7: 나사 하나를 가렸을 때. 가린 사진과 그때의 결과를 함께 보인다.
-cv::Mat figure_covered_screw(const std::string& data, const cv::Mat& photo) {
-    alignment::initialize(data);
-    const alignment::Result before = alignment::measure_alignment(photo);
-    cv::Mat covered = photo.clone();
-    const cv::Rect cover(2864 - 200, 1358 - 80, 400, 160);   // 나사 2 주변
-    covered(cover).setTo(128);
-    const alignment::Result after = alignment::measure_alignment(covered);
+} // namespace
 
-    const cv::Rect view(700, 800, 2440, 1050);
-    cv::Mat picture = to_color(covered);
-    cv::rectangle(picture, cover, kRed, 4);
-    label(picture, "screw 2 covered", cv::Point(cover.x - 60, cover.y - 30), kRed, 1.3);
-    label(picture, "before: Y " + number(before.y_mm, 4) + " mm, T " + number(before.t_deg, 4) + " deg (screws " + before.screws_used + ")", cv::Point(view.x + 30, view.y + 60), kWhite, 1.3);
-    label(picture, "after : Y " + number(after.y_mm, 4) + " mm, T " + number(after.t_deg, 4) + " deg (screws " + after.screws_used + ", " + after.code + ")", cv::Point(view.x + 30, view.y + 130), kYellow, 1.3);
-    cv::Mat small;
-    cv::resize(picture(view), small, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
-    return small;
+namespace {
+
+struct DayZero {
+    double y = 0, t = 0;
+    std::vector<std::string> sources;
+    bool command_zero = false;
+};
+
+DayZero find_day_zero(const std::vector<tools::PhotoFile>& photos, const fs::path& example) {
+    DayZero zero;
+    std::vector<cv::Mat> actual_zero;
+    for (const auto& photo : photos) {
+        if (!tools::is_zero_command(photo)) continue;
+        cv::Mat image = read_photo(photo.path.u8string());
+        if (image.empty()) continue;
+        actual_zero.push_back(image);
+        zero.sources.push_back(photo.name);
+        if (actual_zero.size() == 10) break;
+    }
+    if (actual_zero.size() >= 5) {
+        const auto result = set_zero_from_photos(actual_zero);
+        if (result.status == Status::Ok) {
+            zero.y = result.y_mm;
+            zero.t = result.t_deg;
+            zero.command_zero = true;
+            return zero;
+        }
+    }
+    zero.sources.clear();
+    // 명령 0 사진이 없을 때는 같은 날 근접 명령 사진 5장이 공유하는 오프셋을 추정한다.
+    for (const auto& photo : photos) {
+        if (photo.path == example || !photo.has_command || std::abs(photo.command_y_mm) > 0.25 ||
+            std::abs(photo.command_t_deg) > 0.05) continue;
+        const auto result = measure_alignment(read_photo(photo.path.u8string()));
+        if (result.status != Status::Ok || result.screws_used != "1234") continue;
+        zero.y += result.y_mm - photo.command_y_mm;
+        zero.t += result.t_deg - photo.command_t_deg;
+        zero.sources.push_back(photo.path.lexically_relative(example.parent_path().parent_path()).generic_u8string());
+        if (zero.sources.size() == 5) {
+            zero.y /= 5;
+            zero.t /= 5;
+            set_zero_value(zero.y, zero.t);
+            return zero;
+        }
+    }
+    return {};
 }
 
-}   // namespace
+cv::Mat local_shift(const cv::Mat& photo, cv::Point center, double dx) {
+    const cv::Rect region(center.x - 90, center.y - 90, 181, 181);
+    const cv::Mat shifted = scene::shift(photo(region), dx, 0);
+    cv::Mat result = photo.clone();
+    // 중심은 이동한 조각을 쓰고, 가장자리 22 px에서 원본과 자연스럽게 잇는다.
+    for (int y = 0; y < region.height; ++y) {
+        for (int x = 0; x < region.width; ++x) {
+            const double weight = std::min({x, y, region.width - 1 - x, region.height - 1 - y, 22}) / 22.0;
+            auto& pixel = result.at<uchar>(region.y + y, region.x + x);
+            pixel = cv::saturate_cast<uchar>((1 - weight) * pixel + weight * shifted.at<uchar>(y, x));
+        }
+    }
+    return result;
+}
 
-int main(int argc, char** argv) {
-    if (argc != 5) { std::cerr << "사용: make_figures <model 폴더> <Y 가 큰 사진> <T 가 큰 사진> <출력 폴더>\n"; return 2; }
+void generate(const std::string& model, const fs::path& input, const fs::path& output) {
     Reference reference;
     std::string error;
-    if (!load_reference(argv[1], reference, error)) { std::cerr << error << "\n"; return 1; }
-    const cv::Mat y_photo = alignment::read_photo(argv[2]), t_photo = alignment::read_photo(argv[3]);
-    if (y_photo.empty() || t_photo.empty()) { std::cerr << "사진을 읽지 못했습니다\n"; return 1; }
-    const std::string out = argv[4];
+    if (!load_reference(model, reference, error)) throw std::runtime_error(error);
+    const auto initialize_model = [&] {
+        const Result result = initialize(model);
+        if (result.status == Status::Failed) throw std::runtime_error(result.message);
+    };
+    for (const char* folder : {"step", "ok", "warning", "fail"}) fs::create_directories(output / folder);
+    std::ofstream evidence(output / "cases.tsv", std::ios::binary);
+    evidence << "figure\tcall\tsource\tinput\tcommand_Y_mm\tcommand_T_deg\tstatus\tcode\tcondition\tzero_Y_mm\tzero_T_deg\treturned_Y_mm\treturned_T_deg\tQR_search\tscrews\tcheck_value\tcheck_limit\tmessage\n";
+    evidence << std::setprecision(12);
+    std::ofstream zeros(output / "zeros.tsv", std::ios::binary);
+    zeros << "day\tmethod\tzero_Y_mm\tzero_T_deg\tsource\n" << std::setprecision(12);
 
-    cv::Mat overview;
-    cv::resize(figure_overview(reference), overview, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
-    save(out, "01_what_we_look_at.png", overview);
-    cv::Mat moved_y, moved_t;
-    cv::resize(figure_motion(reference, y_photo, "Y moved (plate slides)"), moved_y, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
-    cv::resize(figure_motion(reference, t_photo, "T moved (plate rotates)"), moved_t, cv::Size(), 0.5, 0.5, cv::INTER_AREA);
-    save(out, "02_y_motion.png", moved_y);
-    save(out, "03_t_motion.png", moved_t);
-    save(out, "04_step1_qr.png", figure_qr_step(reference, y_photo));
-    save(out, "05_step2_screw.png", figure_screw_step(reference));
-    save(out, "06_search_windows.png", figure_search_windows(reference));
-    save(out, "07_covered_screw.png", figure_covered_screw(argv[1], y_photo));
-    return 0;
+    std::vector<cv::Mat> warnings, failures;
+    const auto save = [&](const std::string& name, const Example& example, const Parts& parts, bool show_parts = true) {
+        const bool failed = example.result.status == Status::Failed;
+        const bool normal = example.result.code.empty();
+        const std::string folder = failed ? "fail" : normal ? "ok" : "warning";
+        const std::string file = folder + "/" + name + ".png";
+        const cv::Mat picture = draw(example, reference, parts, 8, show_parts);
+        scene::save_png(output / fs::u8path(file), picture);
+        if (!normal) (failed ? failures : warnings).push_back(picture);
+        const auto& result = example.result;
+        evidence << file << '\t' << example.call << '\t' << example.source.path.lexically_relative(input).generic_u8string()
+                 << '\t' << (example.edited ? "augmented" : "real") << '\t' << example.source.command_y_mm
+                 << '\t' << example.source.command_t_deg << '\t' << int(result.status) << '\t' << result.code
+                 << '\t' << example.description << '\t' << example.zero_y << '\t' << example.zero_t
+                 << '\t' << result.y_mm << '\t' << result.t_deg << '\t' << parts.search << '\t' << result.screws_used
+                 << '\t';
+        if (example.call == "measure_alignment") evidence << result.check_value << '\t' << result.check_limit;
+        else evidence << '\t';
+        evidence << '\t' << result.message << '\n';
+    };
+
+    // 실촬영에서 확인한 정상과 학습 범위 초과 사례. 날짜를 바꿀 때 모델을 초기화한다.
+    const auto load_example = [&](const char* day, const char* relative, const char* description) {
+        initialize_model();
+        const auto folder = input / day;
+        const auto path = folder / fs::u8path(relative);
+        const auto photos = tools::find_photos(folder);
+        const auto source = std::find_if(photos.begin(), photos.end(), [&](const auto& photo) { return photo.path == path; });
+        if (source == photos.end()) throw std::runtime_error("실촬영 예제 없음: " + path.u8string());
+        const DayZero zero = find_day_zero(photos, path);
+        Example example{*source, read_photo(path.u8string()), {}, description};
+        if (example.photo.empty()) throw std::runtime_error("예제 사진 읽기 실패: " + path.u8string());
+        example.day_zero = !zero.sources.empty();
+        example.zero_y = zero.y;
+        example.zero_t = zero.t;
+        example.zero_photo = zero.command_zero && tools::is_zero_command(*source) &&
+            std::find(zero.sources.begin(), zero.sources.end(), source->name) != zero.sources.end();
+        example.result = measure_alignment(example.photo);
+        std::cout << day << " zero " << zero.y << " " << zero.t << " using";
+        for (const auto& name : zero.sources) {
+            std::cout << " | " << name;
+            zeros << day << '\t' << (zero.command_zero ? "command_zero" : "mean_measurement_minus_command")
+                  << '\t' << zero.y << '\t' << zero.t << '\t' << name << '\n';
+        }
+        std::cout << '\n';
+        return example;
+    };
+    const auto range = load_example("20261020", "Y+0.05 T+2.00/Y+0.05 T+2.00 (1).bmp", "학습 범위를 벗어난 실촬영");
+    if (range.result.code != "W_OUT_OF_RANGE") throw std::runtime_error("실촬영 범위 초과 예제의 반환 코드가 달라졌습니다");
+    const auto range_parts = inspect(reference, range.photo);
+    save(range.result.code, range, range_parts);
+    if (range_parts.qr.search == QrSearch::Wide) {
+        auto wide = range;
+        wide.description = "확장 탐색 사용 (동반 알림 N_WIDE_SEARCH)";
+        save("N_WIDE_SEARCH", wide, range_parts);
+    }
+
+    const auto base = load_example("20261029", "Y+0.05 T+0.05/Y+0.05 T+0.05 (1).bmp", "실촬영 측정 결과");
+    const auto parts = inspect(reference, base.photo);
+    if (base.result.status != Status::Ok || !base.result.code.empty()) throw std::runtime_error("정상 예제의 반환 코드가 달라졌습니다");
+    save("OK", base, parts);
+    const char* step_titles[] = {"입력 사진", "회색 영상", "1단계  QR 탐색", "2단계  나사 탐색",
+                                 "3단계  Y, T 계산", "촬영일 영점 적용",
+                                 "4단계  결과 점검", "출력  측정값과 상태"};
+    for (int step = 1; step <= 8; ++step) {
+        auto example = base;
+        example.description = step_titles[step - 1];
+        if (step == 1) {
+            std::ifstream file(example.source.path, std::ios::binary);
+            const std::vector<uchar> bytes((std::istreambuf_iterator<char>(file)), {});
+            example.photo = cv::imdecode(bytes, cv::IMREAD_COLOR);
+        }
+        scene::save_png(output / "step" / ("0" + std::to_string(step) + ".png"), draw(example, reference, parts, step));
+    }
+
+    std::map<std::string, bool> generated;
+    const auto augmented = [&](const cv::Mat& photo, const std::string& description) {
+        auto example = base;
+        example.edited = true;
+        example.zero_photo = false;
+        example.description = description;
+        example.photo = photo;
+        return example;
+    };
+    const auto candidate = [&](const std::string& code, const cv::Mat& photo, const std::string& description,
+                               QrSearch search = QrSearch::NotFound) {
+        if (generated[code]) return true;
+        auto example = augmented(photo, description);
+        example.result = measure_alignment(photo);
+        const auto checked = inspect(reference, photo);
+        std::cout << "candidate " << code << " => " << example.result.code << " | " << checked.search << '\n';
+        if (example.result.code != code && !(search != QrSearch::NotFound && checked.qr.search == search)) return false;
+        save(code, example, checked);
+        return generated[code] = true;
+    };
+
+    const cv::Point qr_offset(cvRound(parts.qr.dx), cvRound(parts.qr.dy));
+    const auto screw_center = [&](int k) {
+        return reference.screw[k] + cv::Point(cvRound(parts.screws[k].dx), cvRound(parts.screws[k].dy));
+    };
+    const auto remove_two = scene::remove_screw(base.photo, screw_center(1));
+    candidate("W_SCREW_MISSING", remove_two, "나사 2 제거");
+    const auto coarse = scene::remove_screw(remove_two, screw_center(3));
+    candidate("W_COARSE", coarse, "오른쪽 나사 2, 4 제거");
+
+    cv::Mat disagreement;
+    for (int dx : {3, -3, 5, -5, 8}) {
+        const cv::Mat shifted = local_shift(base.photo, screw_center(3), dx);
+        if (candidate("W_VALUES_DISAGREE", shifted, "나사 4 주변 가로 이동 " + std::to_string(dx) + " px")) {
+            disagreement = shifted;
+            break;
+        }
+    }
+    for (int k : {1, 2, 0}) {
+        const cv::Rect box = reference.qr[k] + qr_offset;
+        const cv::Point center = (box.tl() + box.br()) / 2;
+        if (candidate("W_QR_PARTIAL", scene::glare(base.photo, center, 150, 255),
+                      "QR " + std::to_string(k + 1) + " 위치에 반사광")) break;
+        for (double factor : {0.6, 0.75, 1.25, 1.45}) {
+            if (candidate("W_QR_PARTIAL", scene::scale_qr(base.photo, box, factor),
+                          "QR " + std::to_string(k + 1) + " 인쇄 크기 변경 (배율 " + number(factor, 2) + ")")) break;
+        }
+        if (generated["W_QR_PARTIAL"]) break;
+    }
+    const cv::Point middle = (reference.qr[1].tl() + reference.qr[1].br()) / 2 + qr_offset;
+    const cv::Mat glare = scene::glare(base.photo, middle, 440, 255);
+    candidate("E_QR_NOT_FOUND", glare, "QR 영역 반사광");
+    candidate("W_FAR", scene::shift(base.photo, 280, 0),
+              "사진 전체 가로 이동 280 px (동반 경고 W_FAR)", QrSearch::FullWidth);
+
+    auto bad_size = augmented({}, "입력 해상도 1920×1080");
+    cv::resize(base.photo, bad_size.photo, {1920, 1080}, 0, 0, cv::INTER_AREA);
+    bad_size.result = measure_alignment(bad_size.photo);
+    if (bad_size.result.code == "E_PHOTO") save("E_PHOTO", bad_size, {}, false);
+
+    auto zero = augmented(coarse, "영점 설정 입력에서 오른쪽 나사 2, 4 제거");
+    zero.call = "set_zero_from_photos";
+    zero.result = set_zero_from_photos({zero.photo});
+    if (zero.result.code == "E_ZERO") save("E_ZERO", zero, inspect(reference, zero.photo));
+
+    auto new_reference = augmented(glare, "기준 갱신 입력의 QR 영역 반사광");
+    new_reference.call = "set_reference_from_photos";
+    new_reference.result = set_reference_from_photos({new_reference.photo});
+    if (new_reference.result.code == "E_REFERENCE") save("E_REFERENCE", new_reference, {}, false);
+
+    auto reset = augmented(scene::shift(base.photo, 0, 60), "카메라 위치 변화 재현, 사진을 아래로 60 px 이동");
+    reset.call = "set_reference_from_photos";
+    reset.result = set_reference_from_photos({reset.photo});
+    if (reset.result.code == "W_ZERO_RESET") save("W_ZERO_RESET", reset, inspect(reference, reset.photo));
+
+    if (!disagreement.empty()) {
+        const auto settings = output / "_fail_on_disagreement.json";
+        std::ofstream(settings) << R"({"screws":[1,2,3,4],"fail_on_disagreement":1})";
+        const Result initialized = initialize(model, settings.u8string());
+        fs::remove(settings);
+        if (initialized.status == Status::Failed) throw std::runtime_error(initialized.message);
+        set_zero_value(base.zero_y, base.zero_t);
+        auto strict = augmented(disagreement, "값 불일치 시 실패를 반환하도록 설정");
+        strict.result = measure_alignment(strict.photo);
+        if (strict.result.status == Status::Failed && strict.result.code == "W_VALUES_DISAGREE")
+            save("W_VALUES_DISAGREE", strict, inspect(reference, strict.photo));
+    }
+    frame(output / "all_warning.png", warnings);
+    frame(output / "all_fail.png", failures);
+    if (!evidence || !zeros) throw std::runtime_error("사례 표를 쓰지 못했습니다");
+}
+
+} // namespace
+
+int wmain(int argc, wchar_t** argv) {
+    if (argc != 1 && argc != 4) {
+        std::cerr << "사용: make_figures [모델_폴더 실촬영_폴더 출력_폴더]\n";
+        return 2;
+    }
+    try {
+        const auto model = argc == 4 ? fs::path(argv[1]) : fs::path("data/model");
+        const auto input = argc == 4 ? fs::path(argv[2]) : fs::path("data/new_photos");
+        const auto output = argc == 4 ? fs::path(argv[3]) : fs::u8path("docs/시각화");
+        generate(model.u8string(), input, output);
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+        return 1;
+    }
 }

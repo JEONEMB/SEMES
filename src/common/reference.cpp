@@ -1,4 +1,4 @@
-#include "common/reference.hpp"
+﻿#include "common/reference.hpp"
 #include "alignment.hpp"
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
@@ -41,14 +41,18 @@ bool load_reference(const std::string& data_folder, Reference& reference, std::s
 
 bool to_gray(const cv::Mat& photo, cv::Mat& gray, std::string& error) {
     if (photo.empty()) { error = "사진이 비어 있습니다"; return false; }
-    if (photo.cols != kPhotoWidth || photo.rows != kPhotoHeight || photo.depth() != CV_8U) {
-        error = "사진 형식이 다릅니다 (받은 크기 " + std::to_string(photo.cols) + "×" + std::to_string(photo.rows) + "). 3840×2160 8비트 사진을 넣어 주세요";
+    if (photo.cols != kPhotoWidth || photo.rows != kPhotoHeight) {
+        error = "입력 해상도 " + std::to_string(photo.cols) + "×" + std::to_string(photo.rows) + " (요구 3840×2160)";
+        return false;
+    }
+    if (photo.depth() != CV_8U) {
+        error = "입력 화소 형식 불일치 (요구 8비트 부호 없는 정수)";
         return false;
     }
     if (photo.channels() == 1) gray = photo;
     else if (photo.channels() == 3) cv::cvtColor(photo, gray, cv::COLOR_BGR2GRAY);
     else if (photo.channels() == 4) cv::cvtColor(photo, gray, cv::COLOR_BGRA2GRAY);
-    else { error = "사진의 채널 수가 1, 3, 4 가 아닙니다"; return false; }
+    else { error = "입력 채널 수 " + std::to_string(photo.channels()) + " (허용 1, 3, 4)"; return false; }
     return true;
 }
 
