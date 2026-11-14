@@ -1,8 +1,8 @@
 // 확인: 사진 여러 장을 재서 표로 쓰고, 기대값 표가 있으면 비교한다.
-// 사용: check_photos <data 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px]
+// 사용: check_photos <data 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px] [아래로 옮길 px]
 //   사진 목록.tsv : 번호<TAB>사진 경로  (머리줄 없음)
 //   기대값.tsv    : 번호<TAB>Y<TAB>T    (머리줄 없음)
-//   가로로 옮길 px: 사진을 통째로 옮겨 큰 이동을 흉내 낼 때 (기본 0)
+//   가로·아래로 옮길 px: 사진을 통째로 옮겨 큰 이동이나 카메라 처짐을 흉내 낼 때 (기본 0). 기대값이 없으면 - 를 넣는다
 #include "alignment.hpp"
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
@@ -41,9 +41,9 @@ std::vector<std::vector<std::string>> read_table(const std::string& path) {
     return rows;
 }
 
-cv::Mat moved_sideways(const cv::Mat& photo, int pixels) {
-    if (pixels == 0 || photo.empty()) return photo;
-    const cv::Mat move = (cv::Mat_<double>(2, 3) << 1, 0, pixels, 0, 1, 0);
+cv::Mat moved(const cv::Mat& photo, int right, int down) {
+    if ((right == 0 && down == 0) || photo.empty()) return photo;
+    const cv::Mat move = (cv::Mat_<double>(2, 3) << 1, 0, right, 0, 1, down);
     cv::Mat moved;
     cv::warpAffine(photo, moved, move, photo.size(), cv::INTER_NEAREST, cv::BORDER_REPLICATE);
     return moved;
@@ -53,7 +53,7 @@ cv::Mat moved_sideways(const cv::Mat& photo, int pixels) {
 
 int main(int argc, char** argv) {
     if (argc < 4) {
-        std::cerr << "사용: check_photos <data 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px]\n";
+        std::cerr << "사용: check_photos <data 폴더> <사진 목록.tsv> <출력.tsv> [기대값.tsv] [가로로 옮길 px] [아래로 옮길 px]\n";
         return 2;
     }
     if (alignment::initialize(argv[1]).status == alignment::Status::Failed) return 1;
@@ -62,6 +62,7 @@ int main(int argc, char** argv) {
     if (argc >= 5 && std::string(argv[4]) != "-")
         for (const auto& row : read_table(argv[4])) expected[row.at(0)] = {std::stod(row.at(1)), std::stod(row.at(2))};
     const int sideways = argc >= 6 ? std::stoi(argv[5]) : 0;
+    const int down = argc >= 7 ? std::stoi(argv[6]) : 0;
 
     std::ofstream out(argv[3], std::ios::binary);
     out << std::setprecision(10) << "id\tY_mm\tT_deg\tstatus\tcode\tqr_px\tscrew1_px\tscrew2_px\tscrew3_px\tscrew4_px\tscrews_used\tcheck_value\tcheck_limit\tms\n";
@@ -70,7 +71,7 @@ int main(int argc, char** argv) {
     std::vector<double> times;
     std::map<std::string, int> codes;
     for (const auto& row : photos) {
-        const cv::Mat photo = moved_sideways(read_photo(row.at(1)), sideways);
+        const cv::Mat photo = moved(read_photo(row.at(1)), sideways, down);
         const auto start = std::chrono::steady_clock::now();
         const alignment::Result r = alignment::measure_alignment(photo);
         const double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
