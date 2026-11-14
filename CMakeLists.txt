@@ -42,6 +42,21 @@ foreach(tool prepare_dataset fit_coefficients evaluate_accuracy measure_speed sc
     endif()
 endforeach()
 
+# 적용 환경 화면 만들기 (tool/). 기준 사진을 바꿔 다른 환경에서 카메라가 볼 화면을 만들고 알고리즘 반응을 잰다
+add_library(scene_effects STATIC tool/scene_effects.cpp)
+target_include_directories(scene_effects PUBLIC tool ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(scene_effects PUBLIC ${OpenCV_LIBS})
+if(MSVC)
+    target_compile_options(scene_effects PRIVATE /utf-8 /EHsc)
+endif()
+foreach(tool make_environment_images make_site_images check_new_installation)
+    add_executable(${tool} tool/${tool}.cpp)
+    target_link_libraries(${tool} PRIVATE alignment scene_effects)
+    if(MSVC)
+        target_compile_options(${tool} PRIVATE /utf-8 /EHsc)
+    endif()
+endforeach()
+
 # 예제와 확인 프로그램
 foreach(program examples/measure_one examples/show_steps tests/check_photos tests/check_setup tool/make_figures)
     get_filename_component(name ${program} NAME)
