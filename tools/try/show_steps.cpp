@@ -1,5 +1,4 @@
-// 예제: 사진 한 장이 단계마다 어떤 값을 내는지 모두 찍는다.
-// 코드를 다른 곳으로 옮길 때, 옮긴 코드의 값과 한 단계씩 비교하는 데 쓴다 (docs/2_포팅안내서.md).
+// 단계별 측정값 출력과 이식 결과 비교
 // 사용: show_steps <model 폴더> <사진>
 #include "alignment.hpp"
 #include "common/reference.hpp"
@@ -15,9 +14,11 @@ using namespace alignment;
 
 namespace {
 
-const char* const kValueLabels[kValueCount] = {"QR", "나사 1", "나사 2", "나사 3", "나사 4"};   // 화면에 찍는 이름
+const char* const kValueLabels[kValueCount] = {"QR", "나사 1", "나사 2", "나사 3", "나사 4"};   // 화면에 출력하는 항목 이름
 
-// 1단계: QR 3개를 하나씩 찾은 값과, 합친 결과를 찍는다.
+// print_qr_step: 1단계 값 표시
+//   입력: qr_finder (기준 QR 탐색 도구), gray (회색 사진)
+//   출력: QrShift, QR별 이동량과 평균 출력
 QrShift print_qr_step(const QrFinder& qr_finder, const cv::Mat& gray) {
     std::cout << "[1단계] find_qr_shift\n";
     for (int k = 0; k < 3; ++k) {
@@ -29,7 +30,9 @@ QrShift print_qr_step(const QrFinder& qr_finder, const cv::Mat& gray) {
     return qr;
 }
 
-// 2단계: 나사마다 세 단계(대략 → 밝기 → 테두리)의 값을 찍고, 찾은 나사의 가로 이동을 values[1~4] 에 넣는다.
+// print_screw_step: 2단계 값 표시
+//   입력: screw_finder (나사 탐색 도구), gray (회색 사진), qr (QR 이동 결과)
+//   출력: 나사별 검출 여부, values[1~4] 이동량 저장, 단계별 값 표시
 std::array<bool, 4> print_screw_step(const ScrewFinder& screw_finder, const cv::Mat& gray, const QrShift& qr, double values[kValueCount]) {
     const cv::Point expected(int(std::lround(qr.dx)), int(std::lround(qr.dy)));
     std::cout << "[2단계] find_screw_shifts  (QR 이동을 반올림한 예상 이동: " << expected.x << ", " << expected.y << ")\n";
@@ -50,7 +53,9 @@ std::array<bool, 4> print_screw_step(const ScrewFinder& screw_finder, const cv::
     return found;
 }
 
-// 3단계: 값마다 Y, T 에 얼마씩 더해지는지와 결과를 찍는다.
+// print_yt_step: 3단계 값 표시
+//   입력: set (이동량 계산식), values (QR과 나사 이동량)
+//   출력: YT, 각 측정값이 Y와 T에 더한 양 표시
 YT print_yt_step(const CoefficientSet& set, const double values[kValueCount]) {
     std::cout << "[3단계] compute_yt  (계수 조합 screws_" << set.screws << ")\n";
     for (int i = 0; i < kValueCount; ++i) {
@@ -64,7 +69,9 @@ YT print_yt_step(const CoefficientSet& set, const double values[kValueCount]) {
     return yt;
 }
 
-// 4단계: 값마다 기대값과의 차이, 점검값, 학습 범위 안인지를 찍는다. check 가 nullptr 이면 점검식이 없는 조합.
+// print_check_step: 4단계 값 표시
+//   입력: check (점검식, 없으면 nullptr), reference (기준), values (이동량), yt (계산한 Y와 T)
+//   출력: 없음 (실제값과 예상값의 차이, 점검값, 학습 범위 출력)
 void print_check_step(const AgreementCheck* check, const Reference& reference, const double values[kValueCount], const YT& yt) {
     std::cout << "[4단계] check_values_agree, check_in_trained_range\n";
     if (check) {
@@ -80,8 +87,11 @@ void print_check_step(const AgreementCheck* check, const Reference& reference, c
     std::cout << "  학습 범위 안: " << (check_in_trained_range(reference, yt.y_mm, yt.t_deg) ? "예" : "아니오") << "\n";
 }
 
-}   // namespace
+}   // 파일 내부
 
+// main: 단계별 측정값 출력과 이식 결과 비교
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
     if (argc != 3) { std::cerr << "사용: show_steps <model 폴더> <사진>\n"; return 2; }
     const std::string model_folder = argv[1];

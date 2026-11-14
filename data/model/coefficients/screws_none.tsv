@@ -1,3 +1,3 @@
-# Y·T 계산 계수. 쓰는 값: QR 만. SEMES 사진 702장으로 학습 (Huber 선형식). # Y = intercept_Y + sum(weight_Y * (값 - mean) / scale), T 도 같은 식 name	mean	scale	weight_Y	weight_T
+# Y·T 계산 계수. 쓰는 값: QR 만. 받은 사진 702장으로 학습 (Huber 선형식). # Y = intercept_Y + sum(weight_Y * (값 - mean) / scale), T 도 같은 식 name	mean	scale	weight_Y	weight_T
 intercept	0	1	-0.056166750254556558	0.17458232367922463
 qr	13.153224144919376	37.39747296339371	-0.001745104327282504	0.46693075996979749

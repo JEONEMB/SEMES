@@ -1,11 +1,12 @@
 #pragma once
-// 기준 다시 잡기: 새 센터 사진에서 QR 상자와 나사 중심을 다시 찾아 새 기준을 만든다.
-// 카메라가 처져 화면이 많이 밀렸을 때처럼, 원래 기준으로는 QR·나사를 찾지 못할 때 쓴다.
+// 기준 재등록: 새 센터 사진의 QR 영역과 나사 중심 검출
 #include "common/reference.hpp"
 
 namespace alignment {
 
-// old_reference 의 위치에서 출발해 new_photo(회색) 안의 QR·나사 위치를 찾는다. 실패하면 false 와 이유.
+// find_new_reference: 새 기준 위치 검출
+//   입력: old_reference (기존 기준), new_photo (새 회색 사진)
+//   출력: 성공 여부, new_reference (새 기준), error (실패 사유)
 bool find_new_reference(const Reference& old_reference, const cv::Mat& new_photo, Reference& new_reference, std::string& error);
 
-}   // namespace alignment
+}   // alignment

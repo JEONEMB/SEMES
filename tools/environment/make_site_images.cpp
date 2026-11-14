@@ -1,14 +1,7 @@
-// 적용 후보 환경(A~J)마다 카메라가 볼 화면을 만든다. 그 환경에서 겹쳐 생길 화면 변화를 한 장에 모으고,
-// 환경을 알아보게 하는 물체(레일, 선반, 웨이퍼 등)를 판 아래 몸체와 위쪽 빈 곳에 그린다.
-// 그 화면에서 지금 알고리즘이 어떻게 반응하는지도 잰다.
-//
+// 환경 A~J의 합성 영상과 측정 반응
 // 사용: make_site_images <model 폴더> <출력 폴더>
-//   출력: site_<A~J>.png, 한눈에 보기 site_overview.png, 반응 표 site_results.tsv
-//
-// 주의
-//   - 기준 사진(판이 움직이지 않은 화면)을 바꾼 합성 화면이다. 실제 설비 사진이 아니다.
-//   - 환경 물체는 QR 탐색 창과 나사 탐색 창 밖에만 그린다 (측정에 끼어들지 않게).
-//   - 판은 그대로이므로 이상적인 출력 변화는 0 이다.
+// 출력: site_<A~J>.png, site_overview.png, site_results.tsv
+// 고정 자세의 합성 실험. 환경 물체는 측정 창 밖에 배치
 #include "alignment.hpp"
 #include "scene_effects.hpp"
 #include <opencv2/imgproc.hpp>
@@ -33,37 +26,55 @@ struct Site {
     bool yellow = false;                // 그림만 노란색으로 보이게 (측정은 회색)
 };
 
-// ---- 환경 물체 (판 아래 몸체, 위쪽 빈 곳) ----
+// 환경 물체 (판 아래 몸체, 위쪽 빈 곳)
 
-void draw_rail(cv::Mat& g) {   // OHT 천장 레일과 호이스트 벨트
+// draw_rail: 천장 운반 장치의 레일과 벨트 그리기
+//   입력: g (회색 사진)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_rail(cv::Mat& g) {
     cv::rectangle(g, cv::Rect(700, 800, 2440, 55), cv::Scalar(70), -1);
     cv::line(g, {1700, 855}, {1700, 940}, cv::Scalar(40), 10);
     cv::line(g, {2150, 855}, {2150, 940}, cv::Scalar(40), 10);
 }
 
-void draw_foup(cv::Mat& g) {   // 몸체 앞의 FOUP 윤곽
+// draw_foup: 웨이퍼 운반 상자의 테두리 그리기
+//   입력: g (회색 사진)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_foup(cv::Mat& g) {
     cv::rectangle(g, cv::Rect(kBody.x + 60, kBody.y + 120, kBody.width - 120, kBody.height - 160), cv::Scalar(90), 8, cv::LINE_AA);
     cv::rectangle(g, cv::Rect(kBody.x + 380, kBody.y + 80, kBody.width - 760, 50), cv::Scalar(70), -1);
 }
 
-void draw_shelf(cv::Mat& g) {   // 스토커 선반 받침
+// draw_shelf: 보관 선반 받침 그리기
+//   입력: g (회색 사진)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_shelf(cv::Mat& g) {
     cv::rectangle(g, cv::Rect(kBody.x, kBody.y + 20, kBody.width, 28), cv::Scalar(60), -1);
     cv::rectangle(g, cv::Rect(kBody.x, kBody.br().y - 40, kBody.width, 28), cv::Scalar(60), -1);
     cv::putText(g, "SHELF 12-07", cv::Point(kBody.x + 380, kBody.y + 300), cv::FONT_HERSHEY_SIMPLEX, 2.0, cv::Scalar(40), 5, cv::LINE_AA);
 }
 
-void draw_person(cv::Mat& g) {   // 지나가는 사람 다리 (AMR 앞)
+// draw_person: 지나가는 사람의 다리 그리기
+//   입력: g (회색 사진)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_person(cv::Mat& g) {
     cv::ellipse(g, cv::Point(kBody.x + 820, kBody.br().y), cv::Size(90, 330), 0, 0, 360, cv::Scalar(45), -1, cv::LINE_AA);
     cv::ellipse(g, cv::Point(kBody.x + 1000, kBody.br().y), cv::Size(85, 300), 0, 0, 360, cv::Scalar(50), -1, cv::LINE_AA);
 }
 
-void draw_robot_hand(cv::Mat& g) {   // 웨이퍼 로봇 손 (갈래 두 개)
+// draw_robot_hand: 웨이퍼를 잡는 로봇 손 그리기
+//   입력: g (회색 사진)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_robot_hand(cv::Mat& g) {
     cv::rectangle(g, cv::Rect(kBody.x + 250, kBody.y + 260, 610, 60), cv::Scalar(170), -1);
     cv::rectangle(g, cv::Rect(kBody.x + 250, kBody.y + 260, 80, 330), cv::Scalar(170), -1);
     cv::rectangle(g, cv::Rect(kBody.x + 780, kBody.y + 260, 80, 330), cv::Scalar(170), -1);
 }
 
-void draw_wafer(cv::Mat& g, bool dies) {   // 웨이퍼 (노치, 다이 격자)
+// draw_wafer: 웨이퍼와 칩 격자 그리기
+//   입력: g (회색 사진), dies (칩 격자 표시 여부)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_wafer(cv::Mat& g, bool dies) {
     const cv::Point c(kBody.x + kBody.width / 2, kBody.y + 330);
     cv::ellipse(g, c, cv::Size(380, 230), 0, 0, 360, cv::Scalar(120), -1, cv::LINE_AA);
     cv::circle(g, c + cv::Point(0, 225), 12, cv::Scalar(200), -1);
@@ -73,12 +84,18 @@ void draw_wafer(cv::Mat& g, bool dies) {   // 웨이퍼 (노치, 다이 격자)
                 if (std::pow(x / 380.0, 2) + std::pow(y / 230.0, 2) < 0.9) cv::rectangle(g, cv::Rect(c.x + x - 25, c.y + y - 16, 50, 32), cv::Scalar(140), 2);
 }
 
-void draw_bowl(cv::Mat& g) {   // 세정 챔버 보울 테두리
+// draw_bowl: 세정 장치의 원형 테두리 그리기
+//   입력: g (회색 사진)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_bowl(cv::Mat& g) {
     cv::ellipse(g, cv::Point(kBody.x + kBody.width / 2, kBody.y + 330), cv::Size(520, 260), 0, 0, 360, cv::Scalar(200), 18, cv::LINE_AA);
     cv::ellipse(g, cv::Point(kBody.x + kBody.width / 2, kBody.y + 330), cv::Size(420, 200), 0, 0, 360, cv::Scalar(80), 6, cv::LINE_AA);
 }
 
-void draw_window_bolts(cv::Mat& g) {   // 진공 창 둘레 볼트
+// draw_window_bolts: 진공 창 주변 볼트 그리기
+//   입력: g (회색 사진)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_window_bolts(cv::Mat& g) {
     for (int k = 0; k < 12; ++k) {
         const double a = k * CV_PI / 6;
         const cv::Point p(int(1920 + 1230 * std::cos(a)), int(1300 + 1230 * std::sin(a)));
@@ -86,17 +103,26 @@ void draw_window_bolts(cv::Mat& g) {   // 진공 창 둘레 볼트
     }
 }
 
-void draw_gantry(cv::Mat& g) {   // 본딩 갠트리와 다이
+// draw_gantry: 칩 부착 장치의 지지대 그리기
+//   입력: g (회색 사진)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_gantry(cv::Mat& g) {
     cv::rectangle(g, cv::Rect(kBody.x + 480, kBody.y, 150, kBody.height), cv::Scalar(55), -1);
     for (int i = 0; i < 4; ++i) cv::rectangle(g, cv::Rect(kBody.x + 60 + i * 95, kBody.y + 380, 70, 70), cv::Scalar(190), -1);
 }
 
-void draw_glass_edges(cv::Mat& g) {   // 큰 유리판 모서리와 반사 줄
+// draw_glass_edges: 유리판 모서리와 반사 줄 그리기
+//   입력: g (회색 사진)
+//   출력: 없음 (g에 환경 물체 추가)
+void draw_glass_edges(cv::Mat& g) {
     cv::line(g, {kBody.x, kBody.y + 60}, {kBody.br().x, kBody.y + 60}, cv::Scalar(230), 6, cv::LINE_AA);
     cv::line(g, {kBody.x + 100, kBody.br().y}, {kBody.x + 500, kBody.y + 80}, cv::Scalar(225), 14, cv::LINE_AA);
     cv::line(g, {kBody.x + 300, kBody.br().y}, {kBody.x + 700, kBody.y + 80}, cv::Scalar(215), 6, cv::LINE_AA);
 }
 
+// yellow_tint: 노란 조명처럼 색 변경
+//   입력: bgr (컬러 사진)
+//   출력: 파란색을 줄인 사진
 cv::Mat yellow_tint(const cv::Mat& bgr) {
     cv::Mat out = bgr.clone();
     std::vector<cv::Mat> channels;
@@ -106,7 +132,9 @@ cv::Mat yellow_tint(const cv::Mat& bgr) {
     return out;
 }
 
-// 설치 자리 목록 (번호, 그림에 쓰는 이름, 바뀐 점, 기준 사진을 바꾸는 함수, 노란 조명인지)
+// list_sites: 설치 환경 A~J 구성
+//   입력: 없음
+//   출력: 환경별 이름, 변환 함수, 조명 조건
 std::vector<Site> list_sites() {
     return {
         {"A", "A. OHT port teaching", "port height -0.5%, vertical shake 7 px, ceiling light, dust",
@@ -152,7 +180,9 @@ std::vector<Site> list_sites() {
     };
 }
 
-// 한눈에 보기: 그림들을 2열로 붙여 절반 크기로 줄인다
+// make_overview: 사례 그림 2열 배치
+//   입력: thumbnails (작게 줄인 사례 그림 목록)
+//   출력: 절반 크기의 요약 영상
 cv::Mat make_overview(const std::vector<cv::Mat>& thumbnails) {
     const int columns = 2, th = thumbnails[0].rows;
     cv::Mat overview(int((thumbnails.size() + columns - 1) / columns) * th, columns * thumbnails[0].cols, CV_8UC3, cv::Scalar(255, 255, 255));
@@ -163,8 +193,11 @@ cv::Mat make_overview(const std::vector<cv::Mat>& thumbnails) {
     return small;
 }
 
-}   // namespace
+}   // 파일 내부
 
+// main: 환경 A~J의 합성 영상과 측정 반응
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
     if (argc != 3) { std::cerr << "사용: make_site_images <model 폴더> <출력 폴더>\n"; return 2; }
     const fs::path data = fs::u8path(argv[1]), out = fs::u8path(argv[2]);

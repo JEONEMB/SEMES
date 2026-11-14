@@ -1,3 +1,5 @@
+// 2단계: QR 이동량 근처에서 나사를 찾고 위치를 세밀하게 조정
+// 처리: 닮은 위치 찾기 -> 밝기 차이 보정 -> 테두리 위치 맞추기
 #include "steps/02_find_screws.hpp"
 #include <opencv2/imgproc.hpp>
 #include <algorithm>
@@ -8,37 +10,43 @@ namespace alignment {
 
 namespace {
 
-// ---- 1. locate_screw 에서 쓰는 값 ----
-const int kPatchRadius = 45;                       // px. 나사 조각의 반지름
+// 1. 초기 위치 탐색 설정
+const int kPatchRadius = 45;                       // px. 나사 영상 영역의 반지름
 const int kPatchSide = 2 * kPatchRadius + 1;       // 91 px
-const int kNearSearch = 60;                        // px. QR 이 움직인 자리 주변을 먼저 찾는 범위 (±)
-const int kFarSearch = 260;                        // px. 거기서 못 찾으면 기준 위치 주변을 넓게 찾는 범위 (±)
-const double kMinSimilarity = 0.6;                 // NCC 가 이보다 낮으면 나사가 아니라고 본다
-const int kMaxAwayFromQr = 100;                    // px. 나사 이동이 QR 이동과 이보다 다르면 다른 나사를 잡은 것으로 본다
+const int kNearSearch = 60;                        // QR 이동 위치 주변 탐색 반너비(px)
+const int kFarSearch = 260;                        // 미검출 시 기준 위치 주변 탐색 반너비(px)
+const double kMinSimilarity = 0.6;                 // 나사 검출을 허용하는 최소 닮은 정도
+const int kMaxAwayFromQr = 100;                    // QR 이동량과의 최대 허용 차이(px)
 
-// ---- 2. refine_by_brightness 에서 쓰는 값 ----
+// 2. 밝기 비교 설정
 const int kBrightnessMaxSteps = 50;
-const double kBrightnessDone = 1e-4;               // px. 한 번에 움직인 양이 이보다 작으면 끝낸다
-const double kBrightnessMaxStep = 3.0;             // px. 한 번에 이보다 많이 움직이려 하면 잘못 맞춘 것으로 본다
-const double kMaxDriftFromLocate = 8.0;            // px. 1 에서 찾은 자리에서 이보다 멀어지면 잘못 맞춘 것으로 본다
+const double kBrightnessDone = 1e-4;               // 반복 종료 이동량(px)
+const double kBrightnessMaxStep = 3.0;             // 반복 1회 최대 이동량(px)
+const double kMaxDriftFromLocate = 8.0;            // 초기 검출 위치 대비 최대 이동량(px)
 
-// ---- 3. refine_by_edges 에서 쓰는 값 ----
-const int kEdgeHalf = 70;                          // px. 테두리 그림의 반쪽 크기
+// 3. 테두리 위치 맞춤 설정
+const int kEdgeHalf = 70;                          // px. 윤곽선 영상의 반쪽 크기
 const int kEdgeSide = 2 * kEdgeHalf + 1;           // 141 px
-const int kEdgeMaskRadius = 45;                    // px. 나사 중심에서 이 안쪽만 맞춘다
+const int kEdgeMaskRadius = 45;                    // 위치 비교 대상 원의 반지름(px)
 const double kEdgeBlurSigma = 1.5;                 // px. 테두리를 뽑기 전에 흐리는 정도
 const int kEdgeSmoothing = 5;                      // px. 맞추기 전에 한 번 더 흐리는 창 크기
 const int kEdgeMaxSteps = 200;
-const double kEdgeDone = 1e-8;                     // 닮은 정도가 이보다 적게 변하면 끝낸다
+const double kEdgeDone = 1e-8;                     // 반복 종료 닮은 정도 변화량
 
+// square_around: 중심 주변 사각 영역 계산
+//   입력: center (중심), half (중심에서 한쪽 끝까지 px)
+//   출력: 중심을 포함한 정사각 영역
 cv::Rect square_around(cv::Point center, int half) {
     return cv::Rect(center.x - half, center.y - half, 2 * half + 1, 2 * half + 1);
 }
 
-// ------------------------------------------------------------------------------------------------
-// 2 에서 쓰는 도구: 소수 px 위치에서 조각 잘라 내기 (3차 보간)
-// ------------------------------------------------------------------------------------------------
+//
+// 밝기 비교용 소수 위치의 색값 계산
+//
 
+// cubic_weight: 주변 픽셀을 얼마나 반영할지 계산
+//   입력: distance (픽셀과의 거리)
+//   출력: 소수 위치 밝기 계산에 곱할 값
 double cubic_weight(double distance) {
     const double a = -0.75;
     const double x = std::abs(distance);
@@ -47,7 +55,9 @@ double cubic_weight(double distance) {
     return 0;
 }
 
-// gray 에서 왼쪽 위가 (left, top) 인 91×91 조각을 잘라 낸다. 사진 밖으로 나가면 false.
+// cut_patch: 소수 좌표에서 나사 영역 추출
+//   입력: gray (회색 사진), left와 top (잘라낼 영역의 왼쪽 위 좌표)
+//   출력: 성공 여부, patch (91×91). 영상 밖이면 false
 bool cut_patch(const cv::Mat& gray, double left, double top, cv::Mat& patch) {
     const int base_x = int(std::floor(left)), base_y = int(std::floor(top));
     if (base_x < 1 || base_y < 1 || base_x + kPatchSide + 2 >= gray.cols || base_y + kPatchSide + 2 >= gray.rows) return false;
@@ -72,11 +82,13 @@ bool cut_patch(const cv::Mat& gray, double left, double top, cv::Mat& patch) {
     return true;
 }
 
-// ------------------------------------------------------------------------------------------------
-// 3 에서 쓰는 도구: 테두리 그림과 ECC 맞춤
-// ------------------------------------------------------------------------------------------------
+//
+// 테두리가 가장 잘 겹치는 위치 찾기
+//
 
-// 밝기가 급히 바뀌는 곳(테두리)이 밝게 나오는 그림을 만든다.
+// edge_picture: 윤곽선 영상 생성
+//   입력: patch (나사 영역)
+//   출력: 밝기 변화량 영상
 cv::Mat edge_picture(const cv::Mat& patch) {
     cv::Mat as_float, blurred, slope_x, slope_y, strength;
     patch.convertTo(as_float, CV_32F);
@@ -87,7 +99,9 @@ cv::Mat edge_picture(const cv::Mat& patch) {
     return strength;
 }
 
-// 소수 px 위치의 값 (이웃 4점 보간). 그림 밖은 0.
+// value_at: 주변 네 점으로 소수 위치의 밝기 계산
+//   입력: picture (사진), x, y (소수 좌표)
+//   출력: 계산한 밝기. 사진 밖은 0
 double value_at(const cv::Mat& picture, double x, double y) {
     const int x0 = int(std::floor(x)), y0 = int(std::floor(y));
     const double fx = x - x0, fy = y - y0;
@@ -97,34 +111,37 @@ double value_at(const cv::Mat& picture, double x, double y) {
     return (1 - fy) * ((1 - fx) * pixel(y0, x0) + fx * pixel(y0, x0 + 1)) + fy * ((1 - fx) * pixel(y0 + 1, x0) + fx * pixel(y0 + 1, x0 + 1));
 }
 
-// ------------------------------------------------------------------------------------------------
-// ECC 맞춤 (평행이동만): current 를 (shift_x, shift_y) 만큼 옮겨 읽으면 reference 와 가장 닮도록 shift 를 구한다.
-// OpenCV findTransformECC(MOTION_TRANSLATION, 마스크) 와 같은 식이다. OpenCV 것은 옮겨 읽을 때 좌표를 1/32 px 로
-// 끊어서 약 0.02 px 의 계단 오차가 생기기 때문에, 같은 식을 정확한 보간으로 직접 푼다.
 //
-// 한 번 고칠 때마다 세 가지를 한다
-//   (가) read_shifted_patch  지금 shift 로 옮겨 읽는다
-//   (나) sum_ecc_terms       평균을 빼고, 닮은 정도와 맞춤에 필요한 합을 구한다
-//   (다) update_ecc_shift    밝기 크기 차이를 맞춘 뒤, 남은 차이를 줄이는 쪽으로 shift 를 고친다
-// ------------------------------------------------------------------------------------------------
+// 기준 사진과 테두리가 가장 잘 겹치는 이동량 계산
+// 계산 방식: OpenCV ECC(밝기 차이를 보정한 사진 비교)
+// 소수 위치를 1/32 px로 반올림하지 않고 직접 계산
+//
+// 반복 계산 순서
+// (가) read_shifted_patch: 옮긴 사진과 밝기 변화량 읽기
+// (나) sum_ecc_terms: 평균 밝기를 빼고 두 사진 비교
+// (다) update_ecc_shift: 밝기 차이를 줄이고 위치 조정
+//
 
-// ECC 가 쓰는 그림들. 화소 번호 i = y * kEdgeSide + x
+// 사진 비교 중 재사용할 자료. 픽셀 번호: y * kEdgeSide + x
 struct EccWork {
-    cv::Mat smooth, slope_x, slope_y;                           // 흐린 현재 그림과 그 가로, 세로 기울기 (원 밖 기울기는 0)
-    std::vector<double> moved, moved_slope_x, moved_slope_y;    // 지금 shift 로 옮겨 읽은 그림과 기울기
-    std::vector<double> reference_centered;                     // 기준 그림 − 평균 (원 밖은 0)
+    cv::Mat smooth, slope_x, slope_y;                           // 흐린 사진과 가로, 세로 밝기 변화량. 원 밖은 0
+    std::vector<double> moved, moved_slope_x, moved_slope_y;    // 현재 이동량을 적용한 사진과 밝기 변화량
+    std::vector<double> reference_centered;                     // 기준 영상 - 평균 (원 밖은 0)
     std::vector<unsigned char> in_mask;                         // 옮겨 읽은 자리가 원 안인지
-    int low = 0, high = 0;                                      // 계산하는 상자 (원 둘레). 상자 밖은 모든 합에 0 만 더해서 결과가 같다
+    int low = 0, high = 0;                                      // 나사 주변 원 안의 계산 범위
 };
 
 // (나) 에서 구하는 합
 struct EccSums {
-    double moved_power = 0, reference_power = 0, product = 0;   // 옮긴 그림², 기준 그림², 둘의 곱
-    double hxx = 0, hxy = 0, hyy = 0, determinant = 0;          // 기울기끼리의 합 (2×2 행렬) 과 그 행렬식
-    double moved_on_x = 0, moved_on_y = 0;                      // 기울기 · 옮긴 그림
-    double reference_on_x = 0, reference_on_y = 0;              // 기울기 · 기준 그림
+    double moved_power = 0, reference_power = 0, product = 0;   // 이동한 영상², 기준 영상², 둘의 곱
+    double hxx = 0, hxy = 0, hyy = 0, determinant = 0;          // 가로, 세로 위치 조정용 합계와 계산 가능 여부 확인값
+    double moved_on_x = 0, moved_on_y = 0;                      // 밝기 변화량과 이동 사진을 같은 위치끼리 곱한 합
+    double reference_on_x = 0, reference_on_y = 0;              // 밝기 변화량과 기준 사진을 같은 위치끼리 곱한 합
 };
 
+// prepare_ecc: 테두리 위치 비교에 쓸 자료 준비
+//   입력: current (현재 사진), mask (비교할 영역)
+//   출력: 흐린 사진, 밝기 변화량, 계산용 저장 공간
 EccWork prepare_ecc(const cv::Mat& current, const cv::Mat& mask) {
     EccWork work;
     cv::GaussianBlur(current, work.smooth, cv::Size(kEdgeSmoothing, kEdgeSmoothing), 0, 0);
@@ -142,7 +159,9 @@ EccWork prepare_ecc(const cv::Mat& current, const cv::Mat& mask) {
     return work;
 }
 
-// (가) 지금 shift 로 옮겨 읽는다
+// read_shifted_patch: 이동한 사진과 밝기 변화량 읽기
+//   입력: work (사진 비교 중간 자료), mask (비교할 영역 표시), shift_x (가로 이동량), shift_y (세로 이동량)
+//   출력: 없음 (work에 이동한 사진과 밝기 변화량 저장)
 void read_shifted_patch(EccWork& work, const cv::Mat& mask, double shift_x, double shift_y) {
     const int reach = kEdgeMaskRadius + 3 + int(std::ceil(std::max(std::abs(shift_x), std::abs(shift_y))));
     work.low = std::max(0, kEdgeHalf - reach);
@@ -160,7 +179,9 @@ void read_shifted_patch(EccWork& work, const cv::Mat& mask, double shift_x, doub
     }
 }
 
-// (나) 평균을 빼고 닮은 정도(상관)와 맞춤에 필요한 합을 구한다. 맞출 수 없는 그림이면 false.
+// sum_ecc_terms: 두 사진의 닮은 정도와 위치 조정값 계산
+//   입력: reference (기준 사진), work (사진 비교 중간 자료)
+//   출력: 성공 여부, sums (위치 조정용 합계). 계산 불가 시 false
 bool sum_ecc_terms(const cv::Mat& reference, EccWork& work, EccSums& sums) {
     double moved_sum = 0, reference_sum = 0;
     int inside = 0;
@@ -199,7 +220,9 @@ bool sum_ecc_terms(const cv::Mat& reference, EccWork& work, EccSums& sums) {
     return sums.determinant > 0 && sums.moved_power > 0 && sums.reference_power > 0;
 }
 
-// (다) 밝기 크기 차이(scale)를 맞춘 뒤, 남은 차이를 줄이는 쪽으로 shift 를 고친다. 맞출 수 없으면 false.
+// update_ecc_shift: 밝기 배율 보정 후 이동량 갱신
+//   입력: work (사진 비교 중간 자료), sums (위치 조정용 합계), shift_x (가로 이동량), shift_y (세로 이동량)
+//   출력: 성공 여부, 갱신한 shift_x와 shift_y
 bool update_ecc_shift(const EccWork& work, const EccSums& sums, double& shift_x, double& shift_y) {
     const double solved_x = (sums.hyy * sums.moved_on_x - sums.hxy * sums.moved_on_y) / sums.determinant;
     const double solved_y = (sums.hxx * sums.moved_on_y - sums.hxy * sums.moved_on_x) / sums.determinant;
@@ -221,7 +244,9 @@ bool update_ecc_shift(const EccWork& work, const EccSums& sums, double& shift_x,
     return true;
 }
 
-// 닮은 정도가 더 변하지 않을 때까지 (가) → (나) → (다) 를 되풀이한다.
+// ecc_shift: 닮은 정도가 더 변하지 않을 때까지 위치 조정
+//   입력: reference와 current (기준과 현재 사진), mask (비교 영역), shift_x와 shift_y (초기 가로, 세로 이동)
+//   출력: 성공 여부, 최종 shift_x와 shift_y
 bool ecc_shift(const cv::Mat& reference, const cv::Mat& current, const cv::Mat& mask, double& shift_x, double& shift_y) {
     EccWork work = prepare_ecc(current, mask);
     shift_x = shift_y = 0;
@@ -238,7 +263,9 @@ bool ecc_shift(const cv::Mat& reference, const cv::Mat& current, const cv::Mat& 
     return true;
 }
 
-// 테두리 맞춤에 쓰는 원. OpenCV ECC 와 같은 방식으로 가장자리 한 겹을 뺀다.
+// make_edge_mask: 나사 중심 주변만 비교할 원형 영역 생성
+//   입력: 없음
+//   출력: 비교할 픽셀을 표시한 영상. 가장자리 한 겹 제외
 cv::Mat make_edge_mask() {
     cv::Mat disk = cv::Mat::zeros(kEdgeSide, kEdgeSide, CV_32F);
     for (int y = 0; y < kEdgeSide; ++y)
@@ -251,8 +278,11 @@ cv::Mat make_edge_mask() {
     return mask;
 }
 
-}   // namespace
+}   // 파일 내부
 
+// ScrewFinder: 비교할 기준 나사 준비
+//   입력: reference (기준 사진과 나사 위치)
+//   출력: 나사별 밝기와 테두리 비교 사진 저장
 ScrewFinder::ScrewFinder(const Reference& reference) {
     for (int k = 0; k < 4; ++k) {
         centers_[k] = reference.screw[k];
@@ -263,10 +293,13 @@ ScrewFinder::ScrewFinder(const Reference& reference) {
     edge_mask_ = make_edge_mask();
 }
 
+// find_screw_shifts: 나사별 이동량 측정
+//   입력: gray (회색 사진), qr_dx와 qr_dy (QR 이동량 px), wanted (사용할 나사)
+//   출력: 나사 1~4의 이동량과 검출 결과
 std::array<ScrewShift, 4> ScrewFinder::find_screw_shifts(const cv::Mat& gray, double qr_dx, double qr_dy, const std::array<bool, 4>& wanted) const {
     std::array<ScrewShift, 4> shifts;
     const cv::Point expected_shift(int(std::lround(qr_dx)), int(std::lround(qr_dy)));
-    // 나사 4개는 서로 독립이라 동시에 찾는다 (하나씩 찾을 때와 결과가 같다).
+    // 나사 4개의 위치를 각각 동시에 탐색
     cv::parallel_for_(cv::Range(0, 4), [&](const cv::Range& range) {
         for (int k = range.start; k < range.end; ++k) {
             if (wanted[k]) shifts[k] = find_one(gray, k, expected_shift);
@@ -276,6 +309,9 @@ std::array<ScrewShift, 4> ScrewFinder::find_screw_shifts(const cv::Mat& gray, do
     return shifts;
 }
 
+// find_one: 나사 하나의 위치를 3단계로 맞추기
+//   입력: gray (회색 사진), screw_index (0~3), expected_shift (예상 이동량 px)
+//   출력: ScrewShift (이동량, 검출 여부, 실패 사유)
 ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point expected_shift) const {
     ScrewShift result;
     cv::Point located;
@@ -288,6 +324,7 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
         result.problem = "나사 위치를 다듬지 못함 (가림·반사)";
         return result;
     }
+    // 밝기로 맞춘 위치에서 사진 자르기. 남은 이동은 테두리로 계산
     const cv::Point start(cvRound(rough_dx), cvRound(rough_dy));
     if (!refine_by_edges(gray, screw_index, start, result.dx, result.dy)) {
         result.problem = "나사 테두리를 맞추지 못함 (가림·반사)";
@@ -297,12 +334,14 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
     return result;
 }
 
-// 1. NCC 로 대략 찾기. shift = 기준 위치에서 움직인 양 (정수 px).
+// ScrewFinder::locate_screw: 기준 사진과 가장 닮은 위치 찾기
+//   입력: gray (회색 사진), screw_index (나사 번호 0~3), expected_shift (예상 이동량 px)
+//   출력: 성공 여부, shift (정수 이동량 px), similarity (닮은 정도)
 bool ScrewFinder::locate_screw(const cv::Mat& gray, int screw_index, cv::Point expected_shift, cv::Point& shift, double& similarity) const {
     const cv::Mat& template8 = locate_templates_[screw_index];
     cv::Mat scores;
 
-    // 먼저 QR 이 움직인 만큼 옮긴 자리 주변을 찾는다.
+    // QR 이동 위치 주변 우선 탐색
     const cv::Rect near_window = square_around(centers_[screw_index] + expected_shift, kPatchRadius + kNearSearch);
     if (inside_photo(near_window)) {
         cv::matchTemplate(gray(near_window), template8, scores, cv::TM_CCOEFF_NORMED);
@@ -314,19 +353,21 @@ bool ScrewFinder::locate_screw(const cv::Mat& gray, int screw_index, cv::Point e
             return true;
         }
     }
-    // 못 찾으면 기준 위치 주변을 넓게 찾는다.
+    // 미검출 시 기준 위치 주변으로 탐색 확대
     const cv::Rect far_window = square_around(centers_[screw_index], kPatchRadius + kFarSearch);
     if (!inside_photo(far_window)) return false;
     cv::matchTemplate(gray(far_window), template8, scores, cv::TM_CCOEFF_NORMED);
     cv::Point peak;
     cv::minMaxLoc(scores, nullptr, &similarity, nullptr, &peak);
     shift = peak - cv::Point(kFarSearch, kFarSearch);
-    // 나사는 QR 과 거의 같이 움직인다. QR 이동과 크게 다르면 다른 나사를 잡은 것이다.
+    // 오검출 방지용 QR 이동량 차이 제한
     const bool moves_with_qr = std::abs(shift.x - expected_shift.x) <= kMaxAwayFromQr && std::abs(shift.y - expected_shift.y) <= kMaxAwayFromQr;
     return similarity >= kMinSimilarity && moves_with_qr;
 }
 
-// 2. 밝기를 맞춰 가며 위치 다듬기. 조명 차이는 매번 밝기 배율(gain)과 더하기(offset)로 맞춘다.
+// ScrewFinder::refine_by_brightness: 밝기 차이를 줄여 위치 맞추기
+//   입력: gray (회색 사진), screw_index (나사 번호 0~3), start (초기 이동량)
+//   출력: 성공 여부, dx와 dy (px)
 bool ScrewFinder::refine_by_brightness(const cv::Mat& gray, int screw_index, cv::Point start, double& dx, double& dy) const {
     const cv::Mat& reference_patch = brightness_templates_[screw_index];
     const cv::Point center = centers_[screw_index];
@@ -361,7 +402,9 @@ bool ScrewFinder::refine_by_brightness(const cv::Mat& gray, int screw_index, cv:
     return settled && std::abs(dx - start.x) <= kMaxDriftFromLocate && std::abs(dy - start.y) <= kMaxDriftFromLocate;
 }
 
-// 3. 테두리 그림으로 정밀하게 맞추기. start 만큼 옮긴 자리에서 조각을 잘라 ECC 로 남은 이동을 구한다.
+// ScrewFinder::refine_by_edges: 테두리를 맞추어 남은 이동량 계산
+//   입력: gray (회색 사진), screw_index (나사 번호 0~3), start (초기 이동량)
+//   출력: 성공 여부, dx와 dy (px)
 bool ScrewFinder::refine_by_edges(const cv::Mat& gray, int screw_index, cv::Point start, double& dx, double& dy) const {
     const cv::Rect area = square_around(centers_[screw_index] + start, kEdgeHalf);
     if (!inside_photo(area)) return false;
@@ -372,4 +415,4 @@ bool ScrewFinder::refine_by_edges(const cv::Mat& gray, int screw_index, cv::Poin
     return std::isfinite(dx) && std::isfinite(dy);
 }
 
-}   // namespace alignment
+}   // alignment

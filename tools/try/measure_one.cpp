@@ -1,5 +1,5 @@
-// 예제: 사진 한 장을 넣고 Y, T 와 단계별 값을 본다.
-// 사용: measure_one <model 폴더> <사진> [영점으로 쓸 센터 사진]
+// 사진 한 장의 Y, T와 단계별 값 확인
+// 사용: measure_one <model 폴더> <사진> [영점 사진]
 #include "alignment.hpp"
 #include <fstream>
 #include <iomanip>
@@ -8,13 +8,18 @@
 
 namespace {
 
-// 한글 경로에서도 읽히도록 파일을 바이트로 읽어 풀어낸다.
+// status_name: 측정 상태 이름 표시
+//   입력: status (측정 상태)
+//   출력: 정상, 경고, 실패 중 해당 문자열
 const char* status_name(alignment::Status status) {
     return status == alignment::Status::Ok ? "정상" : status == alignment::Status::Warning ? "경고" : "실패";
 }
 
-}   // namespace
+}   // 파일 내부
 
+// main: 사진 한 장의 Y, T와 단계별 값 확인
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
     if (argc < 3) {
         std::cerr << "사용: measure_one <model 폴더> <사진> [영점으로 쓸 센터 사진]\n";

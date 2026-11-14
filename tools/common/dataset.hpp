@@ -1,11 +1,10 @@
 #pragma once
-// data/new_photos/tables/ 의 표를 읽어 사진 한 장씩 묶는다 (prepare_dataset 이 만든 것).
-//
-//   photos.tsv    id, session, path, command_y_mm, command_t_deg
-//   features.tsv  id, measured, qr, screw1, screw2, screw3, screw4   (못 찾은 나사는 nan)
-//   labels.tsv    id, label_y_mm, label_t_deg                      (학습용 정답 = 명령 − 그 회차의 영점 어긋남)
-//   splits.tsv    id, usable, final_check, cv0 … cv9               (usable 0 이면 학습, 평가에 안 씀)
-//   sessions.tsv  session, zero_y_mm, zero_t_deg, photos            (회차마다 거꾸로 구한 영점 어긋남)
+// 학습 자료: prepare_dataset의 출력 표
+//   photos.tsv: 사진 경로와 명령값
+//   features.tsv: QR과 나사 이동량
+//   labels.tsv: 학습 정답(명령 - 회차별 영점 차이)
+//   splits.tsv: 사용 여부와 검증 묶음
+//   sessions.tsv: 회차별 영점 차이
 #include "coefficient_fit.hpp"
 #include <filesystem>
 #include <string>
@@ -13,7 +12,7 @@
 
 namespace tools {
 
-const int kRepeatCount = 10;   // 섞어 나누기 반복 횟수
+const int kRepeatCount = 10;   // 학습용과 시험용 사진을 바꾸어 나누는 횟수
 const int kFoldCount = 5;      // 묶음 수
 
 struct DatasetPhoto {
@@ -21,12 +20,15 @@ struct DatasetPhoto {
     std::string session, path;
     double command_y_mm = 0, command_t_deg = 0;
     bool measured = false;
-    Values values{};                 // 못 찾은 나사는 nan
+    Values values{};                 // 검출하지 못한 나사는 nan
     double label_y_mm = 0, label_t_deg = 0;
-    bool usable = false;             // 학습 범위 안, 측정 성공, 나사 4개 모두 찾음
-    bool final_check = false;        // 마지막 확인용 (방법을 다 정한 뒤 한 번만 시험)
+    bool usable = false;             // 학습 사용 여부. 측정, 나사 4개, 범위, 명령 일치 조건
+    bool final_check = false;        // 최종 검증용 분리 사진 여부
     int fold[kRepeatCount] = {};     // 반복마다 묶음 번호 (마지막 확인 사진은 -1)
 
+    // single_axis: 한 축만 움직인 명령 확인
+    //   입력: 없음 (사진의 명령값 사용)
+    //   출력: Y 또는 T가 0이면 true
     bool single_axis() const { return command_y_mm == 0 || command_t_deg == 0; }
 };
 
@@ -36,7 +38,9 @@ struct SessionZero {
     int photos = 0;
 };
 
-// tables 폴더를 읽는다. 실패하면 false 와 이유.
+// load_tables: 학습용 표 읽기
+//   입력: folder (tables 폴더)
+//   출력: 성공 여부, photos (사진 자료), sessions (회차별 영점), error (실패 사유)
 bool load_tables(const std::filesystem::path& folder, std::vector<DatasetPhoto>& photos, std::vector<SessionZero>& sessions, std::string& error);
 
-}   // namespace tools
+}   // tools

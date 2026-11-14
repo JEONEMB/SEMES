@@ -1,3 +1,4 @@
+// 3단계: 검출한 나사 조합의 계산식으로 Y, T 계산
 #include "steps/03_compute_yt.hpp"
 #include <fstream>
 #include <sstream>
@@ -9,6 +10,9 @@ namespace {
 // 가능한 나사 조합 16가지 (없음 포함)
 const char* const kSetNames[] = {"1234", "234", "134", "124", "123", "12", "13", "14", "23", "24", "34", "1", "2", "3", "4", "none"};
 
+// load_one_set: 조합 계산식 파일 읽기
+//   입력: path (파일 경로), screws (나사 조합)
+//   출력: 성공 여부, set (읽은 계산식), error (실패 사유)
 bool load_one_set(const std::string& path, const std::string& screws, CoefficientSet& set, std::string& error) {
     std::ifstream file(path);
     if (!file) { error = "계수 파일을 읽지 못했습니다: " + path; return false; }
@@ -21,7 +25,7 @@ bool load_one_set(const std::string& path, const std::string& screws, Coefficien
         std::string name;
         double mean, scale, weight_y, weight_t;
         cells >> name;
-        if (name == "name") continue;   // 머리줄
+        if (name == "name") continue;   // 열 이름 행
         if (!(cells >> mean >> scale >> weight_y >> weight_t)) { error = "계수 파일의 줄을 읽지 못했습니다: " + path; return false; }
         if (name == "intercept") { set.intercept_y = weight_y; set.intercept_t = weight_t; continue; }
         const int index = value_index_of(name);
@@ -38,14 +42,20 @@ bool load_one_set(const std::string& path, const std::string& screws, Coefficien
     return true;
 }
 
-}   // namespace
+}   // 파일 내부
 
+// value_index_of: 측정값 이름 조회
+//   입력: name (qr, screw1~screw4)
+//   출력: 값 번호 0~4. 미등록 이름은 -1
 int value_index_of(const std::string& name) {
     for (int i = 0; i < kValueCount; ++i)
         if (name == kValueNames[i]) return i;
     return -1;
 }
 
+// load_coefficient_sets: 나사 16조합의 계산식 읽기
+//   입력: data_folder (모델 폴더)
+//   출력: 성공 여부, sets (계산식 목록), error (실패 사유)
 bool load_coefficient_sets(const std::string& data_folder, std::vector<CoefficientSet>& sets, std::string& error) {
     sets.clear();
     for (const char* name : kSetNames) {
@@ -56,12 +66,18 @@ bool load_coefficient_sets(const std::string& data_folder, std::vector<Coefficie
     return true;
 }
 
+// choose_coefficient_set: 검출 나사에 맞는 계산식 선택
+//   입력: sets (계산식 목록), found (나사별 검출 여부)
+//   출력: 해당 조합의 계산식. 없으면 nullptr(없음)
 const CoefficientSet* choose_coefficient_set(const std::vector<CoefficientSet>& sets, const std::array<bool, 4>& found) {
     for (const CoefficientSet& set : sets)
         if (set.uses_screw == found) return &set;
     return nullptr;
 }
 
+// compute_yt: 이동량에서 Y, T 계산
+//   입력: set (조합 계산식), values (QR, 나사 1~4의 가로 이동 px)
+//   출력: YT (영점 차감 전 mm와 도)
 YT compute_yt(const CoefficientSet& set, const double values[kValueCount]) {
     YT result{set.intercept_y, set.intercept_t};
     for (int i = 0; i < kValueCount; ++i) {
@@ -73,4 +89,4 @@ YT compute_yt(const CoefficientSet& set, const double values[kValueCount]) {
     return result;
 }
 
-}   // namespace alignment
+}   // alignment

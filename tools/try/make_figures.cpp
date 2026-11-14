@@ -1,5 +1,6 @@
-﻿// 사용: make_figures [모델_폴더 실촬영_폴더 출력_폴더]
-// 인자를 생략하면 패키지 루트의 data/model, data/new_photos, docs/시각화를 쓴다.
+// 보고서 그림 생성: 실촬영 사례와 합성 사례
+// 사용: make_figures [모델_폴더 실촬영_폴더 출력_폴더]
+// 기본 경로: data/model, data/new_photos, docs/시각화
 #include "figure_text.hpp"
 #include "alignment.hpp"
 #include "common/photo_files.hpp"
@@ -26,6 +27,9 @@ namespace {
 const cv::Scalar kWhite(248, 249, 250), kRed(104, 111, 255), kYellow(90, 222, 255), kGreen(144, 230, 103);
 const cv::Size kFigureSize(1440, 810);
 
+// number: 부호를 포함한 측정값 표시
+//   입력: value (측정값), digits (소수 자릿수)
+//   출력: 부호와 소수 자릿수를 맞춘 문자열
 std::string number(double value, int digits = 4) {
     if (!std::isfinite(value)) return "—";
     std::ostringstream out;
@@ -40,6 +44,9 @@ struct Parts {
     std::string search;
 };
 
+// inspect: 사진의 QR과 나사 상태 확인
+//   입력: reference (기준 사진과 위치), photo (확인할 사진)
+//   출력: QR 위치, 나사 위치, 측정 결과
 Parts inspect(const Reference& reference, const cv::Mat& photo) {
     Parts parts;
     if (photo.size() != kPhotoRect.size()) return parts;
@@ -60,6 +67,9 @@ Parts inspect(const Reference& reference, const cv::Mat& photo) {
     return parts;
 }
 
+// dashed_line: 두 점 사이 점선 표시
+//   입력: image (그림), a와 b (양 끝 위치)
+//   출력: 없음 (image에 점선 추가)
 void dashed_line(cv::Mat& image, cv::Point a, cv::Point b) {
     const double length = cv::norm(b - a);
     for (double pos = 0; pos < length; pos += 12)
@@ -79,6 +89,9 @@ struct Example {
     bool day_zero = false;
 };
 
+// draw_parts: 검출한 QR과 나사 위치 표시
+//   입력: image (그림), reference (기준), parts (검출 결과), ink (색), 표시 설정
+//   출력: 없음 (image에 위치와 이름 추가)
 void draw_parts(cv::Mat& image, const Reference& reference, const Parts& parts, const cv::Scalar& ink,
                 bool show_screws, bool missing_qr_only) {
     const double scale = double(image.cols) / kPhotoWidth;
@@ -121,6 +134,9 @@ void draw_parts(cv::Mat& image, const Reference& reference, const Parts& parts, 
     }
 }
 
+// draw: 단계별 측정 설명 그림 생성
+//   입력: example (사례), reference (기준), parts (측정 결과), 표시 단계와 설정
+//   출력: 설명과 수치를 넣은 그림
 cv::Mat draw(const Example& example, const Reference& reference, const Parts& parts, int step = 8,
              bool show_parts = true) {
     cv::Mat small, image;
@@ -130,7 +146,7 @@ cv::Mat draw(const Example& example, const Reference& reference, const Parts& pa
     const auto& result = example.result;
     const bool failed = result.status == Status::Failed;
     const auto& color = failed ? kRed : example.zero_photo ? kGreen : kYellow;
-    // 글자가 놓이는 모서리만 어둡게 해 장비와 검출 위치의 밝기를 살린다.
+    // 글자 뒤쪽만 어둡게 처리. 장비와 검출 위치 밝기 유지
     for (int y = 0; y < image.rows; ++y) {
         const double top = std::clamp((170.0 - y) / 65.0, 0.0, 1.0);
         const double bottom = std::clamp((y - image.rows + 126.0) / 55.0, 0.0, 1.0);
@@ -196,6 +212,9 @@ cv::Mat draw(const Example& example, const Reference& reference, const Parts& pa
     return image;
 }
 
+// frame: 여러 사례 그림을 한 장으로 배치
+//   입력: output (저장 경로), pictures (사례 그림)
+//   출력: 없음 (요약 그림 저장)
 void frame(const fs::path& output, const std::vector<cv::Mat>& pictures) {
     if (pictures.empty()) return;
     const int w = kFigureSize.width, h = kFigureSize.height, gap = 20;
@@ -207,13 +226,16 @@ void frame(const fs::path& output, const std::vector<cv::Mat>& pictures) {
     scene::save_png(output, sheet);
 }
 
-// ---- 탐색 창 그림: QR 마다 한 줄씩, 그 QR 을 찾는 창과 찾은 자리를 보여 준다 ----
+// QR별 탐색 영역과 검출 위치 그림
 
 const int kWindowCropX = 1150, kWindowCropWidth = 1500;   // px. 사진에서 QR 3개와 넓은 창이 다 들어오는 가로 구간
-const int kWindowMargin = 44;                             // px. 창 위아래로 더 보여 주는 여백 (치수 글자 자리)
+const int kWindowMargin = 44;                             // px. 창 위아래로 더 보여 주는 여백 (치수 문자 표시 영역)
 const int kWindowTop = 104, kWindowLabelHeight = 40, kWindowGap = 14;   // 그림 px. 제목, QR 이름 줄, 줄 사이
 const double kWindowScale = double(kFigureSize.width) / kWindowCropWidth;
 
+// dashed_box: 사각 영역을 점선으로 표시
+//   입력: image (그림), box (영역), color (색)
+//   출력: 없음 (image에 점선 테두리 추가)
 void dashed_box(cv::Mat& image, const cv::Rect& box, const cv::Scalar& color) {
     const cv::Point corners[] = {box.tl(), {box.br().x, box.y}, box.br(), {box.x, box.br().y}};
     for (int i = 0; i < 4; ++i) {
@@ -224,14 +246,16 @@ void dashed_box(cv::Mat& image, const cv::Rect& box, const cv::Scalar& color) {
     }
 }
 
-// QR 하나를 가로 ±half_width 로 찾는 창 (01_find_qr 의 find_one 과 같은 식)
+// search_window: QR 탐색 영역 계산
+//   입력: qr_box (QR 영역), half_width (양옆으로 찾을 거리 px)
+//   출력: QR 주변 탐색 영역. 사진 경계 제한은 호출부에서 처리
 cv::Rect search_window(const cv::Rect& qr_box, int half_width) {
     return cv::Rect(qr_box.x - half_width, qr_box.y - kSearchHalfHeight, qr_box.width + 2 * half_width, qr_box.height + 2 * kSearchHalfHeight);
 }
 
-// window_figure: 탐색 창 그림 한 장
-//   입력: gray (회색 사진), half_width (창 반너비 px), title, subtitle, show_narrow (좁은 창을 빨간 점선으로 같이 그릴지)
-//   출력: 그림 (QR 1, 2, 3 을 위에서부터 한 줄씩)
+// window_figure: QR 탐색 창 그림 생성
+//   입력: reference (기준), gray (사진), half_width (탐색 거리), title과 subtitle (제목), show_narrow (좁은 창 표시)
+//   출력: QR 1~3을 한 줄씩 배치한 영상
 cv::Mat window_figure(const Reference& reference, const cv::Mat& gray, int half_width, const std::string& title,
                       const std::string& subtitle, bool show_narrow) {
     const QrFinder finder(reference);
@@ -248,7 +272,7 @@ cv::Mat window_figure(const Reference& reference, const cv::Mat& gray, int half_
     for (int k = 0; k < 3; ++k) {
         const cv::Rect box = reference.qr[k];
         const int strip_y = box.y - kSearchHalfHeight - kWindowMargin;
-        // 사진 좌표의 상자를 이 줄의 그림 좌표로 옮긴다
+        // 사진 좌표에서 그림 좌표로 변환
         const auto on_strip = [&](const cv::Rect& r) {
             return cv::Rect(cvRound((r.x - kWindowCropX) * kWindowScale), cvRound((r.y - strip_y) * kWindowScale),
                             cvRound(r.width * kWindowScale), cvRound(r.height * kWindowScale));
@@ -295,7 +319,7 @@ cv::Mat window_figure(const Reference& reference, const cv::Mat& gray, int half_
     return sheet;
 }
 
-} // namespace
+} // 파일 내부
 
 namespace {
 
@@ -305,6 +329,9 @@ struct DayZero {
     bool command_zero = false;
 };
 
+// find_day_zero: 같은 날 촬영한 사진으로 영점 설정
+//   입력: photos (사진 목록), example (설명용 사진 경로)
+//   출력: 영점값과 사용 사진 목록. 확보하지 못하면 빈 결과
 DayZero find_day_zero(const std::vector<tools::PhotoFile>& photos, const fs::path& example) {
     DayZero zero;
     std::vector<cv::Mat> actual_zero;
@@ -326,7 +353,7 @@ DayZero find_day_zero(const std::vector<tools::PhotoFile>& photos, const fs::pat
         }
     }
     zero.sources.clear();
-    // 명령 0 사진이 없을 때는 같은 날 근접 명령 사진 5장이 공유하는 오프셋을 추정한다.
+    // 명령 0 사진 부재 시 같은 날 근접 명령 5장으로 영점 추정
     for (const auto& photo : photos) {
         if (photo.path == example || !photo.has_command || std::abs(photo.command_y_mm) > 0.25 ||
             std::abs(photo.command_t_deg) > 0.05) continue;
@@ -345,11 +372,14 @@ DayZero find_day_zero(const std::vector<tools::PhotoFile>& photos, const fs::pat
     return {};
 }
 
+// local_shift: 나사 주변만 가로 이동
+//   입력: photo (원본), center (나사 중심), dx (가로 이동 px)
+//   출력: 주변 경계를 원본과 섞은 이동 사진
 cv::Mat local_shift(const cv::Mat& photo, cv::Point center, double dx) {
     const cv::Rect region(center.x - 90, center.y - 90, 181, 181);
     const cv::Mat shifted = scene::shift(photo(region), dx, 0);
     cv::Mat result = photo.clone();
-    // 중심은 이동한 조각을 쓰고, 가장자리 22 px에서 원본과 자연스럽게 잇는다.
+    // 이동 영역과 원본의 경계 22 px 혼합
     for (int y = 0; y < region.height; ++y) {
         for (int x = 0; x < region.width; ++x) {
             const double weight = std::min({x, y, region.width - 1 - x, region.height - 1 - y, 22}) / 22.0;
@@ -360,6 +390,9 @@ cv::Mat local_shift(const cv::Mat& photo, cv::Point center, double dx) {
     return result;
 }
 
+// generate: 보고서용 측정 사례 그림 생성
+//   입력: model (모델 폴더), input (실촬영 폴더), output (저장 폴더)
+//   출력: 없음 (사례 그림과 측정 근거 표 저장)
 void generate(const std::string& model, const fs::path& input, const fs::path& output) {
     Reference reference;
     std::string error;
@@ -396,7 +429,7 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
         evidence << '\t' << result.message << '\n';
     };
 
-    // 실촬영에서 확인한 정상과 학습 범위 초과 사례. 날짜를 바꿀 때 모델을 초기화한다.
+    // 실촬영 정상 및 범위 초과 사례. 날짜 변경 시 모델 초기화
     const auto load_example = [&](const char* day, const char* relative, const char* description) {
         initialize_model();
         const auto folder = input / day;
@@ -450,7 +483,7 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
         scene::save_png(output / "step" / ("0" + std::to_string(step) + ".png"), draw(example, reference, parts, step));
     }
 
-    // 1단계의 탐색 창 두 가지. 넓은 창은 같은 사진을 오른쪽으로 옮겨서 보여 준다 (재현용 이미지)
+    // 좁은 창과 넓은 창 비교. 넓은 창은 오른쪽 이동 합성
     const int window_shift_px = 180;
     const std::string narrow_px = std::to_string(kNarrowHalfWidth), wide_px = std::to_string(kWideHalfWidth);
     scene::save_png(output / "step" / "03_narrow.png", window_figure(reference, base.photo, kNarrowHalfWidth,
@@ -552,8 +585,11 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
     if (!evidence || !zeros) throw std::runtime_error("사례 표를 쓰지 못했습니다");
 }
 
-} // namespace
+} // 파일 내부
 
+// wmain: 보고서 그림 생성: 실촬영 사례와 합성 사례
+//   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
+//   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int wmain(int argc, wchar_t** argv) {
     if (argc != 1 && argc != 4) {
         std::cerr << "사용: make_figures [모델_폴더 실촬영_폴더 출력_폴더]\n";

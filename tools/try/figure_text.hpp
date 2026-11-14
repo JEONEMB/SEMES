@@ -1,4 +1,5 @@
-﻿#pragma once
+#pragma once
+// 문서 그림용 한글 표시. 글자 모양을 그려 사진에 덧붙이기
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -7,7 +8,9 @@
 #include <stdexcept>
 #include <string>
 
-// 맑은 고딕 보통 굵기를 8비트 글자 마스크로 그린다.
+// text_mask: 맑은 고딕 글자 모양 그리기
+//   입력: text (UTF-8), height (글자 높이 px)
+//   출력: 글자 부분의 밝기를 표시한 영상. 실패 시 예외
 inline cv::Mat text_mask(const std::string& text, int height) {
     const int length = MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, text.data(), int(text.size()), nullptr, 0);
     if (length == 0) throw std::runtime_error("글자를 UTF-8로 읽지 못했습니다");
@@ -47,6 +50,9 @@ inline cv::Mat text_mask(const std::string& text, int height) {
     return mask;
 }
 
+// write_text: 영상에 한글 합성
+//   입력: picture (사진), text (표시할 글자), top (글자 위치), height (글자 높이), color (글자 색), right (오른쪽 정렬 여부)
+//   출력: 없음 (picture 수정)
 inline void write_text(cv::Mat& picture, const std::string& text, cv::Point top, int height,
                        const cv::Scalar& color, bool right = false) {
     if (text.empty()) return;

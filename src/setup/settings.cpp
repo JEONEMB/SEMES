@@ -1,10 +1,14 @@
-﻿#include "setup/settings.hpp"
+// 기본값 적용 후 파일 설정 반영. 외부 프로그램에서 호출할 함수: initialize
+#include "setup/settings.hpp"
 #include <opencv2/core.hpp>
 #include <filesystem>
 #include <fstream>
 
 namespace alignment {
 
+// load_settings: 측정 설정 읽기
+//   입력: settings_file (비우면 기본값)
+//   출력: 성공 여부, settings (읽은 설정), error (실패 사유)
 bool load_settings(const std::string& settings_file, Settings& settings, std::string& error) {
     settings = Settings();
     if (settings_file.empty()) return true;
@@ -41,4 +45,4 @@ bool load_settings(const std::string& settings_file, Settings& settings, std::st
     return true;
 }
 
-}   // namespace alignment
+}   // alignment

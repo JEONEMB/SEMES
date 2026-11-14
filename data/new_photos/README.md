@@ -27,13 +27,15 @@ data/new_photos/
 build\Release\prepare_dataset.exe data/new_photos
 ```
 
-`tables/` 가 이미 있으면 덮어쓰지 않고 멈춥니다. 다시 만들려면 `tables/` 를 지우고 실행합니다.
+`tables/` 가 이미 있으면 덮어쓰지 않고 멈춥니다. 다시 만들려면 `--output <새 표 폴더>` 를 지정합니다. 기본 규칙은 `config/data_preprocessing.tsv` 이며, 다른 규칙은 `--rules <규칙.tsv>` 로 지정합니다.
 
 | 파일 | 내용 |
 |---|---|
 | `photos.tsv` | 사진 번호, 회차, 경로, 받은 명령값 |
 | `features.tsv` | 사진마다 잰 QR, 나사 1~4 의 가로 이동 |
-| `labels.tsv` | 학습용 정답 (명령 − 그 회차의 영점 어긋남) |
+| `labels.tsv` | 학습용 정답 (확인된 명령 − 그 회차의 영점 어긋남) |
 | `splits.tsv` | 학습, 평가에 쓰는지, 시험 나누기 |
 | `sessions.tsv` | 회차별 영점 어긋남 |
+| `preprocessing.tsv` | 원본 명령, 확인값, 학습 사용 여부와 사유 |
+| `preprocessing_rules.tsv`, `preprocessing_version.txt` | 적용 규칙 사본과 표 형식 버전 |
 | `prepare_report.txt` | 사진 수, 뺀 사진과 이유 |
