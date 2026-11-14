@@ -19,12 +19,6 @@ namespace {
 
 const cv::Scalar kGreen(60, 200, 60), kRed(50, 50, 230), kBlue(230, 140, 40), kYellow(40, 220, 240), kWhite(255, 255, 255), kBlack(0, 0, 0);
 
-cv::Mat read_gray(const std::string& path) {
-    std::ifstream file(path, std::ios::binary);
-    const std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
-}
-
 void save(const std::string& folder, const std::string& name, const cv::Mat& picture) {
     std::vector<unsigned char> bytes;
     cv::imencode(".png", picture, bytes);
@@ -206,7 +200,7 @@ int main(int argc, char** argv) {
     Reference reference;
     std::string error;
     if (!load_reference(argv[1], reference, error)) { std::cerr << error << "\n"; return 1; }
-    const cv::Mat y_photo = read_gray(argv[2]), t_photo = read_gray(argv[3]);
+    const cv::Mat y_photo = alignment::read_photo(argv[2]), t_photo = alignment::read_photo(argv[3]);
     if (y_photo.empty() || t_photo.empty()) { std::cerr << "사진을 읽지 못했습니다\n"; return 1; }
     const std::string out = argv[4];
 

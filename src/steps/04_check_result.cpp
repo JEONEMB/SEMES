@@ -9,12 +9,6 @@ namespace {
 
 const char* const kCheckNames[] = {"1234", "234", "134", "124", "123", "12", "13", "14", "23", "24", "34"};
 
-int value_index(const std::string& name) {
-    if (name == "qr") return 0;
-    if (name.size() == 6 && name.compare(0, 5, "screw") == 0 && name[5] >= '1' && name[5] <= '4') return name[5] - '0';
-    return -1;
-}
-
 // 파일이 없으면 found = false 로 두고 true 를 돌려준다 (점검식이 없는 조합은 점검하지 않는다).
 bool load_one_check(const std::string& path, const std::string& screws, AgreementCheck& check, bool& found, std::string& error) {
     std::ifstream file(path);
@@ -31,7 +25,7 @@ bool load_one_check(const std::string& path, const std::string& screws, Agreemen
         if (name == "name") continue;   // 머리줄
         if (name == "threshold") { cells >> check.limit; continue; }
         AgreementCheck::Row row;
-        row.value_index = value_index(name);
+        row.value_index = value_index_of(name);
         for (double& c : row.c) cells >> c;
         cells >> row.usual_spread;
         if (row.value_index < 0 || !cells || !(row.usual_spread > 0)) { error = "점검식 파일의 줄을 읽지 못했습니다: " + path; return false; }
@@ -60,16 +54,16 @@ const AgreementCheck* find_agreement_check(const std::vector<AgreementCheck>& ch
     return nullptr;
 }
 
-void expected_differences(const AgreementCheck& check, const double values[5], double y_mm, double t_deg, double differences[5]) {
-    for (int i = 0; i < 5; ++i) differences[i] = 0;
+void expected_differences(const AgreementCheck& check, const double values[kValueCount], double y_mm, double t_deg, double differences[kValueCount]) {
+    for (int i = 0; i < kValueCount; ++i) differences[i] = 0;
     for (const AgreementCheck::Row& row : check.rows) {
         const double expected = row.c[0] + row.c[1] * y_mm + row.c[2] * t_deg + row.c[3] * y_mm * y_mm + row.c[4] * y_mm * t_deg + row.c[5] * t_deg * t_deg;
         differences[row.value_index] = values[row.value_index] - expected;
     }
 }
 
-AgreementResult check_values_agree(const AgreementCheck& check, const double values[5], double y_mm, double t_deg, const double baseline[5]) {
-    double differences[5];
+AgreementResult check_values_agree(const AgreementCheck& check, const double values[kValueCount], double y_mm, double t_deg, const double baseline[kValueCount]) {
+    double differences[kValueCount];
     expected_differences(check, values, y_mm, t_deg, differences);
     AgreementResult result;
     result.checked = true;

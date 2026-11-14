@@ -1,5 +1,4 @@
 #include "photo_files.hpp"
-#include <opencv2/imgcodecs.hpp>
 #include <algorithm>
 #include <cctype>
 #include <cmath>
@@ -46,12 +45,6 @@ std::vector<std::string> list_subfolders(const fs::path& folder) {
         if (entry.is_directory()) names.push_back(entry.path().filename().u8string());
     std::sort(names.begin(), names.end());
     return names;
-}
-
-cv::Mat read_gray_photo(const fs::path& path) {
-    std::ifstream file(path, std::ios::binary);
-    const std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
 }
 
 bool is_zero_command(const PhotoFile& photo) {

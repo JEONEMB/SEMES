@@ -1,28 +1,25 @@
 #include "common/reference.hpp"
+#include "alignment.hpp"
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
+#include <filesystem>
 #include <fstream>
 #include <vector>
 
 namespace alignment {
 
-namespace {
-
-// 한글 경로에서도 읽히도록 파일을 바이트로 읽어 풀어낸다.
-cv::Mat read_gray_image(const std::string& path) {
-    std::ifstream file(path, std::ios::binary);
+// 파일을 바이트로 읽어 풀어낸다 (cv::imread 는 한글 경로를 못 읽는다).
+// 경로를 UTF-8 로 열어 보고, 안 열리면 받은 글자 그대로(Windows 기본 문자 집합) 다시 연다.
+cv::Mat read_photo(const std::string& path) {
+    std::ifstream file;
+    try { file.open(std::filesystem::u8path(path), std::ios::binary); } catch (const std::exception&) {}
+    if (!file.is_open()) { file.clear(); file.open(path, std::ios::binary); }
     const std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
 }
 
-bool inside_photo(const cv::Rect& box) {
-    return (box & cv::Rect(0, 0, kPhotoWidth, kPhotoHeight)) == box;
-}
-
-}   // namespace
-
 bool load_reference(const std::string& data_folder, Reference& reference, std::string& error) {
-    reference.photo = read_gray_image(data_folder + "/center.bmp");
+    reference.photo = read_photo(data_folder + "/center.bmp");
     if (reference.photo.empty()) { error = "center.bmp 를 읽지 못했습니다: " + data_folder; return false; }
     if (reference.photo.cols != kPhotoWidth || reference.photo.rows != kPhotoHeight) { error = "center.bmp 가 3840×2160 이 아닙니다"; return false; }
 

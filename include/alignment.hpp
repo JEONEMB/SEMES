@@ -68,4 +68,9 @@ void clear_zero();
 //   출력: Result (새 기준에서의 y_mm, t_deg)
 Result set_reference_from_photos(const std::vector<cv::Mat>& center_photos);
 
+// read_photo: 사진 파일 읽기 (한글이 든 경로도 읽힘)
+//   입력: path (사진 파일 경로, UTF-8. bmp, png 등)
+//   출력: 회색 사진 (못 읽으면 빈 Mat). 그대로 measure_alignment 에 넣을 수 있음
+cv::Mat read_photo(const std::string& path);
+
 }   // namespace alignment

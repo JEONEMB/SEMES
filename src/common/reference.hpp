@@ -8,6 +8,10 @@ namespace alignment {
 
 const int kPhotoWidth = 3840;
 const int kPhotoHeight = 2160;
+const cv::Rect kPhotoRect(0, 0, kPhotoWidth, kPhotoHeight);   // 사진 전체
+
+// 사각형이 사진 안에 다 들어가는지.
+inline bool inside_photo(const cv::Rect& area) { return (area & kPhotoRect) == area; }
 
 struct Reference {
     cv::Mat photo;        // 기준 사진 (회색, 3840×2160)

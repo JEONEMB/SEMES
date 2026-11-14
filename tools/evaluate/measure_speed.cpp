@@ -89,7 +89,7 @@ int main(int argc, char** argv) {
         std::vector<double> read_times, measure_times, total_times;
         for (size_t i = 0; i < paths.size(); ++i) {
             const auto read_start = Clock::now();
-            const cv::Mat photo = read_gray_photo(paths[i]);
+            const cv::Mat photo = alignment::read_photo(paths[i].u8string());
             const double read_ms = milliseconds_since(read_start);
             const auto measure_start = Clock::now();
             alignment::measure_alignment(photo);

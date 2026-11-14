@@ -1,7 +1,6 @@
 // 예제: 사진 한 장을 넣고 Y, T 와 단계별 값을 본다.
 // 사용: measure_one <model 폴더> <사진> [영점으로 쓸 센터 사진]
 #include "alignment.hpp"
-#include <opencv2/imgcodecs.hpp>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -10,12 +9,6 @@
 namespace {
 
 // 한글 경로에서도 읽히도록 파일을 바이트로 읽어 풀어낸다.
-cv::Mat read_photo(const std::string& path) {
-    std::ifstream file(path, std::ios::binary);
-    const std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
-}
-
 const char* status_name(alignment::Status status) {
     return status == alignment::Status::Ok ? "정상" : status == alignment::Status::Warning ? "경고" : "실패";
 }
@@ -31,11 +24,11 @@ int main(int argc, char** argv) {
     if (ready.status == alignment::Status::Failed) return 1;
 
     if (argc >= 4) {
-        const alignment::Result zero = alignment::set_zero_from_photos({read_photo(argv[3])});
+        const alignment::Result zero = alignment::set_zero_from_photos({alignment::read_photo(argv[3])});
         std::cout << "영점: Y " << zero.y_mm << " mm, T " << zero.t_deg << " 도 (기준 사진에서 떨어진 양)\n";
     }
 
-    const alignment::Result result = alignment::measure_alignment(read_photo(argv[2]));
+    const alignment::Result result = alignment::measure_alignment(alignment::read_photo(argv[2]));
     std::cout << std::fixed << std::setprecision(4);
     std::cout << "1단계  QR 가로 이동      " << result.qr_shift_px << " px\n";
     std::cout << "2단계  나사 가로 이동    ";

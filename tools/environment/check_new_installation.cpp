@@ -28,7 +28,6 @@ using namespace scene;
 
 namespace {
 
-const double kToleranceYmm = 0.045, kToleranceTdeg = 0.01;
 const int kContentChanges[] = {0, 1, 3};          // 내용이 바뀐 QR 수
 const double kQrSizes[] = {0.8, 1.0, 1.2};        // QR 인쇄 크기 배율
 const double kDistanceScales[] = {0.98, 1.0, 1.02};   // 화면 배율 (0.98 = 약 2% 멀어짐)
@@ -128,65 +127,93 @@ std::vector<std::vector<std::string>> read_tsv(const fs::path& path) {
 
 const char* status_name(alignment::Status s) { return s == alignment::Status::Ok ? "Ok" : s == alignment::Status::Warning ? "Warning" : "Failed"; }
 
-}   // namespace
-
-int main(int argc, char** argv) {
-    if (argc != 6) { std::cerr << "사용: check_new_installation <model 폴더> <list.tsv> <expected.tsv> <작업 폴더> <출력 폴더>\n"; return 2; }
-    const fs::path data = fs::u8path(argv[1]), work = fs::u8path(argv[4]), out = fs::u8path(argv[5]);
-    fs::create_directories(work);
-    fs::create_directories(out);
-    if (alignment::initialize(data.u8string()).status == alignment::Status::Failed) return 1;
-    const cv::Mat center = read_gray(data / "center.bmp");
-    const Layout layout = read_layout(data);
-
-    // 예제 사진: 기대값과, 지금 기준으로 잰 QR 이동 (변화를 같은 자리에 주려고)
+// 예제 사진마다 기대값과, 지금 기준으로 잰 QR 이동을 읽는다 (변화를 같은 자리에 주려고)
+std::vector<SamplePhoto> read_samples(const fs::path& list_file, const fs::path& expected_file) {
     std::vector<SamplePhoto> samples;
-    const auto expected = read_tsv(fs::u8path(argv[3]));
-    for (const auto& row : read_tsv(fs::u8path(argv[2]))) {
+    const auto expected = read_tsv(expected_file);
+    for (const auto& row : read_tsv(list_file)) {
         SamplePhoto s;
-        s.gray = read_gray(fs::u8path(row.at(1)));
-        for (const auto& e : expected) if (e.at(0) == row.at(0)) { s.expected_y = std::stod(e.at(1)); s.expected_t = std::stod(e.at(2)); }
+        s.gray = alignment::read_photo(row.at(1));
+        for (const auto& e : expected)
+            if (e.at(0) == row.at(0)) { s.expected_y = std::stod(e.at(1)); s.expected_t = std::stod(e.at(2)); }
         alignment::clear_zero();
         s.qr_shift_px = alignment::measure_alignment(s.gray).qr_shift_px;
         samples.push_back(s);
     }
+    return samples;
+}
+
+// 새로 등록한 뒤 예제 사진을 잰 결과
+struct SampleScore {
+    int failed = 0, passed = 0;
+    double worst_y = 0, worst_t = 0;   // 기대값과의 차이 최대
+};
+
+SampleScore score_samples(const std::vector<SamplePhoto>& samples, const cv::Mat& changed_qrs, const Layout& layout, const Case& c) {
+    SampleScore score;
+    for (const SamplePhoto& s : samples) {
+        const alignment::Result r = alignment::measure_alignment(apply_case(s.gray, changed_qrs, layout, c, s.qr_shift_px));
+        if (r.status == alignment::Status::Failed) { ++score.failed; continue; }
+        const double ey = r.y_mm - s.expected_y, et = r.t_deg - s.expected_t;
+        score.worst_y = std::max(score.worst_y, std::abs(ey));
+        score.worst_t = std::max(score.worst_t, std::abs(et));
+        score.passed += std::abs(ey) <= kToleranceYmm && std::abs(et) <= kToleranceTdeg;
+    }
+    return score;
+}
+
+// 문서에 넣을 그림으로 저장하는 경우인지
+bool is_shown_in_document(const Case& c) {
+    return (c.qr_size != 1 && c.distance == 1 && c.content == 0) || (c.content == 3 && c.qr_size == 1.2 && c.distance == 0.98) ||
+           (c.content == 1 && c.qr_size == 1 && c.distance == 1);
+}
+
+struct Folders { fs::path model, work, out; };
+
+// 한 경우를 (가) 그대로 쓸 때와 (나) 새로 등록할 때로 재서 표에 한 줄 쓴다.
+void check_case(const Case& c, const cv::Mat& center, const Layout& layout, const std::vector<SamplePhoto>& samples, const alignment::Result& base,
+                const Folders& folders, std::ostream& table) {
+    // (가) 그대로 쓰면
+    alignment::initialize(folders.model.u8string());
+    const cv::Mat changed_qrs = change_qrs(center, layout, c);
+    const cv::Mat changed_center = c.distance != 1 ? scale_rotate(changed_qrs, c.distance, 0) : changed_qrs;
+    const alignment::Result as_is = alignment::measure_alignment(changed_center);
+    const bool as_is_failed = as_is.status == alignment::Status::Failed;
+    // (나) 새로 등록하면
+    const fs::path registered = folders.work / c.name();
+    write_registered_data(folders.model, registered, changed_center, transform_layout(layout, c, center.size()));
+    const bool ready = alignment::initialize(registered.u8string()).status != alignment::Status::Failed;
+    const SampleScore score = ready ? score_samples(samples, changed_qrs, layout, c) : SampleScore();
+
+    table << c.name() << '\t' << c.content << '\t' << c.qr_size << '\t' << c.distance << '\t' << status_name(as_is.status) << '\t' << as_is.code << '\t'
+          << (as_is_failed ? std::string("nan") : std::to_string(as_is.y_mm - base.y_mm)) << '\t' << (as_is_failed ? std::string("nan") : std::to_string(as_is.t_deg - base.t_deg)) << '\t'
+          << ready << '\t' << score.failed << '\t' << score.passed << '\t' << samples.size() << '\t' << score.worst_y << '\t' << score.worst_t << '\n';
+    std::cout << c.name() << "  그대로: " << status_name(as_is.status) << " " << as_is.code << "  |  등록 후: 통과 " << score.passed << "/" << samples.size()
+              << ", 실패 " << score.failed << ", 최대 오차 Y " << score.worst_y << " T " << score.worst_t << "\n";
+    if (is_shown_in_document(c))
+        save_png(folders.out / ("installation_" + c.name() + ".png"),
+                 labeled_view(changed_center, "QR changed " + std::to_string(c.content) + ", QR size x" + std::to_string(c.qr_size).substr(0, 3) + ", distance x" + std::to_string(c.distance).substr(0, 4)));
+}
+
+}   // namespace
+
+int main(int argc, char** argv) {
+    if (argc != 6) { std::cerr << "사용: check_new_installation <model 폴더> <list.tsv> <expected.tsv> <작업 폴더> <출력 폴더>\n"; return 2; }
+    const Folders folders{fs::u8path(argv[1]), fs::u8path(argv[4]), fs::u8path(argv[5])};
+    fs::create_directories(folders.work);
+    fs::create_directories(folders.out);
+    if (alignment::initialize(folders.model.u8string()).status == alignment::Status::Failed) return 1;
+    const cv::Mat center = alignment::read_photo((folders.model / "center.bmp").u8string());
+    const Layout layout = read_layout(folders.model);
+
+    const std::vector<SamplePhoto> samples = read_samples(fs::u8path(argv[2]), fs::u8path(argv[3]));
     alignment::clear_zero();
     const alignment::Result base = alignment::measure_alignment(center);
 
-    std::ofstream table(out / "installation_results.tsv", std::ios::binary);
+    std::ofstream table(folders.out / "installation_results.tsv", std::ios::binary);
     table << std::setprecision(5) << "case\tqr_changed\tqr_size\tdistance\tas_is_status\tas_is_code\tas_is_dY\tas_is_dT\tregistered\tsample_failed\tsample_pass\tsample_total\tmax_eY_mm\tmax_eT_deg\n";
     for (int content : kContentChanges)
         for (double size : kQrSizes)
-            for (double distance : kDistanceScales) {
-                const Case c{content, size, distance};
-                // (가) 그대로 쓰면
-                alignment::initialize(data.u8string());
-                const cv::Mat changed_qrs = change_qrs(center, layout, c);
-                const cv::Mat changed_center = c.distance != 1 ? scale_rotate(changed_qrs, c.distance, 0) : changed_qrs;
-                const alignment::Result as_is = alignment::measure_alignment(changed_center);
-                const bool as_is_failed = as_is.status == alignment::Status::Failed;
-                // (나) 새로 등록하면
-                const fs::path registered = work / c.name();
-                write_registered_data(data, registered, changed_center, transform_layout(layout, c, center.size()));
-                const bool ready = alignment::initialize(registered.u8string()).status != alignment::Status::Failed;
-                int failed = 0, passed = 0;
-                double worst_y = 0, worst_t = 0;
-                if (ready)
-                    for (const SamplePhoto& s : samples) {
-                        const alignment::Result r = alignment::measure_alignment(apply_case(s.gray, changed_qrs, layout, c, s.qr_shift_px));
-                        if (r.status == alignment::Status::Failed) { ++failed; continue; }
-                        const double ey = r.y_mm - s.expected_y, et = r.t_deg - s.expected_t;
-                        worst_y = std::max(worst_y, std::abs(ey));
-                        worst_t = std::max(worst_t, std::abs(et));
-                        passed += std::abs(ey) <= kToleranceYmm && std::abs(et) <= kToleranceTdeg;
-                    }
-                table << c.name() << '\t' << content << '\t' << size << '\t' << distance << '\t' << status_name(as_is.status) << '\t' << as_is.code << '\t'
-                      << (as_is_failed ? std::string("nan") : std::to_string(as_is.y_mm - base.y_mm)) << '\t' << (as_is_failed ? std::string("nan") : std::to_string(as_is.t_deg - base.t_deg)) << '\t'
-                      << ready << '\t' << failed << '\t' << passed << '\t' << samples.size() << '\t' << worst_y << '\t' << worst_t << '\n';
-                std::cout << c.name() << "  그대로: " << status_name(as_is.status) << " " << as_is.code << "  |  등록 후: 통과 " << passed << "/" << samples.size()
-                          << ", 실패 " << failed << ", 최대 오차 Y " << worst_y << " T " << worst_t << "\n";
-                if ((size != 1 && distance == 1 && content == 0) || (content == 3 && size == 1.2 && distance == 0.98) || (content == 1 && size == 1 && distance == 1))
-                    save_png(out / ("installation_" + c.name() + ".png"), labeled_view(changed_center, "QR changed " + std::to_string(content) + ", QR size x" + std::to_string(size).substr(0, 3) + ", distance x" + std::to_string(distance).substr(0, 4)));
-            }
+            for (double distance : kDistanceScales) check_case(Case{content, size, distance}, center, layout, samples, base, folders, table);
     return 0;
 }

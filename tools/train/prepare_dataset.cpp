@@ -170,25 +170,9 @@ void make_splits(const std::vector<PreparedPhoto>& photos, std::vector<int>& fin
     }
 }
 
-}   // namespace
-
-int main(int argc, char** argv) {
-    if (argc < 2) { std::cerr << "사용: prepare_dataset <사진 폴더> [--data <model 폴더>]\n"; return 2; }
-    const fs::path photo_root = fs::u8path(argv[1]);
-    std::string data_folder = "data/model";
-    for (int a = 2; a + 1 < argc; ++a) if (std::string(argv[a]) == "--data") data_folder = argv[a + 1];
-
-    const fs::path tables = photo_root / kTableFolder;
-    std::string error;
-    if (!make_empty_folder(tables, error)) { std::cerr << error << "\n"; return 1; }
-    if (alignment::initialize(data_folder).status == alignment::Status::Failed) return 1;
-
-    // 1, 2. 사진 찾기, 재기
-    std::vector<std::string> sessions = list_subfolders(photo_root);
-    sessions.erase(std::remove(sessions.begin(), sessions.end(), std::string(kTableFolder)), sessions.end());   // 표 폴더는 회차가 아니다
-    if (sessions.empty()) { std::cerr << "사진 폴더가 없습니다: " << photo_root.u8string() << " (회차마다 폴더를 만들어 넣으세요)\n"; return 1; }
+// 1, 2. 회차 폴더마다 사진을 찾아 실사용과 같은 함수로 잰다. 이름에 명령값이 없는 파일은 skipped 에 적는다.
+std::vector<PreparedPhoto> measure_all_photos(const fs::path& photo_root, const std::vector<std::string>& sessions, std::vector<std::string>& skipped) {
     std::vector<PreparedPhoto> photos;
-    std::vector<std::string> skipped;
     for (const std::string& session : sessions) {
         for (const PhotoFile& file : find_photos(photo_root / fs::u8path(session))) {
             if (!file.has_command) { skipped.push_back(session + "/" + file.name + "  (이름에 명령값이 없음)"); continue; }
@@ -197,7 +181,7 @@ int main(int argc, char** argv) {
             photo.file = file;
             photo.in_range = std::abs(file.command_y_mm) <= kTrainedRangeYmm + 1e-9 && std::abs(file.command_t_deg) <= kTrainedRangeTdeg + 1e-9;
             alignment::clear_zero();
-            const alignment::Result r = alignment::measure_alignment(read_gray_photo(file.path));
+            const alignment::Result r = alignment::measure_alignment(alignment::read_photo(file.path.u8string()));
             photo.measured = r.status != alignment::Status::Failed;
             photo.values[0] = r.qr_shift_px;
             photo.all_screws = photo.measured;
@@ -209,25 +193,35 @@ int main(int argc, char** argv) {
         }
         std::cerr << "  " << session << " 측정 끝\n";
     }
+    return photos;
+}
 
-    // 3, 4, 5
-    std::vector<int> left_out;
-    const ZeroFit fit = estimate_session_zeros(photos, sessions, left_out);
-    const auto& zeros = fit.zeros;
-    // 영점 맞추기에서 빠진 사진 가운데 명령이 정말 틀려 보이는 것만 학습, 평가에서 뺀다
-    std::vector<std::string> mismatch_names, kept_names;
+// 영점 맞추기에서 빠진 사진을 설명하는 줄 (보고서용)
+struct LeftOutNotes {
+    std::vector<std::string> mismatch;   // 명령이 틀려 보여 학습, 평가에서도 뺀 사진
+    std::vector<std::string> kept;       // 영점 맞추기에서만 빼고 학습, 평가에는 쓰는 사진
+};
+
+// 영점 맞추기에서 빠진 사진 가운데 명령이 정말 틀려 보이는 것만 학습, 평가에서 뺀다 (command_mismatch 표시).
+LeftOutNotes mark_command_mismatch(std::vector<PreparedPhoto>& photos, const ZeroFit& fit, const std::vector<std::string>& sessions, const std::vector<int>& left_out) {
+    LeftOutNotes notes;
     for (int i = 0; i < int(photos.size()); ++i) {
         if (!left_out[i]) continue;
         const auto error = command_error(fit, photos[i], sessions);
-        const std::string line = photos[i].session + "/" + photos[i].file.name + "  (사진이 보여 주는 자세 − 명령: Y " + format_number(error.first, 3) + " mm, T " + format_number(error.second, 3) + " 도)";
+        const std::string line = photos[i].session + "/" + photos[i].file.name + "  (사진이 보여 주는 자세 − 명령: Y " + format_number(error.first, 3) + " mm, T " +
+                                 format_number(error.second, 3) + " 도)";
         photos[i].command_mismatch = std::abs(error.first) > kCommandErrorYmm || std::abs(error.second) > kCommandErrorTdeg;
-        (photos[i].command_mismatch ? mismatch_names : kept_names).push_back(line);
+        (photos[i].command_mismatch ? notes.mismatch : notes.kept).push_back(line);
     }
-    std::vector<int> final_check;
-    std::vector<std::array<int, kRepeatCount>> folds;
-    make_splits(photos, final_check, folds);
+    return notes;
+}
 
-    // 표 쓰기
+using SessionZeros = std::map<std::string, std::pair<double, double>>;
+using Folds = std::vector<std::array<int, kRepeatCount>>;
+
+// 표 5개를 쓴다 (형식은 common/dataset.hpp).
+void write_tables(const fs::path& tables, const std::vector<PreparedPhoto>& photos, const std::vector<std::string>& sessions, const SessionZeros& zeros,
+                  const std::vector<int>& final_check, const Folds& folds) {
     std::ofstream photo_table(tables / "photos.tsv", std::ios::binary), feature_table(tables / "features.tsv", std::ios::binary),
         label_table(tables / "labels.tsv", std::ios::binary), split_table(tables / "splits.tsv", std::ios::binary),
         session_table(tables / "sessions.tsv", std::ios::binary);
@@ -255,9 +249,11 @@ int main(int argc, char** argv) {
         for (const PreparedPhoto& p : photos) count += p.session == s;
         session_table << s << '\t' << format_number(zeros.at(s).first, 8) << '\t' << format_number(zeros.at(s).second, 8) << '\t' << count << '\n';
     }
+}
 
-    // 보고서
-    std::ofstream report(tables / "prepare_report.txt", std::ios::binary);
+// 사진 수, 뺀 사진과 이유, 회차별 영점 어긋남을 사람이 읽는 글로 쓴다.
+void write_report(const fs::path& path, const std::vector<PreparedPhoto>& photos, const std::vector<std::string>& sessions, const SessionZeros& zeros,
+                  const std::vector<int>& final_check, const LeftOutNotes& notes, const std::vector<std::string>& skipped) {
     int usable = 0, failed = 0, missing_screw = 0, out_of_range = 0, final_count = 0;
     for (int i = 0; i < int(photos.size()); ++i) {
         const PreparedPhoto& p = photos[i];
@@ -267,19 +263,49 @@ int main(int argc, char** argv) {
         out_of_range += !p.in_range;
         final_count += final_check[i];
     }
+    std::ofstream report(path, std::ios::binary);
     report << "사진 " << photos.size() << "장 (회차 " << sessions.size() << "개)\n"
            << "  학습, 평가에 쓰는 사진 " << usable << "장 (그중 마지막 확인용 " << final_count << "장)\n"
            << "  빼는 사진: 측정 실패 " << failed << ", 나사를 다 못 찾음 " << missing_screw << ", 명령이 학습 범위(|Y| <= 2, |T| <= 1) 밖 " << out_of_range
-           << ", 명령값이 틀려 보임 " << mismatch_names.size() << "\n\n"
+           << ", 명령값이 틀려 보임 " << notes.mismatch.size() << "\n\n"
            << "회차별 영점 어긋남 (명령 − 학습 정답. 그날 로봇 0 과 절대 영점의 차이)\n";
     for (const std::string& s : sessions) report << "  " << s << "  Y " << format_number(zeros.at(s).first, 5) << " mm, T " << format_number(zeros.at(s).second, 5) << " 도\n";
-    report << "\n명령값이 틀려 보여 뺀 사진 (자세 차이가 Y " << format_number(kCommandErrorYmm) << " mm 또는 T " << format_number(kCommandErrorTdeg) << " 도를 넘음. 사진을 확인하세요) " << mismatch_names.size() << "장\n";
-    for (const std::string& s : mismatch_names) report << "  " << s << "\n";
-    report << "\n영점 맞추기에서만 뺀 사진 (값이 식에서 벗어났지만 명령은 맞음. 학습, 평가에는 씀) " << kept_names.size() << "장\n";
-    for (const std::string& s : kept_names) report << "  " << s << "\n";
+    report << "\n명령값이 틀려 보여 뺀 사진 (자세 차이가 Y " << format_number(kCommandErrorYmm) << " mm 또는 T " << format_number(kCommandErrorTdeg)
+           << " 도를 넘음. 사진을 확인하세요) " << notes.mismatch.size() << "장\n";
+    for (const std::string& s : notes.mismatch) report << "  " << s << "\n";
+    report << "\n영점 맞추기에서만 뺀 사진 (값이 식에서 벗어났지만 명령은 맞음. 학습, 평가에는 씀) " << notes.kept.size() << "장\n";
+    for (const std::string& s : notes.kept) report << "  " << s << "\n";
     report << "\n건너뛴 파일 " << skipped.size() << "개\n";
     for (const std::string& s : skipped) report << "  " << s << "\n";
-    report.close();
+}
+
+}   // namespace
+
+int main(int argc, char** argv) {
+    if (argc < 2) { std::cerr << "사용: prepare_dataset <사진 폴더> [--data <model 폴더>]\n"; return 2; }
+    const fs::path photo_root = fs::u8path(argv[1]), tables = photo_root / kTableFolder;
+    std::string model_folder = "data/model";
+    for (int a = 2; a + 1 < argc; ++a)
+        if (std::string(argv[a]) == "--data") model_folder = argv[a + 1];
+
+    std::string error;
+    if (!make_empty_folder(tables, error)) { std::cerr << error << "\n"; return 1; }
+    if (alignment::initialize(model_folder).status == alignment::Status::Failed) return 1;
+    std::vector<std::string> sessions = list_subfolders(photo_root);
+    sessions.erase(std::remove(sessions.begin(), sessions.end(), std::string(kTableFolder)), sessions.end());   // 표 폴더는 회차가 아니다
+    if (sessions.empty()) { std::cerr << "사진 폴더가 없습니다: " << photo_root.u8string() << " (회차마다 폴더를 만들어 넣으세요)\n"; return 1; }
+
+    std::vector<std::string> skipped;
+    std::vector<PreparedPhoto> photos = measure_all_photos(photo_root, sessions, skipped);   // 1, 2
+    std::vector<int> left_out;
+    const ZeroFit fit = estimate_session_zeros(photos, sessions, left_out);                  // 3, 4
+    const LeftOutNotes notes = mark_command_mismatch(photos, fit, sessions, left_out);
+    std::vector<int> final_check;
+    Folds folds;
+    make_splits(photos, final_check, folds);                                                 // 5
+
+    write_tables(tables, photos, sessions, fit.zeros, final_check, folds);
+    write_report(tables / "prepare_report.txt", photos, sessions, fit.zeros, final_check, notes, skipped);
     std::ifstream echo(tables / "prepare_report.txt", std::ios::binary);
     std::cout << echo.rdbuf();
     return 0;

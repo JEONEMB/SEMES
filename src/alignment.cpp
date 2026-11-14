@@ -15,6 +15,7 @@
 #include "steps/03_compute_yt.hpp"
 #include "steps/04_check_result.hpp"
 #include <cmath>
+#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -34,7 +35,7 @@ struct Measured {
     QrShift qr;
     std::array<ScrewShift, 4> screws;
     const CoefficientSet* set = nullptr;
-    double values[5] = {};   // [0] QR, [1~4] 나사 1~4 가로 이동
+    double values[kValueCount] = {};   // [0] QR, [1~4] 나사 1~4 가로 이동
     YT raw;                  // 계수로 계산한 그대로의 Y, T
 };
 
@@ -52,7 +53,7 @@ struct State {
 
     YT zero;               // 영점 (출력 = 계산값 + carry_over - zero)
     YT carry_over;         // 기준 사진을 다시 잡았을 때, 처음 영점을 잇기 위해 더하는 값
-    std::map<std::string, std::array<double, 5>> baselines;   // 조합마다 영점을 잡을 때의 (측정값 - 기대값)
+    std::map<std::string, std::array<double, kValueCount>> baselines;   // 조합마다 영점을 잡을 때의 (측정값 - 기대값)
 };
 
 State state;
@@ -150,7 +151,7 @@ void reset_baselines(const Measured& measured) {
             if (set->uses_screw[k] && !measured.screws[k].found) all_found = false;
         if (!all_found) continue;
         const YT raw = compute_yt(*set, measured.values);
-        std::array<double, 5> baseline{};
+        std::array<double, kValueCount> baseline{};
         expected_differences(check, measured.values, raw.y_mm, raw.t_deg, baseline.data());
         state.baselines[check.screws] = baseline;
     }
@@ -168,6 +169,16 @@ std::string missing_screws(const Measured& measured) {
     for (int k = 0; k < 4; ++k)
         if (state.settings.use_screw[k] && !measured.screws[k].found) names += (names.empty() ? "" : ", ") + std::to_string(k + 1);
     return names;
+}
+
+// px_text: 정수 px 값을 문구에 넣을 글자로
+std::string px_text(int px) { return std::to_string(px) + " px"; }
+
+// trained_range_text: 학습 범위를 문구에 넣을 글자로 (reference.json 의 값 그대로, 예: "Y -2.04 ~ 1.96 mm, T -1.00 ~ 1.01 도")
+std::string trained_range_text(const Reference& reference) {
+    char text[96];
+    std::snprintf(text, sizeof(text), "Y %.2f ~ %.2f mm, T %.2f ~ %.2f 도", reference.trained_y_mm[0], reference.trained_y_mm[1], reference.trained_t_deg[0], reference.trained_t_deg[1]);
+    return text;
 }
 
 // add_notices: 상황에 맞는 알림 모두 추가
@@ -190,11 +201,11 @@ void add_notices(Result& result, const Measured& measured, const AgreementResult
     if (measured.set->precise && !missing.empty())
         add_notice(result, Status::Warning, "W_SCREW_MISSING", "나사 " + missing + " 을 찾지 못해 나머지 나사로 계산했습니다. 가림·이물을 확인하세요");
     if (measured.qr.search == QrSearch::FullWidth)
-        add_notice(result, Status::Warning, "W_FAR", "QR 이 기준에서 250 px 넘게 떨어져 있습니다. 값이 부정확할 수 있으니 옮긴 뒤 다시 측정하세요");
+        add_notice(result, Status::Warning, "W_FAR", "QR 이 기준에서 " + px_text(kWideHalfWidth) + " 넘게 떨어져 있습니다. 값이 부정확할 수 있으니 옮긴 뒤 다시 측정하세요");
     if (!in_range)
-        add_notice(result, Status::Warning, "W_OUT_OF_RANGE", "학습한 범위(Y ±2 mm, T ±1도) 밖입니다. 오차가 커질 수 있으니 옮긴 뒤 다시 측정하세요");
+        add_notice(result, Status::Warning, "W_OUT_OF_RANGE", "학습한 범위(" + trained_range_text(state.reference) + ") 밖입니다. 오차가 커질 수 있으니 옮긴 뒤 다시 측정하세요");
     if (measured.qr.search == QrSearch::Wide)
-        add_info(result, "N_WIDE_SEARCH", "QR 이 110 px 넘게 움직여 넓은 창(±250 px)으로 찾았습니다");
+        add_info(result, "N_WIDE_SEARCH", "QR 이 " + px_text(kNarrowHalfWidth) + " 넘게 움직여 넓은 창(±" + px_text(kWideHalfWidth) + ")으로 찾았습니다");
 }
 
 // make_result: 최종 Result 만들기
@@ -214,12 +225,12 @@ Result make_result(const Measured& measured) {
     AgreementResult agreement;
     result.check_value = result.check_limit = kNaN;
     if (const AgreementCheck* check = find_agreement_check(state.agreement_checks, measured.set->screws)) {
-        const auto baseline = state.baselines.count(check->screws) ? state.baselines[check->screws] : std::array<double, 5>{};
+        const auto baseline = state.baselines.count(check->screws) ? state.baselines[check->screws] : std::array<double, kValueCount>{};
         agreement = check_values_agree(*check, measured.values, measured.raw.y_mm, measured.raw.t_deg, baseline.data());
         result.check_value = agreement.value;
         result.check_limit = agreement.limit;
     }
-    // 4단계 (나): 학습된 범위(Y ±2 mm, T ±1도) 안에 있는지 점검한다
+    // 4단계 (나): 학습 범위(reference.json 의 trained_y_mm, trained_t_deg) 안에 있는지 점검한다
     const bool in_range = check_in_trained_range(state.reference, absolute_y, absolute_t);
 
     add_notices(result, measured, agreement, in_range);

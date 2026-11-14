@@ -6,7 +6,6 @@ namespace alignment {
 
 namespace {
 
-const cv::Rect kPhoto(0, 0, kPhotoWidth, kPhotoHeight);
 const int kQrSearch = 120;                // px. 원래 QR 상자 주변을 이만큼 찾는다 (±)
 const double kQrMinSimilarity = 0.5;      // 이보다 닮지 않았으면 QR 을 못 찾은 것으로 본다
 const int kScrewHalf = 70;                // px. 나사 주변에서 테두리를 보는 범위 (±)
@@ -16,7 +15,7 @@ const int kCenterSteps = 3;               // 나사 중심을 고쳐 잡는 횟�
 
 // QR 상자: 원래 상자 주변에서 NCC 로 가장 닮은 자리를 찾는다.
 bool find_qr_box(const cv::Mat& old_photo, const cv::Mat& new_photo, const cv::Rect& old_box, cv::Rect& new_box) {
-    const cv::Rect window = cv::Rect(old_box.x - kQrSearch, old_box.y - kQrSearch, old_box.width + 2 * kQrSearch, old_box.height + 2 * kQrSearch) & kPhoto;
+    const cv::Rect window = cv::Rect(old_box.x - kQrSearch, old_box.y - kQrSearch, old_box.width + 2 * kQrSearch, old_box.height + 2 * kQrSearch) & kPhotoRect;
     cv::Mat similarity;
     cv::matchTemplate(new_photo(window), old_photo(old_box), similarity, cv::TM_CCOEFF_NORMED);
     double best = 0;
@@ -31,7 +30,7 @@ bool find_screw_center(const cv::Mat& new_photo, cv::Point old_center, cv::Point
     new_center = old_center;
     for (int step = 0; step < kCenterSteps; ++step) {
         const cv::Rect area(new_center.x - kScrewHalf, new_center.y - kScrewHalf, 2 * kScrewHalf + 1, 2 * kScrewHalf + 1);
-        if ((area & kPhoto) != area) return false;
+        if (!inside_photo(area)) return false;
 
         cv::Mat as_float, blurred, slope_x, slope_y, strength;
         new_photo(area).convertTo(as_float, CV_32F);

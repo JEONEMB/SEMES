@@ -16,13 +16,20 @@
 
 namespace alignment {
 
+// 값: 사진 한 장에서 재는 가로 이동 5개. 순서는 [0] QR, [1~4] 나사 1~4 (px)
+const int kValueCount = 5;
+const char* const kValueNames[kValueCount] = {"qr", "screw1", "screw2", "screw3", "screw4"};   // 계수, 점검식 파일에 쓰는 이름
+
+// 값 이름 → 값 번호. 모르는 이름이면 −1.
+int value_index_of(const std::string& name);
+
 struct CoefficientSet {
     std::string screws;                    // 쓰는 나사 번호 (예: "1234", "13", "none")
     std::array<bool, 4> uses_screw{};      // 나사마다 쓰는지
     bool precise = false;                  // 왼쪽·오른쪽 나사가 모두 있어 정밀한 조합인지 (아니면 대략값)
     double intercept_y = 0, intercept_t = 0;
     // 값 순서: [0] QR, [1~4] 나사 1~4. 쓰지 않는 값은 weight 가 0.
-    double mean[5] = {}, scale[5] = {1, 1, 1, 1, 1}, weight_y[5] = {}, weight_t[5] = {};
+    double mean[kValueCount] = {}, scale[kValueCount] = {1, 1, 1, 1, 1}, weight_y[kValueCount] = {}, weight_t[kValueCount] = {};
 };
 
 struct YT {
@@ -36,7 +43,7 @@ bool load_coefficient_sets(const std::string& data_folder, std::vector<Coefficie
 // 찾은 나사(found)에 맞는 조합을 고른다. 없으면 nullptr.
 const CoefficientSet* choose_coefficient_set(const std::vector<CoefficientSet>& sets, const std::array<bool, 4>& found);
 
-// values: [0] QR 가로 이동, [1~4] 나사 1~4 가로 이동 (px)
-YT compute_yt(const CoefficientSet& set, const double values[5]);
+// values: 위 값 5개
+YT compute_yt(const CoefficientSet& set, const double values[kValueCount]);
 
 }   // namespace alignment

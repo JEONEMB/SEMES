@@ -9,6 +9,7 @@
 // (나) 범위 점검
 //   계산한 Y, T 가 계수를 학습한 범위 밖이면 오차가 커질 수 있다고 알린다.
 #include "common/reference.hpp"
+#include "steps/03_compute_yt.hpp"   // kValueCount, value_index_of
 #include <string>
 #include <vector>
 
@@ -41,10 +42,10 @@ bool load_agreement_checks(const std::string& data_folder, std::vector<Agreement
 const AgreementCheck* find_agreement_check(const std::vector<AgreementCheck>& checks, const std::string& screws);
 
 // 값마다 (측정값 − 기대값). y_mm, t_deg 는 영점을 빼기 전 계산값.
-void expected_differences(const AgreementCheck& check, const double values[5], double y_mm, double t_deg, double differences[5]);
+void expected_differences(const AgreementCheck& check, const double values[kValueCount], double y_mm, double t_deg, double differences[kValueCount]);
 
 // baseline: 영점을 잡을 때의 (측정값 − 기대값). 그날 화면 상태를 0 으로 삼기 위해 뺀다. 없으면 모두 0.
-AgreementResult check_values_agree(const AgreementCheck& check, const double values[5], double y_mm, double t_deg, const double baseline[5]);
+AgreementResult check_values_agree(const AgreementCheck& check, const double values[kValueCount], double y_mm, double t_deg, const double baseline[kValueCount]);
 
 // Y, T 가 학습 범위 안인지.
 bool check_in_trained_range(const Reference& reference, double y_mm, double t_deg);

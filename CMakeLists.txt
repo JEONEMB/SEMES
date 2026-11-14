@@ -37,13 +37,13 @@ foreach(name measure_one show_steps check_photos check_setup make_figures)
     target_include_directories(${name} PRIVATE src)   # show_steps, make_figures 는 단계 함수를 직접 부른다
 endforeach()
 
-# ---- tools/common: 학습, 평가 도구가 같이 쓰는 코드. 공개 함수(include/alignment.hpp)만 쓴다 ----
+# ---- tools/common: 학습, 평가 도구가 같이 쓰는 코드 ----
 add_library(tools_common STATIC
     tools/common/photo_files.cpp
     tools/common/tables.cpp
-    tools/common/pose_model.cpp
+    tools/common/coefficient_fit.cpp
     tools/common/dataset.cpp)
-target_include_directories(tools_common PUBLIC tools)
+target_include_directories(tools_common PUBLIC tools src)   # 계수 자료형과 계산식은 src/steps 것을 그대로 쓴다 (실사용과 같은 계산)
 target_link_libraries(tools_common PUBLIC alignment)
 if(MSVC)
     target_compile_options(tools_common PRIVATE /utf-8 /EHsc)

@@ -8,8 +8,6 @@ namespace alignment {
 
 namespace {
 
-const cv::Rect kPhoto(0, 0, kPhotoWidth, kPhotoHeight);
-
 // ---- 1. locate_screw 에서 쓰는 값 ----
 const int kPatchRadius = 45;                       // px. 나사 조각의 반지름
 const int kPatchSide = 2 * kPatchRadius + 1;       // 91 px
@@ -35,10 +33,6 @@ const double kEdgeDone = 1e-8;                     // 닮은 정도가 이보다
 
 cv::Rect square_around(cv::Point center, int half) {
     return cv::Rect(center.x - half, center.y - half, 2 * half + 1, 2 * half + 1);
-}
-
-bool inside_photo(const cv::Rect& area) {
-    return (area & kPhoto) == area;
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -103,97 +97,143 @@ double value_at(const cv::Mat& picture, double x, double y) {
     return (1 - fy) * ((1 - fx) * pixel(y0, x0) + fx * pixel(y0, x0 + 1)) + fy * ((1 - fx) * pixel(y0 + 1, x0) + fx * pixel(y0 + 1, x0 + 1));
 }
 
+// ------------------------------------------------------------------------------------------------
 // ECC 맞춤 (평행이동만): current 를 (shift_x, shift_y) 만큼 옮겨 읽으면 reference 와 가장 닮도록 shift 를 구한다.
 // OpenCV findTransformECC(MOTION_TRANSLATION, 마스크) 와 같은 식이다. OpenCV 것은 옮겨 읽을 때 좌표를 1/32 px 로
 // 끊어서 약 0.02 px 의 계단 오차가 생기기 때문에, 같은 식을 정확한 보간으로 직접 푼다.
-bool ecc_shift(const cv::Mat& reference, const cv::Mat& current, const cv::Mat& mask, double& shift_x, double& shift_y) {
-    cv::Mat smooth, slope_x, slope_y;
-    cv::GaussianBlur(current, smooth, cv::Size(kEdgeSmoothing, kEdgeSmoothing), 0, 0);
-    const cv::Matx13f half_difference(-0.5f, 0.0f, 0.5f);
-    cv::filter2D(smooth, slope_x, -1, half_difference);
-    cv::filter2D(smooth, slope_y, -1, half_difference.t());
-    slope_x.setTo(0, mask == 0);
-    slope_y.setTo(0, mask == 0);
+//
+// 한 번 고칠 때마다 세 가지를 한다
+//   (가) read_shifted_patch  지금 shift 로 옮겨 읽는다
+//   (나) sum_ecc_terms       평균을 빼고, 닮은 정도와 맞춤에 필요한 합을 구한다
+//   (다) update_ecc_shift    밝기 크기 차이를 맞춘 뒤, 남은 차이를 줄이는 쪽으로 shift 를 고친다
+// ------------------------------------------------------------------------------------------------
 
+// ECC 가 쓰는 그림들. 화소 번호 i = y * kEdgeSide + x
+struct EccWork {
+    cv::Mat smooth, slope_x, slope_y;                           // 흐린 현재 그림과 그 가로, 세로 기울기 (원 밖 기울기는 0)
+    std::vector<double> moved, moved_slope_x, moved_slope_y;    // 지금 shift 로 옮겨 읽은 그림과 기울기
+    std::vector<double> reference_centered;                     // 기준 그림 − 평균 (원 밖은 0)
+    std::vector<unsigned char> in_mask;                         // 옮겨 읽은 자리가 원 안인지
+    int low = 0, high = 0;                                      // 계산하는 상자 (원 둘레). 상자 밖은 모든 합에 0 만 더해서 결과가 같다
+};
+
+// (나) 에서 구하는 합
+struct EccSums {
+    double moved_power = 0, reference_power = 0, product = 0;   // 옮긴 그림², 기준 그림², 둘의 곱
+    double hxx = 0, hxy = 0, hyy = 0, determinant = 0;          // 기울기끼리의 합 (2×2 행렬) 과 그 행렬식
+    double moved_on_x = 0, moved_on_y = 0;                      // 기울기 · 옮긴 그림
+    double reference_on_x = 0, reference_on_y = 0;              // 기울기 · 기준 그림
+};
+
+EccWork prepare_ecc(const cv::Mat& current, const cv::Mat& mask) {
+    EccWork work;
+    cv::GaussianBlur(current, work.smooth, cv::Size(kEdgeSmoothing, kEdgeSmoothing), 0, 0);
+    const cv::Matx13f half_difference(-0.5f, 0.0f, 0.5f);
+    cv::filter2D(work.smooth, work.slope_x, -1, half_difference);
+    cv::filter2D(work.smooth, work.slope_y, -1, half_difference.t());
+    work.slope_x.setTo(0, mask == 0);
+    work.slope_y.setTo(0, mask == 0);
     const int count = kEdgeSide * kEdgeSide;
-    std::vector<double> moved(count), moved_slope_x(count), moved_slope_y(count), reference_centered(count);
-    std::vector<unsigned char> in_mask(count);
+    work.moved.resize(count);
+    work.moved_slope_x.resize(count);
+    work.moved_slope_y.resize(count);
+    work.reference_centered.resize(count);
+    work.in_mask.resize(count);
+    return work;
+}
+
+// (가) 지금 shift 로 옮겨 읽는다
+void read_shifted_patch(EccWork& work, const cv::Mat& mask, double shift_x, double shift_y) {
+    const int reach = kEdgeMaskRadius + 3 + int(std::ceil(std::max(std::abs(shift_x), std::abs(shift_y))));
+    work.low = std::max(0, kEdgeHalf - reach);
+    work.high = std::min(kEdgeSide - 1, kEdgeHalf + reach);
+    for (int y = work.low; y <= work.high; ++y) {
+        for (int x = work.low; x <= work.high; ++x) {
+            const int i = y * kEdgeSide + x;
+            const double source_x = x + shift_x, source_y = y + shift_y;
+            work.moved[i] = value_at(work.smooth, source_x, source_y);
+            work.moved_slope_x[i] = value_at(work.slope_x, source_x, source_y);
+            work.moved_slope_y[i] = value_at(work.slope_y, source_x, source_y);
+            const int mask_x = cvRound(source_x), mask_y = cvRound(source_y);
+            work.in_mask[i] = (mask_x >= 0 && mask_y >= 0 && mask_x < kEdgeSide && mask_y < kEdgeSide && mask.at<uchar>(mask_y, mask_x)) ? 1 : 0;
+        }
+    }
+}
+
+// (나) 평균을 빼고 닮은 정도(상관)와 맞춤에 필요한 합을 구한다. 맞출 수 없는 그림이면 false.
+bool sum_ecc_terms(const cv::Mat& reference, EccWork& work, EccSums& sums) {
+    double moved_sum = 0, reference_sum = 0;
+    int inside = 0;
+    for (int y = work.low; y <= work.high; ++y) {
+        for (int x = work.low; x <= work.high; ++x) {
+            const int i = y * kEdgeSide + x;
+            if (work.in_mask[i]) { moved_sum += work.moved[i]; reference_sum += reference.at<float>(y, x); ++inside; }
+        }
+    }
+    if (inside == 0) return false;
+    const double moved_mean = moved_sum / inside, reference_mean = reference_sum / inside;
+
+    sums = EccSums();
+    for (int y = work.low; y <= work.high; ++y) {
+        for (int x = work.low; x <= work.high; ++x) {
+            const int i = y * kEdgeSide + x;
+            if (work.in_mask[i]) {
+                work.moved[i] -= moved_mean;
+                work.reference_centered[i] = double(reference.at<float>(y, x)) - reference_mean;
+                sums.moved_power += work.moved[i] * work.moved[i];
+                sums.reference_power += work.reference_centered[i] * work.reference_centered[i];
+                sums.product += work.reference_centered[i] * work.moved[i];
+            } else {
+                work.reference_centered[i] = 0;
+            }
+            sums.hxx += work.moved_slope_x[i] * work.moved_slope_x[i];
+            sums.hxy += work.moved_slope_x[i] * work.moved_slope_y[i];
+            sums.hyy += work.moved_slope_y[i] * work.moved_slope_y[i];
+            sums.moved_on_x += work.moved_slope_x[i] * work.moved[i];
+            sums.moved_on_y += work.moved_slope_y[i] * work.moved[i];
+            sums.reference_on_x += work.moved_slope_x[i] * work.reference_centered[i];
+            sums.reference_on_y += work.moved_slope_y[i] * work.reference_centered[i];
+        }
+    }
+    sums.determinant = sums.hxx * sums.hyy - sums.hxy * sums.hxy;
+    return sums.determinant > 0 && sums.moved_power > 0 && sums.reference_power > 0;
+}
+
+// (다) 밝기 크기 차이(scale)를 맞춘 뒤, 남은 차이를 줄이는 쪽으로 shift 를 고친다. 맞출 수 없으면 false.
+bool update_ecc_shift(const EccWork& work, const EccSums& sums, double& shift_x, double& shift_y) {
+    const double solved_x = (sums.hyy * sums.moved_on_x - sums.hxy * sums.moved_on_y) / sums.determinant;
+    const double solved_y = (sums.hxx * sums.moved_on_y - sums.hxy * sums.moved_on_x) / sums.determinant;
+    const double scale_top = sums.moved_power - (sums.moved_on_x * solved_x + sums.moved_on_y * solved_y);
+    const double scale_bottom = sums.product - (sums.reference_on_x * solved_x + sums.reference_on_y * solved_y);
+    if (scale_bottom <= 0) return false;
+    const double scale = scale_top / scale_bottom;
+    double error_on_x = 0, error_on_y = 0;
+    for (int y = work.low; y <= work.high; ++y) {
+        for (int x = work.low; x <= work.high; ++x) {
+            const int i = y * kEdgeSide + x;
+            const double error = scale * work.reference_centered[i] - work.moved[i];
+            error_on_x += work.moved_slope_x[i] * error;
+            error_on_y += work.moved_slope_y[i] * error;
+        }
+    }
+    shift_x += (sums.hyy * error_on_x - sums.hxy * error_on_y) / sums.determinant;
+    shift_y += (sums.hxx * error_on_y - sums.hxy * error_on_x) / sums.determinant;
+    return true;
+}
+
+// 닮은 정도가 더 변하지 않을 때까지 (가) → (나) → (다) 를 되풀이한다.
+bool ecc_shift(const cv::Mat& reference, const cv::Mat& current, const cv::Mat& mask, double& shift_x, double& shift_y) {
+    EccWork work = prepare_ecc(current, mask);
     shift_x = shift_y = 0;
     double likeness = -1, previous_likeness = -kEdgeDone;
-
     for (int step = 1; step <= kEdgeMaxSteps && std::abs(likeness - previous_likeness) >= kEdgeDone; ++step) {
-        // 원(마스크) 둘레 상자만 계산한다. 상자 밖은 모든 합에 0 만 더해서 결과가 같다.
-        const int reach = kEdgeMaskRadius + 3 + int(std::ceil(std::max(std::abs(shift_x), std::abs(shift_y))));
-        const int low = std::max(0, kEdgeHalf - reach), high = std::min(kEdgeSide - 1, kEdgeHalf + reach);
-
-        // (가) 지금 shift 로 옮겨 읽는다
-        double moved_sum = 0, reference_sum = 0;
-        int inside = 0;
-        for (int y = low; y <= high; ++y) {
-            for (int x = low; x <= high; ++x) {
-                const int i = y * kEdgeSide + x;
-                const double source_x = x + shift_x, source_y = y + shift_y;
-                moved[i] = value_at(smooth, source_x, source_y);
-                moved_slope_x[i] = value_at(slope_x, source_x, source_y);
-                moved_slope_y[i] = value_at(slope_y, source_x, source_y);
-                const int mask_x = cvRound(source_x), mask_y = cvRound(source_y);
-                in_mask[i] = (mask_x >= 0 && mask_y >= 0 && mask_x < kEdgeSide && mask_y < kEdgeSide && mask.at<uchar>(mask_y, mask_x)) ? 1 : 0;
-                if (in_mask[i]) { moved_sum += moved[i]; reference_sum += reference.at<float>(y, x); ++inside; }
-            }
-        }
-        if (inside == 0) return false;
-
-        // (나) 평균을 빼고 닮은 정도(상관)와 맞춤에 필요한 합을 구한다
-        const double moved_mean = moved_sum / inside, reference_mean = reference_sum / inside;
-        double moved_power = 0, reference_power = 0, product = 0;
-        double hxx = 0, hxy = 0, hyy = 0;                 // 기울기끼리의 합 (2×2 행렬)
-        double moved_on_x = 0, moved_on_y = 0;            // 기울기 · 옮긴 그림
-        double reference_on_x = 0, reference_on_y = 0;    // 기울기 · 기준 그림
-        for (int y = low; y <= high; ++y) {
-            for (int x = low; x <= high; ++x) {
-                const int i = y * kEdgeSide + x;
-                if (in_mask[i]) {
-                    moved[i] -= moved_mean;
-                    reference_centered[i] = double(reference.at<float>(y, x)) - reference_mean;
-                    moved_power += moved[i] * moved[i];
-                    reference_power += reference_centered[i] * reference_centered[i];
-                    product += reference_centered[i] * moved[i];
-                } else {
-                    reference_centered[i] = 0;
-                }
-                hxx += moved_slope_x[i] * moved_slope_x[i];
-                hxy += moved_slope_x[i] * moved_slope_y[i];
-                hyy += moved_slope_y[i] * moved_slope_y[i];
-                moved_on_x += moved_slope_x[i] * moved[i];
-                moved_on_y += moved_slope_y[i] * moved[i];
-                reference_on_x += moved_slope_x[i] * reference_centered[i];
-                reference_on_y += moved_slope_y[i] * reference_centered[i];
-            }
-        }
-        const double determinant = hxx * hyy - hxy * hxy;
-        if (!(determinant > 0) || !(moved_power > 0) || !(reference_power > 0)) return false;
+        read_shifted_patch(work, mask, shift_x, shift_y);
+        EccSums sums;
+        if (!sum_ecc_terms(reference, work, sums)) return false;
         previous_likeness = likeness;
-        likeness = product / std::sqrt(moved_power * reference_power);
+        likeness = sums.product / std::sqrt(sums.moved_power * sums.reference_power);
         if (std::isnan(likeness)) return false;
-
-        // (다) 밝기 크기 차이(scale)를 맞춘 뒤, 남은 차이를 줄이는 쪽으로 shift 를 고친다
-        const double solved_x = (hyy * moved_on_x - hxy * moved_on_y) / determinant;
-        const double solved_y = (hxx * moved_on_y - hxy * moved_on_x) / determinant;
-        const double scale_top = moved_power - (moved_on_x * solved_x + moved_on_y * solved_y);
-        const double scale_bottom = product - (reference_on_x * solved_x + reference_on_y * solved_y);
-        if (scale_bottom <= 0) return false;
-        const double scale = scale_top / scale_bottom;
-        double error_on_x = 0, error_on_y = 0;
-        for (int y = low; y <= high; ++y) {
-            for (int x = low; x <= high; ++x) {
-                const int i = y * kEdgeSide + x;
-                const double error = scale * reference_centered[i] - moved[i];
-                error_on_x += moved_slope_x[i] * error;
-                error_on_y += moved_slope_y[i] * error;
-            }
-        }
-        shift_x += (hyy * error_on_x - hxy * error_on_y) / determinant;
-        shift_y += (hxx * error_on_y - hxy * error_on_x) / determinant;
+        if (!update_ecc_shift(work, sums, shift_x, shift_y)) return false;
     }
     return true;
 }
@@ -216,7 +256,8 @@ cv::Mat make_edge_mask() {
 ScrewFinder::ScrewFinder(const Reference& reference) {
     for (int k = 0; k < 4; ++k) {
         centers_[k] = reference.screw[k];
-        reference.photo(square_around(centers_[k], kPatchRadius)).convertTo(brightness_templates_[k], CV_64F);
+        locate_templates_[k] = reference.photo(square_around(centers_[k], kPatchRadius)).clone();
+        locate_templates_[k].convertTo(brightness_templates_[k], CV_64F);
         cv::GaussianBlur(edge_picture(reference.photo(square_around(centers_[k], kEdgeHalf))), edge_templates_[k], cv::Size(kEdgeSmoothing, kEdgeSmoothing), 0, 0);
     }
     edge_mask_ = make_edge_mask();
@@ -258,8 +299,8 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
 
 // 1. NCC 로 대략 찾기. shift = 기준 위치에서 움직인 양 (정수 px).
 bool ScrewFinder::locate_screw(const cv::Mat& gray, int screw_index, cv::Point expected_shift, cv::Point& shift, double& similarity) const {
-    cv::Mat template8, scores;
-    brightness_templates_[screw_index].convertTo(template8, CV_8U);
+    const cv::Mat& template8 = locate_templates_[screw_index];
+    cv::Mat scores;
 
     // 먼저 QR 이 움직인 만큼 옮긴 자리 주변을 찾는다.
     const cv::Rect near_window = square_around(centers_[screw_index] + expected_shift, kPatchRadius + kNearSearch);

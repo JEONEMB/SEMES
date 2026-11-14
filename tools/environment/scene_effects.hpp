@@ -9,6 +9,7 @@ namespace scene {
 
 const cv::Rect kView(700, 800, 2440, 1050);   // 문서 그림에 쓰는 판 둘레 (사진 3840×2160 기준)
 const unsigned kSeed = 20261115;              // 무작위 무늬를 만들 때 쓰는 씨앗 (누가 돌려도 같은 그림)
+const double kToleranceYmm = 0.045, kToleranceTdeg = 0.01;   // 통과 기준 (tools/common/coefficient_fit.hpp 와 같은 값)
 
 struct Layout {
     cv::Rect qr[3];        // QR 상자, 왼쪽부터
@@ -16,7 +17,6 @@ struct Layout {
 };
 
 // ---- 읽고 쓰기 ----
-cv::Mat read_gray(const std::filesystem::path& path);
 void save_png(const std::filesystem::path& path, const cv::Mat& picture);
 Layout read_layout(const std::filesystem::path& data_folder);   // data/reference.json
 // 판 둘레를 잘라 절반 크기로 줄이고 왼쪽 위에 제목을 쓴다 (컬러 3채널로 돌려줌)
