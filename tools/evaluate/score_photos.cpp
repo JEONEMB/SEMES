@@ -15,7 +15,7 @@
 //   summary.txt  전체, 폴더별 통과율, 최대 오차, 상태별 개수
 #include "alignment.hpp"
 #include "common/photo_files.hpp"
-#include "common/pose_model.hpp"   // 통과 기준 kToleranceYmm, kToleranceTdeg
+#include "common/coefficient_fit.hpp"   // 통과 기준 kToleranceYmm, kToleranceTdeg
 #include "common/tables.hpp"
 #include <algorithm>
 #include <chrono>

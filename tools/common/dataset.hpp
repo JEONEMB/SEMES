@@ -6,7 +6,7 @@
 //   labels.tsv    id, label_y_mm, label_t_deg                      (학습용 정답 = 명령 − 그 회차의 영점 어긋남)
 //   splits.tsv    id, usable, final_check, cv0 … cv9               (usable 0 이면 학습, 평가에 안 씀)
 //   sessions.tsv  session, zero_y_mm, zero_t_deg, photos            (회차마다 거꾸로 구한 영점 어긋남)
-#include "pose_model.hpp"
+#include "coefficient_fit.hpp"
 #include <filesystem>
 #include <string>
 #include <vector>
