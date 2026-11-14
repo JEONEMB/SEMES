@@ -7,6 +7,12 @@
 - 속도: 한 장 약 7 ms (노트북, SEMES 사진 702장 중앙값)
 - 언어와 환경: C++17, OpenCV 3.4.15
 
+| 문서 | 읽는 때 |
+|---|---|
+| [docs/1_한눈에보기.md](docs/1_한눈에보기.md) | 처음 5분. 그림으로 보는 원리와 단계 |
+| [docs/2_포팅안내서.md](docs/2_포팅안내서.md) | 코드를 옮길 때. 함수마다 순서와 확인 값 |
+| [docs/3_근거보고서.md](docs/3_근거보고서.md) | 왜 이렇게 만들었는지, 문제가 생기면 어떻게 되는지 |
+
 ## 1. 바로 써 보기
 
 ```cpp
@@ -67,7 +73,10 @@ src/
 config/settings.json         설정 (기본값과 설명)
 data/                        기준 사진, 위치, 계수, 점검식
 examples/measure_one.cpp     사진 한 장 재 보기
+examples/show_steps.cpp      단계마다의 값을 모두 찍기 (옮긴 코드와 비교할 때)
 tests/                       확인 프로그램과 예제 사진·기대값
+tool/make_figures.cpp        문서의 그림 만들기
+docs/                        문서 3개와 그림
 ```
 
 **읽는 순서**: `include/alignment.hpp` → `src/alignment.cpp` 의 `measure_alignment` → `steps/01` → `02` → `03` → `04`. 각 단계의 `.hpp` 맨 위에 그 단계가 하는 일을 적어 두었다.
