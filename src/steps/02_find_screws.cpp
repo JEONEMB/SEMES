@@ -256,7 +256,8 @@ cv::Mat make_edge_mask() {
 ScrewFinder::ScrewFinder(const Reference& reference) {
     for (int k = 0; k < 4; ++k) {
         centers_[k] = reference.screw[k];
-        reference.photo(square_around(centers_[k], kPatchRadius)).convertTo(brightness_templates_[k], CV_64F);
+        locate_templates_[k] = reference.photo(square_around(centers_[k], kPatchRadius)).clone();
+        locate_templates_[k].convertTo(brightness_templates_[k], CV_64F);
         cv::GaussianBlur(edge_picture(reference.photo(square_around(centers_[k], kEdgeHalf))), edge_templates_[k], cv::Size(kEdgeSmoothing, kEdgeSmoothing), 0, 0);
     }
     edge_mask_ = make_edge_mask();
@@ -298,8 +299,8 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
 
 // 1. NCC 로 대략 찾기. shift = 기준 위치에서 움직인 양 (정수 px).
 bool ScrewFinder::locate_screw(const cv::Mat& gray, int screw_index, cv::Point expected_shift, cv::Point& shift, double& similarity) const {
-    cv::Mat template8, scores;
-    brightness_templates_[screw_index].convertTo(template8, CV_8U);
+    const cv::Mat& template8 = locate_templates_[screw_index];
+    cv::Mat scores;
 
     // 먼저 QR 이 움직인 만큼 옮긴 자리 주변을 찾는다.
     const cv::Rect near_window = square_around(centers_[screw_index] + expected_shift, kPatchRadius + kNearSearch);

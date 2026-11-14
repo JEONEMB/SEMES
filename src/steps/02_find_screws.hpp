@@ -39,7 +39,8 @@ private:
     ScrewShift find_one(const cv::Mat& gray, int screw_index, cv::Point expected_shift) const;
 
     cv::Point centers_[4];
-    cv::Mat brightness_templates_[4];   // 기준 사진의 나사 조각 (91×91)
+    cv::Mat locate_templates_[4];       // 기준 사진의 나사 조각 (91×91, 8비트). 1 에서 쓴다
+    cv::Mat brightness_templates_[4];   // 같은 조각을 실수로 바꾼 것. 2 에서 쓴다
     cv::Mat edge_templates_[4];         // 기준 사진의 나사 테두리 그림 (141×141)
     cv::Mat edge_mask_;                 // 테두리 맞춤에 쓰는 원 (반지름 45 px)
 };
