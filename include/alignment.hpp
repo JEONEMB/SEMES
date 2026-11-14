@@ -3,7 +3,7 @@
 //
 // 쓰는 순서
 //   1. alignment::initialize("data 폴더")            한 번
-//   2. alignment::set_zero_from_photos(센터 사진들)   날마다, 카메라, 조명, 판을 건드린 뒤 (권장)
+//   2. alignment::set_zero_from_photos(명령 0 사진들)  날마다, 카메라, 조명, 판을 건드린 뒤 (권장)
 //   3. alignment::measure_alignment(사진)            사진마다
 //
 // 어떤 함수도 예외를 던지지 않는다. 결과의 status 와 message 로 알린다.
@@ -48,10 +48,10 @@ Result initialize(const std::string& data_folder, const std::string& settings_fi
 //   출력: Result (y_mm, t_deg, 점검값, 알림)
 Result measure_alignment(const cv::Mat& photo);
 
-// set_zero_from_photos: 영점 잡기 (이 사진들의 자세를 (0, 0) 으로 삼음, 여러 장이면 화소 평균, 5~10장 권장)
-//   입력: center_photos (센터에서 찍은 사진 여러 장)
-//   출력: Result (y_mm, t_deg = 새 영점이 처음 영점(기준 사진)에서 떨어진 양. 적어 두면 set_zero_value 로 되살릴 수 있음)
-Result set_zero_from_photos(const std::vector<cv::Mat>& center_photos);
+// set_zero_from_photos: 영점 잡기 (로봇을 명령 0 으로 보내 찍은 사진들의 자세를 (0, 0) 으로 삼음, 여러 장이면 화소 평균, 5~10장 권장)
+//   입력: zero_photos (명령 0 에서 찍은 사진 여러 장. 명령값을 모르는 "센터 사진"은 쓰지 않는다)
+//   출력: Result (y_mm, t_deg = 새 영점이 절대 영점에서 떨어진 양 = 그날 로봇 0 의 어긋남. 적어 두면 set_zero_value 로 되살릴 수 있음)
+Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos);
 
 // set_zero_value: 적어 둔 영점 값 다시 넣기
 //   입력: y_mm, t_deg (되살릴 영점 값)
