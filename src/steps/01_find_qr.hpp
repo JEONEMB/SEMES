@@ -32,10 +32,11 @@ public:
     explicit QrFinder(const Reference& reference);
     QrShift find_qr_shift(const cv::Mat& gray) const;
 
-private:
     struct Match { bool found = false; double dx = 0, dy = 0, similarity = 0; };
     // QR 하나를 가로 ±half_width 창에서 찾는다. half_width 가 0 이면 사진 전체 폭.
     Match find_one(const cv::Mat& gray, int qr_index, int half_width) const;
+
+private:
     // 세 QR 을 같은 창 크기로 찾아 평균을 낸다.
     QrShift find_all(const cv::Mat& gray, int half_width) const;
 

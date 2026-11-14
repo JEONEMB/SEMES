@@ -30,11 +30,13 @@ public:
     // wanted[k] 가 false 인 나사는 찾지 않는다.
     std::array<ScrewShift, 4> find_screw_shifts(const cv::Mat& gray, double qr_dx, double qr_dy, const std::array<bool, 4>& wanted) const;
 
-private:
-    ScrewShift find_one(const cv::Mat& gray, int screw_index, cv::Point expected_shift) const;
+    // 아래 셋은 나사 하나를 재는 세 단계다. 단계별 값을 확인할 수 있게 따로 부를 수 있다.
     bool locate_screw(const cv::Mat& gray, int screw_index, cv::Point expected_shift, cv::Point& shift, double& similarity) const;
     bool refine_by_brightness(const cv::Mat& gray, int screw_index, cv::Point start, double& dx, double& dy) const;
     bool refine_by_edges(const cv::Mat& gray, int screw_index, cv::Point start, double& dx, double& dy) const;
+
+private:
+    ScrewShift find_one(const cv::Mat& gray, int screw_index, cv::Point expected_shift) const;
 
     cv::Point centers_[4];
     cv::Mat brightness_templates_[4];   // 기준 사진의 나사 조각 (91×91)
