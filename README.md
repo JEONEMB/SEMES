@@ -169,3 +169,97 @@ docs/                        문서 3개와 그림
 - QR 판과 나사 사이가 통째로 밀리면(판 재조립) 사진만으로는 알 수 없다. 판을 손댄 뒤에는 영점을 다시 잡는다.
 - 536점 추적(QR 을 더 정밀하게 재는 다른 방법)과 바 기울기는 이 폴더에 아직 넣지 않았다.
 - data 폴더 경로에 한글이 있으면 Windows 에서 설정·위치 파일을 읽지 못할 수 있다. 영문 경로에 둔다.
+
+## 9. 옮길 때 신경 쓸 점
+
+항목마다 **지금 어떻게 되어 있는지**와 **바꾸려면 어디를 고치는지**를 적었다. 무엇을 고치든 마지막에는 `check_photos` 로 예제 사진 5장의 값이 그대로인지 확인한다(2절).
+
+### 9-1. 컬러 순서 (가장 먼저 확인)
+
+- **지금**: 3채널 사진은 **BGR** 로 보고 회색으로 바꾼다. 카메라가 RGB 로 주면 회색 밝기가 달라져 값이 조용히 틀린다. 경고도 나오지 않는다.
+- **위치**: [src/common/reference.cpp](src/common/reference.cpp#L52) `to_gray` 52줄 `cv::COLOR_BGR2GRAY`, 53줄 `cv::COLOR_BGRA2GRAY`
+- **바꾸려면** (셋 중 하나)
+  - 넣기 전에 회색(1채널)으로 바꿔서 넣는다. 1채널은 그대로 쓰므로 순서 문제가 없다.
+  - 넣기 전에 `cv::cvtColor(photo, photo, cv::COLOR_RGB2BGR)` 로 순서를 바꾼다.
+  - 52줄을 `cv::COLOR_RGB2GRAY`, 53줄을 `cv::COLOR_RGBA2GRAY` 로 바꾼다.
+
+### 9-2. 사진 크기와 카메라 조건
+
+- **지금**: 사진은 3840×2160 8비트만 받는다. QR 상자와 나사 중심은 기준 사진의 **px 절대 좌표**로 박혀 있다.
+- **위치**: 크기는 [src/common/reference.hpp](src/common/reference.hpp#L9) 9~10줄 `kPhotoWidth`, `kPhotoHeight`. 좌표는 `data/reference.json` 의 `qr`, `screws`
+- **바꾸려면**
+  - 화면이 조금 밀린 정도(카메라가 처지거나 살짝 움직임)면 코드는 그대로 두고 `set_reference_from_photos` 를 부른다(6절).
+  - 해상도나 잘라내기(ROI)를 바꾸면 상수만 바꿔서는 안 된다. 기준 사진, 좌표, 계수를 모두 새 조건으로 다시 만들어야 한다(9-3).
+
+### 9-3. 계수를 다시 만들어야 하는 경우
+
+- **지금**: `data/coefficients/` 와 `data/checks/` 는 SEMES 사진 702장(Y ±2 mm, T ±1도)으로 학습한 결과다. **학습 코드는 이 패키지에 들어 있지 않다.**
+- **다시 만들어야 하는 때**: 카메라, 렌즈, 카메라와 판 사이 거리, QR 판이나 나사 배치가 바뀌었을 때. 영점이나 기준을 다시 잡는 것으로는 해결되지 않는다.
+- **바꾸려면**: 새 조건에서 Y, T 를 알고 있는 사진을 모아 계수를 다시 학습해야 한다. 학습 코드와 방법은 요청하면 따로 전달한다. 파일 형식은 지금 파일의 머리줄 설명을 따르면 코드는 고치지 않아도 된다.
+
+### 9-4. 프로그램을 다시 켜면 사라지는 것
+
+- **지금**: 아래 상태는 메모리에만 있다. 다시 켜면 `initialize` 직후 상태(처음 기준 사진, 영점 0)로 돌아간다.
+  - 영점 (`zero`)
+  - 기준을 다시 잡은 결과 (새 QR·나사 위치, 영점을 잇는 값 `carry_over`)
+  - 값 일치 점검의 기준 어긋남 (`baselines`)
+- **위치**: [src/alignment.cpp](src/alignment.cpp#L38) 38~50줄 `struct State`
+- **다시 넣을 수 있는 것**: 영점 값만 `set_zero_value(y, t)` 로 넣을 수 있다. 이때 점검의 기준 어긋남은 0 이 된다.
+- **바꾸려면**
+  - 코드 수정 없이: 켤 때마다 센터 사진으로 `set_zero_from_photos` 를 다시 부른다. 기준을 다시 잡았던 장비라면 그 앞에 `set_reference_from_photos` 도 부른다. 가장 단순하고 안전하다.
+  - 코드 수정: `alignment.cpp` 에 `state.reference`, `state.zero`, `state.carry_over`, `state.baselines` 를 파일로 쓰고 읽는 함수를 더하고 `include/alignment.hpp` 에 선언한다. 기준 사진은 `center.bmp`, 위치는 `reference.json` 형식으로 쓰면 그 폴더를 `initialize` 에 그대로 넘길 수 있다.
+
+### 9-5. 여러 스레드, 여러 카메라
+
+- **지금**: 상태가 프로그램 전체에 하나뿐이고(`state`), 모든 공개 함수가 같은 잠금(`state_mutex`)을 건다. 여러 스레드에서 불러도 안전하지만 **한 번에 한 장씩** 잰다. 카메라 여러 대를 각각 다른 기준으로 재는 구조는 지원하지 않는다.
+- **위치**: [src/alignment.cpp](src/alignment.cpp#L52) 52~53줄
+- **바꾸려면**
+  - 카메라마다 프로그램(프로세스)을 따로 띄운다. 코드 수정이 없다.
+  - 한 프로그램에서 하려면 `State` 와 잠금을 클래스 멤버로 옮기고, 공개 함수 6개를 그 클래스의 함수로 바꾼다. 단계 코드(`src/steps/`)는 이미 상태를 갖지 않아서 고칠 필요가 없다.
+
+### 9-6. 안쪽 병렬 처리와 속도
+
+- **지금**: QR 3개, 나사 4개를 `cv::parallel_for_` 로 동시에 찾는다. 하나씩 찾을 때와 결과가 같다. 속도는 OpenCV 스레드 수에 따라 달라진다(1스레드 17.6 ms, 4스레드 9.4 ms, 사진 읽기 제외).
+- **위치**: [src/steps/01_find_qr.cpp](src/steps/01_find_qr.cpp#L72) 72줄, [src/steps/02_find_screws.cpp](src/steps/02_find_screws.cpp#L229) 229줄
+- **바꾸려면**: 코드 대신 `cv::setNumThreads(n)` 으로 스레드 수를 정한다. 병렬을 아예 끄려면 `cv::setNumThreads(0)` 이다.
+
+### 9-7. 실패를 알리는 방식
+
+- **지금**: 어떤 함수도 예외를 던지지 않는다. 결과의 `status` 로 알리고, 실패면 `y_mm`, `t_deg` 가 NaN 이다. 안에서 생긴 예외도 잡아서 `E_INTERNAL` 로 돌려준다.
+- **위치**: [src/alignment.cpp](src/alignment.cpp#L67) 67줄 `failed`
+- **바꾸려면**: 라이브러리는 그대로 두고, 부르는 쪽에서 `status == Status::Failed` 일 때 예외를 던지는 감싸는 함수를 만드는 것을 권한다.
+
+### 9-8. 숫자 형식
+
+- **지금**: 계산은 모두 `double` 이다. OpenCV `matchTemplate` 결과만 `float` 이다.
+- **바꾸려면**: `float` 으로 바꾸면 포팅 안내서의 확인 값이 소수 4자리에서 어긋날 수 있다. 바꾼다면 `show_steps` 로 단계마다 비교한다.
+
+### 9-9. OpenCV 버전
+
+- **지금**: OpenCV 3.4.15 에서 확인했다. 쓰는 함수는 `GaussianBlur`, `matchTemplate`, `minMaxLoc`, `Sobel`, `filter2D`, `magnitude`, `cvtColor`, `imdecode`, `FileStorage`, `parallel_for_` 이다. ECC 는 OpenCV 것을 쓰지 않고 직접 풀었다(1/32 px 끊김 문제, 포팅 안내서 2-3).
+- **위치**: [CMakeLists.txt](CMakeLists.txt#L5) 5줄 `find_package(OpenCV REQUIRED)`
+- **바꾸려면**: 다른 버전으로 빌드한 뒤 `check_photos` 로 예제 5장을 비교한다. 흐림과 NCC 의 끝자리 차이는 생길 수 있고, 소수 4자리까지 맞으면 된다.
+
+### 9-10. 소스 파일 인코딩
+
+- **지금**: 소스는 UTF-8 이고 주석과 알림 메시지가 한글이다. Visual Studio 는 `/utf-8` 옵션이 없으면 경고나 오류가 나고 메시지가 깨진다.
+- **위치**: [CMakeLists.txt](CMakeLists.txt#L20) 20줄, 31줄 `/utf-8`
+- **바꾸려면**: CMake 를 쓰지 않고 다른 프로젝트에 파일을 넣을 때도 같은 옵션을 켠다. GCC, Clang 은 기본이 UTF-8 이라 따로 할 일이 없다.
+
+### 9-11. 파일 경로에 한글
+
+- **지금**: 사진(`center.bmp`)은 바이트로 읽어서 한글 경로도 된다. `reference.json`, `settings.json` 은 OpenCV `FileStorage` 로 읽어서 Windows 에서 한글 경로를 못 읽을 수 있다.
+- **위치**: [src/common/reference.cpp](src/common/reference.cpp#L29) 29줄, [src/setup/settings.cpp](src/setup/settings.cpp#L10) 10줄
+- **바꾸려면**: 영문 경로에 두는 것이 가장 쉽다. 코드로 고치려면 `read_gray_image`(같은 파일 12줄)처럼 파일을 바이트로 읽은 뒤 `cv::FileStorage(내용, cv::FileStorage::READ | cv::FileStorage::MEMORY)` 로 연다.
+
+### 9-12. 조정 값 (탐색 창, 기준값)
+
+- **지금**: 탐색 창 크기, NCC 기준값, 반복 횟수 같은 숫자는 파일 맨 위 상수로 모아 두었다.
+- **위치**: [src/steps/01_find_qr.cpp](src/steps/01_find_qr.cpp#L9) 9~14줄 (흐림 σ 2.0, 가로 ±110 → ±250 px, 세로 ±22 px, NCC 0.8), [src/steps/02_find_screws.cpp](src/steps/02_find_screws.cpp#L14) 14~34줄 (조각 반지름 45 px, ±60 → ±260 px, NCC 0.6 등), [src/setup/find_new_reference.cpp](src/setup/find_new_reference.cpp#L10) 10~15줄
+- **바꾸려면**: 상수만 고치면 된다. 다만 흐림 σ, 조각 크기, 원 반지름은 계수와 점검식을 학습할 때의 값이라 바꾸면 계수도 다시 만들어야 한다. 탐색 창 크기와 반복 횟수는 바꿔도 계수와 상관없다. 바꾼 뒤에는 `check_photos` 로 예제 5장을 확인한다.
+
+### 9-13. 옮긴 뒤 확인하는 법
+
+1. 단계를 하나 옮길 때마다 `show_steps` 출력과 비교한다. 단계별 확인 값은 [docs/2_포팅안내서.md](docs/2_포팅안내서.md) 에 있다.
+2. 다 옮긴 뒤 예제 5장의 최종 값을 `tests/photos/expected_steps.tsv` 와 비교한다. 소수 4자리까지 맞으면 된다.
+3. 영점과 기준 다시 잡기는 `check_setup` 과 같은 순서로 확인한다.
