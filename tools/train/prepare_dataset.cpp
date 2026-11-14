@@ -197,7 +197,7 @@ int main(int argc, char** argv) {
             photo.file = file;
             photo.in_range = std::abs(file.command_y_mm) <= kTrainedRangeYmm + 1e-9 && std::abs(file.command_t_deg) <= kTrainedRangeTdeg + 1e-9;
             alignment::clear_zero();
-            const alignment::Result r = alignment::measure_alignment(read_gray_photo(file.path));
+            const alignment::Result r = alignment::measure_alignment(alignment::read_photo(file.path.u8string()));
             photo.measured = r.status != alignment::Status::Failed;
             photo.values[0] = r.qr_shift_px;
             photo.all_screws = photo.measured;

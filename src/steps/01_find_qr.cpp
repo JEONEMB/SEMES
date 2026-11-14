@@ -13,11 +13,9 @@ const int kWideHalfWidth = 250;       // px. 넓힌 탐색 창
 const int kSearchHalfHeight = 22;     // px. 세로 탐색 창 (세로 ±)
 const double kMinSimilarity = 0.8;    // NCC 가 이보다 낮으면 QR 이 아니라고 본다
 
-const cv::Rect kPhoto(0, 0, kPhotoWidth, kPhotoHeight);
-
 // area 부분을 흐려서 돌려준다. 가장자리 효과가 없도록 조금 넓게 잘라 흐린 뒤 area 만 남긴다.
 cv::Mat blurred_area(const cv::Mat& gray, const cv::Rect& area) {
-    const cv::Rect wider = cv::Rect(area.x - kBlurMargin, area.y - kBlurMargin, area.width + 2 * kBlurMargin, area.height + 2 * kBlurMargin) & kPhoto;
+    const cv::Rect wider = cv::Rect(area.x - kBlurMargin, area.y - kBlurMargin, area.width + 2 * kBlurMargin, area.height + 2 * kBlurMargin) & kPhotoRect;
     cv::Mat blurred;
     cv::GaussianBlur(gray(wider), blurred, cv::Size(0, 0), kBlurSigma);
     return blurred(area - wider.tl()).clone();
@@ -45,7 +43,7 @@ QrFinder::Match QrFinder::find_one(const cv::Mat& gray, int qr_index, int half_w
     const cv::Rect box = boxes_[qr_index];
     const int left = half_width > 0 ? box.x - half_width : 0;
     const int right = half_width > 0 ? box.x + box.width + half_width : kPhotoWidth;
-    const cv::Rect window = cv::Rect(left, box.y - kSearchHalfHeight, right - left, box.height + 2 * kSearchHalfHeight) & kPhoto;
+    const cv::Rect window = cv::Rect(left, box.y - kSearchHalfHeight, right - left, box.height + 2 * kSearchHalfHeight) & kPhotoRect;
     if (window.width <= box.width || window.height <= box.height) return match;
 
     cv::Mat similarity;

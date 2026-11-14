@@ -16,7 +16,6 @@ struct Layout {
 };
 
 // ---- 읽고 쓰기 ----
-cv::Mat read_gray(const std::filesystem::path& path);
 void save_png(const std::filesystem::path& path, const cv::Mat& picture);
 Layout read_layout(const std::filesystem::path& data_folder);   // data/reference.json
 // 판 둘레를 잘라 절반 크기로 줄이고 왼쪽 위에 제목을 쓴다 (컬러 3채널로 돌려줌)

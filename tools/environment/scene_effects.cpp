@@ -25,12 +25,6 @@ cv::Mat warp_affine(const cv::Mat& gray, const cv::Mat& matrix) {
 
 // ---- 읽고 쓰기 ----
 
-cv::Mat read_gray(const fs::path& path) {
-    std::ifstream file(path, std::ios::binary);
-    const std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
-}
-
 void save_png(const fs::path& path, const cv::Mat& picture) {
     std::vector<unsigned char> bytes;
     cv::imencode(".png", picture, bytes);

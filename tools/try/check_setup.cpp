@@ -2,7 +2,6 @@
 // 사용: check_setup <model 폴더> <사진 목록.tsv>
 //   사진 목록.tsv : 번호<TAB>사진 경로  (머리줄 없음). 기준 사진은 model 폴더의 center.bmp 를 쓴다.
 #include "alignment.hpp"
-#include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 #include <algorithm>
 #include <cmath>
@@ -14,12 +13,6 @@
 #include <vector>
 
 namespace {
-
-cv::Mat read_photo(const std::string& path) {
-    std::ifstream file(path, std::ios::binary);
-    const std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
-}
 
 std::vector<std::string> read_photo_paths(const std::string& list) {
     std::ifstream file(list);
@@ -60,9 +53,9 @@ int main(int argc, char** argv) {
     if (argc != 3) { std::cerr << "사용: check_setup <model 폴더> <사진 목록.tsv>\n"; return 2; }
     const std::string data = argv[1];
     const auto paths = read_photo_paths(argv[2]);
-    const cv::Mat center = read_photo(data + "/center.bmp");
+    const cv::Mat center = alignment::read_photo(data + "/center.bmp");
     std::vector<cv::Mat> photos;
-    for (const auto& path : paths) photos.push_back(read_photo(path));
+    for (const auto& path : paths) photos.push_back(alignment::read_photo(path));
     std::cout << std::fixed << std::setprecision(5);
 
     // 처음 상태의 값 (비교 기준)

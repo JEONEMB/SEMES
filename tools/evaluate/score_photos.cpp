@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
     std::string zero_note;
     if (!zero_photos.empty()) {
         std::vector<cv::Mat> images;
-        for (const PhotoFile& p : zero_photos) images.push_back(read_gray_photo(p.path));
+        for (const PhotoFile& p : zero_photos) images.push_back(alignment::read_photo(p.path.u8string()));
         const alignment::Result zero = alignment::set_zero_from_photos(images);
         if (zero.status == alignment::Status::Failed) {
             zero_note = "경고: 정답 (0, 0) 사진 " + std::to_string(zero_photos.size()) + "장으로 영점을 잡지 못했다 (" + zero.message + "). 영점 없이 채점했다";
@@ -114,7 +114,7 @@ int main(int argc, char** argv) {
     std::map<std::string, int> by_status, by_code;
     double worst_y = 0, worst_t = 0;
     for (const PhotoFile& p : scored) {
-        const cv::Mat image = read_gray_photo(p.path);
+        const cv::Mat image = alignment::read_photo(p.path.u8string());
         const auto start = std::chrono::steady_clock::now();
         const alignment::Result r = alignment::measure_alignment(image);
         const double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();

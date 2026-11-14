@@ -1,28 +1,17 @@
 // 예제: 사진 한 장이 단계마다 어떤 값을 내는지 모두 찍는다.
 // 코드를 다른 곳으로 옮길 때, 옮긴 코드의 값과 한 단계씩 비교하는 데 쓴다 (docs/2_포팅안내서.md).
 // 사용: show_steps <model 폴더> <사진>
+#include "alignment.hpp"
 #include "common/reference.hpp"
 #include "steps/01_find_qr.hpp"
 #include "steps/02_find_screws.hpp"
 #include "steps/03_compute_yt.hpp"
 #include "steps/04_check_result.hpp"
-#include <opencv2/imgcodecs.hpp>
 #include <cmath>
-#include <fstream>
 #include <iomanip>
 #include <iostream>
 
 using namespace alignment;
-
-namespace {
-
-cv::Mat read_photo(const std::string& path) {
-    std::ifstream file(path, std::ios::binary);
-    const std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
-}
-
-}   // namespace
 
 int main(int argc, char** argv) {
     if (argc != 3) { std::cerr << "사용: show_steps <model 폴더> <사진>\n"; return 2; }
@@ -33,7 +22,7 @@ int main(int argc, char** argv) {
     std::vector<AgreementCheck> checks;
     cv::Mat gray;
     if (!load_reference(data, reference, error) || !load_coefficient_sets(data, sets, error) || !load_agreement_checks(data, checks, error) ||
-        !to_gray(read_photo(argv[2]), gray, error)) {
+        !to_gray(alignment::read_photo(argv[2]), gray, error)) {
         std::cerr << error << "\n";
         return 1;
     }

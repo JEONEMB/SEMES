@@ -136,7 +136,7 @@ int main(int argc, char** argv) {
     fs::create_directories(work);
     fs::create_directories(out);
     if (alignment::initialize(data.u8string()).status == alignment::Status::Failed) return 1;
-    const cv::Mat center = read_gray(data / "center.bmp");
+    const cv::Mat center = alignment::read_photo((data / "center.bmp").u8string());
     const Layout layout = read_layout(data);
 
     // 예제 사진: 기대값과, 지금 기준으로 잰 QR 이동 (변화를 같은 자리에 주려고)
@@ -144,7 +144,7 @@ int main(int argc, char** argv) {
     const auto expected = read_tsv(fs::u8path(argv[3]));
     for (const auto& row : read_tsv(fs::u8path(argv[2]))) {
         SamplePhoto s;
-        s.gray = read_gray(fs::u8path(row.at(1)));
+        s.gray = alignment::read_photo(row.at(1));
         for (const auto& e : expected) if (e.at(0) == row.at(0)) { s.expected_y = std::stod(e.at(1)); s.expected_t = std::stod(e.at(2)); }
         alignment::clear_zero();
         s.qr_shift_px = alignment::measure_alignment(s.gray).qr_shift_px;

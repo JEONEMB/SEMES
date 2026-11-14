@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
     const fs::path data = fs::u8path(argv[1]), out = fs::u8path(argv[2]);
     fs::create_directories(out);
     if (alignment::initialize(data.u8string()).status == alignment::Status::Failed) return 1;
-    const cv::Mat center = read_gray(data / "center.bmp");
+    const cv::Mat center = alignment::read_photo((data / "center.bmp").u8string());
     const Layout L = read_layout(data);
 
     const std::vector<Change> changes = {

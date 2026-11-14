@@ -1,5 +1,5 @@
 #pragma once
-// 사진 파일 찾기, 파일 이름에서 명령값 읽기, 사진 읽기.
+// 사진 파일 찾기, 파일 이름에서 명령값 읽기. (사진 읽기는 alignment::read_photo)
 //
 // 파일 이름 규칙 (SEMES 에서 받은 그대로)
 //   "Y+0.05.bmp"              → Y 0.05, T 0
@@ -29,9 +29,6 @@ std::vector<PhotoFile> find_photos(const std::filesystem::path& folder);
 
 // folder 바로 아래 폴더들의 이름 (이름 순).
 std::vector<std::string> list_subfolders(const std::filesystem::path& folder);
-
-// 사진을 회색으로 읽는다 (한글 경로도 읽히게 바이트로 읽어 푼다). 못 읽으면 빈 Mat.
-cv::Mat read_gray_photo(const std::filesystem::path& path);
 
 // 명령값이 (0, 0) 인지 (영점 사진인지).
 bool is_zero_command(const PhotoFile& photo);

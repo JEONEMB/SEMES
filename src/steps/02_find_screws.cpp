@@ -8,8 +8,6 @@ namespace alignment {
 
 namespace {
 
-const cv::Rect kPhoto(0, 0, kPhotoWidth, kPhotoHeight);
-
 // ---- 1. locate_screw 에서 쓰는 값 ----
 const int kPatchRadius = 45;                       // px. 나사 조각의 반지름
 const int kPatchSide = 2 * kPatchRadius + 1;       // 91 px
@@ -35,10 +33,6 @@ const double kEdgeDone = 1e-8;                     // 닮은 정도가 이보다
 
 cv::Rect square_around(cv::Point center, int half) {
     return cv::Rect(center.x - half, center.y - half, 2 * half + 1, 2 * half + 1);
-}
-
-bool inside_photo(const cv::Rect& area) {
-    return (area & kPhoto) == area;
 }
 
 // ------------------------------------------------------------------------------------------------

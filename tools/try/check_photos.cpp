@@ -4,7 +4,6 @@
 //   기대값.tsv    : 번호<TAB>Y<TAB>T    (머리줄 없음)
 //   가로·아래로 옮길 px: 사진을 통째로 옮겨 큰 이동이나 카메라 처짐을 흉내 낼 때 (기본 0). 기대값이 없으면 - 를 넣는다
 #include "alignment.hpp"
-#include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 #include <algorithm>
 #include <chrono>
@@ -17,12 +16,6 @@
 #include <vector>
 
 namespace {
-
-cv::Mat read_photo(const std::string& path) {
-    std::ifstream file(path, std::ios::binary);
-    const std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    return bytes.empty() ? cv::Mat() : cv::imdecode(bytes, cv::IMREAD_GRAYSCALE);
-}
 
 std::vector<std::vector<std::string>> read_table(const std::string& path) {
     std::ifstream file(path);
@@ -71,7 +64,7 @@ int main(int argc, char** argv) {
     std::vector<double> times;
     std::map<std::string, int> codes;
     for (const auto& row : photos) {
-        const cv::Mat photo = moved(read_photo(row.at(1)), sideways, down);
+        const cv::Mat photo = moved(alignment::read_photo(row.at(1)), sideways, down);
         const auto start = std::chrono::steady_clock::now();
         const alignment::Result r = alignment::measure_alignment(photo);
         const double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();

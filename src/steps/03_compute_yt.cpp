@@ -9,13 +9,6 @@ namespace {
 // 가능한 나사 조합 16가지 (없음 포함)
 const char* const kSetNames[] = {"1234", "234", "134", "124", "123", "12", "13", "14", "23", "24", "34", "1", "2", "3", "4", "none"};
 
-// 값 이름 → 값 번호. 모르는 이름이면 −1.
-int value_index(const std::string& name) {
-    if (name == "qr") return 0;
-    if (name.size() == 6 && name.compare(0, 5, "screw") == 0 && name[5] >= '1' && name[5] <= '4') return name[5] - '0';
-    return -1;
-}
-
 bool load_one_set(const std::string& path, const std::string& screws, CoefficientSet& set, std::string& error) {
     std::ifstream file(path);
     if (!file) { error = "계수 파일을 읽지 못했습니다: " + path; return false; }
@@ -31,7 +24,7 @@ bool load_one_set(const std::string& path, const std::string& screws, Coefficien
         if (name == "name") continue;   // 머리줄
         if (!(cells >> mean >> scale >> weight_y >> weight_t)) { error = "계수 파일의 줄을 읽지 못했습니다: " + path; return false; }
         if (name == "intercept") { set.intercept_y = weight_y; set.intercept_t = weight_t; continue; }
-        const int index = value_index(name);
+        const int index = value_index_of(name);
         if (index < 0 || !(scale > 0)) { error = "계수 파일에 모르는 값이 있습니다: " + name + " (" + path + ")"; return false; }
         set.mean[index] = mean;
         set.scale[index] = scale;
@@ -46,6 +39,12 @@ bool load_one_set(const std::string& path, const std::string& screws, Coefficien
 }
 
 }   // namespace
+
+int value_index_of(const std::string& name) {
+    for (int i = 0; i < kValueCount; ++i)
+        if (name == kValueNames[i]) return i;
+    return -1;
+}
 
 bool load_coefficient_sets(const std::string& data_folder, std::vector<CoefficientSet>& sets, std::string& error) {
     sets.clear();
@@ -63,9 +62,9 @@ const CoefficientSet* choose_coefficient_set(const std::vector<CoefficientSet>& 
     return nullptr;
 }
 
-YT compute_yt(const CoefficientSet& set, const double values[5]) {
+YT compute_yt(const CoefficientSet& set, const double values[kValueCount]) {
     YT result{set.intercept_y, set.intercept_t};
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < kValueCount; ++i) {
         if (set.weight_y[i] == 0 && set.weight_t[i] == 0) continue;   // 이 조합에서 쓰지 않는 값
         const double normalized = (values[i] - set.mean[i]) / set.scale[i];
         result.y_mm += set.weight_y[i] * normalized;

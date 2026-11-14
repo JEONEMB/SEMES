@@ -34,7 +34,7 @@ struct Measured {
     QrShift qr;
     std::array<ScrewShift, 4> screws;
     const CoefficientSet* set = nullptr;
-    double values[5] = {};   // [0] QR, [1~4] 나사 1~4 가로 이동
+    double values[kValueCount] = {};   // [0] QR, [1~4] 나사 1~4 가로 이동
     YT raw;                  // 계수로 계산한 그대로의 Y, T
 };
 
@@ -52,7 +52,7 @@ struct State {
 
     YT zero;               // 영점 (출력 = 계산값 + carry_over - zero)
     YT carry_over;         // 기준 사진을 다시 잡았을 때, 처음 영점을 잇기 위해 더하는 값
-    std::map<std::string, std::array<double, 5>> baselines;   // 조합마다 영점을 잡을 때의 (측정값 - 기대값)
+    std::map<std::string, std::array<double, kValueCount>> baselines;   // 조합마다 영점을 잡을 때의 (측정값 - 기대값)
 };
 
 State state;
@@ -150,7 +150,7 @@ void reset_baselines(const Measured& measured) {
             if (set->uses_screw[k] && !measured.screws[k].found) all_found = false;
         if (!all_found) continue;
         const YT raw = compute_yt(*set, measured.values);
-        std::array<double, 5> baseline{};
+        std::array<double, kValueCount> baseline{};
         expected_differences(check, measured.values, raw.y_mm, raw.t_deg, baseline.data());
         state.baselines[check.screws] = baseline;
     }
@@ -214,7 +214,7 @@ Result make_result(const Measured& measured) {
     AgreementResult agreement;
     result.check_value = result.check_limit = kNaN;
     if (const AgreementCheck* check = find_agreement_check(state.agreement_checks, measured.set->screws)) {
-        const auto baseline = state.baselines.count(check->screws) ? state.baselines[check->screws] : std::array<double, 5>{};
+        const auto baseline = state.baselines.count(check->screws) ? state.baselines[check->screws] : std::array<double, kValueCount>{};
         agreement = check_values_agree(*check, measured.values, measured.raw.y_mm, measured.raw.t_deg, baseline.data());
         result.check_value = agreement.value;
         result.check_limit = agreement.limit;
