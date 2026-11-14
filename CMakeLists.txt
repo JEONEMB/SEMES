@@ -42,6 +42,7 @@ add_library(tools_common STATIC
     tools/common/photo_files.cpp
     tools/common/tables.cpp
     tools/common/console.cpp
+    tools/common/progress.cpp
     tools/common/coefficient_fit.cpp
     tools/common/dataset.cpp)
 target_include_directories(tools_common PUBLIC tools src)   # 계수 자료형과 계산식은 src/steps 것을 그대로 쓴다 (실사용과 같은 계산)
@@ -52,7 +53,7 @@ if(MSVC)
 endif()
 
 # ---- tools/train: 계수를 다시 만들 때 ----
-foreach(name prepare_dataset fit_coefficients)
+foreach(name train prepare_dataset fit_coefficients)
     add_program(${name} tools/train/${name}.cpp tools_common)
 endforeach()
 
