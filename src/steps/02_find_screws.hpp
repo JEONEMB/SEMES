@@ -1,7 +1,7 @@
 #pragma once
 // 2단계: 나사별 가로 이동량(px)
 // 처리: 닮은 위치 찾기 -> 밝기 차이 보정 -> 테두리 위치 맞추기
-// 중간 실패 시 해당 나사만 제외
+// 중간 실패 시 해당 나사만 제외. 머리 일부가 가려지거나 오염된 것으로 보이면 일부 가림으로 표시 (측정 실패 처리)
 #include "common/reference.hpp"
 #include <array>
 #include <string>
@@ -13,6 +13,8 @@ struct ScrewShift {
     double dx = 0;            // 가로 이동 (px, 오른쪽이 +)
     double dy = 0;            // 세로 이동(px, 아래가 +). Y, T 계산 제외
     double similarity = 0;    // 처음 찾은 위치의 닮은 정도 (0~1)
+    double shape_similarity = 0;   // 최종 위치에서 흐린 기준 조각과의 닮은 정도 (0~1). 일부 가림 점검용
+    bool partial = false;     // 머리 일부 가림 또는 오염 의심 (found = false)
     std::string problem;      // 검출 또는 위치 맞춤 실패 사유
 };
 
@@ -49,11 +51,17 @@ private:
     //   출력: ScrewShift (이동량, 검출 여부, 실패 사유)
     ScrewShift find_one(const cv::Mat& gray, int screw_index, cv::Point expected_shift) const;
 
+    // shape_similarity_at: 최종 위치에서 흐린 기준 조각과의 닮은 정도
+    //   입력: gray (회색 사진), screw_index (0~3), dx와 dy (최종 이동량 px)
+    //   출력: 닮은 정도 (-1~1). 사진 밖이면 -1
+    double shape_similarity_at(const cv::Mat& gray, int screw_index, double dx, double dy) const;
+
     cv::Point centers_[4];
     cv::Mat locate_templates_[4];       // 초기 탐색용 나사 영역(91×91, 8비트)
     cv::Mat brightness_templates_[4];   // 밝기 비교용 기준 사진. 소수 밝기값 사용
     cv::Mat edge_templates_[4];         // 기준 사진의 나사 윤곽선 영상 (141×141)
     cv::Mat edge_mask_;                 // 테두리 맞춤에 쓰는 원 (반지름 45 px)
+    cv::Mat shape_templates_[4];        // 일부 가림 점검용 흐린 기준 조각 (91×91, 소수)
 };
 
 }   // alignment
