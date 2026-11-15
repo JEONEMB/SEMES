@@ -66,6 +66,7 @@ endforeach()
 foreach(name evaluate_accuracy measure_speed score_photos)
     add_program(${name} tools/evaluate/${name}.cpp tools_common)
 endforeach()
+add_program(compare_far_pose_methods tools/evaluate/compare_far_pose_methods.cpp)   # 식 모양 비교 실험. 표만 읽음
 
 # tools/environment: 환경 변화 합성과 측정 반응 확인
 add_library(scene_effects STATIC tools/environment/scene_effects.cpp)
@@ -77,6 +78,7 @@ endif()
 foreach(name make_environment_images make_site_images check_new_installation)
     add_program(${name} tools/environment/${name}.cpp alignment scene_effects)
 endforeach()
+add_program(check_qr_blocking tools/environment/check_qr_blocking.cpp tools_common scene_effects)   # 실제 사진 목록(tables) 사용
 
 if(WIN32)
     add_program(make_figures tools/try/make_figures.cpp tools_common scene_effects gdi32)
