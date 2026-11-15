@@ -1,5 +1,10 @@
 # QR 자세 보정 납품·실증 결과
 
+- [최신 프로젝트 전체 보고서와 C++14 포팅 가이드](qr-pose-correction-and-porting.pdf)
+- [C++14 실행기·빌드·연동 안내](../../../experiments/shin/qr_only_multiple_exe/native/README.md)
+
+아래 문서는 초기 Python 실행과 순차 재생의 검증 기록이다. C++14 포팅판의 실행 명령과 지원 환경은 위 가이드에 있다.
+
 - [결과와 한계 보고서 PDF](ssafy-rig-qr-delivery-validation.pdf)
 - [SSAFY 납품용 실행과 외부 목표 설정](ssafy-delivery.md)
 - [Rig 실행과 라즈베리 파이 연동](rig-demo.md)
