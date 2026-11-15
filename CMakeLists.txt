@@ -66,6 +66,7 @@ endforeach()
 foreach(name evaluate_accuracy measure_speed score_photos)
     add_program(${name} tools/evaluate/${name}.cpp tools_common)
 endforeach()
+add_program(compare_far_pose_methods tools/evaluate/compare_far_pose_methods.cpp)   # 식 모양 비교 실험. 표만 읽음
 
 # tools/environment: 환경 변화 합성과 측정 반응 확인
 add_library(scene_effects STATIC tools/environment/scene_effects.cpp)
