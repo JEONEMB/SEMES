@@ -14,10 +14,8 @@ namespace {
 // 1. 초기 위치 탐색 설정
 const int kPatchRadius = 45;                       // px. 나사 영상 영역의 반지름
 const int kPatchSide = 2 * kPatchRadius + 1;       // 91 px
-const int kNearSearch = 60;                        // QR 이동 위치 주변 탐색 반너비(px)
-const int kFarSearch = 260;                        // 미검출 시 기준 위치 주변 탐색 반너비(px)
+const int kSearchHalf = 60;                        // QR 이동 위치 주변 탐색 반너비(px). 받은 사진에서 예상 위치 오차는 최대 7 px
 const double kMinSimilarity = 0.6;                 // 나사 검출을 허용하는 최소 닮은 정도
-const int kMaxAwayFromQr = 100;                    // QR 이동량과의 최대 허용 차이(px)
 
 // 2. 밝기 비교 설정
 const int kBrightnessMaxSteps = 50;
@@ -380,28 +378,16 @@ bool ScrewFinder::locate_screw(const cv::Mat& gray, int screw_index, cv::Point e
     const cv::Mat& template8 = locate_templates_[screw_index];
     cv::Mat scores;
 
-    // QR 이동 위치 주변 우선 탐색
-    const cv::Rect near_window = square_around(centers_[screw_index] + expected_shift, kPatchRadius + kNearSearch);
-    if (inside_photo(near_window)) {
-        cv::matchTemplate(gray(near_window), template8, scores, cv::TM_CCOEFF_NORMED);
-        cv::Point peak;
-        cv::minMaxLoc(scores, nullptr, &similarity, nullptr, &peak);
-        const bool at_window_edge = peak.x <= 0 || peak.y <= 0 || peak.x >= scores.cols - 1 || peak.y >= scores.rows - 1;
-        if (!at_window_edge && similarity >= kMinSimilarity) {
-            shift = peak - cv::Point(kNearSearch, kNearSearch) + expected_shift;
-            return true;
-        }
-    }
-    // 미검출 시 기준 위치 주변으로 탐색 확대
-    const cv::Rect far_window = square_around(centers_[screw_index], kPatchRadius + kFarSearch);
-    if (!inside_photo(far_window)) return false;
-    cv::matchTemplate(gray(far_window), template8, scores, cv::TM_CCOEFF_NORMED);
+    // QR 이동 위치 주변에서만 탐색. 넓혀서 다시 찾지 않는다
+    // (창 밖에서 찾은 나사는 예상 위치와 15 px 넘게 떨어져 일부 가림 점검에서 어차피 빠지므로, 2026-11-16 넓은 창 단계를 뺐다)
+    const cv::Rect window = square_around(centers_[screw_index] + expected_shift, kPatchRadius + kSearchHalf);
+    if (!inside_photo(window)) return false;
+    cv::matchTemplate(gray(window), template8, scores, cv::TM_CCOEFF_NORMED);
     cv::Point peak;
     cv::minMaxLoc(scores, nullptr, &similarity, nullptr, &peak);
-    shift = peak - cv::Point(kFarSearch, kFarSearch);
-    // 오검출 방지용 QR 이동량 차이 제한
-    const bool moves_with_qr = std::abs(shift.x - expected_shift.x) <= kMaxAwayFromQr && std::abs(shift.y - expected_shift.y) <= kMaxAwayFromQr;
-    return similarity >= kMinSimilarity && moves_with_qr;
+    const bool at_window_edge = peak.x <= 0 || peak.y <= 0 || peak.x >= scores.cols - 1 || peak.y >= scores.rows - 1;
+    shift = peak - cv::Point(kSearchHalf, kSearchHalf) + expected_shift;
+    return !at_window_edge && similarity >= kMinSimilarity;
 }
 
 // ScrewFinder::refine_by_brightness: 밝기 차이를 줄여 위치 맞추기
