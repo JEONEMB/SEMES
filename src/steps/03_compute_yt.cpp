@@ -34,7 +34,7 @@ bool load_one_set(const std::string& path, const std::string& screws, Coefficien
         set.scale[index] = scale;
         set.weight_y[index] = weight_y;
         set.weight_t[index] = weight_t;
-        if (index >= 1) set.uses_screw[index - 1] = true;
+        if (index >= 1) set.uses_screw[screw_of_value(index)] = true;
     }
     const bool has_left = set.uses_screw[0] || set.uses_screw[2];    // 나사 1, 3 이 왼쪽
     const bool has_right = set.uses_screw[1] || set.uses_screw[3];   // 나사 2, 4 가 오른쪽
@@ -76,7 +76,7 @@ const CoefficientSet* choose_coefficient_set(const std::vector<CoefficientSet>& 
 }
 
 // compute_yt: 이동량에서 Y, T 계산
-//   입력: set (조합 계산식), values (QR, 나사 1~4의 가로 이동 px)
+//   입력: set (조합 계산식), values (QR, 나사 1~4 테두리, 나사 1~4 둘레 영역의 가로 이동 px)
 //   출력: YT (영점 차감 전 mm와 도)
 YT compute_yt(const CoefficientSet& set, const double values[kValueCount]) {
     YT result{set.intercept_y, set.intercept_t};

@@ -14,7 +14,8 @@ using namespace alignment;
 
 namespace {
 
-const char* const kValueLabels[kValueCount] = {"QR", "나사 1", "나사 2", "나사 3", "나사 4"};   // 화면에 출력하는 항목 이름
+const char* const kValueLabels[kValueCount] = {"QR", "나사 1", "나사 2", "나사 3", "나사 4",
+                                              "나사 1 둘레", "나사 2 둘레", "나사 3 둘레", "나사 4 둘레"};   // 화면에 출력하는 항목 이름
 
 // print_qr_step: 1단계 값 표시
 //   입력: qr_finder (기준 QR 탐색 도구), gray (회색 사진)
@@ -37,7 +38,7 @@ QrShift print_qr_step(const QrFinder& qr_finder, const cv::Mat& gray) {
 
 // print_screw_step: 2단계 값 표시
 //   입력: screw_finder (나사 탐색 도구), gray (회색 사진), qr (QR 이동 결과)
-//   출력: 나사별 검출 여부, values[1~4] 이동량 저장, 단계별 값 표시
+//   출력: 나사별 검출 여부, values[1~4] 테두리와 values[5~8] 둘레 영역 이동량 저장, 단계별 값 표시
 std::array<bool, 4> print_screw_step(const ScrewFinder& screw_finder, const cv::Mat& gray, const QrShift& qr, double values[kValueCount]) {
     const cv::Point expected(int(std::lround(qr.dx)), int(std::lround(qr.dy)));
     std::cout << "[2단계] find_screw_shifts  (QR 이동을 반올림한 예상 이동: " << expected.x << ", " << expected.y << ")\n";
@@ -51,9 +52,13 @@ std::array<bool, 4> print_screw_step(const ScrewFinder& screw_finder, const cv::
         if (!screw_finder.refine_by_brightness(gray, k, located, rough_dx, rough_dy)) { std::cout << " | refine_by_brightness 실패\n"; continue; }
         std::cout << " | refine_by_brightness (" << rough_dx << ", " << rough_dy << ")";
         if (!screw_finder.refine_by_edges(gray, k, cv::Point(cvRound(rough_dx), cvRound(rough_dy)), dx, dy)) { std::cout << " | refine_by_edges 실패\n"; continue; }
-        std::cout << " | refine_by_edges (" << dx << ", " << dy << ")\n";
+        std::cout << " | refine_by_edges (" << dx << ", " << dy << ")";
+        double area_dx = 0, area_dy = 0;
+        if (!screw_finder.refine_by_area(gray, k, cv::Point(cvRound(dx), cvRound(dy)), area_dx, area_dy)) { std::cout << " | refine_by_area 실패\n"; continue; }
+        std::cout << " | refine_by_area (" << area_dx << ", " << area_dy << ")\n";
         found[k] = true;
         values[k + 1] = dx;
+        values[kAreaValueOffset + k] = area_dx;
     }
     return found;
 }
@@ -114,7 +119,7 @@ int main(int argc, char** argv) {
 
     const QrShift qr = print_qr_step(QrFinder(reference), gray);
     if (!qr.found) return 1;
-    double values[kValueCount] = {qr.dx, 0, 0, 0, 0};
+    double values[kValueCount] = {qr.dx};
     const std::array<bool, 4> found = print_screw_step(ScrewFinder(reference), gray, qr, values);
     const CoefficientSet* set = choose_coefficient_set(sets, found);
     const YT yt = print_yt_step(*set, values);

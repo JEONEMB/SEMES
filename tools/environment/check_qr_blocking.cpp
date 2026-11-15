@@ -190,9 +190,13 @@ Pose pose_from(const Model& model, const ScrewFinder& screw_finder, const cv::Ma
     dx /= count; dy /= count;
 
     const std::array<ScrewShift, 4> screws = screw_finder.find_screw_shifts(gray, dx, dy, {true, true, true, true});
-    double values[kValueCount] = {dx, 0, 0, 0, 0};
+    double values[kValueCount] = {dx};
     std::array<bool, 4> found{};
-    for (int k = 0; k < 4; ++k) { found[k] = screws[k].found; values[k + 1] = found[k] ? screws[k].dx : 0.0; }
+    for (int k = 0; k < 4; ++k) {
+        found[k] = screws[k].found;
+        values[k + 1] = found[k] ? screws[k].dx : 0.0;
+        values[alignment::kAreaValueOffset + k] = found[k] ? screws[k].area_dx : 0.0;
+    }
     const bool four_screws = found[0] && found[1] && found[2] && found[3];
     const CoefficientSet* set = own_set && four_screws ? own_set : choose_coefficient_set(model.sets, found);
     if (!set) return {};
@@ -280,7 +284,7 @@ std::vector<CoefficientSet> run_real_photos(const Model& model, const std::vecto
 
         const std::array<ScrewShift, 4> screws = screw_finder.find_screw_shifts(gray, library_shift.dx, library_shift.dy, {true, true, true, true});
         bool all_found = true;
-        for (int k = 0; k < 4; ++k) { all_found &= screws[k].found; real.screw_values[k + 1] = screws[k].dx; }
+        for (int k = 0; k < 4; ++k) { all_found &= screws[k].found; real.screw_values[k + 1] = screws[k].dx; real.screw_values[alignment::kAreaValueOffset + k] = screws[k].area_dx; }
         if (!all_found) continue;
         ++four_screws;
 

@@ -28,7 +28,8 @@ struct Result {
 
     // 단계별 확인용
     double qr_shift_px = 0;          // 1단계: 검출한 QR의 평균 가로 이동(px)
-    double screw_shift_px[4] = {};   // 2단계: 나사별 가로 이동(px). 미검출은 NaN
+    double screw_shift_px[4] = {};   // 2단계: 나사별 가로 이동(px), 머리 테두리 맞춤. 미검출은 NaN
+    double screw_area_shift_px[4] = {};   // 2단계: 나사별 가로 이동(px), 둘레 영역 맞춤. 미검출은 NaN
     std::string screws_used;         // 3단계: 사용한 나사 번호. 예: "1234", "134", "none"
     double check_value = 0;          // 4단계: 값 일치 점검값. 한계 초과 시 경고 또는 실패
     double check_limit = 0;          // 점검 한계. 점검식이 없으면 두 점검값 모두 NaN

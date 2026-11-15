@@ -30,7 +30,7 @@ struct Measured {
     QrShift qr;
     std::array<ScrewShift, 4> screws;
     const CoefficientSet* set = nullptr;
-    double values[kValueCount] = {};   // [0] QR, [1~4] 나사 1~4 가로 이동
+    double values[kValueCount] = {};   // [0] QR, [1~4] 나사 1~4 테두리, [5~8] 나사 1~4 둘레 영역 가로 이동
     YT raw;                  // 계산식으로 구한 그대로의 Y, T
 };
 
@@ -77,6 +77,7 @@ Result failed(const std::string& code, const std::string& message) {
     result.y_mm = result.t_deg = kNaN;
     result.check_value = result.check_limit = kNaN;
     for (double& shift : result.screw_shift_px) shift = kNaN;
+    for (double& shift : result.screw_area_shift_px) shift = kNaN;
     result.status = Status::Failed;
     result.code = code;
     result.message = message;
@@ -114,6 +115,7 @@ Measured measure_values(const cv::Mat& gray) {
     for (int k = 0; k < 4; ++k) {
         found[k] = measured.screws[k].found;
         measured.values[k + 1] = found[k] ? measured.screws[k].dx : 0.0;
+        measured.values[kAreaValueOffset + k] = found[k] ? measured.screws[k].area_dx : 0.0;
     }
 
     // 3단계: 검출 나사 조합의 계산식으로 Y, T 계산
@@ -232,6 +234,7 @@ Result make_result(const Measured& measured) {
     result.t_deg = absolute_t - state.zero.t_deg;
     result.qr_shift_px = measured.qr.dx;
     for (int k = 0; k < 4; ++k) result.screw_shift_px[k] = measured.screws[k].found ? measured.screws[k].dx : kNaN;
+    for (int k = 0; k < 4; ++k) result.screw_area_shift_px[k] = measured.screws[k].found ? measured.screws[k].area_dx : kNaN;
     result.screws_used = measured.set->screws;
 
     // 4단계 (가): QR과 나사 측정값의 일치 여부
