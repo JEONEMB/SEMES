@@ -1,6 +1,6 @@
 // 보고서 그림 생성: 실촬영 사례와 합성 사례
 // 사용: make_figures [모델_폴더 실촬영_폴더 출력_폴더]
-// 기본 경로: data/model, data/new_photos, docs/시각화
+// 기본 경로: data/model, data/new_photos, docs/부록_A_시각화
 #include "figure_text.hpp"
 #include "alignment.hpp"
 #include "common/photo_files.hpp"
@@ -598,7 +598,7 @@ int wmain(int argc, wchar_t** argv) {
     try {
         const auto model = argc == 4 ? fs::path(argv[1]) : fs::path("data/model");
         const auto input = argc == 4 ? fs::path(argv[2]) : fs::path("data/new_photos");
-        const auto output = argc == 4 ? fs::path(argv[3]) : fs::u8path("docs/시각화");
+        const auto output = argc == 4 ? fs::path(argv[3]) : fs::u8path("docs/부록_A_시각화");
         generate(model.u8string(), input, output);
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';

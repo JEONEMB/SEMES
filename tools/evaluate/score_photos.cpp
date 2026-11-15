@@ -253,7 +253,7 @@ std::string summary_text(const PhotoGroups& groups, const Zero& zero, const Scor
     for (const auto& f : scores.by_folder) summary << "  " << f.first << "  " << format_rate(f.second.passed, f.second.total) << "\n";
     summary << "\n상태별\n";
     for (const auto& s : scores.by_status) summary << "  " << s.first << " " << s.second << "\n";
-    summary << "\n코드별 (README 5절)\n";
+    summary << "\n코드별 (docs/03_상태와_알림.md)\n";
     for (const auto& c : scores.by_code) summary << "  " << c.first << " " << c.second << "\n";
     summary << "\n속도 (측정 함수만, 사진 읽기 제외)\n  " << speed_text(scores.times_ms) << "\n";
     if (!groups.no_answer.empty()) {
