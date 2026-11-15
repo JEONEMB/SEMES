@@ -4,6 +4,7 @@
 #include <opencv2/imgproc.hpp>
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
 #include <vector>
 
 namespace alignment {
@@ -32,6 +33,14 @@ const double kEdgeBlurSigma = 1.5;                 // px. 테두리를 뽑기 �
 const int kEdgeSmoothing = 5;                      // px. 맞추기 전에 한 번 더 흐리는 창 크기
 const int kEdgeMaxSteps = 200;
 const double kEdgeDone = 1e-8;                     // 반복 종료 닮은 정도 변화량
+
+// 4. 일부 가림 점검 설정. 하나라도 넘으면 머리 일부 가림 또는 오염으로 보고 측정 실패
+//    받은 사진 715장 × 나사 4개 실측: 닮은 정도 최소 0.996, 대략 위치 차이 최대 7 px, 두 맞춤 차이 최대 0.16 px
+const double kShapeBlurSigma = 2.0;                // px. 모양 비교 전 흐림 (잡음 영향 줄임)
+const int kShapeCutHalf = 60;                      // px. 흐리기 전에 잘라 내는 반폭 (91×91 조각보다 넓게)
+const double kMinShapeSimilarity = 0.93;           // 최종 위치의 흐린 조각 닮은 정도 최소값
+const int kMaxLocateDrift = 15;                    // px. 대략 위치와 QR 예상 위치의 최대 거리
+const double kMaxRefineGap = 0.5;                  // px. 밝기 맞춤과 테두리 맞춤 결과의 최대 거리
 
 // square_around: 중심 주변 사각 영역 계산
 //   입력: center (중심), half (중심에서 한쪽 끝까지 px)
@@ -289,6 +298,8 @@ ScrewFinder::ScrewFinder(const Reference& reference) {
         locate_templates_[k] = reference.photo(square_around(centers_[k], kPatchRadius)).clone();
         locate_templates_[k].convertTo(brightness_templates_[k], CV_64F);
         cv::GaussianBlur(edge_picture(reference.photo(square_around(centers_[k], kEdgeHalf))), edge_templates_[k], cv::Size(kEdgeSmoothing, kEdgeSmoothing), 0, 0);
+        cv::Mat shape; locate_templates_[k].convertTo(shape, CV_32F);
+        cv::GaussianBlur(shape, shape_templates_[k], cv::Size(0, 0), kShapeBlurSigma);
     }
     edge_mask_ = make_edge_mask();
 }
@@ -330,8 +341,36 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
         result.problem = "나사 테두리를 맞추지 못함 (가림·반사)";
         return result;
     }
+
+    // 일부 가림 점검: 모양이 기준과 다르거나, 대략 위치가 예상에서 멀거나, 두 맞춤 결과가 서로 다르면 실패
+    result.shape_similarity = shape_similarity_at(gray, screw_index, result.dx, result.dy);
+    const double locate_drift = cv::norm(located - expected_shift);
+    const double refine_gap = std::hypot(result.dx - rough_dx, result.dy - rough_dy);
+    if (result.shape_similarity < kMinShapeSimilarity || locate_drift > kMaxLocateDrift || refine_gap > kMaxRefineGap) {
+        char detail[160];
+        std::snprintf(detail, sizeof(detail), "나사 머리 일부 가림 또는 오염 의심 (모양 닮은 정도 %.3f, 예상 위치와 거리 %.1f px, 두 맞춤 차이 %.2f px)",
+                      result.shape_similarity, locate_drift, refine_gap);
+        result.partial = true;
+        result.problem = detail;
+        return result;
+    }
     result.found = true;
     return result;
+}
+
+// shape_similarity_at: 최종 위치에서 흐린 기준 조각과의 닮은 정도
+//   입력: gray (회색 사진), screw_index (0~3), dx와 dy (최종 이동량 px)
+//   출력: 닮은 정도 (-1~1). 사진 밖이면 -1
+double ScrewFinder::shape_similarity_at(const cv::Mat& gray, int screw_index, double dx, double dy) const {
+    const int base_x = int(std::floor(dx)), base_y = int(std::floor(dy));
+    const cv::Rect cut = square_around(centers_[screw_index] + cv::Point(base_x, base_y), kShapeCutHalf);
+    if (!inside_photo(cut)) return -1;
+    cv::Mat area, blurred, patch, score;
+    gray(cut).convertTo(area, CV_32F);
+    cv::GaussianBlur(area, blurred, cv::Size(0, 0), kShapeBlurSigma);
+    cv::getRectSubPix(blurred, cv::Size(kPatchSide, kPatchSide), cv::Point2f(float(kShapeCutHalf + dx - base_x), float(kShapeCutHalf + dy - base_y)), patch);
+    cv::matchTemplate(patch, shape_templates_[screw_index], score, cv::TM_CCOEFF_NORMED);
+    return score.at<float>(0, 0);
 }
 
 // ScrewFinder::locate_screw: 기준 사진과 가장 닮은 위치 찾기

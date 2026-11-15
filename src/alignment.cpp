@@ -29,6 +29,7 @@ struct Measured {
     bool has_value = false;
     QrShift qr;
     std::array<ScrewShift, 4> screws;
+    int partial_screw = -1;  // 머리 일부 가림 또는 오염 의심 나사 (0~3). 있으면 측정 실패
     const CoefficientSet* set = nullptr;
     double values[kValueCount] = {};   // [0] QR, [1~4] 나사 1~4 가로 이동
     YT raw;                  // 계산식으로 구한 그대로의 Y, T
@@ -114,7 +115,10 @@ Measured measure_values(const cv::Mat& gray) {
     for (int k = 0; k < 4; ++k) {
         found[k] = measured.screws[k].found;
         measured.values[k + 1] = found[k] ? measured.screws[k].dx : 0.0;
+        if (measured.screws[k].partial && measured.partial_screw < 0) measured.partial_screw = k;
     }
+    // 나사 머리 일부 가림 또는 오염 의심: 남은 나사로 계산하지 않고 종료
+    if (measured.partial_screw >= 0) return measured;
 
     // 3단계: 검출 나사 조합의 계산식으로 Y, T 계산
     measured.set = choose_coefficient_set(state.coefficient_sets, found);
@@ -280,6 +284,8 @@ Result measure_alignment(const cv::Mat& photo) {
         if (!to_gray(photo, gray, error)) return failed("E_PHOTO", error);
 
         const Measured measured = measure_values(gray);
+        if (measured.partial_screw >= 0)
+            return failed("E_SCREW_PARTIAL", "나사 " + std::to_string(measured.partial_screw + 1) + ": " + measured.screws[measured.partial_screw].problem);
         if (!measured.has_value)
             return failed("E_QR_NOT_FOUND", measured.qr.found ? "검출한 나사 조합의 계수 미확보" : measured.qr.problem);
 
@@ -303,6 +309,8 @@ Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos) {
         if (!average_gray(zero_photos, gray, error)) return failed("E_PHOTO", error);
 
         const Measured measured = measure_values(gray);
+        if (measured.partial_screw >= 0)
+            return failed("E_ZERO", "영점 사진의 나사 " + std::to_string(measured.partial_screw + 1) + " 머리 일부 가림 또는 오염 의심, 기존 영점 유지");
         if (!measured.has_value || !measured.set->precise)
             return failed("E_ZERO", "영점 사진에서 측정값 또는 좌우 나사 조합 미확보, 기존 영점 유지");
 
