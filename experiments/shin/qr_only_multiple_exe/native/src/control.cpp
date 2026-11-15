@@ -45,7 +45,7 @@ ControlResult run_correction(Stage& stage,const Settings& s,const std::function<
             commanded_y=target[0];++corrections;move(target);
             continue;
         }
-        const int dt=bounded(1000.*dx/85.,300);
+        const int dt=bounded(-1000.*dx/rig_horizontal_slope_px_per_degree,300);
         const Position target(commanded_y,p[1]+dt);
         if (!within(target) || std::abs(target[1]-s.center[1])>1050) return done("outside_calibrated_range");
         if (!dt || moves>=s.max_moves) return done("move_budget_or_resolution");

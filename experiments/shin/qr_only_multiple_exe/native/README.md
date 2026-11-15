@@ -20,6 +20,29 @@ $env:PATH = "C:\opencv\build\x64\vc15\bin;$env:PATH"
 
 라이브러리에는 `#include "qr_pose.hpp"`와 `target_link_libraries(<target> PRIVATE qr_pose)`로 연결한다. `qr::FeaturePose(model).predict(gray)`는 캘리브레이션 원점 기준이다. 목표 보정이 필요하면 결과에서 `qr::Pose(y_mm, theta_deg)`를 빼고, 이동 코드에서 반대 부호를 사용한다. `qr::DirectPose`에서 `initial()`, `ssafy_supported()`, `refine()`를 이어 호출해 선택 적용할 수 있다. 단일 스레드 추론은 실행 초기의 `cv::setNumThreads(1)`로 설정한다.
 
+### SSAFY 상쇄선 정렬
+
+기존 단일 사진 추정으로 첫 이동을 정하고, 멈춘 뒤 새로 찍은 영상에서 다음 상대 이동을 계산한다.
+
+```powershell
+.\build\Release\qr_pose_cli.exe ssafy-align-step --config config/ssafy.json `
+  --alignment-model models/ssafy-alignment.xml.gz image-after-move.bmp
+```
+
+반복 제어기는 `qr::run_ssafy_alignment`에 정지 후 촬영 콜백과 상대 이동 콜백을 전달한다. 촬영 콜백에서 `aligner.observe(gray)`를 호출하고, 이동 콜백은 상대 µm·mdeg 명령이 완료될 때까지 기다린 뒤 성공 여부를 반환한다. 이동 가능 범위는 장비 어댑터에서 검사한다. 첫 이동에 사용한 명령 수를 20에서 빼서 정렬기에 남은 횟수를 전달한다. 새 영상의 QR 수평 잔차가 0.30 px 이내이면 QR 세 개의 간격·폭·높이를 반영한 Y·θ 추정으로 센터를 확인하고, 허용 범위 밖이면 두 축을 최대 3회 보정한다. 허용 범위에 든 추정은 `qr_center_candidate`로 종료한다.
+
+동일 SSAFY 카메라와 기준 패치에 맞춘 보정 모델이다. 외부 목표는 학습 좌표계의 Y(mm), θ(°)로 지정한다. 모의 재생은 SSAFY 첫 사진 이후의 관측을 Rig 정·역방향 격자에서 빌려 사용한다. 실기에서는 최종 위치를 독립 계측해 센터 판정을 확인한다.
+
+### SSAFY에 Rig 이동 루프 연결
+
+`qr::run_ssafy_rig_alignment(stage, settings, aligner, visual_target, capture)`는 Rig의
+`run_correction`을 호출한다. SSAFY 관측의 수평 감도를 Rig 제어기의 부호와 단위로
+환산하며, 두 축 잔차는 SSAFY 영상으로 적합한 `ssafy-alignment.xml.gz`에서 얻는다.
+`settings.center`에는 기준 사진 자세의 절대 스테이지 좌표(µm·mdeg)를 넣고,
+`visual_target`에는 같은 목표의 SSAFY 캘리브레이션 좌표(mm·°)를 넣는다.
+`capture`는 명령 완료 뒤 정지한 새 영상에서 `aligner.observe(gray)`를 반환한다.
+두 축의 기준 좌표와 이동 방향은 실기에서 확인한다. 복귀 재생 결과는 첫 Y 절대 이동 뒤 남는 잔차에 민감하다.
+
 ## Rig 사진 점검과 C++ 제어 재생
 
 ```powershell

@@ -59,6 +59,34 @@ private:
     double zero_dx_;
 };
 
+enum class SsafyAlignmentAction { center_candidate, theta_alignment, two_axis_alignment };
+const char* name(SsafyAlignmentAction action);
+struct SsafyAlignmentStep {
+    SsafyAlignmentAction action;
+    Pose residual;
+    double horizontal_px;
+    Position relative_move;
+};
+
+class SsafyAligner {
+public:
+    explicit SsafyAligner(const std::string& model_path);
+    Features observe(const cv::Mat& frame) const;
+    Pose residual(Features observation, Pose target) const;
+    double rig_horizontal(Features observation, Pose target) const;
+    SsafyAlignmentStep step(Features observation, Pose target = {0.,0.}) const;
+private:
+    double horizontal_error(Features observation, Pose target) const;
+    Geometry geometry_;
+    cv::Mat coefficients_;
+    Pose horizontal_response_;
+};
+
+struct SsafyAlignmentResult { const char* reason; int moves; int two_axis_moves; };
+SsafyAlignmentResult run_ssafy_alignment(
+    const SsafyAligner& aligner, Pose target, const std::function<Features()>& capture,
+    const std::function<bool(Position)>& move_relative, int max_moves = 20);
+
 struct Fit { Pose pose; double pixel_rmse; int iterations; };
 class DirectPose {
 public:
@@ -86,8 +114,13 @@ struct Stage {
 struct Settings { Position center{0,0}; int max_moves=20; int cancellation_limit=3; };
 struct ControlResult { std::string reason; Position reported; int moves; int corrections; };
 using Event = std::function<void(const char*,Position,Pose)>;
+constexpr double rig_horizontal_slope_px_per_degree = -85.;
 ControlResult run_correction(Stage& stage,const Settings& settings,
     const std::function<double()>& horizontal,const std::function<Pose()>& estimate,
     const Event& event={});
+ControlResult run_ssafy_rig_alignment(Stage& stage, const Settings& settings,
+    const SsafyAligner& model, Pose visual_target, const std::function<Features()>& capture,
+    const Event& event={});
+
 cv::Mat read_frame(const std::string& path);
 }

@@ -34,13 +34,17 @@ struct Args {
 
 bool absolute_path(const std::string& p) {return !p.empty() && (p.front()=='/' || p.front()=='\\' || (p.size()>1 && p[1]==':'));}
 
-void ssafy(const Args& args) {
-    const auto config_path=args.value("--config","config/ssafy.json");
-    const auto config=qr::open_model(config_path);
+qr::Pose ssafy_target(const cv::FileStorage& config) {
     const cv::FileNode y=config["y_mm"],t=config["theta_deg"];
     if (!(y.isInt()||y.isReal()) || !(t.isInt()||t.isReal()) || !std::isfinite(double(y)) || !std::isfinite(double(t)))
         throw std::runtime_error("A finite numeric y_mm and theta_deg are required");
-    const qr::Pose target{double(y),double(t)};
+    return {double(y),double(t)};
+}
+
+void ssafy(const Args& args) {
+    const auto config_path=args.value("--config","config/ssafy.json");
+    const auto config=qr::open_model(config_path);
+    const auto target=ssafy_target(config);
     std::string model=config["model"];
     if (!absolute_path(model)) {
         const auto end=config_path.find_last_of("/\\");
@@ -63,6 +67,21 @@ void ssafy(const Args& args) {
         pose-=target;
         std::cout<<"{\"y_mm\":"<<pose[0]<<",\"theta_deg\":"<<pose[1]<<",\"method\":\""
                  <<(refined?"joint_pixel_refined":"feature_fit")<<"\",\"inference_ms\":"<<ms(start)<<"}\n";
+    }
+}
+
+void ssafy_align_step(const Args& args) {
+    const auto config=qr::open_model(args.value("--config","config/ssafy.json"));
+    const auto target=ssafy_target(config);
+    const qr::SsafyAligner aligner(args.value("--alignment-model","models/ssafy-alignment.xml.gz"));
+    for (const auto& path : args.files) {
+        const auto frame=qr::read_frame(path);
+        const auto start=Clock::now();
+        const auto step=aligner.step(aligner.observe(frame),target);
+        std::cout<<"{\"action\":\""<<qr::name(step.action)<<"\",\"y_mm\":"<<step.residual[0]
+                 <<",\"theta_deg\":"<<step.residual[1]<<",\"dx_px\":"<<step.horizontal_px
+                 <<",\"move_y_um\":"<<step.relative_move[0]
+                 <<",\"move_theta_mdeg\":"<<step.relative_move[1]<<",\"inference_ms\":"<<ms(start)<<"}\n";
     }
 }
 
@@ -110,6 +129,7 @@ int main(int argc,char** argv) {
         const std::string mode=argc>1?argv[1]:"--help";
         if (mode=="--help") {
             std::cout<<"qr_pose_cli ssafy --config config/ssafy.json [--direct models/ssafy-direct.xml.gz] FRAME...\n"
+                       "qr_pose_cli ssafy-align-step --config config/ssafy.json [--alignment-model MODEL] FRAME...\n"
                        "qr_pose_cli rig-frame --reference CENTER.bmp --model models/rig-cancellation.xml.gz [--direct MODEL] FRAME...\n"
                        "qr_pose_cli direct-check --direct SSAFY_MODEL FRAME...\n";
             return 0;
@@ -118,6 +138,7 @@ int main(int argc,char** argv) {
         if (args.files.empty()) throw std::runtime_error("Supply at least one image");
         std::cout<<std::setprecision(12);
         if (mode=="ssafy") ssafy(args);
+        else if (mode=="ssafy-align-step") ssafy_align_step(args);
         else if (mode=="rig-frame") rig_frame(args);
         else if (mode=="direct-check") direct_check(args);
         else throw std::runtime_error("Unknown mode; use --help");
