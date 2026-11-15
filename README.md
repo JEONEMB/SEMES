@@ -234,6 +234,7 @@ docs/                   문서
 | 실패 | `E_NOT_INITIALIZED` | 준비(`initialize`)를 하지 않았다 |
 | 실패 | `E_PHOTO` | 사진의 크기나 형식이 다르다 |
 | 실패 | `E_QR_NOT_FOUND` | QR 3개를 모두 찾지 못했다 (가림, 반사, 화면 밖, 간격 불일치) |
+| 실패 | `E_SCREW_PARTIAL` | 나사 머리 일부가 가려졌거나 오염된 것으로 보인다 |
 | 실패 | `E_ZERO` | 영점을 잡지 못했다 |
 | 실패 | `E_REFERENCE` | 기준을 다시 잡지 못했다 |
 | 실패 | `E_INTERNAL` | 예상하지 못한 오류가 났다 |
