@@ -1,0 +1,81 @@
+{
+  "assumption": "The QR response is evaluated at Y = 0 mm.",
+  "physical_y_measured": false,
+  "joint_pass_rate": null,
+  "captures": {
+    "rig_grid": {
+      "-1.0": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 328,
+        "replay_theta_mean_deg": -0.011023809523809524,
+        "replay_theta_std_deg": 0.0010930101563178907,
+        "max_move_commands": 6
+      },
+      "-0.5": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 1680,
+        "replay_theta_mean_deg": -0.005438690476190476,
+        "replay_theta_std_deg": 0.0010135055615252588,
+        "max_move_commands": 6
+      },
+      "0.0": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 1680,
+        "replay_theta_mean_deg": 0.0008053571428571429,
+        "replay_theta_std_deg": 0.0009683539622774844,
+        "max_move_commands": 6
+      },
+      "0.5": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 1680,
+        "replay_theta_mean_deg": 0.007635119047619049,
+        "replay_theta_std_deg": 0.0012245815554007271,
+        "max_move_commands": 6
+      },
+      "1.0": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 0,
+        "replay_theta_mean_deg": 0.013708333333333338,
+        "replay_theta_std_deg": 0.001214271125029071,
+        "max_move_commands": 6
+      }
+    },
+    "rig_grid_rev": {
+      "-1.0": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 123,
+        "replay_theta_mean_deg": -0.012390476190476191,
+        "replay_theta_std_deg": 0.001207577173676899,
+        "max_move_commands": 6
+      },
+      "-0.5": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 1680,
+        "replay_theta_mean_deg": -0.006292857142857144,
+        "replay_theta_std_deg": 0.0011947091411606378,
+        "max_move_commands": 6
+      },
+      "0.0": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 1680,
+        "replay_theta_mean_deg": -0.0006101190476190478,
+        "replay_theta_std_deg": 0.0012075230393618042,
+        "max_move_commands": 6
+      },
+      "0.5": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 1680,
+        "replay_theta_mean_deg": 0.004877380952380952,
+        "replay_theta_std_deg": 0.0008020585405656691,
+        "max_move_commands": 6
+      },
+      "1.0": {
+        "starts": 1680,
+        "qr_and_replay_theta_within": 1107,
+        "replay_theta_mean_deg": 0.010120833333333334,
+        "replay_theta_std_deg": 0.0009668526606780982,
+        "max_move_commands": 6
+      }
+    }
+  }
+}

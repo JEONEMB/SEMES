@@ -1,5 +1,7 @@
 # 신윤석 실험 전달 기록
 
+- QR 전용 자세 추정·반복 보정: [결과와 한계 및 실행 안내](qr_only_multiple_exe/README.md). SSAFY 납품용 추정기와 Rig 실증용 실행기를 `experiments/shin/qr_only_multiple_exe`에 둔다.
+
 - T 단독 추정: `experiments/shin/t_estimation`. 공개 선언은 include/, 구현은 src/, 실제 추정 라이브러리는 modules/에 보존했다. 원본 feature/shin/T-estimation의 9fee400 기준이며 최신 8장 제외 재평가까지 포함한다.
 - 자세 추정: `experiments/shin/pose_alignment`. 실행 도구는 src/, 공개 헤더는 include/, 정합 구현과 모델은 modules/에 있다. 575장 평가와 학습 결과를 보존했다.
 - 두 실험은 서로 다른 라벨 정책을 사용한다. T 재평가는 8장 제외, 자세 추정은 라벨 1장 정정 및 4장 가중치 감소다. 결과를 직접 같은 조건의 순위로 비교하지 않는다.
