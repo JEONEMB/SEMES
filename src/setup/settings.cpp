@@ -41,6 +41,7 @@ bool load_settings(const std::string& settings_file, Settings& settings, std::st
         if (!has_left || !has_right) { error = "설정의 screws 에 왼쪽(1, 3)과 오른쪽(2, 4) 나사가 하나씩은 있어야 합니다"; return false; }
     }
     if (!file["fail_on_disagreement"].empty()) settings.fail_on_disagreement = int(file["fail_on_disagreement"]) != 0;
+    if (!file["fail_on_partial_screw"].empty()) settings.fail_on_partial_screw = int(file["fail_on_partial_screw"]) != 0;
     if (!file["log_file"].empty()) file["log_file"] >> settings.log_file;
     return true;
 }
