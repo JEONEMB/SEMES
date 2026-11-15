@@ -1,6 +1,37 @@
-# 호출 단계와 상태 사례
+# 부록 A. 단계별 사진과 상태 사례
 
 [경고 모음](all_warning.png) | [실패 모음](all_fail.png) | [정상 사례](ok/OK.png)
+
+**목차**
+
+| 번호 | 제목 |
+|---|---|
+| 1 | 단계별 그림 |
+| 1-1 | 입력 사진 |
+| 1-2 | 회색으로 변환 |
+| 1-3 | QR 위치 찾기 |
+| 1-4 | 좁은 범위 탐색 |
+| 1-5 | 넓은 범위 탐색 |
+| 1-6 | 나사 위치 찾기 |
+| 1-7 | Y와 T 계산 |
+| 1-8 | 영점 빼기 |
+| 1-9 | 결과 점검 |
+| 1-10 | 출력 |
+| 2 | 정상과 경고, 실패 사례 |
+| 2-1 | OK |
+| 2-2 | N_WIDE_SEARCH |
+| 2-3 | W_COARSE |
+| 2-4 | W_FAR |
+| 2-5 | W_OUT_OF_RANGE |
+| 2-6 | W_QR_PARTIAL |
+| 2-7 | W_SCREW_MISSING |
+| 2-8 | W_VALUES_DISAGREE |
+| 2-9 | W_ZERO_RESET |
+| 2-10 | E_PHOTO |
+| 2-11 | E_QR_NOT_FOUND |
+| 2-12 | E_REFERENCE |
+| 2-13 | E_ZERO |
+| 2-14 | W_VALUES_DISAGREE |
 
 | 순서 | 그림 |
 |---|---|
@@ -36,104 +67,104 @@
 
 Windows에서 패키지 루트 기준으로 `build/Release/make_figures.exe`를 실행하면 그림과 사례 표를 다시 만든다. 실촬영 사진이 다른 경로에 있으면 인자로 모델 폴더, 실촬영 폴더, 출력 폴더를 차례로 넘긴다.
 
-## 단계별 그림
+## 1. 단계별 그림
 
-### 입력 사진
+### 1-1. 입력 사진
 
 ![입력 사진](step/01.png)
 
-### 회색으로 변환
+### 1-2. 회색으로 변환
 
 ![회색으로 변환](step/02.png)
 
-### QR 위치 찾기
+### 1-3. QR 위치 찾기
 
 ![QR 위치 찾기](step/03.png)
 
-### 좁은 범위 탐색
+### 1-4. 좁은 범위 탐색
 
 ![좁은 범위 탐색](step/03_narrow.png)
 
-### 넓은 범위 탐색
+### 1-5. 넓은 범위 탐색
 
 ![넓은 범위 탐색](step/03_wide.png)
 
-### 나사 위치 찾기
+### 1-6. 나사 위치 찾기
 
 ![나사 위치 찾기](step/04.png)
 
-### Y와 T 계산
+### 1-7. Y와 T 계산
 
 ![Y와 T 계산](step/05.png)
 
-### 영점 빼기
+### 1-8. 영점 빼기
 
 ![영점 빼기](step/06.png)
 
-### 결과 점검
+### 1-9. 결과 점검
 
 ![결과 점검](step/07.png)
 
-### 출력
+### 1-10. 출력
 
 ![출력](step/08.png)
 
-## 정상과 경고, 실패 사례
+## 2. 정상과 경고, 실패 사례
 
 사진을 바꿔 재현한 사례 포함. 조건과 결과는 위 표 참고.
 
-### OK
+### 2-1. OK
 
 ![OK](ok/OK.png)
 
-### N_WIDE_SEARCH
+### 2-2. N_WIDE_SEARCH
 
 ![N_WIDE_SEARCH](warning/N_WIDE_SEARCH.png)
 
-### W_COARSE
+### 2-3. W_COARSE
 
 ![W_COARSE](warning/W_COARSE.png)
 
-### W_FAR
+### 2-4. W_FAR
 
 ![W_FAR](warning/W_FAR.png)
 
-### W_OUT_OF_RANGE
+### 2-5. W_OUT_OF_RANGE
 
 ![W_OUT_OF_RANGE](warning/W_OUT_OF_RANGE.png)
 
-### W_QR_PARTIAL
+### 2-6. W_QR_PARTIAL
 
 ![W_QR_PARTIAL](warning/W_QR_PARTIAL.png)
 
-### W_SCREW_MISSING
+### 2-7. W_SCREW_MISSING
 
 ![W_SCREW_MISSING](warning/W_SCREW_MISSING.png)
 
-### W_VALUES_DISAGREE
+### 2-8. W_VALUES_DISAGREE
 
 ![W_VALUES_DISAGREE](warning/W_VALUES_DISAGREE.png)
 
-### W_ZERO_RESET
+### 2-9. W_ZERO_RESET
 
 ![W_ZERO_RESET](warning/W_ZERO_RESET.png)
 
-### E_PHOTO
+### 2-10. E_PHOTO
 
 ![E_PHOTO](fail/E_PHOTO.png)
 
-### E_QR_NOT_FOUND
+### 2-11. E_QR_NOT_FOUND
 
 ![E_QR_NOT_FOUND](fail/E_QR_NOT_FOUND.png)
 
-### E_REFERENCE
+### 2-12. E_REFERENCE
 
 ![E_REFERENCE](fail/E_REFERENCE.png)
 
-### E_ZERO
+### 2-13. E_ZERO
 
 ![E_ZERO](fail/E_ZERO.png)
 
-### W_VALUES_DISAGREE
+### 2-14. W_VALUES_DISAGREE
 
 ![W_VALUES_DISAGREE](fail/W_VALUES_DISAGREE.png)
