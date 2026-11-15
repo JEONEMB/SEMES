@@ -2,7 +2,7 @@
 // 사용: check_qr_blocking <model 폴더> <tables 폴더> <출력 폴더>
 // 출력: qr_blocking_report.txt, qr_blocking_cases.tsv, block_<사례>.png
 // 1부: 실제 사진. QR 3개 이동량의 차이, QR 일부만 사용한 계산의 정확도, 탐색 시간
-// 2부: 합성 가림. 현재 판정과 대안 판정 5가지의 결과
+// 2부: 합성 가림. 현재 판정(띠 봉우리 방식)과, 이전 방식 탐색 결과에 대안 판정 5가지를 적용한 결과
 // 사진 경로: tables/photos.tsv 의 경로 (패키지 폴더에서 실행)
 #include "alignment.hpp"
 #include "common/dataset.hpp"
@@ -69,39 +69,74 @@ double milliseconds_since(std::chrono::steady_clock::time_point start) {
 }
 
 //
-// QR 탐색: 측정 코드와 같은 순서(±110 -> ±250 -> 전체 폭), QR별 결과 유지
+// 이전 방식 QR 탐색 (2026-11-15 까지 패키지에서 쓰던 방식, 비교용): QR 마다 따로, ±110 -> ±250 -> 전체 폭
 //
+
+const int kPreviousNarrowHalfWidth = 110;   // 이전 방식 기본 탐색 반너비(px)
+const int kPreviousWideHalfWidth = 250;     // 이전 방식 확대 탐색 반너비(px)
+const int kPreviousHalfHeight = 22;         // 이전 방식 세로 탐색 반높이(px)
+
+// PreviousQrFinder: 이전 방식의 QR 하나 탐색 (흐림 σ2, NCC, 문턱 0.8, 3점 포물선)
+class PreviousQrFinder {
+public:
+    explicit PreviousQrFinder(const Reference& reference) {
+        cv::GaussianBlur(reference.photo, blurred_reference_, cv::Size(0, 0), 2.0);
+        for (int k = 0; k < 3; ++k) boxes_[k] = reference.qr[k];
+    }
+    // find_one: QR 하나 탐색
+    //   입력: gray (회색 사진), qr_index (0~2), half_width (가로 반너비 px, 0이면 전체 폭)
+    //   출력: Match (검출 여부, 이동량, 닮은 정도)
+    QrFinder::Match find_one(const cv::Mat& gray, int qr_index, int half_width) const {
+        QrFinder::Match match;
+        const cv::Rect box = boxes_[qr_index];
+        const int left = half_width > 0 ? box.x - half_width : 0, right = half_width > 0 ? box.x + box.width + half_width : kPhotoWidth;
+        const cv::Rect window = cv::Rect(left, box.y - kPreviousHalfHeight, right - left, box.height + 2 * kPreviousHalfHeight) & kPhotoRect;
+        const cv::Rect wider = cv::Rect(window.x - 8, window.y - 8, window.width + 16, window.height + 16) & kPhotoRect;
+        cv::Mat blurred, similarity;
+        cv::GaussianBlur(gray(wider), blurred, cv::Size(0, 0), 2.0);
+        cv::matchTemplate(blurred(window - wider.tl()), blurred_reference_(box), similarity, cv::TM_CCOEFF_NORMED);
+        double best = 0;
+        cv::Point p;
+        cv::minMaxLoc(similarity, nullptr, &best, nullptr, &p);
+        if (best < kMinSimilarity || p.x <= 0 || p.y <= 0 || p.x >= similarity.cols - 1 || p.y >= similarity.rows - 1) return match;
+        const auto offset = [](double a, double b, double c) { const double curvature = a - 2 * b + c; return curvature < 0 ? 0.5 * (a - c) / curvature : 0.0; };
+        match.found = true;
+        match.dx = window.x + p.x + offset(similarity.at<float>(p.y, p.x - 1), similarity.at<float>(p.y, p.x), similarity.at<float>(p.y, p.x + 1)) - box.x;
+        match.dy = window.y + p.y + offset(similarity.at<float>(p.y - 1, p.x), similarity.at<float>(p.y, p.x), similarity.at<float>(p.y + 1, p.x)) - box.y;
+        match.similarity = best;
+        return match;
+    }
+private:
+    cv::Mat blurred_reference_;
+    cv::Rect boxes_[3];
+};
 
 struct QrMatches {
     QrFinder::Match match[3];
-    QrSearch search = QrSearch::NotFound;
 
     // found_count: 검출 QR 수
     int found_count() const { return int(match[0].found) + int(match[1].found) + int(match[2].found); }
 };
 
-// find_three: 같은 범위에서 QR 3개 탐색
-//   입력: finder (QR 탐색기), gray (회색 사진), half_width (가로 반너비 px, 0이면 전체 폭)
+// find_three: 같은 범위에서 QR 3개 탐색 (이전 방식)
+//   입력: finder (이전 방식 탐색기), gray (회색 사진), half_width (가로 반너비 px, 0이면 전체 폭)
 //   출력: QR별 결과
-QrMatches find_three(const QrFinder& finder, const cv::Mat& gray, int half_width) {
+QrMatches find_three(const PreviousQrFinder& finder, const cv::Mat& gray, int half_width) {
     QrMatches matches;
     for (int k = 0; k < 3; ++k) matches.match[k] = finder.find_one(gray, k, half_width);
     return matches;
 }
 
-// find_like_library: 측정 코드와 같은 순서로 범위 확대
-//   입력: finder (QR 탐색기), gray (회색 사진)
-//   출력: 마지막 탐색 범위의 QR별 결과와 탐색 단계
-QrMatches find_like_library(const QrFinder& finder, const cv::Mat& gray) {
-    QrMatches matches = find_three(finder, gray, kNarrowHalfWidth);
-    if (matches.found_count() == 3) { matches.search = QrSearch::Narrow; return matches; }
-    matches = find_three(finder, gray, kWideHalfWidth);
-    if (matches.found_count() == 3) { matches.search = QrSearch::Wide; return matches; }
-    matches = find_three(finder, gray, 0);
-    matches.search = matches.found_count() == 3 ? QrSearch::FullWidth : matches.found_count() > 0 ? QrSearch::Partial : QrSearch::NotFound;
-    return matches;
+// find_previous_way: 이전 방식 순서로 범위 확대
+//   입력: finder (이전 방식 탐색기), gray (회색 사진)
+//   출력: 마지막 탐색 범위의 QR별 결과
+QrMatches find_previous_way(const PreviousQrFinder& finder, const cv::Mat& gray) {
+    QrMatches matches = find_three(finder, gray, kPreviousNarrowHalfWidth);
+    if (matches.found_count() == 3) return matches;
+    matches = find_three(finder, gray, kPreviousWideHalfWidth);
+    if (matches.found_count() == 3) return matches;
+    return find_three(finder, gray, 0);
 }
-
 // agreeing_group: 이동량이 서로 같은 QR 묶음 중 가장 큰 것
 //   입력: matches (QR별 결과)
 //   출력: 묶음에 든 QR 표시. 2개 이상이 서로 kAgreeLimitPx 안일 때만 표시, 아니면 모두 false
@@ -212,10 +247,11 @@ int refit_pass_count(const std::vector<RealPhoto>& photos, int subset, int& tota
 //   출력: QR 묶음별 계산식 (1부의 모든 사진으로 학습, 나사 4개 조합). 보고서 기록
 std::vector<CoefficientSet> run_real_photos(const Model& model, const std::vector<const DatasetPhoto*>& usable) {
     const QrFinder qr_finder(model.reference);
+    const PreviousQrFinder previous_finder(model.reference);
     const ScrewFinder screw_finder(model.reference);
     std::vector<RealPhoto> photos;
     std::vector<double> spreads, similarities, search_ms;
-    int pass_with_model[kQrSubsetCount] = {}, not_narrow = 0, four_screws = 0;
+    int pass_with_model[kQrSubsetCount] = {}, qr_failed = 0, four_screws = 0;
     double square_y[kQrSubsetCount] = {}, square_t[kQrSubsetCount] = {};
 
     tools::ProgressBar bar("1부 실제 사진", int(usable.size()));
@@ -228,9 +264,9 @@ std::vector<CoefficientSet> run_real_photos(const Model& model, const std::vecto
         const auto start = std::chrono::steady_clock::now();
         const QrShift library_shift = qr_finder.find_qr_shift(gray);
         search_ms.push_back(milliseconds_since(start));
-        not_narrow += library_shift.search != QrSearch::Narrow;
+        qr_failed += !library_shift.found;
 
-        const QrMatches matches = find_like_library(qr_finder, gray);
+        const QrMatches matches = find_previous_way(previous_finder, gray);
         if (matches.found_count() != 3) continue;
         RealPhoto real;
         real.photo = photo;
@@ -270,7 +306,7 @@ std::vector<CoefficientSet> run_real_photos(const Model& model, const std::vecto
           ", 최대 " + fixed(spreads.back(), 3) + "   (간격 검사 한계 " + fixed(kAgreeLimitPx, 1) + " px 를 넘은 사진 " +
           std::to_string(std::count_if(spreads.begin(), spreads.end(), [](double v) { return v > kAgreeLimitPx; })) + "장)");
     print("  QR 닮은 정도: 최소 " + fixed(similarities.front(), 4) + ", 1% " + fixed(similarities[size_t(0.01 * (similarities.size() - 1))], 4) + ", 가운데값 " + fixed(median_of(similarities), 4));
-    print("  QR 탐색 시간 (find_qr_shift, ms): 가운데값 " + fixed(median_of(search_ms), 2) + ", 좁은 창에서 끝나지 않은 사진 " + std::to_string(not_narrow) + "장");
+    print("  QR 탐색 시간 (find_qr_shift, ms): 가운데값 " + fixed(median_of(search_ms), 2) + ", QR 을 찾지 못한 사진 " + std::to_string(qr_failed) + "장");
     print("  QR 일부만 쓴 계산 (나사 4개를 찾은 " + std::to_string(four_screws) + "장, 학습 정답으로 채점)");
     print("    쓴 QR               지금 계산식 통과율   Y RMS mm   T RMS 도   계산식을 다시 만들면 (교차 검증)");
     for (int s = 0; s < kQrSubsetCount; ++s) {
@@ -379,6 +415,7 @@ struct Outcome {
 //   출력: 없음 (보고서, 표, 사례 그림 기록)
 void run_block_cases(const Model& model, const std::vector<CoefficientSet>& subset_sets, const std::vector<const DatasetPhoto*>& usable, const fs::path& output) {
     const QrFinder qr_finder(model.reference);
+    const PreviousQrFinder previous_finder(model.reference);
     const ScrewFinder screw_finder(model.reference);
     const std::vector<BlockCase> cases = list_block_cases(model.reference);
     std::vector<const DatasetPhoto*> chosen;
@@ -405,7 +442,7 @@ void run_block_cases(const Model& model, const std::vector<CoefficientSet>& subs
         cv::Mat gray;
         std::string error;
         if (!to_gray(read_photo(photo->path), gray, error)) continue;
-        const QrMatches clean = find_like_library(qr_finder, gray);
+        const QrMatches clean = find_previous_way(previous_finder, gray);
         if (clean.found_count() != 3) continue;
         const Result clean_result = measure_alignment(gray);                                   // 현재 판정의 기준값 (영점 포함)
         const Pose clean_pose = pose_from(model, screw_finder, gray, clean, {true, true, true});   // 대안 판정의 기준값 (영점 차감 전)
@@ -420,7 +457,7 @@ void run_block_cases(const Model& model, const std::vector<CoefficientSet>& subs
             qr_finder.find_qr_shift(blocked);
             r.search_ms.push_back(milliseconds_since(start));
 
-            const QrMatches matches = find_like_library(qr_finder, blocked);
+            const QrMatches matches = find_previous_way(previous_finder, blocked);
             bool wrong_place = false;
             for (int k = 0; k < 3; ++k) {
                 if (!matches.match[k].found || std::abs(matches.match[k].dx - clean.match[k].dx) <= kWrongPlacePx) continue;

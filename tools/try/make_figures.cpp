@@ -39,7 +39,6 @@ std::string number(double value, int digits = 4) {
 
 struct Parts {
     QrShift qr;
-    std::array<QrFinder::Match, 3> matches;
     std::array<ScrewShift, 4> screws{};
     std::string search;
 };
@@ -51,18 +50,9 @@ Parts inspect(const Reference& reference, const cv::Mat& photo) {
     Parts parts;
     if (photo.size() != kPhotoRect.size()) return parts;
     const QrFinder finder(reference);
-    for (int width : {kNarrowHalfWidth, kWideHalfWidth, 0}) {
-        int count = 0;
-        for (int k = 0; k < 3; ++k) {
-            parts.matches[k] = finder.find_one(photo, k, width);
-            count += parts.matches[k].found;
-        }
-        if (!parts.search.empty()) parts.search += "   ";
-        parts.search += (width ? "±" + std::to_string(width) + " px" : "전체 폭") + "  " + std::to_string(count) + "/3";
-        if (count == 3) break;
-    }
     parts.qr = finder.find_qr_shift(photo);
-    if (parts.qr.found_count > 0)
+    parts.search = parts.qr.found ? "QR 띠 봉우리 3개, 간격 맞음" : parts.qr.problem;
+    if (parts.qr.found)
         parts.screws = ScrewFinder(reference).find_screw_shifts(photo, parts.qr.dx, parts.qr.dy, {true, true, true, true});
     return parts;
 }
@@ -96,7 +86,7 @@ void draw_parts(cv::Mat& image, const Reference& reference, const Parts& parts, 
                 bool show_screws, bool missing_qr_only) {
     const double scale = double(image.cols) / kPhotoWidth;
     for (int k = 0; k < 3; ++k) {
-        const auto& match = parts.matches[k];
+        const auto& match = parts.qr.qr[k];
         if (missing_qr_only && match.found) continue;
         const auto& original = reference.qr[k];
         const cv::Point top(cvRound((original.x + (match.found ? match.dx : parts.qr.dx)) * scale),
@@ -117,7 +107,7 @@ void draw_parts(cv::Mat& image, const Reference& reference, const Parts& parts, 
         }
         write_text(image, "QR " + std::to_string(k + 1), top - cv::Point(0, 22), 18, color);
     }
-    if (!show_screws || missing_qr_only || parts.qr.found_count == 0) return;
+    if (!show_screws || missing_qr_only || !parts.qr.found) return;
     for (int k = 0; k < 4; ++k) {
         const auto& screw = parts.screws[k];
         const cv::Point at(cvRound((reference.screw[k].x + (screw.found ? screw.dx : parts.qr.dx)) * scale),
@@ -161,7 +151,7 @@ cv::Mat draw(const Example& example, const Reference& reference, const Parts& pa
     }
     const bool detection_step = step == 3 || step == 4 || step == 8;
     if (show_parts && detection_step && !parts.search.empty())
-        draw_parts(image, reference, parts, color, step >= 4, result.code == "W_QR_PARTIAL");
+        draw_parts(image, reference, parts, color, step >= 4, result.code == "E_QR_NOT_FOUND");
 
     write_text(image, example.description, {28, 21}, 27, kWhite);
     if (example.edited) write_text(image, "재현용 이미지", {28, 56}, 17, kWhite);
@@ -190,7 +180,7 @@ cv::Mat draw(const Example& example, const Reference& reference, const Parts& pa
     const int caption = image.rows - 68;
     if (show_parts && step == 3 && !parts.search.empty())
         write_text(image, "QR 탐색   " + parts.search, {28, caption}, 20, kWhite);
-    if (show_parts && step == 4 && parts.qr.found_count > 0) {
+    if (show_parts && step == 4 && parts.qr.found) {
         std::string shifts;
         for (int k = 0; k < 4; ++k)
             shifts += "    " + std::to_string(k + 1) + "   " + number(parts.screws[k].found ? parts.screws[k].dx : NAN, 2);
@@ -226,12 +216,11 @@ void frame(const fs::path& output, const std::vector<cv::Mat>& pictures) {
     scene::save_png(output, sheet);
 }
 
-// QR별 탐색 영역과 검출 위치 그림
+// QR 띠 탐색 그림
 
-const int kWindowCropX = 1150, kWindowCropWidth = 1500;   // px. 사진에서 QR 3개와 넓은 창이 다 들어오는 가로 구간
-const int kWindowMargin = 44;                             // px. 창 위아래로 더 보여 주는 여백 (치수 문자 표시 영역)
-const int kWindowTop = 104, kWindowLabelHeight = 40, kWindowGap = 14;   // 그림 px. 제목, QR 이름 줄, 줄 사이
-const double kWindowScale = double(kFigureSize.width) / kWindowCropWidth;
+const int kBandCropX = 1150, kBandCropWidth = 1500;   // px. 사진에서 QR 3개와 둘레가 다 들어오는 가로 구간
+const int kBandTop = 104, kBandListHeight = 150;      // 그림 px. 제목 영역, 아래 봉우리 목록 영역
+const double kBandScale = double(kFigureSize.width) / kBandCropWidth;
 
 // dashed_box: 사각 영역을 점선으로 표시
 //   입력: image (그림), box (영역), color (색)
@@ -246,76 +235,58 @@ void dashed_box(cv::Mat& image, const cv::Rect& box, const cv::Scalar& color) {
     }
 }
 
-// search_window: QR 탐색 영역 계산
-//   입력: qr_box (QR 영역), half_width (양옆으로 찾을 거리 px)
-//   출력: QR 주변 탐색 영역. 사진 경계 제한은 호출부에서 처리
-cv::Rect search_window(const cv::Rect& qr_box, int half_width) {
-    return cv::Rect(qr_box.x - half_width, qr_box.y - kSearchHalfHeight, qr_box.width + 2 * half_width, qr_box.height + 2 * kSearchHalfHeight);
-}
-
-// window_figure: QR 탐색 창 그림 생성
-//   입력: reference (기준), gray (사진), half_width (탐색 거리), title과 subtitle (제목), show_narrow (좁은 창 표시)
-//   출력: QR 1~3을 한 줄씩 배치한 영상
-cv::Mat window_figure(const Reference& reference, const cv::Mat& gray, int half_width, const std::string& title,
-                      const std::string& subtitle, bool show_narrow) {
+// band_figure: QR 띠 봉우리 탐색 그림 생성
+//   입력: reference (기준), gray (사진), title과 subtitle (제목)
+//   출력: QR 띠 조각에 봉우리 자리와 판정을 표시한 영상
+cv::Mat band_figure(const Reference& reference, const cv::Mat& gray, const std::string& title, const std::string& subtitle) {
     const QrFinder finder(reference);
-    const int strip_source = reference.qr[0].height + 2 * (kSearchHalfHeight + kWindowMargin);
-    const int strip_height = cvRound(strip_source * kWindowScale);
-    cv::Mat sheet(kWindowTop + 3 * (kWindowLabelHeight + strip_height + kWindowGap), kFigureSize.width, CV_8UC3, cv::Scalar(24, 24, 24));
+    const cv::Rect band = finder.qr_band();
+    const int strip_height = cvRound(band.height * kBandScale);
+    cv::Mat sheet(kBandTop + strip_height + kBandListHeight, kFigureSize.width, CV_8UC3, cv::Scalar(24, 24, 24));
     write_text(sheet, title, {28, 16}, 32, kWhite);
     write_text(sheet, subtitle, {28, 62}, 20, kWhite);
     const int right = sheet.cols - 28;
-    write_text(sheet, "노랑 = 탐색 창", {right, 14}, 19, kYellow, true);
-    write_text(sheet, "초록 = 찾은 자리", {right, 40}, 19, kGreen, true);
-    write_text(sheet, "흰 점선 = 기준 사진에서의 자리", {right, 66}, 19, kWhite, true);
+    write_text(sheet, "초록 = QR 봉우리 (문턱 이상)", {right, 14}, 19, kGreen, true);
+    write_text(sheet, "흰 점선 = 기준 사진에서의 자리", {right, 40}, 19, kWhite, true);
+    write_text(sheet, "노랑 = QR 띠 (가로는 사진 전체 폭)", {right, 66}, 19, kYellow, true);
 
-    for (int k = 0; k < 3; ++k) {
-        const cv::Rect box = reference.qr[k];
-        const int strip_y = box.y - kSearchHalfHeight - kWindowMargin;
-        // 사진 좌표에서 그림 좌표로 변환
-        const auto on_strip = [&](const cv::Rect& r) {
-            return cv::Rect(cvRound((r.x - kWindowCropX) * kWindowScale), cvRound((r.y - strip_y) * kWindowScale),
-                            cvRound(r.width * kWindowScale), cvRound(r.height * kWindowScale));
-        };
-        const QrFinder::Match match = finder.find_one(gray, k, half_width);
-        const bool narrow_found = finder.find_one(gray, k, kNarrowHalfWidth).found;
+    // 사진 좌표에서 그림 좌표로 변환
+    const auto on_strip = [&](const cv::Rect& r) {
+        return cv::Rect(cvRound((r.x - kBandCropX) * kBandScale), cvRound((r.y - band.y) * kBandScale), cvRound(r.width * kBandScale), cvRound(r.height * kBandScale));
+    };
+    cv::Mat small, strip;
+    cv::resize(gray(cv::Rect(kBandCropX, band.y, kBandCropWidth, band.height)), small, cv::Size(sheet.cols, strip_height), 0, 0, cv::INTER_AREA);
+    cv::cvtColor(small, strip, cv::COLOR_GRAY2BGR);
+    cv::rectangle(strip, cv::Rect(0, 0, strip.cols, strip.rows), kYellow, 2, cv::LINE_AA);
+    for (int k = 0; k < 3; ++k) dashed_box(strip, on_strip(reference.qr[k]), kWhite);
 
-        cv::Mat small, strip;
-        cv::resize(gray(cv::Rect(kWindowCropX, strip_y, kWindowCropWidth, strip_source)), small, cv::Size(sheet.cols, strip_height), 0, 0, cv::INTER_AREA);
-        cv::cvtColor(small, strip, cv::COLOR_GRAY2BGR);
-        const cv::Rect window = on_strip(search_window(box, half_width)) & cv::Rect(0, 0, strip.cols, strip.rows);
-        cv::Mat dimmed = strip * 0.38;   // 창 밖은 어둡게
-        strip(window).copyTo(dimmed(window));
-        strip = dimmed;
-
-        if (show_narrow) dashed_box(strip, on_strip(search_window(box, kNarrowHalfWidth)), kRed);
-        cv::rectangle(strip, window, kYellow, 2, cv::LINE_AA);
-        const cv::Rect original = on_strip(box);
-        dashed_box(strip, original, kWhite);
-        if (match.found)
-            cv::rectangle(strip, on_strip(cv::Rect(cvRound(box.x + match.dx), cvRound(box.y + match.dy), box.width, box.height)), kGreen, 3, cv::LINE_AA);
-
-        // 치수: 기준 상자 끝에서 창 끝까지
-        const int arrow_y = window.br().y + 12;
-        const std::string size_text = std::to_string(half_width) + " px";
-        cv::arrowedLine(strip, {original.x, arrow_y}, {window.x, arrow_y}, kYellow, 2, cv::LINE_AA, 0, 12.0 / std::max(1, original.x - window.x));
-        cv::arrowedLine(strip, {original.br().x, arrow_y}, {window.br().x, arrow_y}, kYellow, 2, cv::LINE_AA, 0, 12.0 / std::max(1, window.br().x - original.br().x));
-        write_text(strip, size_text, {(original.x + window.x) / 2 - 30, arrow_y + 5}, 18, kYellow);
-        write_text(strip, size_text, {(original.br().x + window.br().x) / 2 - 30, arrow_y + 5}, 18, kYellow);
-
-        const int y = kWindowTop + k * (kWindowLabelHeight + strip_height + kWindowGap);
-        write_text(sheet, "QR " + std::to_string(k + 1), {28, y + 6}, 24, kWhite);
-        if (match.found) {
-            std::ostringstream similarity;
-            similarity << std::fixed << std::setprecision(2) << match.similarity;
-            write_text(sheet, "찾음   가로 이동 " + number(match.dx, 1) + " px   닮은 정도 " + similarity.str(), {120, y + 9}, 20, kGreen);
-        } else {
-            write_text(sheet, "못 찾음", {120, y + 9}, 20, kRed);
-        }
-        if (show_narrow && !narrow_found)
-            write_text(sheet, "빨간 점선 = 좁은 창 (±" + std::to_string(kNarrowHalfWidth) + " px). 여기서는 못 찾았다", {right, y + 9}, 20, kRed, true);
-        strip.copyTo(sheet(cv::Rect(0, y + kWindowLabelHeight, sheet.cols, strip_height)));
+    // 봉우리: 문턱 이상은 초록 상자. 3개이면 왼쪽부터 QR 번호, 아니면 봉우리 번호 (번호를 정하지 않음)
+    std::vector<QrFinder::Peak> peaks = finder.find_peaks(gray), qr_peaks;
+    for (const auto& peak : peaks) if (peak.similarity >= kPeakThreshold) qr_peaks.push_back(peak);
+    std::sort(qr_peaks.begin(), qr_peaks.end(), [](const QrFinder::Peak& a, const QrFinder::Peak& b) { return a.x < b.x; });
+    for (size_t i = 0; i < qr_peaks.size(); ++i) {
+        const cv::Rect box = on_strip(cv::Rect(qr_peaks[i].x, qr_peaks[i].y, reference.qr[0].width, reference.qr[0].height));
+        cv::rectangle(strip, box, kGreen, 3, cv::LINE_AA);
+        const std::string name = qr_peaks.size() == 3 ? "QR " : "봉우리 ";
+        write_text(strip, name + std::to_string(i + 1), {box.x + 4, box.y - 28}, 20, kGreen);
     }
+    strip.copyTo(sheet(cv::Rect(0, kBandTop, sheet.cols, strip_height)));
+
+    // 아래: 봉우리 높이 목록과 판정
+    int y = kBandTop + strip_height + 14;
+    std::string heights = "봉우리 높이 (높은 순):";
+    for (const auto& peak : peaks) {
+        std::ostringstream text;
+        text << std::fixed << std::setprecision(2) << peak.similarity;
+        heights += "   " + text.str();
+    }
+    write_text(sheet, heights + "    (문턱 " + number(kPeakThreshold, 1).substr(1) + ")", {28, y}, 20, kWhite);
+    const QrShift shift = finder.find_qr_shift(gray);
+    y += 40;
+    if (shift.found)
+        write_text(sheet, "판정: QR 3개, 간격 맞음. 왼쪽부터 QR 1, 2, 3 으로 정하고 정밀 위치 계산 (평균 가로 이동 " + number(shift.dx, 2) + " px)", {28, y}, 20, kGreen);
+    else
+        write_text(sheet, "판정: 실패 (E_QR_NOT_FOUND). " + shift.problem, {28, y}, 20, kRed);
     return sheet;
 }
 
@@ -459,11 +430,6 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
     if (range.result.code != "W_OUT_OF_RANGE") throw std::runtime_error("실촬영 범위 초과 예제의 반환 코드가 달라졌습니다");
     const auto range_parts = inspect(reference, range.photo);
     save(range.result.code, range, range_parts);
-    if (range_parts.qr.search == QrSearch::Wide) {
-        auto wide = range;
-        wide.description = "확장 탐색 사용 (동반 알림 N_WIDE_SEARCH)";
-        save("N_WIDE_SEARCH", wide, range_parts);
-    }
 
     const auto base = load_example("20261029", "Y+0.05 T+0.05/Y+0.05 T+0.05 (1).bmp", "실촬영 측정 결과");
     const auto parts = inspect(reference, base.photo);
@@ -483,15 +449,18 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
         scene::save_png(output / "step" / ("0" + std::to_string(step) + ".png"), draw(example, reference, parts, step));
     }
 
-    // 좁은 창과 넓은 창 비교. 넓은 창은 오른쪽 이동 합성
-    const int window_shift_px = 180;
-    const std::string narrow_px = std::to_string(kNarrowHalfWidth), wide_px = std::to_string(kWideHalfWidth);
-    scene::save_png(output / "step" / "03_narrow.png", window_figure(reference, base.photo, kNarrowHalfWidth,
-        "좁은 창: QR 상자 양옆 ±" + narrow_px + " px",
-        "평소에 쓰는 창. QR 마다 기준 자리 양옆 " + narrow_px + " px, 위아래 " + std::to_string(kSearchHalfHeight) + " px 안에서만 찾는다", false));
-    scene::save_png(output / "step" / "03_wide.png", window_figure(reference, scene::shift(base.photo, window_shift_px, 0), kWideHalfWidth,
-        "넓은 창: QR 상자 양옆 ±" + wide_px + " px",
-        "좁은 창에서 3개를 다 못 찾았을 때만 쓴다. 재현용 이미지 (사진을 오른쪽으로 " + std::to_string(window_shift_px) + " px 옮김)", true));
+    // QR 띠 탐색: 보통 사진, 크게 옮긴 사진, QR 2 반사광 사진
+    const int band_shift_px = 300;
+    const cv::Rect qr2_now = reference.qr[1] + cv::Point(cvRound(parts.qr.dx), cvRound(parts.qr.dy));
+    scene::save_png(output / "step" / "03_band.png", band_figure(reference, base.photo,
+        "QR 띠 탐색: 봉우리 3개를 찾고 왼쪽부터 번호",
+        "사진 전체 폭의 QR 띠를 1/" + std::to_string(kCoarseScale) + " 로 줄여 QR 모양 봉우리를 찾는다. 정확히 3개이고 간격이 맞아야 통과"));
+    scene::save_png(output / "step" / "03_band_shift.png", band_figure(reference, scene::shift(base.photo, band_shift_px, 0),
+        "큰 이동: 창을 넓혀 다시 찾지 않는다",
+        "재현용 이미지 (사진을 오른쪽으로 " + std::to_string(band_shift_px) + " px 옮김). 띠가 사진 전체 폭이라 한 번에 찾는다"));
+    scene::save_png(output / "step" / "03_band_glare.png", band_figure(reference, scene::glare(base.photo, (qr2_now.tl() + qr2_now.br()) / 2, 150, 255),
+        "QR 하나가 망가지면 실패",
+        "재현용 이미지 (QR 2 위치에 반사광). 이웃 QR 을 대신 잡지 않고 E_QR_NOT_FOUND 를 낸다"));
 
     std::map<std::string, bool> generated;
     const auto augmented = [&](const cv::Mat& photo, const std::string& description) {
@@ -502,14 +471,13 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
         example.photo = photo;
         return example;
     };
-    const auto candidate = [&](const std::string& code, const cv::Mat& photo, const std::string& description,
-                               QrSearch search = QrSearch::NotFound) {
+    const auto candidate = [&](const std::string& code, const cv::Mat& photo, const std::string& description) {
         if (generated[code]) return true;
         auto example = augmented(photo, description);
         example.result = measure_alignment(photo);
         const auto checked = inspect(reference, photo);
         std::cout << "candidate " << code << " => " << example.result.code << " | " << checked.search << '\n';
-        if (example.result.code != code && !(search != QrSearch::NotFound && checked.qr.search == search)) return false;
+        if (example.result.code != code) return false;
         save(code, example, checked);
         return generated[code] = true;
     };
@@ -531,22 +499,10 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
             break;
         }
     }
-    for (int k : {1, 2, 0}) {
-        const cv::Rect box = reference.qr[k] + qr_offset;
-        const cv::Point center = (box.tl() + box.br()) / 2;
-        if (candidate("W_QR_PARTIAL", scene::glare(base.photo, center, 150, 255),
-                      "QR " + std::to_string(k + 1) + " 위치에 반사광")) break;
-        for (double factor : {0.6, 0.75, 1.25, 1.45}) {
-            if (candidate("W_QR_PARTIAL", scene::scale_qr(base.photo, box, factor),
-                          "QR " + std::to_string(k + 1) + " 인쇄 크기 변경 (배율 " + number(factor, 2) + ")")) break;
-        }
-        if (generated["W_QR_PARTIAL"]) break;
-    }
+    // QR 하나가 반사로 망가지면 봉우리가 줄거나 정밀 위치를 얻지 못해 실패
     const cv::Point middle = (reference.qr[1].tl() + reference.qr[1].br()) / 2 + qr_offset;
-    const cv::Mat glare = scene::glare(base.photo, middle, 440, 255);
-    candidate("E_QR_NOT_FOUND", glare, "QR 영역 반사광");
-    candidate("W_FAR", scene::shift(base.photo, 280, 0),
-              "사진 전체 가로 이동 280 px (동반 경고 W_FAR)", QrSearch::FullWidth);
+    candidate("E_QR_NOT_FOUND", scene::glare(base.photo, middle, 150, 255), "QR 2 위치에 반사광");
+    const cv::Mat glare = scene::glare(base.photo, middle, 440, 255);   // QR 영역 전체 반사광 (기준 갱신 실패 예제)
 
     auto bad_size = augmented({}, "입력 해상도 1920×1080");
     cv::resize(base.photo, bad_size.photo, {1920, 1080}, 0, 0, cv::INTER_AREA);

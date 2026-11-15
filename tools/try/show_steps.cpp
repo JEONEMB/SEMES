@@ -18,15 +18,20 @@ const char* const kValueLabels[kValueCount] = {"QR", "나사 1", "나사 2", "�
 
 // print_qr_step: 1단계 값 표시
 //   입력: qr_finder (기준 QR 탐색 도구), gray (회색 사진)
-//   출력: QrShift, QR별 이동량과 평균 출력
+//   출력: QrShift, 대략 봉우리와 평균 이동 출력
 QrShift print_qr_step(const QrFinder& qr_finder, const cv::Mat& gray) {
     std::cout << "[1단계] find_qr_shift\n";
-    for (int k = 0; k < 3; ++k) {
-        const QrFinder::Match match = qr_finder.find_one(gray, k, kNarrowHalfWidth);
-        std::cout << "  QR " << k + 1 << " (창 ±" << kNarrowHalfWidth << "): 찾음 " << match.found << ", dx " << match.dx << ", dy " << match.dy << ", 닮은 정도 " << match.similarity << "\n";
-    }
+    std::cout << "  대략: QR 띠 봉우리 (높은 순, 문턱 " << kPeakThreshold << ")\n";
+    for (const QrFinder::Peak& peak : qr_finder.find_peaks(gray))
+        std::cout << "    x " << peak.x << ", y " << peak.y << ", 닮은 정도 " << peak.similarity << (peak.similarity >= kPeakThreshold ? "  (QR)" : "") << "\n";
     const QrShift qr = qr_finder.find_qr_shift(gray);
-    std::cout << "  결과: dx " << qr.dx << ", dy " << qr.dy << ", 찾은 QR " << qr.found_count << "개, 탐색 단계 " << int(qr.search) << " (0 좁게, 1 넓게, 2 전체 폭, 3 일부, 4 못 찾음)\n";
+    for (int k = 0; k < 3; ++k)
+        if (qr.qr[k].found) std::cout << "  정밀 QR " << k + 1 << " (대략 위치 둘레 ±" << kFineHalfWidth << " px): dx " << qr.qr[k].dx << ", dy " << qr.qr[k].dy << ", 닮은 정도 " << qr.qr[k].similarity << "\n";
+    if (!qr.found) {
+        std::cout << "  결과: 실패, " << qr.problem << "\n";
+        return qr;
+    }
+    std::cout << "  결과: dx " << qr.dx << ", dy " << qr.dy << ", 정밀 닮은 정도 최소 " << qr.lowest_similarity << "\n";
     return qr;
 }
 
@@ -108,7 +113,7 @@ int main(int argc, char** argv) {
     std::cout << std::fixed << std::setprecision(6);
 
     const QrShift qr = print_qr_step(QrFinder(reference), gray);
-    if (qr.search == QrSearch::NotFound) return 1;
+    if (!qr.found) return 1;
     double values[kValueCount] = {qr.dx, 0, 0, 0, 0};
     const std::array<bool, 4> found = print_screw_step(ScrewFinder(reference), gray, qr, values);
     const CoefficientSet* set = choose_coefficient_set(sets, found);

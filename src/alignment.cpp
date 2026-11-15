@@ -93,14 +93,6 @@ void add_notice(Result& result, Status status, const std::string& code, const st
     result.message += (result.message.empty() ? "" : " / ") + message;
 }
 
-// add_info: 참고 알림 추가
-//   입력: result (수정할 결과), code (알림 코드), message (알림 내용)
-//   출력: 없음 (상태 유지, 코드가 비어 있으면 기록, 메시지는 추가)
-void add_info(Result& result, const std::string& code, const std::string& message) {
-    if (result.code.empty()) result.code = code;
-    result.message += (result.message.empty() ? "" : " / ") + message;
-}
-
 //
 // 1~3단계: QR, 나사, Y와 T
 //
@@ -111,9 +103,9 @@ void add_info(Result& result, const std::string& code, const std::string& messag
 Measured measure_values(const cv::Mat& gray) {
     Measured measured;
 
-    // 1단계: QR 이동 측정. 미검출 시 종료
+    // 1단계: QR 이동 측정. QR 3개를 모두 찾지 못하면 종료
     measured.qr = state.qr_finder->find_qr_shift(gray);
-    if (measured.qr.search == QrSearch::NotFound) return measured;
+    if (!measured.qr.found) return measured;
     measured.values[0] = measured.qr.dx;
 
     // 2단계: QR 위치 주변에서 사용 나사 탐색
@@ -166,11 +158,6 @@ std::string missing_screws(const Measured& measured) {
     return names;
 }
 
-// px_text: 픽셀 단위 표시
-//   입력: px (정수 이동량)
-//   출력: 단위 포함 문자열
-std::string px_text(int px) { return std::to_string(px) + " px"; }
-
 // exceeded_axis: 학습 범위를 벗어난 값 표시
 //   입력: axis (축 이름), value (측정값), range (학습 범위), unit (단위)
 //   출력: 측정값과 범위를 담은 알림 문자열
@@ -201,9 +188,6 @@ void add_notices(Result& result, const Measured& measured, const AgreementResult
     if (!measured.set->precise)
         add_notice(result, Status::Warning, "W_COARSE",
                    "좌우 나사 조합 미확보, 대략값 반환 (" + used + ")");
-    if (measured.qr.search == QrSearch::Partial)
-        add_notice(result, Status::Warning, "W_QR_PARTIAL",
-                   "전체 폭 탐색에서 QR " + std::to_string(measured.qr.found_count) + "/3 검출");
     if (!agreement.agrees()) {
         const std::string which = agreement.worst_value_index == 0 ? "QR" : "나사 " + std::to_string(agreement.worst_value_index);
         char values[96];
@@ -213,16 +197,12 @@ void add_notices(Result& result, const Measured& measured, const AgreementResult
     }
     if (measured.set->precise && !missing.empty())
         add_notice(result, Status::Warning, "W_SCREW_MISSING", "나사 " + missing + " 미검출, " + used);
-    if (measured.qr.search == QrSearch::FullWidth)
-        add_notice(result, Status::Warning, "W_FAR", "±" + px_text(kWideHalfWidth) + " 창에서 QR 일부 또는 전체 미검출, 전체 폭에서 3/3 검출");
     if (!check_in_trained_range(state.reference, absolute_y, absolute_t)) {
         const auto y = exceeded_axis("Y", absolute_y, state.reference.trained_y_mm, "mm");
         const auto t = exceeded_axis("T", absolute_t, state.reference.trained_t_deg, "도");
         add_notice(result, Status::Warning, "W_OUT_OF_RANGE",
                    "영점 차감 전 학습 범위 초과 (" + y + (y.empty() || t.empty() ? "" : ", ") + t + ")");
     }
-    if (measured.qr.search == QrSearch::Wide)
-        add_info(result, "N_WIDE_SEARCH", "±" + px_text(kNarrowHalfWidth) + " 창에서 QR 일부 또는 전체 미검출, ±" + px_text(kWideHalfWidth) + " 창에서 3/3 검출");
 }
 
 // make_result: 최종 결과 생성
@@ -301,7 +281,7 @@ Result measure_alignment(const cv::Mat& photo) {
 
         const Measured measured = measure_values(gray);
         if (!measured.has_value)
-            return failed("E_QR_NOT_FOUND", measured.qr.found_count == 0 ? "전체 폭 탐색에서 QR 0/3 검출" : "검출한 나사 조합의 계수 미확보");
+            return failed("E_QR_NOT_FOUND", measured.qr.found ? "검출한 나사 조합의 계수 미확보" : measured.qr.problem);
 
         const Result result = make_result(measured);
         report(result);
