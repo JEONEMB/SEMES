@@ -33,7 +33,7 @@ build\Release\prepare_dataset.exe data/new_photos
 |---|---|
 | `photos.tsv` | 사진 번호, 회차, 경로, 받은 명령값 |
 | `features.tsv` | 사진마다 잰 QR, 나사 1~4 의 가로 이동 |
-| `labels.tsv` | 학습용 정답 (확인된 명령 − 그 회차의 영점 어긋남) |
+| `labels.tsv` | 학습용 정답 (확인된 명령 - 그 회차의 영점 어긋남) |
 | `splits.tsv` | 학습, 평가에 쓰는지, 시험 나누기 |
 | `sessions.tsv` | 회차별 영점 어긋남 |
 | `preprocessing.tsv` | 원본 명령, 확인값, 학습 사용 여부와 사유 |

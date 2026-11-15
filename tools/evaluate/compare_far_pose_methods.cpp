@@ -1,3 +1,4 @@
+#include "common/console.hpp"
 // 먼 자세의 T 오차: 계산식 모양을 바꾸는 방법과 두 번 보정하는 방법 비교
 // 사용: compare_far_pose_methods <tables 폴더> <출력 폴더>
 // 입력: data/new_photos/tables (prepare_dataset 출력. 측정값 5개와 정답)
@@ -252,7 +253,7 @@ Model train(Method method, const std::vector<const Photo*>& photos) {
 // 채점과 보고
 //
 
-struct Scored { const Photo* photo; Pose error; };   // error = 측정 − 정답
+struct Scored { const Photo* photo; Pose error; };   // error = 측정 - 정답
 
 struct Summary {
     int total = 0, passed = 0;
@@ -397,6 +398,7 @@ void run_test(const std::string& name, const std::vector<TrainTest>& splits) {
 //   입력: 실행할 때 지정한 경로(파일 상단 사용법)
 //   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
+    tools::use_korean_console();
     if (argc < 3) { std::cerr << "사용: compare_far_pose_methods <tables 폴더> <출력 폴더>\n"; return 2; }
     const fs::path tables = fs::u8path(argv[1]), output = fs::u8path(argv[2]);
     const std::vector<Photo> photos = load_photos(tables);

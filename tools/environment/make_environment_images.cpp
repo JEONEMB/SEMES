@@ -1,3 +1,4 @@
+#include "common/console.hpp"
 // 개별 환경 변화의 합성 영상과 측정 반응
 // 사용: make_environment_images <model 폴더> <출력 폴더>
 // 출력: env_<번호>.png, overview.png, results.tsv
@@ -116,6 +117,7 @@ cv::Mat make_overview(const std::vector<cv::Mat>& thumbnails) {
 //   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
 //   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
+    tools::use_korean_console();
     if (argc != 3) { std::cerr << "사용: make_environment_images <model 폴더> <출력 폴더>\n"; return 2; }
     const fs::path data = fs::u8path(argv[1]), out = fs::u8path(argv[2]);
     fs::create_directories(out);
@@ -126,7 +128,7 @@ int main(int argc, char** argv) {
     const std::vector<Change> changes = list_changes(L);
 
     alignment::clear_zero();
-    const alignment::Result base = alignment::measure_alignment(center);
+    const alignment::Result base = alignment::measure_diagnostic(center);
     std::ofstream table(out / "results.tsv", std::ios::binary);
     table << std::setprecision(6) << "id\tgroup\ttitle\tstatus\tcode\tdY_mm\tdT_deg\tpass\tsilent_error\n";
     std::vector<cv::Mat> thumbnails;
@@ -134,7 +136,7 @@ int main(int argc, char** argv) {
     thumbnails.push_back(labeled_view(center, "00 Reference"));
     for (const Change& change : changes) {
         const cv::Mat image = change.make(center);
-        const alignment::Result r = alignment::measure_alignment(image);
+        const alignment::Result r = alignment::measure_diagnostic(image);
         const bool failed = r.status == alignment::Status::Failed;
         const double dy = r.y_mm - base.y_mm, dt = r.t_deg - base.t_deg;
         const bool pass = !failed && std::abs(dy) <= kToleranceYmm && std::abs(dt) <= kToleranceTdeg;

@@ -1,3 +1,4 @@
+#include "common/console.hpp"
 // 보고서 그림 생성: 실촬영 사례와 합성 사례
 // 사용: make_figures [모델_폴더 실촬영_폴더 출력_폴더]
 // 기본 경로: data/model, data/new_photos, docs/부록_A_시각화
@@ -31,7 +32,7 @@ const cv::Size kFigureSize(1440, 810);
 //   입력: value (측정값), digits (소수 자릿수)
 //   출력: 부호와 소수 자릿수를 맞춘 문자열
 std::string number(double value, int digits = 4) {
-    if (!std::isfinite(value)) return "—";
+    if (!std::isfinite(value)) return "-";
     std::ostringstream out;
     out << std::fixed << std::showpos << std::setprecision(digits) << value;
     return out.str();
@@ -166,7 +167,7 @@ cv::Mat draw(const Example& example, const Reference& reference, const Parts& pa
         const int y = 47 + axis * 30;
         write_text(image, axis == 0 ? "Y (mm)" : "T (°)", {label - 175, y}, 20, kWhite);
         const double command = axis == 0 ? example.source.command_y_mm : example.source.command_t_deg;
-        write_text(image, example.source.has_command ? number(command) : "—", {label, y}, 23, kWhite, true);
+        write_text(image, example.source.has_command ? number(command) : "-", {label, y}, 23, kWhite, true);
         const double value = axis == 0 ? result.y_mm : result.t_deg;
         write_text(image, step >= 5 && std::isfinite(value) ? number(value) : "-", {right, y}, 23, kWhite, true);
     }
@@ -328,7 +329,7 @@ DayZero find_day_zero(const std::vector<tools::PhotoFile>& photos, const fs::pat
     for (const auto& photo : photos) {
         if (photo.path == example || !photo.has_command || std::abs(photo.command_y_mm) > 0.25 ||
             std::abs(photo.command_t_deg) > 0.05) continue;
-        const auto result = measure_alignment(read_photo(photo.path.u8string()));
+        const auto result = measure_diagnostic(read_photo(photo.path.u8string()));
         if (result.status != Status::Ok || result.screws_used != "1234") continue;
         zero.y += result.y_mm - photo.command_y_mm;
         zero.t += result.t_deg - photo.command_t_deg;
@@ -416,7 +417,7 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
         example.zero_t = zero.t;
         example.zero_photo = zero.command_zero && tools::is_zero_command(*source) &&
             std::find(zero.sources.begin(), zero.sources.end(), source->name) != zero.sources.end();
-        example.result = measure_alignment(example.photo);
+        example.result = measure_diagnostic(example.photo);
         std::cout << day << " zero " << zero.y << " " << zero.t << " using";
         for (const auto& name : zero.sources) {
             std::cout << " | " << name;
@@ -474,7 +475,7 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
     const auto candidate = [&](const std::string& code, const cv::Mat& photo, const std::string& description) {
         if (generated[code]) return true;
         auto example = augmented(photo, description);
-        example.result = measure_alignment(photo);
+        example.result = measure_diagnostic(photo);
         const auto checked = inspect(reference, photo);
         std::cout << "candidate " << code << " => " << example.result.code << " | " << checked.search << '\n';
         if (example.result.code != code) return false;
@@ -506,7 +507,7 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
 
     auto bad_size = augmented({}, "입력 해상도 1920×1080");
     cv::resize(base.photo, bad_size.photo, {1920, 1080}, 0, 0, cv::INTER_AREA);
-    bad_size.result = measure_alignment(bad_size.photo);
+    bad_size.result = measure_diagnostic(bad_size.photo);
     if (bad_size.result.code == "E_PHOTO") save("E_PHOTO", bad_size, {}, false);
 
     auto zero = augmented(coarse, "영점 설정 입력에서 오른쪽 나사 2, 4 제거");
@@ -532,7 +533,7 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
         if (initialized.status == Status::Failed) throw std::runtime_error(initialized.message);
         set_zero_value(base.zero_y, base.zero_t);
         auto strict = augmented(disagreement, "값 불일치 시 실패를 반환하도록 설정");
-        strict.result = measure_alignment(strict.photo);
+        strict.result = measure_diagnostic(strict.photo);
         if (strict.result.status == Status::Failed && strict.result.code == "W_VALUES_DISAGREE")
             save("W_VALUES_DISAGREE", strict, inspect(reference, strict.photo));
     }
@@ -547,6 +548,7 @@ void generate(const std::string& model, const fs::path& input, const fs::path& o
 //   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
 //   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int wmain(int argc, wchar_t** argv) {
+    tools::use_korean_console();
     if (argc != 1 && argc != 4) {
         std::cerr << "사용: make_figures [모델_폴더 실촬영_폴더 출력_폴더]\n";
         return 2;

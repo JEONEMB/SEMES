@@ -34,7 +34,7 @@ struct AgreementResult {
 
 // load_agreement_checks: 조합별 점검식 읽기
 //   입력: data_folder (모델 폴더)
-//   출력: 성공 여부, checks, error. 열 수 없는 파일은 생략
+//   출력: 성공 여부, checks, error. 필수 파일을 열 수 없으면 실패
 bool load_agreement_checks(const std::string& data_folder, std::vector<AgreementCheck>& checks, std::string& error);
 
 // find_agreement_check: 나사 조합의 점검식 조회

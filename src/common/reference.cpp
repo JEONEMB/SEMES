@@ -5,6 +5,7 @@
 #include <opencv2/imgproc.hpp>
 #include <filesystem>
 #include <fstream>
+#include <cmath>
 #include <cstdint>
 #include <limits>
 #include <vector>
@@ -48,15 +49,30 @@ bool load_reference(const std::string& data_folder, Reference& reference, std::s
     if (reference.photo.empty()) { error = "center.bmp 를 읽지 못했습니다: " + data_folder; return false; }
     if (reference.photo.cols != kPhotoWidth || reference.photo.rows != kPhotoHeight) { error = "center.bmp 가 3840×2160 이 아닙니다"; return false; }
 
-    cv::FileStorage file(data_folder + "/reference.json", cv::FileStorage::READ);
+    std::ifstream input(std::filesystem::u8path(data_folder + "/reference.json"), std::ios::binary);
+    if (!input) { error = "reference.json 을 읽지 못했습니다: " + data_folder; return false; }
+    std::string json((std::istreambuf_iterator<char>(input)), {});
+    cv::FileStorage file(json, cv::FileStorage::READ | cv::FileStorage::MEMORY);
     if (!file.isOpened()) { error = "reference.json 을 읽지 못했습니다: " + data_folder; return false; }
     const cv::FileNode qr = file["qr"], screws = file["screws"];
     if (!qr.isSeq() || qr.size() != 3 || !screws.isSeq() || screws.size() != 4) { error = "reference.json 에 qr 3개와 screws 4개가 있어야 합니다"; return false; }
     for (int k = 0; k < 3; ++k) {
+        if (!qr[k].isSeq() || qr[k].size() != 4) { error = "QR 좌표 형식 오류"; return false; }
+        for (int j=0; j<4; ++j) { double v=double(qr[k][j]); if (!qr[k][j].isInt() || !std::isfinite(v) || v<0 || v>kPhotoWidth) { error="QR 좌표 숫자 오류"; return false; } }
+        if (int(qr[k][2])<=0 || int(qr[k][3])<=0) { error="QR 크기는 양수여야 합니다"; return false; }
         reference.qr[k] = cv::Rect(int(qr[k][0]), int(qr[k][1]), int(qr[k][2]), int(qr[k][3]));
         if (!inside_photo(reference.qr[k])) { error = "reference.json 의 QR 상자가 사진 밖입니다"; return false; }
     }
-    for (int k = 0; k < 4; ++k) reference.screw[k] = cv::Point(int(screws[k][0]), int(screws[k][1]));
+    for (int k = 0; k < 4; ++k) {
+        if (!screws[k].isSeq() || screws[k].size() != 2) { error = "나사 좌표 형식 오류"; return false; }
+        for (int j=0;j<2;++j) if (!screws[k][j].isInt()) { error="나사 좌표 숫자 오류"; return false; }
+        reference.screw[k] = cv::Point(int(screws[k][0]), int(screws[k][1]));
+        if (reference.screw[k].x < 0 || reference.screw[k].x >= kPhotoWidth || reference.screw[k].y < 0 || reference.screw[k].y >= kPhotoHeight) { error = "나사 좌표가 사진 밖입니다"; return false; }
+    }
+    for (const char* key : {"trained_y_mm", "trained_t_deg"}) {
+        auto range = file[key];
+        if (!range.isSeq() || range.size() != 2 || (!range[0].isInt() && !range[0].isReal()) || (!range[1].isInt() && !range[1].isReal()) || !std::isfinite(double(range[0])) || !std::isfinite(double(range[1])) || double(range[0]) > double(range[1])) { error = "학습 범위 형식 오류"; return false; }
+    }
     for (int i = 0; i < 2; ++i) {
         reference.trained_y_mm[i] = double(file["trained_y_mm"][i]);
         reference.trained_t_deg[i] = double(file["trained_t_deg"][i]);

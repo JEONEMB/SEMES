@@ -1,3 +1,4 @@
+#include "common/console.hpp"
 // QR 내용, 인쇄 크기, 촬영 거리 변경 후 기준 재등록 효과 비교
 // 사용: check_new_installation <model 폴더> <list.tsv> <expected.tsv> <작업 폴더> <출력 폴더>
 // 변환 순서: QR 내용 -> QR 크기 -> 화면 배율. 이동량 계산식 유지
@@ -146,7 +147,7 @@ std::vector<SamplePhoto> read_samples(const fs::path& list_file, const fs::path&
         for (const auto& e : expected)
             if (e.at(0) == row.at(0)) { s.expected_y = std::stod(e.at(1)); s.expected_t = std::stod(e.at(2)); }
         alignment::clear_zero();
-        s.qr_shift_px = alignment::measure_alignment(s.gray).qr_shift_px;
+        s.qr_shift_px = alignment::measure_diagnostic(s.gray).qr_shift_px;
         samples.push_back(s);
     }
     return samples;
@@ -164,7 +165,7 @@ struct SampleScore {
 SampleScore score_samples(const std::vector<SamplePhoto>& samples, const cv::Mat& changed_qrs, const Layout& layout, const Case& c) {
     SampleScore score;
     for (const SamplePhoto& s : samples) {
-        const alignment::Result r = alignment::measure_alignment(apply_case(s.gray, changed_qrs, layout, c, s.qr_shift_px));
+        const alignment::Result r = alignment::measure_diagnostic(apply_case(s.gray, changed_qrs, layout, c, s.qr_shift_px));
         if (r.status == alignment::Status::Failed) { ++score.failed; continue; }
         const double ey = r.y_mm - s.expected_y, et = r.t_deg - s.expected_t;
         score.worst_y = std::max(score.worst_y, std::abs(ey));
@@ -193,7 +194,7 @@ void check_case(const Case& c, const cv::Mat& center, const Layout& layout, cons
     alignment::initialize(folders.model.u8string());
     const cv::Mat changed_qrs = change_qrs(center, layout, c);
     const cv::Mat changed_center = c.distance != 1 ? scale_rotate(changed_qrs, c.distance, 0) : changed_qrs;
-    const alignment::Result as_is = alignment::measure_alignment(changed_center);
+    const alignment::Result as_is = alignment::measure_diagnostic(changed_center);
     const bool as_is_failed = as_is.status == alignment::Status::Failed;
     // (나) 새로 등록하면
     const fs::path registered = folders.work / c.name();
@@ -217,6 +218,7 @@ void check_case(const Case& c, const cv::Mat& center, const Layout& layout, cons
 //   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
 //   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
+    tools::use_korean_console();
     if (argc != 6) { std::cerr << "사용: check_new_installation <model 폴더> <list.tsv> <expected.tsv> <작업 폴더> <출력 폴더>\n"; return 2; }
     const Folders folders{fs::u8path(argv[1]), fs::u8path(argv[4]), fs::u8path(argv[5])};
     fs::create_directories(folders.work);
@@ -227,7 +229,7 @@ int main(int argc, char** argv) {
 
     const std::vector<SamplePhoto> samples = read_samples(fs::u8path(argv[2]), fs::u8path(argv[3]));
     alignment::clear_zero();
-    const alignment::Result base = alignment::measure_alignment(center);
+    const alignment::Result base = alignment::measure_diagnostic(center);
 
     std::ofstream table(folders.out / "installation_results.tsv", std::ios::binary);
     table << std::setprecision(5) << "case\tqr_changed\tqr_size\tdistance\tas_is_status\tas_is_code\tas_is_dY\tas_is_dT\tregistered\tsample_failed\tsample_pass\tsample_total\tmax_eY_mm\tmax_eT_deg\n";

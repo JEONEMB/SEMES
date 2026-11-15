@@ -1,3 +1,4 @@
+#include "common/console.hpp"
 // QR 가림과 반사에 대한 판정 규칙 비교
 // 사용: check_qr_blocking <model 폴더> <tables 폴더> <출력 폴더>
 // 출력: qr_blocking_report.txt, qr_blocking_cases.tsv, block_<사례>.png
@@ -444,7 +445,7 @@ void run_block_cases(const Model& model, const std::vector<CoefficientSet>& subs
         if (!to_gray(read_photo(photo->path), gray, error)) continue;
         const QrMatches clean = find_previous_way(previous_finder, gray);
         if (clean.found_count() != 3) continue;
-        const Result clean_result = measure_alignment(gray);                                   // 현재 판정의 기준값 (영점 포함)
+        const Result clean_result = measure_diagnostic(gray);                                   // 현재 판정의 기준값 (영점 포함)
         const Pose clean_pose = pose_from(model, screw_finder, gray, clean, {true, true, true});   // 대안 판정의 기준값 (영점 차감 전)
         if (clean_result.status == Status::Failed || !clean_pose.has_value) continue;
 
@@ -476,7 +477,7 @@ void run_block_cases(const Model& model, const std::vector<CoefficientSet>& subs
             if (matches.found_count() > 0) { r.spreads.push_back(high - low); r.lowest_similarities.push_back(lowest_similarity); }
 
             // 현재 판정
-            const Result now = measure_alignment(blocked);
+            const Result now = measure_diagnostic(blocked);
             const bool now_has_value = now.status != Status::Failed;
             const double now_dy = now.y_mm - clean_result.y_mm, now_dt = now.t_deg - clean_result.t_deg;
             r.now.add(now_has_value, now_dy, now_dt);
@@ -554,6 +555,7 @@ void run_block_cases(const Model& model, const std::vector<CoefficientSet>& subs
 //   입력: 실행할 때 지정한 경로(파일 상단 사용법)
 //   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
+    tools::use_korean_console();
     if (argc != 4) { std::cerr << "사용: check_qr_blocking <model 폴더> <tables 폴더> <출력 폴더>\n"; return 2; }
     const std::string model_folder = argv[1];
     const fs::path output = fs::u8path(argv[3]);

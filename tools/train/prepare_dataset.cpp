@@ -222,7 +222,7 @@ std::vector<PreparedPhoto> measure_all_photos(const fs::path& photo_root, const 
     const QuietWarnings quiet;   // 화면 경고 생략. 결과에 알림 유지
     for (PreparedPhoto& photo : photos) {
         alignment::clear_zero();
-        const alignment::Result r = alignment::measure_alignment(alignment::read_photo(photo.file.path.u8string()));
+        const alignment::Result r = alignment::measure_diagnostic(alignment::read_photo(photo.file.path.u8string()));
         photo.measured = r.status != alignment::Status::Failed;
         photo.values[0] = r.qr_shift_px;
         photo.all_screws = photo.measured;
