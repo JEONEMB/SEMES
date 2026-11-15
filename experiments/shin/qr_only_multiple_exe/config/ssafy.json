@@ -1,0 +1,5 @@
+{
+  "model": "../models/ssafy_qr_pose.npz",
+  "y_mm": 0.0,
+  "theta_deg": 0.0
+}
