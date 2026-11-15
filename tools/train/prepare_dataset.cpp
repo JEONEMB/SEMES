@@ -102,8 +102,8 @@ ZeroFit fit_session_zeros(const std::vector<const PreparedPhoto*>& used, const s
     for (int i = 0; i < n; ++i) fit_terms(*used[i], sessions).copyTo(design.row(i));
     ZeroFit fit;
     // 2. QR과 나사별로 자세 영향과 촬영 회차 차이 계산
-    fit.coefficients = cv::Mat(kValueCount, kPoseTerms + s_count, CV_64F);
-    for (int k = 0; k < kValueCount; ++k) {
+    fit.coefficients = cv::Mat(alignment::kCheckedValueCount, kPoseTerms + s_count, CV_64F);   // QR 과 나사 테두리 값만 (둘레 영역 값은 영점 추정에 쓰지 않음)
+    for (int k = 0; k < alignment::kCheckedValueCount; ++k) {
         cv::Mat value(n, 1, CV_64F), fitted;
         for (int i = 0; i < n; ++i) value.at<double>(i) = used[i]->values[k];
         cv::solve(design, value, fitted, cv::DECOMP_SVD);
@@ -124,8 +124,8 @@ ZeroFit fit_session_zeros(const std::vector<const PreparedPhoto*>& used, const s
 //   출력: 항목별 실제 이동량 - 예상 이동량
 cv::Mat residual_of(const ZeroFit& fit, const PreparedPhoto& photo, const std::vector<std::string>& sessions) {
     const cv::Mat predicted = fit.coefficients * fit_terms(photo, sessions).t();
-    cv::Mat residual(kValueCount, 1, CV_64F);
-    for (int k = 0; k < kValueCount; ++k) residual.at<double>(k) = photo.values[k] - predicted.at<double>(k);
+    cv::Mat residual(alignment::kCheckedValueCount, 1, CV_64F);
+    for (int k = 0; k < alignment::kCheckedValueCount; ++k) residual.at<double>(k) = photo.values[k] - predicted.at<double>(k);
     return residual;
 }
 
@@ -155,7 +155,7 @@ ZeroFit estimate_session_zeros(const std::vector<PreparedPhoto>& photos, const s
         std::vector<cv::Mat> residual;
         for (const PreparedPhoto* p : used) residual.push_back(residual_of(fit, *p, sessions));
         bool removed = false;
-        for (int k = 0; k < kValueCount; ++k) {
+        for (int k = 0; k < alignment::kCheckedValueCount; ++k) {
             std::vector<double> column;
             for (const cv::Mat& r : residual) column.push_back(std::abs(r.at<double>(k)));
             const double spread = std::max(1.4826 * median_of(column), 1e-9);
@@ -228,6 +228,7 @@ std::vector<PreparedPhoto> measure_all_photos(const fs::path& photo_root, const 
         photo.all_screws = photo.measured;
         for (int k = 0; k < 4; ++k) {
             photo.values[k + 1] = r.screw_shift_px[k];
+            photo.values[alignment::kAreaValueOffset + k] = r.screw_area_shift_px[k];
             if (!std::isfinite(r.screw_shift_px[k])) photo.all_screws = false;
         }
         bar.step();
@@ -286,7 +287,9 @@ void write_tables(const fs::path& tables, const std::vector<PreparedPhoto>& phot
         label_table(tables / "labels.tsv", std::ios::binary), split_table(tables / "splits.tsv", std::ios::binary),
         session_table(tables / "sessions.tsv", std::ios::binary);
     photo_table << "id\tsession\tpath\tcommand_y_mm\tcommand_t_deg\n";
-    feature_table << "id\tmeasured\tqr\tscrew1\tscrew2\tscrew3\tscrew4\n";
+    feature_table << "id\tmeasured";
+    for (const char* name : alignment::kValueNames) feature_table << '\t' << name;   // qr, screw1~4, screw1_area~screw4_area
+    feature_table << '\n';
     label_table << "id\tlabel_y_mm\tlabel_t_deg\n";
     split_table << "id\tusable\tfinal_check";
     for (int r = 0; r < kRepeatCount; ++r) split_table << "\tcv" << r;

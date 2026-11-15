@@ -41,11 +41,12 @@ double quantile_of(std::vector<double> v, double q) {
 
 // used_values_of: 조합의 측정값 번호 선택
 //   입력: screws (나사 조합)
-//   출력: 계산에 사용할 번호. 0은 QR, 1~4는 나사
+//   출력: 계산에 사용할 번호. 0은 QR, 1~4는 나사 테두리, 5~8은 나사 둘레 영역
 std::vector<int> used_values_of(const std::string& screws) {
     std::vector<int> used = {0};
     if (screws == "none") return used;
     for (char c : screws) used.push_back(c - '0');
+    for (char c : screws) used.push_back(alignment::kAreaValueOffset + (c - '1'));
     return used;
 }
 
@@ -134,7 +135,7 @@ alignment::CoefficientSet fit_coefficient_set(const std::string& screws, const s
     set.screws = screws;
     const std::vector<int> used = used_values_of(screws);
     for (int v : used)
-        if (v >= 1) set.uses_screw[v - 1] = true;
+        if (v >= 1) set.uses_screw[alignment::screw_of_value(v)] = true;
     set.precise = (set.uses_screw[0] || set.uses_screw[2]) && (set.uses_screw[1] || set.uses_screw[3]);   // 왼쪽(1, 3)과 오른쪽(2, 4)이 모두 있음
     // 1. 측정 항목마다 다른 값의 크기 맞추기
     standardize(set, used, values);
@@ -179,8 +180,9 @@ alignment::AgreementCheck fit_agreement_check(const alignment::CoefficientSet& s
     alignment::AgreementCheck check;
     check.screws = set.screws;
     std::vector<double> score(n, 0);   // 사진마다 점검값 = 가장 크게 어긋난 값의 (어긋난 양 ÷ 흔들림)
-    // 2. QR과 나사마다 예상 이동량 계산식 구하기
+    // 2. QR과 나사마다 예상 이동량 계산식 구하기 (둘레 영역 값은 테두리 값과 거의 같아 점검에 넣지 않는다)
     for (int v : used_values_of(set.screws)) {
+        if (v >= alignment::kCheckedValueCount) continue;
         cv::Mat target(n, 1, CV_64F), solved;
         for (int i = 0; i < n; ++i) target.at<double>(i) = values[i][v];
         cv::solve(design, target, solved, cv::DECOMP_SVD);

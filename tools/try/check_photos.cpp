@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
     const int down = argc >= 7 ? std::stoi(argv[6]) : 0;
 
     std::ofstream out(argv[3], std::ios::binary);
-    out << std::setprecision(10) << "id\tY_mm\tT_deg\tstatus\tcode\tqr_px\tscrew1_px\tscrew2_px\tscrew3_px\tscrew4_px\tscrews_used\tcheck_value\tcheck_limit\tms\n";
+    out << std::setprecision(10) << "id\tY_mm\tT_deg\tstatus\tcode\tqr_px\tscrew1_px\tscrew2_px\tscrew3_px\tscrew4_px\tscrew1_area_px\tscrew2_area_px\tscrew3_area_px\tscrew4_area_px\tscrews_used\tcheck_value\tcheck_limit\tms\n";
     int ok = 0, warned = 0, failed = 0, compared = 0;
     double worst_y = 0, worst_t = 0;
     std::vector<double> times;
@@ -81,6 +81,7 @@ int main(int argc, char** argv) {
         if (!r.code.empty()) ++codes[r.code];
         out << row[0] << '\t' << r.y_mm << '\t' << r.t_deg << '\t' << int(r.status) << '\t' << r.code << '\t' << r.qr_shift_px;
         for (double shift : r.screw_shift_px) out << '\t' << shift;
+        for (double shift : r.screw_area_shift_px) out << '\t' << shift;
         out << '\t' << r.screws_used << '\t' << r.check_value << '\t' << r.check_limit << '\t' << ms << '\n';
         const auto match = expected.find(row[0]);
         if (match != expected.end() && r.status != alignment::Status::Failed) {

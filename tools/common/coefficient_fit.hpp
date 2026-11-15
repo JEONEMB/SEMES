@@ -12,7 +12,7 @@
 
 namespace tools {
 
-using alignment::kValueCount;              // 측정값 5개(px): QR, 나사 1~4
+using alignment::kValueCount;              // 측정값 9개(px): QR, 나사 1~4 테두리, 나사 1~4 둘레 영역
 using alignment::kValueNames;
 using Values = std::array<double, kValueCount>;
 

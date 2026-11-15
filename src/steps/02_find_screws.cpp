@@ -1,7 +1,8 @@
 // 2단계: QR 이동량 근처에서 나사를 찾고 위치를 세밀하게 조정
-// 처리: 닮은 위치 찾기 -> 밝기 차이 보정 -> 테두리 위치 맞추기
+// 처리: 닮은 위치 찾기 -> 밝기 차이 보정 -> 테두리 위치 맞추기 -> 둘레 영역 맞추기
 #include "steps/02_find_screws.hpp"
 #include <opencv2/imgproc.hpp>
+#include <opencv2/video/tracking.hpp>   // findTransformECC (둘레 영역 맞춤)
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -32,13 +33,20 @@ const int kEdgeSmoothing = 5;                      // px. 맞추기 전에 한 �
 const int kEdgeMaxSteps = 200;
 const double kEdgeDone = 1e-8;                     // 반복 종료 닮은 정도 변화량
 
+// 3-2. 둘레 영역 맞춤 설정. 나사 둘레 121×121 정사각형의 밝기 그대로 비교 (OpenCV findTransformECC, 이동만)
+//      테두리 맞춤 값과 함께 Y, T 계산에 넣으면 회차가 바뀔 때의 어긋남이 줄어든다 (docs/09_추가_논의/9-11)
+const int kAreaHalf = 60;                          // px. 비교 영역 정사각형의 반쪽 크기 (121×121)
+const int kAreaMargin = 12;                        // px. 현재 사진에서 비교 영역보다 넓게 잘라 두는 여유
+const int kAreaMaxSteps = 100;                     // 최대 반복 수
+const double kAreaDone = 1e-6;                     // 반복 종료 기준 (OpenCV ECC 의 닮은 정도 변화)
+
 // 4. 일부 가림 점검 설정. 하나라도 넘으면 머리 일부 가림 또는 오염으로 보고 측정 실패
 //    받은 사진 715장 × 나사 4개 실측: 닮은 정도 최소 0.996, 대략 위치 차이 최대 7 px, 두 맞춤 차이 최대 0.16 px
 const double kShapeBlurSigma = 2.0;                // px. 모양 비교 전 흐림 (잡음 영향 줄임)
 const int kShapeCutHalf = 60;                      // px. 흐리기 전에 잘라 내는 반폭 (91×91 조각보다 넓게)
 const double kMinShapeSimilarity = 0.93;           // 최종 위치의 흐린 조각 닮은 정도 최소값
 const int kMaxLocateDrift = 15;                    // px. 대략 위치와 QR 예상 위치의 최대 거리
-const double kMaxRefineGap = 0.5;                  // px. 밝기 맞춤과 테두리 맞춤 결과의 최대 거리
+const double kMaxRefineGap = 0.5;                  // px. 밝기 맞춤과 테두리 맞춤, 테두리 맞춤과 둘레 영역 맞춤 결과의 최대 거리
 
 // square_around: 중심 주변 사각 영역 계산
 //   입력: center (중심), half (중심에서 한쪽 끝까지 px)
@@ -298,6 +306,7 @@ ScrewFinder::ScrewFinder(const Reference& reference) {
         cv::GaussianBlur(edge_picture(reference.photo(square_around(centers_[k], kEdgeHalf))), edge_templates_[k], cv::Size(kEdgeSmoothing, kEdgeSmoothing), 0, 0);
         cv::Mat shape; locate_templates_[k].convertTo(shape, CV_32F);
         cv::GaussianBlur(shape, shape_templates_[k], cv::Size(0, 0), kShapeBlurSigma);
+        reference.photo(square_around(centers_[k], kAreaHalf)).convertTo(area_templates_[k], CV_32F);
     }
     edge_mask_ = make_edge_mask();
 }
@@ -318,7 +327,7 @@ std::array<ScrewShift, 4> ScrewFinder::find_screw_shifts(const cv::Mat& gray, do
     return shifts;
 }
 
-// find_one: 나사 하나의 위치를 3단계로 맞추기
+// find_one: 나사 하나의 위치를 4단계로 맞추기
 //   입력: gray (회색 사진), screw_index (0~3), expected_shift (예상 이동량 px)
 //   출력: ScrewShift (이동량, 검출 여부, 실패 사유)
 ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point expected_shift) const {
@@ -348,6 +357,20 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
         char detail[160];
         std::snprintf(detail, sizeof(detail), "나사 머리 일부 가림 또는 오염 의심 (모양 닮은 정도 %.3f, 예상 위치와 거리 %.1f px, 두 맞춤 차이 %.2f px)",
                       result.shape_similarity, locate_drift, refine_gap);
+        result.partial = true;
+        result.problem = detail;
+        return result;
+    }
+    // 둘레 영역 맞춤: 테두리 맞춤 위치에서 출발. 실패하거나 테두리 맞춤과 kMaxRefineGap 넘게 다르면 이 나사를 뺀다
+    double area_dy = 0;
+    if (!refine_by_area(gray, screw_index, cv::Point(cvRound(result.dx), cvRound(result.dy)), result.area_dx, area_dy)) {
+        result.problem = "나사 둘레 영역을 맞추지 못함 (가림·반사)";
+        return result;
+    }
+    const double area_gap = std::hypot(result.area_dx - result.dx, area_dy - result.dy);
+    if (area_gap > kMaxRefineGap) {
+        char detail[120];
+        std::snprintf(detail, sizeof(detail), "나사 둘레 영역 맞춤이 테두리 맞춤과 다름 (차이 %.2f px)", area_gap);
         result.partial = true;
         result.problem = detail;
         return result;
@@ -437,6 +460,29 @@ bool ScrewFinder::refine_by_edges(const cv::Mat& gray, int screw_index, cv::Poin
     if (!ecc_shift(edge_templates_[screw_index], edge_picture(gray(area)), edge_mask_, remaining_x, remaining_y)) return false;
     dx = start.x + remaining_x;
     dy = start.y + remaining_y;
+    return std::isfinite(dx) && std::isfinite(dy);
+}
+
+// ScrewFinder::refine_by_area: 나사 둘레 영역의 밝기를 맞추어 남은 이동량 계산
+//   입력: gray (회색 사진), screw_index (나사 번호 0~3), start (초기 이동량)
+//   출력: 성공 여부, dx와 dy (px)
+//   계산: OpenCV findTransformECC (이동만). 소수 위치를 1/32 px 단위로 끊지만, 이 값은 테두리 값과 함께 쓰는 보조 값이고
+//         직접 계산한 ECC 는 같은 정확도에 시간이 두 배 넘게 걸렸다 (docs/09_추가_논의/9-11)
+bool ScrewFinder::refine_by_area(const cv::Mat& gray, int screw_index, cv::Point start, double& dx, double& dy) const {
+    const cv::Rect area = square_around(centers_[screw_index] + start, kAreaHalf + kAreaMargin);
+    if (!inside_photo(area)) return false;
+    cv::Mat current;
+    gray(area).convertTo(current, CV_32F);
+    // 기준 영역(121×121)을 현재 조각(145×145) 안에서 옮겨 맞춘다. 출발점은 조각 가운데
+    cv::Mat move = (cv::Mat_<float>(2, 3) << 1, 0, float(kAreaMargin), 0, 1, float(kAreaMargin));
+    try {
+        cv::findTransformECC(area_templates_[screw_index], current, move, cv::MOTION_TRANSLATION,
+                             cv::TermCriteria(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, kAreaMaxSteps, kAreaDone), cv::noArray(), 1);
+    } catch (const cv::Exception&) {
+        return false;   // 수렴하지 않음 (가림, 반사)
+    }
+    dx = start.x + move.at<float>(0, 2) - kAreaMargin;
+    dy = start.y + move.at<float>(1, 2) - kAreaMargin;
     return std::isfinite(dx) && std::isfinite(dy);
 }
 
