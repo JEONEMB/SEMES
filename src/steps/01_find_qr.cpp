@@ -32,12 +32,22 @@ cv::Mat blurred_area(const cv::Mat& gray, const cv::Rect& area) {
     return blurred(area - wider.tl()).clone();
 }
 
-// parabola_offset: 가장 닮은 위치의 앞뒤 값으로 소수 이동량 계산
-//   입력: before, at_peak, after (연속한 닮은 정도 3개)
-//   출력: 소수 이동량(-0.5~+0.5 px)
+// parabola_offset: 연속한 값 3개를 지나는 포물선의 꼭대기 위치
+//   입력: before, at_peak, after (가운데가 가장 큰 연속한 값 3개)
+//   출력: 가운데 칸 기준 꼭대기 위치(-0.5~+0.5 px)
 double parabola_offset(double before, double at_peak, double after) {
     const double curvature = before - 2 * at_peak + after;
     return curvature < 0 ? 0.5 * (before - after) / curvature : 0.0;
+}
+
+// gaussian_offset: 가장 닮은 위치의 앞뒤 값으로 소수 이동량 계산 (3점 가우스 맞춤)
+//   흐린 영상끼리의 닮은 정도 봉우리는 종 모양에 가깝다. 종 모양은 로그를 취하면 포물선이므로
+//   세 값의 로그로 포물선 꼭대기를 구한다. 값이 0 이하이면 로그를 쓸 수 없어 포물선으로 계산
+//   입력: before, at_peak, after (연속한 닮은 정도 3개)
+//   출력: 소수 이동량(-0.5~+0.5 px)
+double gaussian_offset(double before, double at_peak, double after) {
+    if (before <= 0 || at_peak <= 0 || after <= 0) return parabola_offset(before, at_peak, after);
+    return parabola_offset(std::log(before), std::log(at_peak), std::log(after));
 }
 
 }   // 파일 내부
@@ -117,8 +127,8 @@ QrFinder::Match QrFinder::find_one(const cv::Mat& gray, int qr_index, int coarse
     const bool at_window_edge = peak.x <= 0 || peak.y <= 0 || peak.x >= similarity.cols - 1 || peak.y >= similarity.rows - 1;
     if (best < kMinSimilarity || at_window_edge) return match;
 
-    const double fine_x = parabola_offset(similarity.at<float>(peak.y, peak.x - 1), similarity.at<float>(peak.y, peak.x), similarity.at<float>(peak.y, peak.x + 1));
-    const double fine_y = parabola_offset(similarity.at<float>(peak.y - 1, peak.x), similarity.at<float>(peak.y, peak.x), similarity.at<float>(peak.y + 1, peak.x));
+    const double fine_x = gaussian_offset(similarity.at<float>(peak.y, peak.x - 1), similarity.at<float>(peak.y, peak.x), similarity.at<float>(peak.y, peak.x + 1));
+    const double fine_y = gaussian_offset(similarity.at<float>(peak.y - 1, peak.x), similarity.at<float>(peak.y, peak.x), similarity.at<float>(peak.y + 1, peak.x));
     match.found = true;
     match.dx = window.x + peak.x + fine_x - box.x;
     match.dy = window.y + peak.y + fine_y - box.y;

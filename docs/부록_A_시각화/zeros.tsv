@@ -1,11 +1,11 @@
 day	method	zero_Y_mm	zero_T_deg	source
-20261020	mean_measurement_minus_command	-0.122526402057	0.0100907876477	Y+0.05 T+0.01/Y+0.05 T+0.01 (1).bmp
-20261020	mean_measurement_minus_command	-0.122526402057	0.0100907876477	Y+0.05 T+0.01/Y+0.05 T+0.01 (2).bmp
-20261020	mean_measurement_minus_command	-0.122526402057	0.0100907876477	Y+0.05 T+0.01/Y+0.05 T+0.01 (3).bmp
-20261020	mean_measurement_minus_command	-0.122526402057	0.0100907876477	Y+0.05 T+0.02/Y+0.05 T+0.02 (1).bmp
-20261020	mean_measurement_minus_command	-0.122526402057	0.0100907876477	Y+0.05 T+0.02/Y+0.05 T+0.02 (2).bmp
-20261029	mean_measurement_minus_command	-0.122493521374	0.00919185784727	Y+0.05 T+0.04/Y+0.05 T+0.04 (1).bmp
-20261029	mean_measurement_minus_command	-0.122493521374	0.00919185784727	Y+0.05 T+0.04/Y+0.05 T+0.04 (2).bmp
-20261029	mean_measurement_minus_command	-0.122493521374	0.00919185784727	Y+0.05 T+0.04/Y+0.05 T+0.04 (3).bmp
-20261029	mean_measurement_minus_command	-0.122493521374	0.00919185784727	Y+0.05 T+0.05/Y+0.05 T+0.05 (2).bmp
-20261029	mean_measurement_minus_command	-0.122493521374	0.00919185784727	Y+0.05 T+0.05/Y+0.05 T+0.05 (3).bmp
+20261020	mean_measurement_minus_command	-0.122393602619	0.0100724117159	Y+0.05 T+0.01/Y+0.05 T+0.01 (1).bmp
+20261020	mean_measurement_minus_command	-0.122393602619	0.0100724117159	Y+0.05 T+0.01/Y+0.05 T+0.01 (2).bmp
+20261020	mean_measurement_minus_command	-0.122393602619	0.0100724117159	Y+0.05 T+0.01/Y+0.05 T+0.01 (3).bmp
+20261020	mean_measurement_minus_command	-0.122393602619	0.0100724117159	Y+0.05 T+0.02/Y+0.05 T+0.02 (1).bmp
+20261020	mean_measurement_minus_command	-0.122393602619	0.0100724117159	Y+0.05 T+0.02/Y+0.05 T+0.02 (2).bmp
+20261029	mean_measurement_minus_command	-0.123107775318	0.00927643494755	Y+0.05 T+0.04/Y+0.05 T+0.04 (1).bmp
+20261029	mean_measurement_minus_command	-0.123107775318	0.00927643494755	Y+0.05 T+0.04/Y+0.05 T+0.04 (2).bmp
+20261029	mean_measurement_minus_command	-0.123107775318	0.00927643494755	Y+0.05 T+0.04/Y+0.05 T+0.04 (3).bmp
+20261029	mean_measurement_minus_command	-0.123107775318	0.00927643494755	Y+0.05 T+0.05/Y+0.05 T+0.05 (2).bmp
+20261029	mean_measurement_minus_command	-0.123107775318	0.00927643494755	Y+0.05 T+0.05/Y+0.05 T+0.05 (3).bmp
