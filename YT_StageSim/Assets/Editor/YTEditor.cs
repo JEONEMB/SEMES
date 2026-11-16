@@ -139,6 +139,9 @@ namespace YT
             PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Gzip;
             PlayerSettings.WebGL.decompressionFallback = true;    // 서버(Flask)에 Content-Encoding 설정 없이도 열리게
             PlayerSettings.WebGL.nameFilesAsHashes = true;        // 다시 빌드하면 파일 이름이 바뀌어 브라우저 캐시 문제 없음
+            // 파이는 https 가 아닌 http://파이IP:8090 으로 열림. 기본값(Not allowed)이면 시작할 때 STL 등을 받는 UnityWebRequest 가
+            // "Insecure connection not allowed" 로 막혀 3D 가 뜨지 않음 (내 PC 127.0.0.1 시험에서는 드러나지 않았음)
+            PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
             IncludeShaders("Standard", "Unlit/Transparent", "Sprites/Default", "UI/Default", "Legacy Shaders/Transparent/Diffuse");
             const string outDir = "Build_Web";
             if (Directory.Exists(outDir)) Directory.Delete(outDir, true);
