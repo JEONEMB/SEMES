@@ -25,20 +25,14 @@
   $('video').addEventListener('error', retryVideo);
   $('video').addEventListener('abort', retryVideo);
   $('video').addEventListener('load', () => { $('video-empty').hidden = true; });
-  const view = {zoom: 1, center: 'image', mode: 'normal'};
+  const view = {zoom: 1, center: 'plate', mode: 'normal'};     // 확대는 항상 QR(판) 중심으로
   document.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click', () => setView({zoom: +b.dataset.zoom}, b)));
-  document.querySelectorAll('[data-center]').forEach(b => b.addEventListener('click', () => setView({center: b.dataset.center}, b)));
   document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => setView({mode: b.dataset.mode}, b)));
   function setView(change, btn) {
     Object.assign(view, change);
     btn.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === btn));
     api('/api/view', view).catch(e => toast(e.message));
   }
-  let showOutline = true;
-  $('btn-outline').addEventListener('click', () => {
-    showOutline = !showOutline; $('btn-outline').classList.toggle('on', showOutline);
-    $('btn-outline').setAttribute('aria-pressed', showOutline); if (state) drawOverlay(state);
-  });
 
   // 목표(점선) = 센터 기준 사진의 QR 3개 + 나사 2개, 지금(실선) = 마지막 측정. 색 = 정렬 여부
   function drawOverlay(s) {
@@ -55,7 +49,6 @@
     badge.className = 'center-badge ' + cls;
     badge.textContent = (diff ? '차이 영상 · ' : '') +
       (cls === 'ok' ? '센터 OK' : cls === 'bad' ? '센터에서 벗어남' : (s.moving ? '이동 중…' : '측정 전'));
-    if (!showOutline) { svg.innerHTML = ''; return; }
     const poly = (q, c) => `<polygon class="${c}" points="${q.map(p => p.join(',')).join(' ')}"/>`;
     const circ = (k, c) => `<circle class="${c}" cx="${k.c[0]}" cy="${k.c[1]}" r="${Math.max(k.r, 6)}"/>`;
     const t = ov.target;
@@ -236,17 +229,11 @@
     state = s;
     const st = s.settings, run = s.run;
     const dev = s.devices || {};
-    const pStage = $('pill-stage');
-    pStage.textContent = s.phase === 'released' ? '데모 웹 사용 중' :
-      `스테이지 ${dev.stage_mode === 'mock' ? '모의' : dev.stage_mode === 'hardware' ? '실물' : '없음'}`;
-    pStage.className = 'pill' + (dev.stage_mode === 'mock' ? ' warn' : (!dev.ready || s.stage_error) ? ' bad' : '');
     const a = s.algorithm || {};
     $('pill-algo').textContent = `알고리즘 ${a.kind === 'mock' ? '모의' : a.detail || a.kind}`;
     $('pill-algo').className = 'pill' + (a.kind === 'mock' ? ' warn' : a.error ? ' bad' : '');
     const cam = s.camera || {};
-    $('pill-camera').textContent = cam.ok ? `카메라 ${cam.kind === 'fake' ? '가짜 ' : ''}${cam.fps} fps` : '카메라 없음';
-    $('pill-camera').className = 'pill' + (cam.ok ? (cam.kind === 'fake' ? ' warn' : '') : ' bad');
-    $('cam-info').textContent = cam.ok ? `왜곡 보정 · SEMES 화각 · ${cam.view_zoom}×` : '';
+    $('cam-info').textContent = cam.ok ? `카메라 ${cam.kind === 'fake' ? '(가짜) ' : ''}${cam.fps} fps` : '카메라 없음';
     if (cam.ok && !camOk) { camOk = true; startVideo(); }       // 카메라가 살아남
     else if (!cam.ok && camOk) { camOk = false; clearTimeout(videoRetry); $('video').removeAttribute('src'); }
     $('video-empty').hidden = cam.ok;
@@ -308,7 +295,7 @@
     if (seg.dataset.key === key) return;
     seg.dataset.key = key;
     seg.innerHTML = list.map(a => `<button data-algo="${a.id}" class="${a.current ? 'on' : ''}" ${a.available && !s.busy ? '' : 'disabled'} ` +
-      `title="${a.available ? '' : a.reason}">${a.label}</button>`).join('');
+      `title="${a.available ? (a.desc || '') : a.reason}"><b>${a.label}</b>${a.desc ? `<small>${a.desc}</small>` : ''}</button>`).join('');
   }
   $('algo-seg').addEventListener('click', ev => {
     const b = ev.target.closest('[data-algo]');
@@ -422,7 +409,7 @@
     if (events) events.close();
     events = new EventSource('/api/events');
     events.onmessage = e => render(JSON.parse(e.data));
-    events.onerror = () => { $('pill-stage').textContent = '서버 재연결 중'; };
+    events.onerror = () => { if (!toast.timer || $('toast').hidden) toast('서버 연결이 끊겨 다시 연결하는 중입니다'); };
     camOk = false;      // 첫 상태에서 카메라가 정상이면 영상 시작
   }
 
@@ -433,6 +420,7 @@
       if (!r.ok) toast('장치 연결 실패: ' + (r.error || ''));
     } catch (e) { toast(e.message); }
     overlay('');
+    api('/api/view', view).catch(() => {});      // 처음부터 QR 중심
     connect();
   }
   // 뒤로 가기로 돌아왔을 때(bfcache)도 장치를 다시 잡는다
