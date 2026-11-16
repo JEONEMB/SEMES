@@ -6,7 +6,7 @@
    "label": "KSH",
    "path": "verify_web/native/build_ksh/align_worker",
    "config": "~/KSH_Algorithm/Code/config/alignment.yml",
-   "desc": "QR 중심 3개 + 나사 2개"
+   "desc": "QR 3개 + 나사 2개"
   },
   {
    "id": "hye",
@@ -14,15 +14,15 @@
    "path": "verify_web/native/build_hye2/align_worker",
    "config": "~/HYE_Algorithm/data/model",
    "gray": true,
-   "desc": "QR 가로 이동 1개 + 나사 4개 (학습 범위 밖 허용)"
+   "desc": "QR + 나사 4개"
   },
   {
    "id": "shin",
-   "label": "SYS",
+   "label": "SHIN",
    "path": "verify_web/native/build_shin_rig/align_worker",
    "config": "~/SHIN_Algorithm/experiments/shin/qr_only_multiple_exe/native/models/rig-reverse-fixed.xml.gz",
    "gray": true,
-   "desc": "QR 3개 아핀 값 18개 (이동·크기·기울기)"
+   "desc": "QR 3개만"
   }
  ]
 }
