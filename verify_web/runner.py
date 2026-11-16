@@ -15,6 +15,7 @@ import time
 from pathlib import Path
 
 import cv2
+import numpy as np
 
 PHASES = {
     'idle': '대기', 'homing': '원점 복귀 중', 'positioning': '시작 위치로 이동 중',
@@ -38,11 +39,39 @@ DEFAULTS = dict(
     save_images=True,
     auto_reference=True,                     # 보정·측정을 시작할 때 센터 기준이 없거나 오래됐으면 먼저 잡는다
     reference_max_age_min=60.0,              # 센터는 몇 시간에 0.01~0.02° 씩 밀려서 이보다 오래된 기준은 다시 잡는다
+    demo_slow=True,                          # 시연 속도: 천천히 움직이고 회차마다 결과를 잠깐 보여 준다
+    slow_y_mm_s=0.2, slow_t_deg_s=0.1,       # 천천히 (Θ 펌웨어 최소 0.018°/s)
+    fast_y_mm_s=1.0, fast_t_deg_s=1.0,       # 빠르게 (펌웨어 기본 Θ 1°/s, Y 는 우리가 1 mm/s 로 올려 씀)
+    pause_s=3.0,
+    sequential_axes=True,                    # 한 회차 안에서 Y 를 먼저 옮기고 이어서 Θ 를 옮긴다 (한 번 측정한 두 축 보정량 그대로)
+    algorithm='',                            # 고른 알고리즘 id (algorithms.json). 빈 값 = 목록의 첫 번째                             # 천천히일 때 측정 결과를 보여 주고 움직이기까지 쉬는 시간
 )
 LIMITS = dict(tol_y_mm=(0.001, 1), tol_t_deg=(0.0001, 1), max_trials=(1, 100), max_step_y_mm=(0.01, 10),
               max_step_t_deg=(0.001, 5), random_y_mm=(0, 10), random_t_deg=(0, 5), approach_y_mm=(0, 2), approach_t_deg=(0, 1),
               average=(1, 16), settle_px=(0.05, 5), settle_timeout_s=(0.5, 30), reference_max_age_min=(1, 1440),
-              center_y_mm=(-1000, 1000), center_t_deg=(-360, 360))
+              center_y_mm=(-1000, 1000), center_t_deg=(-360, 360), slow_y_mm_s=(0.01, 2), fast_y_mm_s=(0.01, 2),
+              slow_t_deg_s=(0.02, 3.6), fast_t_deg_s=(0.02, 3.6), pause_s=(0, 10))
+STEP_CLAMP = 1.25     # 보정량이 한 번 이동 한도의 이 배수까지는 한도만큼만 옮기고, 넘으면 멈춘다
+RANDOM_MIN = 0.4      # 랜덤 시작은 범위의 40 % 이상 떨어지게 (너무 가까우면 시연에서 움직임이 안 보임)
+
+
+_QR = None
+
+
+def find_qr_quads(img):
+    """알고리즘 좌표(3840×2160) 사진에서 QR 3개의 네 꼭짓점 (왼쪽부터). 못 찾으면 None. 화면 기준 윤곽용."""
+    global _QR
+    if _QR is None:
+        _QR = cv2.QRCodeDetectorAruco()
+    try:
+        ok, p = _QR.detectMulti(img)
+    except cv2.error:
+        return None
+    if not ok or p is None or len(p) != 3:
+        return None
+    q = p.reshape(-1, 4, 2)
+    q = q[np.argsort(q.mean(1)[:, 0])]
+    return [[[round(float(x), 2), round(float(y), 2)] for x, y in quad] for quad in q]
 
 
 class RunError(RuntimeError):
@@ -81,6 +110,9 @@ class Settings:
             if kind is bool:
                 if not isinstance(v, bool):
                     raise ValueError(f'{k}: true/false')
+            elif kind is str:
+                if not isinstance(v, str):
+                    raise ValueError(f'{k}: 문자열이 필요함')
             else:
                 try:
                     v = kind(v)
@@ -101,9 +133,10 @@ class Settings:
 
 
 class Runner:
-    def __init__(self, devices, algorithm, rectifier, settings, runs_dir):
+    def __init__(self, devices, algorithm, rectifier, settings, runs_dir, choices=None):
         self.devices = devices          # .stage, .camera, .ready (DeviceManager)
         self.algorithm = algorithm
+        self.choices = choices          # AlgorithmChoices (확인 앱에서 알고리즘 고르기) 또는 None
         self.rectifier = rectifier
         self.settings = settings
         self.runs_dir = Path(runs_dir)
@@ -113,7 +146,8 @@ class Runner:
         self.job = None
         self.state = dict(phase='idle', message='', busy=False, job=None, moving=False,
                           position=None, flags=None, stage_state=None, stage_error=None,
-                          run=None, last=None, history=[], measure=None, reference=None)
+                          run=None, last=None, history=[], measure=None, reference=None, aligned=None,
+                          rois_now=None, start=None, speed=None, axis_stage=None)
 
     # --- 상태 -----------------------------------------------------------------
     def _set(self, **kw):
@@ -134,9 +168,11 @@ class Runner:
         s['settings'] = dict(self.settings.values)
         s['devices'] = self.devices.status()
         s['algorithm'] = self.algorithm.status()
+        s['algorithms'] = self.choices.listing() if self.choices else None
         cam = self.devices.camera
         s['camera'] = cam.health() if cam else dict(ok=False, error='카메라 없음 (데모 웹 사용 중일 수 있음)')
         s['version'] = version
+        s['now'] = time.time()          # 화면이 축별 이동 예상 시간을 서버 시계로 계산하도록
         return s
 
     def wait_change(self, version, timeout=15.0):
@@ -161,6 +197,7 @@ class Runner:
 
     def _guard(self, name, fn, *args):
         try:
+            self._apply_speed()
             fn(*args)
         except Aborted:
             self._set(phase='stopped', message='정지 요청으로 멈췄습니다.')
@@ -179,9 +216,22 @@ class Runner:
         self._launch('home', self._home)
 
     def goto(self, offset):
+        if offset != 'random':
+            self._check_start(*offset)
         self._launch('goto', self._goto_job, offset)
 
+    def _check_start(self, y, t):
+        """직접 입력한 시작 위치: 자동 보정 한 번 이동 한도 안이어야 보정이 중간에 멈추지 않는다."""
+        s = self.settings
+        if not (math.isfinite(y) and math.isfinite(t)):
+            raise RunError('Y, Θ 에 숫자를 넣으세요.')
+        if abs(y) > s['max_step_y_mm'] or (s['enable_t'] and abs(t) > s['max_step_t_deg']):
+            raise RunError(f'시작 위치는 센터에서 Y ±{s["max_step_y_mm"]} mm, Θ ±{s["max_step_t_deg"]}° 안으로 넣으세요 '
+                           f'(자동 보정 한 번 이동 한도).')
+
     def run(self, offset=None):
+        if isinstance(offset, tuple):
+            self._check_start(*offset)
         self._launch('run', self._run, offset)
 
     def step(self):
@@ -202,6 +252,27 @@ class Runner:
             except Exception as exc:
                 self._set(message=f'STOP 실패: {exc}')
 
+    def select_algorithm(self, algo_id):
+        """다른 알고리즘으로 바꾼다. 영점·기록이 알고리즘마다 달라서 센터 기준과 지난 기록은 지운다."""
+        if not self.choices:
+            raise RunError('고를 수 있는 알고리즘 목록이 없습니다 (--algos).')
+        if self.busy():
+            raise RunError('작업 중에는 알고리즘을 바꿀 수 없습니다.')
+        self.algorithm = self.choices.select(algo_id)
+        self.settings.update(dict(algorithm=algo_id))
+        cam = self.devices.camera
+        if cam:
+            cam.set_reference(None)
+        label = self.choices.entry(algo_id).get('label', algo_id)
+        self._set(reference=None, run=None, history=[], last=None, measure=None, aligned=None, rois_now=None,
+                  start=None, phase='idle', message=f'알고리즘: {label}. 센터 기준은 다음 시작 때 새로 잡습니다.')
+
+    def supports_reference(self):
+        try:
+            return bool(getattr(self.algorithm, 'supports_reference', False))
+        except Exception:
+            return False
+
     def set_center_here(self):
         if self.busy():
             raise RunError('작업 중에는 센터를 바꿀 수 없습니다.')
@@ -217,6 +288,21 @@ class Runner:
             job.join(timeout)
 
     # --- 스테이지 --------------------------------------------------------------
+    def _apply_speed(self):
+        """작업마다 시연 속도(천천히/빠르게)를 STM32 에 보낸다. 대기 중에만 부른다."""
+        s = self.settings
+        mode = 'slow' if s['demo_slow'] else 'fast'
+        y, t = s[mode + '_y_mm_s'], s[mode + '_t_deg_s']
+        self.devices.stage.speed(um(y), um(t))
+        self._set(speed=dict(mode=mode, y_mm_s=y, t_deg_s=t))
+
+    def _pause(self, short=False):
+        """천천히 모드: 측정 결과를 화면에서 볼 수 있게 잠깐 멈춘다 (정지 누르면 바로 끝).
+        short: Y 이동과 Θ 이동 사이 (최대 1초)."""
+        if self.settings['demo_slow'] and self.settings['pause_s'] > 0:
+            self.abort.wait(min(1.0, self.settings['pause_s']) if short else self.settings['pause_s'])
+            self._check_abort()
+
     def _check_abort(self):
         if self.abort.is_set():
             raise Aborted()
@@ -247,8 +333,8 @@ class Runner:
             return None
         return (pos[0] / 1000 - self.settings['center_y_mm'], pos[1] / 1000 - self.settings['center_t_deg'])
 
-    def _move(self, y_um, t_mdeg, relative, phase):
-        self._phase(phase)
+    def _move(self, y_um, t_mdeg, relative, phase, message='', final=None):
+        self._phase(phase, message)
         stage = self.devices.stage
         enable_t = self.settings['enable_t']
         if not enable_t and relative:
@@ -260,7 +346,10 @@ class Runner:
         if lim and not relative:
             if not (lim[0] <= y_um <= lim[1] and lim[2] <= t_mdeg <= lim[3]):
                 raise RunError(f'목표가 스테이지 한계 밖: Y {y_um / 1000:.3f} mm (한계 {lim[0] / 1000:.3f}~{lim[1] / 1000:.3f})')
-        self._set(moving=True, target=dict(y_mm=y_um / 1000, t_deg=t_mdeg / 1000, relative=relative))
+        self._set(moving=True, aligned=None, rois_now=None,   # 움직이면 다시 재기 전까지 정렬 여부를 모른다
+                  target=dict(y_mm=y_um / 1000, t_deg=t_mdeg / 1000, relative=relative,
+                              axes=self._axis_plan(y_um, t_mdeg, relative),
+                              final=final))         # 접근점으로 가는 중이면 그다음 최종 목표 (화면 안내용)
         try:
             # 절대 이동에서 Θ 가 꺼져 있으면 목표 Θ = 지금 Θ 라 그대로 보낸다
             stage.start(y_um, t_mdeg, relative=relative, allow_t=enable_t or not relative)
@@ -272,6 +361,21 @@ class Runner:
         self._check_abort()          # 정지 요청으로 끊긴 이동은 오류가 아니라 '정지됨'
         if done['result'] != 0:
             raise RunError('이동 실패: ' + DONE_RESULTS.get(done['result'], str(done['result'])))
+
+    def _axis_plan(self, y_um, t_mdeg, relative):
+        """축마다 이동량과 예상 시간 (속도로 나눈 값, 가감속 빼고). 이동 중에는 STATUS 를 묻지 않아서
+        화면이 'Y 이동 중 / Θ 이동 중' 을 이 예상으로 보여 준다. 두 축은 동시에 출발한다."""
+        pos, sp = self.state.get('position'), self.state.get('speed')
+        if relative:
+            dy, dt = y_um / 1000, t_mdeg / 1000
+        elif pos:
+            dy, dt = y_um / 1000 - pos['y_mm'], t_mdeg / 1000 - pos['t_deg']
+        else:
+            return None
+        est = lambda d, v: round(abs(d) / v, 2) if v else None
+        return dict(started=time.time(), dy_mm=round(dy, 4), dt_deg=round(dt, 4),
+                    y_s=est(dy, sp and sp['y_mm_s']) if abs(dy) >= 0.0005 else 0.0,
+                    t_s=est(dt, sp and sp['t_deg_s']) if abs(dt) >= 0.0005 else 0.0)
 
     def _home(self):
         self._phase('homing')
@@ -285,39 +389,56 @@ class Runner:
         self._check_abort()
         if done['result'] != 0:
             raise RunError('원점 복귀 실패: ' + DONE_RESULTS.get(done['result'], str(done['result'])))
-        self._set(phase='idle', message='Y 원점 복귀 완료')
+        self._set(phase='idle', message='Y 원점 복귀 완료', start=None)
 
     def _resolve_offset(self, offset):
         if offset == 'random':
             ry, rt = self.settings['random_y_mm'], self.settings['random_t_deg']
-            y = random.uniform(-ry, ry)
-            if abs(y) < ry * 0.2:     # 너무 가까운 시작은 의미가 적어 조금 띄운다
-                y = math.copysign(ry * 0.2, y or 1)
-            t = random.uniform(-rt, rt) if self.settings['enable_t'] else 0.0
+            # 크기는 범위의 40~100 %, 부호는 무작위 (가까운 시작은 시연에서 움직임이 안 보인다)
+            pick = lambda r: random.choice((-1, 1)) * random.uniform(RANDOM_MIN * r, r)
+            y = pick(ry)
+            t = pick(rt) if self.settings['enable_t'] else 0.0
             return round(y, 3), round(t, 3)
         y, t = offset
         return float(y), float(t) if self.settings['enable_t'] else 0.0
 
-    def _move_to(self, y_mm, t_deg, phase):
+    def _move_to(self, y_mm, t_deg, phase, message=''):
         """절대 목표로. 항상 −쪽 접근점을 거쳐 +방향으로 마지막 접근 (백래시 방향 통일, 데이터셋과 같음)."""
         s = self.settings
         if not s['enable_t']:
             pos = self.state.get('position')
             t_deg = pos['t_deg'] if pos else 0.0          # Θ 는 그대로 둔다
         ay, at = s['approach_y_mm'], (s['approach_t_deg'] if s['enable_t'] else 0.0)
+        pos = self.state.get('position')
+        if pos:      # 안 움직이는 축은 접근점을 거치지 않는다 (차례 보정에서 Θ 를 그대로 두려고)
+            if abs(y_mm - pos['y_mm']) < 0.0005:
+                ay = 0.0
+            if abs(t_deg - pos['t_deg']) < 0.0005:
+                at = 0.0
         if ay > 0 or at > 0:
-            self._move(um(y_mm - ay), um(t_deg - at), relative=False, phase=phase)
-        self._move(um(y_mm), um(t_deg), relative=False, phase=phase)
+            self._move(um(y_mm - ay), um(t_deg - at), relative=False, phase=phase, message=message,
+                       final=dict(y_mm=y_mm, t_deg=t_deg))
+        self._move(um(y_mm), um(t_deg), relative=False, phase=phase, message=message)
 
     def _goto(self, offset):
         y, t = self._resolve_offset(offset)
         cy, ct = self.settings['center_y_mm'], self.settings['center_t_deg']
-        self._move_to(cy + y, ct + t, phase='positioning')
+        self._set(start=dict(y_mm=y, t_deg=t, reached=False))
+        self._move_to(cy + y, ct + t, phase='positioning',
+                      message=f'시작 위치로: 센터 + Y {y:+.3f} mm, Θ {t:+.3f}°')
+        self._set(start=dict(y_mm=y, t_deg=t, reached=True))
         return y, t
 
     def _goto_job(self, offset):
+        # 센터 기준(오늘의 센터 사진)이 없거나 오래됐으면 센터에 들른 김에 먼저 찍는다 → 시연 버튼은 '랜덤 → 보정' 두 개
+        self._clear_demo()
+        self._ensure_reference(come_back=False)
         y, t = self._goto(offset)
         self._set(phase='idle', message=f'시작 위치 도착: 센터 + Y {y:+.3f} mm, Θ {t:+.3f}°')
+
+    def _clear_demo(self):
+        """새 시연: 지난 실행의 회차 기록·지도 경로·결과를 지운다 (파일로 남긴 run.json 은 그대로)."""
+        self._set(run=None, history=[], last=None, measure=None, aligned=None, rois_now=None)
 
     # --- 검증 ------------------------------------------------------------------
     def _new_run(self, start_offset=None):
@@ -346,7 +467,7 @@ class Runner:
 
     def _reference_needed(self):
         s = self.settings
-        if not s['auto_reference'] or not hasattr(self.algorithm, 'set_reference'):
+        if not s['auto_reference']:      # 영점 등록이 없는 알고리즘도 화면용 센터 사진은 잡는다
             return False
         ref = self.state.get('reference')
         return ref is None or time.time() - ref['ts'] > s['reference_max_age_min'] * 60
@@ -365,11 +486,14 @@ class Runner:
     def _run(self, offset):
         self._ensure_reference(come_back=offset is None)   # 시작 위치로 갈 거면 돌아올 필요 없음
         start = self._goto(offset) if offset is not None else None
+        if start is None and self.state.get('start'):
+            st = self.state['start']
+            start = (st['y_mm'], st['t_deg'])
         run = self._new_run(start)
         for n in range(1, run['max_trials'] + 1):
             if self._trial(n, move=True):
                 self._finish_run('converged', f'{n}회차에 허용 오차 안으로 들어옴')
-                self._set(phase='done', message=self.state['run']['result_label'])
+                self._set(phase='done', message=self.state['run']['result_label'], start=None)
                 return
         self._finish_run('max_trials', f'{run["max_trials"]}회 안에 수렴하지 못함')
         self._set(phase='done', message=self.state['run']['result_label'])
@@ -387,10 +511,10 @@ class Runner:
             self._set(phase='idle', message=f'{n}회차 완료 (한 단계)')
 
     def _reference(self):
-        """센터로 (−쪽에서 접근) 가서 사진을 찍어 알고리즘 영점으로 등록한다. 그날·그 세션의 센터를 기준으로 삼기 위해."""
-        if not hasattr(self.algorithm, 'set_reference'):
-            raise RunError('이 알고리즘은 영점 등록을 지원하지 않습니다.')
-        self._move_to(self.settings['center_y_mm'], self.settings['center_t_deg'], phase='positioning')
+        """센터로 (−쪽에서 접근) 가서 사진을 찍어 알고리즘 영점으로 등록한다. 그날·그 세션의 센터를 기준으로 삼기 위해.
+        영점 등록이 없는 알고리즘(고정 영점)은 화면 윤곽·차이 영상용 사진만 잡는다."""
+        self._move_to(self.settings['center_y_mm'], self.settings['center_t_deg'], phase='positioning',
+                      message='센터 기준을 잡으러 센터로 갑니다.')
         s = self.settings
         cam = self.devices.camera
         self._phase('settling')
@@ -398,14 +522,24 @@ class Runner:
         self._phase('capturing')
         gray, _ = cam.grab(max(4, int(s['average'])))
         img = self.rectifier.apply(gray)
-        self._phase('inferring')
-        z = self.algorithm.set_reference(img)
-        ref = dict(ts=time.time(), zero_y_mm=r6(z['y']), zero_t_deg=r6(z['t']))
+        fixed = not self.supports_reference()
+        if fixed:
+            z = dict(y=0.0, t=0.0, rois=[])
+        else:
+            self._phase('inferring')
+            z = self.algorithm.set_reference(img)
+        ref = dict(ts=time.time(), zero_y_mm=r6(z['y']), zero_t_deg=r6(z['t']), qr_alg=find_qr_quads(img),
+                   rois=z.get('rois') or [], fixed_zero=fixed)
+        cam.set_reference(gray)                 # 차이 영상용 (센서 원본)
         if self.runs_dir:
             self.runs_dir.mkdir(parents=True, exist_ok=True)
             cv2.imwrite(str(self.runs_dir / f'reference_{time.strftime("%Y%m%d_%H%M%S")}.bmp'), img)
-        self._set(reference=ref, phase='idle',
-                  message=f'센터 기준 등록: 학습 영점 대비 Y {z["y"] * 1000:+.1f} µm, Θ {z["t"]:+.4f}°')
+        if fixed:
+            self._set(reference=ref, phase='idle', start=None, aligned=None, rois_now=None,
+                      message='센터 사진을 화면 윤곽용으로만 찍었습니다 (이 알고리즘은 자료에 고정된 영점을 씀).')
+        else:
+            self._set(reference=ref, phase='idle', start=None, aligned=True, rois_now=ref['rois'],
+                      message=f'센터 기준 등록: 학습 영점 대비 Y {z["y"] * 1000:+.1f} µm, Θ {z["t"]:+.4f}°')
 
     def _measure(self):
         self._ensure_reference(come_back=True)
@@ -438,7 +572,9 @@ class Runner:
                      truth_within=None if truth is None else (abs(truth[0]) <= s['tol_y_mm'] and
                                                               (not enable_t or abs(truth[1]) <= s['tol_t_deg'])),
                      infer_ms=round(r.get('ms', 0), 1), settle_s=round(settle_s, 2), settled=settled,
-                     shift_px=None if shift != shift else round(shift, 3), exposure_us=meta.get('exposure_us'))
+                     shift_px=None if shift != shift else round(shift, 3), exposure_us=meta.get('exposure_us'),
+                     rois=r.get('rois') or [])
+        self._set(aligned=entry['within'], rois_now=entry['rois'])
         return entry, img
 
     def _trial(self, n, move):
@@ -449,6 +585,10 @@ class Runner:
             self.cond.notify_all()
         entry, img = self._observe(label=f'{n}회차')
         entry['trial'] = n
+        # 한 회차 = 한 번 측정. 산출한 두 축 보정량을 그대로 쓰고, 차례 보정이면 Y 를 먼저 옮긴 뒤 이어서 Θ 를 옮긴다
+        cy, ct = entry['command']['y_mm'], entry['command']['t_deg']
+        seq = s['sequential_axes'] and s['enable_t']
+        entry['axis'] = None if entry['within'] else ('y_then_t' if seq else 'both')
         if s['save_images']:
             d = self.runs_dir / self.state['run']['id']
             d.mkdir(parents=True, exist_ok=True)
@@ -462,15 +602,39 @@ class Runner:
             self.cond.notify_all()
         if entry['within'] or not move:
             return entry['within']
-        cy, ct = entry['command']['y_mm'], entry['command']['t_deg']
-        if abs(cy) > s['max_step_y_mm'] or abs(ct) > s['max_step_t_deg']:
-            raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {cy:+.3f} mm (한도 ±{s["max_step_y_mm"]}), '
-                           f'Θ {ct:+.3f}° (한도 ±{s["max_step_t_deg"]})')
+        self._pause()                # 천천히 모드: 화면에서 이번 측정을 보여 주고 움직인다
+        ly, lt = s['max_step_y_mm'], s['max_step_t_deg']
+        if abs(cy) > ly * STEP_CLAMP or abs(ct) > lt * STEP_CLAMP:      # 한참 넘으면 잘못 본 것일 수 있어 멈춘다
+            raise RunError(f'추론 명령이 한도를 넘어 멈춤: Y {cy:+.3f} mm (한도 ±{ly}), Θ {ct:+.3f}° (한도 ±{lt})')
+        if abs(cy) > ly or abs(ct) > lt:          # 조금 넘으면 (시작을 한도 끝에 둔 경우 등) 한도만큼만 옮기고 다시 잰다
+            cy, ct = max(-ly, min(ly, cy)), max(-lt, min(lt, ct))
+            entry['clamped'] = dict(y_mm=r6(cy), t_deg=r6(ct))
+            self._set(message=f'보정량이 한도를 조금 넘어 한도만큼만 옮깁니다: Y {cy:+.3f} mm, Θ {ct:+.3f}°')
         pos = self.state.get('position')
-        if pos is None:      # STATUS 를 못 읽었으면 예전처럼 상대 이동 (접근 없음)
-            self._move(um(cy), um(ct), relative=True, phase='moving')
-        else:                # 지금 위치 + 명령 = 절대 목표, −쪽에서 접근
-            self._move_to(pos['y_mm'] + cy, pos['t_deg'] + ct, phase='moving')
+        if not seq:
+            msg = f'보정 이동: Y {cy:+.3f} mm, Θ {ct:+.3f}°'
+            if pos is None:      # STATUS 를 못 읽었으면 예전처럼 상대 이동 (접근 없음)
+                self._move(um(cy), um(ct), relative=True, phase='moving', message=msg)
+            else:                # 지금 위치 + 명령 = 절대 목표, −쪽에서 접근
+                self._move_to(pos['y_mm'] + cy, pos['t_deg'] + ct, phase='moving', message=msg)
+            return False
+        try:                     # ① Y 만 → ② Θ 만 (안 움직이는 축은 접근점도 거치지 않음)
+            self._set(axis_stage='y')
+            msg = f'① Y 보정 이동: Y {cy:+.3f} mm  (이어서 Θ {ct:+.3f}°)'
+            if pos is None:
+                self._move(um(cy), 0, relative=True, phase='moving', message=msg)
+            else:
+                self._move_to(pos['y_mm'] + cy, pos['t_deg'], phase='moving', message=msg)
+            self._pause(short=True)
+            self._set(axis_stage='t')
+            msg = f'② Θ 보정 이동: Θ {ct:+.3f}°  (Y {cy:+.3f} mm 이동 끝)'
+            now = self.state.get('position')
+            if pos is None or now is None:
+                self._move(0, um(ct), relative=True, phase='moving', message=msg)
+            else:
+                self._move_to(now['y_mm'], pos['t_deg'] + ct, phase='moving', message=msg)
+        finally:
+            self._set(axis_stage=None)
         return False
 
     @staticmethod
@@ -482,8 +646,9 @@ class Runner:
             if new:
                 w.writerow(['trial', 'time', 'raw_y', 'raw_t', 'offset_y_mm', 'offset_t_deg', 'cmd_y_mm', 'cmd_t_deg',
                             'truth_y_mm', 'truth_t_deg', 'err_y_mm', 'err_t_deg', 'within', 'truth_within',
-                            'infer_ms', 'settle_s', 'settled', 'shift_px'])
+                            'infer_ms', 'settle_s', 'settled', 'shift_px', 'axis'])
             w.writerow([e.get('trial'), time.strftime('%H:%M:%S', time.localtime(e['ts'])), e['raw']['y'], e['raw']['t'],
                         e['offset']['y_mm'], e['offset']['t_deg'], e['command']['y_mm'], e['command']['t_deg'],
                         g(e['truth'], 'y_mm'), g(e['truth'], 't_deg'), g(e['error'], 'y_mm'), g(e['error'], 't_deg'),
-                        e['within'], e['truth_within'], e['infer_ms'], e['settle_s'], e['settled'], e['shift_px']])
+                        e['within'], e['truth_within'], e['infer_ms'], e['settle_s'], e['settled'], e['shift_px'],
+                        e.get('axis') or ''])

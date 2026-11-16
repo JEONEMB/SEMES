@@ -48,6 +48,34 @@ demo_web/.venv/bin/python -m verify_web serve --mode hardware --host 0.0.0.0 \
 
 화면의 **설정**에서 허용 오차(기본 Y ±0.045 mm, Θ ±0.01°), 최대 회차, 한 번 이동 한도(넘으면 움직이지 않고 멈춤), 랜덤 시작 범위, 접근 거리, 평균 장수, 안정 판정, Θ 명령 전송, 센터 좌표를 바꾼다. `verify_web/instance/settings.json` 에 저장된다.
 
+## 알고리즘 고르기 (성현 / 혜원 / 윤석)
+
+`verify_web/instance/algorithms.json` 이 있으면 화면 위쪽에서 알고리즘을 고를 수 있다 (형식: `algorithms.example.json`).
+바꾸면 실행기를 다시 띄우고 센터 기준·지난 기록을 지운다 (영점이 알고리즘마다 달라서). 고른 것은 설정에 남는다.
+
+```bash
+# 성현님 (영점 등록 가능, ALGR)
+cmake -S verify_web/native -B verify_web/native/build_ksh -G Ninja -DALGO_DIR=$HOME/KSH_Algorithm/Code
+# 혜원님 모듈 (initialize_joint, 기본은 assets 의 절대 영점, set_joint_zero 로 그날 센터를 영점). HYE_DIR = 저장소 형태 폴더, HYE_MODULE = 모듈 폴더
+cmake -S verify_web/native -B verify_web/native/build_hye -G Ninja -DHYE_DIR=$HOME/HYE_Algorithm \
+      -DHYE_MODULE=$HOME/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy
+# 신윤석님 QR 전용 (qr_pose::estimate). --config = config/qr_pose*.yml, 영점은 그 파일의 센터 템플릿에 고정
+cmake -S verify_web/native -B verify_web/native/build_shin -G Ninja -DQR_POSE_DIR=$HOME/SHIN_Algorithm/experiments/shin/ssafy_qr_pose
+cmake --build verify_web/native/build_ksh && cmake --build verify_web/native/build_hye && cmake --build verify_web/native/build_shin
+```
+
+- 실행기는 시작할 때 `READY ref roi` (영점 등록·위치 돌려줌) 또는 `READY` 를 알린다.
+- 영점 등록이 없는 알고리즘은 '센터 기준' 때 화면 윤곽·차이 영상용 사진만 찍고 알고리즘의 고정 영점을 그대로 쓴다.
+- 혜원님 모듈은 `feature/hye/ssafy-reference` 16e5d32e 부터 Pi 에서 그대로 빌드된다 (모듈 안내: `PORTING_PI.md`).
+  `include/joint_reference.hpp` 가 있으면 영점 등록(ALGR = `set_joint_zero`, 측정이 안 되면 `set_joint_reference` 뒤 다시)을 켠다.
+  Pi 확인 (2026-11-13): rig_grid_rev 센터 영점 Y 0.281931, T −0.0442237 (Windows 와 1e-6 안), 한 장 약 19 ms.
+
+## 보정 순서 (Y → Θ)
+
+설정 `sequential_axes` (화면의 '보정 순서'). 켜면 한 회차(한 번 측정)에서 나온 두 축 보정량으로
+Y 를 먼저 옮기고 이어서 Θ 를 옮긴다 (다시 재지 않음). 안 움직이는 축은 접근점도 거치지 않는다.
+끄면 예전처럼 두 축을 함께 움직인다.
+
 ## 장비 조건 (2026-11-13)
 
 - 카메라 게인 기본 3.0, 노출 8333 µs — 데이터셋 촬영과 같다. 알고리즘이 그 밝기로 학습됐다.

@@ -38,12 +38,47 @@ class _Base:
         self._stop = threading.Event()
         self._thread = None
         self._view_req = (1.0, None)
+        # 차이 영상: 센터 기준 사진(센서 원본)을 지금 화면 변환으로 바꿔 두고 프레임마다 뺀다
+        self.view_mode = 'normal'      # 'normal' | 'diff'
+        self.diff_gain = 3.0
+        self._ref_raw = None
+        self._ref_view = None
+        self._ref_key = None
         self._view_lock = threading.Lock()
 
     # --- 공개 API -----------------------------------------------------------
     def set_view(self, view_zoom, center):
         with self._view_lock:
             self._view_req = (view_zoom, center)
+
+    def set_mode(self, mode):
+        if mode not in ('normal', 'diff'):
+            raise ValueError('mode 는 normal 또는 diff')
+        self.view_mode = mode
+
+    def set_reference(self, gray):
+        """센터 기준 사진(센서 원본 흑백)을 차이 영상용으로 보관."""
+        with self._view_lock:
+            self._ref_raw = None if gray is None else gray.copy()
+            self._ref_view, self._ref_key = None, None
+
+    def has_reference(self):
+        return self._ref_raw is not None
+
+    def _view_image(self, gray):
+        img = self.view.apply(gray)
+        if self.view_mode != 'diff':
+            return img
+        with self._view_lock:
+            ref = self._ref_raw
+            if ref is None:
+                return img
+            if self._ref_key != self.view.key:          # 확대·중심이 바뀔 때만 다시 변환
+                self._ref_view = self.view.apply(ref).astype(np.int16)
+                self._ref_key = self.view.key
+            rv = self._ref_view
+        d = (img.astype(np.int16) - rv) * self.diff_gain + 128
+        return np.clip(d, 0, 255).astype(np.uint8)
 
     def view_point(self, x_alg, y_alg):
         return self.view.to_view(x_alg, y_alg)
@@ -117,7 +152,8 @@ class _Base:
 
     def health(self):
         return dict(ok=self.error is None and self.frame is not None, fps=round(self.fps, 1),
-                    error=self.error, kind=self.kind, view_zoom=self.view.key[0])
+                    error=self.error, kind=self.kind, view_zoom=self.view.key[0],
+                    view_mode=self.view_mode, has_reference=self.has_reference())
 
     # --- 내부 -----------------------------------------------------------------
     def _publish(self, gray, meta):
@@ -135,7 +171,7 @@ class _Base:
             with self._view_lock:
                 vz, center = self._view_req
             self.view.set_view(vz, center)
-            ok, buf = cv2.imencode('.jpg', self.view.apply(gray), [cv2.IMWRITE_JPEG_QUALITY, self.jpeg_quality])
+            ok, buf = cv2.imencode('.jpg', self._view_image(gray), [cv2.IMWRITE_JPEG_QUALITY, self.jpeg_quality])
             if ok:
                 with self.cond:
                     self.jpeg, self.jpeg_seq = buf.tobytes(), self.seq

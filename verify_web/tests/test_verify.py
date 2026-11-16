@@ -12,12 +12,12 @@ import cv2
 import numpy as np
 
 from demo_web.stage import MockStage
-from verify_web.algorithm import AlgorithmError, MockAlgorithm, WorkerAlgorithm
+from verify_web.algorithm import AlgorithmChoices, AlgorithmError, MockAlgorithm, WorkerAlgorithm
 from verify_web.app import create_app
 from verify_web.camera import FakeCamera
 from verify_web.devices import DemoLauncher, DeviceManager
 from verify_web.geometry import ALG_SIZE, SEMES_FX, SEMES_FY, Calibration, Rectifier, ViewMapper, alg_matrix
-from verify_web.runner import Runner, Settings
+from verify_web.runner import Runner, RunError, Settings
 
 ROOT = Path(__file__).resolve().parents[2]
 CALIB = ROOT / 'demo_web' / 'calibration' / 'camera_calib.yml'
@@ -119,7 +119,7 @@ class RunnerTest(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.camera = FakeCamera(ViewMapper(self.calib), fps=20).start()
         self.stage = MockStage(duration=0.05)
-        self.settings = Settings(Path(self.tmp.name) / 's.json', dict(save_images=False, settle_timeout_s=2.0))
+        self.settings = Settings(Path(self.tmp.name) / 's.json', dict(save_images=False, settle_timeout_s=2.0, demo_slow=False))
 
     def tearDown(self):
         self.camera.close()
@@ -127,6 +127,128 @@ class RunnerTest(unittest.TestCase):
 
     def runner(self, algo):
         return Runner(Devices(self.camera, self.stage), algo, self.rect, self.settings, Path(self.tmp.name) / 'runs')
+
+    def test_random_start_is_far_enough_and_both_signs(self):
+        r = self.runner(MockAlgorithm())
+        ys, ts = zip(*(r._resolve_offset('random') for _ in range(200)))
+        ry, rt = self.settings['random_y_mm'], self.settings['random_t_deg']
+        self.assertTrue(all(0.4 * ry - 1e-3 <= abs(y) <= ry for y in ys))
+        self.assertTrue(all(0.4 * rt - 1e-3 <= abs(t) <= rt for t in ts))
+        self.assertTrue(min(ys) < 0 < max(ys) and min(ts) < 0 < max(ts))
+
+    def test_sequential_y_then_theta_in_one_trial(self):
+        """한 회차 = 한 번 측정. 산출한 두 축 보정량으로 Y 를 먼저 옮기고 이어서 Θ 를 옮긴다 (Θ 이동 전에 다시 재지 않음)."""
+        moves, stages = [], []
+        orig = self.stage.start
+        def logged(y, t, relative=False, allow_t=False):
+            moves.append((y, t)); stages.append(r.state.get('axis_stage')); return orig(y, t, relative=relative, allow_t=allow_t)
+        self.stage.start = logged
+        self.settings.update(dict(auto_reference=False, sequential_axes=True))
+        r = self.runner(FixedAlgorithm(0.3, 0.05))          # 명령 (−0.3 mm, −0.05°)
+        r.step(); r.wait_idle(10)
+        s = r.snapshot()
+        self.assertEqual(len(s['history']), 1)                         # 측정은 한 번
+        self.assertEqual(s['history'][0]['axis'], 'y_then_t')
+        # Y 만 (접근점 → 목표), 그다음 Θ 만 (접근점 → 목표)
+        self.assertEqual(moves, [(-500, 0), (-300, 0), (-300, -150), (-300, -50)], s['message'])
+        self.assertEqual(stages, ['y', 'y', 't', 't'])
+        self.assertIsNone(s['axis_stage'])
+        self.assertEqual(self.stage.position, (-300, -50))
+
+    def test_sequential_converges_like_together(self):
+        for seq in (True, False):
+            self.settings.update(dict(sequential_axes=seq))
+            r = self.runner(MockAlgorithm(noise_y_mm=0.002, noise_t_deg=0.0005, seed=4))
+            r.run((0.8, 0.3)); r.wait_idle(60)
+            s = r.snapshot()
+            self.assertEqual(s['run']['result'], 'converged', s['message'])
+            self.assertLessEqual(s['run']['trial'], 4)
+            self.assertEqual(s['history'][0]['axis'], 'y_then_t' if seq else 'both')
+
+    def test_fixed_zero_algorithm_reference_is_display_only(self):
+        class Fixed(MockAlgorithm):
+            supports_reference = False
+            def set_reference(self, image):
+                raise AssertionError('호출하면 안 됨')
+        r = self.runner(Fixed())
+        r.reference(); r.wait_idle(30)
+        s = r.snapshot()
+        self.assertEqual(s['phase'], 'idle', s['message'])
+        self.assertTrue(s['reference']['fixed_zero'])
+        self.assertEqual((s['reference']['zero_y_mm'], s['reference']['zero_t_deg']), (0.0, 0.0))
+
+    def test_select_algorithm_clears_reference(self):
+        with tempfile.TemporaryDirectory() as d:
+            choices = AlgorithmChoices([dict(id='a', label='가', path='mock'), dict(id='b', label='나', path='mock'),
+                                        dict(id='c', label='다', path='no/such/worker')], d)
+            r = Runner(Devices(self.camera, self.stage), choices.select('a'), self.rect, self.settings,
+                       Path(self.tmp.name) / 'runs', choices=choices)
+            r.reference(); r.wait_idle(30)
+            self.assertIsNotNone(r.snapshot()['reference'])
+            r.select_algorithm('b')
+            s = r.snapshot()
+            self.assertIsNone(s['reference'])
+            self.assertEqual(self.settings['algorithm'], 'b')
+            self.assertEqual([(a['id'], a['available'], a['current']) for a in s['algorithms']],
+                             [('a', True, False), ('b', True, True), ('c', False, False)])
+            with self.assertRaises(AlgorithmError):
+                r.select_algorithm('c')
+            with self.assertRaises(ValueError):
+                r.select_algorithm('zz')
+
+    def test_axis_plan_estimates_each_axis(self):
+        r = self.runner(MockAlgorithm())
+        r._set(position=dict(y_mm=20.0, t_deg=0.0), speed=dict(mode='slow', y_mm_s=0.2, t_deg_s=0.1))
+        a = r._axis_plan(21000, -300, relative=False)          # Y +1 mm (5 s), Θ −0.3° (3 s)
+        self.assertEqual((a['dy_mm'], a['dt_deg'], a['y_s'], a['t_s']), (1.0, -0.3, 5.0, 3.0))
+        a = r._axis_plan(20000, 50, relative=False)            # Y 그대로, Θ 만
+        self.assertEqual((a['y_s'], a['t_s']), (0.0, 0.5))
+
+    def test_step_slightly_over_limit_is_clamped(self):
+        self.settings.update(dict(auto_reference=False, sequential_axes=False, max_step_t_deg=1.0))
+        r = self.runner(FixedAlgorithm(0.1, -1.1))          # 명령 Θ +1.1° (한도 1.0 의 1.1배)
+        r.step(); r.wait_idle(10)
+        s = r.snapshot()
+        self.assertNotEqual(s['phase'], 'error', s['message'])
+        self.assertEqual(self.stage.position, (-100, 1000))             # Θ 는 한도만큼만
+        self.assertEqual(s['history'][0]['clamped'], dict(y_mm=-0.1, t_deg=1.0))
+        r2 = self.runner(FixedAlgorithm(0.1, -1.5))         # 1.5배 → 멈춤
+        r2.step(); r2.wait_idle(10)
+        self.assertEqual(r2.snapshot()['phase'], 'error')
+
+    def test_direct_start_input_is_checked(self):
+        r = self.runner(MockAlgorithm())
+        with self.assertRaises(RunError):
+            r.goto((2.5, 0.0))                 # 한 번 이동 한도 2 mm 넘음
+        with self.assertRaises(RunError):
+            r.goto((0.5, -1.5))                # Θ 한도 1° 넘음
+        with self.assertRaises(RunError):
+            r.goto((float('nan'), 0.0))
+        r.goto((-0.75, 0.3)); r.wait_idle(30)
+        s = r.snapshot()
+        self.assertEqual(s['start'], dict(y_mm=-0.75, t_deg=0.3, reached=True))
+        self.assertAlmostEqual(s['position']['y_mm'], self.settings['center_y_mm'] - 0.75, places=3)
+        self.assertAlmostEqual(s['position']['t_deg'], self.settings['center_t_deg'] + 0.3, places=3)
+
+    def test_demo_speed_and_pause(self):
+        self.settings.update(dict(demo_slow=True, slow_y_mm_s=0.3, slow_t_deg_s=0.15, pause_s=0.4))
+        r = self.runner(MockAlgorithm(noise_y_mm=0.002, seed=3))
+        t0 = time.monotonic()
+        r.run((0.8, 0.0))
+        r.wait_idle(30)
+        s = r.snapshot()
+        self.assertEqual(s['run']['result'], 'converged', s['message'])
+        self.assertEqual(self.stage.speeds, (300, 150))                    # µm/s, mdeg/s
+        self.assertEqual(s['speed']['mode'], 'slow')
+        moves = sum(1 for e in s['history'] if not e['within'])
+        self.assertGreaterEqual(time.monotonic() - t0, 0.4 * moves)        # 이동 전마다 쉼
+        self.assertIsNone(s['start'])                                      # 보정 끝 → 다음은 ② 랜덤
+        self.settings.update(dict(demo_slow=False))
+        r.goto((0.5, 0.0)); r.wait_idle(30)
+        s = r.snapshot()
+        self.assertEqual((s['run'], s['history'], s['last'], s['aligned']), (None, [], None, None))   # 새 시연 → 지난 기록 지움
+        self.assertEqual(self.stage.speeds, (1000, 1000))
+        self.assertEqual(s['start'], dict(y_mm=0.5, t_deg=0.0, reached=True))
 
     def test_run_converges_and_records_truth(self):
         r = self.runner(MockAlgorithm(noise_y_mm=0.002, seed=3))
@@ -185,11 +307,13 @@ class RunnerTest(unittest.TestCase):
         def logged(y, t, relative=False, allow_t=False):
             moves.append((y, t, relative)); return orig(y, t, relative=relative, allow_t=allow_t)
         self.stage.start = logged
+        self.settings.update(dict(auto_reference=False, sequential_axes=False))
         r = self.runner(FixedAlgorithm(0.3, 0.05))          # 오프셋 → 명령 (−0.3 mm, −0.05°)
         r.step()
         r.wait_idle(10)
         self.assertEqual(moves, [(-500, -150, False), (-300, -50, False)], r.snapshot()['message'])
         self.assertEqual(self.stage.position, (-300, -50))
+
 
     def test_reference_moves_to_center_and_registers(self):
         self.stage.position = (700, 200)
@@ -315,6 +439,7 @@ KSH_WORKER = ROOT / 'verify_web' / 'native' / 'build_ksh' / 'align_worker'
 class KshWorkerTest(unittest.TestCase):
     def test_matches_standalone_tool(self):
         w = WorkerAlgorithm(KSH_WORKER, config=KSH / 'config' / 'alignment.yml')
+        self.assertTrue(w.supports_reference)              # READY ref roi
         z = w.set_reference(cv2.imread('/home/pi/data/rig_eval/center1.bmp', 0))
         self.assertAlmostEqual(z['y'], -0.01433, places=4)
         r = w.infer(cv2.imread('/home/pi/data/rig_eval/Y-1.13 T-0.61/Y-1.13 T-0.61 (1).bmp', 0))
@@ -323,6 +448,64 @@ class KshWorkerTest(unittest.TestCase):
         with self.assertRaises(AlgorithmError):
             w.infer(np.zeros((2160, 3840), np.uint8))       # 측정 실패는 NaN 이 아니라 오류
         w.close()
+
+
+class CenterViewTest(unittest.TestCase):
+    """센터 확인 화면: 차이 영상, 기준 윤곽 좌표."""
+
+    def test_diff_mode_is_gray_when_same_as_reference(self):
+        calib = Calibration.load(CALIB)
+        cam = FakeCamera(ViewMapper(calib))          # start() 안 함: _view_image 만 시험
+        img = cam.img
+        cam.set_mode('diff')
+        self.assertTrue(np.array_equal(cam._view_image(img), ViewMapper(calib).apply(img)))   # 기준 없으면 일반 영상
+        cam.set_reference(img)
+        d = cam._view_image(img)
+        self.assertEqual(int(np.abs(d.astype(int) - 128).max()), 0)        # 같으면 전부 회색
+        moved = np.roll(img, 30, axis=1)                                   # 판이 옮겨진 것처럼
+        self.assertGreater(int(np.abs(cam._view_image(moved).astype(int) - 128).max()), 100)
+        cam.set_mode('normal')
+        self.assertTrue(np.array_equal(cam._view_image(img), ViewMapper(calib).apply(img)))
+        with self.assertRaises(ValueError):
+            cam.set_mode('x')
+
+    def test_reference_quads_to_view_coordinates(self):
+        from verify_web.runner import find_qr_quads
+        img = cv2.imread('/home/pi/data/rig_eval/center1.bmp', 0) if Path('/home/pi/data/rig_eval/center1.bmp').exists() else None
+        if img is None:
+            self.skipTest('센터 사진 없음')
+        quads = find_qr_quads(img)
+        self.assertEqual(len(quads), 3)
+        self.assertLess(quads[0][0][0], quads[2][0][0])                  # 왼쪽부터
+        calib = Calibration.load(CALIB)
+        with tempfile.TemporaryDirectory() as d:
+            cam = FakeCamera(ViewMapper(calib))
+            devices = Devices(cam, MockStage())
+            runner = Runner(devices, MockAlgorithm(), Rectifier(calib), Settings(Path(d) / 's.json'), Path(d) / 'runs')
+            c = [[sum(p[0] for p in q) / 4, sum(p[1] for p in q) / 4] for q in quads]
+            rois = [dict(name=n, rect=[int(x) - 96, int(y) - 103, 192, 206], center=[x, y])
+                    for n, (x, y) in zip(('QR_L', 'QR_C', 'QR_R'), c)]
+            rois += [dict(name='S_LB', rect=[891, 1621, 220, 180], center=[1001.1, 1711.7]),
+                     dict(name='S_RT', rect=[2677, 1331, 220, 180], center=[2787.4, 1421.8])]
+            runner._set(reference=dict(ts=time.time(), zero_y_mm=0.0, zero_t_deg=0.0, qr_alg=quads, rois=rois))
+            client = create_app(runner, devices, DemoLauncher(['true'], d, free_port(), Path(d) / 'l')).test_client()
+            ov = client.get('/api/state').get_json()['overlay']
+            # 1× 화면 = 알고리즘 좌표 / 3 (가운데 기준)
+            self.assertAlmostEqual(ov['target']['qr'][1][0][0], (quads[1][0][0] - 1919.5) / 3 + 639.5, delta=0.2)
+            self.assertEqual([k['name'] for k in ov['target']['screws']], ['S_LB', 'S_RT'])
+            self.assertAlmostEqual(ov['target']['screws'][0]['c'][0], (1001.1 - 1919.5) / 3 + 639.5, delta=0.2)
+            self.assertIsNone(ov['now'])
+            # 이번 측정에서 QR 이 오른쪽으로 30 px 옮겨졌으면 지금 테두리도 화면에서 10 px 오른쪽
+            now = [dict(r, center=[r['center'][0] + 30, r['center'][1]]) for r in rois]
+            runner._set(rois_now=now)
+            ov = client.get('/api/state').get_json()['overlay']
+            for qt, qn in zip(ov['target']['qr'], ov['now']['qr']):
+                for a, b in zip(qt, qn):
+                    self.assertAlmostEqual(b[0] - a[0], 10, delta=0.2)
+                    self.assertAlmostEqual(b[1] - a[1], 0, delta=0.2)
+            self.assertEqual(len(ov['now']['dots']), 5)
+            self.assertEqual(client.post('/api/view', json={'zoom': 1, 'mode': 'diff'}).status_code, 200)
+            self.assertEqual(cam.view_mode, 'diff')
 
 
 class HandoffTest(unittest.TestCase):
