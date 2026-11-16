@@ -33,7 +33,7 @@ namespace YT
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()
         {
-            if (FindAnyObjectByType<App>() == null) new GameObject("App").AddComponent<App>();
+            if (FindAnyObjectByType<App>() == null && FindAnyObjectByType<ViewerApp>() == null) new GameObject("App").AddComponent<App>();   // Viewer 장면(웹 3D)은 대시보드를 만들지 않음
         }
 
         void Awake()

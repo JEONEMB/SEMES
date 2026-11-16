@@ -12,3 +12,4 @@
 *.user
 .vs/
 .vscode/
+/Build_Web/

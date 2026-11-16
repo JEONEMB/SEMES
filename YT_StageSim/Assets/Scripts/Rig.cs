@@ -142,7 +142,7 @@ namespace YT
                 q.transform.localRotation = Quaternion.AngleAxis(90, Vector3.up);
                 q.transform.localScale = new Vector3(69, 15, 1);
                 var tex = new Texture2D(2, 2);
-                tex.LoadImage(System.IO.File.ReadAllBytes(System.IO.Path.Combine(Application.streamingAssetsPath, "qr_plate.png")));
+                tex.LoadImage(Files.Read("qr_plate.png"));
                 tex.anisoLevel = 8;
                 var qm = new Material(Shader.Find("Unlit/Transparent")) { mainTexture = tex, name = "qr_label" };
                 q.GetComponent<Renderer>().sharedMaterial = qm;

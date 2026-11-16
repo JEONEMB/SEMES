@@ -99,7 +99,7 @@ namespace YT
         public static Mesh Load(string file, Func<Vector3, Vector3> map)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            byte[] b = File.ReadAllBytes(Path.Combine(Dir, file));
+            byte[] b = Files.Read("stl/" + file);   // 웹 빌드는 미리 내려받은 것
             if (b.Length < 84) throw new Exception("STL 이 너무 짧음: " + file);
             int n = BitConverter.ToInt32(b, 80);
             if (84 + 50 * n != b.Length) throw new Exception("이진 STL 이 아님: " + file);

@@ -111,5 +111,57 @@ namespace YT
             Build();
             EditorApplication.Exit(0);
         }
+
+        // 웹 3D 장비 화면 빌드 (명령줄: -buildTarget WebGL -executeMethod YT.YTEditor.BuildWebCli) → Build_Web, 끝나면 verify_web_3d/viewer 로 복사
+        //   Viewer 장면 = ViewerApp 하나 (대시보드·장치 연결 없음). 페이지는 WebGLTemplates/YTViewer
+        const string ViewerScene = "Assets/Scenes/Viewer.unity";
+        [MenuItem("YT/웹 3D 빌드 (verify_web_3d)")]
+        public static void BuildWeb()
+        {
+            Directory.CreateDirectory("Assets/Scenes");
+            var sc = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            new GameObject("Viewer").AddComponent<ViewerApp>();   // 이름 'Viewer' = 페이지 JS 의 SendMessage 대상
+            EditorSceneManager.SaveScene(sc, ViewerScene);
+            // 웹에서 미리 내려받을 StreamingAssets 목록
+            const string sa = "Assets/StreamingAssets";
+            var names = new System.Collections.Generic.List<string>();
+            foreach (var f in Directory.GetFiles(sa, "*", SearchOption.AllDirectories))
+            {
+                if (f.EndsWith(".meta") || Path.GetFileName(f) == "manifest.txt") continue;
+                names.Add(f.Substring(sa.Length + 1).Replace(Path.DirectorySeparatorChar, '/'));
+            }
+            names.Sort(System.StringComparer.Ordinal);
+            File.WriteAllText(sa + "/manifest.txt", string.Join("\n", names) + "\n");
+            AssetDatabase.Refresh();
+
+            PlayerSettings.productName = "YT_StageSim";
+            PlayerSettings.WebGL.template = "PROJECT:YTViewer";
+            PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Gzip;
+            PlayerSettings.WebGL.decompressionFallback = true;    // 서버(Flask)에 Content-Encoding 설정 없이도 열리게
+            PlayerSettings.WebGL.nameFilesAsHashes = true;        // 다시 빌드하면 파일 이름이 바뀌어 브라우저 캐시 문제 없음
+            IncludeShaders("Standard", "Unlit/Transparent", "Sprites/Default", "UI/Default", "Legacy Shaders/Transparent/Diffuse");
+            const string outDir = "Build_Web";
+            if (Directory.Exists(outDir)) Directory.Delete(outDir, true);
+            var r = BuildPipeline.BuildPlayer(new[] { ViewerScene }, outDir, BuildTarget.WebGL, BuildOptions.None);
+            Debug.Log("YT 웹 빌드 결과: " + r.summary.result + ", 오류 " + r.summary.totalErrors + ", 크기 " + r.summary.totalSize);
+            if (r.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded) return;
+            const string dst = "verify_web_3d/viewer";
+            if (Directory.Exists(dst)) Directory.Delete(dst, true);
+            CopyDir(outDir, dst);
+            Debug.Log("YT 웹 빌드 복사: " + dst);
+        }
+
+        static void CopyDir(string src, string dst)
+        {
+            Directory.CreateDirectory(dst);
+            foreach (var f in Directory.GetFiles(src)) File.Copy(f, Path.Combine(dst, Path.GetFileName(f)), true);
+            foreach (var d in Directory.GetDirectories(src)) CopyDir(d, Path.Combine(dst, Path.GetFileName(d)));
+        }
+
+        public static void BuildWebCli()
+        {
+            BuildWeb();
+            EditorApplication.Exit(0);
+        }
     }
 }

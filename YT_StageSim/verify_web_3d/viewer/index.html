@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D 장비</title>
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#e7e9e5;font-family:"Pretendard",system-ui,"Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+#c{position:absolute;inset:0;width:100%;height:100%;display:block;outline:none}
+#views{position:absolute;top:8px;right:8px;display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end;max-width:62%}
+#views button{border:1px solid #dce3ed;background:#ffffffe6;color:#243349;border-radius:4px;padding:4px 9px;font-size:12px;cursor:pointer}
+#views button:hover{border-color:#0A3D91}
+#views button.on{background:#0A3D91;color:#fff;border-color:#0A3D91}
+[hidden]{display:none!important}
+#info{position:absolute;left:8px;top:8px;background:#ffffffe6;border:1px solid #dce3ed;border-radius:4px;padding:6px 10px;font-size:12px;color:#243349;line-height:1.55;max-width:calc(100% - 16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:900px){#views{max-width:100%;top:auto;bottom:24px}}
+#info b{font-variant-numeric:tabular-nums}
+#info .bad{color:#b12c39}#info .mv{color:#b06f0c;font-weight:600}
+#hint{position:absolute;left:8px;bottom:6px;font-size:11px;color:#637187;pointer-events:none}
+#loading{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:#637187;background:#e7e9e5}
+</style>
+</head>
+<body>
+<canvas id="c" tabindex="-1"></canvas>
+<div id="loading">3D 장비 불러오는 중… <span id="pct"></span></div>
+<div id="info">verify_web 연결 중…</div>
+<div id="views"></div>
+<div id="hint">드래그 회전 · 오른쪽 드래그 이동 · 휠 확대 · 위치 = 스테이지 STATUS, 이동 중에는 속도로 추정 · 장비 조작 없음</div>
+<script>
+// Rig.Views 와 같은 순서·이름
+const VIEWS = [['all', '전체'], ['side', '옆 (Y 방향)'], ['back', '사람 쪽'], ['top', '위'], ['mount', '출력 받침'], ['cam', '카메라→QR'], ['target', '타깃']];
+const $ = id => document.getElementById(id);
+let unity = null, last = null;
+
+function setView(key, btn) {
+  if (unity) unity.SendMessage('Viewer', 'SetView', key);
+  document.querySelectorAll('#views button').forEach(b => b.classList.toggle('on', b === btn));
+}
+VIEWS.forEach(([k, label]) => {
+  const b = document.createElement('button'); b.textContent = label; b.onclick = () => setView(k, b); b.dataset.view = k;
+  if (k === 'all') b.classList.add('on');
+  $('views').appendChild(b);
+});
+// verify_web_3d 화면 안(?embed=1)에서는 보기 단추를 칸 머리가 갖고 있어 여기 것은 숨기고, 같은 출처에서 오는 신호만 받음
+if (new URLSearchParams(location.search).get('embed') === '1') { $('views').hidden = true; $('hint').hidden = true; }
+window.addEventListener('message', ev => {
+  if (ev.origin !== location.origin || !ev.data || typeof ev.data.ytView !== 'string') return;
+  setView(ev.data.ytView, document.querySelector(`#views button[data-view="${ev.data.ytView}"]`));
+});
+
+const f = (v, d) => (v >= 0 ? '+' : '') + v.toFixed(d);
+// verify_web 상태에서 3D 에 필요한 값만 평평하게 (Unity JsonUtility 는 null 을 못 다룸)
+function pick(s) {
+  const p = s.position, ax = s.target && s.target.axes;
+  return {hasPos: !!p, y: p ? p.y_mm : 0, t: p ? p.t_deg : 0, moving: !!s.moving,
+          hasAxes: !!ax, started: ax ? ax.started : 0, now: s.now || 0,
+          dy: ax ? ax.dy_mm : 0, dt: ax ? ax.dt_deg : 0,
+          ys: ax && ax.y_s != null ? ax.y_s : -1, ts: ax && ax.t_s != null ? ax.t_s : -1};
+}
+function show(s) {
+  const p = s.position, c = s.settings || {};
+  if (!p) { $('info').innerHTML = '<span class="bad">스테이지 위치 없음</span> (연결 안 됨)'; return; }
+  const dy = p.y_mm - (c.center_y_mm || 0), dt = p.t_deg - (c.center_t_deg || 0);
+  $('info').innerHTML = `스테이지 Y <b>${p.y_mm.toFixed(3)}</b> mm · Θ <b>${p.t_deg.toFixed(3)}</b>°` +
+    (s.moving ? ' · <span class="mv">이동 중</span>' : '') +
+    `<br>센터 대비 Y <b>${f(dy, 3)}</b> mm · Θ <b>${f(dt, 3)}</b>°`;
+}
+function send() { if (unity && last) unity.SendMessage('Viewer', 'OnState', JSON.stringify(pick(last))); }
+
+function listen() {
+  const es = new EventSource('/api/events');
+  es.onmessage = ev => { try { last = JSON.parse(ev.data); show(last); send(); } catch (e) {} };
+  es.onerror = () => { $('info').innerHTML = '<span class="bad">verify_web 연결 끊김</span> · 다시 시도 중'; };
+}
+
+const s = document.createElement('script');
+s.src = 'Build/97833d4c34a20c4988bd2d2a71f00a10.loader.js';
+s.onload = () => {
+  createUnityInstance($('c'), {
+    dataUrl: 'Build/ea9e12a7daa02accfd4234c95ad4d748.data.unityweb',
+    frameworkUrl: 'Build/9710bac44798be74c5856bed50113449.framework.js.unityweb',
+    codeUrl: 'Build/bc2e7553248b40944056fad4264389dd.wasm.unityweb',
+    streamingAssetsUrl: 'StreamingAssets',
+    companyName: "DefaultCompany",
+    productName: "YT_StageSim",
+    productVersion: "1.0",
+  }, p => { $('pct').textContent = Math.round(p * 100) + '%'; })
+  .then(u => { unity = u; $('loading').remove(); send(); })
+  .catch(e => { $('loading').textContent = '3D 장비를 띄우지 못함: ' + e; });
+};
+document.body.appendChild(s);
+listen();
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+/* [verify_web_3d] C안 배치 (팀 verify.css 는 그대로 두고 여기서 덮어씀)
+   왼쪽 = 카메라(16:9) + 아래에 버튼·진행 단계 나란히
+   오른쪽 = 센터와의 차이(내용만큼) + [여분] + 3D(고정) + Y·Θ 지도(고정)
+     센터와의 차이 칸이 이동 중·측정 뒤에 높아졌다 낮아져도 그 아래 여분만 바뀌고 3D·지도 크기와 위치는 그대로
+   배치 폭 1920 고정, 가운데. 창 크기 맞춤 배율(viewer3d.js)은 좌우 여백 60씩을 넣은 2040 기준이라 좌우가 늘 비어 있음 */
+.shell{grid-template-columns:minmax(0,1.5fr) minmax(380px,1fr);gap:10px;padding:10px 20px 32px;width:1920px;max-width:none;box-sizing:border-box}
+.left,.right{gap:10px}
+/* 센터와의 차이: 이동 중 높이(진행 막대·목표 줄)를 최소로 잡아 대기↔이동 때 아래가 움직이지 않음. 판정 줄은 칸 아래에 붙임
+   측정 뒤 계산 줄이 붙으면 그만큼 3D 칸이 낮아지고, 지도는 고정이라 그대로 */
+.pos-card{flex:none;min-height:212px;display:flex;flex-direction:column}
+.pos-card .verdict{margin-top:auto}
+.viewer3d{flex:1;min-height:0;display:flex;flex-direction:column}
+.legend.inhead{padding:0;margin-right:6px;font-weight:400;gap:12px}
+.ctrl-row{flex:1;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:10px;align-items:stretch}
+.ctrl-row .flow{flex:none;align-content:flex-start;gap:8px;padding:8px 10px}
+.ctrl-row .step-card{flex:1 1 100%;flex-direction:column;align-items:stretch;gap:6px;padding:6px 10px}
+.ctrl-row .step-body{flex-wrap:wrap}
+.ctrl-row .flow-actions{flex:1 1 100%}
+.ctrl-row .flow-btn.primary{flex:1;width:auto}
+.ctrl-row .seg.big button{padding:6px 14px}
+.ctrl-row .progress-card{display:flex;flex-direction:column}
+.viewer3d-box{position:relative;flex:1;min-height:200px;background:#e7e9e5}   /* 남는 높이를 채움. 3D 는 칸 비율에 맞춰 그려짐 */
+.viewer3d-box iframe{position:absolute;inset:0;display:block;width:100%;height:100%;border:0}
+/* 지도 칸 높이 고정. 그림 칸은 200 이상 (verify.js 가 200 보다 작으면 200 으로 그려 세로가 눌림) */
+.plot-card{flex:none;height:330px;min-height:0}
+.plot-box{min-height:0}
+@media(max-width:1100px){.ctrl-row{grid-template-columns:1fr}.viewer3d{margin-top:0}}
