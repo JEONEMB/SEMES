@@ -61,3 +61,5 @@ legacy에는 이전 소스, 헤더, 도구, 모델이 보존돼 있다. 이전 f
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_text_style.ps1
 ```
+
+현재 나사 품질 판정과 운영 계약은 [변경 안내](docs/screw_quality_20261116.md)를 확인하세요.

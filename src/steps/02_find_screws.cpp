@@ -39,7 +39,6 @@ const double kEdgeDone = 1e-8;                     // 반복 종료 닮은 정�
 const double kShapeBlurSigma = 2.0;                // px. 모양 비교 전 흐림 (잡음 영향 줄임)
 const int kShapeCutHalf = 60;                      // px. 흐리기 전에 잘라 내는 반폭 (91×91 조각보다 넓게)
 const double kMinShapeSimilarity = 0.93;           // 최종 위치의 흐린 조각 닮은 정도 최소값
-const int kMaxLocateDrift = 15;                    // px. 대략 위치와 QR 예상 위치의 최대 거리
 const double kMaxRefineGap = 0.5;                  // px. 밝기 맞춤과 테두리 맞춤 결과의 최대 거리
 
 // square_around: 중심 주변 사각 영역 계산
@@ -347,15 +346,14 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
         return result;
     }
 
-    // 일부 가림 점검: 모양이 기준과 다르거나, 대략 위치가 예상에서 멀거나, 두 맞춤 결과가 서로 다르면 실패
+    // 일부 가림 점검: 모양이 기준과 다르거나 두 맞춤 결과가 서로 다르면 실패. QR 예상 위치와 거리는 판정에서 제외
     result.shape_similarity = shape_similarity_at(gray, screw_index, result.dx, result.dy);
     const double locate_drift = cv::norm(located - expected_shift);
     const double refine_gap = std::hypot(result.dx - rough_dx, result.dy - rough_dy);
     if (record) result.trace += "2-3 테두리 맞춤: dx=" + std::to_string(result.dx) + ", dy=" + std::to_string(result.dy) + " px\n"
         + "2-4 모양 점검: 유사도=" + std::to_string(result.shape_similarity) + " (최소 " + std::to_string(kMinShapeSimilarity)
-        + "), 탐색 거리=" + std::to_string(locate_drift) + " (최대 " + std::to_string(kMaxLocateDrift)
-        + " px), 맞춤 차이=" + std::to_string(refine_gap) + " (최대 " + std::to_string(kMaxRefineGap) + " px)\n";
-    if (result.shape_similarity < kMinShapeSimilarity || locate_drift > kMaxLocateDrift || refine_gap > kMaxRefineGap) {
+        + "), 탐색 거리=" + std::to_string(locate_drift) + " px (참고값), 맞춤 차이=" + std::to_string(refine_gap) + " (최대 " + std::to_string(kMaxRefineGap) + " px)\n";
+    if (result.shape_similarity < kMinShapeSimilarity || refine_gap > kMaxRefineGap) {
         char detail[160];
         std::snprintf(detail, sizeof(detail), "나사 머리 일부 가림 또는 오염 의심 (모양 닮은 정도 %.3f, 예상 위치와 거리 %.1f px, 두 맞춤 차이 %.2f px)",
                       result.shape_similarity, locate_drift, refine_gap);
