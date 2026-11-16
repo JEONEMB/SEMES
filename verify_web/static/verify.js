@@ -415,20 +415,8 @@
     } catch (e) { toast(e.message); }
   });
 
-  // ---------- 데모 웹 넘김 / 되찾기 ----------
+  // ---------- 장치 되찾기 (화면을 열 때 데모 웹이 장치를 잡고 있으면 끄고 다시 잡음) ----------
   function overlay(text) { $('overlay-text').textContent = text; $('overlay').hidden = !text; }
-
-  $('btn-demo').addEventListener('click', async () => {
-    overlay('데모 웹으로 전환 중…');
-    if (events) events.close();
-    $('video').removeAttribute('src');
-    try {
-      const r = await api('/api/handoff');
-      location.href = `${location.protocol}//${location.hostname}:${r.port}/`;
-    } catch (e) {
-      overlay(''); toast(e.message); connect();
-    }
-  });
 
   function connect() {
     if (events) events.close();
