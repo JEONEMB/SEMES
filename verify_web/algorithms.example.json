@@ -3,26 +3,26 @@
  "algorithms": [
   {
    "id": "ksh",
-   "label": "성현",
+   "label": "KSH",
    "path": "verify_web/native/build_ksh/align_worker",
    "config": "~/KSH_Algorithm/Code/config/alignment.yml",
-   "desc": "QR 중심 3개 + 나사 2개"
+   "desc": "QR 3개 + 나사 2개"
   },
   {
    "id": "hye",
-   "label": "혜원",
-   "path": "verify_web/native/build_hye/align_worker",
-   "config": "~/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy/assets",
+   "label": "LHW",
+   "path": "verify_web/native/build_hye2/align_worker",
+   "config": "~/HYE_Algorithm/data/model",
    "gray": true,
-   "desc": "QR 가로 이동 1개 + 나사 4개 (값 5개)"
+   "desc": "QR + 나사 4개"
   },
   {
    "id": "shin",
-   "label": "윤석",
+   "label": "SHIN",
    "path": "verify_web/native/build_shin_rig/align_worker",
    "config": "~/SHIN_Algorithm/experiments/shin/qr_only_multiple_exe/native/models/rig-reverse-fixed.xml.gz",
    "gray": true,
-   "desc": "QR 3개 아핀 값 18개 (이동·크기·기울기)"
+   "desc": "QR 3개만"
   }
  ]
 }

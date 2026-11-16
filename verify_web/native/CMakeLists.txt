@@ -25,6 +25,10 @@ set(ALGO_INCLUDES ${REPO_ROOT}/include CACHE STRING "alignment.hpp 가 있는 �
 #                              src/alignment_diagnostics.cpp), HYE_MODULE 은 모듈 폴더(src/, include/, third_party/).
 #                              실행할 때 --config 로 모듈의 assets 폴더를 준다. 영점은 자료에 고정 (영점 등록 없음).
 set(HYE_DIR "" CACHE PATH "이혜원 알고리즘 저장소 형태 폴더")
+#   -DHYE2_DIR=/path           이혜원 SSAFY 패키지 (chore/hye/merge-ssafy 2390aed~): include/alignment.hpp (namespace alignment),
+#                              src/{alignment.cpp,common,setup,steps}. --config 로 data/model 폴더를 준다.
+#                              ALGR = set_zero_from_photos, 측정은 correction_allowed 일 때만 OK (범위 밖 경고는 허용)
+set(HYE2_DIR "" CACHE PATH "이혜원 SSAFY 패키지 폴더 (include, src, data/model)")
 set(HYE_MODULE "" CACHE PATH "이혜원 모듈 폴더 (예: .../experiments/hye/00000_final_Y_T_ssafy)")
 #   -DQR_RIG_DIR=/path/experiments/shin/qr_only_multiple_exe/native
 #                              신윤석 QR 전용 Rig 모델 (qr::Cancellation). --config = models/rig-cancellation.xml.gz.
@@ -35,7 +39,12 @@ set(QR_RIG_DIR "" CACHE PATH "신윤석 qr_only_multiple_exe/native 폴더")
 #                              실행할 때 --config 로 config/qr_pose*.yml 을 준다 (없으면 빌드 때 경로의 config/qr_pose.yml).
 set(QR_POSE_DIR "" CACHE PATH "신윤석 ssafy_qr_pose 폴더")
 
-if(QR_RIG_DIR)
+if(HYE2_DIR)
+    file(GLOB USE_SOURCES ${HYE2_DIR}/src/alignment.cpp ${HYE2_DIR}/src/common/*.cpp ${HYE2_DIR}/src/setup/*.cpp
+                          ${HYE2_DIR}/src/steps/*.cpp)
+    set(USE_INCLUDES ${HYE2_DIR}/include ${HYE2_DIR}/src)
+    message(STATUS "알고리즘: ${HYE2_DIR} (alignment::measure_alignment, 영점 사진 등록)")
+elseif(QR_RIG_DIR)
     # 라이브러리 소스 전부 (실행 파일용 main·replay·rig_device 는 뺌)
     file(GLOB USE_SOURCES ${QR_RIG_DIR}/src/*.cpp)
     list(FILTER USE_SOURCES EXCLUDE REGEX "/(main|replay|rig_device)\\.cpp$")
@@ -66,7 +75,9 @@ endif()
 add_executable(align_worker align_worker.cpp ${USE_SOURCES})
 target_include_directories(align_worker PRIVATE ${USE_INCLUDES} ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(align_worker PRIVATE ${OpenCV_LIBS} Threads::Threads)
-if(QR_RIG_DIR)
+if(HYE2_DIR)
+    target_compile_definitions(align_worker PRIVATE ALGO_HYE2=1)
+elseif(QR_RIG_DIR)
     target_compile_definitions(align_worker PRIVATE ALGO_HAS_QR_RIG=1)
     if(EXISTS ${QR_RIG_DIR}/src/joint_visual_alignment.cpp)
         # 비전 상대 보정 모델 (qr::JointVisualModel, 979c1d75~). --config 의 kind 가 qr_affine_joint 면 이것을 쓴다
