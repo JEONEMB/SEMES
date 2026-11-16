@@ -20,4 +20,11 @@
     seg.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
     frame.contentWindow && frame.contentWindow.postMessage({ytView: b.dataset.view}, location.origin);
   });
+  // 움직임 과장 (3D 화면이 "움직임 ×10 과장 · 실제 크기 아님" 을 띄움)
+  const ex = document.getElementById('viewer3d-exag');
+  if (ex) ex.addEventListener('click', () => {
+    const on = ex.getAttribute('aria-pressed') !== 'true';
+    ex.setAttribute('aria-pressed', String(on)); ex.classList.toggle('on', on);
+    frame.contentWindow && frame.contentWindow.postMessage({ytExag: on ? 10 : 1}, location.origin);
+  });
 })();

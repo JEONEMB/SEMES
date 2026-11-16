@@ -107,8 +107,9 @@
     <section class="panel viewer3d" id="viewer3d">  <!-- [verify_web_3d] 3D 장비: 스테이지 위치만 받아 그림, 장비 조작 없음 -->
       <div class="panel-head"><span>3D 장비</span>
         <div class="seg" role="group" aria-label="3D 보는 방향" id="viewer3d-views">
-          <button data-view="all" class="on">전체</button><button data-view="side">옆</button><button data-view="top">위</button><button data-view="mount">출력 받침</button><button data-view="cam">카메라→QR</button>
+          <button data-view="all" class="on">전체</button><button data-view="side">옆</button><button data-view="top">위</button><button data-view="cam">카메라→QR</button><button data-view="near">가까이</button><button data-view="near_top">위·가까이</button>
         </div>
+        <button class="toggle" id="viewer3d-exag" type="button" aria-pressed="false" title="센터 대비 움직임을 10배로 그림 (실제 크기 아님)">과장 ×10</button>
       </div>
       <div class="viewer3d-box"><iframe id="viewer3d-frame" src="/viewer/?embed=1" title="3D 장비"></iframe></div>
     </section>
