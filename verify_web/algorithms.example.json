@@ -17,8 +17,8 @@
   {
    "id": "shin",
    "label": "윤석 (QR만)",
-   "path": "verify_web/native/build_shin/align_worker",
-   "config": "~/SHIN_Algorithm/experiments/shin/ssafy_qr_pose/config/qr_pose.yml",
+   "path": "verify_web/native/build_shin_rig/align_worker",
+   "config": "~/SHIN_Algorithm/experiments/shin/qr_only_multiple_exe/native/models/rig-cancellation.xml.gz",
    "gray": true
   }
  ]

@@ -26,12 +26,21 @@ set(ALGO_INCLUDES ${REPO_ROOT}/include CACHE STRING "alignment.hpp 가 있는 �
 #                              실행할 때 --config 로 모듈의 assets 폴더를 준다. 영점은 자료에 고정 (영점 등록 없음).
 set(HYE_DIR "" CACHE PATH "이혜원 알고리즘 저장소 형태 폴더")
 set(HYE_MODULE "" CACHE PATH "이혜원 모듈 폴더 (예: .../experiments/hye/00000_final_Y_T_ssafy)")
+#   -DQR_RIG_DIR=/path/experiments/shin/qr_only_multiple_exe/native
+#                              신윤석 QR 전용 Rig 모델 (qr::Cancellation). --config = models/rig-cancellation.xml.gz.
+#                              센터 기준 사진(ALGR)으로 모델을 만든다 (기준 사진 대비 Y·Θ).
+set(QR_RIG_DIR "" CACHE PATH "신윤석 qr_only_multiple_exe/native 폴더")
 #   -DQR_POSE_DIR=/path/experiments/shin/ssafy_qr_pose
 #                              신윤석 QR 전용 단일 프레임 추정 (src/alignment.cpp 의 qr_pose::estimate, include/qr_pose.hpp).
 #                              실행할 때 --config 로 config/qr_pose*.yml 을 준다 (없으면 빌드 때 경로의 config/qr_pose.yml).
 set(QR_POSE_DIR "" CACHE PATH "신윤석 ssafy_qr_pose 폴더")
 
-if(QR_POSE_DIR)
+if(QR_RIG_DIR)
+    set(USE_SOURCES ${QR_RIG_DIR}/src/pose.cpp ${QR_RIG_DIR}/src/direct.cpp ${QR_RIG_DIR}/src/control.cpp
+                    ${QR_RIG_DIR}/src/ssafy_alignment.cpp)
+    set(USE_INCLUDES ${QR_RIG_DIR}/include ${REPO_ROOT}/include)
+    message(STATUS "알고리즘: ${QR_RIG_DIR} (qr::Cancellation, 센터 기준 사진 대비)")
+elseif(QR_POSE_DIR)
     set(USE_SOURCES ${QR_POSE_DIR}/src/alignment.cpp)
     set(USE_INCLUDES ${QR_POSE_DIR}/include ${REPO_ROOT}/include)
     message(STATUS "알고리즘: ${QR_POSE_DIR} (qr_pose::estimate, 고정 영점)")
@@ -56,7 +65,9 @@ endif()
 add_executable(align_worker align_worker.cpp ${USE_SOURCES})
 target_include_directories(align_worker PRIVATE ${USE_INCLUDES} ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(align_worker PRIVATE ${OpenCV_LIBS} Threads::Threads)
-if(QR_POSE_DIR)
+if(QR_RIG_DIR)
+    target_compile_definitions(align_worker PRIVATE ALGO_HAS_QR_RIG=1)
+elseif(QR_POSE_DIR)
     target_compile_definitions(align_worker PRIVATE ALGO_HAS_QR_POSE=1
                                QR_POSE_DEFAULT_MODEL="${QR_POSE_DIR}/config/qr_pose.yml")
 elseif(HYE_MODULE)
