@@ -74,7 +74,7 @@
   // ---------- Y·Θ 지도 ----------
   // 가운데(허용 범위)를 크게 보이게 대칭 로그 눈금: f(v) = sign·log(1+|v|/c)/log(1+R/c), c = 허용값
   function drawPlot(s) {
-    const st = s.settings, svg = $('plot'), box = {width: svg.clientWidth, height: svg.clientHeight};   // [verify_web_3d] 화면 맞춤 배율(zoom)과 상관없는 칸 크기
+    const st = s.settings, svg = $('plot'), box = svg.getBoundingClientRect();
     // 실제 크기로 그려서 글자가 커지지 않게
     const W = Math.max(240, Math.round(box.width) || 400), H = Math.max(200, Math.round(box.height) || 300), L = 52, R = 14, T = 24, B = 36;
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);

@@ -23,12 +23,16 @@
   <div class="left">
     <section class="panel camera-panel">
       <div class="panel-head">
-        <span id="cam-info">카메라</span>
-        <span class="legend inhead"><span><i class="l-target"></i>목표</span><span><i class="l-now"></i>지금</span></span>
-        <div class="seg" role="group" aria-label="확대">
+        <div class="cam-tabs" role="tablist" aria-label="카메라 화면">  <!-- [verify_web_3d] 장비 카메라 / 3D 시뮬레이터 -->
+          <button type="button" role="tab" data-camtab="cam" class="on" aria-selected="true">장비 카메라</button><button type="button" role="tab" data-camtab="sim" aria-selected="false">3D 시뮬레이터</button>
+        </div>
+        <span id="cam-info" class="cam-only">카메라</span>
+        <span class="sim-only sim-note" hidden>3D 장비 안의 가상 카메라 (SEMES 화각) · 위치 = 스테이지 STATUS · 장비 조작 없음</span>
+        <button class="toggle sim-only" id="sim-exag" type="button" aria-pressed="false" title="센터 대비 움직임을 10배로 그림 (실제 크기 아님)" hidden>과장 ×10</button>
+        <div class="seg cam-only" role="group" aria-label="확대">
           <button data-zoom="1" class="on">1×</button><button data-zoom="2">2×</button><button data-zoom="4">4×</button>
         </div>
-        <div class="seg" role="group" aria-label="영상 종류">
+        <div class="seg cam-only" role="group" aria-label="영상 종류">
           <button data-mode="normal" class="on">일반</button><button data-mode="diff" title="지금 영상 − 센터 기준 사진. 정렬되면 판이 회색으로 사라짐">차이</button>
         </div>
       </div>
@@ -39,10 +43,14 @@
           <em class="axis" id="ax-y" data-on="false">Y</em><em class="axis" id="ax-t" data-on="false">Θ</em></div>
         <div class="center-badge" id="center-badge" hidden></div>
         <div class="video-empty" id="video-empty" hidden><strong>영상 없음</strong><span id="video-empty-msg"></span></div>
+        <div class="sim-view" id="sim-view" hidden><iframe id="sim-frame" title="3D 시뮬레이터 (가상 카메라와 3D 장비 전체)"></iframe></div>
       </div></div>
+      <div class="legend cam-only">
+        <span><i class="l-target"></i>목표</span>
+        <span><i class="l-now"></i>지금</span>
+      </div>
     </section>
 
-    <div class="ctrl-row">  <!-- [verify_web_3d] 버튼과 진행 단계를 카메라 아래에 나란히 -->
     <section class="panel flow">
       <div class="step-card" data-step="1">
         <div class="step-head"><b>1</b><strong>시작 위치 잡기</strong></div>
@@ -71,23 +79,6 @@
         </div>
       </div>
     </section>
-    <section class="panel progress-card">
-      <ol class="flow-steps" id="flow-steps">
-        <li data-step="1"><b>1</b>시작 위치</li><li data-step="2"><b>2</b>자동 보정</li><li data-step="3"><b>✓</b>센터 OK</li>
-      </ol>
-      <ol class="axis-steps" id="axis-steps" hidden>
-        <li data-ax="y"><b>1</b>Y 이동</li><li data-ax="t"><b>2</b>Θ 이동</li><li data-ax="done"><b>✓</b>Y·Θ 모두 허용 안</li>
-      </ol>
-      <div class="phase" id="phase-box" data-phase="idle"><span class="light"></span><div><strong id="phase">대기</strong><p id="message"></p></div></div>
-      <div class="trial-line">
-        <span class="label">회차</span><strong id="trial">0</strong><span class="muted">/ <span id="trial-max">20</span></span>
-        <ol class="steps" id="steps">
-          <li data-phase="settling">흔들림 대기</li><li data-phase="capturing">촬영</li><li data-phase="inferring">추론</li><li data-phase="moving">보정 이동</li>
-        </ol>
-      </div>
-      <div class="result" id="result" hidden></div>
-    </section>
-    </div>
   </div>
 
   <div class="right">
@@ -104,16 +95,6 @@
       <div class="verdict" id="verdict">측정 전</div>
     </section>
 
-    <section class="panel viewer3d" id="viewer3d">  <!-- [verify_web_3d] 3D 장비: 스테이지 위치만 받아 그림, 장비 조작 없음 -->
-      <div class="panel-head"><span>3D 장비</span>
-        <div class="seg" role="group" aria-label="3D 보는 방향" id="viewer3d-views">
-          <button data-view="all" class="on">전체</button><button data-view="side">옆</button><button data-view="top">위</button><button data-view="cam">카메라→QR</button><button data-view="near">가까이</button><button data-view="near_top">위·가까이</button>
-        </div>
-        <button class="toggle" id="viewer3d-exag" type="button" aria-pressed="false" title="센터 대비 움직임을 10배로 그림 (실제 크기 아님)">과장 ×10</button>
-      </div>
-      <div class="viewer3d-box"><iframe id="viewer3d-frame" src="/viewer/?embed=1" title="3D 장비"></iframe></div>
-    </section>
-
     <section class="panel plot-card">
       <div class="panel-head"><span>Y · Θ 지도</span></div>
       <div class="plot-box" id="plot-box"><svg id="plot" viewBox="0 0 400 300" preserveAspectRatio="none" aria-label="센터 대비 Y·Θ 위치와 보정 경로"></svg></div>
@@ -122,6 +103,22 @@
       </div>
     </section>
 
+    <section class="panel progress-card">
+      <ol class="flow-steps" id="flow-steps">
+        <li data-step="1"><b>1</b>시작 위치</li><li data-step="2"><b>2</b>자동 보정</li><li data-step="3"><b>✓</b>센터 OK</li>
+      </ol>
+      <ol class="axis-steps" id="axis-steps" hidden>
+        <li data-ax="y"><b>1</b>Y 이동</li><li data-ax="t"><b>2</b>Θ 이동</li><li data-ax="done"><b>✓</b>Y·Θ 모두 허용 안</li>
+      </ol>
+      <div class="phase" id="phase-box" data-phase="idle"><span class="light"></span><div><strong id="phase">대기</strong><p id="message"></p></div></div>
+      <div class="trial-line">
+        <span class="label">회차</span><strong id="trial">0</strong><span class="muted">/ <span id="trial-max">20</span></span>
+        <ol class="steps" id="steps">
+          <li data-phase="settling">흔들림 대기</li><li data-phase="capturing">촬영</li><li data-phase="inferring">추론</li><li data-phase="moving">보정 이동</li>
+        </ol>
+      </div>
+      <div class="result" id="result" hidden></div>
+    </section>
   </div>
 
   <section class="panel history">

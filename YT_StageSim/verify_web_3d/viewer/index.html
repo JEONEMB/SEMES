@@ -19,8 +19,12 @@ html,body{margin:0;height:100%;overflow:hidden;background:#e7e9e5;font-family:"P
 #hint{position:absolute;left:8px;bottom:6px;font-size:11px;color:#637187;pointer-events:none}
 #loading{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;color:#637187;background:#e7e9e5}
 #exag{position:absolute;right:8px;bottom:8px;background:#b06f0c;color:#fff;border-radius:4px;padding:5px 10px;font-size:12px;font-weight:700}
-#ghostnote{position:absolute;left:8px;bottom:26px;font-size:11px;color:#2a5fb0;background:#ffffffcc;border-radius:3px;padding:2px 6px}
 #views button.toggle.on{background:#b06f0c;border-color:#b06f0c}
+/* simcam: 가상 카메라 전체 + 오른쪽 아래 3D 장비 작은 창 (Unity Viewer.PIP 과 같은 비율: 오른쪽 1.5%, 아래 3%, 폭·높이 28%) */
+#pip{position:absolute;right:1.5%;bottom:3%;width:28%;height:28%;border:1px solid #b9c5d6;border-radius:0 0 4px 4px;pointer-events:none;box-shadow:0 2px 10px #0b173033}
+#pip .cap{position:absolute;left:-1px;right:-1px;bottom:100%;height:22px;box-sizing:border-box;padding:0 8px;display:flex;align-items:center;background:#f7f9fc;border:1px solid #b9c5d6;border-bottom:0;border-radius:4px 4px 0 0;font-size:11px;font-weight:700;color:#0A3D91}
+#simbadge{position:absolute;top:8px;right:8px;background:#e8eefb;border:1px solid #c5d5ef;border-radius:4px;padding:4px 10px;font-size:12px;font-weight:700;color:#0A3D91}
+body.simcam #exag{right:auto;left:8px}
 </style>
 </head>
 <body>
@@ -29,13 +33,17 @@ html,body{margin:0;height:100%;overflow:hidden;background:#e7e9e5;font-family:"P
 <div id="info">verify_web 연결 중…</div>
 <div id="views"></div>
 <div id="hint">드래그 회전 · 오른쪽 드래그 이동 · 휠 확대 · 위치 = 스테이지 STATUS, 이동 중에는 속도로 추정 · 장비 조작 없음</div>
-<div id="ghostnote" hidden>반투명 파랑 = 센터 자세</div>
 <div id="exag" hidden></div>
+<div id="simbadge" hidden>가상 카메라</div>
+<div id="pip" hidden><div class="cap">3D 장비 · 전체</div></div>
 <script>
 // Rig.Views 와 같은 순서·이름
 // near, near_top: 이 화면 전용 근접 보기 (ViewerApp.SetView)
 const VIEWS = [['all', '전체'], ['side', '옆 (Y 방향)'], ['back', '사람 쪽'], ['top', '위'], ['mount', '출력 받침'], ['cam', '카메라→QR'], ['target', '타깃'], ['near', '가까이'], ['near_top', '위·가까이']];
 const EXAG = 10;   // 과장 배율
+// simcam 작은 창의 처음 시점: 카메라 위치 x,y,z, 보는 곳 x,y,z (도면 좌표 mm). 전체 보기에서 스테이지·카메라·QR 판 쪽으로 당김
+const PIP_VIEW = [-450, 331, -408, 60, 110, 0];
+const MODE = new URLSearchParams(location.search).get('mode');
 const $ = id => document.getElementById(id);
 let unity = null, last = null;
 
@@ -60,6 +68,7 @@ function setExag(k) {
   b.onclick = () => setExag(exag > 1 ? 1 : EXAG); $('views').appendChild(b); }
 // verify_web_3d 화면 안(?embed=1)에서는 보기 단추를 칸 머리가 갖고 있어 여기 것은 숨기고, 같은 출처에서 오는 신호만 받음
 if (new URLSearchParams(location.search).get('embed') === '1') { $('views').hidden = true; $('hint').hidden = true; }
+if (MODE === 'simcam') { document.body.classList.add('simcam'); $('views').hidden = true; $('hint').hidden = true; $('pip').hidden = false; $('simbadge').hidden = false; }
 window.addEventListener('message', ev => {
   if (ev.origin !== location.origin || !ev.data) return;
   if (typeof ev.data.ytView === 'string') setView(ev.data.ytView, document.querySelector(`#views button[data-view="${ev.data.ytView}"]`));
@@ -84,7 +93,6 @@ function show(s) {
   $('info').innerHTML = `스테이지 Y <b>${p.y_mm.toFixed(3)}</b> mm · Θ <b>${p.t_deg.toFixed(3)}</b>°` +
     (s.moving ? ' · <span class="mv">이동 중</span>' : '') +
     `<br>센터 대비 Y <b>${f(dy, 3)}</b> mm · Θ <b>${f(dt, 3)}</b>°`;
-  $('ghostnote').hidden = !(Math.abs(dy) > 0.02 || Math.abs(dt) > 0.005 || exag > 1);
 }
 function send() { if (unity && last) unity.SendMessage('Viewer', 'OnState', JSON.stringify(pick(last))); }
 
@@ -95,18 +103,20 @@ function listen() {
 }
 
 const s = document.createElement('script');
-s.src = 'Build/236168e6b0e2cded86fdf548bec08f16.loader.js';
+s.src = 'Build/c7c52713edfd9cbb9ac9d2545f25404e.loader.js';
 s.onload = () => {
   createUnityInstance($('c'), {
-    dataUrl: 'Build/6069c02df563384d8159055a238b28d0.data.unityweb',
+    dataUrl: 'Build/33e1074f32a6dacf3e16fce8750a67dd.data.unityweb',
     frameworkUrl: 'Build/9710bac44798be74c5856bed50113449.framework.js.unityweb',
-    codeUrl: 'Build/a9cc2612e19b0ec21fecb48f2a9a18c5.wasm.unityweb',
+    codeUrl: 'Build/1f936ca78de7e371d82ec00bb05d2b5e.wasm.unityweb',
     streamingAssetsUrl: 'StreamingAssets',
     companyName: "DefaultCompany",
     productName: "YT_StageSim",
     productVersion: "1.0",
   }, p => { $('pct').textContent = Math.round(p * 100) + '%'; })
-  .then(u => { unity = u; $('loading').remove(); send(); if (exag > 1) setExag(exag); })
+  .then(u => { unity = u; $('loading').remove();
+    if (MODE === 'simcam') { u.SendMessage('Viewer', 'SetLayout', 'simcam'); u.SendMessage('Viewer', 'SetOrbit', PIP_VIEW.join(',')); }
+    send(); if (exag > 1) setExag(exag); })
   .catch(e => { $('loading').textContent = '3D 장비를 띄우지 못함: ' + e; });
 };
 document.body.appendChild(s);

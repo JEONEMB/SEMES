@@ -3,12 +3,10 @@
 //   이동 중에는 verify_web 이 STATUS 를 묻지 않으므로(runner.py _axis_plan) 축별 이동량·예상 시간으로 자세를 추정하고, 끝나면 보고 위치로 맞춘다
 //   글씨는 모두 페이지 HTML 에서 그림 (웹 빌드에는 한글 글꼴이 없음)
 // 움직임이 눈에 띄게 (보정 이동은 Y 1~2 mm, Θ 1° 안팎이라 장비 전체 보기에서는 몇 px 밖에 안 됨)
-//   · 센터 고스트: 움직이는 부분(Y 캐리지 + Θ + 카메라 받침)을 반투명으로 복제해 센터 자세에 그림 → 지금 자세와의 어긋남이 보임
 //   · 근접 보기: 스테이지를 가까이 보는 보는 방향 2개 (이 화면 전용)
 //   · 과장: 켜면 센터 대비 움직임을 k 배로 그림 (페이지가 "실제 크기 아님" 표시). Y 행정 ±25 mm 안으로 제한
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace YT
 {
@@ -18,8 +16,11 @@ namespace YT
         St st; double serverOffset;   // 서버 시계 − 이 화면 시계 (초)
         float lastY = float.NaN, lastT = float.NaN;
         bool debug; float nextLog;
-        Transform ghostY, ghostT; float ghostKeyY = float.NaN, ghostKeyT = float.NaN;
         float exag = 1;               // 움직임 과장 배율 (1 = 실제 크기)
+        // simcam 배치 (verify_web_3d 카메라 칸의 "3D 시뮬레이터" 탭): 화면 전체 = 3D 장비 안의 가상 카메라(SEMES 화각),
+        // 오른쪽 아래 작은 창 = 3D 장비 전체 (드래그·휠로 돌리고 확대). 작은 창 자리는 페이지 HTML 의 테두리와 같은 비율
+        public static readonly Rect PIP = new Rect(1f - 0.015f - 0.28f, 0.03f, 0.28f, 0.28f);
+        string pendingLayout, pendingOrbit; bool simcam;
         const float EXAG_MAX_T = 20;  // 과장했을 때 Θ 그림 한계 (°)
 
         // 페이지 JS 가 verify_web 상태에서 골라 넘기는 값 (null 이 없게 평평하게)
@@ -41,26 +42,41 @@ namespace YT
             if (Files.Error != null) Debug.LogError("3D 파일 받기 실패: " + Files.Error);
             App.BuildWorld(transform, out rig, out cam, out orbit, out semes);
             semes.cam.enabled = false;           // SEMES 가상 카메라 화면은 쓰지 않음 (실제 영상은 verify_web 에 있음)
-            MakeGhost();
             rig.SetPose(-Rig.Y_SWITCH_ON, 0);   // 위치를 받기 전: 원점 자리
+            if (pendingLayout != null) SetLayout(pendingLayout);
+            // 3D 카메라(OrbitCam)가 첫 프레임에 기본 시점을 잡으므로, 페이지가 정한 시점은 그 뒤에 넣음
+            yield return null; yield return null;
+            ready = true;
+            if (pendingOrbit != null) SetOrbit(pendingOrbit);
+        }
+        bool ready;
+
+        // "simcam" = 가상 카메라 전체 화면 + 3D 장비 작은 창, 그 밖 = 3D 장비 전체 화면 (예전 3D 칸)
+        public void SetLayout(string mode)
+        {
+            if (rig == null) { pendingLayout = mode; return; }
+            simcam = mode == "simcam";
+            if (simcam)
+            {
+                semes.cam.targetTexture = null; semes.cam.rect = new Rect(0, 0, 1, 1); semes.cam.depth = 0; semes.cam.enabled = true;
+                cam.rect = PIP; cam.depth = 1;
+                orbit.pointerBlocked = () => !cam.pixelRect.Contains(Input.mousePosition);   // 돌리기·확대는 작은 창 안에서만
+            }
+            else
+            {
+                semes.cam.enabled = false; cam.rect = new Rect(0, 0, 1, 1); cam.depth = 0; orbit.pointerBlocked = null;
+            }
         }
 
-        // 움직이는 부분을 통째로 복제해 반투명 파랑으로 (충돌·카메라·스크립트는 지움)
-        void MakeGhost()
+        // "px,py,pz,tx,ty,tz" (도면 좌표 mm): 카메라 위치와 보는 곳. 작은 창 처음 시점을 페이지가 정함
+        public void SetOrbit(string csv)
         {
-            var go = Instantiate(rig.yG.gameObject, rig.yG.parent);
-            go.name = "CenterGhost";
-            foreach (var c in go.GetComponentsInChildren<Component>(true))
-                if (!(c is Transform) && !(c is MeshFilter) && !(c is MeshRenderer)) Destroy(c);
-            var mat = new Material(Shader.Find("Legacy Shaders/Transparent/Diffuse")) { color = new Color(0.20f, 0.55f, 1f, 0.30f), name = "ghost" };
-            foreach (var r in go.GetComponentsInChildren<MeshRenderer>(true))
-            {
-                var arr = new Material[r.sharedMaterials.Length];
-                for (int i = 0; i < arr.Length; i++) arr[i] = mat;
-                r.sharedMaterials = arr; r.shadowCastingMode = ShadowCastingMode.Off; r.receiveShadows = false;
-            }
-            ghostY = go.transform; ghostT = ghostY.Find(rig.tG.name);
-            go.SetActive(false);
+            if (!ready) { pendingOrbit = csv; return; }
+            var p = csv.Split(',');
+            if (p.Length != 6) return;
+            var v = new float[6];
+            for (int i = 0; i < 6; i++) if (!float.TryParse(p[i], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out v[i])) return;
+            orbit.Set(Geo.P(v[0], v[1], v[2]), Geo.P(v[3], v[4], v[5]));
         }
 
         public void OnState(string json)
@@ -113,27 +129,12 @@ namespace YT
                 dt = Mathf.Clamp(dt, st.ct - EXAG_MAX_T, st.ct + EXAG_MAX_T);
             }
             float yy = SimY(dy);
-            UpdateGhost(y, t);
             if (!Mathf.Approximately(yy, lastY) || !Mathf.Approximately(dt, lastT)) { rig.SetPose(yy, dt); lastY = yy; lastT = dt; }
             if (debug && Time.unscaledTime > nextLog)
             {   // 확인용: 주소에 ?debug=1 이면 0.5초마다 그린 자세를 브라우저 콘솔에
                 nextLog = Time.unscaledTime + 0.5f;
-                Debug.Log($"[viewer] 보고 Y {st.y:0.000} Θ {st.t:0.000} · 추정 Y {y:0.000} Θ {t:0.000} · 그림 Y {dy:0.000} Θ {dt:0.000} (×{exag}) · 이동 {st.moving} · 고스트 {(ghostY != null && ghostY.gameObject.activeSelf)}");
+                Debug.Log($"[viewer] 보고 Y {st.y:0.000} Θ {st.t:0.000} · 추정 Y {y:0.000} Θ {t:0.000} · 그림 Y {dy:0.000} Θ {dt:0.000} (×{exag}) · 이동 {st.moving}");
             }
-        }
-
-        // 센터 고스트: 센터 자세에 둠. 거의 센터에 있으면 겹쳐 깜빡이므로 숨김
-        void UpdateGhost(float y, float t)
-        {
-            if (ghostY == null) return;
-            bool show = st.hasCenter && (Mathf.Abs(y - st.cy) > 0.02f || Mathf.Abs(t - st.ct) > 0.005f || exag > 1);
-            if (ghostY.gameObject.activeSelf != show) ghostY.gameObject.SetActive(show);
-            if (!show || (st.cy == ghostKeyY && st.ct == ghostKeyT)) return;
-            // 같은 계산을 쓰려고 장비를 잠깐 센터 자세로 놓고 자세값을 복사한 뒤 다음 Update 에서 다시 지금 자세로
-            rig.SetPose(SimY(st.cy), st.ct);
-            ghostY.localPosition = rig.yG.localPosition;
-            if (ghostT != null) ghostT.localRotation = rig.tG.localRotation;
-            ghostKeyY = st.cy; ghostKeyT = st.ct; lastY = float.NaN;
         }
     }
 }

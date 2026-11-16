@@ -1,19 +1,24 @@
-# verify_web_3d — verify_web 사본 + 3D 장비 칸
+# verify_web_3d — verify_web 사본 + 3D 시뮬레이터 탭
 
-팀 `verify_web`(GitLab dev `efce800`, 2026-11-16)을 복사해 **3D 장비 칸만 더한 사본**이다. 원본(dev)은 고치지 않는다.
-3D 칸은 스테이지가 알려 준 위치(`/api/events` 의 `position`)를 따라 그리기만 하고 장비에는 아무 명령도 보내지 않는다.
+팀 `verify_web`(GitLab dev `efce800`, 2026-11-16)을 복사해 **카메라 칸에 `3D 시뮬레이터` 탭만 더한 사본**이다. 원본(dev)은 고치지 않는다.
+화면 배치는 원본 그대로다. 카메라 칸 머리의 탭으로 `장비 카메라`(기본, 원본과 같음)와 `3D 시뮬레이터`를 바꿔 본다.
+3D 는 스테이지가 알려 준 위치(`/api/events` 의 `position`)를 따라 그리기만 하고 장비에는 아무 명령도 보내지 않는다.
+
+## 3D 시뮬레이터 탭
+- 화면 전체: 3D 장비 안의 가상 카메라(SEMES 화각)가 찍는 화면. 왼쪽 위에 스테이지 위치
+- 오른쪽 아래 작은 창: 3D 장비 전체. 처음에는 스테이지·카메라·QR 판이 들어오게 당긴 시점이고, 창 안에서 드래그로 돌리고 휠로 확대·축소
+- 칸 머리 `과장 ×10`: 센터 대비 움직임을 10배로 그림 ("움직임 ×10 과장 · 실제 크기 아님" 표시)
 
 ## 원본과 다른 점
 | 파일 | 바꾼 것 |
 |---|---|
 | `__main__.py` | 기본 `--data-dir` = `verify_web/instance`, 기본 `--algo-path` = `verify_web/native/build/align_worker` (원본과 설정·알고리즘 목록·기록을 같이 씀. 같은 `server.lock` 이라 원본과 동시에 뜨지 않음) |
 | `app.py` | `/viewer/` 경로 추가 (3D 화면 파일 `viewer/`) |
-| `templates/index.html` | C안 배치: 진행 단계 칸을 버튼 칸 옆(카메라 아래)으로, `3D 장비` 칸을 센터와의 차이 아래로, 카메라 범례를 칸 머리로. css·js 한 줄씩 |
-| `static/verify.js` | 지도 크기를 `getBoundingClientRect` 대신 `clientWidth/Height` 로 잼 (화면 맞춤 배율에서 지도가 찌그러지지 않게) 한 줄 |
-| `static/viewer3d.css`, `static/viewer3d.js` | 새 파일. C안 배치, 창 크기 맞춤 배율(폭 1920 + 좌우 여백 60, 높이 975 기준), 3D 보기 단추 |
-| `viewer/` | Unity 웹 빌드 (YT_StageSim `YT/웹 3D 빌드` 메뉴로 다시 만듦) |
+| `templates/index.html` | 카메라 칸 머리에 탭 2개와 `과장 ×10`, 영상 칸 안에 3D 시뮬레이터 iframe, css·js 한 줄씩. 나머지는 원본 그대로 |
+| `static/viewer3d.css`, `static/viewer3d.js` | 새 파일. 탭 전환(처음 열 때 3D 를 불러옴), 과장 단추 |
+| `viewer/` | Unity WebGL 빌드 (YT_StageSim `YT/웹 3D 빌드` 메뉴로 다시 만듦. `?mode=simcam` = 가상 카메라 + 작은 창) |
 
-나머지 파일은 원본 그대로다. 원본이 바뀌면 위 표의 부분만 다시 옮기면 된다.
+`static/verify.js`, `static/verify.css` 와 나머지 파일은 원본 그대로다. 원본이 바뀌면 위 표의 부분만 다시 옮기면 된다.
 
 ## 파이에서 실행
 이 폴더를 팀 저장소 루트(`verify_web` 옆)에 `verify_web_3d` 이름으로 두고, 원본 대신 실행한다. 옵션은 원본과 같다.
@@ -21,7 +26,7 @@
 # 원본 verify_web 이 떠 있으면 먼저 끈다
 demo_web/.venv/bin/python -m verify_web_3d serve --mode hardware --host 0.0.0.0
 ```
-화면 `http://<파이 IP>:8090` 아래쪽 `3D 장비` 칸. 3D 파일(약 26 MB)은 처음 열 때 브라우저가 받는다.
+화면 `http://<파이 IP>:8090`. 3D 파일(약 26 MB)은 `3D 시뮬레이터` 탭을 처음 열 때 브라우저가 받는다.
 
 ## 3D 위치
 - 펌웨어 위치를 도면 자세로 바꿀 때 원점 = −Y 스위치 작동점(−22.4 mm)으로 가정한다 (Windows 대시보드와 같음, 실물 장착 위치와 다를 수 있음).
