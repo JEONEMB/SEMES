@@ -213,59 +213,16 @@
       const info = axisInfo(ax) || {on: false, frac: 1, left: 0};
       left = Math.max(left, info.left);
       if (tg.final && v[i]) extra = Math.max(extra, Math.abs(goal[i] - end[i]) / v[i]);
-      const o = origin[i] - c[i], g = goal[i] - c[i];
-      return {o, g, a: start[i] - c[i], b: end[i] - c[i], est: start[i] - c[i] + d[i] * info.frac,
-              on: info.on, moves: Math.abs(g - o) >= 0.0005 || Math.abs(d[i]) >= 0.0005,
-              done: !tg.final && info.frac >= 1};
+      const o = origin[i] - c[i], g = goal[i] - c[i], a0 = start[i] - c[i], a1 = end[i] - c[i];
+      const est = a0 + d[i] * info.frac;
+      // 진행률 = 지나온 거리 ÷ 전체 거리 (접근점을 거쳐 되돌아와도 줄지 않게, 접근점까지 + 접근점→목표)
+      const [run, total] = tg.final
+        ? [Math.abs(est - o), Math.abs(a1 - o) + Math.abs(g - a1)]
+        : [Math.abs(a0 - o) + Math.abs(est - a0), Math.abs(a0 - o) + Math.abs(g - a0)];
+      return {o, g, est, on: info.on, moves: total >= 0.0005,
+              frac: total >= 0.0005 ? Math.min(1, run / total) : 1, done: !tg.final && info.frac >= 1};
     });
     return {y: axes[0], t: axes[1], left: left + extra};
-  }
-
-  const NS = 'http://www.w3.org/2000/svg';
-  function gaugeRange(m) {
-    let lo = Math.min(0, m.o, m.g, m.a, m.b), hi = Math.max(0, m.o, m.g, m.a, m.b);
-    if (hi - lo < 1e-6) { lo -= 0.5; hi += 0.5; }
-    const pad = (hi - lo) * 0.06;
-    return [lo - pad, hi + pad];
-  }
-  function gaugeLabels(m, unit, dp, xo, xg) {
-    // 왼쪽·오른쪽 끝에 '출발'·'목표' 값 (자리 순서대로, 표식 모양으로 짝을 맞춘다)
-    const lo = `<tspan class="g-o">○</tspan> 출발 ${fmt(m.o, dp)}${unit}`, go = `<tspan class="g-g">▼</tspan> 목표 ${fmt(m.g, dp)}${unit}`;
-    const [l, r] = xo <= xg ? [lo, go] : [go, lo];
-    return `<text x="6" y="52" class="g-lab">${l}</text><text x="234" y="52" text-anchor="end" class="g-lab">${r}</text>`;
-  }
-  function drawRuler(svg, m) {       // Y: 직선 스테이지 → 가로 자 위로 점이 미끄러진다
-    const [lo, hi] = gaugeRange(m), X = v => 14 + (v - lo) / (hi - lo) * 212, y = 22;
-    const xo = X(m.o), xg = X(m.g), xe = X(m.est), x0 = X(0);
-    svg.innerHTML =
-      `<line x1="14" y1="${y}" x2="226" y2="${y}" class="g-track"/>` +
-      `<line x1="${x0}" y1="${y - 9}" x2="${x0}" y2="${y + 9}" class="g-center"/>` +
-      `<line x1="${xo}" y1="${y}" x2="${xe}" y2="${y}" class="g-path"/>` +
-      `<path d="M${xg - 6} 4 L${xg + 6} 4 L${xg} 13 Z" class="g-goal"/>` +
-      `<circle cx="${xo}" cy="${y}" r="4" class="g-origin"/>` +
-      `<circle cx="${xe}" cy="${y}" r="7" class="g-now"/>` +
-      gaugeLabels(m, ' mm', 3, xo, xg);
-  }
-  function drawDial(svg, m) {        // Θ: 회전 스테이지 → 다이얼 바늘이 돈다 (각도는 보기 좋게 키움)
-    const [lo, hi] = gaugeRange(m), cx = 120, cy = 50, r = 38;
-    const ang = v => (-70 + (v - lo) / (hi - lo) * 140) * Math.PI / 180;
-    const P = (v, rr) => [cx + rr * Math.sin(ang(v)), cy - rr * Math.cos(ang(v))];
-    const arc = (v1, v2, rr) => {
-      const [x1, y1] = P(v1, rr), [x2, y2] = P(v2, rr);
-      return `M${x1.toFixed(1)} ${y1.toFixed(1)} A${rr} ${rr} 0 0 ${v2 >= v1 ? 1 : 0} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
-    };
-    const [c1, c2] = [P(0, r - 8), P(0, r + 8)], [ox, oy] = P(m.o, r), [ex, ey] = P(m.est, r), [nx, ny] = P(m.est, r - 5);
-    const [g1, g2, g3] = [P(m.g, r + 4), P(m.g, r + 13)], ga = ang(m.g);
-    const gl = [g2[0] + 5 * Math.cos(ga), g2[1] + 5 * Math.sin(ga)], gr = [g2[0] - 5 * Math.cos(ga), g2[1] - 5 * Math.sin(ga)];
-    svg.innerHTML =
-      `<path d="${arc(lo, hi, r)}" class="g-track" fill="none"/>` +
-      `<line x1="${c1[0]}" y1="${c1[1]}" x2="${c2[0]}" y2="${c2[1]}" class="g-center"/>` +
-      `<path d="${arc(m.o, m.est, r)}" class="g-path" fill="none"/>` +
-      `<path d="M${g1[0]} ${g1[1]} L${gl[0]} ${gl[1]} L${gr[0]} ${gr[1]} Z" class="g-goal"/>` +
-      `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" class="g-needle"/><circle cx="${cx}" cy="${cy}" r="4" class="g-hub"/>` +
-      `<circle cx="${ox}" cy="${oy}" r="4" class="g-origin"/>` +
-      `<circle cx="${ex}" cy="${ey}" r="6" class="g-now"/>` +
-      gaugeLabels(m, '°', 3, ang(m.o), ang(m.g));
   }
 
   function renderAxes() {
@@ -282,15 +239,18 @@
     renderMotion(s);
   }
   function renderMotion(s) {
-    // 위치 카드: 이동 중이면 큰 숫자 = 예상 위치, 아래에 축 게이지와 남은 시간 하나
+    // 위치 카드: 이동 중이면 큰 숫자 = 예상 위치, 아래에 축마다 진행 막대, 남은 시간 하나
     const m = motion(s), card = $('pos-card');
     card.classList.toggle('in-motion', !!m);
-    for (const [ax, draw] of [['y', drawRuler], ['t', drawDial]]) {
+    for (const [ax, unit] of [['y', ' mm'], ['t', '°']]) {
+      // 큰 숫자(현재) 아래에 막대 한 줄: 채워진 만큼이 진행률, 오른쪽 끝이 목표
       const g = $('g-' + ax), mm = m && m[ax];
-      g.toggleAttribute('hidden', !mm);          // SVG 는 .hidden 속성이 없다
+      g.hidden = !mm;
       if (!mm) continue;
-      g.dataset.state = !mm.moves ? 'idle' : mm.done ? 'done' : mm.on ? 'on' : 'wait';
-      draw(g, mm);
+      g.dataset.state = !mm.moves ? 'idle' : mm.done ? 'done' : 'on';
+      g.querySelector('u').style.width = (mm.frac * 100).toFixed(1) + '%';
+      g.querySelector('i').textContent = !mm.moves ? '그대로' : mm.done ? '도착' : `${Math.floor(mm.frac * 100)}%`;
+      g.querySelector('em').textContent = `목표 ${fmt(mm.g)}${unit}`;
     }
     if (m) {
       $('off-y').textContent = fmt(m.y.est); $('off-t').textContent = fmt(m.t.est);
