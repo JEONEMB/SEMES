@@ -56,7 +56,10 @@ demo_web/.venv/bin/python -m verify_web serve --mode hardware --host 0.0.0.0 \
 ```bash
 # 성현님 (영점 등록 가능, ALGR)
 cmake -S verify_web/native -B verify_web/native/build_ksh -G Ninja -DALGO_DIR=$HOME/KSH_Algorithm/Code
-# 혜원님 모듈 (initialize_joint, 기본은 assets 의 절대 영점, set_joint_zero 로 그날 센터를 영점). HYE_DIR = 저장소 형태 폴더, HYE_MODULE = 모듈 폴더
+# 혜원님 SSAFY 패키지 (chore/hye/merge-ssafy 2390aed~, 학습 범위 밖 보정 허용). --config = data/model
+#   ALGR: set_zero_from_photos, 영점 사진 점검에 실패하면 set_reference_from_photos 로 기준을 다시 등록한 뒤 다시 영점
+cmake -S verify_web/native -B verify_web/native/build_hye2 -G Ninja -DHYE2_DIR=$HOME/HYE_Algorithm
+# (예전) 혜원님 모듈 (initialize_joint, 기본은 assets 의 절대 영점, set_joint_zero 로 그날 센터를 영점). HYE_DIR = 저장소 형태 폴더, HYE_MODULE = 모듈 폴더
 cmake -S verify_web/native -B verify_web/native/build_hye -G Ninja -DHYE_DIR=$HOME/HYE_Algorithm \
       -DHYE_MODULE=$HOME/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy
 # 신윤석님 QR 전용 Rig 모델 (feature/shin/QRonlyMultipleExe). 센터 기준 사진(ALGR) 대비 Y·Θ.

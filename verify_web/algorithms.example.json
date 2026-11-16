@@ -11,10 +11,10 @@
   {
    "id": "hye",
    "label": "혜원",
-   "path": "verify_web/native/build_hye/align_worker",
-   "config": "~/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy/assets",
+   "path": "verify_web/native/build_hye2/align_worker",
+   "config": "~/HYE_Algorithm/data/model",
    "gray": true,
-   "desc": "QR 가로 이동 1개 + 나사 4개 (값 5개)"
+   "desc": "QR 가로 이동 1개 + 나사 4개 (학습 범위 밖 허용)"
   },
   {
    "id": "shin",

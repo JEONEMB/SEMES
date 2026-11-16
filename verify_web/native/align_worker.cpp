@@ -17,6 +17,9 @@
 // ALGO_HAS_JOINT: 이혜원 값 7개 모듈처럼 initialize_joint(자료 폴더) 를 먼저 부르고 alignment() 를 쓰는 알고리즘
 //   (CMake -DHYE_DIR=... -DHYE_MODULE=... 이 켬). 기본은 자료의 절대 영점. ALGO_JOINT_ZERO(joint_reference.hpp 가 있는
 //   버전)면 ALGR = set_joint_zero (측정이 안 될 만큼 화면이 밀렸으면 set_joint_reference 뒤 다시)
+// ALGO_HYE2: 이혜원 SSAFY 패키지 (CMake -DHYE2_DIR=... 이 켬). --config = data/model 폴더.
+//   alignment::initialize → ALGR = set_zero_from_photos → measure_alignment. correction_allowed 가 아니면 ERR <코드> <메시지>.
+//   학습 범위 밖 경고(W_OUT_OF_RANGE)만 있으면 보정 허용 (OK 뒤에 ' | 경고코드' 를 붙임)
 // ALGO_HAS_QR_RIG: 신윤석 QR 전용 Rig 모델 qr::Cancellation (CMake -DQR_RIG_DIR=.../qr_only_multiple_exe/native 가 켬).
 //   --config 는 rig-cancellation.xml.gz. 센터 기준 사진으로 모델을 만들고(ALGR) 그 사진 대비 Y·Θ 를 낸다.
 //   QR_RIG_JOINT(979c1d75~) 이고 --config 의 kind 가 qr_affine_joint 면(예: rig-reverse-fixed.xml.gz)
@@ -27,6 +30,10 @@
 // 알고리즘 코드가 printf/std::cout 로 찍는 내용이 통신을 깨지 않도록
 // 표준 출력(fd 1)은 표준 에러로 돌리고, 통신은 따로 복제한 fd 로 한다.
 #include "alignment.hpp"
+#ifdef ALGO_HYE2
+struct Alignment_t { double y; double t; };   // 이 패키지 헤더는 namespace alignment 라 공용 구조체가 없음
+static std::string g_hye2_note;              // 마지막 측정의 경고 코드 (화면 기록용)
+#endif
 #ifdef ALGO_JOINT_ZERO
 #include "joint_reference.hpp"
 #endif
@@ -94,7 +101,16 @@ static std::string rois_text(const std::vector<AlignmentRoi> &rois)
 // 사진 한 장 → (y mm, t °). 알고리즘마다 진입 함수가 다르다
 static Alignment_t run_algorithm(cv::Mat &src)
 {
-#ifdef ALGO_HAS_QR_RIG
+#ifdef ALGO_HYE2
+    const alignment::Result m = alignment::measure_alignment(src);
+    if (!m.correction_allowed)
+        throw std::runtime_error((m.code.empty() ? std::string("보정 불가") : m.code) + " " + m.message);
+    g_hye2_note = m.code;
+    Alignment_t r;
+    r.y = m.y_mm;
+    r.t = m.t_deg;
+    return r;
+#elif defined(ALGO_HAS_QR_RIG)
     cv::Mat gray;
     if (src.channels() == 1)
         gray = src;
@@ -178,6 +194,16 @@ int main(int argc, char **argv)
 #else
     std::fprintf(proto, "READY\n");
 #endif
+#elif defined(ALGO_HYE2)
+    {
+        const alignment::Result r = config.empty() ? alignment::initialize("data/model") : alignment::initialize(config);
+        if (r.status == alignment::Status::Failed) {
+            std::fprintf(proto, "ERR 초기화 실패: %s %s\n", r.code.c_str(), one_line(r.message).c_str());
+            std::fflush(proto);
+            return 4;
+        }
+    }
+    std::fprintf(proto, "READY ref\n");
 #elif defined(ALGO_HAS_QR_RIG)
     if (config.empty() || !std::ifstream(config)) {
         std::fprintf(proto, "ERR --config 로 rig-cancellation.xml.gz 를 주세요: %s\n", config.c_str());
@@ -249,6 +275,23 @@ int main(int argc, char **argv)
                 } else {
                     std::fprintf(proto, "ERR %s\n", one_line(alignment_reference_info().message).c_str());
                 }
+#elif defined(ALGO_HYE2)
+                alignment::Result z = alignment::set_zero_from_photos({gray});
+                std::string how;
+                if (z.status == alignment::Status::Failed) {
+                    // 영점 사진 점검 실패 (예: QR 판과 나사 관계가 학습 때와 달라짐) → 그 사진으로 QR·나사 기준을 다시 등록하고 영점 재설정
+                    const alignment::Result ref = alignment::set_reference_from_photos({gray});
+                    std::fprintf(stderr, "[hye2] 영점 실패(%s) → 기준 다시 등록: %s %s\n", z.code.c_str(), ref.code.c_str(),
+                                 one_line(ref.message).c_str());
+                    if (ref.status != alignment::Status::Failed) {
+                        z = alignment::set_zero_from_photos({gray});
+                        how = " | 기준 다시 등록";
+                    }
+                }
+                if (z.status == alignment::Status::Failed)
+                    std::fprintf(proto, "ERR %s %s\n", z.code.c_str(), one_line(z.message).c_str());
+                else   // 돌려주는 값 = 그 사진의 자세 (기준 사진 대비)
+                    std::fprintf(proto, "OK %.9g %.9g%s\n", z.y_mm, z.t_deg, how.c_str());
 #elif defined(ALGO_HAS_QR_RIG)
 #ifdef QR_RIG_JOINT
                 if (g_joint) {
@@ -285,6 +328,9 @@ int main(int argc, char **argv)
 #ifdef ALGO_HAS_REFERENCE
                     std::fprintf(proto, "OK %.9g %.9g %.3f%s\n", static_cast<double>(r.y), static_cast<double>(r.t), ms,
                                  rois_text(alignment_last_info().rois).c_str());
+#elif defined(ALGO_HYE2)
+                    std::fprintf(proto, "OK %.9g %.9g %.3f%s%s\n", static_cast<double>(r.y), static_cast<double>(r.t), ms,
+                                 g_hye2_note.empty() ? "" : " | ", g_hye2_note.c_str());
 #else
                     std::fprintf(proto, "OK %.9g %.9g %.3f\n", static_cast<double>(r.y), static_cast<double>(r.t), ms);
 #endif
