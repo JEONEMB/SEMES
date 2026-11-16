@@ -108,7 +108,7 @@
       hist.forEach((e, i) => {
         const x = X(e.offset.y_mm), y = Y(e.offset.t_deg), last = i === hist.length - 1;
         g += `<circle class="cam-pt${e.within ? ' ok' : ''}${last ? ' last' : ''}" cx="${x}" cy="${y}" r="${last ? 7 : 5.5}"/>` +
-          `<text class="pt-n" x="${x}" y="${y + 3}" text-anchor="middle">${e.trial || ''}</text>`;
+          `<text class="pt-n" x="${x}" y="${y + 3}" text-anchor="middle">${e.trial ? e.trial - 1 : ''}</text>`;
       });
     }
     if (goal && s.moving) g += `<g class="goal"><line x1="${X(goal[0]) - 6}" y1="${Y(goal[1]) - 6}" x2="${X(goal[0]) + 6}" y2="${Y(goal[1]) + 6}"/><line x1="${X(goal[0]) - 6}" y1="${Y(goal[1]) + 6}" x2="${X(goal[0]) + 6}" y2="${Y(goal[1]) - 6}"/></g>`;
@@ -286,7 +286,8 @@
     renderAxisSteps(s);
 
     // 진행
-    $('trial').textContent = run ? run.trial : 0;
+    // 보정 이동 횟수 (측정 n 번째 = 이동 n−1 번 뒤, 이동 중이면 그 이동까지 셈)
+    $('trial').textContent = run ? Math.max(0, run.trial - 1) + (s.moving && s.phase === 'moving' ? 1 : 0) : 0;
     $('trial-max').textContent = run ? run.max_trials : st.max_trials;
     document.querySelectorAll('#steps li').forEach(li => li.classList.toggle('on', li.dataset.phase === s.phase));
     $('phase-box').dataset.phase = s.phase;
@@ -339,13 +340,13 @@
     api('/api/algorithm', {id: b.dataset.algo}).then(() => toast('알고리즘을 바꿨습니다', true)).catch(e => toast(e.message));
   });
 
-  // ---------- Y → Θ 차례 보정 (한 회차 안에서 Y 이동 → Θ 이동) ----------
+  // ---------- Y → Θ 차례 보정 (한 번 측정한 보정량으로 Y 이동 → Θ 이동) ----------
   function renderAxisSteps(s) {
     const st = s.settings, seq = st.sequential_axes && st.enable_t, ol = $('axis-steps');
     document.querySelectorAll('[data-seq]').forEach(b => { b.classList.toggle('on', String(seq) === b.dataset.seq); b.disabled = s.busy || !st.enable_t; });
     ol.hidden = !seq;
     const last = s.run && s.history && s.history.length ? s.history[s.history.length - 1] : null;
-    const stage = s.axis_stage;                       // 'y' | 't' | null (이번 회차 이동 중 어느 단계)
+    const stage = s.axis_stage;                       // 'y' | 't' | null (이번 보정 이동 중 어느 단계)
     const done = !stage && last && last.within;
     ol.querySelectorAll('li').forEach(li => {
       const ax = li.dataset.ax;
@@ -353,12 +354,12 @@
         stage === 'y' ? (ax === 'y' ? 'on' : '') :
         stage === 't' ? (ax === 't' ? 'on' : ax === 'y' ? 'done' : '') : '';
     });
-    // 산출 보정량: 이번 회차에 한 번 잰 두 축 값을 그대로 보여 주고, 지금 어느 축을 옮기는지 표시
+    // 산출 보정량: 이번 측정에서 한 번 잰 두 축 값을 그대로 보여 주고, 지금 어느 축을 옮기는지 표시
     const calc = $('calc'), e = last;
     calc.hidden = !e || e.within;
     if (!calc.hidden) {
       const which = !seq ? 'Y·Θ 함께 이동' : stage === 'y' ? '① Y 이동 중 → 다음 Θ' : stage === 't' ? '② Θ 이동 중 (Y 끝)' : 'Y 먼저, 이어서 Θ';
-      calc.innerHTML = `${e.label} 산출 보정량 <b class="${stage === 't' ? 'dim' : ''}">Y ${fmt(e.command.y_mm)} mm</b> · ` +
+      calc.innerHTML = `${e.trial}번째 보정 이동 · 산출 보정량 <b class="${stage === 't' ? 'dim' : ''}">Y ${fmt(e.command.y_mm)} mm</b> · ` +
         `<b class="${stage === 'y' ? 'dim' : ''}">Θ ${fmt(e.command.t_deg)}°</b><span>${which}</span>`;
     }
   }

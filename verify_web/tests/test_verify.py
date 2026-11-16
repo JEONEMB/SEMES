@@ -285,6 +285,25 @@ class RunnerTest(unittest.TestCase):
         self.assertTrue(s['history'][-1]['within'])
         self.assertTrue((Path(self.tmp.name) / 'runs' / s['run']['id'] / 'run.json').exists())
 
+    def test_counts_are_moves(self):
+        """횟수는 보정 이동 기준: 측정 = 이동 + 1, 마지막 이동 뒤에도 확인 측정을 한다."""
+        r = self.runner(MockAlgorithm(noise_y_mm=0.002, seed=3))
+        r.run((0.8, 0.0))
+        r.wait_idle(30)
+        s = r.snapshot()
+        n = len(s['history'])
+        self.assertEqual(s['history'][0]['label'], '시작 위치')
+        self.assertEqual(s['history'][1]['label'], '이동 1번 후')
+        self.assertEqual(s['run']['result_label'], f'보정 이동 {n - 1}번 만에 허용 오차 안으로 들어옴')
+
+        r = self.runner(FixedAlgorithm(0.3))          # 계속 0.3 mm 로 보이는 알고리즘 → 못 들어옴
+        self.settings.update(dict(max_trials=2))
+        r.run(None)
+        r.wait_idle(10)
+        s = r.snapshot()
+        self.assertEqual(len(s['history']), 3)        # 시작 + 이동 2번 뒤 각각 확인
+        self.assertEqual(s['run']['result_label'], '보정 이동 2번 해도 허용 오차 밖')
+
     def test_command_semantics(self):
         algo = FixedAlgorithm(0.3)
         algo.output = 'command'
