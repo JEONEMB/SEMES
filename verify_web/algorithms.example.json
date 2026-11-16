@@ -20,9 +20,9 @@
    "id": "shin",
    "label": "윤석",
    "path": "verify_web/native/build_shin_rig/align_worker",
-   "config": "~/SHIN_Algorithm/experiments/shin/qr_only_multiple_exe/native/models/rig-cancellation.xml.gz",
+   "config": "~/SHIN_Algorithm/experiments/shin/qr_only_multiple_exe/native/models/rig-reverse-fixed.xml.gz",
    "gray": true,
-   "desc": "QR 3개 가로 위치·휘어짐·폭·높이 (값 4개)"
+   "desc": "QR 3개 아핀 값 18개 (이동·크기·기울기)"
   }
  ]
 }

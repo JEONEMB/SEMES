@@ -36,8 +36,9 @@ set(QR_RIG_DIR "" CACHE PATH "신윤석 qr_only_multiple_exe/native 폴더")
 set(QR_POSE_DIR "" CACHE PATH "신윤석 ssafy_qr_pose 폴더")
 
 if(QR_RIG_DIR)
-    set(USE_SOURCES ${QR_RIG_DIR}/src/pose.cpp ${QR_RIG_DIR}/src/direct.cpp ${QR_RIG_DIR}/src/control.cpp
-                    ${QR_RIG_DIR}/src/ssafy_alignment.cpp)
+    # 라이브러리 소스 전부 (실행 파일용 main·replay·rig_device 는 뺌)
+    file(GLOB USE_SOURCES ${QR_RIG_DIR}/src/*.cpp)
+    list(FILTER USE_SOURCES EXCLUDE REGEX "/(main|replay|rig_device)\\.cpp$")
     set(USE_INCLUDES ${QR_RIG_DIR}/include ${REPO_ROOT}/include)
     message(STATUS "알고리즘: ${QR_RIG_DIR} (qr::Cancellation, 센터 기준 사진 대비)")
 elseif(QR_POSE_DIR)
@@ -67,6 +68,10 @@ target_include_directories(align_worker PRIVATE ${USE_INCLUDES} ${OpenCV_INCLUDE
 target_link_libraries(align_worker PRIVATE ${OpenCV_LIBS} Threads::Threads)
 if(QR_RIG_DIR)
     target_compile_definitions(align_worker PRIVATE ALGO_HAS_QR_RIG=1)
+    if(EXISTS ${QR_RIG_DIR}/src/joint_visual_alignment.cpp)
+        # 비전 상대 보정 모델 (qr::JointVisualModel, 979c1d75~). --config 의 kind 가 qr_affine_joint 면 이것을 쓴다
+        target_compile_definitions(align_worker PRIVATE QR_RIG_JOINT=1)
+    endif()
 elseif(QR_POSE_DIR)
     target_compile_definitions(align_worker PRIVATE ALGO_HAS_QR_POSE=1
                                QR_POSE_DEFAULT_MODEL="${QR_POSE_DIR}/config/qr_pose.yml")
