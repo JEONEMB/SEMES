@@ -22,6 +22,7 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
 .shell{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(380px,1fr);grid-template-rows:minmax(calc(100vh - 100px),auto);gap:14px;padding:14px 20px 32px;max-width:2400px;margin:0 auto}
 /* 위쪽 두 칸은 화면 높이를 채우고 아래 끝선을 맞춘다: 왼쪽은 영상 칸, 오른쪽은 지도가 남는 높이를 가져감 */
 .left,.right{display:flex;flex-direction:column;gap:14px;min-width:0}
+.left{container-type:inline-size;container-name:leftcol}   /* 아래 버튼 줄은 왼쪽 칸 폭에 맞춰 줄바꿈 */
 .camera-panel{flex:1;display:flex;flex-direction:column}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);min-width:0}
 .panel-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;border-bottom:1px solid var(--line);font-size:12px;font-weight:600;color:var(--accent);background:var(--surface2)}
@@ -64,7 +65,7 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
 
 /* 흐름 버튼 */
 /* 아래 버튼 줄: 한 줄 높이(52px)로 맞추고 쓸데없는 여백 없앰 */
-.flow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;padding:10px 12px;align-items:stretch}
+.flow{display:grid;grid-template-columns:auto minmax(240px,1fr) auto;gap:10px;padding:10px 12px;align-items:stretch}
 .flow-btn{display:flex;align-items:center;justify-content:center;gap:10px;text-align:left;border:1px solid #bacbe4;background:var(--surface2);color:var(--ink);border-radius:6px;padding:0 22px;min-height:52px}
 .flow-btn b{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid var(--accent);color:var(--accent);font-size:14px}
 .flow-btn strong{display:block;font-size:16px;white-space:nowrap}
@@ -85,6 +86,18 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
 .pick-group{display:flex;align-items:center;gap:8px}
 .pick-group label{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--muted);white-space:nowrap}
 .pick-group input{width:66px;height:40px;padding:0 8px;border:1px solid #c8d2e1;border-radius:4px;color:var(--ink);text-align:right;font-size:14px;font-variant-numeric:tabular-nums}
+/* 왼쪽 칸이 좁으면: ① 은 한 줄 전체, ② 자동 보정·정지는 아래 줄 */
+@container leftcol (max-width: 1040px){
+  .flow{grid-template-columns:minmax(0,1fr) auto}
+  .step-card{grid-column:1 / -1}
+  .step-body{justify-content:space-between}
+}
+/* 더 좁으면: ① 안의 버튼·입력도 줄바꿈 */
+@container leftcol (max-width: 640px){
+  .step-card{flex-direction:column;align-items:stretch;gap:8px;padding:10px 12px}
+  .step-body{flex-wrap:wrap;justify-content:flex-start}
+  .pick-group{flex-wrap:wrap}
+}
 .speed{grid-column:1 / -1;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px}
 
 /* 오른쪽 */
@@ -194,7 +207,6 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
   .shell{grid-template-columns:1fr;grid-template-rows:none;padding:12px}
   .plot-box{min-height:300px}
   .history,.tools{grid-column:1}
-  .flow{grid-template-columns:1fr 1fr}.step-card{grid-column:1 / -1;flex-wrap:wrap}.step-body{flex-wrap:wrap}
 }
 @media(max-width:520px){
   .top{padding:10px 12px}.pos-big strong{font-size:28px}.flow{grid-template-columns:1fr}
