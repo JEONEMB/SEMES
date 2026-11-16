@@ -172,6 +172,7 @@ Geometry::Geometry(const cv::Mat& reference,const std::vector<cv::Point>& center
     check_frame(reference);
     for (int i=0;i<3;++i) templates_[i]=reference(cv::Rect(centers_[i].x-79,centers_[i].y-86,159,173)).clone();
     zero_=measure(reference);
+    affine_zero_=measure_affine(reference);
 }
 
 Geometry::Geometry(const cv::FileStorage& file,const std::vector<cv::Point>& centers):centers_(centers) {
@@ -182,10 +183,10 @@ cv::Point Geometry::seed(const cv::Mat& frame) const {
     return match(frame,templates_[1],centers_[1],240,45,.8,false);
 }
 
-Features Geometry::measure(const cv::Mat& frame) const {
+AffineFeatures Geometry::measure_affine(const cv::Mat& frame) const {
     check_frame(frame);
     const auto shift=seed(frame);
-    std::array<cv::Vec3d,3> terms;
+    AffineFeatures terms;
     for(int i=0;i<3;++i) {
         const auto p=centers_[i]+shift;
         const cv::Mat current=frame(cv::Rect(p.x-79,p.y-86,159,173)).clone();
@@ -194,14 +195,24 @@ Features Geometry::measure(const cv::Mat& frame) const {
               {cv::TermCriteria::COUNT|cv::TermCriteria::EPS,22,1e-7},cv::noArray(),5);
         if (!(score>=.9) || !cv::checkRange(a)) throw std::runtime_error("Unreliable QR affine fit");
         const double scale=a.at<float>(0,0)-1.;
-        terms[i]={scale*79+a.at<float>(0,1)*86+a.at<float>(0,2)+shift.x,
-                  scale*160,(a.at<float>(1,1)-1.)*174};
+        const double vscale=a.at<float>(1,1)-1.;
+        terms[6*i]=scale*79+a.at<float>(0,1)*86+a.at<float>(0,2)+shift.x;
+        terms[6*i+1]=double(a.at<float>(1,0))*79+vscale*86+a.at<float>(1,2)+shift.y;
+        terms[6*i+2]=scale*160;
+        terms[6*i+3]=double(a.at<float>(1,0))*160;
+        terms[6*i+4]=double(a.at<float>(0,1))*174;
+        terms[6*i+5]=vscale*174;
     }
-    const auto l=terms[0],m=terms[1],r=terms[2];
-    return {(l[0]+m[0]+r[0])/3.,l[0]-2*m[0]+r[0],r[1]-l[1],r[2]-l[2]};
+    return terms;
+}
+
+Features Geometry::measure(const cv::Mat& frame) const {
+    const auto t=measure_affine(frame);
+    return {(t[0]+t[6]+t[12])/3.,t[0]-2*t[6]+t[12],t[14]-t[2],t[17]-t[5]};
 }
 
 Features Geometry::predict(const cv::Mat& frame) const {return measure(frame)-zero_;}
+AffineFeatures Geometry::affine(const cv::Mat& frame) const {return measure_affine(frame)-affine_zero_;}
 
 Cancellation::Cancellation(const std::string& path,const cv::Mat& reference):zero_dx_(0.) {
     const auto f=open_model(path);

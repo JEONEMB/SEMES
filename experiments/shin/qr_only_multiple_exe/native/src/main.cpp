@@ -85,6 +85,20 @@ void ssafy_align_step(const Args& args) {
     }
 }
 
+void vision_joint_step(const Args& args) {
+    const qr::JointVisualModel model(args.value("--model"));
+    const qr::Geometry geometry(qr::read_frame(args.value("--reference")),model.qr_centers());
+    for (const auto& path : args.files) {
+        const auto frame=qr::read_frame(path);
+        const auto step=qr::joint_visual_step(model,geometry.affine(frame));
+        std::cout << "{\"action\":\"" << (step.center ? "qr_center_candidate" : "move_relative")
+                  << "\",\"y_mm\":" << step.estimate[0]
+                  << ",\"theta_deg\":" << step.estimate[1]
+                  << ",\"move_y_um\":" << step.delta[0]
+                  << ",\"move_theta_mdeg\":" << step.delta[1] << "}\n";
+    }
+}
+
 void rig_frame(const Args& args) {
     auto reference=qr::read_frame(args.value("--reference"));
     qr::Cancellation model(args.value("--model","models/rig-cancellation.xml.gz"),reference);
@@ -130,6 +144,7 @@ int main(int argc,char** argv) {
         if (mode=="--help") {
             std::cout<<"qr_pose_cli ssafy --config config/ssafy.json [--direct models/ssafy-direct.xml.gz] FRAME...\n"
                        "qr_pose_cli ssafy-align-step --config config/ssafy.json [--alignment-model MODEL] FRAME...\n"
+                       "qr_pose_cli vision-joint-step --reference CENTER.bmp --model MODEL.xml.gz FRAME...\n"
                        "qr_pose_cli rig-frame --reference CENTER.bmp --model models/rig-cancellation.xml.gz [--direct MODEL] FRAME...\n"
                        "qr_pose_cli direct-check --direct SSAFY_MODEL FRAME...\n";
             return 0;
@@ -139,6 +154,7 @@ int main(int argc,char** argv) {
         std::cout<<std::setprecision(12);
         if (mode=="ssafy") ssafy(args);
         else if (mode=="ssafy-align-step") ssafy_align_step(args);
+        else if (mode=="vision-joint-step") vision_joint_step(args);
         else if (mode=="rig-frame") rig_frame(args);
         else if (mode=="direct-check") direct_check(args);
         else throw std::runtime_error("Unknown mode; use --help");

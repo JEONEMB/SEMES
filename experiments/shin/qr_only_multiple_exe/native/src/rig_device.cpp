@@ -52,6 +52,15 @@ public:
             throw;
         }
     }
+    bool move_relative(qr::Position delta) {
+        try {
+            const auto result=stage_.moveBy({delta[0],delta[1]},std::chrono::milliseconds(60000));
+            return result.ok();
+        } catch (...) {
+            try{stage_.stop();}catch(...){ }
+            throw;
+        }
+    }
 private:
     stage::Stage stage_;
 };
@@ -61,15 +70,47 @@ double number(const char* arg) {
     if (arg[used]!='\0' || !std::isfinite(v)) throw std::runtime_error("Expected a finite number");
     return v;
 }
+
+std::ofstream open_log(const char* path) {
+    const int fd=open(path,O_CREAT|O_EXCL|O_WRONLY|O_CLOEXEC,0644);
+    if (fd<0) throw std::runtime_error("Cannot create a new log file");
+    close(fd);
+    std::ofstream stream(path,std::ios::app);
+    if (!stream) throw std::runtime_error("Cannot open log");
+    return stream;
+}
+
+int vision_joint(char** argv) {
+    stage_camera::CameraOptions options;
+    options.calib_path=argv[2];options.zoom=number(argv[5]);options.analogue_gain=3.0f;
+    options.settle.max_shift_px=.25;options.settle.timeout_ms=6000;
+    const qr::JointVisualModel model(argv[4]);
+    const qr::Geometry geometry(qr::read_frame(argv[3]),model.qr_centers());
+    auto log=open_log(argv[6]);
+    DeviceLock lock;RigStage stage;stage_camera::Camera camera(options);
+    const auto result=qr::run_joint_visual_alignment(model,[&](){
+        const auto shot=camera.captureSettled(4);
+        if (!shot.settle.settled) throw std::runtime_error("Camera did not settle");
+        return geometry.affine(shot.image);
+    },[&](qr::Position delta){return stage.move_relative(delta);},20,[&](const char* kind,qr::Pose value){
+        log<<"{\"kind\":\""<<kind<<"\",\"y_mm\":"<<value[0]<<",\"theta_deg\":"<<value[1]<<"}\n";
+        log.flush();
+    });
+    log<<"{\"kind\":\"result\",\"result\":\""<<result.reason<<"\",\"moves\":"<<result.moves<<"}\n";
+    return std::string(result.reason)=="qr_center_candidate" ? 2 : 1;
+}
 }
 
 int main(int argc,char** argv) {
-    if(argc!=8 && argc!=9) {
-        std::cerr<<"qr_rig CAMERA_CALIB CENTER.bmp GEOMETRY.xml.gz CENTER_Y_MM CENTER_THETA_DEG ZOOM LOG.jsonl [JOINT.xml.gz]\n";
+    const bool use_vision=argc>1 && std::string(argv[1])=="--vision-joint";
+    if((use_vision && argc!=7) || (!use_vision && argc!=8 && argc!=9)) {
+        std::cerr<<"qr_rig CAMERA_CALIB CENTER.bmp GEOMETRY.xml.gz CENTER_Y_MM CENTER_THETA_DEG ZOOM LOG.jsonl [JOINT.xml.gz]\n"
+                   "qr_rig --vision-joint CAMERA_CALIB CENTER.bmp MODEL.xml.gz ZOOM LOG.jsonl\n";
         return 1;
     }
     cv::setNumThreads(1);
     try {
+        if (use_vision) return vision_joint(argv);
         const auto center=stage::Position::fromMmDeg(number(argv[4]),number(argv[5]));
         stage_camera::CameraOptions options;
         options.calib_path=argv[1];options.zoom=number(argv[6]);options.analogue_gain=3.0f;
@@ -77,11 +118,7 @@ int main(int argc,char** argv) {
         auto reference=qr::read_frame(argv[2]);qr::Cancellation model(argv[3],reference);
         std::unique_ptr<qr::DirectPose> direct;
         if(argc==9) direct.reset(new qr::DirectPose(argv[8],"rig",reference));
-        const int log_fd=open(argv[7],O_CREAT|O_EXCL|O_WRONLY|O_CLOEXEC,0644);
-        if(log_fd<0) throw std::runtime_error("Cannot create a new log file");
-        close(log_fd);
-        std::ofstream log(argv[7],std::ios::app);
-        if (!log) throw std::runtime_error("Cannot open log");
+        auto log=open_log(argv[7]);
         DeviceLock lock;RigStage stage;stage_camera::Camera camera(options);
         auto frame=[&](){
             auto shot=camera.captureSettled(4);

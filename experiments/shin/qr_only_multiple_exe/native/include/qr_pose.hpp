@@ -9,6 +9,7 @@ namespace qr {
 using Pose = cv::Vec2d; // mm, degree
 using Position = cv::Vec2i; // micrometre, millidegree
 using Features = cv::Vec4d;
+using AffineFeatures = cv::Vec<double,18>;
 cv::FileStorage open_model(const std::string& path);
 cv::Mat matrix(const cv::FileStorage& file,const std::string& key);
 void check_frame(const cv::Mat& gray);
@@ -38,12 +39,15 @@ public:
     Geometry(const cv::Mat& reference,const std::vector<cv::Point>& centers);
     Geometry(const cv::FileStorage& model,const std::vector<cv::Point>& centers);
     Features predict(const cv::Mat& frame) const;
+    AffineFeatures affine(const cv::Mat& frame) const;
     cv::Point seed(const cv::Mat& frame) const;
 private:
     Features measure(const cv::Mat& frame) const;
+    AffineFeatures measure_affine(const cv::Mat& frame) const;
     std::vector<cv::Point> centers_;
     std::array<cv::Mat,3> templates_;
     Features zero_{0.,0.,0.,0.};
+    AffineFeatures affine_zero_{};
 };
 
 class Cancellation {
@@ -121,6 +125,24 @@ ControlResult run_correction(Stage& stage,const Settings& settings,
 ControlResult run_ssafy_rig_alignment(Stage& stage, const Settings& settings,
     const SsafyAligner& model, Pose visual_target, const std::function<Features()>& capture,
     const Event& event={});
+using VisionEvent = std::function<void(const char*,Pose)>;
+class JointVisualModel {
+public:
+    explicit JointVisualModel(const std::string& path);
+    Pose predict(const AffineFeatures& observation) const;
+    const std::vector<cv::Point>& qr_centers() const { return centers_; }
+private:
+    cv::Mat coefficients_;
+    Pose intercept_{0.,0.};
+    std::vector<cv::Point> centers_;
+};
+struct JointVisualStep { Pose estimate; Position delta; bool center; };
+JointVisualStep joint_visual_step(const JointVisualModel& model,const AffineFeatures& observation);
+struct VisionResult { const char* reason; int moves; };
+// Capture observes the settled pose. The relative move callback waits for completion.
+VisionResult run_joint_visual_alignment(
+    const JointVisualModel& model, const std::function<AffineFeatures()>& capture,
+    const std::function<bool(Position)>& move_relative, int max_moves=20, const VisionEvent& event={});
 
 cv::Mat read_frame(const std::string& path);
 }

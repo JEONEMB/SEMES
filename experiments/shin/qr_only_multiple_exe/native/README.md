@@ -43,6 +43,35 @@ $env:PATH = "C:\opencv\build\x64\vc15\bin;$env:PATH"
 `capture`는 명령 완료 뒤 정지한 새 영상에서 `aligner.observe(gray)`를 반환한다.
 두 축의 기준 좌표와 이동 방향은 실기에서 확인한다. 복귀 재생 결과는 첫 Y 절대 이동 뒤 남는 잔차에 민감하다.
 
+## Rig와 SSAFY의 비전 상대 이동
+
+`--vision-joint`는 첫 사진과 매 이동 뒤 새 사진에서 QR 세 개의 변위와 형상을 읽고
+Y와 θ를 동시에 추정한다. 영상 잔차의 −0.8배를 두 축 상대 명령으로 보내며, 한 번에
+Y 0.45 mm, θ 0.30°까지 이동한다. 두 추정 잔차가 각각 ±0.008 mm와 ±0.002° 안에
+들면 센터 후보로 종료한다. 화면에서 수평 변위가 상쇄되는 자세도 같은 추정기를 사용한다.
+제어기는 스테이지의 보고 좌표를 사용하지 않는다. 최대 이동 횟수는 20회다.
+
+Rig는 역순 격자로 학습한 `models/rig-reverse-fixed.xml.gz`를 두 촬영에 공통으로
+사용한다. 기준 영상은 해당 촬영의 센터 사진이다.
+
+```sh
+./build/qr_rig --vision-joint camera_calib.yml /path/to/rig_grid_rev/center.bmp models/rig-reverse-fixed.xml.gz 1 run-reverse.jsonl
+./build/qr_rig --vision-joint camera_calib.yml /path/to/rig_grid/center.bmp models/rig-reverse-fixed.xml.gz 1 run-forward.jsonl
+```
+
+기준 사진은 각 촬영에서 목표 위치에 맞춰 확보한다. 같은 QR 계수에 기준 사진 대비
+관측 차이를 입력한다.
+
+SSAFY는 해당 카메라의 정류 설정, 목표 사진 `center1.bmp`,
+`models/ssafy-vision-joint.xml.gz`를 지정한다. 영상과 QR 배치는 모델을
+피팅한 해상도와 화각을 따른다. `qr_pose_cli vision-joint-step --reference /path/to/rig_grid/center.bmp
+--model models/rig-reverse-fixed.xml.gz image.bmp`는 장비 연결 없이 한 프레임의
+추정과 이동 명령을 출력한다.
+
+기록 영상과 내삽 관측을 사용한 재생에서 역순 1,680개와 정순 1,678개가 각각
+Y ±0.045 mm, θ ±0.010° 범위에서 센터 판정으로 정지했다. 장비 적용 전 독립
+계측으로 센터 후보의 실제 위치와 반복 정밀도를 확인해야 한다.
+
 ## Rig 사진 점검과 C++ 제어 재생
 
 ```powershell
