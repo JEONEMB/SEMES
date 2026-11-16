@@ -79,8 +79,8 @@
       <div class="pos-big">
         <div><span class="ax">Y</span><strong id="off-y">—</strong><small>mm</small></div>
         <div><span class="ax">Θ</span><strong id="off-t">—</strong><small>°</small></div>
-        <div class="axmove" id="mv-y" hidden><i></i><span></span><b><u></u></b></div>
-        <div class="axmove" id="mv-t" hidden><i></i><span></span><b><u></u></b></div>
+        <div class="prog" id="g-y" hidden><span class="bar"><u></u><i></i></span><em></em></div>
+        <div class="prog" id="g-t" hidden><span class="bar"><u></u><i></i></span><em></em></div>
       </div>
       <p class="pos-sub" id="pos-sub"></p>
       <div class="calc" id="calc" hidden></div>
@@ -91,7 +91,7 @@
       <div class="panel-head"><span>Y · Θ 지도</span></div>
       <div class="plot-box" id="plot-box"><svg id="plot" viewBox="0 0 400 300" preserveAspectRatio="none" aria-label="센터 대비 Y·Θ 위치와 보정 경로"></svg></div>
       <div class="legend small">
-        <span><i class="p-cam"></i>회차별 위치</span><span><i class="p-goal"></i>이동 목표</span>
+        <span><i class="p-cam"></i>이동 후 위치 (0 = 시작)</span><span><i class="p-goal"></i>이동 목표</span>
       </div>
     </section>
 
@@ -104,7 +104,7 @@
       </ol>
       <div class="phase" id="phase-box" data-phase="idle"><span class="light"></span><div><strong id="phase">대기</strong><p id="message"></p></div></div>
       <div class="trial-line">
-        <span class="label">회차</span><strong id="trial">0</strong><span class="muted">/ <span id="trial-max">20</span></span>
+        <span class="label">보정 이동</span><strong id="trial">0</strong><span class="muted">/ <span id="trial-max">20</span></span>
         <ol class="steps" id="steps">
           <li data-phase="settling">흔들림 대기</li><li data-phase="capturing">촬영</li><li data-phase="inferring">추론</li><li data-phase="moving">보정 이동</li>
         </ol>
@@ -114,10 +114,10 @@
   </div>
 
   <section class="panel history">
-    <div class="panel-head"><span>회차별 기록</span></div>
+    <div class="panel-head"><span>측정 기록</span></div>
     <div class="scroll">
       <table class="hist">
-        <thead><tr><th>회차</th><th>카메라 Y</th><th>카메라 Θ</th><th>스테이지 Y</th><th>스테이지 Θ</th><th>산출 보정량 Y</th><th>산출 보정량 Θ</th><th>이동 순서</th><th>추론 ms</th><th>판정</th></tr></thead>
+        <thead><tr><th>측정 시점</th><th>카메라 Y</th><th>카메라 Θ</th><th>스테이지 Y</th><th>스테이지 Θ</th><th>산출 보정량 Y</th><th>산출 보정량 Θ</th><th>이동 순서</th><th>추론 ms</th><th>판정</th></tr></thead>
         <tbody id="hist-body"><tr><td colspan="10" class="muted">아직 기록이 없습니다.</td></tr></tbody>
       </table>
     </div>
@@ -143,14 +143,14 @@
       <form id="settings-form">
         <label>허용 Y (mm)<input name="tol_y_mm" type="number" step="0.001"></label>
         <label>허용 Θ (°)<input name="tol_t_deg" type="number" step="0.001"></label>
-        <label>최대 회차<input name="max_trials" type="number" step="1"></label>
+        <label>최대 보정 이동<input name="max_trials" type="number" step="1"></label>
         <label>랜덤 범위 Y ± (mm)<input name="random_y_mm" type="number" step="0.1"></label>
         <label>랜덤 범위 Θ ± (°)<input name="random_t_deg" type="number" step="0.1"></label>
         <label>천천히 Y (mm/s)<input name="slow_y_mm_s" type="number" step="0.05"></label>
         <label>천천히 Θ (°/s)<input name="slow_t_deg_s" type="number" step="0.05"></label>
         <label>빠르게 Y (mm/s)<input name="fast_y_mm_s" type="number" step="0.1"></label>
         <label>빠르게 Θ (°/s)<input name="fast_t_deg_s" type="number" step="0.1"></label>
-        <label>회차 사이 쉬기 (s, 천천히)<input name="pause_s" type="number" step="0.5"></label>
+        <label>측정 후 쉬기 (s, 천천히)<input name="pause_s" type="number" step="0.5"></label>
         <label>한 번 이동 한도 Y (mm)<input name="max_step_y_mm" type="number" step="0.1"></label>
         <label>한 번 이동 한도 Θ (°)<input name="max_step_t_deg" type="number" step="0.1"></label>
         <label>접근 거리 Y (mm)<input name="approach_y_mm" type="number" step="0.05"></label>
@@ -162,9 +162,9 @@
         <label>센터 Θ (°)<input name="center_t_deg" type="number" step="0.001"></label>
         <label>센터 기준 유효 시간 (분)<input name="reference_max_age_min" type="number" step="5"></label>
         <label class="check"><input name="enable_t" type="checkbox"> Θ 명령 보내기</label>
-        <label class="check"><input name="save_images" type="checkbox"> 회차 사진 저장</label>
+        <label class="check"><input name="save_images" type="checkbox"> 측정 사진 저장</label>
         <label class="check"><input name="auto_reference" type="checkbox"> 시작할 때 센터 기준 자동</label>
-        <label class="check"><input name="sequential_axes" type="checkbox"> 회차마다 Y 먼저 옮기고 이어서 Θ</label>
+        <label class="check"><input name="sequential_axes" type="checkbox"> 보정 이동마다 Y 먼저 옮기고 이어서 Θ</label>
         <button class="btn primary" type="submit">설정 저장</button>
       </form>
     </div>
