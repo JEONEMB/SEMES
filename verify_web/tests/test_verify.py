@@ -216,6 +216,28 @@ class RunnerTest(unittest.TestCase):
         r2.step(); r2.wait_idle(10)
         self.assertEqual(r2.snapshot()['phase'], 'error')
 
+    def test_center_here_needs_check(self):
+        self.settings.update(dict(auto_reference=False))
+        r = self.runner(FixedAlgorithm(0.0, 0.0))
+        with self.assertRaises(RunError):
+            r.set_center_here()                                     # 확인 측정 없이 저장 안 됨
+        r.center_check(); r.wait_idle(10)
+        self.assertTrue(r.snapshot()['center_check']['ok'])
+        self.stage.position = (0, 0)
+        r.set_center_here()                                         # 센터 근처 → 저장
+        self.assertIsNone(r.snapshot()['center_check'])
+        r2 = self.runner(FixedAlgorithm(4.8, -1.2))                 # 오늘 같은 경우: 센터에서 4.8 mm, 1.2° 떨어진 자리
+        r2.center_check(); r2.wait_idle(10)
+        c = r2.snapshot()['center_check']
+        self.assertFalse(c['ok'])
+        self.assertAlmostEqual(c['y_mm'], 4.8)
+        with self.assertRaises(RunError):
+            r2.set_center_here()                                    # 묻지 않고는 저장 안 됨
+        r2._set(reference=dict(ts=time.time(), zero_y_mm=0.0, zero_t_deg=0.0))
+        r2.set_center_here(force=True)                              # 사용자가 확인하면 저장, 센터 기준은 지움
+        self.assertIsNone(r2.snapshot()['reference'])
+        self.assertEqual(self.stage.position, (0, 0))               # 확인 측정은 움직이지 않음
+
     def test_direct_start_input_is_checked(self):
         r = self.runner(MockAlgorithm())
         with self.assertRaises(RunError):

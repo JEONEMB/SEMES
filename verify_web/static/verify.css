@@ -13,7 +13,7 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid
 .muted{color:var(--muted)}small{font-size:11px}
 
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px;background:var(--surface);border-bottom:1px solid var(--line);flex-wrap:wrap}
-.title{display:flex;align-items:center;gap:12px}.mark{width:34px;height:34px;border:1px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-size:24px}
+.title{display:flex;align-items:center;gap:12px}.mark{width:36px;height:36px;border:1px solid var(--accent);border-radius:6px;color:var(--accent);display:grid;place-items:center}
 h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{margin:3px 0 0;font-size:11px;color:var(--muted)}
 .pills{display:flex;gap:8px;flex-wrap:wrap}
 .pill{border:1px solid #c5d5ef;background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:6px 10px;font-size:11px;white-space:nowrap}
@@ -133,7 +133,8 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
 .calc{margin:0 0 10px;padding:8px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--line);font-size:13px;font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
 .calc b{font-weight:700;color:var(--ink)}.calc b.dim,.hist td.dim{color:#a7b2c2}.calc span{font-size:12px;color:var(--amber);font-weight:600}
 .algo-pick{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
-.algo-pick .seg button{padding:6px 12px;font-size:12px}
+.algo-pick .seg button{padding:5px 12px;font-size:12px;display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.25;text-align:left}
+.algo-pick .seg button b{font-size:13px}.algo-pick .seg button small{font-size:10px;opacity:.8;font-weight:400}
 .order-label{margin-left:14px}
 .tag.ax{background:#fff3df;color:var(--amber)}
 .flow-steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0;padding:0}
@@ -189,7 +190,6 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);max-width:min(92vw,640px);background:#fff0f1;color:#9d2633;border:1px solid #e3b2b8;border-radius:8px;padding:12px 18px;z-index:40;font-size:13px;line-height:1.6}
 .toast.info{background:var(--accent);color:#fff;border-color:var(--accent)}
 .pills{align-items:center}
-.btn.demo{background:var(--accent);border-color:var(--accent);color:#fff;min-height:32px;padding:6px 14px;font-size:12px;margin-left:6px}
 @keyframes pulse{50%{opacity:.3}}@keyframes spin{to{transform:rotate(360deg)}}
 
 @keyframes glow{50%{box-shadow:0 0 0 6px #f2b84b55}}

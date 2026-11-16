@@ -280,7 +280,7 @@ class AlgorithmChoices:
         out = []
         for e in self.entries:
             ok, why = self.available(e)
-            out.append(dict(id=e['id'], label=e.get('label', e['id']), available=ok, reason=why,
+            out.append(dict(id=e['id'], label=e.get('label', e['id']), desc=e.get('desc', ''), available=ok, reason=why,
                             current=e['id'] == self.current_id))
         return out
 

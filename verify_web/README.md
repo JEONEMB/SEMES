@@ -59,9 +59,12 @@ cmake -S verify_web/native -B verify_web/native/build_ksh -G Ninja -DALGO_DIR=$H
 # 혜원님 모듈 (initialize_joint, 기본은 assets 의 절대 영점, set_joint_zero 로 그날 센터를 영점). HYE_DIR = 저장소 형태 폴더, HYE_MODULE = 모듈 폴더
 cmake -S verify_web/native -B verify_web/native/build_hye -G Ninja -DHYE_DIR=$HOME/HYE_Algorithm \
       -DHYE_MODULE=$HOME/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy
-# 신윤석님 QR 전용 (qr_pose::estimate). --config = config/qr_pose*.yml, 영점은 그 파일의 센터 템플릿에 고정
-cmake -S verify_web/native -B verify_web/native/build_shin -G Ninja -DQR_POSE_DIR=$HOME/SHIN_Algorithm/experiments/shin/ssafy_qr_pose
-cmake --build verify_web/native/build_ksh && cmake --build verify_web/native/build_hye && cmake --build verify_web/native/build_shin
+# 신윤석님 QR 전용 Rig 모델 (feature/shin/QRonlyMultipleExe). 센터 기준 사진(ALGR) 대비 Y·Θ.
+#   --config = models/rig-reverse-fixed.xml.gz (kind qr_affine_joint, 979c1d75~ 비전 상대 보정: QR 아핀 값 18개)
+#           또는 models/rig-cancellation.xml.gz (qr::Cancellation, 값 4개)
+cmake -S verify_web/native -B verify_web/native/build_shin_rig -G Ninja -DQR_RIG_DIR=$HOME/SHIN_Algorithm/experiments/shin/qr_only_multiple_exe/native
+# (예전) 신윤석님 단일 프레임 qr_pose::estimate: -DQR_POSE_DIR=$HOME/SHIN_Algorithm/experiments/shin/ssafy_qr_pose
+cmake --build verify_web/native/build_ksh && cmake --build verify_web/native/build_hye && cmake --build verify_web/native/build_shin_rig
 ```
 
 - 실행기는 시작할 때 `READY ref roi` (영점 등록·위치 돌려줌) 또는 `READY` 를 알린다.

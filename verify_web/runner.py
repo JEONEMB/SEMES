@@ -51,6 +51,8 @@ LIMITS = dict(tol_y_mm=(0.001, 1), tol_t_deg=(0.0001, 1), max_trials=(1, 100), m
               average=(1, 16), settle_px=(0.05, 5), settle_timeout_s=(0.5, 30), reference_max_age_min=(1, 1440),
               center_y_mm=(-1000, 1000), center_t_deg=(-360, 360), slow_y_mm_s=(0.01, 2), fast_y_mm_s=(0.01, 2),
               slow_t_deg_s=(0.02, 3.6), fast_t_deg_s=(0.02, 3.6), pause_s=(0, 10))
+CENTER_CHECK = (0.1, 0.05)   # '현재 위치를 센터로' 전 확인 측정: 알고리즘이 보는 센터와 이만큼(Y mm, Θ °) 넘게 다르면 묻는다
+CENTER_CHECK_AGE_S = 120    # 확인 측정이 이보다 오래됐거나 그 뒤 스테이지가 움직였으면 다시 재야 한다
 STEP_CLAMP = 1.25     # 보정량이 한 번 이동 한도의 이 배수까지는 한도만큼만 옮기고, 넘으면 멈춘다
 RANDOM_MIN = 0.4      # 랜덤 시작은 범위의 40 % 이상 떨어지게 (너무 가까우면 시연에서 움직임이 안 보임)
 
@@ -147,7 +149,7 @@ class Runner:
         self.state = dict(phase='idle', message='', busy=False, job=None, moving=False,
                           position=None, flags=None, stage_state=None, stage_error=None,
                           run=None, last=None, history=[], measure=None, reference=None, aligned=None,
-                          rois_now=None, start=None, speed=None, axis_stage=None)
+                          rois_now=None, start=None, speed=None, axis_stage=None, center_check=None)
 
     # --- 상태 -----------------------------------------------------------------
     def _set(self, **kw):
@@ -273,14 +275,46 @@ class Runner:
         except Exception:
             return False
 
-    def set_center_here(self):
+    def center_check(self):
+        """'현재 위치를 센터로' 전에 지금 자리를 카메라로 잰다 (움직이지 않고, 센터 기준도 새로 찍지 않음)."""
+        self._launch('center_check', self._center_check)
+
+    def _center_check(self):
+        pos = self._refresh_status()
+        if pos is None:
+            raise RunError('스테이지 위치를 읽지 못했습니다.')
+        entry, _ = self._observe(label='센터 확인')
+        ref = self.state.get('reference')
+        basis = 'reference' if ref and not ref.get('fixed_zero') else 'algorithm'
+        y, t = entry['offset']['y_mm'], entry['offset']['t_deg']
+        ok = abs(y) <= CENTER_CHECK[0] and (not self.settings['enable_t'] or abs(t) <= CENTER_CHECK[1])
+        chk = dict(ts=time.time(), position=list(pos), y_mm=y, t_deg=t, ok=ok, basis=basis,
+                   limit=dict(y_mm=CENTER_CHECK[0], t_deg=CENTER_CHECK[1]))
+        where = '지금 센터 기준 사진' if basis == 'reference' else '알고리즘의 센터(학습·고정 영점)'
+        self._set(center_check=chk, phase='idle',
+                  message=f'센터 확인: {where} 대비 Y {y:+.3f} mm, Θ {t:+.4f}° ' + ('(센터로 저장해도 됨)' if ok else '(센터와 다름)'))
+
+    def set_center_here(self, force=False):
+        """지금 스테이지 좌표를 센터로 저장. force 가 아니면 방금(같은 자리) 잰 센터 확인이 허용 안이어야 한다."""
         if self.busy():
             raise RunError('작업 중에는 센터를 바꿀 수 없습니다.')
         pos = self._refresh_status()
         if pos is None:
             raise RunError('스테이지 위치를 읽지 못했습니다.')
+        chk = self.state.get('center_check')
+        fresh = chk and time.time() - chk['ts'] <= CENTER_CHECK_AGE_S and tuple(chk['position']) == tuple(pos)
+        if not force:
+            if not fresh:
+                raise RunError('먼저 지금 자리에서 센터 확인 측정을 해야 합니다.')
+            if not chk['ok']:
+                raise RunError(f'지금 자리는 센터에서 Y {chk["y_mm"]:+.3f} mm, Θ {chk["t_deg"]:+.4f}° 떨어져 있습니다.')
         self.settings.update(dict(center_y_mm=pos[0] / 1000, center_t_deg=pos[1] / 1000))
-        self._set(message=f'센터 = Y {pos[0] / 1000:.3f} mm, Θ {pos[1] / 1000:.3f}°')
+        cam = self.devices.camera
+        if cam:
+            cam.set_reference(None)     # 예전 센터에서 찍은 기준 사진은 버리고 다음 시작 때 새 센터에서 다시 찍는다
+        self._set(center_check=None, reference=None, start=None,
+                  message=f'센터 = Y {pos[0] / 1000:.3f} mm, Θ {pos[1] / 1000:.3f}°'
+                          + (' (확인 측정과 달랐지만 사용자가 저장)' if fresh and not chk['ok'] else ''))
 
     def wait_idle(self, timeout=None):
         job = self.job

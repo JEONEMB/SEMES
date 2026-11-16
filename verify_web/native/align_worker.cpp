@@ -17,6 +17,10 @@
 // ALGO_HAS_JOINT: 이혜원 값 7개 모듈처럼 initialize_joint(자료 폴더) 를 먼저 부르고 alignment() 를 쓰는 알고리즘
 //   (CMake -DHYE_DIR=... -DHYE_MODULE=... 이 켬). 기본은 자료의 절대 영점. ALGO_JOINT_ZERO(joint_reference.hpp 가 있는
 //   버전)면 ALGR = set_joint_zero (측정이 안 될 만큼 화면이 밀렸으면 set_joint_reference 뒤 다시)
+// ALGO_HAS_QR_RIG: 신윤석 QR 전용 Rig 모델 qr::Cancellation (CMake -DQR_RIG_DIR=.../qr_only_multiple_exe/native 가 켬).
+//   --config 는 rig-cancellation.xml.gz. 센터 기준 사진으로 모델을 만들고(ALGR) 그 사진 대비 Y·Θ 를 낸다.
+//   QR_RIG_JOINT(979c1d75~) 이고 --config 의 kind 가 qr_affine_joint 면(예: rig-reverse-fixed.xml.gz)
+//   qr::JointVisualModel: 기준 사진 대비 QR 3개 아핀 값 18개 → Y·Θ
 // ALGO_HAS_QR_POSE: 신윤석 QR 전용 단일 프레임 추정 qr_pose::estimate (CMake -DQR_POSE_DIR=... 이 켬).
 //   --config 는 보정 파일(yml, 환경변수 QR_POSE_MODEL 로 넘김). 영점은 그 파일의 센터 템플릿에 고정
 //
@@ -30,6 +34,17 @@
 #include "qr_pose.hpp"
 #include <cstdlib>
 #include <fstream>
+#endif
+#ifdef ALGO_HAS_QR_RIG
+#include "qr_pose.hpp"
+#include <fstream>
+#include <memory>
+static std::string g_rig_model;                 // rig-cancellation.xml.gz
+static std::unique_ptr<qr::Cancellation> g_rig; // 센터 기준 사진으로 만든 모델 (ALGR 전에는 없음)
+#ifdef QR_RIG_JOINT
+static std::unique_ptr<qr::JointVisualModel> g_joint;   // 비전 상대 보정 계수 (시작 때 읽음)
+static std::unique_ptr<qr::Geometry> g_joint_geo;       // 센터 기준 사진의 QR 아핀 값 (ALGR)
+#endif
 #endif
 
 #include <opencv2/imgproc/imgproc.hpp>
@@ -79,7 +94,31 @@ static std::string rois_text(const std::vector<AlignmentRoi> &rois)
 // 사진 한 장 → (y mm, t °). 알고리즘마다 진입 함수가 다르다
 static Alignment_t run_algorithm(cv::Mat &src)
 {
-#ifdef ALGO_HAS_QR_POSE
+#ifdef ALGO_HAS_QR_RIG
+    cv::Mat gray;
+    if (src.channels() == 1)
+        gray = src;
+    else
+        cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
+#ifdef QR_RIG_JOINT
+    if (g_joint) {
+        if (!g_joint_geo)
+            throw std::runtime_error("센터 기준 사진을 먼저 등록해야 함 (이 알고리즘은 기준 사진 대비로만 잰다)");
+        const qr::Pose p = g_joint->predict(g_joint_geo->affine(gray));
+        Alignment_t r;
+        r.y = p[0];
+        r.t = p[1];
+        return r;
+    }
+#endif
+    if (!g_rig)
+        throw std::runtime_error("센터 기준 사진을 먼저 등록해야 함 (이 알고리즘은 기준 사진 대비로만 잰다)");
+    const qr::Pose p = g_rig->predict(gray);
+    Alignment_t r;
+    r.y = p[0];
+    r.t = p[1];
+    return r;
+#elif defined(ALGO_HAS_QR_POSE)
     const qr_pose::Pose p = qr_pose::estimate(src);
     Alignment_t r;
     r.y = p.y_mm;
@@ -139,6 +178,25 @@ int main(int argc, char **argv)
 #else
     std::fprintf(proto, "READY\n");
 #endif
+#elif defined(ALGO_HAS_QR_RIG)
+    if (config.empty() || !std::ifstream(config)) {
+        std::fprintf(proto, "ERR --config 로 rig-cancellation.xml.gz 를 주세요: %s\n", config.c_str());
+        std::fflush(proto);
+        return 4;
+    }
+    g_rig_model = config;
+#ifdef QR_RIG_JOINT
+    try {
+        cv::FileStorage f(config, cv::FileStorage::READ);
+        if (f.isOpened() && std::string(f["kind"]) == "qr_affine_joint")
+            g_joint.reset(new qr::JointVisualModel(config));
+    } catch (const std::exception &e) {
+        std::fprintf(proto, "ERR 모델을 읽지 못함: %s\n", one_line(e.what()).c_str());
+        std::fflush(proto);
+        return 4;
+    }
+#endif
+    std::fprintf(proto, "READY ref\n");
 #elif defined(ALGO_HAS_QR_POSE)
     if (!config.empty()) {
         if (!std::ifstream(config)) {
@@ -191,6 +249,19 @@ int main(int argc, char **argv)
                 } else {
                     std::fprintf(proto, "ERR %s\n", one_line(alignment_reference_info().message).c_str());
                 }
+#elif defined(ALGO_HAS_QR_RIG)
+#ifdef QR_RIG_JOINT
+                if (g_joint) {
+                    std::unique_ptr<qr::Geometry> geo(new qr::Geometry(gray, g_joint->qr_centers()));
+                    g_joint_geo = std::move(geo);
+                } else
+#endif
+                {
+                    std::unique_ptr<qr::Cancellation> m(new qr::Cancellation(g_rig_model, gray));   // 실패하면 예전 모델 그대로
+                    g_rig = std::move(m);
+                }
+                // 이 모델은 기준 사진 대비로만 재서 '학습 영점 대비' 값이 없다 → 0 0
+                std::fprintf(proto, "OK 0 0\n");
 #elif defined(ALGO_JOINT_ZERO)
                 Alignment_t z;
                 try {
