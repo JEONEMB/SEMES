@@ -48,11 +48,10 @@
         <div class="step-head"><b>1</b><strong>시작 위치 잡기</strong></div>
         <form class="step-body" id="goto-form" autocomplete="off">
           <button type="button" class="pick" id="btn-goto-random">랜덤 위치로</button>
-          <button type="submit" class="pick" id="btn-goto">입력한 위치로</button>
-          <span></span>
-          <div class="pick-inputs">
+          <div class="pick-group">
             <label>Y <input id="start-y" type="number" step="0.01" value="0.50" inputmode="decimal" required> mm</label>
             <label>Θ <input id="start-t" type="number" step="0.01" value="0.20" inputmode="decimal" required> °</label>
+            <button type="submit" class="pick" id="btn-goto">입력한 위치로</button>
           </div>
         </form>
       </div>
