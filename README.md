@@ -1,5 +1,7 @@
 # SSAFY 장비 Y, T 측정
 
+[문서 목차](docs/README.md), [빠른 시작](docs/01_quickstart.md), [API와 상태](docs/03_api_and_status.md), [검증 결과](docs/05_validation.md)
+
 2026-11-16 사용자 요청으로 SEMES의 넓은 QR 탐색, 나사 조합별 계산, 영점 및 상태 API를 적용했다. 모델은 SSAFY 사진 1959장의 기존 L2 라벨로 별도 생성했으며 SEMES 계수를 사용하지 않는다. 원본 S15P31A507과 기존 실험은 변경하지 않았다.
 
 ## 변경 내용
@@ -54,7 +56,7 @@ photos.tsv는 머리줄 없는 id와 사진 경로 TSV다. 평가 도구는 정�
 
 ## 이전 버전과 검사
 
-legacy에는 이전 소스, 헤더, 도구, 모델이 보존돼 있다. 이전 final00_tool과 절대 영점 기본 동작은 과거 재현용이며 운영용이 아니다. docs/original_README.md, docs/original_PORTING_PI.md, docs/source_manifest.tsv와 변경 전 평가 결과도 이전 버전의 기록이다.
+legacy에는 이전 소스, 헤더, 도구, 모델이 보존돼 있다. 이전 final00_tool과 절대 영점 기본 동작은 과거 재현용이며 운영용이 아니다. 변경 전 평가 결과도 이전 버전의 기록이며 현재 문서 목차와 구분한다.
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_text_style.ps1

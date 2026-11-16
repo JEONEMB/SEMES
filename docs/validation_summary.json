@@ -1,0 +1,19 @@
+{
+  "images": 3680,
+  "failed": 1,
+  "range_warning": 180,
+  "range_failed": 0,
+  "mean_ms": 22.622483423913042,
+  "average_label_passed": 3624,
+  "average_label_count": 3638,
+  "date": "2026-11-16",
+  "runtime_contract_checks": 69,
+  "runtime_contract_failures": 0,
+  "training_images": 1959,
+  "training_L2_passed": 1950,
+  "tolerance_y_mm": 0.045,
+  "tolerance_t_deg": 0.01,
+  "range_policy": "warning_only_when_no_other_block",
+  "accuracy_truth": "existing image-derived corrected labels",
+  "deployed_to_raspberry_pi": false
+}
