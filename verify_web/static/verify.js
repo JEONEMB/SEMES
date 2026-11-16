@@ -139,17 +139,17 @@
     return s.reference ? {label: '센터 기준', offset: {y_mm: 0, t_deg: 0}, within: true} : null;
   }
   function renderPosition(s) {
-    const st = s.settings, off = stageOffset(s), goal = moveGoal(s), card = $('pos-card'), seen = lastSeen(s);
+    const st = s.settings, off = stageOffset(s), card = $('pos-card'), seen = lastSeen(s);
     const v2 = seen ? [seen.offset.y_mm, seen.offset.t_deg] : off;
     $('off-y').textContent = v2 ? fmt(v2[0]) : '—';
     $('off-t').textContent = v2 ? fmt(v2[1]) : '—';
     $('pos-label').textContent = seen ? `센터와의 차이 · ${seen.label}` : '센터와의 차이 · 스테이지 좌표';
     card.dataset.ok = !v2 ? 'unknown' : s.moving ? 'moving' : seen ? (seen.within ? 'ok' : 'bad') : 'unknown';
-    const sub = s.moving && goal ? `→ 목표 Y ${fmt(goal[0])} mm, Θ ${fmt(goal[1])}°` : '';
-    $('pos-sub').textContent = sub;
+    $('pos-sub').textContent = '';
     const v = $('verdict');
     const run = s.run;
-    if (s.moving) { v.textContent = s.phase === 'homing' ? '원점 복귀 중' : '움직이는 중'; v.className = 'verdict moving'; }
+    v.hidden = !!s.moving;                // 이동 중에는 게이지·남은 시간이 대신 보여 준다
+    if (s.moving) { v.className = 'verdict moving'; }
     else if (s.aligned === true) { v.textContent = `센터 OK · 허용 ±${st.tol_y_mm} mm, ±${st.tol_t_deg}° 안`; v.className = 'verdict ok'; }
     else if (s.aligned === false) { v.textContent = '센터에서 벗어남'; v.className = 'verdict bad'; }
     else { v.textContent = '카메라로 아직 안 봄'; v.className = 'verdict'; }
@@ -184,7 +184,8 @@
     api('/api/settings', {demo_slow: b.dataset.slow === 'true'}).catch(e => toast(e.message))));
 
   // ---------- 축별 이동 표시 ----------
-  // 이동 중에는 STM32 에 위치를 묻지 않으므로, 서버가 준 이동량÷속도(예상 시간)로 어느 축이 도는지 보여 준다
+  // 이동 중에는 STM32 에 위치를 묻지 않으므로, 서버가 준 이동량÷속도(예상 시간)로 어느 축이 도는지,
+  // 지금 어디쯤인지(예상값)를 보여 준다. 도착하면 다시 STM32·카메라 값으로 바뀐다.
   let clockSkew = 0;
   function axisInfo(ax) {
     const s = state, tg = s && s.target, a = tg && tg.axes;
@@ -194,6 +195,79 @@
     const el = Date.now() / 1000 + clockSkew - a.started;
     return {on: el < total + 0.3, d, left: Math.max(0, total - el), frac: Math.min(1, el / total)};
   }
+  function motion(s) {
+    // 이번 이동의 출발·목표·예상 위치 (모두 센터와의 차이). 접근점을 거치면 출발은 처음 자리, 목표는 최종 목표
+    const tg = s && s.target, a = tg && tg.axes;
+    if (!s || !s.moving || !tg || !a || s.phase === 'homing') return null;
+    const c = [s.settings.center_y_mm, s.settings.center_t_deg], d = [a.dy_mm, a.dt_deg];
+    const pos = s.position ? [s.position.y_mm, s.position.t_deg] : null;
+    let end;
+    if (tg.relative) { if (!pos) return null; end = [pos[0] + d[0], pos[1] + d[1]]; }
+    else end = [tg.y_mm, tg.t_deg];
+    const start = [end[0] - d[0], end[1] - d[1]];
+    const origin = tg.origin ? [tg.origin.y_mm, tg.origin.t_deg] : start;
+    const goal = tg.final ? [tg.final.y_mm, tg.final.t_deg] : end;
+    const sp = s.speed || {}, v = [sp.y_mm_s, sp.t_deg_s];
+    let left = 0, extra = 0;
+    const axes = ['y', 't'].map((ax, i) => {
+      const info = axisInfo(ax) || {on: false, frac: 1, left: 0};
+      left = Math.max(left, info.left);
+      if (tg.final && v[i]) extra = Math.max(extra, Math.abs(goal[i] - end[i]) / v[i]);
+      const o = origin[i] - c[i], g = goal[i] - c[i];
+      return {o, g, a: start[i] - c[i], b: end[i] - c[i], est: start[i] - c[i] + d[i] * info.frac,
+              on: info.on, moves: Math.abs(g - o) >= 0.0005 || Math.abs(d[i]) >= 0.0005,
+              done: !tg.final && info.frac >= 1};
+    });
+    return {y: axes[0], t: axes[1], left: left + extra};
+  }
+
+  const NS = 'http://www.w3.org/2000/svg';
+  function gaugeRange(m) {
+    let lo = Math.min(0, m.o, m.g, m.a, m.b), hi = Math.max(0, m.o, m.g, m.a, m.b);
+    if (hi - lo < 1e-6) { lo -= 0.5; hi += 0.5; }
+    const pad = (hi - lo) * 0.06;
+    return [lo - pad, hi + pad];
+  }
+  function gaugeLabels(m, unit, dp, xo, xg) {
+    // 왼쪽·오른쪽 끝에 '출발'·'목표' 값 (자리 순서대로, 표식 모양으로 짝을 맞춘다)
+    const lo = `<tspan class="g-o">○</tspan> 출발 ${fmt(m.o, dp)}${unit}`, go = `<tspan class="g-g">▼</tspan> 목표 ${fmt(m.g, dp)}${unit}`;
+    const [l, r] = xo <= xg ? [lo, go] : [go, lo];
+    return `<text x="6" y="52" class="g-lab">${l}</text><text x="234" y="52" text-anchor="end" class="g-lab">${r}</text>`;
+  }
+  function drawRuler(svg, m) {       // Y: 직선 스테이지 → 가로 자 위로 점이 미끄러진다
+    const [lo, hi] = gaugeRange(m), X = v => 14 + (v - lo) / (hi - lo) * 212, y = 22;
+    const xo = X(m.o), xg = X(m.g), xe = X(m.est), x0 = X(0);
+    svg.innerHTML =
+      `<line x1="14" y1="${y}" x2="226" y2="${y}" class="g-track"/>` +
+      `<line x1="${x0}" y1="${y - 9}" x2="${x0}" y2="${y + 9}" class="g-center"/>` +
+      `<line x1="${xo}" y1="${y}" x2="${xe}" y2="${y}" class="g-path"/>` +
+      `<path d="M${xg - 6} 4 L${xg + 6} 4 L${xg} 13 Z" class="g-goal"/>` +
+      `<circle cx="${xo}" cy="${y}" r="4" class="g-origin"/>` +
+      `<circle cx="${xe}" cy="${y}" r="7" class="g-now"/>` +
+      gaugeLabels(m, ' mm', 3, xo, xg);
+  }
+  function drawDial(svg, m) {        // Θ: 회전 스테이지 → 다이얼 바늘이 돈다 (각도는 보기 좋게 키움)
+    const [lo, hi] = gaugeRange(m), cx = 120, cy = 50, r = 38;
+    const ang = v => (-70 + (v - lo) / (hi - lo) * 140) * Math.PI / 180;
+    const P = (v, rr) => [cx + rr * Math.sin(ang(v)), cy - rr * Math.cos(ang(v))];
+    const arc = (v1, v2, rr) => {
+      const [x1, y1] = P(v1, rr), [x2, y2] = P(v2, rr);
+      return `M${x1.toFixed(1)} ${y1.toFixed(1)} A${rr} ${rr} 0 0 ${v2 >= v1 ? 1 : 0} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+    };
+    const [c1, c2] = [P(0, r - 8), P(0, r + 8)], [ox, oy] = P(m.o, r), [ex, ey] = P(m.est, r), [nx, ny] = P(m.est, r - 5);
+    const [g1, g2, g3] = [P(m.g, r + 4), P(m.g, r + 13)], ga = ang(m.g);
+    const gl = [g2[0] + 5 * Math.cos(ga), g2[1] + 5 * Math.sin(ga)], gr = [g2[0] - 5 * Math.cos(ga), g2[1] - 5 * Math.sin(ga)];
+    svg.innerHTML =
+      `<path d="${arc(lo, hi, r)}" class="g-track" fill="none"/>` +
+      `<line x1="${c1[0]}" y1="${c1[1]}" x2="${c2[0]}" y2="${c2[1]}" class="g-center"/>` +
+      `<path d="${arc(m.o, m.est, r)}" class="g-path" fill="none"/>` +
+      `<path d="M${g1[0]} ${g1[1]} L${gl[0]} ${gl[1]} L${gr[0]} ${gr[1]} Z" class="g-goal"/>` +
+      `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" class="g-needle"/><circle cx="${cx}" cy="${cy}" r="4" class="g-hub"/>` +
+      `<circle cx="${ox}" cy="${oy}" r="4" class="g-origin"/>` +
+      `<circle cx="${ex}" cy="${ey}" r="6" class="g-now"/>` +
+      gaugeLabels(m, '°', 3, ang(m.o), ang(m.g));
+  }
+
   function renderAxes() {
     const s = state; if (!s) return;
     const moving = !!s.moving || s.stage_state === 'moving' || s.stage_state === 'homing';
@@ -205,15 +279,25 @@
       names.length ? `${names.join(' · ')} 이동 중` : '도착 중';
     $('ax-y').dataset.on = !!(moving && iy && iy.on); $('ax-t').dataset.on = !!(moving && it && it.on);
     $('ax-y').hidden = $('ax-t').hidden = !moving;
-    for (const [ax, info, unit, dp] of [['y', iy, 'mm', 3], ['t', it, '°', 3]]) {
-      const el = $('mv-' + ax);
-      el.hidden = !moving || homing || !info;
-      if (el.hidden) continue;
-      el.dataset.on = info.on;
-      el.querySelector('span').textContent = info.on
-        ? `${ax === 'y' ? 'Y' : 'Θ'} 이동 중 ${fmt(info.d, dp)} ${unit} · 약 ${info.left.toFixed(1)}초 남음`
-        : `${ax === 'y' ? 'Y' : 'Θ'} ${info.d ? '도착' : '그대로'}`;
-      el.querySelector('u').style.width = (info.frac * 100).toFixed(0) + '%';
+    renderMotion(s);
+  }
+  function renderMotion(s) {
+    // 위치 카드: 이동 중이면 큰 숫자 = 예상 위치, 아래에 축 게이지와 남은 시간 하나
+    const m = motion(s), card = $('pos-card');
+    card.classList.toggle('in-motion', !!m);
+    for (const [ax, draw] of [['y', drawRuler], ['t', drawDial]]) {
+      const g = $('g-' + ax), mm = m && m[ax];
+      g.toggleAttribute('hidden', !mm);          // SVG 는 .hidden 속성이 없다
+      if (!mm) continue;
+      g.dataset.state = !mm.moves ? 'idle' : mm.done ? 'done' : mm.on ? 'on' : 'wait';
+      draw(g, mm);
+    }
+    if (m) {
+      $('off-y').textContent = fmt(m.y.est); $('off-t').textContent = fmt(m.t.est);
+      $('pos-label').textContent = '센터와의 차이 · 이동 중 (예상)';
+      $('pos-sub').textContent = m.left > 0.05 ? `⏱ ${m.left.toFixed(1)}초 남음` : '⏱ 도착 중';
+    } else if (s.moving && s.phase === 'homing') {
+      $('pos-sub').textContent = 'Y 원점 복귀 중…';
     }
   }
   setInterval(() => { if (state && state.moving) renderAxes(); }, 200);
@@ -234,9 +318,8 @@
     $('video-empty-msg').textContent = s.phase === 'released' ? '데모 웹이 카메라를 쓰는 중입니다.' : (cam.error || '카메라 연결을 기다리는 중');
     drawOverlay(s);
     clockSkew = s.now ? s.now - Date.now() / 1000 : 0;
-    renderAxes();
-
     renderPosition(s);
+    renderAxes();            // 위치 카드 위에 이동 중 예상값·게이지를 덮어쓴다
     drawPlot(s);
     renderFlow(s);
     renderAlgorithms(s);

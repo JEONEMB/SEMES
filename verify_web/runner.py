@@ -367,8 +367,9 @@ class Runner:
             return None
         return (pos[0] / 1000 - self.settings['center_y_mm'], pos[1] / 1000 - self.settings['center_t_deg'])
 
-    def _move(self, y_um, t_mdeg, relative, phase, message='', final=None):
+    def _move(self, y_um, t_mdeg, relative, phase, message='', final=None, origin=None):
         self._phase(phase, message)
+        origin = origin or self.state.get('position')     # 이번 이동을 시작한 자리 (접근점을 거쳐도 처음 자리)
         stage = self.devices.stage
         enable_t = self.settings['enable_t']
         if not enable_t and relative:
@@ -383,7 +384,8 @@ class Runner:
         self._set(moving=True, aligned=None, rois_now=None,   # 움직이면 다시 재기 전까지 정렬 여부를 모른다
                   target=dict(y_mm=y_um / 1000, t_deg=t_mdeg / 1000, relative=relative,
                               axes=self._axis_plan(y_um, t_mdeg, relative),
-                              final=final))         # 접근점으로 가는 중이면 그다음 최종 목표 (화면 안내용)
+                              final=final,          # 접근점으로 가는 중이면 그다음 최종 목표 (화면 안내용)
+                              origin=dict(origin) if origin else None))
         try:
             # 절대 이동에서 Θ 가 꺼져 있으면 목표 Θ = 지금 Θ 라 그대로 보낸다
             stage.start(y_um, t_mdeg, relative=relative, allow_t=enable_t or not relative)
@@ -451,8 +453,8 @@ class Runner:
                 at = 0.0
         if ay > 0 or at > 0:
             self._move(um(y_mm - ay), um(t_deg - at), relative=False, phase=phase, message=message,
-                       final=dict(y_mm=y_mm, t_deg=t_deg))
-        self._move(um(y_mm), um(t_deg), relative=False, phase=phase, message=message)
+                       final=dict(y_mm=y_mm, t_deg=t_deg), origin=pos)
+        self._move(um(y_mm), um(t_deg), relative=False, phase=phase, message=message, origin=pos)
 
     def _goto(self, offset):
         y, t = self._resolve_offset(offset)
