@@ -1,0 +1,14 @@
+{
+    "id": "photo_error",
+    "call": "measure_alignment",
+    "width": 1920,
+    "height": 1080,
+    "status": 2,
+    "code": "E_PHOTO",
+    "message": "입력 해상도 1920×1080 (요구 3840×2160)",
+    "used": "",
+    "y": "NaN",
+    "t": "NaN",
+    "check": "NaN",
+    "limit": "NaN"
+}
