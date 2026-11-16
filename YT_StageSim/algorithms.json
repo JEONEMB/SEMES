@@ -1,0 +1,28 @@
+{
+ "_설명": "보정 확인 화면 위 막대에서 고를 알고리즘 목록 (GitLab dev verify_web/algorithms.example.json 과 같은 모양). path·config 의 상대경로 = 이 파일이 있는 폴더 기준. 실행기(.exe)나 config 가 없으면 단추가 흐리게 보이고, 누르면 없는 파일을 알려 줌. 아래 algorithms/ 경로는 Windows 용 실행기를 둘 자리로 정한 것이며 실행기는 아직 들어 있지 않음. output: offset(센터 대비 위치, 기본) 또는 command(보낼 이동). gray: 흑백 1채널 그대로 넘김",
+ "algorithms": [
+  {
+   "id": "ksh",
+   "label": "성현",
+   "path": "algorithms/ksh/align_worker.exe",
+   "config": "algorithms/ksh/alignment.yml",
+   "desc": "QR 중심 3개 + 나사 2개"
+  },
+  {
+   "id": "hye",
+   "label": "혜원",
+   "path": "algorithms/hye/align_worker.exe",
+   "config": "algorithms/hye/assets",
+   "gray": true,
+   "desc": "QR 가로 이동 1개 + 나사 4개 (값 5개)"
+  },
+  {
+   "id": "shin",
+   "label": "윤석",
+   "path": "algorithms/shin/align_worker.exe",
+   "config": "algorithms/shin/rig-reverse-fixed.xml.gz",
+   "gray": true,
+   "desc": "QR 3개 아핀 값 18개 (이동·크기·기울기)"
+  }
+ ]
+}

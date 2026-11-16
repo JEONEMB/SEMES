@@ -1,0 +1,42 @@
+flowchart TB
+  subgraph APP["실행 파일 (각자 main)"]
+    M["main.cpp<br/>예제 · 사진 한 장"]
+    TR["tools/align_train.cpp<br/>모델 학습"]
+    EV["tools/align_eval.cpp<br/>정확도 평가 · 교차검증"]
+  end
+  API["alignment.hpp / .cpp<br/>제출 형식 진입점 alignment()"]
+  subgraph KSH["ksh 모듈 (함수 단위 공유)"]
+    direction TB
+    EST["estimator<br/>estimate_pose (①→④ 전체)"]
+    FEA["features ③<br/>measure_features · measure_roi · compute_features"]
+    CO["coarse_align ①<br/>coarse_alignment · phase_shift"]
+    FI["fine_align ②<br/>fine_alignment · icgn_translation · ecc_translation"]
+    IK["interp_kernel<br/>kernel_weight · to_kernel_coeffs"]
+    PM["pose_model ④<br/>fit · invert · load/save"]
+    CFG["align_config<br/>load_align_config"]
+    IU["image_util<br/>to_gray32 · rect_inside"]
+    BA["batch<br/>measure_photos · estimate_photos"]
+    DS["dataset<br/>parse_label · list_labeled_photos"]
+    EVA["evaluation<br/>score_j · block_folds · cross_validate"]
+  end
+  M --> API
+  API --> CFG
+  API --> EST
+  TR --> CFG
+  TR --> BA
+  TR --> PM
+  EV --> CFG
+  EV --> BA
+  EV --> EVA
+  EST --> FEA
+  EST --> PM
+  FEA --> CO
+  FEA --> FI
+  FI --> IK
+  CO --> IU
+  FI --> IU
+  BA --> EST
+  BA --> DS
+  EVA --> PM
+  CFG --> FEA
+  CFG --> PM
