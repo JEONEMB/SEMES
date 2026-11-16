@@ -389,7 +389,31 @@
   act('btn-measure', '/api/measure');
   act('btn-reference', '/api/reference');
   act('btn-stop', '/api/stop');
-  act('btn-center', '/api/center-here');
+  // 현재 위치를 센터로: 먼저 그 자리를 카메라로 재고, 센터와 많이 다르면 묻는다
+  async function waitIdle() {
+    for (let i = 0; i < 200; i++) {
+      const s = await (await fetch('/api/state')).json();
+      if (!s.busy) return s;
+      await new Promise(r => setTimeout(r, 300));
+    }
+    throw new Error('센터 확인 측정이 끝나지 않습니다');
+  }
+  $('btn-center').addEventListener('click', async () => {
+    try {
+      await api('/api/center-check');
+      const s = await waitIdle(), c = s.center_check;
+      if (!c) throw new Error(s.message || '센터 확인 측정 실패');
+      const where = c.basis === 'reference' ? '지금 센터 기준 사진' : '알고리즘의 센터(학습·고정 영점)';
+      let force = false;
+      if (!c.ok) {
+        force = window.confirm(`카메라로 재 보니 이 자리는 ${where}에서\n  Y ${fmt(c.y_mm)} mm, Θ ${fmt(c.t_deg, 4)}°\n떨어져 있습니다 (기준 Y ±${c.limit.y_mm} mm, Θ ±${c.limit.t_deg}°).\n\n` +
+          '실제 센터가 아니면 센터 기준·이동 위치가 모두 틀어집니다.\n그래도 여기를 센터로 저장할까요?');
+        if (!force) { toast('센터를 바꾸지 않았습니다', true); return; }
+      }
+      await api('/api/center-here', {force});
+      toast('센터를 저장했습니다', true);
+    } catch (e) { toast(e.message); }
+  });
 
   // ---------- 데모 웹 넘김 / 되찾기 ----------
   function overlay(text) { $('overlay-text').textContent = text; $('overlay').hidden = !text; }

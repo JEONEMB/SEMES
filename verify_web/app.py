@@ -210,9 +210,14 @@ def create_app(runner, devices, demo):
             raise RunError(str(exc)) from None
         return jsonify(ok=True)
 
+    @app.post('/api/center-check')
+    def center_check():
+        runner.center_check()
+        return jsonify(ok=True)
+
     @app.post('/api/center-here')
     def center_here():
-        runner.set_center_here()
+        runner.set_center_here(force=bool(body().get('force')))
         return jsonify(ok=True)
 
     @app.post('/api/settings')
