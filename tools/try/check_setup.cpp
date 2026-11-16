@@ -1,3 +1,4 @@
+#include "common/console.hpp"
 // 영점 설정, 기준 재등록, 나사 가림 진단
 // 사용: check_setup <model 폴더> <사진 목록.tsv>
 // 목록: 번호<TAB>사진 경로, 헤더 없음
@@ -85,10 +86,10 @@ struct WorstDifference {
 //   출력: 없음 (영점 차감 결과 출력)
 void check_zero(const Photos& photos, const Results& plain) {
     const alignment::Result zero = alignment::set_zero_from_photos({photos[0]});
-    const alignment::Result same = alignment::measure_alignment(photos[0]);
+    const alignment::Result same = alignment::measure_diagnostic(photos[0]);
     double worst = 0;
     for (size_t i = 0; i < photos.size(); ++i) {
-        const alignment::Result r = alignment::measure_alignment(photos[i]);
+        const alignment::Result r = alignment::measure_diagnostic(photos[i]);
         worst = std::max({worst, std::abs(r.y_mm - (plain[i].y_mm - zero.y_mm)), std::abs(r.t_deg - (plain[i].t_deg - zero.t_deg))});
     }
     std::cout << "1. 영점 잡기: 영점 (" << zero.y_mm << ", " << zero.t_deg << "), 그 사진의 값 (" << same.y_mm << ", " << same.t_deg << "), 다른 사진이 (처음 값 − 영점) 과 다른 정도 최대 " << worst << "\n";
@@ -100,11 +101,11 @@ void check_zero(const Photos& photos, const Results& plain) {
 //   출력: 없음 (초기값과의 차이 출력, 영점 재설정 가능)
 void check_reference_reset(const Photos& photos, const Results& plain, const cv::Mat& center) {
     Tally before, after;
-    for (const auto& photo : photos) before.add(alignment::measure_alignment(moved(photo, 0, kScreenShiftDown)));
+    for (const auto& photo : photos) before.add(alignment::measure_diagnostic(moved(photo, 0, kScreenShiftDown)));
     const alignment::Result set = alignment::set_reference_from_photos({moved(center, 0, kScreenShiftDown)});
     WorstDifference worst;
     for (size_t i = 0; i < photos.size(); ++i) {
-        const alignment::Result r = alignment::measure_alignment(moved(photos[i], 0, kScreenShiftDown));
+        const alignment::Result r = alignment::measure_diagnostic(moved(photos[i], 0, kScreenShiftDown));
         after.add(r);
         worst.add(r, plain[i]);
     }
@@ -124,7 +125,7 @@ void check_covered_screw(const Photos& photos, const Results& plain) {
     for (size_t i = 0; i < photos.size(); ++i) {
         cv::Mat photo = photos[i].clone();
         photo(kScrew2Cover).setTo(128);
-        const alignment::Result r = alignment::measure_alignment(photo);
+        const alignment::Result r = alignment::measure_diagnostic(photo);
         covered.add(r);
         ++used[r.screws_used];
         worst.add(r, plain[i]);
@@ -141,6 +142,7 @@ void check_covered_screw(const Photos& photos, const Results& plain) {
 //   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
 //   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
+    tools::use_korean_console();
     if (argc != 3) { std::cerr << "사용: check_setup <model 폴더> <사진 목록.tsv>\n"; return 2; }
     const std::string model_folder = argv[1];
     const cv::Mat center = alignment::read_photo(model_folder + "/center.bmp");
@@ -151,7 +153,7 @@ int main(int argc, char** argv) {
     // 처음 상태의 값 (비교 기준)
     alignment::initialize(model_folder);
     Results plain;
-    for (const auto& photo : photos) plain.push_back(alignment::measure_alignment(photo));
+    for (const auto& photo : photos) plain.push_back(alignment::measure_diagnostic(photo));
 
     check_zero(photos, plain);
     check_reference_reset(photos, plain, center);

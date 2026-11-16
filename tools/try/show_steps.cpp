@@ -1,3 +1,4 @@
+#include "common/console.hpp"
 // 단계별 측정값 출력과 이식 결과 비교
 // 사용: show_steps <model 폴더> <사진>
 #include "alignment.hpp"
@@ -103,6 +104,7 @@ void print_check_step(const AgreementCheck* check, const Reference& reference, c
 //   입력: 실행할 때 지정한 경로와 옵션(파일 상단 사용법)
 //   출력: 실행 결과와 성공 여부를 나타내는 종료 코드
 int main(int argc, char** argv) {
+    tools::use_korean_console();
     if (argc != 3) { std::cerr << "사용: show_steps <model 폴더> <사진>\n"; return 2; }
     const std::string model_folder = argv[1];
     std::string error;

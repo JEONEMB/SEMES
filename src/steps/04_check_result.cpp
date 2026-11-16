@@ -1,7 +1,10 @@
-// 4단계: 예상 이동량과 가장 크게 다른 항목으로 이상 여부 확인
+﻿// 4단계: 예상 이동량과 가장 크게 다른 항목으로 이상 여부 확인
 #include "steps/04_check_result.hpp"
 #include <cmath>
 #include <fstream>
+#include <filesystem>
+#include <set>
+#include <stdexcept>
 #include <sstream>
 
 namespace alignment {
@@ -12,28 +15,38 @@ const char* const kCheckNames[] = {"1234", "234", "134", "124", "123", "12", "13
 
 // load_one_check: 조합 점검식 파일 읽기
 //   입력: path (파일 경로), screws (나사 조합)
-//   출력: 성공 여부, check, found, error. 파일 열기 실패는 found = false
+//   출력: 성공 여부, check, found, error. 파일 열기 실패는 false 반환
 bool load_one_check(const std::string& path, const std::string& screws, AgreementCheck& check, bool& found, std::string& error) {
-    std::ifstream file(path);
+    std::ifstream file(std::filesystem::u8path(path));
     found = bool(file);
-    if (!found) return true;
+    if (!found) { error = "필수 점검식 파일을 읽지 못했습니다: " + path; return false; }
     check = AgreementCheck();
     check.screws = screws;
+    std::set<std::string> seen;
     std::string line;
+    int line_number = 0;
     while (std::getline(file, line)) {
+        ++line_number;
         if (line.empty() || line[0] == '#') continue;
         std::istringstream cells(line);
         std::string name;
         cells >> name;
+        if (!seen.insert(name).second) { error = "중복된 모델 행: " + path + ":" + std::to_string(line_number); return false; }
         if (name == "name") continue;   // 열 이름 행
-        if (name == "threshold") { cells >> check.limit; continue; }
+        if (name == "threshold") { std::string extra; if (!(cells >> check.limit) || !std::isfinite(check.limit) || check.limit <= 0 || (cells >> extra)) { error = "점검 한계 형식 오류: " + path; return false; } continue; }
         AgreementCheck::Row row;
         row.value_index = value_index_of(name);
         for (double& c : row.c) cells >> c;
         cells >> row.usual_spread;
         if (row.value_index < 0 || !cells || !(row.usual_spread > 0)) { error = "점검식 파일의 줄을 읽지 못했습니다: " + path; return false; }
+        std::string extra;
+        if ((cells >> extra) || !std::isfinite(row.usual_spread)) { error = "점검식 숫자 오류: " + path; return false; }
+        for (double c : row.c) if (!std::isfinite(c)) { error = "점검식 숫자 오류: " + path; return false; }
         check.rows.push_back(row);
     }
+    std::set<std::string> expected{"name", "threshold", "qr"};
+    for (char c : screws) expected.insert("screw" + std::string(1,c));
+    if (seen != expected) { error = "점검식 필수 행 누락 또는 조합 불일치: " + path; return false; }
     if (check.rows.empty() || !(check.limit > 0)) { error = "점검식 파일이 비었습니다: " + path; return false; }
     return true;
 }
@@ -42,7 +55,7 @@ bool load_one_check(const std::string& path, const std::string& screws, Agreemen
 
 // load_agreement_checks: 조합별 점검식 읽기
 //   입력: data_folder (모델 폴더)
-//   출력: 성공 여부, checks, error. 열 수 없는 파일은 생략
+//   출력: 성공 여부, checks, error. 필수 파일 누락 시 실패
 bool load_agreement_checks(const std::string& data_folder, std::vector<AgreementCheck>& checks, std::string& error) {
     checks.clear();
     for (const char* name : kCheckNames) {
@@ -87,6 +100,7 @@ AgreementResult check_values_agree(const AgreementCheck& check, const double val
     // 2. 영점 때의 차이를 빼고 평소 흔들림과 비교
     for (const AgreementCheck::Row& row : check.rows) {
         const double off = std::abs(differences[row.value_index] - baseline[row.value_index]) / row.usual_spread;
+        if (!std::isfinite(off)) throw std::overflow_error("일치 점검값이 유한하지 않습니다");
         if (off > result.value) { result.value = off; result.worst_value_index = row.value_index; }
     }
     return result;

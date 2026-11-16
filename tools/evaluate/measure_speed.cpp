@@ -107,7 +107,7 @@ int main(int argc, char** argv) {
             const cv::Mat photo = alignment::read_photo(paths[i].u8string());
             const double read_ms = milliseconds_since(read_start);
             const auto measure_start = Clock::now();
-            alignment::measure_alignment(photo);
+            alignment::measure_diagnostic(photo);
             const double measure_ms = milliseconds_since(measure_start);
             table << threads << '\t' << paths[i].filename().u8string() << '\t' << read_ms << '\t' << measure_ms << '\n';
             if (i == 0) continue;   // 첫 실행의 준비 시간 제외

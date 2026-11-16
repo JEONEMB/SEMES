@@ -17,6 +17,7 @@ struct ScrewShift {
     double shape_similarity = 0;   // 최종 위치에서 흐린 기준 조각과의 닮은 정도 (0~1). 일부 가림 점검용
     bool partial = false;     // 머리 일부 가림 또는 오염 의심 (found = false)
     std::string problem;      // 검출 또는 위치 맞춤 실패 사유
+    std::string trace;        // 실제 수행한 하위 단계의 중간값 (진단 기록)
 };
 
 class ScrewFinder {
@@ -29,7 +30,7 @@ public:
     // find_screw_shifts: 나사별 이동량 측정
     //   입력: gray (회색 사진), qr_dx와 qr_dy (QR 이동량 px), wanted (사용할 나사)
     //   출력: 나사 1~4의 이동량과 검출 결과
-    std::array<ScrewShift, 4> find_screw_shifts(const cv::Mat& gray, double qr_dx, double qr_dy, const std::array<bool, 4>& wanted) const;
+    std::array<ScrewShift, 4> find_screw_shifts(const cv::Mat& gray, double qr_dx, double qr_dy, const std::array<bool, 4>& wanted, bool record = false) const;
 
     // locate_screw: 기준 사진과 가장 닮은 위치 찾기
     //   입력: gray (회색 사진), screw_index (0~3), expected_shift (예상 이동량 px)
@@ -55,7 +56,7 @@ private:
     // find_one: 나사 하나의 위치를 4단계로 맞추기
     //   입력: gray (회색 사진), screw_index (0~3), expected_shift (예상 이동량 px)
     //   출력: ScrewShift (이동량, 검출 여부, 실패 사유)
-    ScrewShift find_one(const cv::Mat& gray, int screw_index, cv::Point expected_shift) const;
+    ScrewShift find_one(const cv::Mat& gray, int screw_index, cv::Point expected_shift, bool record) const;
 
     // shape_similarity_at: 최종 위치에서 흐린 기준 조각과의 닮은 정도
     //   입력: gray (회색 사진), screw_index (0~3), dx와 dy (최종 이동량 px)

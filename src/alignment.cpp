@@ -17,6 +17,8 @@
 #include <map>
 #include <memory>
 #include <mutex>
+#include <chrono>
+#include <stdexcept>
 
 namespace alignment {
 
@@ -39,6 +41,7 @@ struct Measured {
 // 여러 요청의 동시 변경 방지: state_mutex 사용
 struct State {
     bool ready = false;
+    bool zero_valid = false;
     Settings settings;
     Reference reference;
     std::unique_ptr<QrFinder> qr_finder;
@@ -81,15 +84,19 @@ Result failed(const std::string& code, const std::string& message) {
     result.status = Status::Failed;
     result.code = code;
     result.message = message;
+    result.notices.push_back({Status::Failed, code, message, Action::Stop});
     report(result);
     return result;
 }
 
 // add_notice: Result에 알림 추가
 //   입력: result (수정할 결과), status (상태), code (알림 코드), message (내용)
-//   출력: 없음 (result.status/code/message를 직접 바꿈, 처음 추가한 알림 코드를 유지)
+//   출력: 없음 (result.status/code/message를 직접 바꿈, 가장 제한적인 조치의 대표 코드를 선택)
 void add_notice(Result& result, Status status, const std::string& code, const std::string& message) {
-    if (result.code.empty()) result.code = code;
+    const Action action = status == Status::Failed ? Action::Stop : (code == "W_SCREW_MISSING" || code == "W_OUT_OF_RANGE") ? Action::Correct : code == "W_VALUES_DISAGREE" ? Action::Recapture : Action::Review;
+    if (result.code.empty() || int(action) > int(result.action)) result.code = code;
+    if (result.notices.empty() || int(action) > int(result.action)) result.action = action;
+    result.notices.push_back({status, code, message, action});
     if (status == Status::Failed || result.status == Status::Ok) result.status = status;
     result.message += (result.message.empty() ? "" : " / ") + message;
 }
@@ -101,27 +108,71 @@ void add_notice(Result& result, Status status, const std::string& code, const st
 // measure_values: QR, 나사 이동량과 Y, T 계산
 //   입력: gray (회색 사진)
 //   출력: Measured. QR 또는 계산식 미확보 시 has_value = false
-Measured measure_values(const cv::Mat& gray) {
+Measured measure_values(const cv::Mat& gray, const ProgressCallback& progress = {}) {
     Measured measured;
+    using Clock = std::chrono::steady_clock;
+    auto started = Clock::now();
+    const auto begin = [&](int stage, const std::string& purpose) {
+        if (progress) progress(stage, true, 0, purpose);
+        started = Clock::now();
+    };
+    const auto finish = [&](int stage, const std::string& values) {
+        const double ms = std::chrono::duration<double, std::milli>(Clock::now() - started).count();
+        if (progress) progress(stage, false, ms, values);
+    };
 
     // 1단계: QR 이동 측정. QR 3개를 모두 찾지 못하면 종료
+    begin(1, "QR 검출: 이동량을 구해 나사 탐색 위치에 사용");
     measured.qr = state.qr_finder->find_qr_shift(gray);
+    if (progress) {
+        std::string detail = "1-1 위치 탐색: 후보 위치 수=" + std::to_string(measured.qr.peak_count) + " (요구 3)\n";
+        for (int k = 0; k < 3; ++k) {
+            const auto& qr = measured.qr.qr[k];
+            detail += "1-2 정밀 QR " + std::to_string(k + 1) + ": " + (qr.found ? "dx=" + std::to_string(qr.dx) + ", dy=" + std::to_string(qr.dy) + " px; 유사도=" + std::to_string(qr.similarity) : "유효한 정밀 결과 없음") + "\n";
+        }
+        detail += measured.qr.found ? "1-3 평균: dx=" + std::to_string(measured.qr.dx) + ", dy=" + std::to_string(measured.qr.dy) + " px; 다음: 나사 탐색 위치" : "QR 단계 중단: " + measured.qr.problem;
+        finish(1, detail);
+    }
     if (!measured.qr.found) return measured;
+    if (!std::isfinite(measured.qr.dx) || !std::isfinite(measured.qr.dy)) throw std::overflow_error("QR 이동량이 유한하지 않습니다");
     measured.values[0] = measured.qr.dx;
 
     // 2단계: QR 위치 주변에서 사용 나사 탐색
-    measured.screws = state.screw_finder->find_screw_shifts(gray, measured.qr.dx, measured.qr.dy, state.settings.use_screw);
+    begin(2, "나사 검출: 나사별 가로 이동량을 Y/T 계산에 사용");
+    measured.screws = state.screw_finder->find_screw_shifts(gray, measured.qr.dx, measured.qr.dy, state.settings.use_screw, bool(progress));
     std::array<bool, 4> found{};
     for (int k = 0; k < 4; ++k) {
         found[k] = measured.screws[k].found;
         measured.values[k + 1] = found[k] ? measured.screws[k].dx : 0.0;
+        if (!std::isfinite(measured.values[k + 1])) throw std::overflow_error("나사 이동량이 유한하지 않습니다");
         measured.values[kAreaValueOffset + k] = found[k] ? measured.screws[k].area_dx : 0.0;
+        if (!std::isfinite(measured.values[kAreaValueOffset + k])) throw std::overflow_error("나사 둘레 이동량이 유한하지 않습니다");
     }
+    // 나사별 품질 검사 결과를 기록하고 유효한 나사 조합으로 계산
+    std::string screw_values;
+    for (int k = 0; progress && k < 4; ++k)
+        screw_values += "\n나사 " + std::to_string(k + 1) + "\n" + measured.screws[k].trace
+            + (found[k] ? "결과: 유효, 가로 이동량을 Y/T 계산에 전달\n" : "결과: 미검출/제외: " + measured.screws[k].problem + "\n");
+    finish(2, screw_values);
 
     // 3단계: 검출 나사 조합의 계산식으로 Y, T 계산
+    begin(3, "Y/T 계산: QR과 나사 이동량을 조합별 계산식에 대입");
     measured.set = choose_coefficient_set(state.coefficient_sets, found);
-    if (!measured.set) return measured;
+    if (!measured.set) { finish(3, "사용 가능한 계산식 없음"); return measured; }
     measured.raw = compute_yt(*measured.set, measured.values);
+    if (progress) {
+        std::string detail = "3-1 계산식 선택: 나사 조합=" + measured.set->screws + "\n";
+        for (int i = 0; i < kValueCount; ++i) {
+            if (measured.set->weight_y[i] == 0 && measured.set->weight_t[i] == 0) continue;
+            const double normalized = (measured.values[i] - measured.set->mean[i]) / measured.set->scale[i];
+            detail += "3-2 " + std::string(kValueNames[i]) + ": 정규화=" + std::to_string(normalized)
+                + "; Y 기여=" + std::to_string(normalized * measured.set->weight_y[i]) + " mm, T 기여=" + std::to_string(normalized * measured.set->weight_t[i]) + " 도\n";
+        }
+        detail += "3-3 절편: Y=" + std::to_string(measured.set->intercept_y) + ", T=" + std::to_string(measured.set->intercept_t)
+            + "; 합계(영점 차감 전) Y=" + std::to_string(measured.raw.y_mm) + " mm, T=" + std::to_string(measured.raw.t_deg) + " 도; 다음: 영점 반영 및 점검";
+        finish(3, detail);
+    }
+    if (!std::isfinite(measured.raw.y_mm) || !std::isfinite(measured.raw.t_deg)) throw std::overflow_error("Y/T 계산값이 유한하지 않습니다");
     measured.has_value = true;
     return measured;
 }
@@ -142,6 +193,7 @@ void reset_baselines(const Measured& measured) {
         const YT raw = compute_yt(*set, measured.values);
         std::array<double, kValueCount> baseline{};
         expected_differences(check, measured.values, raw.y_mm, raw.t_deg, baseline.data());
+        for (double v : baseline) if (!std::isfinite(v)) throw std::overflow_error("영점 점검값이 유한하지 않습니다");
         state.baselines[check.screws] = baseline;
     }
 }
@@ -219,7 +271,7 @@ void add_notices(Result& result, const Measured& measured, const AgreementResult
         const auto y = exceeded_axis("Y", absolute_y, state.reference.trained_y_mm, "mm");
         const auto t = exceeded_axis("T", absolute_t, state.reference.trained_t_deg, "도");
         add_notice(result, Status::Warning, "W_OUT_OF_RANGE",
-                   "영점 차감 전 학습 범위 초과 (" + y + (y.empty() || t.empty() ? "" : ", ") + t + ")");
+                   "학습 범위를 벗어나 정확도가 떨어질 수 있습니다 (영점 차감 전 " + y + (y.empty() || t.empty() ? "" : ", ") + t + ")");
     }
 }
 
@@ -232,6 +284,7 @@ Result make_result(const Measured& measured) {
     const double absolute_t = measured.raw.t_deg + state.carry_over.t_deg;
     result.y_mm = absolute_y - state.zero.y_mm;
     result.t_deg = absolute_t - state.zero.t_deg;
+    if (!std::isfinite(result.y_mm) || !std::isfinite(result.t_deg)) throw std::overflow_error("최종 측정값이 유한하지 않습니다");
     result.qr_shift_px = measured.qr.dx;
     for (int k = 0; k < 4; ++k) result.screw_shift_px[k] = measured.screws[k].found ? measured.screws[k].dx : kNaN;
     for (int k = 0; k < 4; ++k) result.screw_area_shift_px[k] = measured.screws[k].found ? measured.screws[k].area_dx : kNaN;
@@ -247,7 +300,10 @@ Result make_result(const Measured& measured) {
         result.check_limit = agreement.limit;
     }
     // 4단계 (나): reference.json의 학습 범위 확인
+    result.action = Action::Correct;
     add_notices(result, measured, agreement, absolute_y, absolute_t);
+    result.correction_allowed = state.zero_valid && result.action == Action::Correct;
+    if (result.status == Status::Failed) result.y_mm = result.t_deg = kNaN;
     return result;
 }
 
@@ -255,9 +311,11 @@ Result make_result(const Measured& measured) {
 //   입력: reference (새 기준)
 //   출력: 없음 (state.reference와 QR, 나사 탐색기를 새로 만듦)
 void use_reference(const Reference& reference) {
+    auto qr = std::make_unique<QrFinder>(reference);
+    auto screws = std::make_unique<ScrewFinder>(reference);
     state.reference = reference;
-    state.qr_finder.reset(new QrFinder(reference));
-    state.screw_finder.reset(new ScrewFinder(reference));
+    state.qr_finder = std::move(qr);
+    state.screw_finder = std::move(screws);
 }
 
 }   // 파일 내부
@@ -271,6 +329,8 @@ void use_reference(const Reference& reference) {
 //   출력: 기본 Result. 실패 시 Failed와 오류 알림
 Result initialize(const std::string& data_folder, const std::string& settings_file) {
     std::lock_guard<std::mutex> lock(state_mutex);
+    state.ready = false;
+    state.zero_valid = false;
     try {
         State fresh;
         std::string error;
@@ -282,6 +342,8 @@ Result initialize(const std::string& data_folder, const std::string& settings_fi
         use_reference(Reference(state.reference));
         state.ready = true;
         return Result();
+    } catch (const std::overflow_error& e) {
+        return failed("E_NUMERIC", std::string("유효하지 않은 계산값입니다. 보정을 중단하세요: ") + e.what());
     } catch (const std::exception& e) {
         return failed("E_DATA", std::string("초기화 중 오류: ") + e.what());
     }
@@ -291,26 +353,50 @@ Result initialize(const std::string& data_folder, const std::string& settings_fi
 //   입력: photo (컬러 또는 흑백 사진 한 장)
 //   출력: Result (y_mm, t_deg, 점검값, 알림, 실패하면 오류 코드와 메시지)
 Result measure_alignment(const cv::Mat& photo) {
+    return measure_alignment(photo, {});
+}
+
+// measure_alignment: 진행 알림을 포함한 측정
+//   입력: photo (사진), progress (단계 시작과 완료 알림)
+//   출력: Result (측정값과 상태). 알림 처리 시간은 단계 시간에서 제외
+static Result measure_impl(const cv::Mat& photo, const ProgressCallback& progress, bool diagnostic) {
     std::lock_guard<std::mutex> lock(state_mutex);
     if (!state.ready) return failed("E_NOT_INITIALIZED", "초기화 완료 전 호출");
+    if (!diagnostic && !state.zero_valid) return failed("E_ZERO_REQUIRED", "유효한 영점이 없습니다. 명령 0에서 촬영한 사진으로 영점을 설정하세요.");
     try {
         cv::Mat gray;
         std::string error;
         if (!to_gray(photo, gray, error)) return failed("E_PHOTO", error);
 
-        const Measured measured = measure_values(gray);
+        const Measured measured = measure_values(gray, progress);
         if (!measured.has_value && measured.qr.found && !partial_screws(measured).empty())
             return failed("E_SCREW_PARTIAL", partial_screws(measured) + " (남은 나사로 계산할 계수 없음)");
         if (!measured.has_value)
             return failed("E_QR_NOT_FOUND", measured.qr.found ? "검출한 나사 조합의 계수 미확보" : measured.qr.problem);
 
-        const Result result = make_result(measured);
+        if (progress) progress(4, true, 0, "영점 반영 및 값 일치, 학습 범위 점검: 최종 상태 결정 (정답 미사용)");
+        const auto started = std::chrono::steady_clock::now();
+        Result result = make_result(measured);
+        if (diagnostic) { result.correction_allowed = false; if (result.action == Action::Correct) result.action = Action::Review; }
+        const double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - started).count();
+        if (progress) progress(4, false, ms,
+            "4-1 영점 반영: Y=" + std::to_string(state.zero.y_mm) + " mm, T=" + std::to_string(state.zero.t_deg)
+            + " 도; 기준 연결값 Y=" + std::to_string(state.carry_over.y_mm) + ", T=" + std::to_string(state.carry_over.t_deg)
+            + "\n4-2 값 일치 점검: " + (std::isfinite(result.check_value) ? "값=" + std::to_string(result.check_value) + ", 한계=" + std::to_string(result.check_limit) : "미실시 (점검식 없음)")
+            + "\n4-3 학습 범위: Y [" + std::to_string(state.reference.trained_y_mm[0]) + ", " + std::to_string(state.reference.trained_y_mm[1])
+            + "] mm, T [" + std::to_string(state.reference.trained_t_deg[0]) + ", " + std::to_string(state.reference.trained_t_deg[1]) + "] 도 (영점 차감 전 값으로 판정)"
+            + "\n4-4 알림: " + (result.message.empty() ? "없음" : result.message));
         report(result);
         return result;
+    } catch (const std::overflow_error& e) {
+        return failed("E_NUMERIC", std::string("유효하지 않은 계산값입니다. 보정을 중단하세요: ") + e.what());
     } catch (const std::exception& e) {
         return failed("E_INTERNAL", std::string("측정 중 오류: ") + e.what());
     }
 }
+
+Result measure_alignment(const cv::Mat& photo, const ProgressCallback& progress) { return measure_impl(photo, progress, false); }
+Result measure_diagnostic(const cv::Mat& photo, const ProgressCallback& progress) { return measure_impl(photo, progress, true); }
 
 // set_zero_from_photos: 명령 0 에서 찍은 사진들로 영점 재설정
 //   입력: zero_photos (로봇을 명령 0 으로 보내 찍은 사진 여러 장)
@@ -318,6 +404,7 @@ Result measure_alignment(const cv::Mat& photo) {
 Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos) {
     std::lock_guard<std::mutex> lock(state_mutex);
     if (!state.ready) return failed("E_NOT_INITIALIZED", "초기화 완료 전 호출");
+    state.zero_valid = false;
     try {
         cv::Mat gray;
         std::string error;
@@ -325,18 +412,29 @@ Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos) {
 
         const Measured measured = measure_values(gray);
         if (!partial_screws(measured).empty())
-            return failed("E_ZERO", "영점 사진의 " + partial_screws(measured) + ", 기존 영점 유지");
+            return failed("E_ZERO", "영점 사진의 " + partial_screws(measured) + ", 운영용 영점 무효화");
         if (!measured.has_value || !measured.set->precise)
-            return failed("E_ZERO", "영점 사진에서 측정값 또는 좌우 나사 조합 미확보, 기존 영점 유지");
+            return failed("E_ZERO", "영점 사진에서 측정값 또는 좌우 나사 조합 미확보, 운영용 영점 무효화");
 
+        const Result checked = make_result(measured);
+        // 학습 범위 초과만 있는 사진은 측정 실패가 아니다. 경고는 유지하고 영점을 설정한다.
+        bool blocking = checked.status == Status::Failed;
+        for (const Notice& notice : checked.notices)
+            if (notice.code != "W_OUT_OF_RANGE") blocking = true;
+        if (blocking) return failed("E_ZERO", "영점 사진 점검에 실패했습니다. 가림과 촬영 자세를 확인하세요.");
         state.zero.y_mm = measured.raw.y_mm + state.carry_over.y_mm;
         state.zero.t_deg = measured.raw.t_deg + state.carry_over.t_deg;
         reset_baselines(measured);
 
-        Result result;
+        state.zero_valid = true;
+        Result result = checked;
+        result.correction_allowed = false;  // 설정 결과는 이동 허가가 아니다. 다음 운영 측정에서 판단한다.
         result.y_mm = state.zero.y_mm;
         result.t_deg = state.zero.t_deg;
+        report(result);
         return result;
+    } catch (const std::overflow_error& e) {
+        return failed("E_NUMERIC", std::string("유효하지 않은 계산값입니다. 보정을 중단하세요: ") + e.what());
     } catch (const std::exception& e) {
         return failed("E_INTERNAL", std::string("영점 잡는 중 오류: ") + e.what());
     }
@@ -344,19 +442,27 @@ Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos) {
 
 // set_zero_value: 영점 직접 지정
 //   입력: y_mm, t_deg (새 영점)
-//   출력: 없음 (state.zero 변경, baselines 유지)
-void set_zero_value(double y_mm, double t_deg) {
+//   출력: Result. 유한값 검사 후 영점 변경, baselines 삭제
+Result set_zero_value(double y_mm, double t_deg) {
     std::lock_guard<std::mutex> lock(state_mutex);
+    state.zero_valid = false;
+    if (!state.ready) return failed("E_NOT_INITIALIZED", "초기화 완료 전 호출");
+    if (!std::isfinite(y_mm) || !std::isfinite(t_deg)) return failed("E_ZERO_VALUE", "영점 값이 유효하지 않습니다. Y와 T는 유한한 숫자여야 합니다. 영점을 다시 설정하세요.");
     state.zero.y_mm = y_mm;
     state.zero.t_deg = t_deg;
+    state.baselines.clear();
+    state.zero_valid = true;
+    return Result();
 }
 
 // clear_zero: 영점 값 초기화
 //   입력: 없음
-//   출력: 없음 (state.zero만 (0, 0), 기준과 baselines 유지)
+//   출력: 없음 (state.zero를 (0, 0), 영점 무효화, baselines 삭제)
 void clear_zero() {
     std::lock_guard<std::mutex> lock(state_mutex);
     state.zero = YT();
+    state.zero_valid = false;
+    state.baselines.clear();
 }
 
 // set_reference_from_photos: 센터 사진들로 기준 재등록 (가능하면 기존 영점 연결)
@@ -365,6 +471,7 @@ void clear_zero() {
 Result set_reference_from_photos(const std::vector<cv::Mat>& center_photos) {
     std::lock_guard<std::mutex> lock(state_mutex);
     if (!state.ready) return failed("E_NOT_INITIALIZED", "초기화 완료 전 호출");
+    state.zero_valid = false;
     try {
         cv::Mat gray;
         std::string error;
@@ -398,9 +505,15 @@ Result set_reference_from_photos(const std::vector<cv::Mat>& center_photos) {
         reset_baselines(after);
         result.y_mm = after.raw.y_mm + state.carry_over.y_mm - state.zero.y_mm;
         result.t_deg = after.raw.t_deg + state.carry_over.t_deg - state.zero.t_deg;
+        if (result.code.empty()) add_notice(result, Status::Warning, "W_ZERO_RESET", "기준이 변경되었습니다. 명령 0에서 영점을 다시 설정하세요.");
+        if (!std::isfinite(result.y_mm) || !std::isfinite(result.t_deg)) throw std::overflow_error("기준 좌표 연결값이 유한하지 않습니다");
         report(result);
         return result;
+    } catch (const std::overflow_error& e) {
+        state.ready = false;
+        return failed("E_NUMERIC", std::string("유효하지 않은 계산값입니다. 보정을 중단하세요: ") + e.what());
     } catch (const std::exception& e) {
+        state.ready = false;
         return failed("E_INTERNAL", std::string("기준 다시 잡는 중 오류: ") + e.what());
     }
 }

@@ -51,7 +51,7 @@
 | [QR 검출 실패](fail/E_QR_NOT_FOUND.png) | QR 2 위치 반사광으로 QR 띠의 봉우리가 2개. 이웃 QR 을 대신 잡지 않고 실패 |
 | [일치 점검 경고](warning/W_VALUES_DISAGREE.png), [실패 설정](fail/W_VALUES_DISAGREE.png) | 나사 4 주변을 3 px 옮긴 후 점검값 55.15051, 한계 6.0821129. 가장 크게 벗어난 비교 항목은 QR이었다 |
 | [입력 규격 실패](fail/E_PHOTO.png) | 1920×1080 영상 입력 |
-| [영점 설정 실패](fail/E_ZERO.png) | 오른쪽 나사 제거 사진을 영점 설정에 입력. 기존 영점 유지 |
+| [영점 설정 실패](fail/E_ZERO.png) | 오른쪽 나사 제거 사진을 영점 설정에 입력. 운영용 영점 무효화 |
 | [기준 갱신 실패](fail/E_REFERENCE.png) | QR 영역 반사광 사진을 기준 갱신에 입력. 기존 기준 유지 |
 | [영점 재설정](warning/W_ZERO_RESET.png) | 아래로 60 px 이동한 사진을 기준 갱신에 입력. 이전 기준에서 측정이 성립하지 않아 새 기준 사진을 영점으로 설정 |
 
