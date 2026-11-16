@@ -28,7 +28,7 @@ DONE_RESULTS = {0: '정상', 1: '정지 명령으로 중단', 2: '리밋 스위�
 DEFAULTS = dict(
     center_y_mm=0.0, center_t_deg=0.0,       # 플레이트가 센터일 때의 스테이지 좌표
     tol_y_mm=0.045, tol_t_deg=0.01,          # 이 안이면 '보정 완료'
-    max_trials=20,
+    max_trials=20,                           # 최대 보정 이동 횟수 (측정은 이동 + 1 번: 마지막 이동 뒤 확인 측정)
     enable_t=True,                           # Θ 명령 전송 (꺼져 있으면 Θ 는 그대로 두고 표시만)
     max_step_y_mm=2.0, max_step_t_deg=1.0,   # 추론값이 이보다 크면 움직이지 않고 멈춤
     random_y_mm=1.5, random_t_deg=0.5,       # 랜덤 시작 위치 범위 (±)
@@ -75,6 +75,16 @@ def find_qr_quads(img):
     q = q[np.argsort(q.mean(1)[:, 0])]
     return [[[round(float(x), 2), round(float(y), 2)] for x, y in quad] for quad in q]
 
+
+
+def measure_label(n):
+    """n 번째 측정의 이름 (횟수는 보정 이동 기준: 1 번째 측정은 시작 위치, n 번째는 이동 n−1 번 뒤)."""
+    return '시작 위치' if n <= 1 else f'이동 {n - 1}번 후'
+
+
+def converged_label(n):
+    moves = n - 1
+    return '시작 위치가 이미 허용 오차 안 (이동 없음)' if moves == 0 else f'보정 이동 {moves}번 만에 허용 오차 안으로 들어옴'
 
 class RunError(RuntimeError):
     pass
@@ -367,8 +377,9 @@ class Runner:
             return None
         return (pos[0] / 1000 - self.settings['center_y_mm'], pos[1] / 1000 - self.settings['center_t_deg'])
 
-    def _move(self, y_um, t_mdeg, relative, phase, message='', final=None):
+    def _move(self, y_um, t_mdeg, relative, phase, message='', final=None, origin=None):
         self._phase(phase, message)
+        origin = origin or self.state.get('position')     # 이번 이동을 시작한 자리 (접근점을 거쳐도 처음 자리)
         stage = self.devices.stage
         enable_t = self.settings['enable_t']
         if not enable_t and relative:
@@ -383,7 +394,8 @@ class Runner:
         self._set(moving=True, aligned=None, rois_now=None,   # 움직이면 다시 재기 전까지 정렬 여부를 모른다
                   target=dict(y_mm=y_um / 1000, t_deg=t_mdeg / 1000, relative=relative,
                               axes=self._axis_plan(y_um, t_mdeg, relative),
-                              final=final))         # 접근점으로 가는 중이면 그다음 최종 목표 (화면 안내용)
+                              final=final,          # 접근점으로 가는 중이면 그다음 최종 목표 (화면 안내용)
+                              origin=dict(origin) if origin else None))
         try:
             # 절대 이동에서 Θ 가 꺼져 있으면 목표 Θ = 지금 Θ 라 그대로 보낸다
             stage.start(y_um, t_mdeg, relative=relative, allow_t=enable_t or not relative)
@@ -451,8 +463,8 @@ class Runner:
                 at = 0.0
         if ay > 0 or at > 0:
             self._move(um(y_mm - ay), um(t_deg - at), relative=False, phase=phase, message=message,
-                       final=dict(y_mm=y_mm, t_deg=t_deg))
-        self._move(um(y_mm), um(t_deg), relative=False, phase=phase, message=message)
+                       final=dict(y_mm=y_mm, t_deg=t_deg), origin=pos)
+        self._move(um(y_mm), um(t_deg), relative=False, phase=phase, message=message, origin=pos)
 
     def _goto(self, offset):
         y, t = self._resolve_offset(offset)
@@ -524,12 +536,13 @@ class Runner:
             st = self.state['start']
             start = (st['y_mm'], st['t_deg'])
         run = self._new_run(start)
-        for n in range(1, run['max_trials'] + 1):
-            if self._trial(n, move=True):
-                self._finish_run('converged', f'{n}회차에 허용 오차 안으로 들어옴')
+        # 횟수는 '보정 이동' 기준. n 번째 측정 = 이동 n−1 번 뒤 (1 번째는 시작 위치), 마지막 이동 뒤에도 확인 측정
+        for n in range(1, run['max_trials'] + 2):
+            if self._trial(n, move=n <= run['max_trials']):
+                self._finish_run('converged', converged_label(n))
                 self._set(phase='done', message=self.state['run']['result_label'], start=None)
                 return
-        self._finish_run('max_trials', f'{run["max_trials"]}회 안에 수렴하지 못함')
+        self._finish_run('max_trials', f'보정 이동 {run["max_trials"]}번 해도 허용 오차 밖')
         self._set(phase='done', message=self.state['run']['result_label'])
 
     def _step(self):
@@ -539,10 +552,10 @@ class Runner:
             run = self._new_run(None)
         n = run['trial'] + 1
         if self._trial(n, move=True):
-            self._finish_run('converged', f'{n}회차에 허용 오차 안으로 들어옴')
+            self._finish_run('converged', converged_label(n))
             self._set(phase='done', message=self.state['run']['result_label'])
         else:
-            self._set(phase='idle', message=f'{n}회차 완료 (한 단계)')
+            self._set(phase='idle', message=f'보정 이동 {n}번째 완료 (한 단계)')
 
     def _reference(self):
         """센터로 (−쪽에서 접근) 가서 사진을 찍어 알고리즘 영점으로 등록한다. 그날·그 세션의 센터를 기준으로 삼기 위해.
@@ -617,9 +630,9 @@ class Runner:
             self.state['run']['trial'] = n
             self.version += 1
             self.cond.notify_all()
-        entry, img = self._observe(label=f'{n}회차')
+        entry, img = self._observe(label=measure_label(n))
         entry['trial'] = n
-        # 한 회차 = 한 번 측정. 산출한 두 축 보정량을 그대로 쓰고, 차례 보정이면 Y 를 먼저 옮긴 뒤 이어서 Θ 를 옮긴다
+        # 한 번 측정 → 보정 이동 한 번. 산출한 두 축 보정량을 그대로 쓰고, 차례 보정이면 Y 를 먼저 옮긴 뒤 이어서 Θ 를 옮긴다
         cy, ct = entry['command']['y_mm'], entry['command']['t_deg']
         seq = s['sequential_axes'] and s['enable_t']
         entry['axis'] = None if entry['within'] else ('y_then_t' if seq else 'both')
