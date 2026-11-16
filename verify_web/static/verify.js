@@ -42,7 +42,7 @@
     if (!ov.target) {
       svg.innerHTML = '';
       badge.hidden = false; badge.className = 'center-badge unknown';
-      badge.textContent = '센터 기준 없음 · ① 을 누르면 먼저 찍습니다';
+      badge.textContent = '센터 기준 없음';
       return;
     }
     badge.hidden = false;
@@ -143,11 +143,9 @@
     const v2 = seen ? [seen.offset.y_mm, seen.offset.t_deg] : off;
     $('off-y').textContent = v2 ? fmt(v2[0]) : '—';
     $('off-t').textContent = v2 ? fmt(v2[1]) : '—';
-    $('pos-label').textContent = seen ? `지금 위치 · 카메라로 본 센터와의 차이 (${seen.label})` : '지금 위치 · 스테이지 좌표 − 센터 (카메라로 재기 전)';
+    $('pos-label').textContent = seen ? `센터와의 차이 · ${seen.label}` : '센터와의 차이 · 스테이지 좌표';
     card.dataset.ok = !v2 ? 'unknown' : s.moving ? 'moving' : seen ? (seen.within ? 'ok' : 'bad') : 'unknown';
-    let sub = off ? `스테이지 좌표 기준: Y ${fmt(off[0])} mm, Θ ${fmt(off[1])}°` : '';
-    if (s.moving && goal) sub = (s.target.final ? '백래시 방지: −쪽 접근점을 거쳐서 → ' : '이동 중 → ') +
-      `목표 Y ${fmt(goal[0])} mm, Θ ${fmt(goal[1])}°`;
+    const sub = s.moving && goal ? `→ 목표 Y ${fmt(goal[0])} mm, Θ ${fmt(goal[1])}°` : '';
     $('pos-sub').textContent = sub;
     const v = $('verdict');
     const run = s.run;
@@ -178,13 +176,9 @@
       li.className = n === jobStep ? 'on' : done[n] ? 'done' : n === next ? 'next' : '';
     });
     const st = s.settings;
-    $('input-hint').textContent = `±${st.max_step_y_mm} mm, ±${st.max_step_t_deg}° 안`;
     ['start-y', 'start-t'].forEach(id => { $(id).disabled = s.busy; });
     $('start-t').closest('label').hidden = !st.enable_t;
-    $('random-hint').textContent = `무작위 Y ±${(st.random_y_mm * 0.4).toFixed(1)}~${st.random_y_mm} mm, Θ ±${(st.random_t_deg * 0.4).toFixed(1)}~${st.random_t_deg}°`;
     document.querySelectorAll('[data-slow]').forEach(b => b.classList.toggle('on', String(st.demo_slow) === b.dataset.slow));
-    const sp = st.demo_slow ? [st.slow_y_mm_s, st.slow_t_deg_s] : [st.fast_y_mm_s, st.fast_t_deg_s];
-    $('speed-info').textContent = `Y ${sp[0]} mm/s · Θ ${sp[1]}°/s` + (st.demo_slow && st.pause_s ? ` · 회차마다 ${st.pause_s}s 보여 줌` : '');
   }
   document.querySelectorAll('[data-slow]').forEach(b => b.addEventListener('click', () =>
     api('/api/settings', {demo_slow: b.dataset.slow === 'true'}).catch(e => toast(e.message))));
@@ -278,7 +272,6 @@
     document.querySelectorAll('[data-slow]').forEach(b => { b.disabled = s.busy; });
     $('btn-stop').disabled = !ready || !s.busy;
 
-    $('run-id').textContent = run ? `실행 ${run.id}` + (run.start_offset ? ` · 시작 센터 + (Y ${fmt(run.start_offset[0])} mm, Θ ${fmt(run.start_offset[1])}°)` : '') : '';
     renderHistory(s.history || []);
     if (!settingsDirty) fillSettings(st);
   }
