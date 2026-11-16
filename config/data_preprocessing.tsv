@@ -1,3 +1,0 @@
-rule_id	session	relative_path	expected_raw_y_mm	expected_raw_t_deg	verified_y_mm	verified_t_deg	training_allowed	reason	provenance
-verified_t032_repeat3	20261029	Y+0.05 T+0.32/Y+0.05 T+0.33 (3).bmp	0.05	0.33	0.05	0.32	1	동봉 장비 기록으로 확인된 학습 명령 정정. 원본 파일명과 평가 명령은 유지.	2026-11-12 정정 기록: S15P31A507/apps/distribution/reoof.py; 같은 폴더 T+0.32 (3).txt의 T_Actual=-1.350
-suspected_command_mismatch_round4	20261109_round4	Y-0.8 T-0.96.bmp	-0.8	-0.96	-0.8	-0.96	0	명령과 영상 자세가 불일치하는 의심 사례. 학습과 영점 추정에서 제외하고 원본과 평가 행은 보존.	2026-11-12 제외 기록: S15P31A507/apps/distribution/reoof.py; 기존 OOF 예측 T 약 +0.717, 파일명 T=-0.96

@@ -3,6 +3,7 @@
 // 동시 호출 시 state_mutex로 한 번에 한 요청만 처리
 #include "alignment.hpp"
 #include "common/reference.hpp"
+#include "common/model_manifest.hpp"
 #include "setup/find_new_reference.hpp"
 #include "setup/settings.hpp"
 #include "steps/01_find_qr.hpp"
@@ -319,6 +320,7 @@ Result initialize(const std::string& data_folder, const std::string& settings_fi
         State fresh;
         std::string error;
         if (!load_settings(settings_file, fresh.settings, error)) return failed("E_SETTINGS", error);
+        if (!verify_model_manifest(data_folder, error)) return failed("E_DATA", error);
         if (!load_reference(data_folder, fresh.reference, error)) return failed("E_DATA", error);
         if (!load_coefficient_sets(data_folder, fresh.coefficient_sets, error)) return failed("E_DATA", error);
         if (!load_agreement_checks(data_folder, fresh.agreement_checks, error)) return failed("E_DATA", error);

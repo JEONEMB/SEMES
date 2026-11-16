@@ -1,4 +1,8 @@
 #include "alignment.hpp"
+#ifdef SSAFY_MODEL_MANIFEST
+#include "common/sha256.hpp"
+#include <sstream>
+#endif
 #include "common/reference.hpp"
 #include <opencv2/imgproc.hpp>
 #include <filesystem>
@@ -50,7 +54,15 @@ int main(int argc,char**argv){
     file<<"screws"<<"[";for(const auto&s:ref.screw)file<<"["<<s.x<<s.y<<"]";file<<"]";
     for(int j=0;j<2;++j){const double*original=j==0?ref.trained_y_mm:ref.trained_t_deg;
         file<<(j==0?"trained_y_mm":"trained_t_deg")<<"["<<(j==axis?(side>0?10000.0:-10001.0):original[0])<<(j==axis?(side>0?10001.0:-10000.0):original[1])<<"]";}
-    file.release();expect(initialize(dest.u8string()).status==Status::Ok,"range model");
+    file.release();
+#ifdef SSAFY_MODEL_MANIFEST
+    failed(initialize(dest.u8string()),"E_DATA");
+    std::ifstream rf(dest/"reference.json",std::ios::binary);std::vector<unsigned char> bytes((std::istreambuf_iterator<char>(rf)),{});
+    std::ifstream manifest(dest/"model_manifest.tsv");std::string line,updated;
+    while(std::getline(manifest,line)){if(line.find("reference.json\t")==0)line="reference.json\t"+final00_sha::sha256_hex(bytes);updated+=line+"\n";}
+    manifest.close();std::ofstream(dest/"model_manifest.tsv")<<updated;
+#endif
+    expect(initialize(dest.u8string()).status==Status::Ok,"range model");
     r=measure_diagnostic(photo);expect(r.status==Status::Warning&&notice(r,"W_OUT_OF_RANGE")&&std::isfinite(r.y_mm)&&std::isfinite(r.t_deg),"range returns values");
     r=set_zero_from_photos({photo});expect(r.status==Status::Warning&&notice(r,"W_OUT_OF_RANGE"),"range zero succeeds with warning");
     r=measure_alignment(photo);expect(r.status==Status::Warning&&notice(r,"W_OUT_OF_RANGE")&&std::abs(r.y_mm)<1e-10&&std::abs(r.t_deg)<1e-10&&r.correction_allowed&&r.action==Action::Correct,"range warning allows correction");

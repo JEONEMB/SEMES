@@ -1,8 +1,4 @@
-build/
-~$*
-plan*.md
-# 설비에서 받은 사진과 그 표 (장당 24 MB). 넣는 법은 data/new_photos/README.md
-data/new_photos/*
-!data/new_photos/README.md
-# 학습, 평가 도구가 만든 결과 (data/results/train, data/results/eval)
-data/results/
+/build/
+/data/results/
+/legacy/bin/
+/legacy/build/
