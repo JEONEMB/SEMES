@@ -93,7 +93,7 @@ Result failed(const std::string& code, const std::string& message) {
 //   입력: result (수정할 결과), status (상태), code (알림 코드), message (내용)
 //   출력: 없음 (result.status/code/message를 직접 바꿈, 가장 제한적인 조치의 대표 코드를 선택)
 void add_notice(Result& result, Status status, const std::string& code, const std::string& message) {
-    const Action action = status == Status::Failed ? Action::Stop : code == "W_SCREW_MISSING" ? Action::Correct : code == "W_VALUES_DISAGREE" ? Action::Recapture : Action::Review;
+    const Action action = status == Status::Failed ? Action::Stop : (code == "W_SCREW_MISSING" || code == "W_OUT_OF_RANGE") ? Action::Correct : code == "W_VALUES_DISAGREE" ? Action::Recapture : Action::Review;
     if (result.code.empty() || int(action) > int(result.action)) result.code = code;
     if (result.notices.empty() || int(action) > int(result.action)) result.action = action;
     result.notices.push_back({status, code, message, action});
@@ -256,7 +256,7 @@ void add_notices(Result& result, const Measured& measured, const AgreementResult
         const auto y = exceeded_axis("Y", absolute_y, state.reference.trained_y_mm, "mm");
         const auto t = exceeded_axis("T", absolute_t, state.reference.trained_t_deg, "도");
         add_notice(result, Status::Warning, "W_OUT_OF_RANGE",
-                   "영점 차감 전 학습 범위 초과 (" + y + (y.empty() || t.empty() ? "" : ", ") + t + ")");
+                   "학습 범위를 벗어나 정확도가 떨어질 수 있습니다 (영점 차감 전 " + y + (y.empty() || t.empty() ? "" : ", ") + t + ")");
     }
 }
 
@@ -401,15 +401,21 @@ Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos) {
             return failed("E_ZERO", "영점 사진에서 측정값 또는 좌우 나사 조합 미확보, 운영용 영점 무효화");
 
         const Result checked = make_result(measured);
-        if (checked.status != Status::Ok) return failed("E_ZERO", "영점 사진 점검에 실패했습니다. 가림과 촬영 자세를 확인하세요.");
+        // 학습 범위 초과만 있는 사진은 측정 실패가 아니다. 경고는 유지하고 영점을 설정한다.
+        bool blocking = checked.status == Status::Failed;
+        for (const Notice& notice : checked.notices)
+            if (notice.code != "W_OUT_OF_RANGE") blocking = true;
+        if (blocking) return failed("E_ZERO", "영점 사진 점검에 실패했습니다. 가림과 촬영 자세를 확인하세요.");
         state.zero.y_mm = measured.raw.y_mm + state.carry_over.y_mm;
         state.zero.t_deg = measured.raw.t_deg + state.carry_over.t_deg;
         reset_baselines(measured);
 
         state.zero_valid = true;
-        Result result;
+        Result result = checked;
+        result.correction_allowed = false;  // 설정 결과는 이동 허가가 아니다. 다음 운영 측정에서 판단한다.
         result.y_mm = state.zero.y_mm;
         result.t_deg = state.zero.t_deg;
+        report(result);
         return result;
     } catch (const std::overflow_error& e) {
         return failed("E_NUMERIC", std::string("유효하지 않은 계산값입니다. 보정을 중단하세요: ") + e.what());

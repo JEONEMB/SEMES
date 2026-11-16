@@ -207,6 +207,7 @@ Zero set_zero(const PhotoGroups& groups) {
     zero.y_mm = result.y_mm;
     zero.t_deg = result.t_deg;
     zero.note = "영점: " + source + "으로 잡음 (Y " + number(zero.y_mm, 4) + " mm, T " + number(zero.t_deg, 5) + " 도). 이 사진들은 채점에서 뺐다";
+    if (!result.message.empty()) zero.note += " / 영점 설정 알림: " + result.message;
     return zero;
 }
 

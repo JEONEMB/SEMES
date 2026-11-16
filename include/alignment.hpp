@@ -25,7 +25,7 @@ struct Notice { Status status; std::string code; std::string message; Action act
 
 struct Result {
     std::vector<Notice> notices;
-    bool correction_allowed = false;
+    bool correction_allowed = false; // 학습 범위 경고만 있으면 true 가능. 다른 차단 조건은 유지
     Action action = Action::Stop;
     double y_mm = 0;     // Y 이동량(mm)
     double t_deg = 0;    // T 회전량(도)
@@ -63,7 +63,7 @@ Result measure_alignment(const cv::Mat& photo, const ProgressCallback& progress)
 
 // set_zero_from_photos: 명령 (0, 0) 사진으로 영점 설정
 //   입력: zero_photos (같은 자세의 사진 목록, 여러 장이면 같은 위치의 픽셀 밝기 평균)
-//   출력: Result (새 영점의 Y, T, 알림). 실패 시 운영용 영점 무효화
+//   출력: Result (새 영점의 Y, T, 알림). Failed이면 영점 무효화, 학습 범위 초과만 있으면 Warning으로 설정 성공
 Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos);
 
 // set_zero_value: 저장한 영점 복원

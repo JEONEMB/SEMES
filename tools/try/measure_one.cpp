@@ -111,6 +111,7 @@ int run_measurement(int argc, char** argv) {
             log.finish(zero, 0, 0); saved(); return 1;
         }
         std::cout << "영점 적용: 완료\n";
+        if (!zero.message.empty()) { std::cout << zero.message << "\n"; log.text << "영점 설정 알림: " << zero.message << "\n"; }
     } else {
         log.text << "영점: 미설정\n";
         std::cout << "영점 적용: 미설정 (모델의 기본 기준으로 측정)\n";

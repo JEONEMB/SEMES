@@ -122,3 +122,11 @@ foreach(name check_new_installation check_qr_blocking make_environment_images ma
         target_link_libraries(${name} PRIVATE tools_common)
     endif()
 endforeach()
+
+if(BUILD_TESTING)
+    add_program(runtime_tests tools/tests/runtime.cpp alignment)
+    target_include_directories(runtime_tests PRIVATE src)
+    add_test(NAME runtime_contract COMMAND runtime_tests "${CMAKE_CURRENT_SOURCE_DIR}/data/model")
+endif()
+
+add_program(evaluate_runtime_photos tools/evaluate/runtime_photos.cpp alignment)
