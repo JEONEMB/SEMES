@@ -12,6 +12,9 @@ from .runner import RunError
 ROOT = Path(__file__).resolve().parent
 FONTS = ROOT.parent / 'demo_web' / 'static' / 'fonts'      # 데모 웹 글꼴을 읽기만 함
 PLATE_CENTER = (1906.3, 1130.8)   # A507 센터 사진의 가운데 QR (알고리즘 좌표, SEMES 는 1907, 1065)
+# QR 3개 + 나사 4개를 감싸는 네모의 가운데 (2026-11-17 센터 사진, LHW·KSH 가 찾은 위치: x 873~2895, y 1044~1819).
+# 이 점을 가운데에 두면 1.7배까지 나사 4개가 여유 있게 다 보인다 (가로 폭이 한계, 1.8배부터 왼쪽 나사가 화면 끝에 붙음)
+SCREWS_CENTER = (1884.0, 1431.5)
 NO_FRAME_GIVE_UP_S = 3            # 카메라 프레임이 이만큼(초) 없으면 영상 응답을 끝낸다
 
 
@@ -150,7 +153,7 @@ def create_app(runner, devices, demo):
         zoom = float(b.get('zoom', 1.0))
         if not 1.0 <= zoom <= 8.0:
             raise ValueError('확대는 1~8 배')
-        center = PLATE_CENTER if b.get('center') == 'plate' else None
+        center = {'plate': PLATE_CENTER, 'screws': SCREWS_CENTER}.get(b.get('center'))
         if devices.camera:
             devices.camera.set_view(zoom, center)
             if 'mode' in b:

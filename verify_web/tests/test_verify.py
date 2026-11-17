@@ -547,6 +547,10 @@ class CenterViewTest(unittest.TestCase):
             self.assertEqual(len(ov['now']['dots']), 5)
             self.assertEqual(client.post('/api/view', json={'zoom': 1, 'mode': 'diff'}).status_code, 200)
             self.assertEqual(cam.view_mode, 'diff')
+            # 1.7× 는 QR+나사 전체의 가운데를 중심으로 (나사 4개가 다 보이게)
+            from verify_web.app import SCREWS_CENTER
+            self.assertEqual(client.post('/api/view', json={'zoom': 1.7, 'center': 'screws'}).status_code, 200)
+            self.assertEqual(cam._view_req, (1.7, SCREWS_CENTER))
 
 
 class HandoffTest(unittest.TestCase):

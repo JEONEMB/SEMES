@@ -25,8 +25,8 @@
   $('video').addEventListener('error', retryVideo);
   $('video').addEventListener('abort', retryVideo);
   $('video').addEventListener('load', () => { $('video-empty').hidden = true; });
-  const view = {zoom: 1, center: 'plate', mode: 'normal'};     // 확대는 항상 QR(판) 중심으로
-  document.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click', () => setView({zoom: +b.dataset.zoom}, b)));
+  const view = {zoom: 1, center: 'plate', mode: 'normal'};     // 확대는 QR(판) 중심, 1.7× 는 QR+나사 전체의 가운데
+  document.querySelectorAll('[data-zoom]').forEach(b => b.addEventListener('click', () => setView({zoom: +b.dataset.zoom, center: b.dataset.center || 'plate'}, b)));
   document.querySelectorAll('[data-mode]').forEach(b => b.addEventListener('click', () => setView({mode: b.dataset.mode}, b)));
   function setView(change, btn) {
     Object.assign(view, change);
