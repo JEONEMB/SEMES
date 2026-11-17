@@ -14,7 +14,7 @@ int wmain(int argc,wchar_t** argv){try{
  std::regex yr("Y([+-][0-9]+(?:\\.[0-9]+)?)"),tr("T([+-][0-9]+(?:\\.[0-9]+)?)");
  for(const auto& date:{std::string("20261014"),std::string("20261020")})for(const auto& e:fs::recursive_directory_iterator(root/("clean_"+date))){if(e.path().extension()!=L".bmp")continue;auto name=e.path().stem().u8string();std::smatch ym,tm;double y=std::regex_search(name,ym,yr)?std::stod(ym[1]):0,t=std::regex_search(name,tm,tr)?std::stod(tm[1]):0;auto src=read_image(e.path());++count;
   out<<date<<",\""<<fs::relative(e.path(),root).u8string()<<"\","<<y<<','<<t<<',';
-  try{auto q=joint(src);double dy=std::abs(q.y-y),dt=std::abs(q.t-t);ey+=dy;et+=dt;maxy=std::max(maxy,dy);maxt=std::max(maxt,dt);++valid;bool pass=dy<=.09&&dt<=.09;passed+=pass;out<<q.y<<','<<q.t<<",1,"<<pass<<'\n';}catch(const std::exception&){out<<",,0,0\n";}
+  try{auto q=joint(src);double dy=std::abs(q.y-y),dt=std::abs(q.t-t);ey+=dy;et+=dt;maxy=std::max(maxy,dy);maxt=std::max(maxt,dt);++valid;bool pass=dy<=.045&&dt<=.01;passed+=pass;out<<q.y<<','<<q.t<<",1,"<<pass<<'\n';}catch(const std::exception&){out<<",,0,0\n";}
   if(count%40==0)std::cout<<"evaluated "<<count<<std::endl;
  }
  std::cout<<std::setprecision(12)<<"joint n="<<count<<" valid="<<valid<<" pass="<<passed<<" Ymean="<<ey/std::max(1,valid)<<" Ymax="<<maxy<<" Tmean="<<et/std::max(1,valid)<<" Tmax="<<maxt<<" (full-model reapplication; not OOF)\n";

@@ -17,7 +17,8 @@
 namespace fs = std::filesystem;
 
 namespace {
-const double TOLERANCE = 0.09;
+const double TOLERANCE_Y = 0.045;
+const double TOLERANCE_T = 0.01;
 struct Label { double y, t; };
 struct Row { std::string path, condition, module; std::optional<Label> label; bool measured = false, outside = false; double y = 0, t = 0, ms = 0; std::string message; };
 
@@ -164,7 +165,7 @@ int wmain(int argc, wchar_t** argv) {
             csv << ',' << r.measured << ',' << r.outside << ',';
             if (r.measured && r.label) {
                 double ey = std::abs(r.y - r.label->y), et = std::abs(r.t - r.label->t);
-                csv << ey << ',' << et << ',' << (ey <= TOLERANCE && et <= TOLERANCE);
+                csv << ey << ',' << et << ',' << (ey <= TOLERANCE_Y && et <= TOLERANCE_T);
             } else csv << ",,";
             csv << ',' << std::setprecision(4) << r.ms << std::setprecision(12) << ',' << csv_quote(r.message) << '\n';
         }
@@ -172,7 +173,7 @@ int wmain(int argc, wchar_t** argv) {
         std::ofstream js(output / "summary.json", std::ios::binary);
         auto module_name = [](const std::string& assets) { return fs::u8path(assets).parent_path().filename().u8string(); };
         js << std::setprecision(10) << "{\n  \"tool\": \"03_benchmark\",\n  \"created\": \"" << now_text("%Y-%m-%d %H:%M") << "\",\n"
-           << "  \"dataset\": \"" << json_escape(dataset.generic_u8string()) << "\",\n  \"photos\": " << photos.size() << ",\n  \"tolerance\": " << TOLERANCE << ",\n"
+           << "  \"dataset\": \"" << json_escape(dataset.generic_u8string()) << "\",\n  \"photos\": " << photos.size() << ",\n  \"tolerance_y\": " << TOLERANCE_Y << ",\n  \"tolerance_t\": " << TOLERANCE_T << ",\n"
            << "  \"note\": \"Same-photo scoring. Photos already used in development give a resubstitution score, not an independent one.\",\n  \"modules\": {";
         for (size_t k = 0; k < modules.size(); ++k) {
             auto assets = modules[k] == "joint" ? joint_assets : control_assets;
@@ -190,7 +191,7 @@ int wmain(int argc, wchar_t** argv) {
                 if (!r.measured) continue;
                 double dy = std::abs(r.y - r.label->y), dt = std::abs(r.t - r.label->t);
                 ey.push_back(dy); et.push_back(dt);
-                bool ok = dy <= TOLERANCE && dt <= TOLERANCE; pass += ok; b.second += ok;
+                bool ok = dy <= TOLERANCE_Y && dt <= TOLERANCE_T; pass += ok; b.second += ok;
             }
             js << "    \"" << modules[k] << "\": {\"photos\": " << n << ", \"measured\": " << measured << ", \"labeled\": " << labeled << ", \"pass\": " << pass
                << ", \"error_y\": " << stats_json(ey) << ", \"error_t\": " << stats_json(et) << ", \"ms_median\": " << percentile(ms, 0.5) << ", \"by_condition\": {";

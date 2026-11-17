@@ -6,6 +6,7 @@
 data/raw/zip_20261014.zip -> data/clean/clean_20261014
 data/raw/zip_20261020.zip -> data/clean/clean_20261020
 data/raw/zip_20261029.zip -> data/clean/clean_20261029
+data/raw/[교보재] 세메스 데이터 4차.zip -> data/clean/clean_round4
 
 BMP 픽셀이나 파일 바이트를 가공하지 않고 중첩 분할 ZIP을 풉니다.
 공통 최상위 포장 폴더 한 개만 제거하고 촬영 폴더/파일명을 보존합니다.
@@ -13,6 +14,7 @@ BMP 픽셀이나 파일 바이트를 가공하지 않고 중첩 분할 ZIP을 �
 20261014: BMP 281장 (center 1, Y 80, T 200)
 20261020: BMP 60장 (center 3, 혼합 57), 동봉 TXT 60개
 20261029: BMP 234장 (center 없음, 혼합 Y+0.05 x Θ 78자세 x 3장), 동봉 TXT 234개
+4차: BMP 144장 (Y 12값 × T 12값, 각 1장), 동봉 TXT 없음
 
 Python이나 과거 실험 폴더 없이 실행됩니다.
 사용 라이브러리: C++17, OpenCV 3.4.15, Windows BCrypt(SHA256).
@@ -34,11 +36,14 @@ cmake 명령을 찾지 못하면 docs/windows-setup.md의 PATH 설정을 확인�
 
 3. 실행
 -------
-두 날짜 모두 생성하거나 기존 데이터 검증:
+전체 생성 또는 기존 데이터 검증 (4차 ZIP이 제공되면 포함):
   .\build\tool\Release\01_prepare_clean.exe
 
 한 날짜만:
   .\build\tool\Release\01_prepare_clean.exe --date 20261020
+
+4차만:
+  .\build\tool\Release\01_prepare_clean.exe --date round4
 
 기존 데이터 검증만 (없으면 오류, 생성/수정하지 않음):
   .\build\tool\Release\01_prepare_clean.exe --verify-only
