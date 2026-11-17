@@ -34,7 +34,7 @@ bool measure_for_controller(const cv::Mat& image, double& y_mm, double& t_deg) {
 | 좌우 나사 정보 미확보 | Warning, W_COARSE, Review | 금지 |
 | 관측값 일치 점검 초과 | W_VALUES_DISAGREE, Recapture 또는 Stop | 금지 |
 | QR 미검출 또는 개수와 간격 불일치 | Failed, E_QR_NOT_FOUND | 금지 |
-| 나사 부분 가림 또는 오염 의심 | Failed, E_SCREW_PARTIAL | 금지 |
+| 나사 위치 계산 후 품질 기준 초과 | Warning, W_SCREW_UNSTABLE, 측정값 유지 | 다른 차단 조건이 없으면 허용 |
 | 영점 미설정 또는 무효화 | Failed, E_ZERO_REQUIRED | 금지 |
 | 모델, 입력 형식 또는 계산 오류 | Failed | 금지 |
 | measure_diagnostic 호출 | 상태와 무관 | 금지 |

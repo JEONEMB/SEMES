@@ -63,3 +63,5 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_text_style.ps1
 ```
 
 현재 나사 품질 판정과 운영 계약은 [변경 안내](docs/screw_quality_20261116.md)를 확인하세요.
+
+나사 추정 불안정 경고와 측정값 유지 동작은 [2026-11-17 변경 안내](docs/screw_quality_20261117.md)를 확인하세요.

@@ -32,7 +32,6 @@ struct Measured {
     bool has_value = false;
     QrShift qr;
     std::array<ScrewShift, 4> screws;
-    int partial_screw = -1;  // 머리 일부 가림 또는 오염 의심 나사 (0~3). 있으면 측정 실패
     const CoefficientSet* set = nullptr;
     double values[kValueCount] = {};   // [0] QR, [1~4] 나사 1~4 가로 이동
     YT raw;                  // 계산식으로 구한 그대로의 Y, T
@@ -94,7 +93,7 @@ Result failed(const std::string& code, const std::string& message) {
 //   입력: result (수정할 결과), status (상태), code (알림 코드), message (내용)
 //   출력: 없음 (result.status/code/message를 직접 바꿈, 가장 제한적인 조치의 대표 코드를 선택)
 void add_notice(Result& result, Status status, const std::string& code, const std::string& message) {
-    const Action action = status == Status::Failed ? Action::Stop : (code == "W_SCREW_MISSING" || code == "W_OUT_OF_RANGE") ? Action::Correct : code == "W_VALUES_DISAGREE" ? Action::Recapture : Action::Review;
+    const Action action = status == Status::Failed ? Action::Stop : (code == "W_SCREW_MISSING" || code == "W_OUT_OF_RANGE" || code == "W_SCREW_UNSTABLE") ? Action::Correct : code == "W_VALUES_DISAGREE" ? Action::Recapture : Action::Review;
     if (result.code.empty() || int(action) > int(result.action)) result.code = code;
     if (result.notices.empty() || int(action) > int(result.action)) result.action = action;
     result.notices.push_back({status, code, message, action});
@@ -146,16 +145,13 @@ Measured measure_values(const cv::Mat& gray, const ProgressCallback& progress = 
         found[k] = measured.screws[k].found;
         measured.values[k + 1] = found[k] ? measured.screws[k].dx : 0.0;
         if (!std::isfinite(measured.values[k + 1])) throw std::overflow_error("나사 이동량이 유한하지 않습니다");
-        if (measured.screws[k].partial && measured.partial_screw < 0) measured.partial_screw = k;
     }
-    // 나사 머리 일부 가림 또는 오염 의심: 남은 나사로 계산하지 않고 종료
+    // 위치 계산이 완료된 나사는 품질 경고와 함께 계산에 사용
     std::string screw_values;
     for (int k = 0; progress && k < 4; ++k)
         screw_values += "\n나사 " + std::to_string(k + 1) + "\n" + measured.screws[k].trace
             + (found[k] ? "결과: 유효, 가로 이동량을 Y/T 계산에 전달\n" : "결과: 미검출/제외: " + measured.screws[k].problem + "\n");
-    if (measured.partial_screw >= 0) screw_values += "부분 가림 의심으로 중단";
     finish(2, screw_values);
-    if (measured.partial_screw >= 0) return measured;
 
     // 3단계: 검출 나사 조합의 계산식으로 Y, T 계산
     begin(3, "Y/T 계산: QR과 나사 이동량을 조합별 계산식에 대입");
@@ -240,6 +236,12 @@ std::string used_screws(const std::string& screws) {
 void add_notices(Result& result, const Measured& measured, const AgreementResult& agreement, double absolute_y, double absolute_t) {
     const std::string missing = missing_screws(measured);
     const std::string used = used_screws(measured.set->screws);
+
+    // 계산이 끝난 나사는 품질 경고가 있어도 Y/T 계산에 사용한다.
+    for (int k = 0; k < 4; ++k)
+        if (measured.screws[k].found && measured.screws[k].quality_warning)
+            add_notice(result, Status::Warning, "W_SCREW_UNSTABLE",
+                       "나사 " + std::to_string(k + 1) + ": " + measured.screws[k].problem + " (계산값 유지)");
 
     if (!measured.set->precise)
         add_notice(result, Status::Warning, "W_COARSE",
@@ -355,8 +357,6 @@ static Result measure_impl(const cv::Mat& photo, const ProgressCallback& progres
         if (!to_gray(photo, gray, error)) return failed("E_PHOTO", error);
 
         const Measured measured = measure_values(gray, progress);
-        if (measured.partial_screw >= 0)
-            return failed("E_SCREW_PARTIAL", "나사 " + std::to_string(measured.partial_screw + 1) + ": " + measured.screws[measured.partial_screw].problem);
         if (!measured.has_value)
             return failed("E_QR_NOT_FOUND", measured.qr.found ? "검출한 나사 조합의 계수 미확보" : measured.qr.problem);
 
@@ -397,8 +397,6 @@ Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos) {
         if (!average_gray(zero_photos, gray, error)) return failed("E_PHOTO", error);
 
         const Measured measured = measure_values(gray);
-        if (measured.partial_screw >= 0)
-            return failed("E_ZERO", "영점 사진의 나사 " + std::to_string(measured.partial_screw + 1) + " 머리 일부 가림 또는 오염 의심, 운영용 영점 무효화");
         if (!measured.has_value || !measured.set->precise)
             return failed("E_ZERO", "영점 사진에서 측정값 또는 좌우 나사 조합 미확보, 운영용 영점 무효화");
 
@@ -406,7 +404,7 @@ Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos) {
         // 학습 범위 초과만 있는 사진은 측정 실패가 아니다. 경고는 유지하고 영점을 설정한다.
         bool blocking = checked.status == Status::Failed;
         for (const Notice& notice : checked.notices)
-            if (notice.code != "W_OUT_OF_RANGE") blocking = true;
+            if (notice.code != "W_OUT_OF_RANGE" && notice.code != "W_SCREW_UNSTABLE") blocking = true;
         if (blocking) return failed("E_ZERO", "영점 사진 점검에 실패했습니다. 가림과 촬영 자세를 확인하세요.");
         state.zero.y_mm = measured.raw.y_mm + state.carry_over.y_mm;
         state.zero.t_deg = measured.raw.t_deg + state.carry_over.t_deg;

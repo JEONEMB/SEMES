@@ -34,7 +34,7 @@ const int kEdgeSmoothing = 5;                      // px. 맞추기 전에 한 �
 const int kEdgeMaxSteps = 200;
 const double kEdgeDone = 1e-8;                     // 반복 종료 닮은 정도 변화량
 
-// 4. 일부 가림 점검 설정. 하나라도 넘으면 머리 일부 가림 또는 오염으로 보고 측정 실패
+// 4. 일부 가림 점검 설정. 기준 초과 시 추정 불안정 경고. 계산된 위치는 유지
 //    받은 사진 715장 × 나사 4개 실측: 닮은 정도 최소 0.996, 대략 위치 차이 최대 7 px, 두 맞춤 차이 최대 0.16 px
 const double kShapeBlurSigma = 2.0;                // px. 모양 비교 전 흐림 (잡음 영향 줄임)
 const int kShapeCutHalf = 60;                      // px. 흐리기 전에 잘라 내는 반폭 (91×91 조각보다 넓게)
@@ -327,14 +327,14 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
     cv::Point located;
     if (!locate_screw(gray, screw_index, expected_shift, located, result.similarity)) {
         if (record) result.trace = "2-1 위치 탐색 실패; 2-2 밝기 맞춤, 2-3 테두리 맞춤, 2-4 모양 점검 미실행\n";
-        result.problem = "나사를 찾지 못함 (가려졌거나 사진 밖)";
+        result.problem = "나사 위치 후보를 찾지 못했습니다";
         return result;
     }
     double rough_dx = 0, rough_dy = 0;
     if (record) result.trace = "2-1 위치 탐색: dx=" + std::to_string(located.x) + ", dy=" + std::to_string(located.y) + " px; 유사도=" + std::to_string(result.similarity) + "\n";
     if (!refine_by_brightness(gray, screw_index, located, rough_dx, rough_dy)) {
         if (record) result.trace += "2-2 밝기 맞춤 실패; 2-3, 2-4 미실행\n";
-        result.problem = "나사 위치를 다듬지 못함 (가림, 반사)";
+        result.problem = "나사 밝기 맞춤 계산이 완료되지 않았습니다";
         return result;
     }
     // 밝기로 맞춘 위치에서 사진 자르기. 남은 이동은 테두리로 계산
@@ -342,11 +342,11 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
     if (record) result.trace += "2-2 밝기 맞춤: dx=" + std::to_string(rough_dx) + ", dy=" + std::to_string(rough_dy) + " px; 반올림한 위치를 테두리 맞춤에 전달\n";
     if (!refine_by_edges(gray, screw_index, start, result.dx, result.dy)) {
         if (record) result.trace += "2-3 테두리 맞춤 실패; 2-4 미실행\n";
-        result.problem = "나사 테두리를 맞추지 못함 (가림, 반사)";
+        result.problem = "나사 테두리 맞춤 계산이 완료되지 않았습니다";
         return result;
     }
 
-    // 일부 가림 점검: 모양이 기준과 다르거나 두 맞춤 결과가 서로 다르면 실패. QR 예상 위치와 거리는 판정에서 제외
+    // 위치 계산 후 품질 점검: 모양 또는 맞춤 차이 기준 초과는 경고만 기록. QR 예상 위치와 거리는 판정에서 제외
     result.shape_similarity = shape_similarity_at(gray, screw_index, result.dx, result.dy);
     const double locate_drift = cv::norm(located - expected_shift);
     const double refine_gap = std::hypot(result.dx - rough_dx, result.dy - rough_dy);
@@ -354,12 +354,12 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
         + "2-4 모양 점검: 유사도=" + std::to_string(result.shape_similarity) + " (최소 " + std::to_string(kMinShapeSimilarity)
         + "), 탐색 거리=" + std::to_string(locate_drift) + " px (참고값), 맞춤 차이=" + std::to_string(refine_gap) + " (최대 " + std::to_string(kMaxRefineGap) + " px)\n";
     if (result.shape_similarity < kMinShapeSimilarity || refine_gap > kMaxRefineGap) {
-        char detail[160];
-        std::snprintf(detail, sizeof(detail), "나사 머리 일부 가림 또는 오염 의심 (모양 닮은 정도 %.3f, 예상 위치와 거리 %.1f px, 두 맞춤 차이 %.2f px)",
+        char detail[320];
+        std::snprintf(detail, sizeof(detail), "나사 위치 추정이 불안정합니다 (모양 유사도 %.3f, 예상 위치와 거리 %.1f px, 두 맞춤 차이 %.2f px)",
                       result.shape_similarity, locate_drift, refine_gap);
-        result.partial = true;
-        result.problem = detail;
-        return result;
+        result.quality_warning = true;
+        if (!result.problem.empty()) result.problem += "; ";
+        result.problem += detail;
     }
     result.found = true;
     return result;
