@@ -111,6 +111,7 @@ foreach(name make_environment_images make_site_images check_new_installation)
     add_program(${name} tools/environment/${name}.cpp alignment scene_effects)
 endforeach()
 add_program(check_qr_blocking tools/environment/check_qr_blocking.cpp tools_common scene_effects)   # 실제 사진 목록(tables) 사용
+add_program(measure_slow_cases tools/environment/measure_slow_cases.cpp tools_common scene_effects)   # 느린 경우의 측정 시간
 
 if(WIN32)
     add_program(make_figures tools/try/make_figures.cpp tools_common scene_effects gdi32)
