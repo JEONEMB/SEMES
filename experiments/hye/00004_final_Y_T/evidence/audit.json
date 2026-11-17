@@ -1,0 +1,19 @@
+{
+  "image": {
+    "outer_unique_photos": 715,
+    "prediction_rows": 178750,
+    "duplicate_or_missing_ids_per_condition": 0,
+    "outer_test_in_inner_train": 0,
+    "group_leaks": "image split intentionally allows repeat poses in train/test"
+  },
+  "group": {
+    "outer_unique_photos": 715,
+    "prediction_rows": 178750,
+    "duplicate_or_missing_ids_per_condition": 0,
+    "outer_test_in_inner_train": 0,
+    "group_leaks": 0
+  },
+  "protocol_hash_verified": true,
+  "all_metrics_conditions": 500,
+  "baseline_parity": "C++ followup_checks verifies regression parity and analytic sensitivity; full OOF parity additionally reported in parity.tsv"
+}
