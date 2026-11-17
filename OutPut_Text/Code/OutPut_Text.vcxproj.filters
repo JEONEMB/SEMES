@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src"><UniqueIdentifier>{d3de5332-cef1-53aa-abbf-f3bd2776dab3}</UniqueIdentifier></Filter>
+    <Filter Include="src\modules"><UniqueIdentifier>{4af82e69-5f07-5061-a4c6-c8f51dd93805}</UniqueIdentifier></Filter>
+    <Filter Include="include"><UniqueIdentifier>{08510d4a-60a8-5f97-bab1-24eb0648453d}</UniqueIdentifier></Filter>
+    <Filter Include="include\ksh"><UniqueIdentifier>{f753d65f-d2e3-590f-8510-79563bca096b}</UniqueIdentifier></Filter>
+    <Filter Include="config"><UniqueIdentifier>{49220da4-6e69-5074-a62e-6524cdbf6c9a}</UniqueIdentifier></Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\alignment.cpp"><Filter>src</Filter></ClCompile>
+    <ClCompile Include="src\main.cpp"><Filter>src</Filter></ClCompile>
+    <ClCompile Include="src\modules\align_config.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\batch.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\dataset.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\estimator.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\evaluation.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\features.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\hole_locate.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\image_util.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\pose_model.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\qr_locate.cpp"><Filter>src\modules</Filter></ClCompile>
+    <ClCompile Include="src\modules\setup.cpp"><Filter>src\modules</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\alignment.hpp"><Filter>include</Filter></ClInclude>
+    <ClInclude Include="include\ksh\align_config.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\batch.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\dataset.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\estimator.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\evaluation.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\features.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\hole_locate.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\image_util.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\pose_model.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\qr_locate.hpp"><Filter>include\ksh</Filter></ClInclude>
+    <ClInclude Include="include\ksh\setup.hpp"><Filter>include\ksh</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\alignment.yml"><Filter>config</Filter></None>
+    <None Include="config\model_s1d1.yml"><Filter>config</Filter></None>
+  </ItemGroup>
+</Project>
