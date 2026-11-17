@@ -1,7 +1,7 @@
 # TextAlign — center1 기준 재학습 · 텍스트 설정(절대 ROI) · 엔코더 영점 (2026-11-16 ~ 11-17)
 
 기준 이미지 없이 **텍스트 설정 파일(`alignment.yml`)만으로** 정렬하는 방식을 고르기까지의 실험 기록이다.
-배포용 C++ 코드는 `OutPut_Text/Code/` 에 있고, 이 폴더는 루트 빌드에 포함하지 않는다.
+배포용 C++ 코드는 `OutPut_Text/Code/` (config · include · src · tools) 에 있고, 이 폴더는 루트 빌드에 포함하지 않는다.
 
 ## 결과 요약
 
@@ -25,6 +25,7 @@
 | `models/` | 후보 수식 (`model_center1_s1d1*.yml`, `model_center1_s1d2*.yml`, `model_text_s1d2.yml`) 과 텍스트 설정 원형 `alignment_text*.yml` |
 | `reports/` | 검토 결과 보고서(HTML), 실험 결과 JSON, 2·3차 사진별 예측 CSV, 세메스 표 대조 |
 | `figures/` | 항목 4 그림, center1 ROI 확인 그림, ROI 미리보기 |
+| `verify/` | 배포 코드 검증 환경 — CMake · Visual Studio 프로젝트 4개(정렬 · 학습 · 단위 테스트 31개 · 실사진 점검 7개), 테스트 코드, 특징 CSV(1~4차), 학습·검증 결과, 적용 가이드 v2. 프로젝트 파일은 `../../../../OutPut_Text/Code` 가 아니라 원래 배치(같은 폴더에 src·include·config) 기준 |
 
 사진(`img/`)과 마스킹 검증 PNG(약 1 GB)는 저장소에 올리지 않는다.
 스크립트 안의 절대·상대 경로(`/mnt/user-data/...`, `data/features_719x4ref.csv` 등)는 작업 당시 배치 기준이라 그대로는 실행되지 않을 수 있다.
