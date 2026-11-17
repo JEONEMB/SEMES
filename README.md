@@ -1,5 +1,7 @@
 # S15P31A507
 
+2026-11-09 평가 후보: joint 기본값은 [QR·바·나사 66특징 가중 선형 final](experiments/hye/00000_final_QR_bar_pin66/README.md)입니다. 실행·교차검증·5장 반복정밀도 명령과 환경별 검증 한계는 해당 README에 정리했습니다.
+
 ## 개발 규칙과 모듈 구성
 
 작업 전 [AGENTS.md](AGENTS.md)와 [알고리즘 공통 규칙](ALGORITHM_RULES.md)을 확인합니다. 팀장이 전달한 헤더 선언·CPP 구현 분리 지침과 현재 입출력 계약은 [모듈 구성 지침](docs/team-module-layout.md)에 정리했습니다.
