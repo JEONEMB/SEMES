@@ -66,7 +66,7 @@ struct Shot {
 int main() {
     hye::begin_results();
     const hye::fs::path repo = hye::fs::u8path(REPO_DIR);
-    const hye::fs::path assets = repo / hye::fs::u8path(u8"experiments/hye/00000_final_Y_T_joint/assets");
+    const hye::fs::path assets = repo / hye::fs::u8path(u8"experiments/hye/20261028_1258_final_Y_T_joint/assets");
     Observer observer(assets);
     Frozen model(assets / "both_model.json");
 

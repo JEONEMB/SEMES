@@ -1,0 +1,2 @@
+# bar_tilt_upper bar_tilt_lower  (장비 기준 = 역순 기준 + 이 값)
+-0.100473 0.065498

@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV 3.4 REQUIRED)
 get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
-set(CONTROL "${REPO}/experiments/hye/00000_final_Y_T control")
+set(CONTROL "${REPO}/experiments/hye/20261028_1327_final_Y_T control")
 # 학습식(6절편·2차 응답·축소 0.05)은 P12/J204 비교 실험의 train_yort를 그대로 쓴다
 set(STUDY "${REPO}/experiments/hye/20261028_141257_control_P12_vs_J204/실험")
 add_executable(compare_lk src/main.cpp "${STUDY}/src/models.cpp" "${CONTROL}/src/tracker.cpp" "${CONTROL}/src/spline.cpp" "${CONTROL}/src/model.cpp")

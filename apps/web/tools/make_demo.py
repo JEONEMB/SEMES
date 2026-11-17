@@ -41,7 +41,7 @@ def locate_qr(img):
 # Feature-point motion: the 536 fixed QR points control uses (points.json selected=1).
 # Approximation for display: per-QR NCC shift + LK 15x15 on sigma 0.8 blur (control's GN refinement omitted).
 CROP = (1340, 800, 1130, 530)  # control tracker full_crop
-POINTS_JSON = os.path.join(REPO, "experiments", "hye", "00000_final_Y_T control", "assets", "points.json")
+POINTS_JSON = os.path.join(REPO, "experiments", "hye", "20261028_1327_final_Y_T control", "assets", "points.json")
 _pts = [p for p in json.load(open(POINTS_JSON, encoding="utf-8"))["points"] if p[3] == 1]
 REF_PTS = np.array([[p[0], p[1]] for p in _pts], np.float32)
 REF_QR = np.array([int(p[2]) for p in _pts])
@@ -199,7 +199,7 @@ for name in sorted(os.listdir(scen_dir)):
 demo = dict(
     generated=time.strftime("%Y-%m-%d %H:%M"),
     source="build/Release/main.exe 실행 결과 (시나리오 재생, 실제 촬영 아님)",
-    models=dict(joint="00000_final_Y_T_joint", control="00000_final_Y_T control", adopted=True),
+    models=dict(joint="20261028_1258_final_Y_T_joint", control="20261028_1327_final_Y_T control", adopted=True),
     rules=RULES, roi=dict(zip(("x", "y", "w", "h"), ROI)), frame=dict(w=3840, h=2160),
     images={v["key"]: v for v in image_cache.values()}, scenarios=scenarios)
 with open(os.path.join(OUT, "data.js"), "w", encoding="utf-8") as f:

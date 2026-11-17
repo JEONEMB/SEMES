@@ -65,7 +65,7 @@ int main(int argc,char** argv){
         fs::path repo=fs::u8path(REPO_DIR),experiment=fs::u8path(EXPERIMENT_DIR),results=argc>1?fs::u8path(argv[1]):experiment/"results";
         if(fs::exists(results))throw std::runtime_error("results already exists; refusing to overwrite: "+results.u8string());
         cv::setNumThreads(1);
-        auto root=repo/"data/clean",control=repo/fs::u8path(u8"experiments/hye/00000_final_Y_T control");
+        auto root=repo/"data/clean",control=repo/fs::u8path(u8"experiments/hye/20261028_1327_final_Y_T control");
         auto data=samples(root,control);cv::Mat center=legacy_control::read_gray(control/"assets/center.bmp");auto pts=bench::load_points(control/"assets/points.json");
         bench::Methods methods(center,pts,control/"assets");std::vector<bench::Estimate> zero;for(auto& v:kVariants)zero.push_back(methods.run(v.method,center));
         fs::create_directories(results/"models");

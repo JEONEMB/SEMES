@@ -6,10 +6,10 @@ find_package(OpenCV REQUIRED)
 find_package(Threads REQUIRED)
 get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
 set(V2 "${REPO}/experiments/hye/v2_Y_T control")
-# v1 (00000_final_Y_T control 복사본, 바꾼 것: macOS 용 sha256) 과 v2 를 각각 따로 링크한다.
+# v1 (20261028_1327_final_Y_T control 복사본, 바꾼 것: macOS 용 sha256) 과 v2 를 각각 따로 링크한다.
 add_executable(a23_v1 src/main.cpp "${REPO}/src/alignment_diagnostics.cpp" v1/src/control.cpp v1/src/tracker.cpp v1/src/spline.cpp v1/src/model.cpp)
 target_include_directories(a23_v1 PRIVATE v1/include "${REPO}/include" ${OpenCV_INCLUDE_DIRS})
-target_compile_definitions(a23_v1 PRIVATE VERSION_NAME="v1" ASSETS_DIR="${REPO}/experiments/hye/00000_final_Y_T control/assets")
+target_compile_definitions(a23_v1 PRIVATE VERSION_NAME="v1" ASSETS_DIR="${REPO}/experiments/hye/20261028_1327_final_Y_T control/assets")
 add_executable(a23_v2 src/main.cpp "${REPO}/src/alignment_diagnostics.cpp" "${V2}/src/control.cpp" "${V2}/src/tracker.cpp" "${V2}/src/spline.cpp" "${V2}/src/bars.cpp" "${V2}/src/line_profile.cpp" "${V2}/src/model_v2.cpp")
 target_include_directories(a23_v2 PRIVATE "${V2}/include" "${REPO}/include" ${OpenCV_INCLUDE_DIRS})
 target_compile_definitions(a23_v2 PRIVATE VERSION_NAME="v2" ASSETS_DIR="${V2}/assets")

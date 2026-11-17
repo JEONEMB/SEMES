@@ -122,10 +122,10 @@ def predict_control(m, F):
     return np.where(best_ax == "Y", best_val, 0.0), np.where(best_ax == "T", best_val, 0.0), best_ax
 
 # 채택 동결 모델 (참고, 재대입)
-JM = json.load(open(HYE / "00000_final_Y_T_joint" / "assets" / "both_model.json", encoding="utf-8"))["model"]
+JM = json.load(open(HYE / "20261028_1258_final_Y_T_joint" / "assets" / "both_model.json", encoding="utf-8"))["model"]
 FROZEN_J = dict(origin=np.array(JM["origin"]).reshape(-1), proj=np.array(JM["projector"]), initial=np.array(JM["initial"]))
 assert np.allclose(JM["scale"], [2, 2])
-CM = json.load(open(HYE / "00000_final_Y_T control" / "assets" / "model.json", encoding="utf-8"))
+CM = json.load(open(HYE / "20261028_1327_final_Y_T control" / "assets" / "model.json", encoding="utf-8"))
 FROZEN_C = dict(W=np.array(CM["W"]), branches=[(n, b[0], np.array(b[1]), np.array(b[2]), np.array(b[3])) for n, b in CM["branches"].items()])
 FROZEN_C["branches"].sort(key=lambda b: NAMES.index(b[0]))
 

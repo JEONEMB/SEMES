@@ -136,9 +136,9 @@ int main(int argc, char** argv) {
         const bool quick = argc > 1 && std::string(argv[1]) == "quick";
 
         const fs::path clean = repo / "data" / "clean";
-        const fs::path control_assets = repo / fs::u8path(u8"experiments/hye/00000_final_Y_T control/assets");
-        const fs::path joint_assets = repo / fs::u8path(u8"experiments/hye/00000_final_Y_T_joint/assets");
-        const fs::path splits_json = repo / fs::u8path(u8"experiments/hye/00000_final_Y_T control/validation/splits.json");
+        const fs::path control_assets = repo / fs::u8path(u8"experiments/hye/20261028_1327_final_Y_T control/assets");
+        const fs::path joint_assets = repo / fs::u8path(u8"experiments/hye/20261028_1258_final_Y_T_joint/assets");
+        const fs::path splits_json = repo / fs::u8path(u8"experiments/hye/20261028_1327_final_Y_T control/validation/splits.json");
 
         // ---- 1) 사진 목록 ----
         std::vector<ManifestRow> rows;

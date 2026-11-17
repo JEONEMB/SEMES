@@ -112,7 +112,7 @@ static cv::Mat fft_shift(const cv::Mat& g, double dx, double dy) {
 int main(int argc, char** argv) {
     const fs::path repo = fs::u8path(REPO_DIR), res = fs::u8path(EXPERIMENT_DIR) / "results";
     fs::create_directories(res);
-    const fs::path assets = repo / fs::u8path(u8"experiments/hye/00000_final_Y_T_joint/assets");
+    const fs::path assets = repo / fs::u8path(u8"experiments/hye/20261028_1258_final_Y_T_joint/assets");
     Observer obs(assets);
     cv::Mat center = cv::imread((assets / "center.bmp").u8string(), cv::IMREAD_GRAYSCALE);
     Ref R;

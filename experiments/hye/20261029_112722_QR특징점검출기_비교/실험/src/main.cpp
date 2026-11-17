@@ -111,7 +111,7 @@ struct Method{std::string name,kind;std::function<Field(const cv::Mat&)> measure
 int main(){
     try{
         auto repo=fs::u8path(REPO_DIR),exp=fs::u8path(EXPERIMENT_DIR);
-        auto assets=repo/"experiments/hye/00000_final_Y_T control/assets";auto data=repo/"data/clean/clean_20261014";
+        auto assets=repo/"experiments/hye/20261028_1327_final_Y_T control/assets";auto data=repo/"data/clean/clean_20261014";
         auto out=exp/"results";if(fs::exists(out))throw std::runtime_error("results 폴더가 이미 있다. 덮어쓰지 않는다");fs::create_directories(out);
         auto S=load_samples(data);if(S.size()!=280)throw std::runtime_error("1014 단일축 280장이 아니다");
         cv::Mat center=read_gray(data/"center.bmp");

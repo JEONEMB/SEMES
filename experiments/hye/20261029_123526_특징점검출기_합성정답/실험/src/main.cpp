@@ -67,7 +67,7 @@ int main(int argc,char** argv){
         if(fs::exists(results))throw std::runtime_error("results already exists; refusing to overwrite: "+results.u8string());
         cv::setNumThreads(1);
         auto data14=repo/"data/clean/clean_20261014",data20=repo/fs::u8path(u8"data/clean/clean_20261020/기준 위치");
-        auto control=repo/fs::u8path(u8"experiments/hye/00000_final_Y_T control/assets");
+        auto control=repo/fs::u8path(u8"experiments/hye/20261028_1327_final_Y_T control/assets");
         if(legacy_control::sha256(data14/"center.bmp")!=kCenterSha)throw std::runtime_error("center.bmp hash mismatch");
         cv::Mat center=legacy_control::read_gray(data14/"center.bmp"),ref_crop=center(kCrop);
         std::vector<cv::Mat> repeats;for(int i=1;i<=3;++i)repeats.push_back(legacy_control::read_gray(data20/("center"+std::to_string(i)+".bmp")));

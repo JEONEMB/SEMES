@@ -1,0 +1,817 @@
+{
+ "scope": "Only permitted upper/lower long horizontal wall-structure edges; fixedcenter-derived profile masks (rig 20261112: same x ranges as SEMES, rows re-located on the rig center)",
+ "center_sha256": "1ccf649cdd959f31a512b3ede65fb1b58d417654593f87015af5410375fcfdb3",
+ "selected_before_current_measurement": true,
+ "regions": [
+  {
+   "name": "upper_left",
+   "line": "upper",
+   "x_range": [
+    400,
+    1168
+   ],
+   "reference_edge_search_y": [
+    956,
+    966
+   ],
+   "polarity": 1
+  },
+  {
+   "name": "upper_right",
+   "line": "upper",
+   "x_range": [
+    2700,
+    3468
+   ],
+   "reference_edge_search_y": [
+    988,
+    998
+   ],
+   "polarity": 1
+  },
+  {
+   "name": "lower_left",
+   "line": "lower",
+   "x_range": [
+    400,
+    1168
+   ],
+   "reference_edge_search_y": [
+    1934,
+    1937
+   ],
+   "polarity": -1
+  },
+  {
+   "name": "lower_right",
+   "line": "lower",
+   "x_range": [
+    2600,
+    3368
+   ],
+   "reference_edge_search_y": [
+    1953,
+    1965
+   ],
+   "polarity": -1
+  }
+ ],
+ "blocks": [
+  {
+   "id": "upper_left_00",
+   "line": "upper",
+   "side": "left",
+   "x0": 400,
+   "x1": 464,
+   "reference_y": 957,
+   "read_box": [
+    400,
+    933,
+    464,
+    982
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_01",
+   "line": "upper",
+   "side": "left",
+   "x0": 464,
+   "x1": 528,
+   "reference_y": 956,
+   "read_box": [
+    464,
+    932,
+    528,
+    981
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_02",
+   "line": "upper",
+   "side": "left",
+   "x0": 528,
+   "x1": 592,
+   "reference_y": 959,
+   "read_box": [
+    528,
+    935,
+    592,
+    984
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_03",
+   "line": "upper",
+   "side": "left",
+   "x0": 592,
+   "x1": 656,
+   "reference_y": 960,
+   "read_box": [
+    592,
+    936,
+    656,
+    985
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_04",
+   "line": "upper",
+   "side": "left",
+   "x0": 656,
+   "x1": 720,
+   "reference_y": 962,
+   "read_box": [
+    656,
+    938,
+    720,
+    987
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_05",
+   "line": "upper",
+   "side": "left",
+   "x0": 720,
+   "x1": 784,
+   "reference_y": 963,
+   "read_box": [
+    720,
+    939,
+    784,
+    988
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_06",
+   "line": "upper",
+   "side": "left",
+   "x0": 784,
+   "x1": 848,
+   "reference_y": 965,
+   "read_box": [
+    784,
+    941,
+    848,
+    990
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_07",
+   "line": "upper",
+   "side": "left",
+   "x0": 848,
+   "x1": 912,
+   "reference_y": 964,
+   "read_box": [
+    848,
+    940,
+    912,
+    989
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_08",
+   "line": "upper",
+   "side": "left",
+   "x0": 912,
+   "x1": 976,
+   "reference_y": 965,
+   "read_box": [
+    912,
+    941,
+    976,
+    990
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_09",
+   "line": "upper",
+   "side": "left",
+   "x0": 976,
+   "x1": 1040,
+   "reference_y": 966,
+   "read_box": [
+    976,
+    942,
+    1040,
+    991
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_10",
+   "line": "upper",
+   "side": "left",
+   "x0": 1040,
+   "x1": 1104,
+   "reference_y": 966,
+   "read_box": [
+    1040,
+    942,
+    1104,
+    991
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_11",
+   "line": "upper",
+   "side": "left",
+   "x0": 1104,
+   "x1": 1168,
+   "reference_y": 966,
+   "read_box": [
+    1104,
+    942,
+    1168,
+    991
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_00",
+   "line": "upper",
+   "side": "right",
+   "x0": 2700,
+   "x1": 2764,
+   "reference_y": 989,
+   "read_box": [
+    2700,
+    965,
+    2764,
+    1014
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_01",
+   "line": "upper",
+   "side": "right",
+   "x0": 2764,
+   "x1": 2828,
+   "reference_y": 988,
+   "read_box": [
+    2764,
+    964,
+    2828,
+    1013
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_02",
+   "line": "upper",
+   "side": "right",
+   "x0": 2828,
+   "x1": 2892,
+   "reference_y": 989,
+   "read_box": [
+    2828,
+    965,
+    2892,
+    1014
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_03",
+   "line": "upper",
+   "side": "right",
+   "x0": 2892,
+   "x1": 2956,
+   "reference_y": 992,
+   "read_box": [
+    2892,
+    968,
+    2956,
+    1017
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_04",
+   "line": "upper",
+   "side": "right",
+   "x0": 2956,
+   "x1": 3020,
+   "reference_y": 993,
+   "read_box": [
+    2956,
+    969,
+    3020,
+    1018
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_05",
+   "line": "upper",
+   "side": "right",
+   "x0": 3020,
+   "x1": 3084,
+   "reference_y": 993,
+   "read_box": [
+    3020,
+    969,
+    3084,
+    1018
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_06",
+   "line": "upper",
+   "side": "right",
+   "x0": 3084,
+   "x1": 3148,
+   "reference_y": 994,
+   "read_box": [
+    3084,
+    970,
+    3148,
+    1019
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_07",
+   "line": "upper",
+   "side": "right",
+   "x0": 3148,
+   "x1": 3212,
+   "reference_y": 994,
+   "read_box": [
+    3148,
+    970,
+    3212,
+    1019
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_08",
+   "line": "upper",
+   "side": "right",
+   "x0": 3212,
+   "x1": 3276,
+   "reference_y": 994,
+   "read_box": [
+    3212,
+    970,
+    3276,
+    1019
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_09",
+   "line": "upper",
+   "side": "right",
+   "x0": 3276,
+   "x1": 3340,
+   "reference_y": 994,
+   "read_box": [
+    3276,
+    970,
+    3340,
+    1019
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_10",
+   "line": "upper",
+   "side": "right",
+   "x0": 3340,
+   "x1": 3404,
+   "reference_y": 995,
+   "read_box": [
+    3340,
+    971,
+    3404,
+    1020
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_11",
+   "line": "upper",
+   "side": "right",
+   "x0": 3404,
+   "x1": 3468,
+   "reference_y": 998,
+   "read_box": [
+    3404,
+    974,
+    3468,
+    1023
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "lower_left_00",
+   "line": "lower",
+   "side": "left",
+   "x0": 400,
+   "x1": 464,
+   "reference_y": 1935,
+   "read_box": [
+    400,
+    1911,
+    464,
+    1960
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_01",
+   "line": "lower",
+   "side": "left",
+   "x0": 464,
+   "x1": 528,
+   "reference_y": 1935,
+   "read_box": [
+    464,
+    1911,
+    528,
+    1960
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_02",
+   "line": "lower",
+   "side": "left",
+   "x0": 528,
+   "x1": 592,
+   "reference_y": 1934,
+   "read_box": [
+    528,
+    1910,
+    592,
+    1959
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_03",
+   "line": "lower",
+   "side": "left",
+   "x0": 592,
+   "x1": 656,
+   "reference_y": 1935,
+   "read_box": [
+    592,
+    1911,
+    656,
+    1960
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_04",
+   "line": "lower",
+   "side": "left",
+   "x0": 656,
+   "x1": 720,
+   "reference_y": 1935,
+   "read_box": [
+    656,
+    1911,
+    720,
+    1960
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_05",
+   "line": "lower",
+   "side": "left",
+   "x0": 720,
+   "x1": 784,
+   "reference_y": 1935,
+   "read_box": [
+    720,
+    1911,
+    784,
+    1960
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_06",
+   "line": "lower",
+   "side": "left",
+   "x0": 784,
+   "x1": 848,
+   "reference_y": 1935,
+   "read_box": [
+    784,
+    1911,
+    848,
+    1960
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_07",
+   "line": "lower",
+   "side": "left",
+   "x0": 848,
+   "x1": 912,
+   "reference_y": 1936,
+   "read_box": [
+    848,
+    1912,
+    912,
+    1961
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_08",
+   "line": "lower",
+   "side": "left",
+   "x0": 912,
+   "x1": 976,
+   "reference_y": 1936,
+   "read_box": [
+    912,
+    1912,
+    976,
+    1961
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_09",
+   "line": "lower",
+   "side": "left",
+   "x0": 976,
+   "x1": 1040,
+   "reference_y": 1937,
+   "read_box": [
+    976,
+    1913,
+    1040,
+    1962
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_10",
+   "line": "lower",
+   "side": "left",
+   "x0": 1040,
+   "x1": 1104,
+   "reference_y": 1937,
+   "read_box": [
+    1040,
+    1913,
+    1104,
+    1962
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_11",
+   "line": "lower",
+   "side": "left",
+   "x0": 1104,
+   "x1": 1168,
+   "reference_y": 1936,
+   "read_box": [
+    1104,
+    1912,
+    1168,
+    1961
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_00",
+   "line": "lower",
+   "side": "right",
+   "x0": 2600,
+   "x1": 2664,
+   "reference_y": 1953,
+   "read_box": [
+    2600,
+    1929,
+    2664,
+    1978
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_01",
+   "line": "lower",
+   "side": "right",
+   "x0": 2664,
+   "x1": 2728,
+   "reference_y": 1954,
+   "read_box": [
+    2664,
+    1930,
+    2728,
+    1979
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_02",
+   "line": "lower",
+   "side": "right",
+   "x0": 2728,
+   "x1": 2792,
+   "reference_y": 1955,
+   "read_box": [
+    2728,
+    1931,
+    2792,
+    1980
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_03",
+   "line": "lower",
+   "side": "right",
+   "x0": 2792,
+   "x1": 2856,
+   "reference_y": 1956,
+   "read_box": [
+    2792,
+    1932,
+    2856,
+    1981
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_04",
+   "line": "lower",
+   "side": "right",
+   "x0": 2856,
+   "x1": 2920,
+   "reference_y": 1957,
+   "read_box": [
+    2856,
+    1933,
+    2920,
+    1982
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_05",
+   "line": "lower",
+   "side": "right",
+   "x0": 2920,
+   "x1": 2984,
+   "reference_y": 1958,
+   "read_box": [
+    2920,
+    1934,
+    2984,
+    1983
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_06",
+   "line": "lower",
+   "side": "right",
+   "x0": 2984,
+   "x1": 3048,
+   "reference_y": 1960,
+   "read_box": [
+    2984,
+    1936,
+    3048,
+    1985
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_07",
+   "line": "lower",
+   "side": "right",
+   "x0": 3048,
+   "x1": 3112,
+   "reference_y": 1960,
+   "read_box": [
+    3048,
+    1936,
+    3112,
+    1985
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_08",
+   "line": "lower",
+   "side": "right",
+   "x0": 3112,
+   "x1": 3176,
+   "reference_y": 1962,
+   "read_box": [
+    3112,
+    1938,
+    3176,
+    1987
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_09",
+   "line": "lower",
+   "side": "right",
+   "x0": 3176,
+   "x1": 3240,
+   "reference_y": 1964,
+   "read_box": [
+    3176,
+    1940,
+    3240,
+    1989
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_10",
+   "line": "lower",
+   "side": "right",
+   "x0": 3240,
+   "x1": 3304,
+   "reference_y": 1964,
+   "read_box": [
+    3240,
+    1940,
+    3304,
+    1989
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_11",
+   "line": "lower",
+   "side": "right",
+   "x0": 3304,
+   "x1": 3368,
+   "reference_y": 1965,
+   "read_box": [
+    3304,
+    1941,
+    3368,
+    1990
+   ],
+   "edge_polarity": -1
+  }
+ ],
+ "method": "Average64 image columns to one normal intensity profile per fixed block; sigma1 smoothing only inside49-row read box; match21-sample reference profile by continuous vertical shift and affine intensity normalization; no horizontal tracking, texture descriptor or forbidden object input.",
+ "parameters": {
+  "block_width": 64,
+  "blocks_per_segment": 12,
+  "profile_smoothing_sigma": 1.0,
+  "reference_half_width": 10,
+  "search_half_width": 12,
+  "read_half_width": 24,
+  "correlation_min": 0.9,
+  "contrast_min": 5.0,
+  "positive_gain_range": [
+   0.25,
+   4.0
+  ],
+  "max_abs_shift_for_valid": 11.5
+ },
+ "features": "24 vertical shifts per upper/lower line (left12,right12); measured coordinates and all per-block validity diagnostics retained",
+ "failure_policy": "X value is NaN for an invalid block; success_upper/lower requires all24 blocks valid. Raw measured shifts and failure reasons remain saved. No label-dependent omission or point replacement.",
+ "outside_mask_policy": "Every current image sample read by extractor is inside the union of fixed49x64 boxes. Gaussian smoothing is applied only to extracted1D profiles. No full-image blur/NCC/ECC.",
+ "prohibited_inputs": [
+  "bolts",
+  "nuts",
+  "screws",
+  "bracket",
+  "handle",
+  "general background texture",
+  "prior external5ROI measurements",
+  "current filename/date/pose label"
+ ],
+ "limits": [
+  "Long straight edges constrain displacement normal to the line; tangential/horizontal displacement has an aperture ambiguity.",
+  "Fixed-x blocks identify portions of the same geometric line, not independent persistent3D material points along it.",
+  "The measured edge includes a photometric transition on the structural ridge; lighting and shadow changes can shift its apparent position.",
+  "Search is limited to plus/minus12px and does not switch to a different edge if the selected one is lost.",
+  "All341 images remain exposed development data. No real robot-feedback sequence is being measured."
+ ]
+}

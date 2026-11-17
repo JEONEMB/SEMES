@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(OpenCV 3.4 REQUIRED)
 get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../../.." ABSOLUTE)
-set(CONTROL "${REPO}/experiments/hye/00000_final_Y_T control")
+set(CONTROL "${REPO}/experiments/hye/20261028_1327_final_Y_T control")
 # 측정은 채택 control 모듈의 tracker 소스를 그대로 링크한다 (A0 캐시와 같은 측정기).
 add_executable(measure630 src/main.cpp "${CONTROL}/src/tracker.cpp" "${CONTROL}/src/spline.cpp")
 target_include_directories(measure630 PRIVATE "${REPO}/include" "${CONTROL}/include" ${OpenCV_INCLUDE_DIRS})

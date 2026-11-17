@@ -1,0 +1,1 @@
+joint_api photos 702 valid 702 pass 702 max|eY| 0.04009 max|eT| 0.00909

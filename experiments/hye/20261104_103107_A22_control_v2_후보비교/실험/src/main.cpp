@@ -64,7 +64,7 @@ int main() {
     };
     // v1: 1014 4-fold OOF 는 검증 기록(python raw_oof4)이 있으나 Y 단독 판정만 필요하므로, 전수 모델 출력(A10)을 1014 밖 평가에 쓴다(v1 은 1014 만 학습).
     std::map<std::string, double> v1oof;
-    { std::ifstream in(fs::u8path(REPO_DIR) / fs::u8path(u8"experiments/hye/00000_final_Y_T control/validation/python_predictions.csv")); std::string l; std::getline(in, l);
+    { std::ifstream in(fs::u8path(REPO_DIR) / fs::u8path(u8"experiments/hye/20261028_1327_final_Y_T control/validation/python_predictions.csv")); std::string l; std::getline(in, l);
       while (std::getline(in, l)) { auto r = sp(l); if (r[12] != "raw_oof4") continue; double pred = std::stod(r[5]); v1oof[r[0]] = r[4] == "Y" ? pred : 0.0; } }
     row("v1 control (전달 모델, Y-or-T)", [&](const Shot& x, int proto) { if (proto == 0) { auto k = x.rel.substr(x.rel.find('/') + 1); auto it = v1oof.find(k); return it == v1oof.end() ? NAN : it->second; } return v1y[x.idx]; });
     for (auto& cd : cs) for (double lam : {0.0, 0.01}) {

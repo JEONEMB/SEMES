@@ -72,7 +72,7 @@ int main() {
         fs::create_directories(results);
         hye::begin_results();
         Cache c = load(cache_dir());
-        auto blocks = read_blocks(fs::u8path(REPO_DIR) / fs::u8path(u8"experiments/hye/00000_final_Y_T_joint/assets/line_protocol.json"));
+        auto blocks = read_blocks(fs::u8path(REPO_DIR) / fs::u8path(u8"experiments/hye/20261028_1258_final_Y_T_joint/assets/line_protocol.json"));
 
         // ---- 블록별 감도 (1014 단일축) ----
         std::vector<int> ids;

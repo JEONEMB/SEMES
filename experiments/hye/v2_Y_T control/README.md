@@ -3,7 +3,7 @@
 # 2차 control C++ 모듈 v2
 
 공통 목표, 관측 제약, 평가는 [ALGORITHM_RULES.md](../../../ALGORITHM_RULES.md)를 따른다. 2차 control의 판정 기준은 한 장 `|eY| ≤ 0.045`이다. 보조로 같은 자세 반복의 Y 전폭 ≤ 0.045를 함께 본다.
-v1 [00000_final_Y_T control](../00000_final_Y_T%20control/README.md)의 QR 536점 측정기를 그대로 쓰고, **위·아래 바 기울기로 남은 T를 재서 Y에서 빼는 단계**를 더했다. 공개 함수와 CMake 대상 이름(`semes_control`)은 같다. 빌드에 쓰려면 [selected_modules.cmake](../../selected_modules.cmake)의 `SEMES_CONTROL_DIR`를 이 폴더로 바꾼다(이 작업에서는 바꾸지 않았다).
+v1 [20261028_1327_final_Y_T control](../20261028_1327_final_Y_T%20control/README.md)의 QR 536점 측정기를 그대로 쓰고, **위·아래 바 기울기로 남은 T를 재서 Y에서 빼는 단계**를 더했다. 공개 함수와 CMake 대상 이름(`semes_control`)은 같다. 빌드에 쓰려면 [selected_modules.cmake](../../selected_modules.cmake)의 `SEMES_CONTROL_DIR`를 이 폴더로 바꾼다(이 작업에서는 바꾸지 않았다).
 
 ## 무엇을 바꿨나, 왜
 

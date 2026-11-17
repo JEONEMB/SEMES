@@ -1,7 +1,7 @@
 // A19: joint 측정(QR ECC 54 + 위·아래 가로선 48)이 안정적으로 뽑히는지 점검한다.
 //  1부: 575장 전수 측정. 실패, 탐색 범위 확장, QR NCC·ECC 상관, 정밀화 이동량, 선 블록 유효·상관을 기록하고 측정값(102)을 캐시로 남긴다.
 //  2부: 대표 30장에 알려진 교란(정확한 FFT 이동, 밝기, 흐림, 잡음, 조명 기울기)을 넣고 측정값과 frozen joint 의 (Y,T) 가 얼마나 바뀌는지 본다.
-//  측정 코드는 00000_final_Y_T_joint 를 복사했다(바꾼 것: macOS 용 sha256, 진단을 내는 measure_detailed 추가). 원본은 수정하지 않았다.
+//  측정 코드는 20261028_1258_final_Y_T_joint 를 복사했다(바꾼 것: macOS 용 sha256, 진단을 내는 measure_detailed 추가). 원본은 수정하지 않았다.
 #include "observer_internal.hpp"
 #include <opencv2/opencv.hpp>
 #include <atomic>
@@ -40,7 +40,7 @@ static cv::Mat fft_shift(const cv::Mat& g, double dx, double dy) {
 int main(int argc, char** argv) {
     const fs::path repo = fs::u8path(REPO_DIR), res = fs::u8path(EXPERIMENT_DIR);
     fs::create_directories(res / "results"); fs::create_directories(res / "cache");
-    const fs::path assets = repo / fs::u8path(u8"experiments/hye/00000_final_Y_T_joint/assets");
+    const fs::path assets = repo / fs::u8path(u8"experiments/hye/20261028_1258_final_Y_T_joint/assets");
     Observer obs(assets); Frozen model(assets / "both_model.json");
     std::vector<Shot> shots;
     { std::ifstream in(repo / fs::u8path(u8"experiments/hye/20261102_124309_A0_분할측정고정_계층분할과점측정캐시/결과/cache/shots.csv")); std::string l; std::getline(in, l);

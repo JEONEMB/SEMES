@@ -44,7 +44,7 @@ int main(int argc,char** argv){
         bool quick=argc>2&&std::string(argv[2])=="quick";
         if(fs::exists(results))throw std::runtime_error("results already exists; refusing to overwrite: "+results.u8string());
         cv::setNumThreads(1);
-        auto assets=repo/fs::u8path(u8"experiments/hye/00000_final_Y_T control/assets"),models=repo/fs::u8path(u8"experiments/hye/20261029_131112_부화소정합_YT결과영향/결과/results/models");
+        auto assets=repo/fs::u8path(u8"experiments/hye/20261028_1327_final_Y_T control/assets"),models=repo/fs::u8path(u8"experiments/hye/20261029_131112_부화소정합_YT결과영향/결과/results/models");
         std::vector<fs::path> files;for(auto sub:{"Y","Theta"})for(auto& e:fs::directory_iterator(repo/"data/clean/clean_20261014"/sub))if(e.path().extension()==".bmp")files.push_back(e.path());
         std::sort(files.begin(),files.end());if(quick)files.resize(20);
         cv::Mat center=legacy_control::read_gray(assets/"center.bmp");auto pts=bench::load_points(assets/"points.json");const int M=bench::Methods::count();

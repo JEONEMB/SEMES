@@ -73,7 +73,7 @@ int main(int argc,char** argv){
         bool quick=argc>2&&std::string(argv[2])=="quick";
         if(fs::exists(results))throw std::runtime_error("results already exists; refusing to overwrite: "+results.u8string());
         cv::setNumThreads(1);
-        auto data=repo/"data/clean",control=repo/fs::u8path(u8"experiments/hye/00000_final_Y_T control/assets");
+        auto data=repo/"data/clean",control=repo/fs::u8path(u8"experiments/hye/20261028_1327_final_Y_T control/assets");
         if(legacy_control::sha256(data/"clean_20261014/center.bmp")!=kCenterSha)throw std::runtime_error("center.bmp hash mismatch");
         cv::Mat center=legacy_control::read_gray(data/"clean_20261014/center.bmp");auto pts=load_points(control/"points.json");
         Methods methods(center,pts,control);const int M=Methods::count();

@@ -3,7 +3,7 @@
 # 1차 joint C++ 모듈 v2
 
 공통 목표, 관측 제약, 평가는 [ALGORITHM_RULES.md](../../../ALGORITHM_RULES.md)를 따른다. 1차 joint의 판정 기준은 한 장 `|eT| ≤ 0.01`(T 1틱)이다.
-v1 [00000_final_Y_T_joint](../00000_final_Y_T_joint/README.md)에서 **측정은 그대로 두고 모델만 바꿨다.** 공개 함수, CMake 대상 이름(`semes_joint`), `assets/` 구조는 같다. 빌드에 쓰려면 [selected_modules.cmake](../../selected_modules.cmake)의 `SEMES_JOINT_DIR`를 이 폴더로 바꾼다(이 작업에서는 바꾸지 않았다).
+v1 [20261028_1258_final_Y_T_joint](../20261028_1258_final_Y_T_joint/README.md)에서 **측정은 그대로 두고 모델만 바꿨다.** 공개 함수, CMake 대상 이름(`semes_joint`), `assets/` 구조는 같다. 빌드에 쓰려면 [selected_modules.cmake](../../selected_modules.cmake)의 `SEMES_JOINT_DIR`를 이 폴더로 바꾼다(이 작업에서는 바꾸지 않았다).
 
 ## 무엇을 바꿨나, 왜
 

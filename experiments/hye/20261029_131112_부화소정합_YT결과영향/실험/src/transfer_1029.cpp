@@ -31,7 +31,7 @@ int main(){
         fs::path repo=fs::u8path(REPO_DIR),experiment=fs::u8path(EXPERIMENT_DIR),results=experiment/"results_transfer20261029";
         if(fs::exists(results))throw std::runtime_error("results already exists; refusing to overwrite: "+results.u8string());
         cv::setNumThreads(1);
-        auto control=repo/fs::u8path(u8"experiments/hye/00000_final_Y_T control/assets");auto pts=bench::load_points(control/"points.json");
+        auto control=repo/fs::u8path(u8"experiments/hye/20261028_1327_final_Y_T control/assets");auto pts=bench::load_points(control/"points.json");
         cv::Mat center=legacy_control::read_gray(control/"center.bmp");bench::Methods methods(center,pts,control);
         std::vector<study::Model> models;std::vector<bench::Estimate> zero;std::vector<cv::Mat> center_feature;
         for(auto& v:kVariants){models.push_back(load_model(experiment/"results/models"/v.model));zero.push_back(methods.run(v.method,center));center_feature.push_back(p12(pts,zero.back(),zero.back()));}
