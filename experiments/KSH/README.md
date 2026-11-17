@@ -14,6 +14,7 @@
 | `Simulator/` | 영점 맞춤 시뮬레이터 (콘솔 + MFC, 2026-10-28 판, 기록용) — 최신 판은 `tool/simulator/` |
 | `Integrated/` | 통합 정렬기 (ksh 추정 + 팀 판 검출·QR 검증) — 루트에서 `-DKSH_BUILD_INTEGRATED=ON` 으로 빌드 |
 | `Retrain/` | **1~4차 전체 재학습 (2026-11-10)** — 차수 1~3 · 기준 센터 · 사분면 균형 · 반복 학습 비교, 4차 데이터 진단, 폐루프 영향 분석, 후보 수식 9개 (배포 수식은 그대로) |
+| `TextAlign/` | **center1 기준 재학습 · 텍스트 설정(절대 ROI) · 엔코더 영점 (2026-11-16)** — 1차식(s1d1) 채택, 배포 코드는 `OutPut_Text/Code/` |
 | `Alignment_vs/` | 이전 `src/KSH/Alignment` 의 Visual Studio 프로젝트·CMake 사본 (로컬 `QR_Image.slnx` 용, 파일 경로는 이전 배치 기준) |
 
 사진(`img/`)은 저장소에 올리지 않는다. 실험 폴더 안의 상대 경로(`../Alignment` 등)는 이전 배치 기준이라 그대로는 빌드되지 않을 수 있다.
