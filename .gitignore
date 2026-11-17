@@ -42,3 +42,9 @@ Desktop.ini
 # 실험 결과의 옛 ppt·그림·영상 원본 사본 (00000.legacies 에 원본 보관, 용량 때문에 커밋하지 않음)
 experiments/hye/**/원본자료/
 __pycache__/
+
+# 데이터 변환 도구의 입력 및 생성 폴더
+/data/raw/
+/data/bmp/
+/data/png/
+/data/tmp_*/
