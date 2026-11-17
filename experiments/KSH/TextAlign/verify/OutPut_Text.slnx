@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="OutPut_Text.vcxproj" Id="7c1f4e2a-3b6d-4f8e-9a51-2d7e0b4c6a13" />
+  <Project Path="OutPut_TextTrain.vcxproj" Id="8d2a5f3b-4c7e-4a9f-8b62-3e8f1c5d7b24" />
+  <Project Path="OutPut_TextTest.vcxproj" Id="9e3b6a4c-5d8f-4bab-9c73-4f9a2d6e8c35" />
+  <Project Path="OutPut_TextPhoto.vcxproj" Id="a14c7b5d-6e9a-4cbc-8d84-5a0b3e7f9d46" />
+</Solution>

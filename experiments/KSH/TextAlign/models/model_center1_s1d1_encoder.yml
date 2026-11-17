@@ -1,0 +1,18 @@
+%YAML:1.0
+---
+trained_at: "2026-11-16"
+note: "영점 = 엔코더 (Y -1.30, T -1.67). 기울기는 model_center1_s1d1 과 같음, 상수 = center1 날 2·3차 291장 잔차 평균 (center1 사진 = Y +40.1 um, T +0.0022 deg)"
+n_samples: 291
+theta_order_s: 1
+theta_order_d: 1
+model:
+   s:
+      c_px: -7.4888066497578565e-01
+      a_px_per_mm: 1.4298201518725016e+01
+      theta_px_per_deg_k: [ 8.0162503857079614e+01 ]
+      sigma_px: 2.7798707597526168e-01
+   d:
+      c_px: -1.2278220604285399e-01
+      a_px_per_mm: 3.1275187105597073e+00
+      theta_px_per_deg_k: [ -1.2681142515069881e+00 ]
+      sigma_px: 5.2354045115987777e-02
