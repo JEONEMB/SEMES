@@ -1,0 +1,61 @@
+--- a/experiments/hye/20261105_090000_mixed_learning_curve/src/main.cpp
++++ b/experiments/hye/20261105_090000_mixed_learning_curve/src/main.cpp
+@@ -58,14 +58,31 @@
+     runs<<std::setprecision(17)<<"model\tseed\tfold\tsubset\tbudget\tn_train\tn_valid_train\tn_test\tn_valid_test\tpass_Y\tpass_T\tpass_both\tMAE_Y\tMAE_T\tmax_eY\tmax_eT\tsim1_pass\tsim2_pass\tsim1_false_stop\tsim2_false_stop\tfit_ms\tpredict_ms_per_image\tn_1014\tn_1020\tn_1029\ttrain_min_Y\ttrain_max_Y\ttrain_min_T\ttrain_max_T\terror\n";
+     std::map<std::pair<int,int>,Stats> total;int fits=0;long predictions=0;
+     std::vector<int> canonical;for(int i=0;i<int(rows.size());++i)canonical.push_back(i);
+-    for(unsigned seed:{20261105u,20261106u,20261107u}){
+-        auto order=shuffled(canonical,seed);std::vector<int> fold(rows.size());for(int i=0;i<int(order.size());++i)fold[order[i]]=i%5+1;
++    for(unsigned seed:{20261104u,20261001u}){
++        std::vector<int> fold(rows.size());
++        const int foldCount = seed == 20261104u ? 5 : 3;
++        if (foldCount == 5) {
++            std::map<std::string,int> groupFold;
++            std::ifstream assignments(root/"data/fivefold_seed20261104/_metadata/assignments.tsv");
++            if (!assignments) throw std::runtime_error("Missing group assignments");
++            std::string line;
++            std::getline(assignments,line);
++            while (std::getline(assignments,line)) {
++                const auto fields=split(line,'\t');
++                if (!groupFold.emplace(fields.at(1),std::stoi(fields.at(2))).second)
++                    throw std::runtime_error("Duplicate group assignment");
++            }
++            for (const auto& row:rows) fold[row.id]=groupFold.at(row.group);
++        } else {
++            const std::map<std::string,int> dateFold={{"20261014",1},{"20261020",2},{"20261029",3}};
++            for (const auto& row:rows) fold[row.id]=dateFold.at(row.date);
++        }
+         for(int id:canonical)foldfile<<seed<<'\t'<<fold[id]<<'\t'<<id<<'\n';
+         std::vector<std::ofstream> pr(8);for(int m=0;m<8;++m){pr[m].open(out/"predictions"/(names[m]+"_"+std::to_string(seed)+".tsv"));pr[m]<<std::setprecision(17)<<"fold\tsubset\tbudget\tindex\tY\tT\tpred_Y\tpred_T\tabs_eY\tabs_eT\tpass_both\tsim1_pass\tsim2_pass\tsim1_turns\tsim2_turns\terror\n";}
+-        for(int f=1;f<=5;++f){std::vector<int> train,test;for(int id:canonical)(fold[id]==f?test:train).push_back(id);
++        for(int f=1;f<=foldCount;++f){std::vector<int> train,test;for(int id:canonical)(fold[id]==f?test:train).push_back(id);
+             if(train.size()+test.size()!=rows.size())throw std::runtime_error("Fold partition failure");
+-            for(int subset=0;subset<2;++subset){auto selected=shuffled(train,seed^(0x9e3779b9u*unsigned(f))^(0x85ebca6bu*unsigned(subset+1)));
+-                for(int budget:{10,20,40,80,160,320,0}){if(budget==0&&subset==1)continue;int count=budget==0?int(train.size()):budget;
++            for(int subset=0;subset<1;++subset){auto selected=shuffled(train,seed^(0x9e3779b9u*unsigned(f))^(0x85ebca6bu*unsigned(subset+1)));
++                for(int budget:{0}){if(budget==0&&subset==1)continue;int count=budget==0?int(train.size()):budget;
+                     std::vector<int> ids=budget==0?train:std::vector<int>(selected.begin(),selected.begin()+count);int dates[3]={0,0,0};double ymin=1e9,ymax=-1e9,tmin=1e9,tmax=-1e9;
+                     for(int k=0;k<count;++k){int id=ids[k];if(fold[id]==f)throw std::runtime_error("Train/test leakage");members<<seed<<'\t'<<f<<'\t'<<subset<<'\t'<<(budget==0?"all":std::to_string(budget))<<'\t'<<k<<'\t'<<id<<'\n';auto&r=rows[id];++dates[r.date=="20261014"?0:r.date=="20261020"?1:2];ymin=std::min(ymin,r.y);ymax=std::max(ymax,r.y);tmin=std::min(tmin,r.t);tmax=std::max(tmax,r.t);}
+                     for(int m=0;m<8;++m){Model model;model.kind=m;cv::Mat X,Y,A;Stats s;std::string error;double trainms=0,predictionms=0;
+@@ -81,16 +98,16 @@
+                             pr[m]<<f<<'\t'<<subset<<'\t'<<(budget==0?"all":std::to_string(budget))<<'\t'<<id<<'\t'<<r.y<<'\t'<<r.t<<'\t'<<p[0]<<'\t'<<p[1]<<'\t'<<ey<<'\t'<<et<<'\t'<<(py&&pt)<<'\t'<<sims[0].pass<<'\t'<<sims[1].pass<<'\t'<<sims[0].turns<<'\t'<<sims[1].turns<<'\t'<<failure<<'\n';
+                         }
+                         runs<<names[m]<<'\t'<<seed<<'\t'<<f<<'\t'<<subset<<'\t'<<(budget==0?"all":std::to_string(budget))<<'\t'<<count<<'\t'<<X.rows<<'\t'<<s.n<<'\t'<<s.valid<<'\t'<<s.py<<'\t'<<s.pt<<'\t'<<s.pb<<'\t'<<s.ey/std::max(1L,s.valid)<<'\t'<<s.et/std::max(1L,s.valid)<<'\t'<<s.my<<'\t'<<s.mt<<'\t'<<s.simpass[0]<<'\t'<<s.simpass[1]<<'\t'<<s.false_stop[0]<<'\t'<<s.false_stop[1]<<'\t'<<trainms<<'\t'<<predictionms/std::max(1L,s.valid)<<'\t'<<dates[0]<<'\t'<<dates[1]<<'\t'<<dates[2]<<'\t'<<ymin<<'\t'<<ymax<<'\t'<<tmin<<'\t'<<tmax<<'\t'<<error<<'\n';
+-                        auto&g=total[{m,budget}];g.n+=s.n;g.valid+=s.valid;g.py+=s.py;g.pt+=s.pt;g.pb+=s.pb;g.ey+=s.ey;g.et+=s.et;g.my=std::max(g.my,s.my);g.mt=std::max(g.mt,s.mt);g.fitfail+=s.fitfail;g.rates.push_back(100.*s.pb/s.n);g.fitms.push_back(trainms);g.predms.push_back(predictionms/std::max(1L,s.valid));for(int w=0;w<2;++w){g.simpass[w]+=s.simpass[w];g.false_stop[w]+=s.false_stop[w];g.turns[w]+=s.turns[w];g.maxturns[w]=std::max(g.maxturns[w],s.maxturns[w]);}++fits;
++                        auto&g=total[{m,int(seed)}];g.n+=s.n;g.valid+=s.valid;g.py+=s.py;g.pt+=s.pt;g.pb+=s.pb;g.ey+=s.ey;g.et+=s.et;g.my=std::max(g.my,s.my);g.mt=std::max(g.mt,s.mt);g.fitfail+=s.fitfail;g.rates.push_back(100.*s.pb/s.n);g.fitms.push_back(trainms);g.predms.push_back(predictionms/std::max(1L,s.valid));for(int w=0;w<2;++w){g.simpass[w]+=s.simpass[w];g.false_stop[w]+=s.false_stop[w];g.turns[w]+=s.turns[w];g.maxturns[w]=std::max(g.maxturns[w],s.maxturns[w]);}++fits;
+                     }
+                 }
+             }std::cout<<"seed "<<seed<<" fold "<<f<<" fits "<<fits<<std::endl;
+         }
+     }
+-    if(fits!=1560||predictions!=178152)throw std::runtime_error("Unexpected experiment coverage");
+-    std::ofstream agg(out/"aggregate.tsv");agg<<std::setprecision(17)<<"model\tbudget\tfits\ttest_evaluations\tvalid\tpass_Y_pct\tpass_T_pct\tpass_both_pct\tworst_fit_pct\tp05_fit_pct\tMAE_Y\tMAE_T\tmax_eY\tmax_eT\tsim1_pass_pct\tsim2_pass_pct\tsim1_false_stop\tsim2_false_stop\tsim1_mean_turns\tsim2_mean_turns\tsim1_max_turns\tsim2_max_turns\tmedian_fit_ms\tmedian_predict_ms\tfit_failures\n";
+-    for(auto&item:total){int m=item.first.first,b=item.first.second;auto&s=item.second;agg<<names[m]<<'\t'<<(b==0?"all":std::to_string(b))<<'\t'<<s.rates.size()<<'\t'<<s.n<<'\t'<<s.valid<<'\t'<<100.*s.py/s.n<<'\t'<<100.*s.pt/s.n<<'\t'<<100.*s.pb/s.n<<'\t'<<quantile(s.rates,0)<<'\t'<<quantile(s.rates,.05)<<'\t'<<s.ey/std::max(1L,s.valid)<<'\t'<<s.et/std::max(1L,s.valid)<<'\t'<<s.my<<'\t'<<s.mt<<'\t'<<100.*s.simpass[0]/s.n<<'\t'<<100.*s.simpass[1]/s.n<<'\t'<<s.false_stop[0]<<'\t'<<s.false_stop[1]<<'\t'<<s.turns[0]/s.n<<'\t'<<s.turns[1]/s.n<<'\t'<<s.maxturns[0]<<'\t'<<s.maxturns[1]<<'\t'<<quantile(s.fitms,.5)<<'\t'<<quantile(s.predms,.5)<<'\t'<<s.fitfail<<'\n';}
+-    std::ofstream integrity(out/"integrity.txt");integrity<<"feature_sha256 "<<hash<<"\nimages 571\nsource_dates_mixed true\nfold_seeds 20261105 20261106 20261107\nfolds 5\nsubset_repeats 2\ntrain_budgets 10 20 40 80 160 320 all\nfits "<<fits<<"\ntest_evaluations "<<predictions<<"\ntrain_test_intersection 0\ntrain_only_standardization true\ntrain_only_world_model true\nreal_robot_trials 0\n";
++    if(fits!=64||predictions!=9136)throw std::runtime_error("Unexpected experiment coverage");
++    std::ofstream agg(out/"aggregate.tsv");agg<<std::setprecision(17)<<"model\tsplit_id\tfits\ttest_evaluations\tvalid\tpass_Y_pct\tpass_T_pct\tpass_both_pct\tworst_fit_pct\tp05_fit_pct\tMAE_Y\tMAE_T\tmax_eY\tmax_eT\tsim1_pass_pct\tsim2_pass_pct\tsim1_false_stop\tsim2_false_stop\tsim1_mean_turns\tsim2_mean_turns\tsim1_max_turns\tsim2_max_turns\tmedian_fit_ms\tmedian_predict_ms\tfit_failures\n";
++    for(auto&item:total){int m=item.first.first,b=item.first.second;auto&s=item.second;agg<<names[m]<<'\t'<<b<<'\t'<<s.rates.size()<<'\t'<<s.n<<'\t'<<s.valid<<'\t'<<100.*s.py/s.n<<'\t'<<100.*s.pt/s.n<<'\t'<<100.*s.pb/s.n<<'\t'<<quantile(s.rates,0)<<'\t'<<quantile(s.rates,.05)<<'\t'<<s.ey/std::max(1L,s.valid)<<'\t'<<s.et/std::max(1L,s.valid)<<'\t'<<s.my<<'\t'<<s.mt<<'\t'<<100.*s.simpass[0]/s.n<<'\t'<<100.*s.simpass[1]/s.n<<'\t'<<s.false_stop[0]<<'\t'<<s.false_stop[1]<<'\t'<<s.turns[0]/s.n<<'\t'<<s.turns[1]/s.n<<'\t'<<s.maxturns[0]<<'\t'<<s.maxturns[1]<<'\t'<<quantile(s.fitms,.5)<<'\t'<<quantile(s.predms,.5)<<'\t'<<s.fitfail<<'\n';}
++    std::ofstream integrity(out/"integrity.txt");integrity<<"feature_sha256 "<<hash<<"\nimages 571\nsplit_20261104 grouped_5fold\nsplit_20261001 leave_date_out\ntrain_budgets all\nfits "<<fits<<"\ntest_evaluations "<<predictions<<"\ntrain_test_intersection 0\ntrain_only_standardization true\ntrain_only_world_model true\nreal_robot_trials 0\n";
+ }
+ static std::string key(const std::string&seed,const std::string&fold,const std::string&subset,const std::string&budget){return seed+":"+fold+":"+subset+":"+budget;}
+ static void audit(const fs::path&out,const std::vector<Row>&rows){
