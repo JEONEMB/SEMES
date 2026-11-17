@@ -1,0 +1,914 @@
+530                                                                                 IEEE TRANSACTIONS ON ROBOTICS, VOL. 23, NO. 3, JUNE 2007
+
+     Stable Visual Servoing Through Hybrid
+              Switched-System Control
+
+              Nicholas R. Gans, Member, IEEE, and Seth A. Hutchinson, Fellow, IEEE
+
+   Abstract--Visual servoing methods are commonly classified as                     can lead to system failure. Likewise, PBVS surrenders control
+image-based or position-based, depending on whether image fea-                      of the image features, which may allow them to leave the image,
+tures or the camera position define the signal error in the feedback                in which case pose reconstruction may be impossible. Tasks that
+loop of the control law. Choosing one method over the other gives                   fail can be well posed initially, so detection of impending failure
+asymptotic stability of the chosen error but surrenders control over                is often impossible.
+the other. This can lead to system failure if feature points are lost
+or the robot moves to the end of its reachable space.                                  A number of partitioned approaches have been introduced
+                                                                                    to address these problems [10]-[13]. These approaches parti-
+   We present a hybrid switched-system visual servo method that                     tion the system's degrees of freedom into disjoint sets, each of
+utilizes both image-based and position-based control laws. We                       which is controlled by a different control scheme. Partitioning
+prove the stability of a specific, state-based switching scheme and                 the visual servo system along specific degrees of freedom of
+present simulated and experimental results.                                         motion gives access to new, potentially better, trajectories for
+                                                                                    the system.
+   Index Terms--Switched-system control, vision based control, vi-
+sual servoing.                                                                         Other methods to address one or more of these problems
+                                                                                    have been introduced as well. Taylor and Ostrowski [14] in-
+                           I. INTRODUCTION                                          troduced a unique, PBVS-like controller based on the funda-
+                                                                                    mental matrix relating camera views. This system was shown
+VISUAL servo control allows for the closed-loop control                             to be asymptotically stable even with large calibration errors.
+      of a robot end effector through the use of image data. It                     Cowan, et al. [15], presented visual servoing methods based
+provides a high degree of accuracy using even simple camera                         on the use of navigation functions, similar to artificial poten-
+systems and offers robustness in the face of signal error and                       tial functions. This system can avoid loss of feature points and
+uncertainty of system parameters.                                                   incorporate boundaries on the robot pose, in terms of distance
+                                                                                    from the camera to the features. Mezouar and Chaumette [16]
+   Classically, there have been two approaches to visual servo                      developed an IBVS path planner to keep the pose error minimal
+control: Image-Based Visual Servoing (IBVS) and Posi-                               while keeping the features in the field of view. Kyrki et al. [17]
+tion-Based Visual Servoing (PBVS). In IBVS, an error signal                         developed a PBVS controller that maintained target visibility
+is measured in the image, and is mapped directly to actuator                        while following a minimum distance path in Cartesian space by
+commands. In PBVS systems, features are detected in an image                        allowing freedom in the orientation to keep the object in the field
+and used to estimate the current camera position. A position                        of view. Garcia-Aracil et al., [18] allow feature points to leave
+error is then computed in the Cartesian task space, and this                        and enter the field of view while maintaining a smooth control
+error is used by the control system. There has been a great deal                    law.
+of research on each of these [1]-[8].
+                                                                                       We have proposed a new hybrid switched-system approach
+   Chaumette outlined a number of problems that cannot be                           [19], [20], in which system control is partitioned along the time
+solved using the traditional local linearized approaches to vi-                     axis rather than along specific dimensions of the state space. A
+sual servo control [9]. Many of these problems are fundamental                      hybrid switched system comprises a set of continuous subsys-
+to the control law. For example, by zeroing the error in the image                  tems along with a discrete switching controller that switches
+space, IBVS provides no control over the specific position or ve-                   between them [21], [22]. Using hybrid switched systems, it
+locity of the camera and may perform unnecessary motions that                       may be possible to increase the region of stability, increase the
+                                                                                    rate of convergence, and to switch between unstable systems
+   Manuscript received April 6, 2006; revised November 17, 2006. This paper         in a pattern that makes the total system stable. Taking a simple
+was recommended for publication by Associate Editor P. Rives and Editor F.          view of performance, IBVS performs well when PBVS per-
+Park upon evaluation of the reviewers' comments. This material is based in part     forms badly, and vice versa. Thus, rather than mitigating bad
+upon work supported by the National Science Foundation under Awards CCR-            performance along particular degrees of freedom (as with the
+0085917 and IIS-0083275.                                                            partitioned methods), we attempt to improve performance over
+                                                                                    time.
+   N. R. Gans is with the Department of Mechanical and Aerospace Engineering,
+University of Florida, Gainesville, FL 32579 USA (e-mail: ngans@ufl.edu).              We present a switching strategy that achieves stability in both
+                                                                                    the pose space and image space simultaneously. More impor-
+   S. A. Hutchinson is with the Department of Electrical and Computer Engi-         tantly, it is possible to specify neighborhoods for the image error
+neering, University of Illinois at Urbana-Champaign, Urbana, IL 61801 USA           and pose error that the state can never leave. This insures that no
+(e-mail: seth@uiuc.edu).
+
+   Color versions of one or more of the figures in this paper are available online
+at http://ieeexplore.ieee.org.
+
+   Digital Object Identifier 10.1109/TRO.2007.895067
+
+     1552-3098/$25.00 � 2007 IEEE
+GANS AND HUTCHINSON: STABLE VISUAL SERVOING THROUGH HYBRID SWITCHED-SYSTEM CONTROL                                                 531
+
+feature ever leaves the image, and the robot never moves beyond      A useful interpretation is to consider to be a discrete signal,
+a specified distance to the goal pose. This is a strong result, and
+to our knowledge, no other VS controller can guarantee never         switching among discrete values in              . The value
+to fail due to these reasons.
+                                                                     at time determines which function               governs system
+   Recently, a few other switching approaches have been intro-
+duced as well. Chesi and Vicino [23] introduced a switched-          behavior at time . The signal is often classified as state-depen-
+system PBVS controller that keeps features in the field of view
+by switching to a different PBVS controller when the features        dent or dependent, depending on whether switching is caused by
+approach the edge of the image. Deng, et al. [24], presented
+a system that switches between to PBVS to avoid singularities        the state of or the time , although these classifications are not
+and local minima in the IBVS control law. In the same paper,
+they developed an off-line path planner that incorporates image,     firm and can overlap.
+Cartesian and joint space constraints and avoids singularities
+and local minima in the IBVS control law.                            The stability of a switched system is not insured by the sta-
+
+   We present a simple set of switching rules to facilitate the      bility of the individual controllers. Indeed, a collection of stable
+analysis of the system. However, our switched system is inclu-
+sive to additional switching rules. For instance, alternate or ad-   systems can become unstable when inappropriately switched
+ditional switching surfaces could be introduced to avoid colli-
+sions in a known workspace. A switched system could also in-         [27], [29].
+corporate methods developed in [24] to escape local minima and
+singularities in the image Jacobian, or switch to controllers like   Furthermore, stability of a switched system can be extremely
+those in [25] and [26] to avoid joint limits and joint space sin-
+gularities.                                                          difficult to prove. For a specific switching rule, stability can be
+
+   The remainder of the paper is organized as follows. Section II    established through a finite family of Lyapunov functions [29],
+provides a brief review of hybrid switched systems and IBVS
+and PBVS methods. Section III describes our new hybrid               [30]. This will be discussed further in Section IV-B. It is gener-
+switched-system controller, which incorporates both an IBVS
+controller and a PBVS controller. Section IV contains the            ally more difficult to prove stability under arbitrary switching.
+proofs of stability for our state-based switching method. Re-
+sults of experiments are given in Section V.                         This generally requires finding a common Lyapunov function
+
+                           II. BACKGROUND                            for all subsystems [27], [31]. This will be discussed in further
+
+   In this section, we provide background information on hybrid      detail in Section IV-A.
+systems and visual servoing. These topics are well covered in
+literature. Our purpose here is to introduce notation and quickly    B. Position-Based Visual Servoing
+summarize relevant results.
+                                                                     The task in PBVS is to regulate the error between the current
+
+                                                                     camera pose and the goal pose. Given a current camera pose
+
+                                                                           and goal pose (throughout the paper, the superscript
+
+                                                                     denotes values at the goal configuration), the transformation
+
+                                                                     relating them is described by a translation     and rotation
+
+                                                                     of the camera frame              .
+
+                                                                     Locally,             can be parameterized by the three-tuple ,
+
+                                                                     in which is an angle of rotation about the axis defined by the
+
+                                                                     unit vector . Given a collection of feature points in the image,
+
+                                                                     there are numerous methods to extract           and thus and
+
+                                                                     from         [32]-[34].
+
+                                                                     For a PBVS system, we define the error in terms of the
+
+                                                                     rigid body motion that relates to
+
+                                                                                                                                   (3)
+
+A. Hybrid Switched-System Control                                    If the camera is moving with velocity           (in twist
+
+   The theory of hybrid, switched control systems, i.e., systems     coordinates) the relationship between the error derivative and
+that comprise a number of continuous subsystems and a dis-
+crete system that switches between them, has received notable        the camera velocity is given by
+attention in the control theory community [21], [22], [27], [28].
+In general, a hybrid switched system can be represented by the                                                                     (4)
+differential equation
+                                                                     in which [10]
+
+                                                            (1)                                                                    (5)
+
+where is a collection of distinct functions. The solution
+
+to (1) is a pair  giving the value of the state and                  and is the skew symmetric matrix associated with . Note
+
+switching variable, respectively, over time. The functions           that by definition,      .
+
+and are continuous from the right to insure both are locally         Since is non singular when                   ,  [10],
+
+Lipschitz.                                                           we can achieve the error dynamics               , using a simple
+
+For our purposes, it is convenient to explicitly note that the       feedback control law
+
+switching behavior can directly affect the choice of the control
+
+input                                                                                                                              (6)
+
+                                                            (2) in which is a positive gain scalar.
+532                                                                                        IEEE TRANSACTIONS ON ROBOTICS, VOL. 23, NO. 3, JUNE 2007
+
+We use a quadratic candidate Lyapunov function                                   Using the candidate Lyapunov function
+
+                                                                                                                                         (13)
+
+                                                                 (7)         we obtain
+                                                                                                                                                    (14)
+                                                                 (8)
+
+where           , is a 3 3 identity matrix and is a 3                        and we have asymptotic stability when the matrix      is pos-
+
+3 matrix in which each element is 0. Different allow us to                   itive definite.
+
+scale effects of the translation with respect to rotation. We will               Unfortunately, this condition is rarely achieved. When
+
+typically use a large to focus on the effects of position error                               the image Jacobian is overdetermined; it will
+
+without sacrificing the positive definiteness of . For the case              have a nonempty null space, and local minima will exist [9].
+
+where        ,              is a trivial scaling of the 2-norm.              However, when is full rank at the goal , then there is a
+
+When is full rank and       , it follows from (7) and                        neighborhood of in which                is positive semidefinite,
+
+(6) that                                                                     and thus IBVS is globally stable in the sense of Lyapunov, but
+
+                                                                             not globally asymptotically stable. It can be shown that IBVS
+
+                                                                             is locally asymptotically stable for some sufficiently small
+
+                                                                             neighborhood of the origin, though to our knowledge the region
+
+                                                                             of convergence has never been firmly established. See [3], [35],
+
+                                                                             [36] for more detailed discussions of stability and robustness.
+
+                                                                        (9)      In addition to the problems of singularities and local minima,
+and
+                                                                             Chaumette has described problems that arise due to large
+
+                                                                             physical camera motions that are sometimes required to follow
+
+                                                                             IBVS-generated trajectories [9]. Thus, there are a number of
+
+                                                                             serious performance problems that confront an IBVS system.
+
+                                                                 (10)            III. A HYBRID SWITCHED-SYSTEM VISUAL SERVO
+                                                                                                        CONTROLLER
+
+A similar set of equations exists for the case that              .               We combine IBVS and PBVS controllers in a switched-
+
+Thus, this controller is asymptotically stable for all translations          system controller. To derive analytic results, we first establish
+
+          and rotation of the camera frame           such that               a common state space within which both systems can be de-
+
+             . See [35] for a more detailed proof of stability and           scribed. To this end we show that and are local coordinate
+
+robustness.                                                                  charts of the pose error in          .
+
+Although the position error tends monotonically to zero, we                      If a camera is posed with respect to a motionless set of fea-
+
+cannot control the position of all the image points. If there is any         ture points, the feature vector can be defined as a mapping
+
+rotation present, the feature points in the image will move along                      ,                          from the camera pose to the
+
+curves in the image plane as the camera undergoes rotation and               image points using the well-known perspective projection func-
+
+translation. In a physical system with a limited imaging surface,            tion. Likewise, the pose error in       can be mapped to the
+
+it is possible for the feature points to leave the image. In this            image error,                 , and through the local mapping of
+
+case, the system will fail to complete the task.                                              described in Section II-B, there is a function from
+
+                                                                                 to . We can therefor define                    ,        .
+
+C. Image-Based Visual Servoing                                                   It is easy to see that           . The matrix     maps
+
+   With image-based visual servo control, the control law is a                   (i.e. it maps the tangent space of to the tangent space of ).
+function of an error that is measured in the image. If de-
+notes the vector of image features that are extracted from com-              If               at          , then     is full column rank and
+puter vision data, the error is defined in the image feature space,
+                                                                                 is locally injective in a neighborhood of         . In this way,
+                      . The relationship between camera velocity
+and the measured feature values is given by                                  both and can be seen as local coordinates for the pose error
+
+                                                                             in        . The inverse function of (and by extension) can
+
+                                                                             be computed by any of the many pose reconstruction routines
+
+                                                                             for feature points.
+
+                                                                 (11)            While and are both local coordinates of the pose error in
+
+                                                                                 , it is usually more intuitive to think of them as separate,
+
+in which is the image Jacobian (also called the interaction                  dependent measurements. In this spirit, we can map any error in
+matrix) [1]-[3], [7].
+                                                                                 to a point in            . This mapping is described by a
+   We can use a simple feedback control law
+                                                                             function
+
+                                                                 (12)                                                                    (15)
+
+where                       is the general inverse of and                    In an abuse of terminology, we will refer to an analysis "in the
+                                                                             space " to mean analyzing the map of and to .
+is a positive gain scalar.
+GANS AND HUTCHINSON: STABLE VISUAL SERVOING THROUGH HYBRID SWITCHED-SYSTEM CONTROL                                                         533
+
+   We have designed a state-based switching visual servo con-        assumptions are typical in the visual servo literature (see, e.g.,
+troller that switches between controllers based on the values of
+the two Lyapunov functions given in (7) and (13). Given the          [35], [36]).
+locally injective map from to , we note that (13) can be
+rewritten as                                                             In the proof and in our simulations, we assume perfect
+
+                                                                     camera calibration and that there is no signal noise. This grants
+
+                                                                     perfect pose estimation and feature point depth estimation. In
+
+                                                         (16)        Section V, we present experiments on a real robot system to
+
+                                                                     demonstrate stability of the system when these assumptions are
+
+though we will rarely make the reliance of on the pose error         relaxed.
+
+explicit.                                                                Proposition: A hybrid switched-system visual servo system
+
+To design our controller, we use level sets of these Lyapunov        is asymptotically stable in the sense of Lyapunov under arbitrary
+
+functions to define switching surfaces; when the system encoun-      switching within a sufficiently small neighborhood of the origin.
+
+ters these surfaces it will switch to the appropriate system. These          Proof: As discussed in Section III, there exists a function
+
+level sets are defined by the constants     (which defines a             mapping           , which is injective in a neighborhood of
+
+maximum acceptable pose error) and          (which defines                   , and maps                      . In the region where
+
+a maximum feature point error). The specific switching rule is       is injective, the Jacobian              is full column rank. A
+
+given by:                                                            Taylor expansion about         gives
+
+� In IBVS mode, if                          , switch to PBVS                                                                            (17)
+
+mode.
+
+� In PBVS mode, if                          , switch to IBVS         where are terms second order and higher.
+                                                                        Combining (13) and (17) we get
+mode.
+
+The function will map the level sets of and to straight
+
+lines in , and the interior of the intersection of the level sets                                                                       (18)
+
+will be mapped to a rectangle.
+
+Under this control scheme, when using IBVS, the image error          which is positive definite within a small neighborhood of the
+                                                                     origin. Taking (6) and the derivative of (18), we see that under
+will decrease, but the pose error may increase. If the pose error    PBVS
+
+becomes too large, the control switches to the PBVS controller.
+
+Analogously, when using PBVS the pose error will decrease, but                                                                          (19)
+                                                                                                                                        (20)
+the feature point error may increase. If the feature error becomes
+
+too large, the control switches to the IBVS controller.
+
+Proofs of the stability of our system are given in Section IV.
+
+We are able to prove asymptotic stability within some suf-           which is negative definite in a neighborhood of the origin.
+
+ficiently small neighborhood of zero pose and feature error.             Section II-C showed that        is a valid Lyapunov function
+
+Within a known, defined neighborhood, we are able to prove           and proves global stability of under IBVS, and local asymp-
+
+stability, though not the stronger condition of asymptotic           totic stability under IBVS within a sufficiently small neighbor-
+
+stability. In Section V, empirical evidence suggests that the        hood of the origin. Equation (20) shows that in a sufficiently
+
+switched system is attractive to the state  ,            over a      small neighborhood of the origin is also a valid Lyapunov
+
+large region.                                                        function showing local asymptotic stability under PBVS. The
+
+                                                                     intersection of these two neighborhoods is a neighborhood of
+
+                IV. ANALYSIS OF LOCAL STABILITY                      the origin where is a common Lyapunov function for IBVS
+
+   We investigate the stability of our switched system. We are       and PBVS. [27].
+able to prove asymptotic stability within a neighborhood of the
+origin, however this neighborhood is not known. We are able to       B. Local Stability Through State Based Switching
+prove local stability in both the image error and pose error within
+neighborhoods of zero in both error spaces. More importantly,            In [29] Branicky gives a technique for establishing the
+this neighborhood is defined explicitly by the user.
+                                                                     stability of switched-control systems. For our system, we will
+
+                                                                     use the two Lyapunov functions                 and           defined
+
+                                                                     in (7) and (13). We denote the set of switching times by
+
+A. Local Asymptotic Stability Under Arbitrary Switching                                    . Since we have exactly two controllers, the
+
+We first show that in a sufficiently small neighborhood of           set of times at which the system switches to PBVS from IBVS
+
+the origin, a system arbitrarily switched between IBVS and           is                    , and the set of times at which the system
+
+PBVS will be asymptotically stable. It has been shown that if        switches to IBVS from PBVS is                             .
+
+all systems in a family share a common Lyapunov function,                For our specific system, the conditions for stability given in
+
+the switched system is stable under arbitrary switching. We          [29] are as follows:
+
+proceed to show that in a sufficiently small neighborhood, is            1)                      .
+
+a common Lyapunov function for IBVS and PBVS                             2)        for              and             for                 .
+
+We assume that the feature points are stationary with respect            3)              for                 , for                   .
+
+to the world frame, that the image features are well posed so that       4)                         for all         s.t.          .
+
+the image Jacobian is full rank when the camera is at the goal           5)                for               , for                .
+
+pose, and that                  and                      . These         6)                         for all              s.t.           .
+534                                                                           IEEE TRANSACTIONS ON ROBOTICS, VOL. 23, NO. 3, JUNE 2007
+
+Fig. 1. Stable family of Lyapunov function.
+
+                                                                    Fig. 2. A switching sequence that increases the error over time.
+
+The first two conditions establish that each candidate Lyapunov
+
+function is positive definite in a neighborhood of the origin. The
+
+third and fourth conditions establish the Lyapunov-like prop-                               . This scaled Lyapunov function
+
+erty that is nonincreasing when IBVS is active as well as           will be used only once before the first switch.
+
+at the switching instants for IBVS. The final two conditions        � Condition 5 follows from (10).
+
+establish the Lyapunov-like property that is nonincreasing          � Condition 6 follows from the fact that
+
+when PBVS is active as well as at the switching instants for                                for all   .
+
+PBVS. This is illustrated in Fig. 1, for a family of two Lya-       Consider the case that the current state is near the intersection
+
+punov functions. Function becomes active at switching times         of the boundaries , and . While both errors never increase at
+
+, and , while function becomes active at switching                  the same time, the accumulated result of switches can result in
+
+times and . Furthermore                            and              a general increase in both errors. In this case the system would
+
+              .                                                     head toward the intersection of and . An illustration of such
+
+We now show that our hybrid switched system is stable in a          an occurrence, in the space , is shown in Fig. 2. This does not
+
+known neighborhood. The proof assumes that the system begins        violate the condition of stability; the system is heading to an
+
+with IBVS, but a proof for the system beginning with PBVS           accumulation point at the intersection and cannot move past it.
+
+parallels this one.                                                 However, the time between switching will become increas-
+
+Proposition: The hybrid switched-system visual servo                ingly shorter as the system approaches the intersection. There
+
+system, with switching surfaces described by                        is no condition on the number of or time between switches,
+
+� In IBVS mode, if                              , switch to PBVS    however rapid switching is undesirable. There are several ways
+
+     mode                                                           to handle this problem. One is to sense when the system is
+
+� In PBVS mode, if                           , switch to IBVS mode  switching too rapidly and enter a "shut down" mode where the
+
+is stable in the sense of Lyapunov within a well-defined neigh-     robot stops moving. A second method is to impose a minimum
+
+borhood                                         .                   time between switches.
+
+     Proof:                                                         A related problem is finite sensor update time. As the time
+
+� To establish that both and are positive definite in               between switches decreases, the system could move from one
+
+     a neighborhood of the origin (conditions 1 and 2), it is       boundary past the other boundary in less than the sensor update
+
+     sufficient to note that if              ,                      time. Once beyond the switching boundaries, the system has no
+
+                                                                    guarantee of reentering the stable subspace. This problem would
+
+                                                                    likely be exacerbated if a minimum time between switches is
+
+                                                                    imposed.
+
+     since any error in pose will cause an error in the observed    We address this issue analytically and offer a modification to
+     image features, and conversely, an image error implies that
+     there must be some pose error. Therefore, we have              the system to insure the system slows down near intersections
+
+                                                                    of the switching surfaces and cannot move past the switching
+
+                                                                    surfaces due to a minimum switching time. In order to slow
+
+                                                                    the system near the switching surfaces, we introduce nonlinear,
+
+     Since both and are norms, they are positive definite.          time-varying, scalar gains, and . To simplify the fol-
+
+     This satisfies conditions 1 and 2.                             lowing equations, we define two values                            and
+
+� Condition 3 follows from (14).                                              .
+
+� Condition 4 requires two steps. First,
+
+     for all          . Branicky showed that his method
+
+     can be extended to allow more Lyapunov functions than
+
+     component systems [29], because the same controller                                                                      (21)
+                                                                                                      else
+     using multiple Lyapunov functions can simply be treated
+
+     as additional controllers. We can add an additional Lya-
+
+     punov function,             , where is a scalar such that
+GANS AND HUTCHINSON: STABLE VISUAL SERVOING THROUGH HYBRID SWITCHED-SYSTEM CONTROL                                                        535
+
+                                                         (22)
+
+                              else
+
+where           for a vector is the standard 2-norm, or Euclidean
+
+norm, and for a matrix is the 2-norm and equals the largest sin-
+
+gular value of the matrix. Note that and are smooth if
+
+           and  . This is true at the initial conditions under
+
+the assumptions of the proof, and it remains true for all time at
+
+the completion of the proof.
+
+When using IBVS, is a function of and . Using the
+
+gain, , defined in (21), along with (6), (9) and (12), and the
+
+fact that       we have                                                      Fig. 3. Histograms of kL k and kL k for 4 points.
+
+                                                         (23)                So the condition in (29) is met if is sufficiently small. As
+                                                         (24)
+
+                                                         (25)                expected, as the minimum time between switches increases,
+
+                                                                             decreases to insure a slower velocity.
+
+                                                                             We have sought a proof of minimum dwell time between
+
+While IBVS is the active mode, the time-varying gain affects                 switches, but have been unable to prove this. One recurring
+as well. From (21) and (14)
+                                                                             problem with analysis of visual servoing systems is the inability
+                                                                       (26)
+                                                                       (27)  to find a closed-form solution for the inverse of the image Jaco-
+
+                                                                       (28)  bian, . This prevents us from saying anything definitive about
+
+                                                                             the effects of IBVS on the pose error, and relegates us to numer-
+
+                                                                             ical results or imposing bounds on .
+
+                                                                             Fig. 4 shows a simulation of the trajectory of the errors
+
+                                                                             in for a task involving a translation of
+
+assuming        . As expected, while in IBVS mode,                                                  in meters and a rotation of
+
+remains negative semidefinite, but does not.                                                                                    where is given
+
+It can be shown that          is bounded from below by some                  in radians. Note that                   . Fig. 4(a) shows the
+
+       . However, will depend on the number of feature points,               result for the non-time-varying gain with
+
+the relative positions of the feature points, the camera parame-             and      and           . The system moves far outside
+
+ters, etc. Due to the uncertainty of the lower bound of  , we                the boundaries since the sensor time delay does not detect the
+
+bound it at 1 in . It seems this may be unnecessary. Simula-                 boundary until it is past. Fig. 4(b) uses the time-varying gains
+
+tion of a sampling of 30,000 error poses about a goal pose gave              with          . The system heads to the intersection and
+
+histograms for values of      and for 4 points. These are                    becomes stuck there. While this does not alter the stability of
+
+shown in Fig. 3 Both are clearly bounded from below by   .                   the system (the system does not fail due to lost features or task
+
+Assume that at time the system has just switched to IBVS                     space constraints), failure to converge is not desirable. Fig. 4(c)
+
+mode, so        . Define the minimum update time as .                        shows the results for the time-varying gains, but increases
+
+We seek to pick a such that                                                  to 0.75. The system now goes to zero error eventually. This
+
+                                                                             suggests that if the state becomes trapped, and the boundaries
+
+                                                         (29)                are known to be conservative, temporarily increasing the
+
+                                                                             boundaries may free it, though careful consideration of the
+
+   In the case that the number of feature points is greater than             state should be taken first. Further results for the use of the
+three and is in the null space of , a subset of three feature
+points can be temporarily used. It remains to prove that if is               time-varying gains will be given in Section V.
+positive definite, (29) is satisfied.
+                                                                             It must be emphasized that this stability proof is a local re-
+
+                                                                             sult, and given the reliance upon the local stability of the IBVS
+
+                                                                             and PBVS controllers, and the existence of a local diffeomor-
+
+                                                         (30)                phism between and , the sufficient region of stability may
+
+                                                                             be small. However, this is only a sufficient condition, and in
+
+                                                         (31)                Section V we experimentally demonstrate that the region of sta-
+
+                                                                             bility appears to be quite large. Furthermore, while this proof is
+
+                                                                             only for stability, not asymptotic stability, experiments suggest
+
+                                                         (32)                that the switched system is attractive to the origin over a large
+
+                                                                             region.
+536                                                                 IEEE TRANSACTIONS ON ROBOTICS, VOL. 23, NO. 3, JUNE 2007
+
+                                                                    Fig. 5. Initial and goal images.
+
+Fig. 4. Simulation of errors in the W space.
+
+   One goal of the switching method is to insure that the system    Fig. 6. Experiment of PBVS under large general motion.
+never fails due to the robot moving to the end of its reachable
+space or losing feature points from the image. The choice of        raphy relating coplanar points in the goal and current camera
+and can keep the system from failure, but the best choices
+may require some knowledge of the goal. The goal image and          pose. Planar homography has been used in visual servoing, [10],
+goal pose must be known for IBVS and PBVS, respectively, so
+this does not add additional knowledge requirements.                [12], [37], and specific details can be found in [38].
+
+   For instance, given feature points, a conservative is            In our experiment, we used a Puma 560 robot arm and a Sony
+times the least distance from any goal feature point to any edge
+of the image. While very restrictive, this will guarantee that no   VW-V500 color camera. The feature targets are the centroids of
+feature point can leave the image. If is large, the feature points
+are tightly clustered and are roughly centered in the goal image,   four colored dots. Depth was estimated using knowledge of the
+then can be increased over the conservative estimate. Addi-
+tionally, knowledge of the goal pose will aid in selecting . If     target geometry. Since many of these tasks involve large errors
+the goal pose is known to be far from the 3D feature points, a
+large will be necessary.                                            in the image and position, the gains must be kept small or the
+
+   The switching system can be extended to guard against other      early motions can be so large as to be potentially damaging for
+common causes of failure as well. Local minima can exist
+in IBVS, thus if IBVS has zero velocity for a nonzero error,        the robot. This also means that when the errors have been mostly
+switching to PBVS may free the system from the attraction of
+the local minimum. Likewise, it is possible to carve out other      reduced the motions are often very small.
+"forbidden regions" in the image space that correspond to such
+things as obstacles in the workspace or joint limits in the joint   We performed many simulations and experiments. For the
+space. If IBVS approaches these regions, the system can switch
+to PBVS or a joint space control to avoid the region. This topic    sake of brevity, we present the results of two difficult tasks. Re-
+was explored by Deng, et al. [24].
+                                                                    sults for more experiments and simulations are available at [39].
+                    V. EXPERIMENTAL RESULTS
+                                                                    One task involved rotation and translation about all axes. Goal
+   We present experimental results using the state based
+switching rule. These results support our stability proof and       and initial images are shown in Figs. 5(a) and 5(b) respectively.
+offer insight into the performance characteristics of the system.
+Calibration of both the camera intrinsic parameters and the         PBVS results are in Fig. 6. The feature point trajectories,
+extrinsic parameters relating the camera position to the robot
+end effector are left coarse. This was done intentionally to        shown in Fig. 6(a), quickly leave the image and the task fails.
+demonstrate the robustness of the switched-system.
+                                                                    The values of and are shown in Fig. 6(b). The effects of
+   We use IBVS with feature points as described in Section II-C.
+For PBVS we used epipolar geometry, specifically the homog-         coarse calibration are apparent in these graphs as the pose error
+
+                                                                    initially increases under PBVS. Please note the scale of each
+
+                                                                    graph when comparing results.
+
+                                                                    Results for IBVS are shown in Figs. 7(a) and 7(b). IBVS ex-
+
+                                                                    periences camera retreat, and in this case fails due to the robot
+
+                                                                    encountering joint limits on its elbow joint. The camera trajec-
+
+                                                                    tory brings the camera back toward the robot base, and the robot
+
+                                                                    is unable to accommodate this. Coarse calibration affects perfor-
+
+                                                                    mance, and image error increases a little. Results for the hybrid
+
+                                                                    system are shown in Figs. 8(a) and 8(b). We set
+
+                                                                    to keep the features in the image surface and set       where
+
+                                                                    the translation is measured in mm and rotation in radians. The
+
+                                                                    system switches twice asymptotically, approaching the goal.
+
+                                                                    As described above, stability is a local property, and the
+
+                                                                    neighborhood proven to ensure stability may be overly con-
+GANS AND HUTCHINSON: STABLE VISUAL SERVOING THROUGH HYBRID SWITCHED-SYSTEM CONTROL                                            537
+
+Fig. 7. Experiment of IBVS under large general motion.                Fig. 10. Experiment of PBVS under large rotation.
+
+Fig. 8. Experiment of Hybrid VS under large general motion.           Fig. 11. Experiment of IBVS under large rotation.
+
+Fig. 9. Initial and goal images.                                      Fig. 12. Experiment of Hybrid VS under large rotation.
+
+servative. We have performed a number of experiments to               does not violate the condition of stability, but it is not desirable
+                                                                      behavior. Arguably, however, this is preferable to a loss of fea-
+demonstrate the performance of our system when the initial            tures or the robot reaching its joint limits.
+
+configuration does not lie in a conservatively defined region of         Empirically, it appears that switching forever, or ending in
+                                                                      such an accumulation point happens rarely. We have presented
+stability. Here, we present the example of a very large rotation      results of that showed attraction to the origin, including when
+                                                                      the switched-system visual servoing started outside its proven
+about the optical axis, with the feature points close to the edge     region of stability. However, this is not conclusive. In an effort
+                                                                      to determine how often the system may not reach the goal, we
+of the image.                                                         ran Monte Carlo analysis. The results lend strong support to the
+                                                                      notion that the system is nearly always attractive to the goal (in
+Goal and initial images are shown in Fig. 9. Results of PBVS,         our experiments, the system reached the goal 99% of the time
+                                                                      using time-varying gains). This analysis also sheds light on the
+IBVS and Hybrid VS are shown in Figs. 10-12. The feature              practical performance of the system.
+
+points leave the image under PBVS control. IBVS undergoes                We ran Monte Carlo analysis in simulation for PBVS, IBVS
+                                                                      and our switched-system approach using time-varying gains and
+severe camera retreat and encounters its joint limits. The Hybrid     constant gains. We sampled the six-dimensional configuration
+                                                                      space (translation and rotation about three axes), resulting in
+VS system begins outside the region of stability proven for the       30,000 unique initial camera poses with the feature points in
+                                                                      front of the camera. Many of these starting poses are outside of
+switched system in Section IV-B. After undergoing an initial          the sufficient region of stability of the switched system, in which
+
+camera retreat, the system encounters                   and switches
+
+to PBVS. PBVS reduces the retreat slightly, but the image error
+
+lies outside and the system switches back to IBVS. Rapid
+
+switching occurs, during which both the IBVS and PBVS modes
+
+reduce the rotation error. Eventually rotation error is reduced to
+
+a level that IBVS does not experience camera retreat and the
+
+system converges to zero error.
+
+As seen in Fig. 4, it is possible for a system to switch forever
+
+and converge to an accumulation point other than the goal. This
+538                                                                                 IEEE TRANSACTIONS ON ROBOTICS, VOL. 23, NO. 3, JUNE 2007
+
+Fig. 13. Histograms of time needed to move to goal pose.                Fig. 15. Histograms for ke k.
+
+                                                                                                                  TABLE I
+                                                                                                       TABLE OF FAILURE RATES
+
+                                                                        350 pixels. However, the distribution lies to the left of the dis-
+
+                                                                        tribution for PBVS, indicating an expected lower image error.
+
+                                                                        The distribution of the maximum image error for the switched
+
+                                                                        system with time-varying gains is very close to that of IBVS,
+
+                                                                        indicating few expected failures. If a feature leaves the 512
+
+                                                                        512 imaging surface, the system was said to fail. Note that the
+
+Fig. 14. Histograms for ke k.                                           square imaging surface and multiple features means that losing
+
+                                                                        a feature point does not correspond to exceeding a specific
+
+case rapid switching may result. Gains were chosen such that            threshold.
+
+each system completed a series of simple test tasks in about 120        Similarly, for , IBVS experienced                      greater than
+
+iterations. The thresholds for the switched system (both with           three meters for many tasks, while PBVS was never greater
+
+and without time-varying gains) are                       and  .        than 2.66 meters. For our purposes,                    greater than three
+
+For each starting pose, we recorded the time needed for each            meters or less than zero was considered a failure. With constant
+
+of these systems to reach the goal pose. Histograms of the time         gains, the switched system experiences several instances where
+
+to convergence are seen in Fig. 13. PBVS and the switched               the camera retreat was greater than three meters, though far
+
+system with constant gains have similar distributions. IBVS has         less than IBVS. The switched system performs much better
+
+several tasks that complete very quickly, but for the majority of       using the time-varying gains, although some tasks were greater
+
+tasks it performs similarly to PBVS. The switched system with           than three meters since many tasks begin outside the sufficient
+
+time-varying gains is notably slower for a number of tasks than         region of stability.
+
+the other methods, as the gains will slow it down. Additionally,        We compile the above info into a set of failure rates. The
+
+.97% of the tasks took longer than 5000 iterations to complete.         system was considered to fail in three situations:
+
+These cases were assumed to be "stuck" at an intersection of            1) The system failed to converge within 5000 iterations.
+
+the switching surfaces. Such cases were be deemed failures, al-         2) A feature point left the image.
+
+though the system remains stable.                                       3) The system experienced            3000, where translation
+
+We also recorded the maximum value of                     and en-       is measured in mm and rotation in radians.
+
+countered during each task. In Figs. 14 and 15 we show his-             The failure rates are given in Table I. The switched system with
+
+tograms of the maximum values encountered. In order to main-            time-varying gains outperformed the other systems.
+
+tain detail, the vertical scales vary between some of the his-                                     VI. CONCLUSION
+
+tograms.                                                                   Visual Servoing remains hampered by the fact that no single
+                                                                        control method is suitable for all cases. Motivated by this
+For , PBVS has a maximum                                       in many  problem, we propose the use of hybrid switched-system control
+
+cases. The distribution of the hybrid switched system with con-
+
+stant gains also has a portion of the distribution greater than
+GANS AND HUTCHINSON: STABLE VISUAL SERVOING THROUGH HYBRID SWITCHED-SYSTEM CONTROL  539
+
+methods. In this way, a system switches between multiple can-                       [13] P. Corke and S. Hutchinson, "A new partitioned approach to image-
+didate controllers when it is known that one has an advantage                             based visual servo control," IEEE Trans. Robot. Automat., vol. 17, no.
+in the current conditions.                                                                4, pp. 507-515, 2001.
+
+   We present one such method that incorporates image-based                         [14] C. Taylor and J. Ostrowski, "Robust vision-based pose control," in
+and position-based visual servoing. This is one of the simplest                           Proc. Int. Conf. Robot. Automat., 2000, pp. 2734-2740.
+possible switched system visual servo controllers, yet it demon-
+strates the strength of the idea. We have proven that, within a                     [15] N. Cowan, J. Weingarten, and D. Koditschek, "Visual servoing via nav-
+sufficient neighborhood of the goal, our controller will never                            igation functions," IEEE Trans. Robot. Automat., vol. 18, no. 4, pp.
+fail due to features leaving the image or the camera moving too                           521-533, 2002.
+far from the goal pose. Furthermore, the region of stability is
+defined by the user, which provides a great deal of control over                    [16] Y. Mezouar and F. Chaumette, "Path planning in image space for ro-
+system performance.                                                                       bust visual servoing," in Proc. Int. Conf. Robot. Automat., 2000, pp.
+                                                                                          2759-2764.
+   However, this particular system is stable, not asymptotically
+stable, within part of the region of stability. This introduces the                 [17] V. Kyrki, D. Kragic, and H. Christensen, "Path planning in image space
+possibility of converging to a point other than the goal, which                           for robust visual servoing," in Proc. Int. Conf. Intelligent Robots and
+can be deemed failure. This system also remains susceptible                               Systems, 2004, pp. 349-354.
+to local minima and singularities in the IBVS control law. Fu-
+ture work will focus on more complicated switched system con-                       [18] N. Garcia-Aracil, E. Malis, R. Aracil-Santonja, and C. Perez-Vidal,
+trollers, possibly integrating controllers besides pure IBVS and                          "Continuous visual servoing despite the changes of visibility
+PBVS to mitigate these problems.                                                          in image features," IEEE Trans. Robotics, vol. 21, no. 6, pp.
+                                                                                          1214-1220, 2005.
+                         ACKNOWLEDGMENT
+                                                                                    [19] N. R. Gans and S. A. Hutchinson, "A switching approach to visual
+   The authors wish to thank the anonymous reviewers for their                            servo control," in Proc. IEEE Int. Symp. Intell. Control, 2002.
+help in shaping this paper. The authors especially thank the
+third reviewer for suggestions that resulted in the proof of local                  [20] N. Gans and S. Huthcinson, "An experimental study of hybrid switched
+asymptotic stability.                                                                     system approaches to visual servoing," in Proc. Int. Conf. Robot. Au-
+                                                                                          tomat., May 2003.
+                              REFERENCES
+                                                                                    [21] M. Branicky, V. Borkar, and S. Mitter, "A unified framework
+     [1] L. E. Weiss, A. C. Sanderson, and C. P. Neuman, "Dynamic sensor-                 for hybrid control," in Proc. 33rd IEEE Conf. Decision and
+          based control of robots with visual feedback," IEEE Trans. Robot. Au-           Control, 1994.
+          tomat., vol. RA-3, pp. 404-417, Oct. 1987.
+                                                                                    [22] R. W. Brockett, Hybrid Models for Motion Control Systems, H. L.
+     [2] J. Feddema and O. Mitchell, "Vision-guided servoing with feature-                Trentelman and J. C. Willems, Eds. : Birkhauser, 1993.
+          based trajectory generation," IEEE Trans. Robot. Automat., vol. 5, pp.
+          691-700, Oct. 1989.                                                       [23] G. Chesi and A. Vicino, "Visual servoing for large camera displace-
+                                                                                          ments," IEEE Trans. Robot. Automat., vol. 20, no. 4, pp. 724-735,
+     [3] B. Espiau, F. Chaumette, and P. Rives, "A new approach to visual ser-            2004.
+          voing in robotics," IEEE Trans. Robot. Automat., vol. 8, pp. 313-326,
+          Jun. 1992.                                                                [24] L. Deng, F. Janabi-Sharifi, and W. Wilson, "Hybrid motion control and
+                                                                                          planning strategies for visual servoing," IEEE Trans. Ind. Electron.,
+     [4] K. Hashimoto, Ed., Visual Control of Robots: High Performance Visual             vol. 52, no. 4, pp. 1024-1040, 2005.
+          Servoing. Hong Kong: World Scientific, 1993.
+                                                                                    [25] B. Nelson and P. Khosla, "Strategies for increasing the tracking re-
+     [5] N. P. Papanikolopoulos, P. K. Khosla, and T. Kanade, "Visual tracking            gion of an eye-in-hand system by singularity and joint limit avoidance,"
+          of a moving target by a camera mounted on a robot: A combination                Int. J. Robot. Res. vol. 14, Jun. 1995 [Online]. Available: /afs/cs/user/
+          of vision and control," IEEE Trans. Robot. Automat., vol. 9, no. 1, pp.         bnelson/ftp/ijrr.sjl.ps.Z
+          14-35, 1993.
+                                                                                    [26] F. Chaumette and T. Marchand, "A redundancy-based iterative ap-
+     [6] P. Martinet, J. Gallice, and D. Khadraoui, "Vision based control law             proach for avoiding joint limits: Application to visual servoing," IEEE
+          using 3d visual features," in Proc. WAC 96, 1996, vol. 3, pp. 497-502.          Trans. Robot. Automat., vol. 17, no. 5, pp. 719-730, 2001.
+
+     [7] S. Hutchinson, G. Hager, and P. Corke, "A tutorial on visual servo con-    [27] D. Liberzon and A. Morse, "Basic problems in stability and design of
+          trol," IEEE Trans. Robot. Automat., vol. 12, pp. 651-670, Oct. 1996.            switched systems," IEEE Control Syst. Mag., vol. 19, no. 5, pp. 59-70,
+                                                                                          Oct. 1999.
+     [8] G. S. B. W. J. Wilson and C. C. W. Hulls, "Relative end-effector control
+          using cartesian position based visual servoing," IEEE Trans. Robot.       [28] D. Liberzon, Switching in Systems and Control. New York:
+          Automat., vol. 12, no. 5, pp. 684-696, 1996.                                    Birkhauser, 2003.
+
+     [9] F. Chaumette, "Potential problems of stability and convergence in im-      [29] M. Branicky, "Stability of hybrid systems: State of the art," in Proc.
+          agebased and position-based visual servoing," in The Confluence of              IEEE Conf. Decision and Control, 1997, pp. 120-125.
+          Vision and Control, D. Kriegman, G. Hager, and S. Morse, Eds. :
+          Springer-Verlag, 1998, vol. 237, Lecture Notes in Control and Infor-      [30] M. Wicks, P. Peleties, and R. DeCarlo, "Construction of piecewise lya-
+          mation Sciences, pp. 66-78.                                                     punov functions for stabilizing switched systems," in Proc. Conf. De-
+                                                                                          cision and Control, 1994, pp. 3492-3497.
+    [10] E. Malis, F. Chaumette, and S. Boudet, "2-1/2d visual servoing," IEEE
+          Trans. Robot. Automat., vol. 15, pp. 238-250, Apr. 1999.                  [31] M. Branicky, "Multiple Lyapunov functions and other analysis tools
+                                                                                          for switched and hybrid systems," IEEE Trans. Automat. Contr., vol.
+    [11] G. Morel, T. Liebezeit, J. Szewczyk, S. Boudet, and J. Pot, "Explicit            43, pp. 475-482, 1998.
+          incorporation of 2d constraints in vision based control of robot ma-
+          nipulators," in Experimental Robotics VI, P. Corke and J. Trevelyan,      [32] O. Faugeras and F. Lustman, "Motion and structure from motion in a
+          Eds. : Springer-Verlag, 2000, vol. 250, Lecture Notes in Control and            piecewise planar environment," Int. J. Pattern Recognit. Artificial In-
+          Information Sciences, pp. 99-108, 1 85233 210 7.                                tell., vol. 2, no. 3, pp. 485-508, 1988.
+
+    [12] K. Deguchi, "Optimal motion control for image-based visual servoing        [33] Z. Zhang and A. R. Hanson, "3d reconstruction based on homography
+          by decoupling translation and rotation," in Proc. Int. Conf. Intelligent        mapping," in ARPA Image Understanding Workshop, Palm Springs,
+          Robots and Systems, Oct. 1998, pp. 705-711.                                     CA, 1996.
+
+                                                                                    [34] D. DeMenthon and L. S. Davis, "Model-based object pose in
+                                                                                          25 lines of code," in Proc. Eur. Conf. Computer Vision, 1992,
+                                                                                          pp. 335-343.
+
+                                                                                    [35] L. Deng, F. Janabi-Sharifi, and W. Wilson, "Stability and robustness
+                                                                                          of visual servoing methods," in Proc. IEEE Conf. Robot. Automat.,
+                                                                                          2002.
+
+                                                                                    [36] R. Kelly, R. Carelli, O. Nasisi, B. Kuchen, and F. Reyes, "Stable vi-
+                                                                                          sual servoing of camera-in-hand robotic systems," IEEE/ASME Trans.
+                                                                                          Mechatronics, vol. 5, no. 1, pp. 39-48, Mar. 2000.
+
+                                                                                    [37] Y. Fang, W. Dixon, D. Dawson, and P. Chawda, "Homography-based
+                                                                                          visual servo regulation of mobile robots," IEEE Trans. Syst., Man Cy-
+                                                                                          bern., vol. 35, no. 5, pp. 1041-1050, 2005.
+
+                                                                                    [38] O. Faugeras and F. Lustman, "Motion and structure from motion in a
+                                                                                          piecewise planar environment," Int. J. Pattern Recognit. Artificial In-
+                                                                                          tell., vol. 2, no. 3, pp. 485-508, 1988.
+
+                                                                                    [39] F. Chaumette, "Switched system visual servo control," Ph.D. disserta-
+                                                                                          tion, Univ. Illinois, Urbana-Champaign, 2005.
+540                                                                                    IEEE TRANSACTIONS ON ROBOTICS, VOL. 23, NO. 3, JUNE 2007
+
+                               Nicholas R. Gans (M'02) received the B.S. degree                                       Seth A. Hutchinson (F'06) received the Ph.D. from
+                               from Case Western Reserve University, Cleveland,                                       Purdue University, West Lafayette, IN, in 1988.
+                               OH, in 1999, and the M.S. and Ph.D. degrees
+                               from the University of Illinois Urbana-Champaign,                                         In 1990 he joined the faculty at the University of
+                               Urbana, IL, in 2002 and 2005, respectively.                                            Illinois in Urbana-Champaign, where he is currently
+                                                                                                                      a Professor in the Department of Electrical and Com-
+                                  He is currently a Postdoctoral Researcher at                                        puter Engineering, the Coordinated Science Labora-
+                               the University of Florida, working with both the                                       tory, and the Beckman Institute for Advanced Science
+                               Nonlinear Control and Robotics Laboratory in                                           and Technology. He has published more than 100 pa-
+                               Gainesville, FL, and the Research and Engineering                                      pers on the topics of robotics and computer vision,
+                               Education Facility in Shalimar, FL. His research in-                                   and is coauthor of the books Principles of Robot Mo-
+                               terests include visual servoing, vision-based control,                                 tion: Theory, Algorithms, and Implementations (MIT
+and nonlinear control of robot systems.                                                Press, 2005), and Robot Modeling and Control (Wiley, 2006).
+                                                                                          Dr. Hutchinson serves as the Editor-in-Chief for the RAS Conference Edito-
+                                                                                       rial Board, and on the editorial boards of the International Journal of Robotics
+                                                                                       Research and the Journal of Intelligent Service Robotics. He served as Asso-
+                                                                                       ciate and then Senior Editor for the IEEE TRANSACTIONS ON ROBOTICS AND
+                                                                                       AUTOMATION, now the IEEE TRANSACTIONS ON ROBOTICS, from 1997 to 2005.
+                                                                                       In 1996 he was a guest editor for a special section of the Transactions devoted
+                                                                                       to the topic of visual servo control, and in 1994 he was co-chair of an IEEE
+                                                                                       Workshop on Visual Servoing. In 1996 and 1998 he co-authored papers that
+                                                                                       were finalists for the King-Sun Fu Memorial Best Transactions Paper Award.
+                                                                                       He was co-chair of IEEE Robotics and Automation Society Technical Com-
+                                                                                       mittee on Computer and Robot Vision from 1992 to 1996, and has served on
+                                                                                       the program committees for more than 50 conferences related to robotics and
+                                                                                       computer vision.
+

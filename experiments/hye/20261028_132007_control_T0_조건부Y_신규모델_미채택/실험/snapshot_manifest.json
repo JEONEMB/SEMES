@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-28",
+  "topic": "20261028_02_control_T0_조건부Y_신규모델_미채택",
+  "status": "새로 학습한81장 조건부Y 실험. 사용자 지정 초기100% 모델이 아니므로 미채택",
+  "operation": "Verified copy snapshot. Existing delivery paths and build wiring retained; no runtime behavior changed.",
+  "source_module": "experiments/00000_final_Y_T control",
+  "files_checked": 12,
+  "all_copies_sha256_equal": true,
+  "files": [
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T control/CMakeLists.txt",
+      "snapshot_relative": "snapshot/module/CMakeLists.txt",
+      "sha256": "02db5b3b4f321a398bd5c96ab8c6242521ad5c5e7c0b9bcf241905214d3fe994",
+      "bytes": 228
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T control/README.md",
+      "snapshot_relative": "snapshot/module/README.md",
+      "sha256": "c87949349146097e9d95a7a72a85f8c43ecd96240db369873096f24e40a2ad9c",
+      "bytes": 2790
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T control/assets/control_model.yml",
+      "snapshot_relative": "snapshot/module/assets/control_model.yml",
+      "sha256": "6ff4aa13f9da3b95bdda5dacf24f3295ca95ee91aed877e0bc4506d8c02f2e28",
+      "bytes": 12013
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T control/src/control.cpp",
+      "snapshot_relative": "snapshot/module/src/control.cpp",
+      "sha256": "c7ad4c7787cf5eae7e2b4e335e85fd4dd2a067b4de69b3443ddaa5bdb69bfd99",
+      "bytes": 1914
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T control/tool/train_control.cpp",
+      "snapshot_relative": "snapshot/module/tool/train_control.cpp",
+      "sha256": "cbeb9caa158c7740a7a89204262595d4ca5fb1f98f1a50a1a9fb3f8b928605a1",
+      "bytes": 2997
+    },
+    {
+      "source_repository_relative": "include/alignment.hpp",
+      "snapshot_relative": "snapshot/repository_context/include/alignment.hpp",
+      "sha256": "74a12d77266a4b96e09c5029b7f51719f90b83516d452db259ded5fe88b33df4",
+      "bytes": 1263
+    },
+    {
+      "source_repository_relative": "src/main.cpp",
+      "snapshot_relative": "snapshot/repository_context/src/main.cpp",
+      "sha256": "5e88fb51bc2aade6ea658e979d1bd37efecec030a2f7f82783a391592bdceae8",
+      "bytes": 1526
+    },
+    {
+      "source_repository_relative": "tests/alignment_checks.cpp",
+      "snapshot_relative": "snapshot/repository_context/tests/alignment_checks.cpp",
+      "sha256": "3f2987cfb044432c5992ccc4257750d091ed32f14a5cb1a9bb69a7c2fb426e94",
+      "bytes": 2086
+    },
+    {
+      "source_repository_relative": "tool/02_evaluate_alignment.cpp",
+      "snapshot_relative": "snapshot/repository_context/tool/02_evaluate_alignment.cpp",
+      "sha256": "319e9272fe62790efccfab7921e13184c13e369bf9dfd54467d38a70d783f23d",
+      "bytes": 2442
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/results/native_20261028_001/verification.json",
+      "snapshot_relative": "snapshot/repository_context/experiments/00000_final_Y_T_joint/results/native_20261028_001/verification.json",
+      "sha256": "4cc638bbacfb6ffff2fee4cff41340f4dad2cf8521ca1f7bb3f0f367d3027166",
+      "bytes": 1226
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/results/native_20261028_001/predictions.csv",
+      "snapshot_relative": "snapshot/repository_context/experiments/00000_final_Y_T_joint/results/native_20261028_001/predictions.csv",
+      "sha256": "a0f83d9600455f8e13b60c8417c84f2863578697e27a5bc2933e2a0b2de09b55",
+      "bytes": 42098
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/results/native_20261028_001/python_full_model_comparison.csv",
+      "snapshot_relative": "snapshot/repository_context/experiments/00000_final_Y_T_joint/results/native_20261028_001/python_full_model_comparison.csv",
+      "sha256": "26e167e7136d3684bcf122ad8ac0266ffcef6bc7f86e79173f8fbe903948fb3b",
+      "bytes": 48896
+    }
+  ]
+}

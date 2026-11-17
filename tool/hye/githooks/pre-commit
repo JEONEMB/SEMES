@@ -1,0 +1,29 @@
+#!/bin/sh
+# 보호 브랜치 직접 커밋 차단. 설치: git config core.hooksPath tool/hye/githooks
+# 우회: SEMES_ALLOW_PROTECTED=1 git commit ...
+
+branch=$(git symbolic-ref --short -q HEAD) || exit 0
+
+case "$branch" in
+  chore/hye/merge|dev|main|master) ;;
+  *) exit 0 ;;
+esac
+
+[ -n "$SEMES_ALLOW_PROTECTED" ] && exit 0
+
+cat >&2 <<MSG
+
+커밋 거부: '$branch' 는 보호 브랜치다. 여기서 직접 커밋하지 않는다.
+
+  git switch -c feature/hye/<영문-기능명>
+  git add <바꾼 경로만>
+  git commit -m "<type>: <설명>"
+  git push -u origin feature/hye/<영문-기능명>
+  그리고 MR(대상 chore/hye/merge)을 만들어 사용자가 승인한다.
+
+지금 변경은 그대로 남아 있으니 브랜치만 만들고 다시 커밋하면 된다.
+규칙 전문: AGENTS.md 의 'Git 작업 흐름 (hye, 강제)'
+정말 우회해야 하면: SEMES_ALLOW_PROTECTED=1 git commit ...
+
+MSG
+exit 1

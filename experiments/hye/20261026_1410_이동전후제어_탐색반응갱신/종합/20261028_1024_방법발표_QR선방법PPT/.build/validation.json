@@ -1,0 +1,9 @@
+{
+  "finalPath": "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\codex_experiments_20261014\\qr_lines_method_ppt_20261028\\output\\QR_위아래선_YT_동시추정_방법.pptx",
+  "publishMethod": "exclusive-copy Windows hardlink fallback",
+  "finalSha256": "6c8c08c0e1b6cf9a7b51e895861ebab6bf58c68841fa3d2bd20e877ca2ea3014",
+  "allPackagedValidationGatesPassedBeforePublish": true,
+  "firstPartyImportPassedBeforePublish": true,
+  "sourcePreserved": true,
+  "reason": "EPERM: operation not permitted, link 'C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\codex_experiments_20261014\\qr_lines_method_ppt_20261028\\output\\.QR_위아래선_YT_동시추정_방법.pptx.07bf6d50-9ea5-4db8-8418-871ed410932b.validated' -> 'C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\codex_experiments_20261014\\qr_lines_method_ppt_20261028\\output\\QR_위아래선_YT_동시추정_방법.pptx'"
+}

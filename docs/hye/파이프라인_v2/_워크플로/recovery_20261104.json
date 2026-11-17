@@ -1,0 +1,63 @@
+{
+  "scope": "Nonempty file existence only; content quality and source verification are separate.",
+  "units": 19,
+  "stage_pages": 14,
+  "missing_document_files": 21,
+  "pending": [
+    {
+      "unit": "10",
+      "stage": "docs\\hye\\파이프라인_v2\\단계\\10_단계전환\\00_단계.md",
+      "stage_exists": false,
+      "missing_documents": [
+        "docs/hye/파이프라인_v2/단계/10_단계전환/논문/01_Wright2015_MathProg_좌표하강_순차수렴/번역.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/논문/01_Wright2015_MathProg_좌표하강_순차수렴/요약.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/논문/02_MalisRives2003_ICRA_근사상호작용행렬_안정영역/요약.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/논문/03_Hespanha2003_Automatica_히스테리시스전환_전환횟수상한/번역.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/논문/03_Hespanha2003_Automatica_히스테리시스전환_전환횟수상한/요약.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/논문/04_Gans2007_TRO_전환시스템_시각서보안정/번역.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/논문/04_Gans2007_TRO_전환시스템_시각서보안정/요약.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/특허/01_US5142156_Canon_θ거친정렬_재시도한계/번역.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/특허/01_US5142156_Canon_θ거친정렬_재시도한계/요약.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/특허/02_US4669867_Canon_임계값T_거친정밀전환/번역.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/특허/02_US4669867_Canon_임계값T_거친정밀전환/요약.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/특허/03_US4328553_Computervision_θ반복보정후_XY/번역.md",
+        "docs/hye/파이프라인_v2/단계/10_단계전환/특허/03_US4328553_Computervision_θ반복보정후_XY/요약.md"
+      ]
+    },
+    {
+      "unit": "11",
+      "stage": "docs\\hye\\파이프라인_v2\\단계\\11_검증\\00_단계.md",
+      "stage_exists": false,
+      "missing_documents": [
+        "docs/hye/파이프라인_v2/단계/11_검증/특허/02_US11346751_SAS_MSA설계진단/요약.md",
+        "docs/hye/파이프라인_v2/단계/11_검증/특허/03_US20130103174_Cummins_MSA판정규칙/번역.md",
+        "docs/hye/파이프라인_v2/단계/11_검증/특허/03_US20130103174_Cummins_MSA판정규칙/요약.md"
+      ]
+    },
+    {
+      "unit": "6",
+      "stage": "docs\\hye\\파이프라인_v2\\단계\\6_판정\\00_단계.md",
+      "stage_exists": false,
+      "missing_documents": []
+    },
+    {
+      "unit": "7",
+      "stage": "docs\\hye\\파이프라인_v2\\단계\\7_명령만들기\\00_단계.md",
+      "stage_exists": false,
+      "missing_documents": [
+        "docs/hye/파이프라인_v2/단계/7_명령만들기/논문/03_delCastillo2019_arXiv_2변수_데드밴드_조정정책/요약.md",
+        "docs/hye/파이프라인_v2/단계/7_명령만들기/논문/04_Ai2015_arXiv_EWMA_R2R_안정영역/요약.md",
+        "docs/hye/파이프라인_v2/단계/7_명령만들기/특허/01_US9517563_FANUC_시각되먹임_이동량임계_도달판정/요약.md",
+        "docs/hye/파이프라인_v2/단계/7_명령만들기/특허/02_US4910679_Canon_스텝반복정렬_가중평균보정/요약.md"
+      ]
+    },
+    {
+      "unit": "9",
+      "stage": "docs\\hye\\파이프라인_v2\\단계\\9_정지\\00_단계.md",
+      "stage_exists": false,
+      "missing_documents": [
+        "docs/hye/파이프라인_v2/단계/9_정지/특허/02_US11534908_Fanuc_연속영상_진동량판정/요약.md"
+      ]
+    }
+  ]
+}

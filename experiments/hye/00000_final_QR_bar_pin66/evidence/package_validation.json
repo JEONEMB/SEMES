@@ -1,0 +1,65 @@
+{
+  "date": "2026-11-09",
+  "base_commit": "7ee8b3b5ceb6df324b544198429c217df6be952d",
+  "status": "Evaluation candidate; reference-platform image parity and independent machine test remain pending",
+  "reference_environment": "Windows x64, MSVC v141 / 1916, OpenCV 3.4.15",
+  "tested_environment": "macOS ARM64, AppleClang 17.0.0, C++17",
+  "standalone_builds": {
+    "OpenCV 5.0.0": "PASS (explicit diagnostic override)",
+    "OpenCV 3.4.15": "PASS (official source, local BMP-capable minimal build, explicit diagnostic override)"
+  },
+  "contract_tests": "PASS on both versions; final 3.4.15 tests additionally verify alignment() delegation",
+  "fixed_3_seed_development_cv": {
+    "n": 1713,
+    "pass": 1712,
+    "max_Y_3415": 0.03962945022039632,
+    "max_T_3415": 0.010642227938886084,
+    "note": "Same 571 development photos evaluated across 3 seeds; not 1713 independent photos or a new-machine test.",
+    "unique_development_photos": 571
+  },
+  "training_reproduction": {
+    "mean_and_scale_delta": 0,
+    "max_prediction_delta": 7.404318649544373e-11,
+    "note": "OpenCV5 refit compared with unchanged frozen model on all cached rows."
+  },
+  "opencv5_image_audit": {
+    "photos": 571,
+    "measurement_errors": 0,
+    "strict_coordinate_parity_pass": 0,
+    "max_raw_delta_px": 0.02098000179421433,
+    "max_prediction_delta_either_axis": 0.007031302888597768,
+    "resubstitution_only": {
+      "pass": 571,
+      "max_Y": 0.038259603361104455,
+      "max_T": 0.009905226343978168
+    }
+  },
+  "opencv3415_macos_image_audit": {
+    "photos": 571,
+    "measurement_errors": 0,
+    "strict_coordinate_parity_pass": 0,
+    "max_raw_delta_px": 0.030776424935766045,
+    "max_prediction_delta_either_axis": 0.009411175444710262,
+    "resubstitution_only": {
+      "pass": 571,
+      "max_Y": 0.03739658117045441,
+      "max_T": 0.009180095651824371
+    }
+  },
+  "image_audit_interpretation": "All images decoded/measured, but strict parity FAILS against Windows cache on both macOS builds. Pin displacement agrees to floating-point precision on debug image0; QR observation differs. Cause is not isolated to OpenCV version. Do not claim Windows/MSVC executed or cross-platform numerical equivalence. Reapplication passes do not establish independent accuracy.",
+  "root_build": "NOT completed on macOS: unchanged legacy control tracker.cpp requires windows.h. New joint target compiled. Windows full-root build not executed.",
+  "negative_checks": [
+    "Repeated identical bytes in repeat5 rejected with exit1",
+    "Default non-Windows configure rejected without explicit diagnostic override",
+    "Bad image sizes/types/channels and blank images rejected",
+    "Malformed degree/dimensions/scale and nonfinite features rejected",
+    "Failed context reload retains old context"
+  ],
+  "remaining": [
+    "Windows x64/MSVC v141 build and image/cache audit",
+    "Five independent same-pose captures",
+    "Held-out new-machine evaluation",
+    "Persistent screw motion and real robot convergence"
+  ],
+  "data_augmentation": "None in shipped model or image inference"
+}

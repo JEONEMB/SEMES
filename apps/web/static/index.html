@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SEMES Vision Alignment</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="styles.css?v=20261029e">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">SEMES</span>
+      <span class="brand-product">Vision Alignment</span>
+    </div>
+    <nav class="tabs" aria-label="메뉴">
+      <button class="tab is-active" data-tab="service" aria-current="page">서비스</button>
+      <button class="tab" disabled>디지털 트윈<span class="tab-soon">준비 중</span></button>
+      <button class="tab" data-tab="eval">평가</button>
+      <button class="tab" data-tab="dist">데이터 분포</button>
+      <button class="tab" data-tab="report">보고서</button>
+    </nav>
+    <div class="topbar-right" data-panel="service">
+      <span class="source-pill" id="sourcePill">시나리오 재생</span>
+    </div>
+  </header>
+
+  <div class="panel" data-panel="service">
+  <section class="modelbar" aria-label="사용 모델">
+    <div class="model"><span class="model-kind">1차 joint</span><span class="model-name" id="jointModel"></span><span class="badge badge-adopted">채택</span></div>
+    <div class="model"><span class="model-kind">2차 control</span><span class="model-name" id="controlModel"></span><span class="badge badge-adopted">채택</span></div>
+    <span class="data-source" id="pageFoot"></span>
+    <button class="link-button" disabled title="후보 모델 선택은 준비 중입니다">모델 변경</button>
+  </section>
+
+  <main class="layout layout-service">
+    <section class="col-main col-view">
+      <article class="card viewer-card">
+        <header class="card-head">
+          <div>
+            <h2 class="card-title">현재 사진</h2>
+            <p class="card-sub" id="frameSub"></p>
+          </div>
+          <div class="segmented" role="group" aria-label="보기">
+            <button data-view="qr" class="is-on">QR 확대</button>
+            <button data-view="full">전체</button>
+          </div>
+        </header>
+        <div class="viewer-wrap">
+          <div class="viewer" id="viewer">
+            <img id="frameImg" alt="현재 입력 사진">
+            <div class="overlay" id="overlay"></div>
+            <div class="estimate-tag" id="estimateTag"></div>
+            <div class="plan-chip" id="planChip"></div>
+          </div>
+        </div>
+        <footer class="viewer-foot">
+          <span class="mono" id="framePath"></span>
+          <span class="muted">시나리오 재생 사진이며 실제 촬영이 아닙니다</span>
+        </footer>
+      </article>
+    </section>
+
+    <aside class="col-side col-analysis">
+      <article class="card plane-card">
+        <h2 class="card-title">Y-T 평면</h2>
+        <svg id="plane" viewBox="0 0 320 240" role="img" aria-label="자세 궤적"></svg>
+        <div class="legend">
+          <span><i class="lg lg-pose"></i>시뮬레이션 자세</span>
+          <span><i class="lg lg-est"></i>추정</span>
+          <span><i class="lg lg-tol"></i>기준 0.09</span>
+        </div>
+      </article>
+
+      <article class="card motion-card">
+        <h2 class="card-title">특징점 이동 성분</h2>
+        <svg id="motionField" role="img" aria-label="특징점 이동 벡터"></svg>
+        <p class="muted motion-legend" id="motionScale"></p>
+        <dl class="comp-grid" id="motionComps"></dl>
+        <p class="muted motion-note" id="motionNote"></p>
+      </article>
+    </aside>
+
+    <aside class="col-side col-steps">
+      <article class="card input-card">
+        <h2 class="card-title">입력</h2>
+        <div class="source-tabs" role="group" aria-label="입력 종류">
+          <button disabled title="카메라가 연결되지 않았습니다">카메라</button>
+          <button class="is-on" title="시나리오 6개">시나리오</button>
+          <button disabled title="데이터 증강 후 사용할 수 있습니다">시뮬레이션</button>
+        </div>
+        <ul class="scenario-list" id="scenarioList"></ul>
+        <div class="controls">
+          <button class="btn btn-primary" id="runBtn">실행</button>
+          <button class="btn" id="stepBtn">한 단계</button>
+          <button class="btn btn-ghost" id="resetBtn">처음으로</button>
+        </div>
+      </article>
+
+      <article class="card timeline-card">
+        <header class="card-head">
+          <h2 class="card-title">단계</h2>
+          <span class="muted" id="stepCount"></span>
+        </header>
+        <ol class="timeline" id="timeline"></ol>
+      </article>
+    </aside>
+  </main>
+
+  </div>
+
+  <div class="panel" data-panel="eval" hidden>
+  <main class="layout layout-eval">
+    <aside class="col-side">
+      <article class="card">
+        <h2 class="card-title">결과 폴더</h2>
+        <p class="card-sub">benchmark.exe가 만든 폴더를 엽니다. evals 폴더를 고르면 안의 결과를 모두 불러옵니다</p>
+        <label class="btn btn-primary file-button">
+          결과 폴더 열기
+          <input type="file" id="evalPicker" webkitdirectory directory multiple hidden>
+        </label>
+        <ul class="result-files" id="evalResults"></ul>
+      </article>
+
+      <article class="card">
+        <h2 class="card-title">새 평가 실행</h2>
+        <p class="card-sub">평가할 사진 폴더 경로를 넣으면 실행 명령을 만듭니다</p>
+        <label class="field">
+          <span>사진 폴더</span>
+          <input type="text" id="evalPath" value="data\clean\clean_20261020" spellcheck="false">
+        </label>
+        <label class="field">
+          <span>모델</span>
+          <select id="evalWhich">
+            <option value="both">1차 joint + 2차 control</option>
+            <option value="joint">1차 joint만</option>
+            <option value="control">2차 control만</option>
+          </select>
+        </label>
+        <pre class="command" id="evalCommand"></pre>
+        <button class="btn" id="evalCopy">명령 복사</button>
+        <p class="muted run-note">저장소 루트의 PowerShell에서 실행합니다. 웹 서버가 연결되면 실행 버튼으로 바뀝니다</p>
+      </article>
+    </aside>
+
+    <section class="col-main" id="evalMain">
+      <article class="card empty-state" id="evalEmpty">
+        <h2 class="card-title">불러온 결과가 없습니다</h2>
+        <p class="card-sub">왼쪽에서 결과 폴더를 열어 주세요. 예: evals\20261028_1754_clean</p>
+      </article>
+      <div id="evalBody" hidden>
+        <article class="card">
+          <header class="card-head">
+            <div>
+              <h2 class="card-title" id="evalTitle"></h2>
+              <p class="card-sub" id="evalMeta"></p>
+            </div>
+            <div class="segmented" role="group" aria-label="모델" id="evalModule">
+              <button data-module="joint" class="is-on">1차 joint</button>
+              <button data-module="control">2차 control</button>
+            </div>
+          </header>
+          <p class="notice" id="evalNotice"></p>
+          <div class="kpis" id="evalKpis"></div>
+        </article>
+
+        <article class="card" id="evalCompareCard">
+          <header class="card-head">
+            <div>
+              <h2 class="card-title">결과 비교</h2>
+              <p class="card-sub">첫 번째 결과를 기준으로 차이를 표시합니다</p>
+            </div>
+          </header>
+          <div class="table-wrap"><table class="data-table" id="evalCompare"></table></div>
+        </article>
+
+        <div class="eval-grid">
+          <article class="card">
+            <h3 class="stat-label">조건별 통과</h3>
+            <div id="evalConditions"></div>
+          </article>
+          <article class="card">
+            <h3 class="stat-label">명령값과 추정값</h3>
+            <div class="scatter-pair">
+              <figure><svg id="scatterY" viewBox="0 0 260 220" role="img" aria-label="Y 명령값 대비 추정값"></svg><figcaption>Y</figcaption></figure>
+              <figure><svg id="scatterT" viewBox="0 0 260 220" role="img" aria-label="T 명령값 대비 추정값"></svg><figcaption>T</figcaption></figure>
+            </div>
+            <div class="legend">
+              <span><i class="lg lg-passdot"></i>두 축 0.09 이내</span>
+              <span><i class="lg lg-faildot"></i>기준 밖</span>
+              <span><i class="lg lg-tol"></i>대각선 ±0.09</span>
+            </div>
+          </article>
+        </div>
+
+        <article class="card">
+          <header class="card-head">
+            <h2 class="card-title">오차가 큰 사진</h2>
+            <span class="muted" id="evalWorstNote"></span>
+          </header>
+          <div class="table-wrap"><table class="data-table" id="evalWorst"></table></div>
+        </article>
+      </div>
+    </section>
+  </main>
+  </div>
+
+  <div class="panel" data-panel="dist" hidden>
+  <section class="report-view" id="distView">
+    <iframe class="report-frame" id="distFrame" title="데이터 분포" data-src="../../distribution/index.html"></iframe>
+  </section>
+  </div>
+
+  <div class="panel" data-panel="report" hidden>
+  <main class="report-wrap" id="reportList">
+    <header class="report-head">
+      <h1 class="report-title">보고서</h1>
+      <p class="card-sub">실험 보고서를 주제별로 모아 본다. 가정 시뮬레이션과 실측 평가를 구분해서 읽는다</p>
+    </header>
+    <div class="report-grid">
+      <button class="card report-block" data-report="augment">
+        <span class="report-text"><span class="report-kind">데이터 증강</span><span class="report-name">Y-T 평면 데이터 증강</span></span>
+      </button>
+      <div class="card report-block is-soon" aria-disabled="true">
+        <span class="report-text"><span class="report-kind">알고리즘</span><span class="report-name">알고리즘 보고서</span></span>
+        <span class="badge badge-soon">준비 중</span>
+      </div>
+      <div class="card report-block is-soon" aria-disabled="true">
+        <span class="report-text"><span class="report-kind">EDA</span><span class="report-name">EDA 보고서</span></span>
+        <span class="badge badge-soon">준비 중</span>
+      </div>
+    </div>
+  </main>
+  <section class="report-view" id="reportView" hidden>
+    <div class="report-bar">
+      <button class="link-button report-back" id="reportBack">보고서 목록</button>
+      <span class="report-bar-title" id="reportViewTitle"></span>
+      <span class="badge badge-sim" id="reportViewBadge" hidden></span>
+      <a class="link-button report-open" id="reportOpen" target="_blank" rel="noopener">새 창으로 열기</a>
+    </div>
+    <iframe class="report-frame" id="reportFrame" title="보고서"></iframe>
+  </section>
+  </div>
+
+  <script src="demo/data.js?v=20261029e"></script>
+  <script src="shell.js?v=20261112a"></script>
+  <script src="app.js?v=20261029e"></script>
+  <script src="eval.js?v=20261029e"></script>
+</body>
+</html>

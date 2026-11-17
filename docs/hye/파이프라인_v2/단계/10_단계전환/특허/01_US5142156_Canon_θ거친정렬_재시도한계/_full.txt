@@ -1,0 +1,950 @@
+                                               i 'lllllllllllllllllllllllllllllUllSlOllOll5l1ll4l2ll1ll5l6llAllllllllllllllllllllllllllll
+
+United States Patent [191                                                           [11] Patent Number: . 5,142,156
+
+Ozawa et al.                                                                        [45] Date of Patent: Aug. 25, 1992
+
+[54] ALIGNMENT METHOD FOR PRINTING A                                          Attorney, Agent, or Firm--Fitzpatrick, Cella, Harper &
+       PATTERN OF AN ORIGINAL ONTO                                            Scinto
+       DIFFERENT SURFACE AREAS OF A
+       SUBSTRATE                                                              [57]                  ABSTRACT
+
+[75] Inventors: Kunitaka Ozawa, Isehara; Shunichi                             An alignment method for use in an exposure apparatus
+                                                                              for printing a pattern of an original onto different sur
+      '       Uzawa, Tokyo; Hirohisa Ohta,                                    face areas of a substrate, the alignment method compris
+                                                                              ing the steps of: providing alignment marks around the
+              Kawasaki; Makiko Mori, Atsugi;                                  pattern of the original and placing the original on an
+                                                                              original supporting stage; providing a reference mark
+              Noriyuki Nose, Machida, all of Japan                            on an X-Y stage for supporting the substrate and being
+                                                                              movable in X and Y directions, and moving the X-Y
+[73] Assignee: Canon Kabushiki Kaisha, Tokyo,                                 stage so as to place the reference mark at those posi
+                                                                              tions, in sequence, which correspond to the alignment
+                 Japan                                                        marks of the original, respectively, and which are preset
+                                                                              in respect to a stage coordinate system; detecting, in
+[21] Appl. No.: 588,947                                                       sequence, positional errors of the alignment marks of
+                                                                              the original with respect to the corresponding set posi
+[22] Filed: Sep. 27, 1990
+                                                                              tions, respectively, by using the reference mark and
+[30] Foreign Application Priority Data
+                                                                              through the movement of the X-Y stage, wherein the
+Sep. 29, 1989 [JP] Japan ................................ .. l-252348         positional errors are detected by use of positional error
+                                                                              detectors which are provided to be associated with the
+[51] Int. Cl.5 ........................................... .. G01N 21/86
+                                                                              alignment marks of the original, respectively; calculat
+[52]  US. Cl. . _ . . . . . . . . . . . , .  . . . . . . .. 250/548; 356/401
+                                                                              ing a rotational error of the original with respect to the
+[58]  Field of Search ..................... .. 250/548, 557, 561;             stage coordinate system, in 6 direction, by using the
+
+                                          356/399, 400, 401                   positional errors; and rotationally moving the original
+
+[56]          References Cited                                                supporting table in the 0 direction so as to correct the
+
+         U.S. PATENT DOCUMENTS
+
+      4,662,753 5/1987 Yabu ................................. .. 250/548 '
+
+      4.677.301 6/1987 Tanimoto et al.       250/548
+
+      4,766,309 8/1988 Kudo ......................... .. 250/548
+
+      4,780,615 10/1988 Suzuki ............................... .. 250/548
+
+                                                                              rotational error.  -            '
+
+Primary Examt'ner--David C. Nelms                                                   6 Claims, 10 Drawing Sheets
+Assistant Examiner-K. Shami
+
+                                                                                                    lOO
+US. Patent  Aug. 25, 1992  Sheet 1 of 10  5,142,156
+U.S. Patel-1t  Aug.- 2s, 1992  Sheet 2 `of 10  5,142,156
+
+               FIG.2B
+US. Patent  Aug. 25, 1992 _  Sheet 4 of 10  5,142,156
+
+            FIG.4
+US. Patent - Aug. 25, 1992                     Sheet 5 of 10  5,142,156
+
+            START 50'
+
+II                   /"
+
+    SUPPLY WAFER
+
+    oNTo STAGE
+
+                    #502                                         ,
+
+    WAFER P                                 I                      W504
+    PREALIGNMENT
+                                                 MASK C'HANGE
+    (CORRECTION:
+                                                                    505
+    APX A APY)
+                                                                  /
+            >                   _
+                                               cLEAR MASK ALIGN
+                         503
+                                               MENT coRREcTIoN
+         cmg?éE                 YES `          AMX L? AMY
+
+            '_>      A                                               W506
+
+    5|Q          NO                                MASK ROUGH
+
+         \       T                       .            ALIGNMENT
+
+    MovE STAGE                                                ?sm
+
+    STEPWISE TO                                    MASK FIN
+
+    DESIGNATED                                   ALIGNMENET
+
+    POSlTlON(Xsn,                                             [1508
+    Ysn), WITH
+                                               SET coRREcTIoN
+    CORRECTIONS                                AMX 8' AM As
+                                                MASK CENTER
+    oF APX',APY,AMXI
+    AMY.AWx 2¢AWY                               DEVIATION ACX
+
+                             5" '                                     .
+
+                                     /"         8' A CY» 8* CLEAR
+                                                MASK-To-WAFER
+    MASK-TO-WAFER
+                                                coRREcTIoN AWX
+    ALIGNMENT
+                                                & AWY
+                         ` 5,2
+                                                          1
+                    /
+         ExPoSuRE
+
+                         5l3
+
+                  NEXT
+
+       SHOTOAREA
+
+               NO /5l4
+
+          COLLECT WAFER
+          FRoM STAGE
+_________J
+
+                     FIG.5
+US. Patent  Aug. 25, 1992        Sheet 6 of 10  5,142,156
+
+                  SliART -       WSOI
+
+            MEASUR DEVIATION
+
+            Xyr 8e AYyr OF MASK
+
+            MARK YR
+
+            MEASUR DDEVIATION    ~so2
+
+            Xy( 2. AYyl OF MASK
+
+            MARK YL
+
+            CALCULATE MASK
+            DEVIATION AX, AY& A e "603
+
+' MOVE MASK G-STAGE
+
+  BY A9,X~ ADD AX Z~ s 4
+
+  AY TO MASK ALIGNMENT N O
+
+  CORRECTION AMX Q AMY
+
+                    NO.          ' 606   ERROR
+                OF RETRIES               ROUTINE
+            BEYOND PRESET           YES
+
+            `  'P
+
+               vNO
+
+               END
+
+                   FIG.6
+`US. Patent  Aug. 25, 1992 `               Sheet 7 of 10  5,142,156
+
+                                             mC-D2OE
+
+                                            mmwom>mw N.O./\N
+
+                                           won
+
+lFmdDrm_ 5"nzo5E6owmm$f5i2i.x2v3a2:552:.2  #ONZ
+
+                                              no"
+
+                                             oz5025min. +Qzw
+US. Patent  I Aug. 25, 1992    Sheet 9 of 10        5,142,156 .
+
+               START             90l
+
+               PICKUP              OFF
+
+            DRIVE FLAG
+
+MOVE YR-PICKUP TO POS
+OF SUM OF (Xyr, Yyr) 2(- N902
+
+(AMX,AMY)
+
+            MOVE STAGE MARK TO   N903
+            POS OF SUM OF (Xyr,
+
+            Yyr) 8 (AMX, AMY)
+
+            MEASURE DEVIATION AY
+
+            OF MASK MARK YR Q @904
+            STAGE MARK
+
+                                               905
+
+            Ay DETECTED '?       NO
+
+                          YES    "\I 906
+            SET Ay AS AYyr
+
+            END
+
+            FIG.9
+U.S. Patent  Aug'. 25, 1992  Sheet 10 of 10  5,142,156
+
+             FIG. IOA
+
+             FIG. IOB
+                           1                        5,142,156               2
+
+    ALIGNMENT METHOD FOR PRINTING A                        two of marks provided on the original, and a step of
+PATTERN OF AN ORIGINAL ONTO DIFFERENT                      ?nal alignment with regard to the X, Y and 0 compo
+                                                           nents, using two or more marks.
+        SURFACE AREAS OF A SUBSTRATE
+                                                             In conventional exposure apparatuses, the alignment
+
+FIELD OF THE INVENTION AND RELATED                         of the original is executed with respect to the coordi
+                                                           nate system of the main body of the exposure apparatus.
+        '                  ART                             Thus, if there is an error between the coordinate system
+
+This invention relates to an exposure apparatus for of the substrate stage and the coordinate system of the
+
+exposing a substrate such as a semiconductor wafer to main body of the apparatus, an error is produced be
+
+an original such as a mask, wherein the original and the   tween the direction of movement of the substrate stage
+substrate are disposed opposed to each other.              and the direction of corrective drive as calculated from
+                                                           the deviation between the original and the substrate.
+  In exposure apparatuses for manufacture of semicon       Such an error adversely affects the alignment precision.
+ductor integrated circuits, it is necessary to attain, be
+                                                             According to one aspect of the present invention, the
+fore the exposure operation, high-precision registration   original is aligned with respect to the coordinate system
+                                                           of the stage. Thus, the precision of relative position of
+(alignment) between a mask having an integrated circuit    the original and the substrate, to be exposed, can be
+pattern formed thereon and a semiconductor wafer to
+which the circuit pattern is to be transferred. By way of  improved.
+example, in the case of an integrated circuit for a 256
+megabit DRAM, the linewidth of the pattern is 0.25
+
+micron order and, thus, a registration precision higher 20 Further, since the original is aligned with respect to
+
+than 0.06 micron is required.                              the stage coordinate system, the effect of an error be
+
+        SUMMARY OF THE INVENTION                           tween the coordinate system of the substrate stage and
+                                                           the coordinate system of the main body of the appara-
+
+In conventional exposure apparatuses, it is not easy to tus, upon the alignment precision, is reduced, such that
+
+attain high precision of alignment such as is described 25 the assembling and adjustment of the main body of the
+
+above.                                                     apparatus and the stage coordinate is easier.
+
+Also, in conventional exposure apparatus, it is neces         Further, the alignment of the original is executed by
+
+sary to adjust both the coordinate system of a wafer two steps of rough alignment with respect to the 0
+stage and the coordinate system of a mask stage, with component and ?nal or ?ne alignment with respect to
+reference to the coordinate system of the main part 30 the X, Y and 0 components. This is effective to reduce
+(body) of the exposure apparatus. This necessarily re the number of searching operations and, thus, effective
+sults in the disadvantage of a complicated assembling
+and adjustment of these stage coordinate systems with to improve the throughput of the device.
+                                                              These and other objects, features and advantages of
+reference to the coordinate system of the main body of
+                                                           35 the present invention will become more apparent upon
+the exposure apparatus.
+Accordingly, it is an object of the present invention a consideration of the follov'ving description of the pre
+
+to provide an exposure apparatus in which higher preci     ferred embodiments of the present invention taken` in
+sion alignment is attainable and in which the assembling
+                                                           conjunction with the accompanying drawings.
+
+and adjustment is easier.                                     BRIEF DESCRIPTION OF THE DRAWINGS
+
+In accordance with an aspect of the present invention 40
+
+to achieve this object, an X-Y stage for moving the           FIG. 1 is a schematic view showing a major part of a
+
+substrate, to be exposed, is provided with a mark for, step-and-repeat type exposure apparatus according to
+
+alignment of the original. Any positional deviation be an embodiment of the present invention.
+
+tween such mark on the X-Y stage and a plurality of           FIGS. 2A and 2B are schematic views, respectively,
+
+alignment marks provided on the original, is measured. 45 for explaining wafer alignment marks and mask align
+
+The position of the original is adjusted with respect to , ment marks.
+
+the coordinate system of the X-Y stage, on the basis of       FIG. 3 is a block diagram, illustrating the hardware
+
+the position coordinate of the alignment marks of the of a control system of the exposure apparatus of FIG. 1.
+original with respect to the X-Y stage coordinate.
+                                                              FIG. 4 is a schematic view, for explaining the step
+In one preferred embodiment of the present inven 50 and-repeat exposure method.
+tion, the original aligning mark on the X-Y stage is
+                                                              FIG. 5 is a flow chart, illustrating the ?ow corre
+formed at a particular location, and the X-Y stage is
+moved sequentially so that the mark of the X-Y stage is sponding to one patch of the step-and-repeat exposure
+sequentially placed at the positions below the alignment sequence.
+                                                              FIG. 6 is a flow chart, illustrating details of the mask
+marks of the original, respectively. The amount of devi
+ation between the mark of the X-Y stage and each mark rough alignment operation to be made at step 506 of
+of the original is measured to determine the X-Y coordi FIG. 5.
+                                                              FIG. 7 is a flow chart, illustrating details of the mask
+nate of each alignment mark of the original. Also, of the
+positional deviation of the original with respect to the rough alignment mark measuring operation to be made
+X-Y stage coordinate system, the 0 component is cor at step 601 of FIG. 6.
+
+rected by moving the stage for the original. The amount       FIG. 8 is a flow chart, illustrating details of the mask
+
+of correction in the X and Y components is fed back, as ?ne alignment operation to be made at step 507 of FIG.
+
+a corrective quantity for the position coordinate of each 5.
+
+shot area when the pattern of the original is to be           FIG. 9 is a flow chart, illustrating details of the mask
+
+printed on that shot area of the substrate.                65 ?ne alignment mark measuring operation to be made at
+
+In another preferred form of this invention, the align step 802 of FIG. 8.
+
+ment operation for the original includes a step of rough      FIGS. 10A and 10B are schematic views, respec
+
+alignment only with regard to the 0 component, using tively, for explaining the mask alignment operation.
+                    3                              5,142,156                         4
+
+DESCRIPTION OF THE PREFERRED                                and the AA mark 203 ofthe mask; and denoted at 209 is
+              EMBODIMENTS                                   an autofocusing (AF) light beam, to be received, which
+                                                            bears gap information (AF information) given by an
+
+  FIG. 1 illustrates the structure of a part of a step-and  optical system constituted by the AF mark 202 of the
+                                                            wafer and the AF mark 204 ofthe mask. Denoted at 210
+repeat type exposure apparatus (stepper) which pertains
+
+to the mask-to-wafer alignmentand which is around an is an autoalignment (AA) sensor for converting the
+
+exposure stage. In FIG. 1, denoted at 1 is light for expo   position of an autoalignment (AA) light spot 211,
+sure (photoprinting) which is projected substantially       formed by the AA light beam 208, into an electric signal
+along the Z-axis direction and which comprises X`rays
+contained in a synchrotron orbit radiation (SOR), for       (AA information). For example, the sensor 210 com
+                                                            prises a line sensor such as a CCD array. Denoted at 212
+
+example. Denoted at 2 is a mask having formed thereon is an autofocusing (AF) sensor for converting the posi
+
+a pattern whichis to be transferred onto a semiconduc tion of an autofocusing (AF) light spot 213, formed by
+tor wafer 3. Denoted at 4 is a mask 0 stage for rotation the AF light beam 209, into an electric signal (AF infor
+ally moving the mask 2 along a plane (X-Y plane) paral mation). For example, the sensor 212 comprises a line
+lel to the surface thereof; and denoted at 5 is a 0 rough sensor such as a CCD array.
+motion stage for rotationally moving the wafer 3 along
+                                                            Referring back to FIG. 1, denoted at 14 is a mask
+a plane (X-Y plane) parallel to the surface thereof. De aligning reference mark provided on the wafer stage 24
+noted at 6 is a Z tilt stage which is effective to move the for alignment between the mask 2 and the wafer stage
+wafer 3 in the Z direction (movement toward the expo 24. This reference mark 14 comprises four mark ele
+sure light 1), in the wx direction (rotation about the X 20 ments corresponding to the four alignment marks pro
+axis) and in the wy (rotation about the Y axis), respec vided on the mask 2. Denoted at 16 is a super ?at mir
+tively, when the wafer 3 is to be opposed to the mask 2 ror; and at 17 is a Y-measurement beam and O-measure
+with a predetermined proximity gap in the Z-axis direc ment beam which is projected to and reflected by the
+tion. Denoted at 7 is a 6 ?ne-motion stage for minutely
+rotating the wafer 3 in the X-Y plane; denoted at 8 is an 25 mirror 16, for measurement of the amount of displace
+X ?ne-motion stage for minutely moving the wafer in ment of the wafer stage 24 in the Y direction as well as
+the X direction; at denoted 9 is a Y ?ne-motion stage for the inclination 0 thereof about the Z axis. By using these
+minutely moving the wafer in the Y direction; denoted beams and an X-measurement beam (not shown), the
+at 10 is an X rough-motion stage; and denoted at 11 is a position (X, Y, 6) of the wafer stage 24 with respect to
+Y rough-motion stage. The 6 rough-motion stage 5, the 30 the stage coordinate system can be measured through
+Z tilt stage 6, the 0 ?ne-motion stage 7, the X rough an interferometer.
+                                                            Denoted at 100 is a main body frame to which the
+motion stage 10 the Y ?ne-motion stage 9, the X rough
+motion stage 10 and the Y rough-motion stage 11, coop mask 0 stage 4 and the wafer stage 24 as well as the
+                                                            pickups 12 are mounted.
+eratewith each other to provide a wafer stage 24.
+Denoted at 12 are pickups which are adapted to 35 FIG. 3 illustrates the structure of a control system of
+
+project light to alignment marks formed on the mask 2 the exposure apparatus of FIG. 1. While not shown in
+
+and the wafer 3 and which are adapted to detect scat the drawings, the exposure apparatus of FIG. 1 is
+
+tered light from these marks.                               equipped with a mirror unit for expanding the flux of
+
+In this embodiment, as best seen in FIG. 2A, four X-rays, emitted from a SOR in the form of a horizontal
+
+alignment marks XU, XD, YL and YR are formed on sheet-like beam, in the vertical direction to provide an
+
+scribe lines of each shot area of the wafer 3, each mark area beam; a main part unit which includes an alignment
+
+being disposed closed to an end of corresponding sides unit for aligning the mask and the wafer and an expo
+
+of that shot area.             _                            ' sure unit for exposing the aligned mask and the wafer
+
+  Each alignment mark comprises a diffraction grating, with the area X-ray beam; an attitude control unit for
+as shown in FIG. 2B, which provides an autoalignment 45 controlling the attitude of each of the mirror unit and
+
+(AA) mark 201 adapted to detect an error in the mask the main-part unit; as well as a chamber and air condi
+
+to-wafer registration with respect to a direction which tioning unit for controlling the ambience around the
+
+is parallel to the side at which that alignment mark is mirror unit and the main-part unit.
+
+formed, as well as an autofocusing (AF) mark 202, for       In FIG. 3, denoted at 301 is a main processor unit for
+
+detection of the spacing between the mask 2 and the controlling the operation of the apparatus as a whole;
+
+wafer 3. The alignment mark has been formed on the denoted at 302 is a communication line for communicat
+
+wafer together with a semiconductor circuit pattern, in ing the main processor unit 301 with the main-part unit;
+
+the preceding process. Also, the mask 2 is provided denoted at 303 is a main-part side communication inter
+
+with four alignment marks (203, 204) associated with face; denoted at 304 is a main-part control unit; and
+
+the alignment marks of the wafer 3, respectively, which 55 denoted at 305 is a pickup stage control means. Denoted
+
+mask alignment marks are formed of gold, for example, at 306 and 308 are communication interfaces and de
+
+together with a semiconductor circuit pattern which is noted at 307 is a communication line, all of which are
+
+to be transferred to the wafer (see FIG. 10A).              adapted to communicate, in the main-part unit, the
+
+In FIG. 2B, denoted at 205 is a semiconductor laser main-part control unit 304 with fine AA/AF control '
+
+(light emitting element); denoted at 206 is a collimator means 3090, 309b, 309a and 309d for measurement of
+
+lens for transforming the light emitted by the semicon mark positional deviation for the purpose of mask align
+
+ductor laser 205 into a parallel light; denoted at 207 is ment and mask-to-wafer alignment. Denoted at 310 and
+
+the light beam emitted by the semiconductor laser 205 312 are communication interfaces and denoted at 311 is
+
+and transformed by the collimator lens 206 into the a communication line all of which are adapted to com
+
+parallel light; denoted at 208 is an autoalignment (AA) 65 municate, in the main-part unit, the main-part control
+
+light beam, to be received, which bears positional devia unit 304 with a stage control means 313 which controls
+
+tion information (AA information) given by a optical the alignment corrective drive and the stepwise move
+
+system constituted by the AA mark 201 of the wafer ment.
+         5                                5,142,156,                     6
+
+FIG. 4 illustrates the step-and-repeat exposure between the mask and the wafer in respect to the z-axis
+
+method. For simplicity in illustration, as compared with direction, to be equal to the gap for exposure.
+
+FIG. 1, illustration of the mask 6 stage 4 which is driv  Subsequently, 'the pickups 120-120' project light
+
+ing means for the mask 2, the wafer stage 24 which is beams 423 again, and deviation between paired align
+
+driving means for the wafer 3 and the pickup stage 13 ment marks 421 and 422 of the mask and the wafer,
+
+which is driving means for the pickup 12, is omitted in along a plane parallel to the surface of the mask or
+
+FIG. 4.     .                                             wafer, is measured. On the basis of the information
+
+In FIG. 4, denoted at 12 (12a~12d) are pickups for obtained from the four pickups, the amount of correc
+
+aligning the mask 2 and the wafer 3; denoted at 418 is a tive drive of that shot area as a whole is calculated, and
+
+pattern (to be transferred) formed on the mask; denoted the mask 0 stage 4 and the wafer stage 24 are driven to
+
+at 419 is a pattern, transferred, having been formed on bring the mask pattern 418 and the wafer pattern 419
+
+the wafer in the preceding process; denoted at 420 are into alignment with each other. After the alignment is
+
+alignment marks for mask alignment, to be used for attained, the exposure operation is effected, whereby
+
+aligning the mask 2 with a reference mark 14 (FIG. 1) the mask pattern 418 is transferred onto the wafer 3.
+provided on the wafer stage 24; denoted at 421 are 5 Thereafter, the wafer stage 24 is driven so that the next
+
+alignment marks formed on the mask, for aligning the shot area comes to a position below the mask. In a simi
+
+mask pattern 18 with the transferred pattern 419; de lar manner, the alignment and exposure operation is
+
+noted at 422 are alignment marks formed on the wafer repeated, whereby exposures of all the shot areas are
+
+for the same purpose; denoted at 423 are projected light effected.
+
+beams, projected from the pickups 12 for the same pur     FIG. 5 is a flow chart, illustrating the flow of the
+
+pose; and denoted at 401 are scribe lines de?ned be step-and-repeat exposure sequence.
+
+tween shot areas. The alignment marks 421 and 422 of      First, at step 501, a wafer is supplied to the wafer
+
+the mask and the wafer are formed on these scribe lines. stage 24, and the supplied wafer is chucked to the wafer
+
+As regards the alignment marks 420 on the mask, stage 24. At step 502, the wafer stage 24 is moved and
+
+there are four marks which are provided at the middles two alignment marks of the wafer 2 are measured
+
+of the four sides of the mask pattern 418, corresponding through a prealignment optical system (not shown), and
+
+to the scribe lines 401 of the wafer defined between the prealignment of the wafer 2 is executed. Here, the
+
+adjacent shot areas. The mask marks 420 for exclusive prealignment correction quantities APx and APy are
+
+use of alignment may be omitted and the alignment memorized.
+
+marks 421 of the mask for the mask-to-wafer alignment     First, at step 503, discrimination is made as to the
+
+may be used also for the mask alignment.                  necessity of mask replacement. If the exposure is to be
+
+In the apparatus of FIG. 1, the mask 2 can be aligned effected by using the mask which is being chucked at
+
+with the coordinate system (stage coordinate system) of this time, the sequence goes to step 510. Ifthe mask is to
+
+the wafer stage 24 in the following manner: First, the be replaced by another, the sequence goes to step 504.
+
+wafer stage 24 is moved successively to place, in se      At step 504, the current mask is demounted from the
+
+quence, the alignment reference mark 14 of the wafer mask stage 4, by using a mask traverser (not shown) and
+
+sage 24 at a position (measuring position) aligned with the demounted mask is stored into a mask cassette (not
+
+each mask mark 420 (or 421), and each time the wafer shown). Then, a mask to be used for the exposure is
+
+stage 24 is positioned the light beam 423 is projected taken out of its mask `cassette by using the mask tra
+
+from corresponding pickup 12 (12a-12d) having been verser and it is chucked to the mask stage 4.
+
+moved to the corresponding mask mark, to measure          Then, at step 505, the mask alignment correction
+
+relative positional deviation between the reference quantities AMX and AMY having been memorized in a
+
+mark 14 and the corresponding mask mark in respect to memory, are cleared. At step 506, mask rough align
+
+the X and Y directions. By using the positional devia ment is effected byv using two (YR and YL) of the four
+
+tion information of these four mask marks, at the respec alignment marks 42] formed on the mask 2.
+
+tive measuring position, and by using the amount of         FIG. 6 illustrates details of the mask rough alignment
+
+movement of the wafer stage 24 to each_measuring          operation.
+
+position, errors AX, AY and A6 of the mask marks with     In FIG. 6, at step 601, an alignment mark (reference
+
+respect to the stage coordinate system are calculated. mark 14) of the wafer stage 24 is used to measure the
+
+'Then, as regards the 0 component (A6), the mask 0 positional deviation (AXyr and AYyr) of the mark YR
+
+stage 4 is driven to reduce the 0 error into its tolerance of the mask alignment marks 421, with respect to the
+
+which is predetermined. Also, as regards the X compo reference mark 14.
+
+nent (AX) and the Y component (AY), the calculated        FIG. 7 illustrates details of the mask rough alignment
+
+values are fed back to the position coordinate of each 55 mark measuring operation, made at step 601 of FIG. 6.
+
+shot area (i.e. the amount of movement of the wafer       In FIG. 7, at step 701, the quantities AXm and AYm
+
+~stage 24 to be made for moving the wafer 3 to the re     of searching movement having been memorized in the
+                                                          memory are cleared. Then, at step 702, the pickup 12 for
+spective shot positions).
+
+The mask 2 and the wafer 3 can be aligned with each measurement of the mark YR (hereinafter, this pickup
+
+other in the following manner: ?rst, under the condition will be referred to as "YR pickup") is moved to the
+
+that the mask 2 and the wafer 3 are supported to be position which corresponds to the sum of the stage
+
+opposed to each other, the pickups 12a-12d project coordinate (Xyr, Yyr) of the mask YR mark 421, the
+
+light beams 423 and, through the corresponding align mask alignment correction quantities (AMX and AMY)
+
+ment marks 421 and 422 of the mask and the wafer, the and the searching movement quantities (AXm and
+
+gap between the mask and the wafer is measured. On 65 AYm). Here, the stage coordinate means the design
+
+the basis of the information obtained from the four position coordinate or the position coordinate, actually
+
+pickups, the amount of gap correcting drive is calcu measured by using a sample, in the stage coordinate
+
+lated and the wafer stage 24 is driven to set the gap system of the mask YR mark 421, for example, and the
+                                                5,142,156
+
+                             7
+
+stage coordinate of each mark or each shot area is set      At step 507 in FIG. 5, the reference mark 14 of the
+
+prior to the exposure step.                                 wafer stage 24 and four alignment marks 421 (XU, XD,
+
+At step 703, the wafer stage 24 is moved to place the YL and YR) ofthe mask 2 are used to execute the mask
+
+alignment mark (reference mark) 14 thereof at the posi ?ne alignment.        -
+
+tion which corresponds to the sum of the stage coordi       FIG. 8 illustrates details of the mask ?ne alignment
+
+nate (Xyr, Yyr) of the mask YR mark 421, the mask operation.                                         -
+
+alignment correction quantities (AMX and AMY) and             In FIG. 8, at step 801, the pickup drive designation
+the searching movement quantities (AXm and AYm).            flag is set, and the quantities AXp and AYp of the pickup
+
+Subsequently, at step 704, relative deviation Aby be deviation are cleared. Then, at step 802, the alignment
+
+tween the mask YR mark 421 and the alignment mark mark 14 of the wafer stage 24 is used to measure the
+
+14 of the stage is measured through the YR pickup 12 positional deviation AYyr of the mark YR which is one
+
+and the sequence goes to step 705.                 .        of the alignment marks 421 of the mask.
+
+  At step 705, a discrimination is made as to whether         FIG. 9 illustrates details of the mask ?ne alignment
+the measurement of the deviation Ay has been attained       mark measuring operation to be made at step 802 in
+
+or not. If not, the sequence goes to step 706 whereat 5 FIG. 8.
+                                                            In FIG. 9, at step 901, the pickup drive designation
+discrimination is made as to whether the measurement
+to all the points at the searching position has been com flag is checked. If it has been set, at step 902 the YR
+pleted or not. If not, the sequence goes to step 707 pickup 12 is moved to the position which corresponds
+wherein the quantities AXm and AYm for the next to the sum of the stage coordinate (Xyr, Yyr) of the
+searching movement are set. After this, the flow goes mask YR mark 421 and the mask alignment correction
+back to step 702, and the operations at step 702 and steps quantities AMX and AMY having been memorized in
+following it are repeated. If the result of the discrimina the preceding operation. Then, the sequence goes to
+tion at step 706 is affirmative, which means failure ofthe step 903. If, on the other hand, the pickup drive designa
+YR mark measurement, the sequence goes to an error tion flag has not been set, the processing at step 902 is
+routine, whereby the exposure processing is stopped or, skipped, and the flow goes directly to step 903 from step
+alternatively, an alarm or display of error is provided, 901.
+                                                            At step 903, the wafer stage is moved to place the
+Also. if the result of the discrimination at step 705 is
+af?rmative, the flow goes to step 708 wherein the quan alignment mark 14 thereof at the position which corre
+                                                                       sponds to the sum of the stage coordinate (Xyr, Yyr) of
+tities AXm and AY+AYm are memorized as the posi 30 the mask YR mark 421 and the mask alignment correc
+tional deviation (AXyr and AYyr) of the mask YR mark tion quantities AMX and AMY. Then, at step 904, posi
+421 and, thereafter, the mask rough alignment mark tional deviation Ay between the mask YR mark 421 and
+measuring operation is completed and the sequence the alignment mark 14 of the stage, is measured through
+goes to step 602 in FIG. 6.
+                                                            the YR pickup 12. Then, at step 905, discrimination is
+At step 602 in FIG. 6, positional deviation (AXyl and 35 made as to whether the measurement of the deviation
+AYyl) of the mask YL mark is measured in the same Ay has been attained or not. If not, which means failure
+manner as at step 601, except for that the mark YL of of correct execution of the YR mark rough alignment
+the mask is used as the mask mark 421 and the YL operation (step 506 in FIG. 5), the sequence goes to an
+pickup 12 is used as the corresponding pickup 12.
+                                                            error` routine whereby the exposure processing is
+Then, at step 603, the positional deviation (AX, AY 40 stopped or, alternatively, an alarm or display of error is
+and A0) of the mask 2 is calculated on the basis of the provided. If the result of discrimination at step 905 is
+detected positional deviation quantities AXyr and AYyr af?rmative, then the flow goes to step 906 in which the
+of the mask YR mark and of the detected positional quantity Ay is set as the positional deviation AYyr of the
+deviation quantities AXyl and AYyl of the mask YL YR mark 421 and, after this, the mask ?ne alignment
+mark. Then, at step 604, the mask 0 stage 4 is driven by 45 mark measuring processing is ?nished and the ?ow goes
+an amount corresponding to the deviation A0while, on to step 803 in FIG. 8.
+the other hand, the determined positional deviation
+                                                            At step 803 in FIG. 8, positional deviation AYyl of
+quantities AX and AY are added to the mask alignment the mask mark YL is measured in the same manner as at
+correction quantities AMX and AMY. After- this, the step 802, except for that the mask mark YL is used as the
+sequence goes to step 605 at which a discrimination is mask alignment mark 421 and the YL pickup is used as
+made as to whether the mask positional deviation A0 is the pickup 12. Then, at step 804 and at step 805, in the
+within the tolerance of the rough alignment. If it is not same manner as at step 802 and at step 803, positional
+
+within the tolerance, the sequence goes to step 606 in      deviation AXxu of the mask mark XU and positional
+which the mask rough alignment operation counter is         deviation AXxd of the mask mark XD are measured.
+
+incremented and whether or not the counted number is 55 Then, at step 806, the quantities AX, AY and A0 of
+beyond a preset number of retries, is discriminated. If positional deviation of the mask 2 with respect to the
+
+the counted number is larger than the preset number, X-Y coordinate system of the stage 24 are calculated on
+
+which means failure of mask 0 rough alignment in spite the basis of the detected positional deviation quantities
+
+of retries of a predetermined number, the sequence goes AYyr, AYyl, AXxu and AXxd of 'the respective marks.
+
+to an error routine wherein the exposure processing is      Then, at step 807, the mask 0 stage 4 is driven by an
+stopped or, alternatively, an alarm or display of error is  amount corresponding to the positional deviation A0
+provided. If the counted number is smaller than the set     while, on the other hand, the quantities AX and AY are
+
+number of retries, the ?ow goes back to step 601 and the added to the mask alignment correction quantities MX
+
+0 rough alignment operation at step 601 and step fol and MY. Then, the sequence goes to step 808 in which
+
+lowing it is retried.                                       65 discrimination is made as to whether the mask positional
+
+  If the result of discrimination at step 605 is af?rma     deviation (AX, AY and A0) is within the tolerance for
+                                                            mask alignment or not. If not, the flow goes to step 809
+tive, the mask rough alignment operation is completed
+
+and the sequence goes to step 507 in FIG. 5.                whereat discrimination is made as to whether the num
+                                      5,142,156
+
+                                                                        10
+
+ber of times of the mask fine alignment operation is to the details set forth and this application is intended to
+
+larger than a preset number of retries or not. If the result cover such modi?cations or changes as may come
+
+is affirmative, which means failure of mask ?ne align within the purposes of the improvements or the scope of
+
+ment in spite of execution of a predetermined number of the following claims.
+
+retries, the sequence goes to an error routine whereby        What is claimed is:
+
+the exposure-processing is stopped, or. alternatively, an     1. An alignment method for use in an, exposure appa
+
+alarm or display of error is provided. If the number is ratus for printing a pattern of an original onto different
+
+not larger than the set number of retries, the sequence surface areas of a substrate, said alignment method com
+
+goes to step 810 in which the positional deviation quan prising the steps of:                ,
+
+tities AX and AY are added to the pickup deviation             providing alignment marks around the pattern of the
+                                                                  original, and placing the original on an original
+quantities AXp and AYp, and the pickup drive designa              supporting stage;
+
+tion flag is turned off. After this, the ?ow goes to step       providing a reference mark on an X¢Y stage for sup
+                                                                  porting the substrate, and moving the X-Y stage to
+811 at which a discrimination is made as to whether the           place the reference mark at those positions, in se
+
+pickup deviation (AXp and AYp) is within the tolerance             quence, which are preset in correspondence to
+                                                                  selected ones of the alignment marks, to thereby
+or not. If not, the flow goes to step 812 and the pickup          execute ?rst detection for detecting positional er
+                                                                  rors, in sequence, of the selected alignment marks
+'drive designation flag is set, while the quantities AXp
+and AYp of the pickup deviation are cleared. After this,          with respect to the corresponding preset positions,
+
+the flow goes back to step 802 and the operations at step         respectively;
+802 and steps following it are repeated. This ensures
+that. when the mask ?ne alignment mark measuring                calculating a rotational error, in a 0 direction of the
+operation at steps 802, 803, 804 and 805 (details are              original with respect to a stage coordinate system
+illustrated in FIG. 9) is subsequently to be executed, the
+ pickup 12 is moved to catch the center of the mask mark          by using the positional errors, and executing ?rst
+421. Thus, the precision of the mask ?ne alignment                correction for rotationally moving the original
+ operation can be improved. If, on the other hand, the 25          supporting stage in the 6 direction to correct the
+ result of discrimination at step 811 is affirmative, the
+processing at step 812 is skipped and the flow goes                calculated rotational error;
+ directly back to step 802 from step 811.                       selecting, after completion of the ?rst correction, a
+
+    If the result of discrimination at step 808 is affirma        larger number of alignment marks, of the alignment
+ tive, the mask ?ne alignment operation is ?nished and 30          marks of the original, than the number of marks
+ the sequence goes to step 508 in FIG. 5.                          selected at the ?rst detection, and executing second
+                                                                   detection for moving the X-Y stage to place the
+   At step 508 in FIG. 5, the mask alignment correction
+ quantities AMX and AMY are set as the quantities ACX              reference mark at those positions, in sequence,
+                                                                   which are preset in correspondence to the re
+ and ACY of the mask center deviation, while the cor              sele'cted alignment marks, to thereby detect posi
+                                                                   tional errors of the re-selected alignment marks
+ rection quantities AWX and AWY of the mask-to-wafer              with respect to the corresponding preset positions,
+ alignment are cleared. After this, the flow goes to step
+ 510. With the above-described mask alignment opera               respectively;
+ tion, the mask 2 having been set with deviation with
+ respect to the stage coordinate system 1001 such as            calculating a rotational error, in the 0 direction, of the
+ shown in FIG. 10A, can be aligned with the stage coor             original with respect to the stage coordinate system
+                                                                   by using the positional errors detected by the sec
+ dinate system such as shown in FIG. 10B.                          ond detection, and executing second correction for
+   At step 510, the wafer stage 24 is moved stepwise to
+                                                                  rotationally moving the original supporting stage
+ the position having such coordinate as obtainable by
+ correcting the preset coordinate (Xsn, Ysn) of the shot           in the 0 direction to correct the calculated rota
+ area in accordance with the prealignment correction 45
+ quantities APX and APY, the mask alignment correc                 tional error; and
+ tion quantities AMX and AMY, and the mask-to-wafer             controlling the movement of the X-Y stage for print
+ alignment correction quantities AWX and AWY. Then,
+ at step 511, the mask-to-wafer alignment is executed by           ing the pattern of the original upon the substrate,
+ using the wafer alignment marks 422 (YR, YL, XU and               on the basis of positional deviation of the original in
+ XD) and the mask alignment mark 421 (YR, YL, XU                   the X and Y directions as calculated by using the
+ and XD). The correction quantities in the X and Y                 positional errors detected at the second detection.
+ directions as assumed when the mask-to-wafer align
+                                                                2. An alignment method for use in an exposure appa
+                                                              ratus for printing a pattern of an original on different
+
+ment is effected, are equal to the quantities AWX and         zones of a substrate in sequence, said method compris
+AWY, and these quantities change with the alignment
+operation to each shot area. After the subsequent expo        ing the steps of:
+sure operation to the shot area at step 512, the flow goes      setting the original on an original carrying stage,
+                                                                   wherein the originalhas alignment marks formed
+
+to step 513.                                                  around the pattern;
+
+At step 513, a discrimination is made as to whether           positioning reference mark means at those positions,
+
+there remains an unexposed shot area on the same wa           in sequence, which are preset in accordance with a
+
+fer. If it remains, the sequence goes back to step 503 and    stage coordinate system and in relation to the align
+
+the above-described operations at step 503 and steps          ment marks, respectively, wherein the movement
+
+following it are repeated. If it does not remain, the         of the reference mark means is made through a
+
+sequence goes back to step 501, and after the wafer           substrate carrying stage adapted to move the sub
+
+replacement, the above-described operations at step 502 65 strate in at least one of X and Y directions in accor~
+
+and steps following it are repeated.                          dance with the stage coordinate system and
+
+While the invention has been described with refer             wherein the reference mark means is provided on
+
+,ence to the structures disclosed herein, it is not confined  the substrate carrying stage;
+         11                                 5,142,156         12
+
+detecting, through the sequential positioning of the become less than the predetermined tolerance even as a
+
+reference mark means at the preset positions, a result of repeating the rotationally moving step.
+
+positional error of each alignment mark with re               6. An alignment method for use in an exposure appa
+
+spect to the reference mark means by using corre ratus for printing a pattern of an original on different
+
+sponding one of positional error detectors pro zones of a substrate in sequence, said method compris
+
+vided in relation to the alignment marks, respec ing:                                     ,
+
+tively;                                  '                    a setting step for setting the original on an original
+
+calculating a rotational error in a 0 direction of the        carrying stage, wherein the original has marks
+
+                                                              formed around the pattern;
+original with respect to the stage coordinate system 10 a ?rst detecting step for selecting particular ones of
+by using the detected positional errors, and rota
+                                                              the marks comprising ?rst-time selected masks and
+tionally moving the original carrying stage in the 6
+                                                              positioning reference mark means at those posi
+
+   direction so as to correct the rotational error; and       tions, in sequence, which are preset in accordance
+                                                              with a stage coordinate system and in relation to
+moving the substrate through the substrate carrying
+
+stage in at least one of the X and Y directions in            the ?rst-time selected marks, respectively, to
+
+accordance with the stage coordinate system so as             thereby detect a positional error of each of the
+
+to print the pattern of the original on the different         ?rst-time selected marks with respect to the refer
+
+      zones of the substrate in sequence.                        ence mark means;
+
+  3. A method according to claim 2, further comprising        a ?rst correcting step for calculating a rotational
+the steps of calculating an amount of any positional            error of the original by using the positional errors
+deviation of the original with respect to the stage coor        detected at said ?rst detecting step and rotational
+                                                                moving the original carrying stage so as to correct
+dinate system in at least one of the X and Y directions         the rotational error;
+
+by using the positional errors; and, when the substrate       a second detecting step for selecting second-time
+carrying stage is moved for the printing of the pattern 25      selected marks, after said ?rst correcting step, of a
+of the original on the substrate, using the calculated          number larger than that of the ?rst-time selected
+amount of positional deviation of the original for the          marks, and positioning the reference mark means at
+
+control of the movement of the stage carrying stage in        those positions in sequence which are preset in
+
+at least one of the X and Y directions.                       accordance with the stage coordinate system and in
+
+4. A method according to claim 2, wherein said rota 30 relation to the second-time selected marks, respec
+
+tionally moving step comprises the step of rotationally       tively, to thereby detect a positional error of each
+
+moving the original carrying stage in the 6 direction so      of the second-time selected marks with respect to
+
+as to correct the rotational error when the detected             the reference mark means;
+                                                              a second correcting step for calculating a rotational
+rotational error is greater than a predetermined toler
+                                                                error of the original by using the positional errors
+ance, wherein said method further comprises the steps 35        detected at said second detecting step and rotation
+of repeating said detecting, calculating, rotationally          ally moving the original carrying stage so as to
+moving, and substrate moving steps after said rotation
+ally moving step is performed when the detected rota             correct the calculated rotational error; and
+
+tional error is greater than a predetermined tolerance.       moving the substrate through the substrate carrying
+  5. A method according to claim 4, further comprising          stage in accordance with the stage coordinate sys
+
+the step of interrupting the rotationally moving step as        tem so as to print the pattern of the original on the
+                                                                different zones of the substrate in sequence.
+
+an error when the calculated rotational error does not        11 it i i t
+
+                                                          45
+
+                                                          55
+
+                                                          65
+       UNITED sTATEs PATENT AND TRADEMARK OFFICE
+
+          CERTIFICATE OF CORRECTION
+
+PATENTNO. :    5,142,156               Page _1 of .__Z
+               August 25, 1992
+DATED  :       KUNITAKA OZAWA, ET AL.
+
+INVENTORIS) :
+
+      It is certi?ed that enor appears in the above-identified patent and that said Letters Patent is hereby
+comctedasshown below:
+
+       SHEET 6 OF THE DRAWINGS
+
+                 Figure 6, "MEASUR" should read --MEASURE----
+
+                                         (both occurrences) .
+
+       SHEET 8 OF THE DRAWINGS
+
+                 Figure 8, "DEIVE" should read ----DRIVE---.
+
+       COLUMN 3,            "mask 0'' should read ----mask 9--;
+                            "wy" should read ----wy direction--;
+                  Line 13,
+                 Line 21,   "rough-" should read --fine---; and
+                            "stage 10" should read ----stage 8,-
+                 Line 31,
+                 Line 32,
+
+            COLUMN 5 ,
+
+                   Line 17, "pattern 18" should read ----pattern 418--;
+and
+
+                  Line 37, "sage" should read ----stage--.
+
+       COLUMN 7,
+                 Line 9, "Aby" should read ---Ay---
+                 Line 36, "for" should be deleted;
+                 Line 64, "step" should read --steps--; and
+                  Line 65, "is" should read ---are--.
+       UNITED STATES PATENT AND TRADEMARK OFFICE
+
+          CERTIFICATE OF CORRECTION
+
+PATENTNU. :    5,142,156               Page 2 of 2
+               August 25, 1992
+DATED  :       KUNITAKA OZAWA, ET AL.
+
+INVENTOFHS) 1
+
+      It is certified that error appears in the above-identified patent and that said Letters Patent is hereby
+conectedasshovm helm:
+
+       COLUMN 8
+                  Line 63, "MX" should read --AMX--; and
+                  Line 64, "MY." should read '"'AMY.-
+
+       COLUMN 9                        '
+
+               Line 51, "mark" should read ---marks---.
+
+       COLUMN 12
+                  Line 11, "masks" should read ---marks--; and
+
+                 Line 21, "rotational" should read --rotationally--.
+
+                 Arrest:                    Signed and Sealed this
+                                     Twenty-sixth Day of October, 1993
+                 AtteSl`irlg O?icer
+                                        6M W
+
+                                                                       BRUCE LEHMAN
+
+                                                     Commissioner of Patents and Trademarks
+

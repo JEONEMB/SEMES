@@ -1,0 +1,7 @@
+add_library(semes_joint STATIC src/joint.cpp src/observer.cpp src/line_profile.cpp third_party/ecc_compat.cpp)
+target_include_directories(semes_joint PUBLIC "${PROJECT_SOURCE_DIR}/include" ${OpenCV_INCLUDE_DIRS} PRIVATE include)
+target_link_libraries(semes_joint PUBLIC semes_diagnostics ${OpenCV_LIBS} bcrypt)
+if(MSVC)
+ target_compile_options(semes_joint PRIVATE /utf-8 /EHsc)
+ target_compile_definitions(semes_joint PRIVATE NOMINMAX _CRT_SECURE_NO_WARNINGS)
+endif()

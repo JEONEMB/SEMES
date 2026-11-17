@@ -1,0 +1,57 @@
+Claims (6)
+
+    
+    
+    What is claimed is:
+     
+      1. A robot system, comprising:
+a robot that is controlled by a program including operational instructions for performing predetermined operations on an object placed at a first object position on a plane by use of a device attached to an arm end of the robot;
+
+a camera that is attached to the arm end to take an image of the object;
+
+a first robot position storing unit configured to store, as a first robot position, a position of the arm end arranged in a predetermined positional relationship relative to the first object position;
+
+a target arrival state data storing unit configured to store, at least one feature quantity among a position, attitude and size of the object on the image of the camera in a target arrival state where the object is placed at the first object position while the arm end is positioned at the first robot position, as the target arrival state data;
+
+a robot movement amount calculator configured to calculate an amount of movement from an arbitrary initial position of the arm end in order to make, at least one feature quantity of the position, attitude and size on the image of the object when the object placed at a second object position on the plane has been captured by the camera with the arm end of the robot positioned at the arbitrary initial position, agree with the at least one feature quantity of the target arrival state data; and
+
+a correction data calculator configured to calculate correction data for correcting a robot position taught in the program based on a difference between the first robot position and a second robot position, wherein the second robot position is the position of the arm end when the arm end has been moved based on the calculated amount of movement.
+
+    
+
+    
+  
+      2. The robot system according to claim 1, wherein when a difference between at least one feature quantity among the position, attitude and size of the object placed at the second object position, on the image taken by the camera with the arm end of the robot positioned at the second robot position, and the at least one feature quantity of the target arrival state data stored in the target arrival state data storing unit, is greater than a predetermined value, the robot movement amount calculator calculates the amount of movement by regarding the second robot position as a revised initial position, and the position of the arm end after the arm end has been moved based on the calculated amount of movement is set as a revised second robot position.
+
+    
+
+    
+  
+      3. The robot system according to claim 1, wherein with the arm end of the robot positioned at the second robot position, the robot movement amount calculator calculates the amount of movement by regarding the second robot position as a revised initial position, and when the calculated amount of movement is greater than a predetermined value, the position of the arm end after the arm end has been moved based on the calculated amount of movement is set as a revised second robot position.
+
+    
+
+    
+  
+      4. The robot system according to claim 1, further comprising:
+when at least three second object positions different from each other and not located on a straight line are provided,
+a second robot position storing unit configured to store a plurality of second robot positions, each of which is obtained correspondingly by placing the object at one of the second object positions; and
+
+a normal vector calculator configured to calculate a normal vector to the plane on which the object is placed, based on the second robot positions stored in the second robot position storing unit,
+
+wherein the robot movement amount calculator calculates only a translational motion within a plane perpendicular to the normal vector and a rotational motion about a rotational axis parallel to the normal vector, as the amount of movement.
+
+    
+
+    
+  
+      5. The robot system according to claim 4, wherein one of the second object positions different from each other is identical with the first object position, and one of the second robot positions is the first robot position.
+
+    
+
+    
+  
+      6. The robot system according to claim 4, wherein
+the robot movement amount calculator defines a straight line that cuts through a center of the object placed at the first object position and is parallel to the normal vector, as a relative straight line for the arm end when the arm end is positioned at the first robot position, and the rotational motion is done using the defined relative straight line for the arm end as the rotational axis, and
+
+the center of the object is obtained as a center position of a template that shows a highest degree of match by adopting template matching as an image processing algorithm.

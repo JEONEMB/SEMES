@@ -1,0 +1,1079 @@
+                                                                                            USO09517563B2
+
+(12) United States Patent                                                   (10) Patent No.: US 9,517,563 B2
+
+   Watanabe                                                                 (45) Date of Patent:              Dec. 13, 2016
+
+(54) ROBOT SYSTEM USING VISUAL                                                USPC ............ 700/258, 259,254; 901/9, 3, 46, 47:
+       FEEDBACK                                                                                                318/.568.13, 568. 16
+
+(71) Applicant: FANUC Corporation, Yamanashi (JP)                             See application file for complete search history.
+
+(72) Inventor: Keisuke Watanabe, Yamanashi (JP)                         (56)                References Cited
+
+(73) Assignee: FANUC CORPORATION, Yamanashi                                   U.S. PATENT DOCUMENTS
+
+                   (JP)                                                     6.256,560 B1*   7/2001 Kim ..................... GOSD 1.0246
+
+(*) Notice:    Subject to any disclaimer, the term of this                 7,904,207 B2 *                                          180,168
+               patent is extended or adjusted under 35                  2005, 0102060 A1
+                                                                                            3/2011 Nagatsuka ............. B25J 9, 1674
+               U.S.C. 154(b) by 33 days.                                2005. O107.920 A1*
+                                                                                            5.2005 Waattaannaabbe et al1.  318.568.1
+
+                                                                                            5, 2005 Ban ........................ B25J 9, 1692
+
+(2211)) AAppppll.. NNoo.: 14/618,9 326                                                                                     TOO.245
+
+                                                                                            (Continued)
+
+(22) Filed: Feb. 10, 2015                                                     FOREIGN PATENT DOCUMENTS
+
+(65)              Prior Publication Data                                CN    1834835. A 9,2006
+
+      US 2015/0224649 A1 Aug. 13, 2015                                  CN    102161126 A 8, 2011
+
+                                                                                            (Continued)
+
+(30)           Foreign Application Priority Data                        Primary Examiner -- Bao Long T Nguyen
+
+Feb. 13, 2014 (JP) ................................. 2014-025600        (74) Attorney, Agent, or Firm --Hauptman Ham, LLP
+
+(51) Int. Cl.                                                           (57)                ABSTRACT
+
+      B25, 9/16                         (2006.01)                       The robot system includes: a robot for performing prede
+      G05B 9/408                        (2006.01)                       termined operations on an object placed at a first object
+
+(52) U.S. Cl.                                                           position; a first robot position storage configured to store the
+
+      CPC - - - - - - - - - - - - - B25. 9/1697 (2013.01); B25. 9/1607  position of al al end arranged in a predetermined posi
+
+               (2013.01); B25J 9/1692 (2013.01); G05B                   tional relationship relative to the first object position; a target
+                  19/4083 (2013.01); G05B 2219/39397                    arrival state data storage configured to store feature quanti
+                                                                        ties of the object on the camera image; a robot movement
+           (2013.01); G05B 2219/40003 (2013.01); Y10S
+                                     901/09 (2013.01)                   amount calculator configured to calculate the amount of
+                                                                        movement in order to make the feature quantities of the
+(58) Field of Classification Search                                     object placed at a second object position coincide with the
+                                                                        feature quantities of the target arrival State data; and a
+      CPC ................ G05D 1/0246; G06T 1/0014: G05B
+                                                                        correction data calculator configured to calculate correction
+                  19/401-19/4015; G05B 19/4083; G05B
+                                                                        data based on the difference between the second robot
+                   2219/40003; G05B 2219/39397: G05B
+                   2219/39011; G05B 2219/39024; G05B                    position when the arm end has been moved based on the
+                                                                        amount of movement and the first robot position.
+                 2219/39045; B25J 9/1607; B25J 9/1692;
+                  B25J 9/16949/1697; B25J 19/02; B25J                         6 Claims, 7 Drawing Sheets
+
+                19/021; B25J 19/023; B25J 9/1653; Y1OS
+
+                     901/03; Y10S 901/46; Y10S 901/47
+
+                  ROBOT
+
+                  CONTROL
+                  DEVICE
+                                        US 9,517,563 B2
+
+                                               Page 2
+
+(56)                 References Cited
+
+      U.S. PATENT DOCUMENTS
+
+2006/0063599 A1*     3/2006    Greenspan ............. B25J 9, 1697
+2006/0181236 A1*     8/2006
+                                                              473/1
+2007,0293987 A1*     12, 2007
+                               Brogardh............... B25J 9, 1671
+2009/0187276 A1*      7/2009
+2014/0288710 A1*     9/2014                              318.568.1
+                               Yamada ................... B25J 13,06
+
+                                                           TOO.245
+
+                               Nagatsuka ............. B25J 9, 1697
+
+                                                           TOO.245
+
+                               Ikenaga ................. B25J 9, 1697
+
+                                                           7OO 259
+
+      FOREIGN PATENT DOCUMENTS
+
+DE    6O2004O13107             T 2009
+                               9, 1993
+JP    5-24.1626                2, 1998
+                               T 2003
+JP    10-49.218                6, 2005
+                               6, 2008
+JP    2003-211381              5, 2009
+                               4/2010
+JP    2005-138223              5, 2011
+                               4/2013
+JP    2008-132525              9, 1992
+
+JP    4265088
+
+JP    2010-076.054
+
+JP    2011-93076
+
+JP    2013-63474
+
+WO    92,15838
+
+* cited by examiner
+U.S. Patent Dec. 13, 2016 Sheet 1 of 7  US 9,517,563 B2
+U.S. Patent  US 9,517,563 B2
+
+       CN
+
+                                                    CO
+
+                                                                                                                                                                                                      ---=~--1
+
+                                                      t
+                                                     t
+
+             0|| p ||
+U.S. Patent Dec. 13, 2016 Sheet 3 of 7              US 9,517,563 B2
+
+FIG. 3
+
+PLACE THE OBJECT AT THE FIRST OBJECT POSITION S101
+
+MOVE THE ROBOT TO THE FIRST ROBOT POSITION S102
+
+TEACH IMAGE MODEL DATA                  S103
+
+STORE TARGET                            S104.
+
+ARRIVAL STATE DATA
+
+TEACH THE ROBOT PROGRAM                 S05
+U.S. Patent Dec. 13, 2016 Sheet 4 of 7         US 9,517,563 B2
+
+                         FIG. 4
+
+                         MOVE THE ROBOT TO          S201
+                         THE INITIAL POSITION
+
+S205
+
+                         EXECUTE DETECTION          S2O2
+
+MOVE THE ROBOT TO THE    CALCULATE ROBOT            S2O3
+TARGET ARRIVAL POSITION  MOVEMEN AMOUNT
+
+                                       IS           S204
+                              IT IN THE TARGET       S2O6
+
+                             ARRIVA, STATE
+
+                                           Y
+
+                         CALCULATE CORRECTION DATA
+
+                         EXECUTE OPERATIONS         S2O7
+U.S. Patent Dec. 13, 2016 Sheet 5 of 7  US 9,517,563 B2
+
+                          FIG. 5
+
+FIG. 6
+
+                                     A SHIFTED WIRTUAL ROBOT
+                                     COORDINATE SYSTEM Xb
+
+                                  -
+
+ROBOT COORDINATE SYSTEM b
+U.S. Patent Dec. 13, 2016 Sheet 6 of 7  US 9,517,563 B2
+
+                         FIG. 7
+
+       4.
+              NORMAL VECTOR n
+                                 5
+
+FIG. 8
+U.S. Patent Dec. 13, 2016 Sheet 7 of 7  US 9,517,563 B2
+
+                                       NORMAL WECTOR n
+
+                    FIG. 10
+
+            P .
+
+(x1, y Z1)  (X2, y2, Z2)
+                                           US 9,517,563 B2
+
+              1.                                                                2
+
+ROBOT SYSTEM USING VISUAL                                   by the camera every time the robot is moved, then the
+              FEEDBACK
+                                                            position and attitude of the robot is controlled so that the
+                                                            appearance of the object coincides with the target data. This
+
+CROSS-REFERENCE TO RELATED                                  process is iterated. When the error has converged to zero,
+            APPLICATIONS                                    gripping with the hand is implemented.
+
+                                                               In the method described in Patent Document 2, the robot
+  This application is a new U.S. patent application that grips the object by a hand at a position where the error has
+claims benefit ofJP 2014-025600, filed on Feb. 13, 2014, the become Zero. This means that the appearance of the object
+entire content ofJP 2014-025600 is hereby incorporated by reference. 10 on the camera when the robot is positioned at a place where the object is gripped, needs to be stored as the target data.
+
+              FIELD OF THE INVENTION                        This requirement limits the positional relationship between
+                                                            the camera and the hand attached at the arm end ofthe robot,
+
+The present invention relates to a robot system that hence restricts free design. Since this method enables the robot to perform operations
+relating to a robot system using visual feedback in order to corrects the operation ofa robot using a camera, in particular 15 on the object only at the position Where the erroris Zero, the
+eliminate the necessity of having performed registration operation is free from problems when the robot is made to
+(position adjustment) between the robot coordinate system perform a simple task Such as gripping the object. However,
+                                                            this method cannot be used when it is necessary to make the
+and the camera coordinate system.
+                                                            robot perform a job that needs complicated motion paths
+
+BACKGROUND OF THE INVENTION                                 Such as to apply an adhesive to the object through a
+
+                                                            predetermined path, for instance.
+
+  Many industrial robots are operated based on a scheme There is another proposed method in which the difference
+called teaching playback. That is, the movement and opera between the position of the robot when target data was
+
+tions the user wants the robot to perform have been taught 25 configured relative to a reference object and the position of
+in advance as a program so as to make the robot perform the robot when the robot performs a gripping operation of
+desired operations by playing back the program. The robot the reference object, has been stored as a position transfor
+is able to repeat programmed movement and operations mation matrix, and the robot is operated to converge the
+exactly. However, once the object is placed at a position error to zero, then is moved following the stored position
+different from that taught by the program, the robot cannot 30 transformation matrix to perform a gripping operation (e.g.,
+perform correct operations on the object.
+                                                            Japanese Patent Publication No. JP-B-4265088). In this
+
+  To deal with this, there is a known technology in which invention, in comparison with the method disclosed in
+the position of the object is recognized by use of a vision Patent Document 2, restriction on the positional relationship
+
+sensor Such as a camera, etc., so that the operation of the between the camera and the hand attached to the arm end of
+
+robot is corrected based on the positional information on the 35 the robot is eliminated. However, this method offers no
+
+object recognized by the vision sensor. This method makes solution to the problem that the method cannot be used when
+it possible to perform exact operations on the object even if the robot is required to perform a job that needs complicated
+
+the object is placed at a position different from that taught by motion paths.
+the program.                                                Incidentally, when the object is placed on a flat pedestal
+
+The position of the object identified by the vision sensor 40 such as a table or the like, in order to control the position and
+
+is represented in a coordinate system. (which will be referred attitude of the robot so that the appearance of the object
+
+to hereinbelow as "the vision coordinate system'') based on coincides with the target data, it is preferable that the robot
+
+which measurement of the vision sensor is performed. In is controlled to keep the distance from the camera attached
+
+order to correct the operation of the robot based on the to the arm end of the robot to the table on which the object
+positional information identified by the vision sensor, the 45 is placed, unvaried. Further, when the orientation of the
+positional information represented in the vision coordinate object changes, it is necessary to control the robot so that the
+
+system needs to be transformed into the positional informa relative direction of the object to the camera is unchanged.
+
+tion in the coordinate system (which will be referred to For this purpose, it is preferable that the camera is controlled
+hereinbelow as "the robot coordinate system') based on So as to rotate on an axis that is perpendicular to the table
+
+which the operation of the robot is controlled. The data for 50 surface so that the inclination of the camera relative to the
+converting the positional information represented in the table will not change.
+
+vision coordinate system into the positional information However, in the general visual feedback, it is neither
+
+represented in the robot coordinate system is referred to as guaranteed that the distance between the camera and the
+
+"camera calibration data, and the job for acquiring the table is unchanged nor that the relative inclination between
+
+camera calibration data is referred to as "camera calibration' 55 the camera and the table is unchanged. As a result, there are
+(e.g., Japanese Unexamined Patent Publication No. JP-A- cases in which controlling the robot so that the appearance
+
+10-49218).                                                  of the object coincides with the target data takes a longer
+  On the other hand, there is a known technique called
+                                                            time than needed.
+visual feedback as a method that enables correction of the
+                                                              In order to avoid this problem, a coordinate system that is
+
+position of the robot using a vision sensor without perform 60 parallel to the table surface may and should be configured in
+
+ing camera calibration (e.g., Japanese Unexamined Patent the robot so that the camera can be moved based on this
+Publication No. JP-A-2003-211381, which will be referred coordinate system. For example, it is possible to configure a
+
+to hereinbelow as "Patent Document 2). For example, the robot coordinate system on the table surface by defining an
+robot is moved to a position for gripping the object and is arbitrary point on the hand of the robot as the TCP (Tool
+
+made to take an image of the object by the camera attached 65 Center Point), making the TCP of the robot touch three
+to the robot and store the appearance of the object as target points on the table surface but not in a line to read the
+data. In the actual operation, an image of the object is taken coordinate values of the TCP at each point, viewed from the
+                                                  US 9,517,563 B2
+
+                       3                                                                     4
+
+robot coordinate system (e.g., Japanese Unexamined Patent FIG. 6 is a diagram showing a shifted virtual robot
+
+Publication No. JP-A-2010-076054).                            coordinate system;
+
+However, the operation for setting up the coordinate FIG. 7 is a diagram for illustrating the definition of a tool
+
+system using this method entails the problem that the coordinate system;
+operator's skill makes a difference in setting precision and FIG. 8 is a diagram showing the positional relationship
+
+the risk that the hand and the table may be damaged by between a tool coordinate system and a camera;
+erroneous operations since the hand of the robot is brought FIG. 9 is a diagram showing the positional relationship
+                                                              between a tool coordinate system and a second tool coor
+into physical contact with the table.
+The present invention is to provide a system for correcting the operation of a robot using visual feedback, which 10 dinate system; and, FIG. 10 is a diagram showing how a tool coordinate
+enables operations on an object involving complicated paths system is rotated about the Z-axis.
+
+and enables the camera to move parallel to the table surface       DETAILED DESCRIPTION OF THE
+
+and rotate about an axis normal to the table surface without       PREFERRED EMBODIMENT
+
+an operators cognition of the robot coordinate system, to 15
+thereby efficiently move the camera to a predetermined The robot system according to the present invention will
+position.
+                                                              be described with reference to the drawings. It should be
+
+            SUMMARY OF THE INVENTION                          noted that the technical scope of the present invention is not
+
+                                                              limited to the embodiments hereof but includes the invention
+
+                                                         defined in the scope of the Claims and its equivalent.
+  A robot system according to one embodiment of the FIG. 1 is a diagram showing the overall configuration of
+present invention includes: a robot that is controlled by a the robot system in the embodiment of the present invention.
+program including operational instructions for performing The robot system according to the embodiment of the
+predetermined operations on an object placed at a first object present invention includes: a robot 1 that is controlled by a
+position on a plane by use of a device attached to an arm end 25 program including operational instructions for performing
+of the robot; a camera that is attached to the arm end to take predetermined operations on an object 4 placed at a first
+the image of the object; a first robot position storing unit that object position on a plane 5 by use of a tool 30 as a device
+stores, as a first robot position, the position of the arm end attached to a mechanical interface unit 32 provided in the
+arranged in a predetermined positional relationship relative arm end of the robot 1; a camera 3 that is attached to the
+
+to the first object position; a target arrival State data storing 30 mechanical interface unit 32 to take the image of the object
+unit that stores, at least, one feature quantity among the 4; a first robot position storing unit (which will be also called
+position, attitude and size of the object on the image of the hereinbelow simply "robot position storage') 12a (FIG. 2)
+camera in a target arrival state where the object is placed at for storing the position of the mechanical interface unit 32
+the first object position while the arm end is positioned at the that is arranged in a predetermined positional relationship
+first robot position, as the target arrival state data; a robot 35 relative to the first object position, as the first robot position;
+movement amount calculator that calculates the amount of a target arrival state data storage 12b that stores at least one
+movement from an arbitrary initial position of the arm end feature quantity among the position, attitude and size of the
+in order to make, at least, one feature quantity of the object 4 on the image of the camera 3 in a target arrival state
+position, attitude and size on the camera image of the object where the object 4 is placed at the first object position while
+when the object placed at a second object position on the 40 the mechanical interface unit 32 is positioned at the first
+plane has been captured by the camera with the arm end of robot position, as the target arrival state data; a robot
+the robot positioned at the arbitrary initial position, agree movement amount calculator 11b that calculates the amount
+with the corresponding feature quantity of the target arrival of movement from an arbitrary initial position of the
+
+state data; and, a correction data calculator that calculates mechanical interface unit 32 in order to make, at least, one
+the correction data for correcting the program based on the 45 feature quantity of the position, attitude and size on the
+difference between the second robot position, or the position camera image of the object when the object placed at a
+of the arm end when the arm end has been moved based on second object position on the plane has been captured by the
+
+the calculated amount of movement, and the first robot camera with the arm end of the robot positioned at the
+position.                                                     arbitrary initial position, coincide with the corresponding
+
+                                                              50 feature quantity of the target arrival state data; and a
+
+            DESCRIPTION OF THE DRAWINGS                       correction data calculator 11c that calculates the correction
+
+                                                              data for correcting the program based on the difference
+
+These and other features and advantages of the present between the second robot position, or the position of the
+
+invention will be better understood by reading the following mechanical interface unit 32 when the mechanical interface
+detailed description, taken together with the drawings 55 unit 32 has been moved based on the amount of movement,
+
+wherein:                                                      and the first robot position.
+
+FIG. 1 is a diagram showing the overall configuration of The robot 1 is a well-known typical robot, for example, a
+
+a robot system in the first embodiment of the present 6-axis multi-joint robot. The robot 1 includes an arm unit 1a
+
+invention;                                                    and a base unit 1b, and is connected to a robot control device
+
+FIG. 2 is a block diagram showing a robot control 60 2 for controlling the robot 1.
+apparatus used in the present invention;
+                                                                  The mechanical interface unit 32 arranged at the arm end
+
+FIG. 3 is a flow chart for illustrating the flow when the of the arm unit 1a is equipped with a tool 30. The tool 30
+robot system of the present invention is booted;              depicted in FIG. 1 is a mechanism for performing operations
+
+FIG. 4 is a flow chart for illustrating the process when a on an object, Such as a nozzle 31 for adhesive application,
+
+job is executed in the robot system of the present invention; 65 for example. The mechanical interface unit 32 is further
+  FIG. 5 is a plan view showing an object placed at the first equipped with a camera 3 for taking the image of the object
+
+and second positions;                                         4.
+                                           US 9,517,563 B2
+
+                         5                                                             6
+
+On the robot 1, a robot coordinate system Xb fixed to the storing the data in various arithmetic processing performed
+
+base unit 1b and a mechanical interface coordinate system Of by the CPU 11. The memory 12 includes the robot position
+
+fixed to the mechanical interface unit 32 are defined. The storage 12a for storing the robot position and the target
+
+robot control device 2 controls the position and attitude R of arrival state data storage 12b for storing the target arrival
+the mechanical interface coordinate system Xf, viewed from 5 state data calculated by the image processor 11b.
+the robot coordinate system Xb, as the current position of the The servo control unit 15 includes servo controllers #1 to
+robot. Herein, R is a 4x4 homogeneous transformation in (n is the total number of axes of the robot, n-6 is assumed
+matrix. Hereinbelow, unless otherwise indicated, the "robot herein), and receives operational commands from the CPU
+position' is the position and attitude R of the mechanical 11 and outputs a torque command to each of servo amplifiers
+interface coordinate system Xf viewed from the robot coor 10 A1 to Antogether with the feedback signal received from the
+dinate system Xb.
+  The camera 3 is, for example a CCD camera for industrial  pulse coder (not depicted) attached to each axis. Each servo
+                                                            amplifier A1 to An supplies electric current to servo motor
+use, and a well-known light-receiving device having an M1 to Min for each axis to drive the motors, based on the
+image capturing function. In the present embodiment, the robot control device 2 is presented to have an image pro 15 corresponding torque command.
+cessing function, and the camera 3 is connected to the robot Connected to the camera interface 14 is the imaging
+control device 2. However, the invention should not be device, i.e., a camera 3. As an image capturing command is
+limited to this example, but can be realized by providing a sent from the CPU 11 via the camera interface 14, the
+device for image processing such as a PC or the like, camera 3 performs image capturing by the electronic shutter
+connecting the camera 3 to the image processing device, and function, so that the image signal is stored in the form of
+connecting the image processing device and the robot con gray-scale signals into the memory 12 via camera interface
+
+trol device 2 with a communication cable.                   14.
+
+  The object 4 is placed on a flat table 5. The robot 1 can In the robot system of the present application, the robot
+be moved to fit the object 4 into the visual field of the camera program for performing predetermined operations on the
+3, to thereby take the image of the object 4 by the camera 3. 25 object 4 has been taught with the object 4 placed at one
+
+  FIG. 2 is a block diagram depicting a robot control device arbitrary position on the table 5. This position is referred to
+
+used in the present invention. The robot control device 2 as "the reference position'. When the object 4 is set at the
+includes a main CPU (hereinbelow referred to simply as reference position, it is possible for the robot 1 to perform
+                                                            pertinent operations on the object 4 by merely running the
+"CPU) 11.
+The CPU 11 includes: an image processor lie for calcu 30 robot program.
+
+lating the feature quantities such as the position, attitude, Under Such circumstances, when the object 4 is placed at
+size and the like of the object 4 appearing in the image a position different from the reference position, correction
+
+captured by the camera 3; a robot movement amount cal data is calculated by the aftermentioned method disclosed by
+culator 11b for determining the amount of movement of the the present invention so that the robot program is run while
+
+robot based on the calculated feature quantities and the 35 being corrected based on the correction data, to thereby
+stored target arrival state data; a correction data calculator enable the robot 1 to perform appropriate operations on the
+11c for calculating the correction data for correcting the object 4 that is placed at a position other than the reference
+operation of the robot based on the first robot position and position.
+
+the second robot position; and a normal vector calculator FIG. 3 is a flow chart for illustrating the flow when the
+11d for determining the normal vector to the surface of the 40 robot system of the present invention is set up. Hereinbelow,
+table 5 on which the object 4 is placed, based on multiple the setup procedures of the robot system will be described
+
+second robot positions.                                     with reference to FIG. 3.
+
+Connected to a bus 17 extended from the CPU 11 are a To begin with, an object 4 is set at the reference position
+
+memory 12 including RAM, ROM, nonvolatile memories, on the table 5 (which will be referred to hereinbelow as "the
+etc., a teaching control board interface 13, a camera interface 45 first object position') (S101).
+
+14, a servo control unit 15, and an external device I/O Next, the robot 1 is moved to the first robot position so
+                                                            that the object 4 placed at the first object position appears in
+interface 16.
+
+  A teaching control board 18 is to the teaching control the visual field of the camera 3 (S102). The first robot
+board interface 13. An operator can, by operating the teach position is preferably set such that the optical axis of the
+ing control board 18, prepare, modify, register the robot 50 camera 3 becomes approximately perpendicular to the plane
+program and set up various parameters of the program, and of the table 5, but is not limited to this requirement. For
+in addition, play back the taught robot program, perform example, there is no problem if the optical axis of the camera
+
+manual control on the robot position and others. Further, in 3 is slightly inclined with respect to the plane of the table 5.
+
+the present embodiment, the robot control device 2 has an Further, in order to minimize the influence on the captured
+image processing function, so that the operator can, by 55 image of the object 4 from lens distortions and others, the
+operating the teaching control board 18, prepare, modify, first robot position is preferably set so that the object 4 will
+register the image processing program and set up various appear approximately in the center of the visual field of the
+
+parameters of the program, and in addition, play back the CaCa.
+taught image processing program, perform detection test and Next, the image of the object 4 is taken by the camera 3.
+
+others.                                                     60 and the image of the object 4 is taught as the model data
+
+  The system software for controlling the robot 1 and the (S103). Herein, what kind of information should be stored as
+system software for performing image processing are stored the model data depends on the algorithm of image process
+
+in the ROM of the memory 12. The robot program to which ing used to detect the object 4 from the image. In the present
+the content of the task of the robot is taught in accordance invention, any image processing algorithm may be used. For
+with the application and the associated data of settings are 65 example, template matching using normalized correlation,
+stored in nonvolatile memory of the memory 12. The RAM the generalized Hough transform using edge information
+of the memory 12 is used for the storage area for temporarily and other techniques have been known and may be used.
+                                                 US 9,517,563 B2
+
+                     7                                                      8
+
+When template matching based on normalized correlation is When the robot is determined to be in the target arrival
+used, the template corresponds to the model data.
+                                                                    state, the current robot position is registered as the second
+
+Next, the taught model data is used to detect the object 4 robot position, and at the same time the correction data for
+from the image. The feature quantities such as the position, performing operations on the detected object 4 is calculated
+attitude, size and the like on the image of the detected object based on the stored first robot position and the second robot
+4 are stored as the target arrival state into the target arrival position.
+state data storage 12b while the first robot position is stored The principle of correction to the robot program and the
+into the robot position storage 12a (S104). For example, calculation method of correction data are described as
+when template matching is adopted as the image processing follows.
+algorithm, the center position, rotational angle, the enlarge 10 As described above, the robot position can be represented
+ment/reduction ratio of the template that shows the highest as the position and attitude R of the mechanical interface
+degree of match can be sampled as the feature quantities for coordinate system Xf viewed from the robot coordinate
+the position, attitude and size.                                    system Xb. Herein R is a 4x4 homogeneous transformation
+
+Finally, the robot program that will cause the robot 1 to matrix. Since the robot program moves the robot 1 to
+perform predetermined operations on the object 4 placed at 15 multiple robot positions Successively, it is possible to regard
+the first object position, is taught (S105).
+                                                                    the program as a set of a plurality of robot positions. When
+FIG. 4 is a flow chart for illustrating the process when the the i-th robot position is denoted as R, the correction data
+robot system of the present invention executes operations. to be determined can be considered as a 4x4 homogeneous
+The robot system operation of the robot system of the transformation matrix X that satisfies the following equa
+present invention will be described with reference to FIG. 4. tion:--
+
+First, the robot is moved to the initial position (S201).
+Usually, the initial position of the robot may be set at the first
+robot position. However, as long as the object 4 appears in
+                                                                    In other words, correction to the robot can be carried out
+the visual field of the camera 3 while the robot can take the
+same attitude as that of the first robot position, the robot may 25 by running the program whilst transforming the robot posi
+be set at a different initial position. For example, when the tion R, taught in the robot program into R, by use of the
+table 5 is wide so that the whole area of the table 5 cannot above equation based on the correction data X. Since this
+fit in the visual field of the camera 3, it is possible to perform transformation matrix. X has the effect of running the robot
+measurements by dividing the whole area of table 5 into program by virtually shifting the robot coordinate system Xb
+multiple visual fields by changing the initial positions. 30 by X, it is possible to correct the robot program appropri
+Next, the image of the object 4 is taken by the camera 3 ately so as to be suited to the position and orientation of the
+so as to perform detection of the object 4 by image process object 4 even if the job entails complicated paths.
+ing (S202). The image processing algorithm may use the In the present invention, when the stored first robot
+same technique as that of S104 above, so that information on position is represented by R and the second robot position
+the feature quantities (the position, attitude, size on the 35 by R, correction data X can be calculated based on R and
+image) is acquired.                                                 R by the following equation:
+
+  Next, the amount ofrobot movement to move the robot to
+Such a position that the feature quantities acquired at S202
+
+agree with the stored target arrival state data is calculated Finally, the taught robot program is run while being
+(S203). There have been various techniques for calculating 40 corrected based on the calculated correction data (S207).
+the amount of robot movement based on the feature quan Subsequently, as an example of the calculation method at
+tities sampled from the image. In the present invention, the S203 for calculating the robot movement to coincide the
+
+technique to be used is not limited, but one example will be robot position with the target arrival state based on the
+                                                                    feature quantities acquired from the image, a method using
+described later.
+
+Next, it is determined whether the current robot position 45 Jacobian matrixes will be described.
+
+is in the target arrival state (S204). This determination may First, the amount of robot movement to conform with the
+be made by comparing the magnitude ofthe amount ofrobot target arrival state is calculated based on the difference
+
+movement calculated at S203 with the previously set thresh between the detected feature quantities of the object and the
+old. For example, with a threshold of 0.5 mm, if the feature quantities stored as the target arrival State data. FIG.
+calculated amount of robot movement is less than 0.5 mm it 50 5 is a plan view depicting the object placed at the first and
+
+is possible to determine that the robot is in the target arrival    second object positions. For example, in FIG. 5, the image
+                                                                    of the object 4 residing at the first object position is
+state. The evaluation criterion at S204 may use a value that
+has been obtained by comparing the difference between one           represented by the broken line and the object 4 residing at
+of the feature quantities acquired at S202 and the corre            the second object position is represented by the solid line.
+
+sponding feature quantity of the stored target arrival state 55 When the position in the vision coordinate system is denoted
+data, with the previously set threshold. For example, when by (u, v), Au is the difference in vertical position of the
+
+the threshold is one pixel, it is possible to determine that the image and AV is the difference in horizontal position of the
+robot position is in the target arrival state if the difference of image.
+the calculated position is less than one pixel.                     The feature quantity of the apparent size on the image is
+
+When not in the target arrival state, the robot 1 is moved 60 denoted by S. For example, in the case oftemplate matching,
+based on the amount of robot movement calculated at S203 it is possible to represent this feature quantity with a value
+
+(S205). Though it is possible to directly go to the next step greater than 1.0 if the object appears larger than the template
+
+(S206) by assuming that a single move of the robot is and with a value smaller than 1.0 if the object appears
+enough to reach the target arrival state, in the flow chart in smaller than the template, where the size of the template is
+
+FIG. 4 the control is adapted to return to S202 in order to 65 100%=1.O.
+reconfirm that the robot position satisfies the target arrival When the feature quantities stored as the target arrival
+
+condition at S204.                                                  data are assumed as (uo, Vo, So) and the feature quantities
+                                                   US 9,517,563 B2
+
+                    9                                                                            10
+
+obtained at Step S202 are assumed as (u, v, S), the                                           -continued
+differences of the feature quantities can be given by the
+following equations:--                                             Auty = uty - to
+                                                                   Avy = vy - Vo
+
+Au = u 1 - uto                                                             1 1
+                                                                   ASvy =
+
+                                                                          Sy So
+
+AV = V - Vo                                                                   Aut. = u- - to
+                                                                              Av = v. - Vo
+       1 1
+AS = - - -                                                         10
+
+       Sl SO
+
+Since the feature quantity S of the apparent size on the
+
+image is inversely proportional to the distance to the camera By substituting these into Eq. (1), the Jacobian matrix J
+
+3 from the table surface 5 on which the object is placed, the 15 can be obtained as follows:--
+
+reciprocal, instead of the ratio itself, which is a value that is
+
+proportional to the distance, is used.                             in O O Auy Auy Au
+
+  When the amount of robot movement to be determined is
+
+denoted by (AX, Ay, AZ), a Jacobian matrix J can be defined          m 0 | = | Ava Avy Av.
+by the following equation:--
+                                                                   0 0 m AS ASy AS:
+
+                                                                    m () () i? Au, Auy Au. I'
+
+AX Aut                                             (1)             i = 0 m 0 || AV, Avy Av.
+
+Ayi = J. AV                                                                      0 0 m AS ASy A.S.
+
+A3, AS                                                             25
+
+                                                           Once the Jacobian matrix is determined, it is possible to
+  The amount of robot movement (AX, Ay, AZ) may be determine the amount of robot movement (AX, Ay, AS) for
+represented in any coordinate system. However, when tak bringing the robot 1 to the target arrival State by Substituting
+ing into account that the relative positional relationship 30 the feature quantities (u, V. S) of an arbitrary object 4 into Eq.
+
+between the camera 3 and the mechanical interface coordi (1).
+
+nate system Xf is fixed, the amount of robot movement is The process described above enables the robot 1 to
+preferably represented in the mechanical interface coordi perform operations on the object 4 placed at an arbitrary
+nate system Xf. That is, in the present embodiment, (AX, Ay, position on table 5 while correcting the robot program.
+AZ) are defined as the amounts by which the robot 1 should 35 However, the determined amount of robot movement (Ax,
+be moved in the directions of the X-axis, Y-axis and Z-axis Ay, AZ) has the possibility of a move that changes the
+                                                                   distance between the camera 3 and the table 5, hence
+of the mechanical interface coordinate system Xf.
+Next, the method of determining the Jacobian matrix J efficiency is poor despite the fact that this method can
+                                                                   eventually reach the target arrive state.
+will be described.
+First, Suppose that the robot is placed at the original 40 For this reason, the next description will be made on the
+position where the object 4 appears approximately in the method, disclosed by the invention, of calculating the
+center of the image. When the robot 1 is positioned at the amount of robot movement that will not vary the distance
+original position, the object 4 is detected from the image between the robot 1 and the table 5, by calculating the
+captured by the camera 3 so as to acquire feature quantities normal to the table 5 surface on which the object 4 is placed, 45 and moving the robot parallel to the table 5 surface and
+as (u, vo so). Then, the robot 1 is moved from the original position by a distance m in the X-axis direction of the rotating the robot about an axis parallel to the normal to the
+mechanical interface coordinate system X.f. So as to detect table 5 surface.
+the object 4 from the image captured by the camera 3 at the First, it is assumed that the aforementioned Jacobian matrix has been already determined and the robot 1 is ready
+position and obtain the feature quantities as (u, V. S.). Similarly, at the positions to which the robot is moved from 50 to start operations on the object 4 placed at an arbitrary
+the original position by a distance m in the Y-axis direction position on the table 5 in accordance with the procedures
+and by a distance m in the Z-axis direction ofthe mechanical from S2O1 to S207.
+in coordinate system Xf the object 4 is detected so as to It is generally known that three non-identical points
+obtain the feature quantities as (u, V. S.) and (u2, V2, S2), residing on a plane should be known in order to determine
+respectively.                                                      55 an arbitrary plane in three dimensions.
+From the detection results of the object when the robot has In considering the positional components (x, y, z) of the
+been moved in the directions of the X, Y and Z axes and the above-described second robot position stored at S206, (x, y,
+detection result of the object at the original position, Au, AV Z) gives the position of the origin point of the mechanical
+                                                                   interface coordinate system Xf viewed from the robot coor
+and AS are determined as follows:--                                60 dinate system Xb when the robot 1 is positioned at the
+
+                                                                   second robot position.
+
+Att = uy - to                                                        The positional components (x, y, z) of the second robot
+AV = V - Vo                                                        position do not designate a point on the plane of table 5.
+                                                                   However, if the positional components (x, y, z) at a
+
+                                                                   65 plurality of second robot positions have been known, these
+                                                                      points must reside practically on one plane. Further the plane
+
+                                                                   defined by the multiple coordinate points (x, y, z) must be
+                                              US 9,517,563 B2
+
+                            11                                                                                     12
+
+parallel to the plane of the table 5. Accordingly, it is possible As shown in FIG. 7, the tool coordinate system Xt can be
+to calculate the normal to the table 5's plane by calculating defined, as one example, as a coordinate system that has the
+
+the normal to the plane formed by (x, y, z).                                                     same origin point as that of the mechanical interface coor
+
+Generally, an arbitrary plane in three dimensions can be dinate system Xf and has its Z axis parallel to the normal
+represented by the following equation:--                         5 vector n to the table 5 surface when the robot 1 is positioned
+
+                                                                                                 at the first robot position. The X and Y axes of the tool
+                                                                                                 coordinate system X't may be oriented in any direction as
+                                                                                                 long as they are orthogonal to the Z axis and orthogonal to
+Here, a vector n (a, b, c) is a normal vector to the plane, each other.
+and the Scalar value d represents the length of the perpen 10 Defining the tool coordinate system Xt is equivalent to
+dicular line from the origin point of the coordinate system to determining a position and attitude T of the tool coordinate
+the plane. From the above, when there are a plurality of system Xt viewed from the mechanical interface coordinate
+second robot positions specified by (x, y, Z) that satisfies system Xf T is a 4x4 homogeneous transformation matrix.
+the following relation may and should be determined.
+                                                                                                 First, on the premise that the robot 1 is positioned at the
+
+                                                                 15 first robot position, the position and attitude Tb of the tool
+
+W y3                     d                                                                       coordinate system Xt viewed from the robot coordinate
+                                                                                                 system Xb is determined in accordance with the following
+X2 y2 32 | |                                                                                     procedures.
+
+             b =                                                                                   When the directional vectors of the X-axis, Y-axis and
+
+                C                                                                                Z-axis of the tool coordinate system Xt, viewed from the
+
+Vn yn in                 d                                                                       robot coordinate system Xb are denoted by V, V, and V.
+
+                                                                                                 respectively, V can be expressed by the following equation
+
+From this, the normal vector n is determined by the least because the Z-axis is directed in the same direction as the
+square method.
+                                                                                                 normal vector n.
+
+When                                                             25
+
+                                                                                                 VZ= n
+
+            Wl y 3                                                    Since the X-axis and the Y-axis can be oriented in any
+            Vn yn in                                                direction, the X-axis may be defined to direct from the first
+                                                                    one of the second robot positions to the second one of the
+                                                                 30 second robot positions while the Y-axis may be defined to be
+                                                                    laid to be perpendicular to both the X-axis and the Z-axis.
+
+                                                                   That is, V, and V are given by the following expressions:--
+
+the following equation can be derived.
+
+                                                                                             35
+
+: 40
+                                                  where k is given by the following expression:--
+                                                            k-V(x-x)^+(y-yl)^+(z-z)^
+
+  By normalizing this vector (a/d, b/d, c/d), it is possible to Since the origin point of the tool coordinate system Xt
+calculate the normal vector to the plane created by a plurality 45 takes the same coordinate values as those of the origin point
+of second robot positions, or the normal vector n to the table of Xf viewed from the robot coordinate system Xb when the
+5's plane.                                                                                       robot 1 is positioned at the first robot position R, when the
+
+The first robot position may be used to replace one of the origin point is denoted by (x, y, z), the position and
+second robot positions.
+                                                                 50 attitude T, of the tool coordinate system Xt viewed from the
+Since this embodiment takes on the form of calculating robot coordinate system Xb is given by the following expres
+the normal vector n in the process of causing the robot 1 to S1O
+perform the predetermined operation, step. S207 is imple
+
+mented at the same time. However, if it is desired to
+
+calculate only the normal vector a first without causing the
+
+robot 1 to work, step S207 is suspended until the normal 55                                                 Vy Vy
+
+vector a is calculated.
+
+Finally described is the method for making the amount of
+
+robot movement calculated at step S203 to include only a
+translational motion parallel to the table 5's plane, based on
+
+the calculated normal vector n.                                  60 Further, since the robot 1 is positioned at the first robot
+
+Herein, as a new coordinate system a tool coordinate position R, the following equation holds.
+system Xt is introduced. The tool coordinate system Xt is a
+
+coordinate system that is defined to be relatively fixed to the
+
+mechanical interface coordinate system Xf, hence moves Accordingly, the position and attitude T of the tool
+while keeping the relative positional relationship with the 65 coordinate system Xt, viewed from the mechanical interface
+mechanical interface coordinate system Xf when the robot 1 coordinate system Xf can be calculated by the following
+                                                                                                 equation.
+is moved.
+                                               US 9,517,563 B2
+
+                              13                                                        14
+
+                                                             Ay", AZ) represented in the tool coordinate system X't can be
+
+  Since the position and attitude T of the tool coordinate   directly calculated from (Au, AV, AS).
+                                                               As for A0, i.e., the apparent orientation change of the
+system Xt, viewed from the mechanical interface coordinate
+system Xf has been determined, the amount of robot move      object 4 in the image, since the Z-axis of the tool coordinate
+ment (AX, Ay, AZ) represented in the mechanical interface    system Xt is perpendicular to the table 5 surface, the robot
+coordinate system Xf can be transformed into the amount of
+robot movement (Ax", Ay", AZ) Viewed from the tool coor      1 may be rotated by A0 about the Z-axis of the tool
+dinate system Xt, by use of the following equation.          coordinate system.
+
+                                                               In this case, however, as shown in FIG. 8 there is a
+                                                             possibility that the object 4 gets out of the visual field of the
+
+                                                             10 camera 3 by rotationally moving the robot 1 about the Z-axis
+
+Ax'                 AX                                       ofthe tool coordinate system Xt, depending on the positional
+                                                             relationship between the tool coordinate system Xt and the
+Ay = TI Ay
+                                                             camera 3.
+
+Az'                 A3,                                      To deal with this, as shown in FIG. 9, by calculating a
+
+                                                             15 second tool coordinate system Xt' that is created by trans
+                                                                lating the origin point of the tool coordinate system Xt So as
+
+  In the above equation, since T is a 4x4 homogeneous        to have its origin point on the axis that cuts through the
+                                                             center of the object 4 and is aligned parallel to the normal
+transformation matrix, the robot movement amount vector is   vector n when the object 4 is placed at the first object
+also expanded into four dimensions. However, the rotational
+components of T may be defined as a 3x3 rotational matrix    position while the robot 1 is positioned at the first robot
+M, with which the equation can be expressed as the follow    position, and making a rotation by A0 about the Z-axis of the
+ing equation.
+                                                             second tool coordinate system Xt', it is possible to solve the
+                                                             problem that the object 4 gets out of the visual field of the
+
+                                                             camera 3. Now, the calculation method of the second tool
+
+Ax'                 AX                                       25 coordinate system Xt' will be described.
+                                                                  Since the tool coordinate system Xt and the second tool
+Ay' = M. Ay
+                                                                coordinate system Xt' are parallel to each other with only
+
+Az'                 A3,                                      their origin points different from each other, let P be the
+
+                                                             vector reaching from the origin point of the tool coordinate
+                                                             30 system Xt to the origin point of the to coordinate system Xt'.
+As to the thus determined, the amount of robot movement represented on the bass of the tool coordinate system Xt.
+(AX', Ay", AZ) in the tool coordinate system X't representa In the state where an object 4 is placed at an appropriate
+tion, Az' should be ideally zero from the fact that the Z-axis position on the table 5, for example at the first object
+of the tool coordinate system Xt is perpendicular to the table position and the robot 1 is positioned at, for example the first
+5 surface and that the object 4 is placed on the table 5. 35 robot position, the object 4 is detected from the image of the
+However, it will not be exactly zero due to various factors camera 3 by performing image processing. The position and
+Such as detection error, calculator error and others. As a attitude of the tool coordinate system Xt viewed from the
+result, if the robot is moved in accordance with the calcu robot coordinate system Xb is denoted as Tb, the coordinate
+lated amount of robot movement, the robot will approach the values of the origin point of the tool coordinate system Xt
+table 5 somewhat closely in some cases and somewhat 40 viewed from the robot coordinate system Xb are denoted as
+distantly in other cases. In this case, if Az' is substituted by (x, y, z), and the coordinate values of the detected object
+0 so that the amount of robot movement is (AX', Ay', 0), it is 4 in the vision coordinate system are denoted as (u, v).
+possible to move the robot while keeping the exact distance Next, while the object 4 is maintained at the same
+from table 5.                                                position, the robot 1 is rotationally moved by a minute angle
+
+The above equation (1) is given as follows:--                45 (p about the Z-axis of the tool coordinate system Xt, and
+
+AX             Aut                                           visual feedback is applied using the aforementioned method
+                                                             so that the feature quantities of the object 4 appearing in the
+Ayi = J. AV                                                  image of the camera 3 will coincide with the above-men
+                                                             tioned (u, v). At the robot position of convergence, the
+
+      A3, AS                                                 50 coordinate values of the origin point of the tool coordinate
+
+Therefore, the following equation can be obtained.              system Xt viewed from the robot coordinate system Xb are
+                                                                denoted by (X2, y2, Z2).
+
+                                                                  FIG. 10 is a diagram depicting this situation from the top.
+
+Ax'                      Aut                                    Since the object 4 appears at the same coordinate value (u,
+                                                             55 V) on the image of the camera 3 at two robot positions
+Ay' = M. J. Ay
+                                                                different in angle to each other, the following equation
+
+                                                                holds:--
+
+Az'                      AS
+
+  Accordingly, J' can be calculated by the following equa 60 where  cos(d) - sin(d) ()
+
+tion.                                                               sin(d) cos(d) ()
+
+  When J", which has been calculated in advance in accor 65         O  O
+dance with the above equation, is used at step S203 instead
+of Jacobian matrix J, the amount of robot movement (Ax',
+                                        US 9,517,563 B2
+
+                                                                                         16
+
+                            -continued                           end of the robot positioned at the second robot position, and
+                                                                 the corresponding feature quantity of the target arrival State
+Aly                X2 - X1
+                                                                 data stored in the target arrival State data storing unit, is
+Aly = T,           y2-y                                          greater than a predetermined value, the robot movement
+
+Al-                22 - 31                                       amount calculator calculates the amount of movement by
+                                                                 regarding the second robot position as a revised initial
+                                                                 position, and the position of the arm end after the arm end
+
+By expanding the equation (2), the following equation can has been moved based on the calculated amount of move ment is set as a revised second robot position.
+be obtained:--
+                                                                 10 A number of methods have been proposed as the method
+
+                                                                 of determining the amount of robot movement that makes
+
+1 - cos(d) sin(i) O Aly                                            the robot coincide with the target arrival state. The present
+
+-sin(d) 1 - cos(d) () P = Aty                                       invention does not limit the way to determine the amount of
+                                                                    robot movement. However, if a simple method is used, there
+O                  O 1      Al                                   15 are cases in which a single move of the robot based on the
+
+                                                                 amount of movement determined for the first time cannot
+
+  As the above equation is solved for P, the following           bring the robot into the target arrival State. In such a case, it
+                                                                 is possible to repeat the same procedures by using the second
+Solution can be obtained:--                                      robot position as a revised initial position so as to make the
+                                                                 robot gradually approach the target arrival state.
+
+1 - cos(d) sin(d) () || At                                         The robot system according to a further embodiment of
+                                                                 the present invention is characterized in that with the arm
+P = -sin(d) 1 - cos(d) () Aly                                    end of the robot positioned at the second robot position, the
+
+   O                        O 1 Al                               robot movement amount calculator calculates the amount of
+
+                                                                 25 movement by regarding the second robot position as a
+
+  Since the transformation from the tool coordinate system revised initial position, and when the calculated amount of
+                                                         movement is greater than a predetermined value, the posi
+
+Xt to the second tool coordinate system Xt' does not involve tion of the arm end after the arm end has been moved based
+any rotational transformation, the origin point of the second on the calculated amount of movement is set as a revised
+tool coordinate system Xt' can be determined by moving the 30 second robot position.
+origin point of the tool coordinate system Xt by the vector P. The robot system according to a still further embodiment
+
+  By the above process, the movement can be limited to of the present invention further includes: under the condition
+only parallel motion within a plane perpendicular to the that a plurality of, at least, three, second object positions
+
+determined normal and rotational motion about an axis different from each other are provided, a second robot
+parallel to the determined normal. As a result, the direction 35 position storing unit that stores a plurality of second robot
+
+of the translation and the rotational axis required for con      positions, each or which is obtained correspondingly by
+vergence can be limited, so that it is possible to reduce the    placing the object at one of the second object positions; and,
+time for convergence. Specifically, since there is no opera
+                                                                 a normal vector calculator that calculates a normal vector to
+
+tion for convergence in the height direction when the object the plane on which the object is placed, based on the second
+is moved to the target position on the image so that the size 40 robot positions stored in the second robot position storing
+
+of the object on the image is unvaried, it is no longer          unit, and is characterized in that the robot movement amount
+necessary to perform calculations for size discrepancy and       calculator calculates only the translational motion within a
+convergence decision in determining convergence. As a            plane perpendicular to the normal vector and the rotational
+
+result the processing time and hence the convergence time motion about the axis parallel to the normal vector, as the
+
+can be shortened.                                                45 amount of movement.
+
+  By controlling the robot so that the feature quantities of The robot system according to a still further embodiment
+the object appearing on the image taken by the camera of the present invention is characterized in that one of the
+
+coincide with the target arrival state data, it is possible to second object positions different from each other is identical
+expect that the relative positional relationship between the with the first object position, and one of the second robot
+object placed at the second object position and the second 50 positions is the first robot position.
+
+robot position is equivalent to the relative positional rela       The directional vector (normal vector) of an axis perpen
+tionship between the object placed at the first object position  dicular to the table surface on which the object is placed can
+                                                                 be calculated if the first robot position and two second robot
+and the first robot position. Accordingly, it is possible to     positions, or three second robot positions are known. For
+correct the program that has been taught to perform opera
+
+tions on the object placed at the first object position, based 55 example, the normal vector can be determined by calculating
+
+on the difference between the first robot position and the the cross product of the vector from the first robot position
+
+second robot position, and run the corrected program to          to the first one of the second robot positions and the vector
+thereby perform the operations on the object placed at the       from the first robot position to the second one of the second
+second object position. This means that the desired opera        robot positions. Alternatively, when three or more second
+
+tions can be done for the object placed at the second object 60 robot positions have been obtained, the normal vector can be
+position even if the operations of the robot taught in the calculated by using the least square method or the like.
+program include complicated paths.
+                                                                 In this case, since a plane cannot be determined if all the
+The robot system according to another embodiment of the second robot positions to be used for calculation reside on a
+present invention is characterized in that when the difference straight line, the placement of second object positions may
+between at least, one feature quantity among the position, 65 and should be arranged in such a way that the first robot
+attitude and size of the object placed at the second object position and two second robot positions, or three second
+position, on the image captured by the camera with the arm robot positions form a regular triangle, for example. There
+                                                      US 9,517,563 B2
+
+                     17                                                            18
+
+is also a risk that the normal vector to the plane cannot be           camera with the arm end of the robot positioned at the
+determined correctly when three second robot positions are             arbitrary initial position, agree with the at least one
+                                                                       feature quantity of the target arrival state data; and
+located in close proximity. Therefore, the second robot
+position to be stored in the second robot position storage is a correction data calculator configured to calculate cor
+                                                                       rection data for correcting a robot position taught in the
+preferably stored after it has been checked that the second            program based on a difference between the first robot
+
+robot position in question is located more than a certain              position and a second robot position, wherein the
+distance apart from the already stored second robot posi
+                                                                       second robot position is the position of the arm end
+tions.
+                                                                       when the arm end has been moved based on the
+The robot movement amount calculator may define a
+straight line that cuts through the center of the object placed 10 calculated amount of movement.
+at the first object position and is parallel to the normal 2. The robot system according to claim 1, wherein when
+vector, as a relative straight line for the robot arm end when a difference between at least one feature quantity among the
+the robot is positioned at the first robot position, and the position, attitude and size of the object placed at the second
+rotational motion based on the robot movement amount object position, on the image taken by the camera with the
+calculator may be carried out using the defined relative 15 arm end of the robot positioned at the second robot position,
+straight line to the arm end as the rotational axis.                   and the at least one feature quantity of the target arrival state
+The rotational axis for moving the robot so that the feature data stored in the target arrival state data storing unit, is
+quantities of the object appearing on the camera image will greater than a predetermined value, the robot movement
+become equivalent to the target arrival state data, is deter amount calculator calculates the amount of movement by
+mined as an axis that is parallel to the normal vector cutting regarding the second robot position as a revised initial
+through the center of the object and is defined as a relative position, and the position of the arm end after the arm end
+straight line to the robot arm end when the object is placed has been moved based on the calculated amount of move
+at the first object position and the robot is positioned at the ment is set as a revised second robot position.
+first robot position. This configuration eliminates the risk of 3. The robot system according to claim 1, wherein with
+the object getting out of the image when the robot is 25 the arm end of the robot positioned at the second robot
+rotationally moved.                                                    position, the robot movement amount calculator calculates
+As has been described heretofore, according to the robot the amount of movement by regarding the second robot
+system of the embodiment of the present invention, in the position as a revised initial position, and when the calculated
+robot system for controlling a robot to perform predeter amount of movement is greater than a predetermined value.
+mined operations by recognizing the position and attitude of 30 the position of the arm end after the arm end has been moved
+the object to be handled, with a camera, it is possible to based on the calculated amount of movement is set as a
+eliminate the constraint that visual feedback cannot be revised second robot position.
+applied to a system that performs operations with compli 4. The robot system according to claim 1, further com
+cated paths, while keeping the advantage of visual feedback prising:
+                                                                35 when at least three second object positions different from
+which is that camera calibration is not needed.                        each other and not located on a straight line are
+                                                                       provided,
+Further, it is possible to eliminate the problem that the
+robot is apt to approach the table surface on which the object
+to be handled is pieced, sometimes closer, or sometimes                a second robot position storing unit configured to store
+distantly, or become inclined, to the table surface and cannot
+efficiently reach the target arrival state, so that it is possible 40  a plurality of second robot positions, each of which
+                                                                       is obtained correspondingly by placing the object at
+
+to realize the target arrival state steadily and reliably in a         one of the second object positions; and
+
+short time.                                                            a normal vector calculator configured to calculate a
+                                                                       normal vector to the plane on which the object is
+What is claimed is:                                                    placed, based on the second robot positions stored in
+
+1. A robot system, comprising:                                         the second robot position storing unit,
+
+a robot that is controlled by a program including opera 45             wherein the robot movement amount calculator calcu
+tional instructions for performing predetermined opera
+tions on an object placed at a first object position on a                lates only a translational motion within a plane
+                                                                       perpendicular to the normal vector and a rotational
+plane by use of a device attached to an arm end of the                 motion about a rotational axis parallel to the normal
+
+  robot;                                                               Vector, as the amount of movement.
+                                                                       5. The robot system according to claim 4, wherein one of
+a camera that is attached to the arm end to take an image 50
+of the object;
+a first robot position storing unit configured to store, as a the second object positions different from each other is
+first robot position, a position of the arm end arranged identical with the first object position, and one of the second
+in a predetermined positional relationship relative to robot positions is the first robot position.
+the first object position:                                      55 6. The robot system according to claim 4, wherein
+a target arrival state data storing unit configured to store, the robot movement amount calculator defines a straight
+at least one feature quantity among a position, attitude               line that cuts through a center of the object placed at the
+                                                                       first object position and is parallel to the normal vector,
+and size of the object on the image of the camera in a
+target arrival state where the object is placed at the first           as a relative straight line for the arm end when the arm
+object position while the arm end is positioned at the 60 end is positioned at the first robot position, and the
+                                                                       rotational motion is done using the defined relative
+first robot position, as the target arrival state data;                straight line for the arm end as the rotational axis, and
+
+a robot movement amount calculator configured to cal
+culate an amount of movement from an arbitrary initial the center of the object is obtained as a center position of
+position of the arm end in order to make, at least one                 a template that shows a highest degree of match by
+feature quantity of the position, attitude and size on the 65 adopting template matching as an image processing
+image of the object when the object placed at a second                 algorithm.
+
+object position on the plane has been captured by the
+

@@ -1,0 +1,54 @@
+﻿{
+    "compiler":  "MSVC v141 19.16.27054",
+    "repository_commit":  "354f5b32e69f7937ff40330df7c5320da368b042",
+    "opencv_threads":  1,
+    "lsj_commit":  "8738cacaed0b4c1640c76fd61113b1119d0855ca",
+    "physical_robot_executed":  false,
+    "notes":  "Prediction TSV CR characters normalized when archiving; group IDs preserve canonical content.",
+    "date":  "2026-11-04",
+    "mode":  "Release",
+    "hashes":  [
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\experiments\\hye\\20261104_123000_v1v2_LSJ_5fold평가\\src\\eval.cpp",
+                       "sha256":  "3FC6C40ECCFD8AE0837E0F8EAFD4842B7187887D62560E4CB6BAE75CC865F8AA"
+                   },
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\experiments\\hye\\20261104_123000_v1v2_LSJ_5fold평가\\src\\frozen.cpp",
+                       "sha256":  "58C43C1C2ECF5ACA8288BE463B8243B2227146623DFD1D4F22DB150DC90E709E"
+                   },
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\experiments\\hye\\20261104_123000_v1v2_LSJ_5fold평가\\src\\lsj.cpp",
+                       "sha256":  "0758C19DE80BBD8A2571560EDE89B1249681F592156CE099927A9547D414B00F"
+                   },
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\experiments\\hye\\20261104_123000_v1v2_LSJ_5fold평가\\src\\lsj_new.cpp",
+                       "sha256":  "DE66C06EC0AABA03E1F326E081325411BA59C2E79187FC2743EEAE4088BAFB08"
+                   },
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\experiments\\hye\\00000_final_Y_T_joint\\assets\\both_model.json",
+                       "sha256":  "53A459861ECADC5E4D6491143B73D6B651BA166FD3A3099C186803B27E279A7D"
+                   },
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\experiments\\hye\\00000_final_Y_T control\\assets\\model.json",
+                       "sha256":  "7E4105C2F76843D3E07F8560368DB4458E4CBEEB8A4E3942741E319B591B8726"
+                   },
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\experiments\\hye\\00000_final_v2_Y_T_joint\\assets\\joint_v2_model.json",
+                       "sha256":  "59F58209377FCBEE88855AE5704174BEA66585F192A7CC276A0C7A5994C8613C"
+                   },
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\experiments\\hye\\00000_final_v2_Y_T control\\assets\\control_v2_model.json",
+                       "sha256":  "568AF3020A3AB856CAB07903D1EDF19A4E48D098912FA5EAB7D555CDB84B6432"
+                   },
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\data\\fivefold_seed20261104\\_metadata\\images.csv",
+                       "sha256":  "015B46CFCE9C928B4BC15635A14D5447D24BD0945C9227F73688920A6EBC1ABD"
+                   },
+                   {
+                       "path":  "C:\\Users\\SSAFY\\Desktop\\hwlee\\projects\\2026-10_SEMES\\S15P31A507-chore-hye-merge\\data\\fivefold_seed20261104\\_metadata\\assignments.tsv",
+                       "sha256":  "B9EEE82B0CE5A758E03319B1C9AB041A8E5DF378BD2E3EACC7939F3CE7D143CE"
+                   }
+               ],
+    "opencv":  "3.4.15",
+    "cpu":  "Intel(R) Core(TM) Ultra 9 185H"
+}

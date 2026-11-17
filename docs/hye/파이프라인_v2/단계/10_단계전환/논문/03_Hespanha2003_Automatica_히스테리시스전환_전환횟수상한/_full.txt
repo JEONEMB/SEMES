@@ -1,0 +1,622 @@
+Available online at www.sciencedirect.com
+
+Automatica 39 (2003) 263 - 272
+
+                                                                                     www.elsevier.com/locate/automatica
+
+                                       Brief Paper
+
+ Hysteresis-based switching algorithms for supervisory
+                control of uncertain systems
+
+          Joa~o P. Hespanhaa, Daniel Liberzonb;, A. Stephen Morsec
+
+aDepartment of Electronical and Computer Engineering, University of California, Santa Barbara, CA 93106, USA
+      bCoordinated Science Laboratory, University of Illinois at Urbana-Champaign, Urbana, IL 61801, USA
+                  cDepartment of Electrical Engineering, Yale University, New Haven, CT 06520, USA
+               Received 13 January 2001; received in revised form 4 July 2002; accepted 4 September 2002
+
+Abstract
+
+   We address the problem of controlling a linear system with unknown parameters ranging over a continuum by means of switching among
+a ÿnite family of candidate controllers. We present a new hysteresis-based switching logic, designed speciÿcally for this purpose, and
+derive a bound on the number of switches produced by this logic on an arbitrary time interval. The resulting switching control algorithm
+is shown to provide stability and robustness to arbitrary bounded noise and disturbances and su ciently small unmodeled dynamics.
+? 2002 Elsevier Science Ltd. All rights reserved.
+
+Keywords: Linear system; Modeling uncertainty; Switching logic; Supervisory control
+
+1. Introduction                                                            signals? Which controller to switch to? When to switch? In
+                                                                           addressing the ÿrst question, the methods considered here
+   Suppose that a given process admits a model containing                  allow one to rely on conventional techniques from linear
+unknown parameters, and the goal is to design a feedback                   robust control theory. An answer to the second question
+controller that achieves some desired behavior in the face                 emerges from the supervisory control architecture (Morse,
+of noise, disturbances, and unmodeled dynamics. The kind                   1996; Hocherman-Frommer, Kulkarni, & Ramadge, 1998;
+of control algorithm that we have in mind is the one that                  Mosca, Capecchi, & Casavola, 2001; Pait & Kassab, 1997)
+relies on switching among a family of candidate controllers,               reviewed later in this paper. The certainty equivalence prin-
+and bases controller selection on certainty equivalence. In                ciple provides one way to settle the third question. To deal
+this framework, one associates to each possible value of                   with the last question, one needs to specify a switching logic.
+the unknown parameters a monitoring signal, designed in                    It is this last question that will be of primary concern in
+such a way that a small value of this signal indicates a high              what follows.
+likelihood that the corresponding parameters are close to
+the actual unknown values. The switching algorithm then                       One way to orchestrate the switching is provided by
+selects, from time to time, a controller that has been de-                 the dwell-time switching logic. In this logic, consecutive
+signed for the parameter values associated with the smallest               switching instants are separated by (at least) a prespeciÿed
+monitoring signal.                                                         time interval, called the dwell time, which is su ciently
+                                                                           large so that the switching does not destabilize the system.
+   Relevant questions in this context are: How to pick                     Dwell-time switching was used in Morse (1996, 1997) to
+the individual controllers? How to design the monitoring                   design set-point supervisory control algorithms for linear
+                                                                           systems with a continuum of parametric uncertainty, noise,
+     Research supported by AFOSR, DARPA, NSF, and ONR. This paper          disturbances, and unmodeled dynamics.
+was not presented at any IFAC meeting. This paper was recommended
+for publication in revised form by Associate Editor Thomas Parisini under     However, dwell-time switching has some signiÿcant dis-
+the direction of Editor Robert R. Bitmead.                                 advantages. With a prespeciÿed dwell time, the performance
+                                                                           of the currently active controller might deteriorate to an
+   Corresponding author. Fax: +1-217-244-2352.                             unacceptable level before the next switch is permitted. If
+    E-mail addresses: liberzon@control.csl.uiuc.edu (D. Liberzon).         the uncertain process is nonlinear, the trajectories may even
+
+0005-1098/03/$ - see front matter ? 2002 Elsevier Science Ltd. All rights reserved.
+PII: S 0 0 0 5 - 1 0 9 8 ( 0 2 ) 0 0 2 4 1 - 8
+264  J.P. Hespanha et al. / Automatica 39 (2003) 263 - 272
+
+escape to inÿnity in ÿnite time. These considerations moti-     hysteresis switching logic and its properties are presented
+vate the study of switching algorithms which do not rely on     in Section 3. The supervisory control system is described
+a ÿxed dwell time.                                              in Section 4. Its analysis is given in Section 5.
+
+   An example of such a switching logic is the hysteresis       2. Scale-independent hysteresis switching logic
+switching logic described in Middleton, Goodwin, Hill,
+and Mayne (1988), Morse, Mayne, and Goodwin (1992).                The functioning of the scale-independent hysteresis
+According to this logic, a switch occurs when the moni-         switching logic, introduced in Hespanha (1998), is as fol-
+toring signal that corresponds to the controller currently in   lows (see Figure 1). Inputs to the logic are continuous
+the feedback loop exceeds the smallest monitoring signal        signals p : [0; )  R, p  P, where the index set P
+by a prespeciÿed positive number, called the hysteresis         is taken throughout the paper to be a compact subset of a
+constant. Using a multiplicative hysteresis constant instead    ÿnite-dimensional normed linear vector space. The output
+of an additive one, one arrives at the scale-independent        of the logic will be a switching signal taking values in P.
+hysteresis switching logic, which was studied and applied       Let us pick a number h ¿ 0 called the hysteresis constant.
+to control of uncertain nonlinear systems in Hespanha           First, we set (0) = arg minpP{ p(0)}. Suppose that at
+(1998) and elsewhere. For a ÿnite family of monitoring          a certain time ti the value of has just switched to some
+signals satisfying suitable assumptions, these logics guar-     q  P. We then keep ÿxed until a time ti+1 ¿ ti such that
+antee that switching stops in ÿnite time. This allows one       (1 + h)minpP { p(ti+1)} 6 q(ti+1), at which point we
+to design supervisory control algorithms which are e ec-        set (ti+1) = arg minpP { p(ti+1)}.
+tive when the unknown parameters take values in a ÿnite
+set and there are no noise, disturbances, or unmodeled             Repeating the above steps, we generate a piecewise con-
+dynamics.                                                       stant signal which is continuous from the right every-
+                                                                where. If p, p  P are uniformly bounded away from zero,
+   We continue to study the scale-independent hysteresis        i.e., if for some ¿ 0 we have p(t) ¿ for all p  P
+switching logic in this paper by establishing a bound on the    and all t ¿ 0, then inÿnitely fast switching (chattering) is
+number of switches on an arbitrary ÿnite interval. Combin-      avoided. In fact, there must be an interval [0; Tmax) of max-
+ing this with the results of Hespanha and Morse (1999) on       imal length on which exists, and there can only be a ÿnite
+stability of switched systems with average dwell time, it is    number of switches on each proper subinterval of [0; Tmax);
+possible to analyze the correctness of the supervisory con-     see Hespanha (1998) for details.
+trol algorithm for the case when the unknown parameters
+belong to a ÿnite set, without relying on the termination of       When the indicated arg min is not unique, a particular
+switching. Details of this analysis are provided in Hespanha    value for among those that achieve the minimum can be
+et al. (2001).                                                  chosen arbitrarily. Carrying out the minimization over P is
+                                                                a trivial task if P is a ÿnite set. If P is a continuum, in
+   The main contribution of the present work is to deal with    many cases of interest (including those when the unknown
+the case when the unknown parameters belong to a contin-        parameters enter the model of the process linearly) the prob-
+uum. To do this, we need a new switching logic, which we        lem reduces to solving a polynomial equation in p on-line.
+develop here and call hierarchical hysteresis switching. It     Tractability issues regarding the above minimization proce-
+relies on a partition of the parametric uncertainty set into a  dure in the context of supervisory control are further dis-
+ÿnite number of subsets. The name of the logic comes from       cussed in Morse (1996).
+the fact that the minimization of the monitoring signals is
+carried out on two levels: ÿrst, the smallest one is taken         It is not hard to see from the deÿnition of the above
+for each of the subsets that form the partition, and then the   switching logic that its output would not be a ected if we
+smallest signal among these is chosen. We derive a bound        replaced the signals p, p  P by their scaled versions
+on the number of switches produced by the hierarchical hys-
+teresis switching logic, using the corresponding result for     p(t) := (t) p(t); p  P;                          (1)
+scale-independent hysteresis switching.
+                                                                where is some positive function of time. This is where
+   In the context of supervisory control with hierarchical      the term "scale-independent" comes from. One can choose
+hysteresis switching, the subsets in the partition used by
+the switching logic are chosen to be su ciently small so           so that the scaled signals p, p  P have some additional
+that there exists a robustly stabilizing controller for each    properties (such as monotonicity) and then use these signals
+subset. We show that this leads to a supervisory control        for analysis purposes (cf. below).
+algorithm whose stability can be analyzed in the presence
+of noise, disturbances, and unmodeled dynamics. Thus we            For 0 6 t0 ¡ t ¡ Tmax, we will denote by N (t; t0) the
+are able to handle the same class of systems as that treated    number of discontinuities of on the interval (t0; t). For the
+in Morse (1996, 1997), without requiring a ÿxed dwell           case of a ÿnite P, we have the following result.
+time.
+                                                                Lemma 1 (Scale-independent hysteresis switching lemma).
+   The scale-independent hysteresis switching logic is de-      Let P = {1; 2; : : : ; m} with m a positive integer. Suppose
+ÿned and studied in the next section. The hierarchical          that the signals p, p  P are continuous and monotone
+                                       J.P. Hespanha et al. / Automatica 39 (2003) 263 - 272                                  265
+
+                          Initialize                                   Inequalities (4)-(6) summarize all the properties of the
+                                                                       switching logic that are relevant for this proof.
+
+                                                                          Since P has m elements, there must be a q  P such that
+                                                                         = q on at least 1 N := (N (t; t0) - 1)=m of the intervals
+
+                                              = p                      [t1; t2); [t2; t3); : : : ; [tN (t;t0)-1; tN (t;t0)):  (7)
+                                       yes
+                                 p :                                   If N 6 1, then we must have N (t; t0) 6 1 + m and therefore
+           no (1+h) p                                                  (2) automatically holds. Suppose now that N ¿ 2 and let
+
+                                  ?                                    [tk1 ; tk1+1); [tk2 ; tk2+1); : : : ; [tkN ; tkN +1) be the N intervals on
+                                                                       which =q. Picking any i  {1; 2; : : : ; N -1}, in view of (6),
+
+           Fig. 1. Scale-independent hysteresis switching logic.       the assumed monotonicity of          (tki+1), and (5), we conclude
+                                                                       that
+
+increasing, and that there exists a number ¿ 0 such that               q(tki+1) = (1 + h) (tki+1)(tki+1)
+ p(0) ¿ p  P. Then, for an arbitrary index l  P and
+arbitrary numbers t0 and t satisfying 0 6 t0 ¡ t ¡ Tmax, we                       ¿ (1 + h) (tki+1)(tki )
+have
+                                                                                  ¿ (1 + h) q(tki ):                          (8)
+
+N (t; t0) 6 1 + m + m log l(t) (2)                                     Moreover, because the intervals are nonoverlapping,
+                          log(1 + h)   minpP p(t0)                     tki+1 ¿ tki+1, hence q(tki+1 ) ¿ q(tki+1). From this and
+                                                                       (8) we obtain (1 + h) q(tki ) 6 q(tki+1 ) for i  {1; 2; : : : ;
+and                                                                    N - 1}. Iterating the last inequality from i = 1 to
+                                                                       N - 1 yields (1 + h)N-1 q(tk1 ) 6 q(tkN ) and therefore
+N (t; t0)  (tk )(tk+1) -  (tk )(tk ))                                  (1 + h)N-1 q(tk1 ) 6 l(tkN ) for all l  P because of (5).
+                                                                       Using the monotonicity of the p, we conclude that
+      (                                                                (1 + h)N-1 q(t0) 6 l(t) for all l  P. In light of this, we
+                                                                       must have (1 + h)N-1minpP p(t0) 6 l(t) for all l  P,
+  k =0                                                                 from which the inequality (2) follows by virtue of the fact
+                                                                       that N ¿ (N (t; t0) - 1)=m.
+6 m (1 + h) l(t) - min p(t0)                                      (3)
+                          pP                                              It remains to show that inequality (3) holds. Grouping all
+                                                                       the terms in the summation on the left-hand side of (3) for
+where t1 ¡ t2 ¡ · · · ¡ tN (t;t0) are the discontinuities of on        which (tk ) is the same, we obtain
+(t0; t) and tN (t;t0)+1 := t.
+
+Remark 1. The left-hand side of inequality (3) can be                  N (t; t0)  (tk )(tk+1) - (tk )(tk )
+thought of as the variation of over the interval [t0; t]. If             k =0
+the signals p, p  P are (piecewise) di erentiable, then
+the left-hand side of (3) equals the integral tt0  ( )( ) d ,                     N (t; t0)
+which is to be interpreted as the sum of integrals over
+                                                                       =                     q(tk+1) - q(tk ) :               (9)
+intervals on which is constant.
+
+Proof. For each k  {0; 1; : : : ; N (t; t0)}, the value of re-         qP k=0
+mains constant and equal to (tk ) on [tk ; tk+1). Therefore,                    (tk )=q
+
+(tk)(t) 6 (1 + h) p(t) t  [tk ; tk+1];                                 Take some value q  P that takes on (t0; t). Since intervals
+                                                                       (7) are nonoverlapping, it follows from the monotonicity of
+           k  {0; 1; : : : ; N (t; t0)}; p  P:                    (4)   q that
+
+Since switched to (tk ) at time tk , k  {1; 2; : : : ; N (t; t0)},     N (t; t0)  q(tk+1) - q(tk ) 6 q(tkq+1) - q(t0);        (10)
+we also have
+                                                                         k =0
+(tk)(tk ) 6 p(tk ) k  {1; 2; : : : ; N (t; t0)};                        (tk )=q
+
+           p  P:                                                  (5)  where kq denotes the largest index k  {0; 1; : : : ; N (t; t0)}
+                                                                       for which (tk ) = q. Now, because of (4), q(tkq+1) 6 (1 +
+Moreover, switched from (tk ) to (tk+1) at time tk+1,                  h) l(tkq+1) for all l  P. From this, (10), and the
+k ¡ N (t; t0) - 1, thus, because of the continuity of (tk),
+
+(tk )(tk+1) = (1 + h) (tk+1)(tk+1)                                        1 Given a scalar a, we denote by a the smallest integer larger than
+                                                                       or equal to a.
+           k  {0; 1; : : : ; N (t; t0) - 1}:                      (6)
+266                                   J.P. Hespanha et al. / Automatica 39 (2003) 263 - 272
+
+monotonicity of the p, we conclude that                         Deÿnition. We say that a piecewise constant signal taking
+                                                                values in P is {Di}-consistent with a given switching signal
+N (t; t0)  q(tk+1) - q(tk )
+                                                                  on an interval [t0; t] if:
+  k =0
+ (tk )=q                                                        1. For all s  [t0; t] we have (s)  D (s).
+                                                                2. The set of discontinuities of on [t0; t] is a subset of the
+     6 (1 + h) l(t) - min p(t0) l  P:
+                                                                   set of discontinuities of .
+                                    pP
+                                                                   We now note the following fact, which follows immedi-
+Inequality (3) follows from this, (9), and the fact that P has  ately from the deÿnitions of the switching logics considered
+m elements.                                                     in this section and the previous one.
+
+3. Hierarchical hysteresis switching                            Remark 2. The signal produced by the hierarchical hys-
+                                                                teresis switching logic coincides with the signal that would
+   We now describe the hierarchical hysteresis switching        be produced by the scale-independent hysteresis switching
+                                                                logic with inputs minpDi { p(t)}, i  M.
+logic. Its inputs are continuous signals p, p  P, where P
+is a compact index set as before. Fix a positive integer m         The result presented below is a consequence of this ob-
+                                                                servation. As before, for 0 6 t0 ¡ t ¡ Tmax we denote by
+and denote by M the set {1; 2; : : : ; m}. Assumed given is     N (t; t0) the number of discontinuities of on the interval
+a family of closed subsets Di; i  M of P, whose union           (t0; t).
+is the entire P. The output of the switching logic will be
+a switching signal taking values in M. Pick a number            Lemma 2 (Hierarchical hysteresis switching lemma).
+h ¿ 0, called the hysteresis constant. First, we select some
+j0  M such that Dj0 contains arg minpP { p(0)}, and set         Suppose that the signals p, p  P are continuous and
+                                                                monotone increasing, and that there exists a number
+ (0) = j0. Suppose that at a certain time ti the value of has
+just switched to some ji  M. We then keep ÿxed until a           ¿ 0 such that p(0) ¿ p  P. Then, for an arbitrary
+time ti+1 ¿ ti such that the following inequality is satisÿed:  index l  P and arbitrary numbers t0 and t satisfying
+                                                                0 6 t0 ¡ t ¡ Tmax, we have
+(1 + h) min { p(ti+1)} 6 min { p(ti+1)}:
+           pP  pDji                                             N (t; t0) 6 1 + m + m log(1 + h) log         l(t)   :
+                                                                                                      minpP p(t0)   (11)
+At this point, we select some ji+1  M such that Dj+1 con-
+tains arg minpP{ p(ti+1)}, and set (ti+1) = ji+1.               In addition, there exists a signal    , which is {Di}-consistent
+                                                                with on [t0; t], such that
+   The above procedure yields a piecewise constant signal
+which is continuous from the right everywhere. By the same      N (t; t0)
+argument as in Hespanha (1998), one can show that chat-
+tering is avoided if p, p  P are uniformly bounded away                     (tk )(tk+1) - (tk )(tk )
+from zero. In fact, there exists a maximal interval [0; Tmax)
+on which is deÿned, and there can only be a ÿnite num-            k =0
+ber of switches on each proper subinterval of [0; Tmax). In
+the supervisory control application treated below, we will      6 m (1 + h) l(t) - min p(t0) ;                      (12)
+always have Tmax = . When the indicated arg min is not                                       pP
+unique, a particular index among those that achieve the min-
+imum can be chosen arbitrarily. The understanding here is       where t1 ¡ t2 ¡ · · · ¡ tN (t;t0) are the discontinuities of on
+that minimization over Di's is computationally tractable if     (t0; t) and tN (t;t0)+1 := t.
+these sets are su ciently small.
+                                                                Proof. Inequality (11) follows at once from the scale-
+   The above switching logic is also scale independent, i.e.,   independent hysteresis switching lemma (Lemma 1) and
+its output would not be a ected if we replaced the signals      Remark 2. A signal that satisÿes the second statement of
+                                                                the lemma can be deÿned as follows: for each s  [t0; t],
+ p, p  P by their scaled versions (1), where is some            let (s) := arg minpD (s) { p(tk+1)}, where k is the largest
+positive function of time. In the supervisory control context   index in the set {0; 1; : : : ; N (t; t0)} for which (tk ) = (s).
+to be discussed below, we will arrange matters in such a        In other words, (s) = arg minpD (s) { p( )}, where is
+way that it is possible to ÿnd a function which makes           the right endpoint of the last subinterval of [t0; t] on which
+the scaled signals p, p  P strictly positive and monotone
+increasing. For analysis purposes, we will always use the         equals (s). Then is {Di}-consistent with on [t0; t]
+scaled signals p, p  P that have this property, while the       by construction. Grouping all the terms in the summation
+actual inputs to the switching logic are the original signals   on the left-hand side of (12) for which is the same, and
+                                                                reasoning exactly as in the proof of Lemma 1, we arrive at
+ p, p  P.                                                       (12).
+                                                      J.P. Hespanha et al. / Automatica 39 (2003) 263 - 272                      267
+
+Remark 3. The signal depends on the choice of the time                          SUPERVISOR
+                                                                                         2 p,
+t. As before, if the signals p, p  P are (piecewise) dif-                                                    ep -
+ferentiable, then the left-hand side of inequality (12) equals                                                +
+              t                                                                                             yp
+the integral  t0    (  )(  )d    ,     which  is  to  be  interpreted  as  the                                   $
+
+sum of integrals over intervals on which is constant.                                    "u
+
+4. Supervisory control system
+
+   Suppose that the uncertain process P to be controlled ad-                                                        dn
+mits the model of a SISO ÿnite-dimensional stabilizable and                                                                   y
+detectable linear system with control input u and measured
+output y, perturbed by a bounded disturbance input d and a                                                            /
+bounded output noise n. It is assumed known that the trans-
+fer function of P from u to y belongs to a family of admis-                                         Fig. 2. Supervisory control architecture.
+sible process model transfer functions pP F(p), where
+p is a parameter taking values in a compact index set P.                        controller, called a supervisor, whose purpose is to or-
+Here each F(p) denotes a family of transfer functions "cen-                     chestrate the switching among a parameterized family of
+tered" around some known nominal process model transfer                         candidate controllers {Cq : q  Q}, where Q is an index
+function p.                                                                     set. This leads to a switched controller which we call the
+                                                                                multi-controller and denote by C. We require the above
+   The problem of interest is to design a feedback controller                   controller family to be su ciently rich so that every ad-
+that achieves output regulation, i.e., drives the output y of                   missible process model can be stabilized by placing in the
+P to zero, whenever the noise and disturbance signals are                       feedback loop the controller Cq for some index q  Q. In
+zero. Moreover, all system signals must remain bounded in                       this paper, we focus on the case when Q is a ÿnite set.
+response to arbitrary bounded noise and disturbance inputs.                     Without loss of generality, we take Q = M = {1; 2; : : : ; m}
+Everything that follows can be readily extended to the more                     where m is a positive integer.
+general problem of set-point control with the help of adding
+an integrator in the feedback loop, as in Morse (1996, 1997).                      The supervisor consists of three subsystems (Fig. 2):
+Extensions to MIMO systems are also possible.                                      Multi-estimator E: A dynamical system whose inputs are
+                                                                                the output y and the input u of the process P and whose
+   Uncertainty of the kind considered here may be associ-                       outputs are the signals yp, p  P. Each yp would converge
+ated with unpredictable changes in operating environment,                       to y asymptotically if the transfer function of P were equal
+component failures, or various external in uences. The set                      to the nominal process model transfer function p and there
+P represents the range of parametric uncertainty, while for                     were no noise or disturbances.
+each ÿxed p  P the subfamily F(p) accounts for unmod-                              Monitoring signal generator M: A dynamical system
+eled dynamics. There are several ways to specify allowable                      whose inputs are the estimation errors
+unmodeled dynamics around the nominal process model
+transfer functions p (see Hespanha et al. (2001)). For ex-                      ep := yp - y; p  P
+ample, take two arbitrary numbers ¿ 0 and u ¿ 0. Then
+for each p  P we can deÿne                                                      and whose outputs p, p  P are suitably deÿned integral
+                                                                                norms of the estimation errors, called monitoring signals.
+F(p) := {     p(1+     mp )+  a     :  m                  a
+                              p                                                    Switching logic S: A switched system whose inputs are
+                                       p ; u 6 ;          p ; u 6 };            the monitoring signals p, p  P and whose output is a
+                                                                                switching signal , taking values in M, which is used to
+where · ; u denotes the e ut-weighted H norm of a                               deÿne the control law u.
+transfer function, i.e., ; u = sup!R | (j! - u)|. This
+yields the class of admissible process models treated in                           We now brie y recall from Morse (1996) the key
+Morse (1996, 1997). In the sequel, we assume for concrete-                      state-space equations for the di erent subsystems appearing
+ness that unmodeled dynamics are speciÿed in this way; we                       in Fig. 1. As i ranges over M, let
+will refer to the parameter as the unmodeled dynamics
+bound. The results presented below can be extended to other                     xC = AixC + biy;
+classes of admissible process models, such as those studied
+in Hespanha et al. (2001).                                                      u = kixC + riy
+
+   Typically, no single controller is capable of solving the                    be realizations of the transfer functions of the candidate
+regulation problem for the entire family of admissible pro-                     controllers, all sharing the same state xC. See Morse (1996)
+cess models. Therefore, one needs to develop a controller                       for more details on constructing such realizations. We then
+whose dynamics can change on the basis of available
+real-time data. Within the framework of supervisory control
+discussed here, this task is carried out by a "high-level"
+268                                     J.P. Hespanha et al. / Automatica 39 (2003) 263 - 272
+
+describe the multi-controller C by the equations                   The constant will play the role of a "weighting" de-
+xC = A xC + b y;                                                sign parameter in the deÿnition of the monitoring signals.
+                                                                Fix an arbitrary constant ¿ 0 (its role will become clear
+u = k xC + r y:                                                 later). We generate the monitoring signals p, p  P by the
+                                                                equations
+We assume that the multi-estimator is also realized in a
+state-shared fashion, as given by                               W = -2 W + xE                  xE ; W (0) ¿ 0;
+                                                                                      y        y
+xE = AExE + bEy + dEu;
+
+yp = cpxE; p  P                                                 p := (cp - 1)W (cp - 1) + ; p  P;                (18)
+
+with AE a stable matrix. This type of structure is quite com-   where W (t) is a symmetric nonnegative-deÿnite k × k
+mon in adaptive control. We denote by x the composite state     matrix, k := dim(xE) + 1. Since cpxE - y = ep p  P,
+(xE; xC) of the multi-estimator and the multi-controller, and   this yields
+by p an (unknown) element of P such that the transfer
+function of P belongs to F(p), i.e., the "true" parame-         p(t) = e-2 t ~p(0)                        p  P;
+ter value (due to possibly overlapping sets of unmodeled
+dynamics, p may not be unique). For every l  P, the                                 t
+evolution of x can then be described by a system of the
+form                                                                    + e-2 (t- )e2 ( ) d + ;
+
+                                                                                                       p
+                                                                                  0
+
+x = A lx + d el;                                          (13)  where ~p(0) := (cp - 1)W (0)(cp - 1) . Note that the
+                                                                dynamics of the monitoring signal generator, as well as those
+y = (cp 0)x - ep ;                                        (14)  of the multi-estimator, are ÿnite-dimensional even if P is
+                                                                an inÿnite set.
+u = f x + g ep :                                          (15)
+                                                                   Finally, we deÿne the switching signal using the hierar-
+We assume that a partition P = iM Di is given, such that        chical hysteresis switching logic described in Section 3,
+the matrices Aip, i  M, p  P have the following stability       where the sets Di, i  M are chosen as explained
+margin property: for every i  M and every p  Di the ma-         earlier. Setting (t) := e2 t in (1), we see that the signals
+trix Aip + 0I is stable, where 0 is a ÿxed positive number.      p, p  P are monotone increasing, because they
+It follows from the developments of Morse (1996) that such      satisfy
+a partition exists, provided that the sets Di, i  M are su -
+ciently small and each Ci stabilizes the pth nominal process                                    t         p  P: (19)
+model whenever p  Di. We take the sets Di to be closed.
+                                                                p(t) = ~p(0) + e2 e2p( ) d + e2 t;
+   Fix a number  (0; min{ u; 0}). As shown in Morse
+(1996, 1997), there exist positive constants 1; 2 that only                                   0
+depend on the unmodeled dynamics bound and go to zero
+as goes to zero; positive constants B1; B2 that only depend     Moreover, it is easy to ensure that p, p  P are
+on the noise and disturbance bounds and go to zero as these     uniformly bounded away from zero, either by set-
+bounds go to zero; and positive constants C1; C2 that only      ting ¿ 0 or by requiring W (0) to be positive def-
+depend on the system's parameters and on initial conditions,    inite. Therefore, we can apply Lemma 2 and con-
+such that along all solutions of the closed-loop system we      clude that inequalities (11) and (12) are valid. Since in
+have                                                            this case the signals p, p  P are di erentiable, the
+                                                                left-hand side of inequality (12) equals tt0  ( )( ) d
+                                                                (see Remark 3). From (19) we have the following
+                                                                formula:
+
+   t                                       t                    p(t) = e2 te2p(t) + 2 e2 t; p  P:                (20)
+
+      e2   2    )d  6 B1e2 t + C1 +  1        e2 u2( ) d  (16)
+
+0         ep (                          0
+
+and                                                             5. Analysis
+
+|ep (t)| 6 B2 + C2e- t                                             We now proceed to the analysis of the supervisory
+                                                                control system deÿned by (13)-(15), (18), and the hie-
+          + 2e- t        t                                (17)  rarchical hysteresis switching logic. We will sometimes
+                                                                appeal to the state of the uncertain process P, which
+                          e2 u2( ) d :                          we denote by xP. However, the analysis centers around
+                                                                system (13) and its stability margin property described
+                        0                                       earlier. Consider the system obtained from (13) by
+
+The above inequalities represent the basic requirements be-
+ing placed on the multi-controller and the multi-estimator,
+upon which the subsequent analysis depends.
+                           J.P. Hespanha et al. / Automatica 39 (2003) 263 - 272                                       269
+
+substituting for l, where  is some signal that is                  switching logic was studied with the help of Lemma 1; some
+{Di}-consistent with :                                             details will be omitted.
+
+x = A x + d e :                             (21)                   5.1. No noise, disturbances, or unmodeled dynamics
+
+The stability margin property implies that for every ÿxed          We ÿrst consider the simple situation where the noise
+time s ¿ 0, the matrix A (s) (s) is stable, with stability margin
+ 0. Note that this is true even if the controller C (s) does not   and disturbance signals are zero (n = d  0) and there are
+stabilize the process. (In this case, the estimation error e (s)   no unmodeled dynamics ( = 0), i.e., the process P exactly
+may be large. The underlying property of the closed-loop           matches one of the nominal process models. In this case,
+system is detectability with respect to the estimation error;
+cf. Morse (1996).)                                                 the constants B1; B2; 1; 2 in (16) and (17) are all zero. Let
+                                                                   us take in the deÿnition of the monitoring signals to be
+   Following Hespanha and Morse (1999b), we say that the
+switching signal has an average dwell time AD ¿ 0 if               zero as well (W (0) must then be taken positive deÿnite).
+there exists a nonnegative number N0 such that the number                                 0t e2     2
+of discontinuities of on an arbitrary interval (t0; t), denoted    Inequality (16) gives         e  p    (  )d  6 C1, which together
+by N (t; t0), satisÿes
+                                                                   with (19) implies p 6 ~p (0) + C1. It follows from (11),
+N (t; t0) 6 N0 + t - t0 : (22)                                     applied with l = p, that N (t; t0) is bounded by a ÿxed
+                                                                   constant for arbitrary t ¿ t0 ¿ 0. This means that switching
+                                 AD                                stops in ÿnite time, i.e., there exist a time T  and an index
+
+We need the following result, which in view of the present         i  M such that (t) = i for t ¿ T . Thus, (22) holds for
+assumptions is a straightforward corollary of Theorem 1 of         every AD if N0 is large enough. Fix an arbitrary t ¿ 0. In
+Hespanha and Morse (1999b). It states that the switched            view of Lemma 2, Remark 3, and formula (20), there exists
+system
+                                                                   a signal which is {Di}-consistent with on [0; t] and satis-
+x = A x                                     (23)                   ÿes 0t e2 e2( )( ) d 6 m(1 + h)( ~p (0) + C1). Using (24),
+                                                                   we have e2 t|x(t)|2 6 gm(1 + h)( ~p (0) + C1) + g0|x(0)|2,
+                                                                   thus x  0. Since ep  0 by virtue of (17), we conclude
+                                                                   from (14) that y  0. Therefore, the output regulation
+
+is exponentially stable with stability margin , uniformly          problem is solved. Also note that since the evolution of
+over all with su ciently large average dwell time and all
+                                                                   xP and x for t ¿ T  is described by a linear time-invariant
+  that are {Di}-consistent with .                                  system, the rate of convergence is actually exponential.
+
+Lemma 3. There exist positive constants  and c such                In light of (15), (18), and detectability of P, all the other
+that for every switching signal with an average dwell              signals remain bounded for all t ¿ 0 (in fact, here the
+time AD ¿  and every signal that is {Di}-consistent
+with on a given interval [t0; t], all solutions of (23) satisfy    state converges to 0, but this would no longer be true
+|x(t)| 6 ce- (t-t0)|x(t0)|.
+                                                                   in the case of set-point control). We summarize this as
+
+                                                                   follows.
+
+   Let  be the number speciÿed by this lemma; it can be cal-       Proposition 5. Suppose that the noise and disturbance
+culated explicitly from the proof of (Hespanha and Morse,          signals are zero and there are no unmodeled dynamics,
+1999b, Theorem 1). An immediate corollary of Lemma 3               and set = 0. Then all the signals in the supervisory
+is that system (21) has a ÿnite e t-weighted L2-to-L               control system remain bounded for every set of initial con-
+induced norm, uniform over all with average dwell                  ditions such that W (0) ¿ 0. Moreover, switching stops in
+time no smaller than  and all that are {Di}-consistent             ÿnite time, after which y(t) converges to 0 exponentially
+with .                                                             fast.
+
+Corollary 4. There exist positive constants g and g0 such          5.2. Noise and disturbances, no unmodeled dynamics
+that for every t ¿ 0, every switching signal with an
+average dwell time AD ¿ , and every signal that                       We now assume that bounded noise n and disturbance
+is {Di}-consistent with on [0; t], all solutions of (21)           d are present, but there are no unmodeled dynamics. In
+satisfy                                                            this case the switching typically will not stop in ÿnite time.
+                                                                   Inequalities (16) and (17) hold with some unknown but
+                 t                                                 ÿnite constants B1 and B2. The parameters 1 and 2 are
+e2 t|x(t)|2 6 g e2 e2( )( ) d + g0|x(0)|2:                         still zero, and C1 and C2 are positive constants as before.
+                                            (24)                   We take to be a positive number. From (16) and (19) we
+                                                                   have
+         0
+
+   With these results in place, the analysis is similar to         p (t) 6 ~p (0) + B1e2 t + C1 + e2 t:                (25)
+that given in Hespanha et al. (2001), where a supervisory
+control system employing the scale-independent hysteresis
+270  J.P. Hespanha et al. / Automatica 39 (2003) 263 - 272
+
+Applying (11) with l = p and using the bound p(t0) ¿         decreasing on-line (e.g., in a piecewise constant fashion),
+  e2 t0 provided by (19) yields                              it is possible to recover asymptotic convergence of y to zero
+                                                             when the noise and disturbance signals converge to zero.
+N (t; t0) 6 N0 + t - t0 ;
+                                                             Remark 4. The above analysis relies on the property that
+                                 AD                          the average dwell time is su ciently large. However, using
+                                                             techniques described in (Morse (1996), Section VIII), it is
+where                                                        possible to establish the same result for an arbitrary average
+ AD = log(1 + h) 2 m                                         dwell time, thus removing the restrictions on the design
+and                                                          parameters h and . We do not pursue this issue here due to
+                                                             lack of space.
+N0 = 1 + m + m log(1 + h) log ~p (0) + B1 + C1 + :
+                                                             5.3. Noise, disturbances, and unmodeled dynamics
+We can guarantee that AD ¿  by increasing the hysteresis
+constant h and/or decreasing the weighting constant if          If unmodeled dynamics are present, i.e., if the parame-
+necessary. In the sequel, we assume that h and have been     ter is positive, then 1 and 2 in (16) and (17) are also
+chosen in this way.                                          positive. In this case, the analysis becomes more compli-
+                                                             cated, because we can no longer deduce from (16) that the
+   Using (12) with l = p and t0 = 0, (20), and (25), we      switched system must possess an average dwell time. How-
+obtain                                                       ever, it is possible to prove that the above control algorithm,
+                                                             without any modiÿcation, is robust with respect to unmod-
+    t                                                        eled dynamics in the following, "semi-global", sense. The
+                                                             proof uses a small-gain argument, and is almost identical to
+    e2 e2( )( ) d 6 m((1 + h)( ~p (0) + B1e2 t               the proof of Theorem 4 in Hespanha et al. (2001).
+
+  0                                                          Theorem 7. For arbitrary bounds on the noise and distur-
+                                                             bance signals, the supervisory control system has the fol-
+                         + C1 + e2 t) - e2 t0 );             lowing properties:
+
+where t ¿ 0 is arbitrary and is the signal provided by       1. For every positive value of and every number E ¿ 0
+Lemma 2. Together with (24) this implies that                   there exists a number ¿ 0 such that if the unmodeled
+                                                                dynamics bound is smaller than , then all signals
+|x(t)|2 6 (gm(1 + h)( ~p (0) + C1) + g0|x(0)|2)e-2 t            remain bounded for every set of initial conditions such
+                                                                that |xP(0)|; |x(0)| 6 E.
+           + gm(1 + h)(B1 + ):
+                                                             2. For arbitrary positive numbers E and y there exist a
+Two conclusions can be drawn from the last formula. First,      value of and a number ¿ 0 such that if the noise and
+x is bounded and, as in the previous subsection we can          disturbance signals converge to zero and the unmodeled
+easily deduce from (15), (17), (18), and detectability of       dynamics bound is smaller than , then for each solu-
+P that all system signals remain bounded. Note that the         tion with |xP(0)|; |x(0)| 6 E there is a time T such that
+choice of the design parameters , h and did not de-             |y(t)| 6 y for all t ¿ T .
+pend on the noise or disturbance bounds, in other words,
+explicit knowledge of these bounds is not necessary (we      6. Concluding remarks
+are merely requiring that such bounds exist). Secondly, if
+n and d equal or converge to zero, then x will approach a       The main contribution of the paper was to develop a new
+neighborhood of the origin whose size is proportional to     hysteresis-based switching logic, together with appropriate
+g . A close examination of the last quantity reveals that    analysis tools, which can be used in the case of inÿnite
+it decreases to 0 as goes to 0, which means that we can      parametric uncertainty (ranging over a continuum) to design
+make this neighborhood as small as desired by choosing       provably correct supervisory control algorithms. The results
+                                                             obtained here for linear systems with noise, disturbances,
+   su ciently small. Moreover, ep will converge to zero      and unmodeled dynamics extend those available previously
+because of (17), hence y will also become arbitrarily small  for systems with unknown parameters taking values in ÿnite
+in view of (14). We arrive at the following result.          sets.
+
+Proposition 6. Suppose that the noise and disturbance           For linear systems, other types of switching logics--
+signals are bounded and there are no unmodeled dynamics.     particularly those based on dwell time--can be ap-
+Then for an arbitrary ¿ 0 all the signals in the supervi-    plied in similar situations. However, as explained in the
+sory control system remain bounded for every set of initial
+conditions. Moreover, for every number y ¿ 0 there is a
+value of leading to the property that if the noise and dis-
+turbance signals converge to zero, then for each solution
+there is a time T such that |y(t)| 6 y for all t ¿ T .
+
+   Note that we cannot simply let = 0, as this would in-
+validate the above analysis even if W (0) ¿ 0. However, by
+J.P. Hespanha et al. / Automatica 39 (2003) 263 - 272                     271
+
+Introduction, dwell-time switching logics have inherent lim-              Morse, A. S., Mayne, D. Q., & Goodwin, G. C. (1992). Applications of
+itations when one tries to use them in the nonlinear context.                hysteresis switching in parameter adaptive control. IEEE Transactions
+Hysteresis-based switching logics, on the other hand, have                   on Automatic Control, 37, 1343-1354.
+proved to be successful in dealing with nonlinear systems
+whose parametric uncertainty is described by a ÿnite set                  Mosca, E., Capecchi, F., & Casavola, A. (2001). Designing predictors
+(Hespanha & Morse, 1999a; Hespanha, Liberzon, & Morse,                       for MIMO switching supervisory control. International Journal of
+2002). The work reported here is motivated by these re-                      Adaptive Control and Signal Processing, 15, 265-286.
+sults and serves as an important step towards extending
+the supervisory control techniques to nonlinear systems                   Pait, F. M., & Kassab, F., Jr. (1997). Parallel algorithms for adaptive
+with parameters taking values in a continuum. In fact,                       control: robust stability. In A. S. Morse, (Ed.), Control using
+the hierarchical hysteresis switching logic presented above                  logic-based switching (pp. 262-276). London: Springer.
+can be applied to nonlinear systems without any changes;
+di culties lie elsewhere, particularly in designing candidate                                                 Joa~o P. Hespanha was born in Coimbra,
+controllers which achieve a suitable nonlinear counterpart                                                    Portugal, in 1968. He received the Licen-
+of the stability margin property deÿned in Section 4 and                                                      ciatura and the M.S. degree in electrical
+exploited in Section 5.                                                                                       and computer engineering from Instituto
+                                                                                                              Superior TeÃcnico, Lisbon, Portugal, in 1991
+   Another direction for future research is to understand                                                     and 1993, respectively, and the M.S. and
+relative advantages of the algorithm presented here and                                                       Ph.D. degrees in electrical engineering
+existing schemes for linear systems, from the implementa-                                                     and applied science from Yale University,
+tion and performance points of view. This issue fell outside                                                  New Haven, Connecticut, in 1994 and
+the scope of the present paper. For some examples of how                                                      1998, respectively. For his Ph.D. work,
+supervisory control methods of the kind considered here                                                       Dr. Hespanha received Yale University's
+can be applied to speciÿc problems, as well as compar-                                                        Henry Prentiss Becton Graduate Prize for
+ison with more traditional adaptive control techniques,                   exceptional achievement in research in Engineering and Applied
+we refer the reader to Hespanha, Liberzon, and Morse,                     Science.
+(to appear).                                                                  Dr. Hespanha currently holds an Associate Professor position in the
+                                                                          Department of Electrical and Computer Engineering, University of Cali-
+References                                                                fornia, Santa Barbara. From 1999 to 2001 he was an Assistant Professor
+                                                                          at the University of Southern California, Los Angeles. Dr. Hespanha's
+Hespanha, J. P. (1998). Logic-based switching algorithms in control.      research interests include nonlinear control, both robust and adaptive;
+   Ph.D. thesis, Department of Electrical Engineering, Yale University,   hybrid systems; switching control; the use of vision in feedback control;
+   New Haven, CT.                                                         and probabilistic games. Dr. Hespanha is the author of over 80 technical
+                                                                          papers, the recipient of a NSF CAREER Award (2001), and the PI and
+Hespanha, J. P., Liberzon, D., & Morse, A. S. (2002). Supervision         co-PI in several federally funded projects.
+   of integral-input-to-state stabilizing controllers. Automatica, 38,
+   1327-1335.                                                                                                 Daniel Liberzon was born in the former So-
+                                                                                                              viet Union in 1973. He was a student in the
+Hespanha, J. P., Liberzon, D., & Morse, A. S. Overcoming the limitations                                      Department of Mechanics and Mathematics
+   of adaptive control by means of logic-based switching. Systems                                             at Moscow State University from 1989 to
+   Control Lett., in press.                                                                                   1993 and received the Ph.D. degree in math-
+                                                                                                              ematics from Brandeis University, Waltham,
+Hespanha, J. P., Liberzon, D., Morse, A. S., Anderson, B. D. O.,                                              MA, in 1998 (under the supervision of Prof.
+   Brinsmead, T. S., & De Bruyne, F. (2001). Multiple model adaptive                                          Roger W. Brockett of Harvard University).
+   control, part 2: Switching. International Journal of Robust Nonlinear                                      Following a postdoctoral position in the De-
+   Control, 11, 479-496.                                                                                      partment of Electrical Engineering at Yale
+                                                                                                              University, New Haven, CT, he joined the
+Hespanha, J. P., & Morse, A. S. (1999a). Certainty equivalence implies                                        University of Illinois at Urbana-Champaign
+   detectability. Systems Control Letters, 36, 1-13.                      in 2000 as an assistant professor in the Electrical and Computer Engi-
+                                                                          neering Department and an assistant research professor in the Coordinated
+Hespanha, J. P., & Morse, A. S. (1999b). Stability of switched systems    Science Laboratory. Dr. Liberzon's research interests include nonlinear
+   with average dwell-time. In Proceedings of the 38th IEEE Conference    control theory, analysis and synthesis of hybrid dynamical systems, and
+   on Decision and Control, Phoenix, AZ, (pp. 2655 -2660).                control with limited information. He served as an Associate Editor on
+                                                                          the IEEE Control Systems Society Conference Editorial Board in 1999
+Hocherman-Frommer, J., Kulkarni, S. R., & Ramadge, P. J. (1998).          -2000. Dr. Liberzon received the NSF CAREER Award and the IFAC
+   Controller switching based on output prediction errors. IEEE           Young Author Prize, both in 2002.
+   Transactions on Automatic Control, 43, 596-607.
+                                                                                                              A. Stephen Morse was born in Mt. Vernon,
+Middleton, R. H., Goodwin, G. C., Hill, D. J., & Mayne, D. Q. (1988).                                         New York. He received a B.S.E.E. degree
+   Design issues in adaptive control. IEEE Transactions on Automatic                                          from Cornell University, Ithaca, a M.S. de-
+   Control, 33, 50-58.                                                                                        gree from the University of Arizona, Tucson,
+                                                                                                              and a Ph.D degree from Purdue University,
+Morse, A. S. (1996). Supervisory control of families of linear set-point                                      West Lafayette, all in electrical engineering.
+   controllers, part 1: Exact matching. IEEE Transactions on Automatic
+   Control, 41, 1413-1431.                                                                                         From 1967 to 1970 he was associated
+                                                                                                              with the O ce of Control Theory and Ap-
+Morse, A. S. (1997). Supervisory control of families of linear set-point                                      plication, NASA Electronics Research Cen-
+   controllers, part 2: Robustness. IEEE Transactions on Automatic                                            ter, Cambridge, MA. Since July, 1970 he
+   Control, 42, 1500-1515.                                                                                    has been with Yale University where he is
+272  J.P. Hespanha et al. / Automatica 39 (2003) 263 - 272
+
+presently a Professor of Electrical Engineering. His main interest is in  as a Director of the American Automatic Control Council representing
+system theory, and he has done research in network synthesis, optimal     the Society for Industrial and Applied Mathematics.
+control, multi-variable control, adaptive control, urban transportation,
+hybrid and nonlinear systems, vision-based control, and most recently          Dr. Morse is the recipient of the 1999 IEEE Field Award for Control
+coordination of groups of mobile autonomous agents.                       Systems. He is a Distinguished Lecturer of the IEEE Control Systems
+                                                                          Society and a co-recipient of the Society's George S. Axelby Outstanding
+     Dr. Morse is a Fellow of the IEEE and a member of SIAM, Sigma        Paper Award. He has twice received the American Automatic Control
+Xi and Eta Kappa Nu. He has served as an Associate Editor of the IEEE     Council's Best Paper Prize. He is a member of the National Academy of
+Transactions on Automatic Control, the European Journal of Control and    Engineering.
+the International Journal of Adaptive Control and Signal Processing and
+

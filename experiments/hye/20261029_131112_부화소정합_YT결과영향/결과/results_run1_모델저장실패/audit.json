@@ -1,0 +1,5 @@
+{
+  "GN(채택측정기)": {"method_index": 6, "train_error": "Cannot write model", "measure_ms_median_1014": 41.9472, "measure_ms_p95_1014": 66.4815, "frozen_fold_max_difference": 0, "frozen_fold_axis_mismatch": 0},
+  "ECC": {"method_index": 7, "train_error": "Cannot write model", "measure_ms_median_1014": 185.73, "measure_ms_p95_1014": 294.4824},
+  "LK(1단)": {"method_index": 4, "train_error": "Cannot write model", "measure_ms_median_1014": 17.8639, "measure_ms_p95_1014": 29.0863}
+}

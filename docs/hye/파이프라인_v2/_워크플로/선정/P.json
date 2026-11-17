@@ -1,0 +1,197 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/P_문제정의/논문/01_Jiang2020_Sensors_로봇절대위치정확도_반복정밀도",
+   "title": "Absolute Positioning Accuracy Improvement in an Industrial Robot",
+   "citation": "Jiang Y., Yu L., Jia H., Zhao H., Xia H. (2020). Sensors 20(16):4354. DOI 10.3390/s20164354. PMC7471972",
+   "url": "https://doi.org/10.3390/s20164354",
+   "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7471972/",
+   "questions": [
+    1,
+    7
+   ],
+   "why": "산업용 로봇은 반복정밀도는 높지만 절대 위치 정확도가 낮다는 점을 다룬다. 명령 좌표만으로 센터에 못 가는 이유와 정확도/반복정밀도 구분의 근거. MDPI PDF는 curl 403이므로 PMC 사본 사용."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/P_문제정의/논문/02_vanEsch2024_arXiv_웨이퍼핸들러_기울기_벨트고장",
+   "title": "Hybrid Model-Data Fault Diagnosis for Wafer Handler Robots: Tilt and Broken Belt Cases",
+   "citation": "van Esch T., Ghanipoor F., Murguia C., van de Wouw N. (2024). arXiv:2412.09114v1 [cs.RO]",
+   "url": "https://arxiv.org/abs/2412.09114",
+   "pdf_url": "https://arxiv.org/pdf/2412.09114v1",
+   "questions": [
+    1,
+    6
+   ],
+   "why": "웨이퍼 핸들러 로봇의 팔 기울기(점진)와 벨트 끊김(급변) 고장을 모델링. 같은 명령이라도 기구 상태 변화로 도착점이 바뀌는 근거, 재보정 필요 시점 질문에 답함. PDF 응답 200 확인."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/P_문제정의/논문/03_Yoon2023_Electronics_웨이퍼이송로봇_정착시간_미끄럼",
+   "title": "An Asymmetric Velocity Profile for Minimizing Wafer Slippage and Settling Time of a Wafer Transport Robot",
+   "citation": "Yoon K.S., Kim M.S., Moon H., Choi H.R., Koo J.C. (2023). Electronics 12(10):2157. DOI 10.3390/electronics12102157",
+   "url": "https://doi.org/10.3390/electronics12102157",
+   "pdf_url": "https://www.mdpi.com/2079-9292/12/10/2157/pdf?version=1683623149",
+   "questions": [
+    4,
+    8
+   ],
+   "why": "웨이퍼 이송 로봇의 정착 시간과 미끄럼. 이동 후 촬영 시점, 시간 제약, 정지 사진 자료와 실제 작업 후 도착의 차이를 따질 근거. MDPI만 있어 curl 403, 브라우저 수동 다운로드 필요(못 받으면 받을 목록에 기록)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/P_문제정의/논문/04_Verstegen2019_TUDelft박사논문_단일카메라정렬_반복정밀도",
+   "title": "Mechatronic design for repeatability of a single-camera alignment system in pick-and-place machines",
+   "citation": "Verstegen P. (2019). PhD thesis, Delft University of Technology. DOI 10.4233/uuid:d0423cf6-90b8-4a2a-b4cd-a1cff0f84c96",
+   "url": "https://doi.org/10.4233/uuid:d0423cf6-90b8-4a2a-b4cd-a1cff0f84c96",
+   "pdf_url": "http://repository.tudelft.nl/islandora/object/uuid:d0423cf6-90b8-4a2a-b4cd-a1cff0f84c96/datastream/OBJ/download",
+   "questions": [
+    2,
+    4,
+    7
+   ],
+   "why": "단일 카메라 정렬 시스템의 반복정밀도를 기구와 광학까지 묶어 설계한 사례. 비전 정렬 요구사항, 오차 예산, 평가 방식의 근거. 존재는 OpenAlex/DOI로 확인, TU Delft 저장소는 이번에 시간 초과."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/P_문제정의/논문/05_Perez2016_Sensors_산업용로봇_비전유도_비교리뷰",
+   "title": "Robot Guidance Using Machine Vision Techniques in Industrial Environments: A Comparative Review",
+   "citation": "Pérez L., Rodríguez Í., Rodríguez N., Usamentiaga R., García D.F. (2016). Sensors 16(3):335. DOI 10.3390/s16030335. PMC4813910",
+   "url": "https://doi.org/10.3390/s16030335",
+   "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4813910/",
+   "questions": [
+    2,
+    3,
+    5
+   ],
+   "why": "산업 현장 비전 로봇 유도 방식 비교 리뷰. 비전이 로봇 오차를 어떻게 보완하는지, 필요한 환경 조건, 문제 범위 정리의 근거."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/P_문제정의/특허/01_US10861723_TSMC_EFEM로봇_위치변화_자동재티칭",
+   "title": "EFEM Robot Auto Teaching Methodology",
+   "citation": "US 10,861,723 B2, Taiwan Semiconductor Manufacturing Co., Ltd. Lee C.-F. 외. 출원 2017-11-27(가출원 2017-08-08), 등록 2020-12-08. 공개 US2019/0051546A1",
+   "url": "https://patents.google.com/patent/US10861723B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10861723",
+   "questions": [
+    1,
+    3,
+    6
+   ],
+   "why": "예방정비와 수리로 EFEM 로봇 위치가 바뀌면 기존 티칭이 맞지 않아 재프로그래밍이 필요하다는 문제. 재티칭 원인과 재설치 빈도 질문의 근거. USPTO 공보 1면 OCR로 서지와 초록 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/P_문제정의/특허/02_US10607878_TEL_암열팽창_반송위치보정",
+   "title": "Transfer Device and Correction Method",
+   "citation": "US 10,607,878 B2, Tokyo Electron Limited. Sakaue H., Ishibashi S. 출원 2016-11-30, 우선권 JP2015-236793(2015-12-03), 등록 2020-03-31. 공개 US2017/0162421A1",
+   "url": "https://patents.google.com/patent/US10607878B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10607878",
+   "questions": [
+    1,
+    6
+   ],
+   "why": "반송 암의 열팽창/수축으로 회전각(엔코더)으로 계산한 위치와 실제 위치가 어긋나 센서로 보정. 명령만으로 못 가는 이유의 장비사 근거. 기존 TEL US12211719와 다른 건. USPTO 공보 1면 OCR로 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/P_문제정의/특허/03_US11110599_Kawasaki_핸드카메라_가상기판_티칭",
+   "title": "Robot, Control Device of Robot, and Method of Teaching Position of Robot",
+   "citation": "US 11,110,599 B2, Kawasaki Jukogyo K.K. Goto H. 외. PCT/JP2017/034696(2017-09-26), WO2018/062156, 등록 2021-09-07. 공개 US2020/0030973A1",
+   "url": "https://patents.google.com/patent/US11110599B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11110599",
+   "questions": [
+    2,
+    5
+   ],
+   "why": "핸드 카메라 영상에 티칭 기판과 가상 기판을 겹쳐 티칭. 사람 티칭을 카메라로 보완하는 사례이고 우리 과제(자동 Y/T 수렴)와 차이 비교용. USPTO 공보 1면 OCR로 확인."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/00000_유사연구_종합요약.md",
+   "why": "명세서 문제 정의(Y/Θ 같은 방향 투영, 반자동 운영, 입력/출력, C++/OpenCV/실시간 조건)와 업계 허용오차 수치 정리. 질문 3,4,5"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/00001_심층비교분석_v3.md",
+   "why": "원인-증상-해결 매트릭스(관측 공선성, 측정 편향, 미교정 기구, 기계 이력/드리프트)와 실측 결과. 질문 1,5"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/14_Nordin2002_Automatica_백래시제어_조사/요약.md",
+   "why": "백래시가 명령과 실제 위치를 어긋나게 함. 질문 1"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/특허/06_US7248931_ASM_고정기준점_드리프트측정/요약.md",
+   "why": "고정 기준점 카메라로 웨이퍼 위치 드리프트 측정/보정. 질문 1,6"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/03_LeReun2022_Robotica_열드리프트_백래시_위치성능/요약.md",
+   "why": "열드리프트와 백래시가 로봇 위치 성능에 주는 영향. 질문 1,6"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/04_US12211719_TEL_열변위_백래시방향_목표위치보정/요약.md",
+   "why": "열변위와 백래시 방향을 고려한 목표 위치 보정. 질문 1"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/02_US10403539_Kawasaki_로스트모션_편차진단/요약.md",
+   "why": "로스트모션에 의한 위치 편차 진단. 질문 1,6"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/05_Lee2008_CGIV_세정장비_웨이퍼위치오차_비전/요약.md",
+   "why": "세정 장비 웨이퍼 위치 오차를 비전으로 측정. 질문 1,2"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/01_Wang2020_UCB박사논문_핸드아이카메라_자동티칭/요약.md",
+   "why": "블레이드 카메라 자동 티칭, 실제 로봇 Y≤0.2mm/회전≤0.5° 성능 범위, 정지 후 촬영. 질문 2,4"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/특허/01_US12566413_SEMES_비전카메라_2단계티칭/요약.md",
+   "why": "SEMES 비전 카메라 2단계(원거리/근거리) 티칭. 비전이 보완하는 역할. 질문 2"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/특허/02_US12472621_SEMES_라이다비전거리센서_티칭/요약.md",
+   "why": "배경기술에서 로봇 비전+QR 마커 방식의 한계(영상 2축만, 사람 조작) 명시. 질문 2,5"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/03_US9424646_Omron_2단계_비전위치결정/요약.md",
+   "why": "2단계 비전 위치결정, 정지 촬영 look-and-move와의 비교. 질문 2,4"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/07_Ji2025_KSME_웨이퍼이송로봇_위치모니터링_자동티칭/요약.md",
+   "why": "초기 설치와 PM 때 이송 로봇 티칭 오차, 기울기 허용치(0.6°, 원문 확인 필요). 환경과 재티칭 빈도. 질문 3,6"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/특허/07_US6973370_TEL_반송위치조정/요약.md",
+   "why": "공정별 웨이퍼 위치 허용오차 0.1/0.3/0.5mm. 질문 4"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/09_Han2023_Sensors_AWC_웨이퍼센터링/요약.md",
+   "why": "AWC 센터링 ±0.15mm 정확도 기준. 질문 4"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/10_Kim2022_Sensors_센서3개_웨이퍼센터정렬/요약.md",
+   "why": "웨이퍼 중심 정렬 사양 상한 0.2mm. 질문 4"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/11_Cho2009_ICROS_대형LCD패널_비전정렬/요약.md",
+   "why": "비전 정렬 시스템의 성능과 반복 정렬 사례. 질문 4"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/06_Kuric2018_MATEC_ISO9283_반복정밀도측정/요약.md",
+   "why": "ISO 9283 반복정밀도 측정 기준. 평가 기준. 질문 7"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/15_NIST_eHandbook_GaugeRR_측정시스템/요약.md",
+   "why": "측정 시스템 자체 오차(Gauge R&R) 분리. 질문 7"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/02_Wang2023_JMNM_비전웨이퍼본딩정렬_오차예산/요약.md",
+   "why": "비전 웨이퍼 정렬의 오차 예산. 요구사항과 평가 기준. 질문 4,7"
+  },
+  {
+   "path": "docs/hye/파이프라인_v2/단계/P_문제정의/조사방법론.md",
+   "why": "이번에 작성한 조사방법론(목적, 질문 1~8, 검색어 블록, 검색 기록 표, 선정 이유, 기존 문헌 매핑, 한계). Google Patents 503 차단으로 웹 검색+USPTO 공보 PDF로 특허 서지 확인했음을 기록."
+  }
+ ]
+}

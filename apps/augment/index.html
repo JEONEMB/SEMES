@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Y-T 데이터 증강</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root {
+  --ink: #0f1b33; --ink-2: #4a5568; --muted: #8a94a6; --line: #e4e8ef;
+  --bg: #f4f6f9; --surface: #ffffff; --navy: #0b2a5b; --blue: #1d4ed8; --blue-soft: #e8efff;
+  --orange: #b45309; --pass: #0f7b55; --fail: #c62f3a; --violet: #6d28d9; --gray: #8a94a6; --radius: 14px;
+  --font: "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --mono: "SF Mono", "Cascadia Mono", "Consolas", monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font-family: var(--font); color: var(--ink); background: var(--bg); font-size: 14px; line-height: 1.5; word-break: keep-all; font-variant-numeric: tabular-nums; }
+button, input, select { font: inherit; color: inherit; }
+.mono { font-family: var(--mono); font-size: 12px; }
+.muted { color: var(--muted); font-size: 12px; }
+.embedded .topbar { display: none; }
+.topbar { display: flex; align-items: center; gap: 16px; height: 56px; padding: 0 24px; background: var(--surface); border-bottom: 1px solid var(--line); }
+.brand-mark { width: 20px; height: 20px; border-radius: 6px; background: linear-gradient(135deg, var(--navy), var(--blue)); }
+.brand-name { font-weight: 800; letter-spacing: .06em; color: var(--navy); }
+.badge { margin-left: auto; font-size: 12px; padding: 3px 10px; border-radius: 999px; background: #fdf3e7; color: var(--orange); font-weight: 600; }
+main { max-width: 1520px; margin: 0 auto; padding: 20px 24px 40px; display: grid; gap: 16px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 16px; }
+.kpi b { display: block; font-size: 22px; font-weight: 700; }
+.layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.layout.even { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 1050px) { .layout, .layout.even { grid-template-columns: minmax(0, 1fr); } main { padding: 16px; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; min-width: 0; }
+.card h2 { font-size: 15px; margin: 0 0 4px; }
+.card .sub { font-size: 12px; color: var(--ink-2); margin: 0 0 10px; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.between { justify-content: space-between; }
+canvas { display: block; width: 100%; }
+#grid { height: 600px; cursor: crosshair; }
+#orig { height: 360px; cursor: pointer; }
+#field { height: 300px; }
+#cloud { height: 300px; }
+#valid { height: 260px; cursor: crosshair; }
+.readout { font-family: var(--mono); font-size: 12px; min-height: 18px; color: var(--ink); }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); margin-top: 8px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; }
+.legend i.line { width: 16px; height: 3px; border-radius: 0; vertical-align: 2px; }
+.btn { padding: 6px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); cursor: pointer; }
+.btn:hover { background: var(--bg); }
+.btn.primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+.btn.is-on { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); }
+input[type=number].n, select { padding: 5px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+input[type=number].n { width: 80px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th, td { padding: 4px 6px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--ink-2); font-weight: 600; }
+tr.pick td { background: var(--blue-soft); }
+.tablewrap { max-height: 260px; overflow: auto; }
+.note { font-size: 12px; color: var(--ink-2); background: var(--bg); border-radius: 10px; padding: 10px 12px; margin: 0; }
+.note li { margin: 3px 0; }
+.good { color: var(--pass); font-weight: 600; }
+.bad { color: var(--fail); font-weight: 600; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+@media (max-width: 700px) { .split { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<script>/* 웹 앱 보고서 탭 안에 들어가면 자체 머리줄을 숨긴다 (머리줄과 표시는 웹 앱이 보여 준다) */
+try { if (window.self !== window.top) document.documentElement.classList.add('embedded'); } catch (e) { document.documentElement.classList.add('embedded'); }</script>
+<header class="topbar">
+  <span class="brand-mark"></span>
+  <span class="brand-name">SEMES</span>
+  <span>Y-T 데이터 증강</span>
+  <span class="badge">가정 시뮬레이션 · 실측 성적 아님</span>
+</header>
+
+<main>
+  <section class="kpis">
+    <div class="kpi"><span class="muted">(Y, T) 격자점 81 × 201</span><b>16,281</b></div>
+    <div class="kpi"><span class="muted">영점 (실측 11 + 추가 후보 4)</span><b id="kOrig">15</b></div>
+    <div class="kpi"><span class="muted">점당 노이즈 n회</span><b id="kN">3</b></div>
+    <div class="kpi"><span class="muted">총 샘플 (격자 × 영점 × n)</span><b id="kTotal">-</b></div>
+    <div class="kpi"><span class="muted">반복 촬영 잡음 바닥 (선택 536점 RMS)</span><b id="kFloor">-</b></div>
+  </section>
+
+  <div class="layout">
+    <section class="card">
+      <div class="row between">
+        <h2>Y-T 평면 격자점</h2>
+        <div class="row">
+          <button class="btn is-on" id="tBox">허용 박스 ±0.09</button>
+          <button class="btn is-on" id="tLine">구분 어려운 방향</button>
+          <button class="btn is-on" id="tMeas">실측 자세</button>
+        </div>
+      </div>
+      <p class="sub">점을 누르면 아래에 그 자세의 증강 샘플이 나온다.</p>
+      <div class="readout" id="ro"></div>
+      <canvas id="grid"></canvas>
+      <div class="legend">
+        <span><i style="background:#1d4ed8"></i>격자점</span>
+        <span><i class="line" style="background:#0f1b33"></i>Y = 0, T = 0</span>
+        <span><i class="line" style="background:#0f7b55"></i>허용 박스 (|Y|, |T| ≤ 0.09)</span>
+        <span><i class="line" style="background:#c62f3a"></i>Y ≈ −5.68 × T</span>
+        <span><i style="background:#6d28d9"></i>실측 사진이 있는 자세</span>
+        <span><i style="background:#b45309"></i>선택</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>영점 지도</h2>
+      <p class="sub">각 영점에서 선택 536점의 평균 이동이다 (20261014 center 기준, px). 누르면 그 영점을 선택한다.</p>
+      <canvas id="orig"></canvas>
+      <div class="legend">
+        <span><i style="background:#0f1b33"></i>센터 사진</span>
+        <span><i style="background:#1d4ed8"></i>trial 영점</span>
+        <span><i style="background:#6d28d9"></i>혼합 촬영 세션</span>
+        <span><i style="background:#8a94a6"></i>추가 후보 (주성분 ±2σ)</span>
+        <span><i class="line" style="background:#b45309"></i>백래시 (+접근, −접근)</span>
+      </div>
+      <div class="tablewrap" style="margin-top:8px"><table id="otbl"></table></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="row between">
+      <div>
+        <h2>선택한 자세 × 영점의 증강 샘플</h2>
+        <div class="readout" id="selInfo"></div>
+      </div>
+      <div class="row">
+        <label>n <input class="n" type="number" id="n" min="1" max="50" step="1" value="3"></label>
+        <label>seed <input class="n" type="number" id="seed" min="0" step="1" value="20261028" style="width:110px"></label>
+        <button class="btn is-on" id="tBack">센터 영점에 백래시</button>
+        <button class="btn" id="tYT">YT 결합항</button>
+      </div>
+    </div>
+    <div class="split" style="margin-top:8px">
+      <div>
+        <div class="row between"><span class="muted" id="fieldInfo"></span>
+          <select id="fieldMode"><option value="shape">모양만 (평균 이동을 뺀 점별 차이)</option><option value="total">전체 이동</option><option value="noise">샘플 1의 잡음만</option></select></div>
+        <canvas id="field"></canvas>
+      </div>
+      <div>
+        <span class="muted">모든 영점 × n 샘플의 판 평균 이동 (선택 영점은 주황)</span>
+        <canvas id="cloud"></canvas>
+      </div>
+    </div>
+    <div class="tablewrap" style="margin-top:10px"><table id="stbl"></table></div>
+  </section>
+
+  <section class="card">
+    <h2>증강 자체 평가 · 실측 사진 vs 증강 쌍둥이</h2>
+    <p class="sub">실측 사진마다 그 사진을 빼고 맞춘 생성기로 같은 자세·영점의 쌍둥이를 만들고, 채택 joint·control 모듈에 똑같이 넣었다. 측정값은 각 모듈이 실제로 쓰는 것이다 (joint 102관측, control 고정 630점 LK/GN 추적). Python으로 옮긴 추정은 C++ 결과와 <span id="portTxt"></span> 안에서 같다.</p>
+    <p class="sub">반복 잡음은 두 가지다. <b>1020 반복</b>: 1020 같은 자세 3장의 편차 (2번째 장 치우침 포함). <b>1014 연속</b>: 1014 단일축 사진의 점별 반응식 잔차 (같은 자세 반복이 없어 잔차로 추정, 자유도 보정). <span id="noiseTxt"></span></p>
+    <div class="split">
+      <div><table id="twTbl"></table></div>
+      <div>
+        <div class="row between"><span class="muted" id="twInfo"></span>
+          <select id="twMode"><option value="jy">joint Y 오차</option><option value="jt">joint T 오차</option><option value="c">control 값 오차</option></select></div>
+        <div class="readout" id="twro"></div>
+        <canvas id="twin" style="height:300px; cursor:crosshair"></canvas>
+        <div class="legend">
+          <span><i style="background:#1d4ed8"></i>1014 단일축</span>
+          <span><i style="background:#6d28d9"></i>1020 혼합</span>
+          <span><i style="background:#c62f3a"></i>1020 T = 2 (외삽)</span>
+          <span><i class="line" style="background:#0f7b55"></i>허용 ±0.09</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="row between">
+      <div><h2>Y-T 평면 오차 지도</h2>
+        <p class="sub" style="margin:0">격자 16,281점 × 영점 15개 × 잡음 <span id="mapN"></span>회를 채점했다. 가정 시뮬레이션이다.</p></div>
+      <div class="row">
+        <select id="mModel"><option value="joint">joint (1차)</option><option value="control">control (2차, Y 또는 T 하나만 출력)</option></select>
+        <select id="mMetric"><option value="pass_">두 축 0.09 통과율</option><option value="ey">평균 |Y 오차|</option><option value="et">평균 |T 오차|</option><option value="eymax">최대 |Y 오차|</option><option value="etmax">최대 |T 오차|</option></select>
+        <select id="mNoise"></select>
+        <select id="mOrigin"></select>
+      </div>
+    </div>
+    <div class="kpis" id="mKpi" style="margin:10px 0"></div>
+    <div class="readout" id="mro"></div>
+    <canvas id="map" style="height:560px; cursor:crosshair"></canvas>
+    <div class="legend" id="mLegend"></div>
+    <ul class="note" style="padding-left: 26px; margin-top:10px">
+      <li>Y > 0, T > 0 밖의 사분면과 |Y| > 1 혼합 자세는 실측이 없다. 이 영역의 증강은 "Y·T 효과가 더해진다"는 가정이고, 결합항은 지금 자료로 확인하지 못했다.</li>
+      <li>joint는 1014와 1020 사진으로 학습했다. 실측 사진 성적은 재대입이고, 지도는 그 모델이 학습 범위 밖 자세에서 어떻게 되는지 보여 주는 가정 시뮬레이션이다.</li>
+      <li>control은 Y 또는 T 하나만 출력하므로 혼합 자세에서는 원래 통과할 수 없다. 쓰임새(1차 후 T ≈ 0)에 맞는 곳은 T = 0 줄 부근이다.</li>
+    </ul>
+  </section>
+
+  <div class="layout even">
+    <section class="card">
+      <h2>검증 1 · 가진 데이터</h2>
+      <p class="sub">사진마다 생성기에 넣지 않고 예측한 잔차다. 1014는 trial 안 4겹 교차검증, 1020 혼합은 자세 하나 빼기 (세션 영점, 결합항 없음).</p>
+      <div class="readout" id="vro"></div>
+      <canvas id="valid"></canvas>
+      <div class="legend">
+        <span><i style="background:#1d4ed8"></i>1014 Y</span>
+        <span><i style="background:#0f7b55"></i>1014 T</span>
+        <span><i style="background:#6d28d9"></i>1020 혼합 T ≤ 1</span>
+        <span><i style="background:#c62f3a"></i>1020 T = 2 (범위 밖 외삽)</span>
+        <span><i class="line" style="background:#b45309"></i>잡음 바닥, 2배</span>
+      </div>
+      <div class="split" style="margin-top:10px">
+        <div><table id="vtbl1"></table></div>
+        <div><table id="vtbl2"></table></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>검증 2 · 내일 받을 데이터</h2>
+      <p class="sub">오늘 생성기를 고정하고, 새 사진을 보기 전에 예측을 정한 뒤 한 번 비교한다.</p>
+      <ol class="note" style="padding-left: 28px;">
+        <li>새 사진을 기존과 같은 630점 흐린 경계 맞춤으로 측정한다.</li>
+        <li>새 센터 사진: 기존 영점 구름(주성분 2σ) 안에 들어오는지, 어느 영점과 가까운지 본다.</li>
+        <li>나머지 사진, 영점 가정 4가지로 잔차를 잰다.
+          <br>a. 새 센터 평균 · a2. 새 센터 + 접근 방향 백래시 (사진 정보만 쓰는 예측)
+          <br>b. 기존 15개 중 가장 맞는 영점 · c. 새 사진으로 세션 영점 맞춤 (진단)</li>
+        <li>결합항 YT 끔과 켬을 둘 다 계산한다. 잔차를 잡음 바닥과 비교한다.</li>
+      </ol>
+      <p class="note mono" style="margin-top:8px">cd experiments/hye/20261028_211553_YT증강_점별변위_결합항<br>python -I evaluate_new.py &lt;새 사진 폴더&gt; &lt;이름&gt;</p>
+      <h2 style="margin-top:14px">파이프라인 점검 (20261020으로 다시 돌림)</h2>
+      <p class="sub">20261020은 생성기를 맞출 때 쓴 사진이라 성적이 아니라 동작 확인이다. a2의 백래시에도 이 세션 값이 섞여 있다.</p>
+      <table id="dry"></table>
+      <h2 style="margin-top:14px">내일 데이터에 요청할 것</h2>
+      <ul class="note" style="padding-left: 26px;">
+        <li>혼합 자세가 지금은 Y > 0, T > 0 사분면뿐이다. 결합항과 백래시 부호를 확인하려면 Y < 0 또는 T < 0 자세가 필요하다.</li>
+        <li>|Y| > 1 혼합 자세가 없다. 격자 끝(±2)의 결합은 아직 외삽이다.</li>
+        <li>촬영 순서(접근 방향)를 기록해 주면 백래시를 가정 대신 실측으로 넣을 수 있다.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>생성 방식과 한계</h2>
+    <ul class="note" style="padding-left: 26px;">
+      <li><b>샘플</b> = 영점 필드 + 단일축 반응 Y·T± + [YT 결합항] + 반복 촬영 잡음. 모두 점별(630점, 화면은 control 선택 536점) 2성분 변위다.</li>
+      <li><b>단일축 반응</b>: 20261014 280장에서 trial 영점과 함께 점마다 맞춘다. 후보 6개 중 4겹 교차검증으로 <span class="mono" id="famTxt"></span>를 골랐다 (T는 +/− 기울기를 따로 둔다).</li>
+      <li><b>영점</b>: 실측 11개 (1014 센터, trial 6개, 1020 센터 3장, 1020 혼합 세션) + 실측 11개의 주성분 2개 ±2σ 추가 후보 4개. 센터 사진 영점에는 접근 방향 백래시를 더한다.</li>
+      <li><b>반복 잡음</b>: 1020 같은 자세 3장의 점별 편차 60개에서, 같은 촬영 순번(1, 2, 3번째)의 편차를 하나 뽑는다. 2번째 장의 x 치우침이 그대로 들어간다.</li>
+      <li><b>결합항 YT</b>: 혼합 57장 자세 하나 빼기에서 오차를 줄이지 못해 기본으로 끈다. 지금 자료로는 잡음 바닥과 구분되지 않는다는 뜻이다.</li>
+      <li><b>측정</b>: joint_center_630의 흐린 경계 직접 맞춤이다. control의 LK15/GN17 추적과 joint의 102관측(QR 정합 54 + 선 48)으로 같은 검증은 아직 하지 않았다.</li>
+      <li>전부 저장하면 영점 1개 × n=3에 약 250MB다. 대시보드는 화면에서 계산하고, 파일은 <span class="mono">generate.py --write &lt;영점&gt;</span>로 필요할 때 만든다.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="data.js"></script>
+<script src="eval.js"></script>
+<script>
+const A = window.AUG, NY = 81, NT = 201, NP = A.points.length;
+const $ = id => document.getElementById(id);
+const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const Yof = i => Math.round((-2 + i * 0.05) * 100) / 100, Tof = j => Math.round((-1 + j * 0.01) * 100) / 100;
+const f = (v, d) => (v >= 0 ? '+' : '') + v.toFixed(d);
+let sel = [60, 150], selO = 0, hov = null, showBox = true, showLine = true, showMeas = true, useBack = true, useYT = false;
+const KIND_COL = { '실측 센터 사진': '--ink', '실측 trial 영점': '--blue', '실측 혼합 세션 영점': '--violet', '추가 후보 (주성분 ±2σ)': '--gray' };
+
+function mulberry(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function basis(Y, T) {
+  const [dy, dt, sg] = A.family_spec, b = [];
+  for (let d = 1; d <= dy; d++) b.push(Y ** d);
+  if (sg) { for (let d = 1; d <= dt; d++) b.push(Math.max(T, 0) ** d); for (let d = 1; d <= dt; d++) b.push(Math.min(T, 0) ** d); }
+  else for (let d = 1; d <= dt; d++) b.push(T ** d);
+  return b;
+}
+function clean(o, Y, T) {
+  const b = basis(Y, T), O = A.origins[o], out = new Float64Array(NP * 2);
+  const sgn = Math.sign(T) || Math.sign(Y), bl = useBack && O.kind === '실측 센터 사진' ? (sgn > 0 ? A.bplus : sgn < 0 ? A.bminus : null) : null;
+  for (let p = 0; p < NP; p++) for (let c = 0; c < 2; c++) {
+    let v = O.field[p][c];
+    for (let k = 0; k < b.length; k++) v += b[k] * A.coef[k][p][c];
+    if (bl) v += bl[p][c];
+    if (useYT) v += Y * T * A.yt[p][c];
+    out[p * 2 + c] = v;
+  }
+  return out;
+}
+function pickPool(o, i, j, k, seed) {
+  const r = mulberry((seed * 73856093) ^ (o * 2654435761) ^ (i * 19349663) ^ (j * 83492791) ^ ((k + 1) * 40503));
+  const cand = A.pool_shot.map((s, q) => s === (k % 3) + 1 ? q : -1).filter(q => q >= 0);
+  return cand[Math.floor(r() * cand.length)];
+}
+function samples(o, i, j, n, seed) {
+  const base = clean(o, Yof(i), Tof(j)), out = [];
+  for (let k = 0; k < n; k++) {
+    const q = pickPool(o, i, j, k, seed), s = new Float64Array(NP * 2);
+    for (let p = 0; p < NP; p++) { s[p * 2] = base[p * 2] + A.pool[q][p][0]; s[p * 2 + 1] = base[p * 2 + 1] + A.pool[q][p][1]; }
+    out.push({ k, q, shot: A.pool_shot[q], s });
+  }
+  return { base, out };
+}
+const mean = (v, c) => { let a = 0; for (let p = 0; p < NP; p++) a += v[p * 2 + c]; return a / NP; };
+function setupCanvas(cv) { const d = devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight; cv.width = W * d; cv.height = H * d; const c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); c.font = '11px ' + cssv('--font'); return [c, W, H]; }
+function axes(c, W, H, m, x0, x1, y0, y1, xs, ys, xl, yl) {
+  const X = v => m.L + (v - x0) / (x1 - x0) * (W - m.L - m.R), Y = v => H - m.B - (v - y0) / (y1 - y0) * (H - m.T - m.B);
+  c.strokeStyle = cssv('--line'); c.fillStyle = cssv('--ink-2'); c.lineWidth = 1;
+  for (let v = Math.ceil(x0 / xs) * xs; v <= x1 + 1e-9; v += xs) { c.beginPath(); c.moveTo(X(v), m.T); c.lineTo(X(v), H - m.B); c.stroke(); c.textAlign = 'center'; c.fillText(+v.toFixed(3) + '', X(v), H - m.B + 14); }
+  for (let v = Math.ceil(y0 / ys) * ys; v <= y1 + 1e-9; v += ys) { c.beginPath(); c.moveTo(m.L, Y(v)); c.lineTo(W - m.R, Y(v)); c.stroke(); c.textAlign = 'right'; c.fillText(+v.toFixed(3) + '', m.L - 5, Y(v) + 4); }
+  c.textAlign = 'center'; c.fillText(xl, m.L + (W - m.L - m.R) / 2, H - 4);
+  c.save(); c.translate(11, m.T + (H - m.T - m.B) / 2); c.rotate(-Math.PI / 2); c.fillText(yl, 0, 0); c.restore();
+  return [X, Y];
+}
+
+/* ---------- 격자 ---------- */
+const G = { L: 56, R: 14, T: 10, B: 40 };
+const gx = (i, W) => G.L + i * (W - G.L - G.R) / (NY - 1), gy = (j, H) => G.T + (NT - 1 - j) * (H - G.T - G.B) / (NT - 1);
+const measPoses = [...new Set(A.photos.map(p => p.Y + ',' + p.T))].map(s => s.split(',').map(Number));
+function drawGrid() {
+  const [c, W, H] = setupCanvas($('grid'));
+  c.strokeStyle = cssv('--line'); c.fillStyle = cssv('--ink-2'); c.textAlign = 'center';
+  for (let i = 0; i < NY; i += 10) { const x = gx(i, W); c.beginPath(); c.moveTo(x, G.T); c.lineTo(x, H - G.B); c.stroke(); c.fillText(Yof(i).toFixed(1), x, H - G.B + 15); }
+  c.fillText('Y (mm), 0.05 간격 81칸', G.L + (W - G.L - G.R) / 2, H - 6);
+  c.textAlign = 'right';
+  for (let j = 0; j < NT; j += 25) { const y = gy(j, H); c.beginPath(); c.moveTo(G.L, y); c.lineTo(W - G.R, y); c.stroke(); c.fillText(Tof(j).toFixed(2), G.L - 6, y + 4); }
+  c.save(); c.translate(12, G.T + (H - G.T - G.B) / 2); c.rotate(-Math.PI / 2); c.textAlign = 'center'; c.fillText('T, 0.01 간격 201칸', 0, 0); c.restore();
+  c.fillStyle = cssv('--blue');
+  for (let i = 0; i < NY; i++) for (let j = 0; j < NT; j++) c.fillRect(gx(i, W) - .8, gy(j, H) - .8, 1.6, 1.6);
+  c.strokeStyle = cssv('--ink'); c.lineWidth = 2.5;
+  c.beginPath(); c.moveTo(gx(40, W), G.T); c.lineTo(gx(40, W), H - G.B); c.moveTo(G.L, gy(100, H)); c.lineTo(W - G.R, gy(100, H)); c.stroke();
+  if (showBox) { c.strokeStyle = cssv('--pass'); c.lineWidth = 2; const x0 = gx(38.2, W), x1 = gx(41.8, W), y0 = gy(109, H), y1 = gy(91, H); c.strokeRect(x0, y0, x1 - x0, y1 - y0); }
+  if (showLine) { c.strokeStyle = cssv('--fail'); c.lineWidth = 1.5; c.setLineDash([6, 4]); c.beginPath(); c.moveTo(gx(0, W), gy(100 + 2 / 5.68 * 100, H)); c.lineTo(gx(80, W), gy(100 - 2 / 5.68 * 100, H)); c.stroke(); c.setLineDash([]); }
+  if (showMeas) { c.fillStyle = cssv('--violet'); measPoses.forEach(([Y, T]) => { if (Math.abs(T) <= 1) { c.beginPath(); c.arc(gx((Y + 2) / 0.05, W), gy((T + 1) / 0.01, H), 2.6, 0, 7); c.fill(); } }); }
+  c.fillStyle = cssv('--orange'); c.beginPath(); c.arc(gx(sel[0], W), gy(sel[1], H), 5, 0, 7); c.fill();
+  if (hov) { c.strokeStyle = cssv('--ink'); c.lineWidth = 1.5; c.beginPath(); c.arc(gx(hov[0], W), gy(hov[1], H), 6, 0, 7); c.stroke(); }
+}
+function pickGrid(e) {
+  const cv = $('grid'), r = cv.getBoundingClientRect(), W = cv.clientWidth, H = cv.clientHeight;
+  const i = Math.round((e.clientX - r.left - G.L) / ((W - G.L - G.R) / (NY - 1))), j = Math.round((NT - 1) - (e.clientY - r.top - G.T) / ((H - G.T - G.B) / (NT - 1)));
+  return i >= 0 && i < NY && j >= 0 && j < NT ? [i, j] : null;
+}
+const ptLabel = p => `Y ${f(Yof(p[0]), 2)} mm, T ${f(Tof(p[1]), 2)}  ·  #${(p[0] * NT + p[1] + 1).toLocaleString()} / 16,281`;
+
+/* ---------- 영점 지도 ---------- */
+let OM = null;
+function drawOrig() {
+  const [c, W, H] = setupCanvas($('orig')), m = { L: 48, R: 14, T: 10, B: 34 };
+  const P = A.origins.map(o => [mean(o.field.flat(), 0), mean(o.field.flat(), 1)]);
+  const [X, Y] = axes(c, W, H, m, -1.2, 0.5, -0.3, 0.7, 0.2, 0.1, '판 평균 dx (px) · Y 1스텝 0.70, T 1스텝 0.79', 'dy (px)');
+  c.strokeStyle = cssv('--ink'); c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(0), m.T); c.lineTo(X(0), H - m.B); c.moveTo(m.L, Y(0)); c.lineTo(W - m.R, Y(0)); c.stroke();
+  const bp = [mean(A.bplus.flat(), 0), mean(A.bplus.flat(), 1)], bm = [mean(A.bminus.flat(), 0), mean(A.bminus.flat(), 1)];
+  c.strokeStyle = cssv('--orange'); c.lineWidth = 2;
+  [bp, bm].forEach((b, q) => { c.beginPath(); c.moveTo(X(0), Y(0)); c.lineTo(X(b[0]), Y(b[1])); c.stroke(); c.fillStyle = cssv('--orange'); c.textAlign = 'left'; c.fillText(q ? '−접근' : '+접근', X(b[0]) + 4, Y(b[1]) - 4); });
+  OM = P.map(([x, y]) => [X(x), Y(y)]);
+  A.origins.forEach((o, k) => {
+    c.fillStyle = cssv(KIND_COL[o.kind]); c.beginPath(); c.arc(OM[k][0], OM[k][1], k === selO ? 7 : 5, 0, 7); c.fill();
+    if (k === selO) { c.strokeStyle = cssv('--orange'); c.lineWidth = 2.5; c.beginPath(); c.arc(OM[k][0], OM[k][1], 10, 0, 7); c.stroke(); }
+    c.fillStyle = cssv('--ink-2'); c.textAlign = 'left'; c.fillText(o.name, OM[k][0] + 8, OM[k][1] + 4);
+  });
+  $('otbl').innerHTML = '<tr><th>영점</th><th>종류</th><th>dx</th><th>dy</th></tr>' + A.origins.map((o, k) =>
+    `<tr class="${k === selO ? 'pick' : ''}" data-k="${k}" style="cursor:pointer"><td>${o.label}</td><td>${o.kind}</td><td>${f(P[k][0], 3)}</td><td>${f(P[k][1], 3)}</td></tr>`).join('');
+}
+$('orig').addEventListener('click', e => {
+  const r = $('orig').getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  let best = -1, bd = 400; OM.forEach(([px, py], k) => { const d = (px - x) ** 2 + (py - y) ** 2; if (d < bd) { bd = d; best = k; } });
+  if (best >= 0) { selO = best; drawOrig(); drawSamples(); }
+});
+$('otbl').addEventListener('click', e => { const tr = e.target.closest('tr[data-k]'); if (tr) { selO = +tr.dataset.k; drawOrig(); drawSamples(); } });
+
+/* ---------- 샘플 ---------- */
+const nVal = () => Math.max(1, Math.min(50, Math.round(+$('n').value || 1))), seedVal = () => Math.round(+$('seed').value || 0);
+function drawSamples() {
+  const n = nVal(), seed = seedVal(), [i, j] = sel, O = A.origins[selO];
+  $('kN').textContent = n; $('kTotal').textContent = (16281 * A.origins.length * n).toLocaleString();
+  const { base, out } = samples(selO, i, j, n, seed);
+  $('selInfo').textContent = `${ptLabel(sel)}  ·  영점 ${O.label}${useBack && O.kind === '실측 센터 사진' && (Tof(j) || Yof(i)) ? ' + 백래시' : ''}${useYT ? ' + YT' : ''}`;
+  /* 점 필드 */
+  const mode = $('fieldMode').value, [c, W, H] = setupCanvas($('field'));
+  const xs = A.points.map(p => p[0]), ys = A.points.map(p => p[1]);
+  const x0 = Math.min(...xs) - 20, x1 = Math.max(...xs) + 20, y0 = Math.min(...ys) - 20, y1 = Math.max(...ys) + 20;
+  const sc = Math.min((W - 10) / (x1 - x0), (H - 10) / (y1 - y0)), ox = (W - (x1 - x0) * sc) / 2, oy = (H - (y1 - y0) * sc) / 2;
+  const s0 = out[0].s, mdx = mean(base, 0), mdy = mean(base, 1);
+  const vec = p => mode === 'total' ? [s0[p * 2], s0[p * 2 + 1]] : mode === 'shape' ? [s0[p * 2] - mean(s0, 0), s0[p * 2 + 1] - mean(s0, 1)] : [s0[p * 2] - base[p * 2], s0[p * 2 + 1] - base[p * 2 + 1]];
+  let mx = 1e-9; for (let p = 0; p < NP; p++) { const v = vec(p); mx = Math.max(mx, Math.hypot(v[0], v[1])); }
+  const mag = 28 / mx / sc;
+  c.strokeStyle = cssv('--blue'); c.lineWidth = 1;
+  for (let p = 0; p < NP; p++) {
+    const X = ox + (A.points[p][0] - x0) * sc, Y = oy + (A.points[p][1] - y0) * sc, v = vec(p);
+    c.fillStyle = cssv('--muted'); c.fillRect(X - 1, Y - 1, 2, 2);
+    c.beginPath(); c.moveTo(X, Y); c.lineTo(X + v[0] * mag * sc, Y + v[1] * mag * sc); c.stroke();
+  }
+  $('fieldInfo').textContent = `선택 536점 · 화살표 ×${mag.toFixed(0)} · 가장 긴 화살표 ${mx.toFixed(3)} px`;
+  /* 판 평균 구름: 모든 영점 */
+  const [c2, W2, H2] = setupCanvas($('cloud')), m = { L: 52, R: 12, T: 10, B: 34 };
+  const all = A.origins.map((o, k) => samples(k, i, j, n, seed).out.map(s => [mean(s.s, 0), mean(s.s, 1)]));
+  const flat = all.flat(), cx0 = Math.min(...flat.map(p => p[0])), cx1 = Math.max(...flat.map(p => p[0])), cy0 = Math.min(...flat.map(p => p[1])), cy1 = Math.max(...flat.map(p => p[1]));
+  const padx = Math.max(0.3, (cx1 - cx0) * 0.1), pady = Math.max(0.3, (cy1 - cy0) * 0.1);
+  const [X, Y] = axes(c2, W2, H2, m, cx0 - padx, cx1 + padx, cy0 - pady, cy1 + pady, 0.5, 0.2, '판 평균 dx (px)', 'dy (px)');
+  const ideal = clean(0, Yof(i), Tof(j));
+  c2.strokeStyle = cssv('--muted'); c2.setLineDash([4, 3]);
+  [-0.70, 0.70].forEach(d => { c2.beginPath(); c2.moveTo(X(mean(ideal, 0) + d), m.T); c2.lineTo(X(mean(ideal, 0) + d), H2 - m.B); c2.stroke(); });
+  c2.setLineDash([]);
+  all.forEach((pts, k) => pts.forEach(p => { c2.fillStyle = k === selO ? cssv('--orange') : cssv(KIND_COL[A.origins[k].kind]); c2.globalAlpha = k === selO ? 1 : 0.55; c2.beginPath(); c2.arc(X(p[0]), Y(p[1]), k === selO ? 4 : 3, 0, 7); c2.fill(); }));
+  c2.globalAlpha = 1;
+  /* 표 */
+  const toY = 1 / 13.9, toT = 1 / 79.5;
+  $('stbl').innerHTML = '<tr><th>k</th><th>촬영 순번</th><th>잡음 표본</th><th>판 dx</th><th>판 dy</th><th>잡음 dx</th><th>≈ΔY mm</th><th>≈ΔT</th><th>잡음 RMS</th></tr>' + out.map(s => {
+    const dx = mean(s.s, 0), dy = mean(s.s, 1), nd = dx - mdx; let r = 0; for (let p = 0; p < NP * 2; p++) r += (s.s[p] - base[p]) ** 2;
+    return `<tr><td>${s.k + 1}</td><td>${s.shot}번째</td><td>#${s.q}</td><td>${dx.toFixed(3)}</td><td>${dy.toFixed(3)}</td><td>${f(nd, 3)}</td><td>${f(nd * toY, 4)}</td><td>${f(nd * toT, 4)}</td><td>${Math.sqrt(r / NP / 2).toFixed(3)}</td></tr>`;
+  }).join('') + `<tr><td colspan="9" class="muted" style="text-align:left">≈ΔY, ≈ΔT는 판 x 잡음을 한 축만 움직였다고 보고 환산한 값 (Y 13.9 px/mm, T 79.5 px/1.00). 노이즈 없는 판 이동 dx ${mdx.toFixed(3)}, dy ${mdy.toFixed(3)} px</td></tr>`;
+}
+['n', 'seed', 'fieldMode'].forEach(id => $(id).addEventListener('input', drawSamples));
+$('tBack').onclick = () => { useBack = !useBack; $('tBack').classList.toggle('is-on', useBack); drawSamples(); };
+$('tYT').onclick = () => { useYT = !useYT; $('tYT').classList.toggle('is-on', useYT); drawSamples(); };
+$('tBox').onclick = () => { showBox = !showBox; $('tBox').classList.toggle('is-on', showBox); drawGrid(); };
+$('tLine').onclick = () => { showLine = !showLine; $('tLine').classList.toggle('is-on', showLine); drawGrid(); };
+$('tMeas').onclick = () => { showMeas = !showMeas; $('tMeas').classList.toggle('is-on', showMeas); drawGrid(); };
+$('grid').addEventListener('mousemove', e => { hov = pickGrid(e); $('ro').textContent = hov ? ptLabel(hov) : ptLabel(sel); drawGrid(); });
+$('grid').addEventListener('mouseleave', () => { hov = null; $('ro').textContent = ptLabel(sel); drawGrid(); });
+$('grid').addEventListener('click', e => { const p = pickGrid(e); if (p) { sel = p; drawGrid(); drawSamples(); } });
+
+/* ---------- 검증 ---------- */
+const VPH = A.photos.filter(p => p.rms !== null);
+const vcol = p => p.date === '20261020' ? (p.T > 1 ? '--fail' : '--violet') : (p.trial === 'S3' || p.trial === 'S4' ? '--pass' : '--blue');
+let VM = [];
+function drawValid() {
+  const [c, W, H] = setupCanvas($('valid')), m = { L: 44, R: 10, T: 10, B: 30 };
+  const [X, Y] = axes(c, W, H, m, 0, VPH.length, 0, 0.8, 50, 0.1, '사진 (1014 T → 1014 Y → 1020 혼합)', '잔차 RMS (px)');
+  const fl = A.noise_floor.rms;
+  c.strokeStyle = cssv('--orange'); c.setLineDash([5, 3]); [fl, 2 * fl].forEach(v => { c.beginPath(); c.moveTo(m.L, Y(v)); c.lineTo(W - m.R, Y(v)); c.stroke(); }); c.setLineDash([]);
+  VM = VPH.map((p, k) => { const x = X(k + 0.5), y = Y(Math.min(p.rms, 0.8)); c.fillStyle = cssv(vcol(p)); c.beginPath(); c.arc(x, y, 2.6, 0, 7); c.fill(); return [x, y]; });
+}
+$('valid').addEventListener('mousemove', e => {
+  const r = $('valid').getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  let best = -1, bd = 150; VM.forEach(([px, py], k) => { const d = (px - x) ** 2 + (py - y) ** 2; if (d < bd) { bd = d; best = k; } });
+  const p = VPH[best]; $('vro').textContent = p ? `${p.file} · ${p.eval} · 잔차 RMS ${p.rms.toFixed(3)} px, 판 평균 잔차 dx ${f(p.rdx, 3)}` : '';
+});
+function tables() {
+  const fl = A.noise_floor.rms, cls = v => v <= 1.5 * fl ? 'good' : v > 3 * fl ? 'bad' : '';
+  $('kFloor').textContent = fl.toFixed(3) + ' px'; $('famTxt').textContent = A.family;
+  $('vtbl1').innerHTML = '<tr><th>1014 반응식</th><th>전체</th><th>Y</th><th>T</th></tr>' + Object.entries(A.shape_cv).map(([k, v]) =>
+    `<tr class="${k === A.family ? 'pick' : ''}"><td>${k}</td><td class="${cls(v.rms)}">${v.rms.toFixed(3)}</td><td>${v.rms_Y.toFixed(3)}</td><td>${v.rms_T.toFixed(3)}</td></tr>`).join('');
+  const keep = Object.entries(A.mixed).filter(([k]) => k.includes('학습 T<=1') && !k.includes('YT2'));
+  $('vtbl2').innerHTML = '<tr><th>1020 혼합 (영점 | 결합항 | 평가)</th><th>RMS</th><th>판 dx 평균</th></tr>' + keep.map(([k, v]) => {
+    const [o, cp, , ev] = k.split('|'); return `<tr><td>${o} · ${cp === 'none' ? '없음' : cp} · ${ev.replace('평가 ', '')}</td><td class="${cls(v.rms)}">${v.rms.toFixed(3)}</td><td>${f(v.mdx_mean, 3)}</td></tr>`;
+  }).join('');
+  const DRY = [['a. 새 센터 평균', 0.486, 0.507], ['a2. 새 센터 + 백래시', 0.143, 0.140], ['b. 기존 영점 중 최적', 0.115, 0.118], ['c. 세션 영점 맞춤', 0.141, 0.142]];
+  $('dry').innerHTML = '<tr><th>영점 가정 (T ≤ 1, 45장)</th><th>결합항 없음</th><th>YT</th></tr>' + DRY.map(r => `<tr><td>${r[0]}</td><td class="${cls(r[1])}">${r[1].toFixed(3)}</td><td class="${cls(r[2])}">${r[2].toFixed(3)}</td></tr>`).join('');
+}
+
+/* ---------- 증강 자체 평가 ---------- */
+const E = window.AUG_EVAL;
+const SETCOL = s => s.startsWith('1014') ? '--blue' : s.includes('T=2') ? '--fail' : '--violet';
+let TWM = [];
+const NZL = nz => nz === '1020반복' ? '1020 반복' : '1014 연속';
+function twinTable() {
+  $('portTxt').textContent = `joint ${E.port.joint_max_abs_diff.toExponential(0)}, control ${E.port.control_max_abs_diff.toExponential(0)}`;
+  const sets = Object.keys(E.twin), cell = (v, d) => v === null || v === undefined ? '-' : (+v).toFixed(d);
+  const row = (lab, fn) => `<tr><td>${lab}</td>${sets.map(s => `<td>${fn(E.twin[s], s)}</td>`).join('')}</tr>`;
+  const pct = v => (v * 100).toFixed(0) + '%';
+  $('twTbl').innerHTML = `<tr><th></th>${sets.map(s => `<th>${s} (${E.twin[s].n})</th>`).join('')}</tr>` +
+    `<tr><td colspan="${sets.length + 1}" style="text-align:left;font-weight:600">joint: 실측 추정 − 쌍둥이 추정</td></tr>` +
+    row('Y 차이 RMS / 최대', t => `${cell(t.joint.diff_y_rms, 3)} / ${cell(t.joint.diff_y_max, 3)}`) +
+    row('T 차이 RMS / 최대', t => `${cell(t.joint.diff_t_rms, 4)} / ${cell(t.joint.diff_t_max, 4)}`) +
+    row('통과 (실측 / 쌍둥이)', t => `${t.joint.real_pass} / ${t.joint.twin_pass}`) +
+    row('통과 판정 일치', t => `<span class="${t.joint.pass_agree === t.n ? 'good' : 'bad'}">${t.joint.pass_agree} / ${t.n}</span>`) +
+    E.noises.map(nz => row(`실측이 쌍둥이 95% 안 (Y / T) · ${NZL(nz)}`, t => `${pct(t.joint.noisy[nz].real_inside_twin95_y)} / ${pct(t.joint.noisy[nz].real_inside_twin95_t)}`) +
+      row(`잡음 쌍둥이 통과율 · ${NZL(nz)}`, t => `${pct(t.joint.noisy[nz].twin_noisy_pass_mean)} <span class="muted">(실측 ${pct(t.joint.real_pass / t.n)})</span>`)).join('') +
+    `<tr><td colspan="${sets.length + 1}" style="text-align:left;font-weight:600">control</td></tr>` +
+    row('고른 축 일치', t => `<span class="${t.control.axis_agree === t.n ? 'good' : 'bad'}">${t.control.axis_agree} / ${t.n}</span>`) +
+    row('값 차이 RMS / 최대', t => `${cell(t.control.diff_rms, 4)} / ${cell(t.control.diff_max, 3)}`) +
+    row('통과 (실측 / 쌍둥이)', t => `${t.control.real_pass} / ${t.control.twin_pass}`) +
+    row('통과 판정 일치', t => `<span class="${t.control.pass_agree === t.n ? 'good' : 'bad'}">${t.control.pass_agree} / ${t.n}</span>`) +
+    E.noises.map(nz => row(`실측이 쌍둥이 95% 안 · ${NZL(nz)}`, t => pct(t.control.noisy[nz].real_inside_twin95)) +
+      row(`잡음 쌍둥이 통과율 · ${NZL(nz)}`, t => `${pct(t.control.noisy[nz].twin_noisy_pass_mean)} <span class="muted">(실측 ${pct(t.control.real_pass / t.n)})</span>`)).join('');
+  $('noiseTxt').textContent = 'control 선택 536점 기준 잡음 RMS: ' + E.noises.map(nz => `${NZL(nz)} ${E.noise[nz].rms.toFixed(3)} px (x ${E.noise[nz].x.toFixed(3)}, y ${E.noise[nz].y.toFixed(3)}, 판 dx 표준편차 ${E.noise[nz].plate_dx_sd.toFixed(3)})`).join(' · ');
+}
+function drawTwin() {
+  const mode = $('twMode').value, [c, W, H] = setupCanvas($('twin')), m = { L: 52, R: 12, T: 10, B: 34 };
+  const val = r => mode === 'jy' ? [r.joint_real_y - r.Y, r.joint_twin_y - r.Y] : mode === 'jt' ? [r.joint_real_t - r.T, r.joint_twin_t - r.T]
+    : [r.control_real_y + r.control_real_t - (r.control_real_axis === 'Y' ? r.Y : r.T), r.control_twin_y + r.control_twin_t - (r.control_twin_axis === 'Y' ? r.Y : r.T)];
+  const pts = E.twins.filter(r => !r.set.includes('T=2') || mode !== 'c').map(r => [r, ...val(r)]);
+  const lim = mode === 'jt' ? 0.04 : 0.16;
+  const [X, Y] = axes(c, W, H, m, -lim, lim, -lim, lim, lim / 4, lim / 4, '실측 사진 추정 오차', '증강 쌍둥이 추정 오차');
+  c.strokeStyle = cssv('--muted'); c.setLineDash([4, 3]); c.beginPath(); c.moveTo(X(-lim), Y(-lim)); c.lineTo(X(lim), Y(lim)); c.stroke(); c.setLineDash([]);
+  c.strokeStyle = cssv('--pass'); if (lim > 0.09) { c.strokeRect(X(-0.09), Y(0.09), X(0.09) - X(-0.09), Y(-0.09) - Y(0.09)); }
+  TWM = pts.map(([r, a, b]) => { const x = X(Math.max(-lim, Math.min(lim, a))), y = Y(Math.max(-lim, Math.min(lim, b))); c.fillStyle = cssv(SETCOL(r.set)); c.globalAlpha = .75; c.beginPath(); c.arc(x, y, 3, 0, 7); c.fill(); return [x, y, r, a, b]; });
+  c.globalAlpha = 1;
+  $('twInfo').textContent = '점선은 실측 = 쌍둥이. 범위 밖 점은 가장자리에 붙인다.';
+}
+$('twMode').addEventListener('input', drawTwin);
+$('twin').addEventListener('mousemove', e => {
+  const r = $('twin').getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  let best = null, bd = 150; TWM.forEach(p => { const d = (p[0] - x) ** 2 + (p[1] - y) ** 2; if (d < bd) { bd = d; best = p; } });
+  $('twro').textContent = best ? `${best[2].file} · 실측 ${f(best[3], 3)}, 쌍둥이 ${f(best[4], 3)}` : '';
+});
+
+/* ---------- 오차 지도 ---------- */
+function mapColor(metric, v) {
+  if (v === null || !isFinite(v)) return '#eee';
+  if (metric === 'pass_') { const s = [[0, [198, 47, 58]], [0.8, [244, 196, 120]], [0.95, [214, 236, 222]], [1, [15, 123, 85]]];
+    for (let k = 1; k < s.length; k++) if (v <= s[k][0]) { const t = (v - s[k - 1][0]) / (s[k][0] - s[k - 1][0]), a = s[k - 1][1], b = s[k][1]; return `rgb(${a.map((x, q) => Math.round(x + (b[q] - x) * t)).join(',')})`; }
+    return 'rgb(15,123,85)'; }
+  const t = Math.min(1, v / 0.18), mix = (p, q, u) => `rgb(${p.map((x, k) => Math.round(x + (q[k] - x) * u)).join(',')})`;
+  return t < 0.5 ? mix([232, 239, 255], [29, 78, 216], t * 2) : mix([29, 78, 216], [198, 47, 58], (t - 0.5) * 2);
+}
+let MAPG = null;
+function mapValues() {
+  const md = $('mModel').value, mt = $('mMetric').value, o = $('mOrigin').value, g = E.grid[$('mNoise').value][md];
+  if (o === 'all' || mt !== 'pass_') return g[mt];
+  return Array.from(g.by_origin[+o], ch => +ch / E.n);
+}
+function drawMap() {
+  const [c, W, H] = setupCanvas($('map')), mt = $('mMetric').value, md = $('mModel').value, vals = mapValues();
+  const L = 56, R = 14, T = 10, B = 40, cw = (W - L - R) / NY, ch = (H - T - B) / NT;
+  for (let i = 0; i < NY; i++) for (let j = 0; j < NT; j++) { c.fillStyle = mapColor(mt, vals[i * NT + j]); c.fillRect(L + i * cw, T + (NT - 1 - j) * ch, cw + .6, ch + .6); }
+  c.fillStyle = cssv('--ink-2'); c.textAlign = 'center';
+  for (let i = 0; i < NY; i += 10) c.fillText(Yof(i).toFixed(1), L + (i + .5) * cw, H - B + 15);
+  c.fillText('Y (mm)', L + (W - L - R) / 2, H - 6); c.textAlign = 'right';
+  for (let j = 0; j < NT; j += 25) c.fillText(Tof(j).toFixed(2), L - 6, T + (NT - 1 - j + .5) * ch + 4);
+  c.strokeStyle = cssv('--ink'); c.lineWidth = 2.5; c.beginPath(); c.moveTo(L + 40.5 * cw, T); c.lineTo(L + 40.5 * cw, H - B); c.moveTo(L, T + 100.5 * ch); c.lineTo(W - R, T + 100.5 * ch); c.stroke();
+  c.strokeStyle = cssv('--pass'); c.lineWidth = 2; c.strokeRect(L + (40.5 - 1.8) * cw, T + (100.5 - 9) * ch, 3.6 * cw, 18 * ch);
+  c.strokeStyle = cssv('--fail'); c.setLineDash([6, 4]); c.lineWidth = 1.5; c.beginPath(); c.moveTo(L + .5 * cw, T + (100.5 - 2 / 5.68 * 100) * ch); c.lineTo(L + 80.5 * cw, T + (100.5 + 2 / 5.68 * 100) * ch); c.stroke(); c.setLineDash([]);
+  c.strokeStyle = cssv('--ink'); c.lineWidth = 1.5; c.strokeRect(L + 40 * cw, T + (NT - 1 - 200) * ch, 21 * cw, 101 * ch); // 실측 혼합 범위 Y 0~1, T 0~1
+  c.strokeStyle = cssv('--orange'); c.lineWidth = 2; c.beginPath(); c.arc(L + (sel[0] + .5) * cw, T + (NT - 1 - sel[1] + .5) * ch, 5, 0, 7); c.stroke();
+  MAPG = { L, T, cw, ch, vals };
+  const s = E.grid[$('mNoise').value][md].summary, pct = v => (v * 100).toFixed(1) + '%';
+  $('mKpi').innerHTML = [['통과율 (전체)', pct(s.pass_rate)], ['통과율 |Y| ≤ 1', pct(s.pass_rate_absY_le1)], ['통과율 Y·T 축 위', pct(s.pass_rate_on_axes)], ['평균 |Y 오차|', s.ey_mean.toFixed(3) + ' mm'], ['평균 |T 오차|', s.et_mean.toFixed(4)], ['한 번도 통과 못 한 점', s.points_never_pass.toLocaleString()]]
+    .map(([a, b]) => `<div class="kpi"><span class="muted">${a}</span><b>${b}</b></div>`).join('');
+  $('mLegend').innerHTML = mt === 'pass_' ? '<span><i style="background:rgb(198,47,58)"></i>0%</span><span><i style="background:rgb(244,196,120)"></i>80%</span><span><i style="background:rgb(214,236,222)"></i>95%</span><span><i style="background:rgb(15,123,85)"></i>100%</span><span><i class="line" style="background:#0f1b33"></i>실측 혼합 자세가 있는 범위 (Y 0~1, T 0~1)</span><span><i class="line" style="background:#c62f3a"></i>Y ≈ −5.68 × T</span>'
+    : `<span><i style="background:rgb(232,239,255)"></i>0</span><span><i style="background:rgb(29,78,216)"></i>0.09 (허용 오차)</span><span><i style="background:rgb(198,47,58)"></i>0.18 이상</span>`;
+}
+function mapPick(e) { const r = $('map').getBoundingClientRect(), i = Math.floor((e.clientX - r.left - MAPG.L) / MAPG.cw), j = NT - 1 - Math.floor((e.clientY - r.top - MAPG.T) / MAPG.ch); return i >= 0 && i < NY && j >= 0 && j < NT ? [i, j] : null; }
+$('map').addEventListener('mousemove', e => { const p = mapPick(e); if (!p) return; const g = E.grid[$('mNoise').value][$('mModel').value], k = p[0] * NT + p[1];
+  $('mro').textContent = `${ptLabel(p)}  ·  통과 ${(g.pass_[k] * 100).toFixed(0)}%  ·  평균 |Y 오차| ${g.ey[k].toFixed(3)}, 최대 ${g.eymax[k].toFixed(3)}  ·  평균 |T 오차| ${g.et[k].toFixed(4)}, 최대 ${g.etmax[k].toFixed(4)}`; });
+$('map').addEventListener('click', e => { const p = mapPick(e); if (p) { sel = p; drawGrid(); drawSamples(); drawMap(); } });
+$('mOrigin').innerHTML = '<option value="all">영점 전체</option>' + E.names.map((n, k) => `<option value="${k}">${A.origins[k].label} (통과율만)</option>`).join('');
+$('mNoise').innerHTML = E.noises.map(nz => `<option value="${nz}">잡음: ${NZL(nz)}</option>`).join('');
+['mModel', 'mMetric', 'mOrigin', 'mNoise'].forEach(id => $(id).addEventListener('input', drawMap));
+$('mapN').textContent = E.n;
+
+tables(); twinTable(); drawGrid(); drawOrig(); drawSamples(); drawValid(); drawTwin(); drawMap(); $('ro').textContent = ptLabel(sel);
+addEventListener('resize', () => { drawGrid(); drawOrig(); drawSamples(); drawValid(); drawTwin(); drawMap(); });
+</script>
+</body>
+</html>

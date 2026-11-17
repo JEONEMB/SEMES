@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.15)
+project(control_feature_comparison LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(OpenCV 3.4 REQUIRED)
+get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
+set(CONTROL "${REPO}/experiments/hye/00000_final_Y_T control")
+set(JOINT "${REPO}/experiments/hye/00000_final_Y_T_joint")
+add_executable(compare_control src/main.cpp src/models.cpp
+ "${CONTROL}/src/tracker.cpp" "${CONTROL}/src/spline.cpp" "${CONTROL}/src/model.cpp"
+ "${JOINT}/src/observer.cpp" "${JOINT}/src/line_profile.cpp" "${JOINT}/third_party/ecc_compat.cpp")
+target_include_directories(compare_control PRIVATE include "${REPO}/include" "${CONTROL}/include" "${JOINT}/include" ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(compare_control PRIVATE ${OpenCV_LIBS} bcrypt)
+if(MSVC)
+ target_compile_options(compare_control PRIVATE /utf-8 /EHsc)
+ target_compile_definitions(compare_control PRIVATE NOMINMAX _CRT_SECURE_NO_WARNINGS)
+endif()
+add_custom_command(TARGET compare_control POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll" "$<TARGET_FILE_DIR:compare_control>")

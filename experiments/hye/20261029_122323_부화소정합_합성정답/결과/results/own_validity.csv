@@ -1,0 +1,10 @@
+method,valid_good,valid_bad,invalid_good,invalid_bad
+NCC(정수),28198,17162,0,0
+NCC+포물선,45294,44,0,0
+NCC+위상상관,44058,1276,0,0
+NCC+cornerSubPix,42953,1354,0,0
+NCC+LK(1단),44645,484,37,194
+피라미드LK(3단·NCC없음),45225,135,0,0
+NCC+LK15+GN스플라인(채택측정기),45118,8,160,74
+NCC+ECC,45354,6,0,0
+QR단위NCC+위상상관64(점NCC없음),45300,60,0,0

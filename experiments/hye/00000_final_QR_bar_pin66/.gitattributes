@@ -1,0 +1,5 @@
+# Preserve frozen hashes on Windows even with core.autocrlf=true.
+assets/* -text
+evidence/* -text
+assets/*.json whitespace=cr-at-eol
+evidence/*.tsv whitespace=-blank-at-eol,cr-at-eol

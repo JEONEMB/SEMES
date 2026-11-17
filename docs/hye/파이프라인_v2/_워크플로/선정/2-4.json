@@ -1,0 +1,155 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-4_품질판정/논문/01_Forstner1987_CVGIP_신뢰성분석_과대오차검정",
+   "title": "Reliability analysis of parameter estimation in linear models with applications to mensuration problems in computer vision",
+   "citation": "Förstner, W. (1987). Computer Vision, Graphics, and Image Processing 40(3), 273-310. doi:10.1016/S0734-189X(87)80144-5",
+   "url": "https://doi.org/10.1016/S0734-189X(87)80144-5",
+   "pdf_url": "https://www.ipb.uni-bonn.de/pdfs/Forstner1987Reliability.pdf",
+   "questions": [
+    2,
+    3,
+    8
+   ],
+   "why": "최소제곱 잔차로 과대오차를 검정하는 Baarda 방식을 템플릿 정합 등 영상 측정에 적용. 정밀도, 검출 가능한 최소 오차(내부 신뢰성), 못 잡은 오차가 결과에 주는 영향(외부 신뢰성)을 정의. GLS/P12 잔차 게이트 문턱을 통계로 정하는 근거. 원문은 저자 소속 공개 스캔 PDF(이미지, OCR 필요)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-4_품질판정/논문/02_Kalal2010_ICPR_정역방향오차_추적실패검출",
+   "title": "Forward-Backward Error: Automatic Detection of Tracking Failures",
+   "citation": "Kalal, Z., Mikolajczyk, K., Matas, J. (2010). ICPR 2010, 2756-2759. doi:10.1109/ICPR.2010.675",
+   "url": "https://doi.org/10.1109/ICPR.2010.675",
+   "pdf_url": "http://kahlan.eps.surrey.ac.uk/featurespace/tld/Publications/2010_icpr.pdf",
+   "questions": [
+    1,
+    5,
+    6
+   ],
+   "why": "캔버스 후보 '정방향과 역방향 오차'의 원전. LK 추적 점을 되돌려 추적해 출발점과의 거리로 실패를 찾고 NCC, SSD 지표와 비교."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-4_품질판정/논문/03_Kybic2010_TIP_부트스트랩_정합불확도",
+   "title": "Bootstrap Resampling for Image Registration Uncertainty Estimation Without Ground Truth",
+   "citation": "Kybic, J. (2010). IEEE Transactions on Image Processing 19(1), 64-73. doi:10.1109/TIP.2009.2030955",
+   "url": "https://doi.org/10.1109/TIP.2009.2030955",
+   "pdf_url": "https://cmp.felk.cvut.cz/ftp/articles/kybic/Kybic-ieeeTIP2009.pdf",
+   "questions": [
+    4,
+    6
+   ],
+   "why": "정답 없이 두 영상만으로 정합 불확도를 부트스트랩으로 구하고 헤세 기반 추정과 비교. 사진마다 Y, T 표준편차를 붙이는 직접 근거. 점 사이 상관(유효 정보 약 19) 반영 문제와 연결."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-4_품질판정/논문/04_Wieneke2015_MST_상관통계_점별불확도",
+   "title": "PIV uncertainty quantification from correlation statistics",
+   "citation": "Wieneke, B. (2015). Measurement Science and Technology 26(7), 074002. doi:10.1088/0957-0233/26/7/074002",
+   "url": "https://doi.org/10.1088/0957-0233/26/7/074002",
+   "pdf_url": "https://iopscience.iop.org/article/10.1088/0957-0233/26/7/074002/pdf",
+   "questions": [
+    1,
+    4,
+    8
+   ],
+   "why": "정합 후 두 창의 잔차로 점별 불확도를 계산하는 방법의 원전(기존 Sciacchitano 2019 리뷰는 2차 소개만). ECC/LK 패치 잔차로 점별 불확도를 만드는 근거. CC BY 3.0이지만 IOP가 자동 접근 확인(Radware) 화면을 띄워 받지 못함, 우회 안 함, 브라우저로 직접 받아야 함."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-4_품질판정/논문/05_Poggi2017_ICCV_신뢰도지표_정량평가",
+   "title": "Quantitative Evaluation of Confidence Measures in a Machine Learning World",
+   "citation": "Poggi, M., Tosi, F., Mattoccia, S. (2017). ICCV 2017, 5238-5247. doi:10.1109/ICCV.2017.559",
+   "url": "https://doi.org/10.1109/ICCV.2017.559",
+   "pdf_url": "https://openaccess.thecvf.com/content_ICCV_2017/papers/Poggi_Quantitative_Evaluation_of_ICCV_2017_paper.pdf",
+   "questions": [
+    1,
+    6
+   ],
+   "why": "정합 비용 곡선에서 나온 신뢰도 지표(피크 비, 곡률, 좌우 일치 등)를 AUC로 같은 조건에서 비교(Hu, Mordohai 2012 평가법 계승). 여러 지표를 고르고 묶는 평가 틀의 근거."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-4_품질판정/특허/01_US7065262_Cognex_RMS오차_포괄률_잡음도",
+   "title": "Fast high-accuracy multi-dimensional pattern inspection",
+   "citation": "US7065262B1, Cognex Corporation, Silver, Wallack, Wagman. 출원 2003-11-10, 등록 2006-06-20",
+   "url": "https://patents.google.com/patent/US7065262B1/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7065262",
+   "questions": [
+    1,
+    6,
+    7
+   ],
+   "why": "정합 결과마다 자세와 함께 RMS 오차, 포괄률(coverage), 잡음도(clutter)를 내고, 나쁘면 정밀 단계를 돌리지 않고 멈춤. 유효점 수와 잔차를 함께 쓰는 실무 판정 사례. 서지는 USPTO 공보 첫 장으로 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-4_품질판정/특허/02_US7728953_Nikon_마크점수_OK_NG_재측정",
+   "title": "Exposure method, exposure system, and substrate processing apparatus",
+   "citation": "US7728953B2, Nikon Corporation, Suzuki, Ishii, Okita. 출원 2006-08-31, 등록 2010-06-01",
+   "url": "https://patents.google.com/patent/US7728953B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7728953",
+   "questions": [
+    2,
+    7
+   ],
+   "why": "마크마다 점수를 내고 문턱보다 좋으면 OK, 나쁘면 NG와 원 파형을 노광 장치에 넘기며, 다른 마크나 측정 조건으로 재측정을 지정. 판정 뒤 재측정 흐름의 근거. OK/NG 문장은 공보 46쪽 부근 OCR로 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-4_품질판정/특허/03_US9483816_Litel_영상기각_위치불확도_정합통계",
+   "title": "Method and system for high accuracy and reliability registration of multi modal imagery",
+   "citation": "US9483816B2, Litel Instruments, Smith, Hunter Jr. 출원 2014-09-02, 등록 2016-11-01",
+   "url": "https://patents.google.com/patent/US9483816B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/9483816",
+   "questions": [
+    1,
+    4,
+    7
+   ],
+   "why": "그림자 큰 영상을 먼저 기각하고, 위치 불확도를 붙이고, 부분 영역마다 자유도를 둔 정합 통계(NMSE 최소)로 위치를 정함. 사진 단위 기각과 위치 불확도를 한 흐름으로 묶은 사례. 서지는 USPTO 공보 첫 장으로 확인."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/06_Duncan2010_MST_이웃중앙값_이상치검출/요약.md",
+   "why": "이웃 중앙값 정규화 잔차로 이상점 판정, 문턱 2~4. 점 단위 판정과 문턱(질문 2, 3)"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/12_Sciacchitano2019_MST_PIV_불확도정량화/요약.md",
+   "why": "사전, 사후 불확도, 피크 비, 영상 일치. 사후 지표가 편향을 못 잡는 한계(질문 4, 8)"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/01_JCGM2008_GUM_측정불확도표현지침/요약.md",
+   "why": "A형, B형 불확도, 합성, 확장불확도 k=2,3. 판정 문턱을 불확도로 표현(질문 2, 4)"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/03_US7352891_Canon_마크요소_정밀도선별/요약.md",
+   "why": "요소 간격 잔차 RMS가 문턱 초과면 이상, 해당 요소 대체. 잔차 게이트 실무 사례(질문 1, 3, 7)"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/15_Matrox_MIL_GeometricModelFinder_문서/요약.md",
+   "why": "score, target score, certainty 80% 자동 확정. 정합 점수 문턱(질문 1, 2)"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/05_US7265841_Canon_신호파형_중심오차보정/요약.md",
+   "why": "파형 평가값(콘트라스트, 비대칭)을 품질 값으로 쓰고 잔차 최소로 계수 결정(질문 1, 8)"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/07_Pan2013_ExpMech_ICGN_고속DIC/요약.md",
+   "why": "ZNSSD 상관값을 신뢰도로 써서 점 처리 순서 결정(질문 1)"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/13_Kyrki2004_ICRA_시각서보_측정오차전파/요약.md",
+   "why": "영상 오차가 자세, 운동 불확도로 전파되는 1차 해석(질문 4)"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/15_NIST_eHandbook_GaugeRR_측정시스템/요약.md",
+   "why": "반복성, 재현성, 안정성으로 측정계 품질 평가 절차(질문 2, 8)"
+  },
+  {
+   "path": "docs/hye/문헌연구/00002_문헌대장_v2.md",
+   "why": "위 기존 문헌(Duncan 2010, Sciacchitano 2019, GUM)이 대장에 등록되어 있어 중복 확인에 사용. 새 선정 8건은 대장과 기존 요약에 없음"
+  }
+ ]
+}

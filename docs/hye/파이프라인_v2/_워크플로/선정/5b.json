@@ -1,0 +1,162 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/b_물리식/논문/01_Sturm2000_CVPR_평면자세추정_호모그래피",
+   "title": "Algorithms for plane-based pose estimation",
+   "citation": "Sturm, P. (2000). Algorithms for plane-based pose estimation. Proc. IEEE CVPR 2000. DOI 10.1109/CVPR.2000.855889 (HAL inria-00525671)",
+   "url": "https://inria.hal.science/inria-00525671",
+   "pdf_url": "https://inria.hal.science/inria-00525671/file/Sturm-cvpr00.pdf",
+   "questions": [
+    3,
+    5,
+    10
+   ],
+   "why": "호모그래피에서 평면 자세를 푸는 닫힌 식 계열. 기존 IPPE와 다른 방식이라 같은 QR 점으로 대조 가능. 해 선택과 계산 시간 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/b_물리식/논문/02_Triggs1998_ECCV_평면장면_자기보정",
+   "title": "Autocalibration from Planar Scenes",
+   "citation": "Triggs, B. (1998). Autocalibration from planar scenes. ECCV 1998, LNCS 1406. DOI 10.1007/BFb0055661 (HAL inria-00548325, long version)",
+   "url": "https://inria.hal.science/inria-00548325",
+   "pdf_url": "https://inria.hal.science/inria-00548325/file/Triggs-eccv98-long.pdf",
+   "questions": [
+    6
+   ],
+   "why": "평면 장면 호모그래피만으로 내부 상수(f, 주점) 자기 보정. A13 식별값의 평면 장면 기준 재검토와 퇴화 조건 확인."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/b_물리식/논문/03_AlSharadqah2009_EJS_짧은호_원맞춤_오차",
+   "title": "Error analysis for circle fitting algorithms",
+   "citation": "Al-Sharadqah, A., Chernov, N. (2009). Error analysis for circle fitting algorithms. Electronic Journal of Statistics 3. DOI 10.1214/09-EJS419 (arXiv 0907.0421)",
+   "url": "https://arxiv.org/abs/0907.0421",
+   "pdf_url": "https://arxiv.org/pdf/0907.0421",
+   "questions": [
+    7
+   ],
+   "why": "원/원호 맞춤(기하, Kasa, Pratt, Taubin)의 고차 오차 분석. ±1도 짧은 호에서 회전 중심 식별의 편향과 분산 계산 근거."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/b_물리식/논문/04_Das2023_arXiv_GP잔차_기구보정",
+   "title": "An Active Learning Based Robot Kinematic Calibration Framework Using Gaussian Processes",
+   "citation": "Daş, E., Burdick, J. W. (2023). An Active Learning Based Robot Kinematic Calibration Framework Using Gaussian Processes. arXiv:2303.03658",
+   "url": "https://arxiv.org/abs/2303.03658",
+   "pdf_url": "https://arxiv.org/pdf/2303.03658",
+   "questions": [
+    9
+   ],
+   "why": "기구 모델의 잔차 오차를 GP로 모델링하고 GP-UCB로 측정 자리를 능동 선택. 물리식+잔차 학습 혼합과 보정 자료 자리 선정 근거."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/b_물리식/특허/01_US9305361_Qualcomm_호모그래피분해_모호성해소",
+   "title": "Resolving homography decomposition ambiguity based on orientation sensors",
+   "citation": "US9305361B2, Qualcomm Inc., inventors Jiang, Ahuja, Brunner. Filed 2011-12-02, granted 2016-04-05 (pub. US20130063589A1)",
+   "url": "https://patents.google.com/patent/US9305361B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/9305361",
+   "questions": [
+    5
+   ],
+   "why": "호모그래피 분해의 두 모호 해를 외부 자세 정보로 선택. 우리는 명령 이동 방향과 이전 턴으로 대체 가능. 표지 초록 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/b_물리식/특허/02_US20140100694_BeckmanCoulter_카메라축_회전중심_오프셋",
+   "title": "System and method for camera-based auto-alignment",
+   "citation": "US20140100694A1, Beckman Coulter Inc., inventors Rueckl, Streibl, Sickert. Filed 2013-10-04, published 2014-04-10 (family WO2014055909A2, EP2903786A2)",
+   "url": "https://patents.google.com/patent/US20140100694A1/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/20140100694",
+   "questions": [
+    3,
+    7
+   ],
+   "why": "카메라 축과 그리퍼 축 어긋남을 영상으로 교정. H=K[R1 R2 T]로 원 궤적의 타원 투영, 타원 맞춤과 반지름 비로 원 중심 투영점을 구함(본문 6쪽 확인). 원근 보정 회전 중심 추정."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/5_YT계산/b_물리식/특허/03_US6529852_Knoll_기구보정_신경망잔차보상",
+   "title": "Method and device for the improvement of the pose accuracy of effectors on mechanisms and for the measurement of objects in a workspace",
+   "citation": "US6529852B2, Alois Knoll, Peter Kovacs. Filed 2001-05-14, granted 2003-03-04, priority DE 198 54 011 (1998-11-12) (family WO2000029175A1, EP1135237)",
+   "url": "https://patents.google.com/patent/US6529852B2/en",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/6529852",
+   "questions": [
+    4,
+    9
+   ],
+   "why": "기구 모델 매개변수 식별 후 남은 보정 오차를 신경망으로 보상하는 관절값 제어기(그림 9 설명 확인). 물리식+잔차 학습 혼합의 특허 근거."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/09_MalisVargas2007_INRIA_호모그래피분해/요약.md",
+   "why": "해석적 호모그래피 분해(R, t/d, n)와 다중 해. OpenCV 3.4.15 decomposeHomographyMat 근거. 질문 3, 5, 10"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/10_Collins2014_IJCV_IPPE_평면자세추정/요약.md",
+   "why": "IPPE 닫힌 식 평면 자세와 두 해 반환, OpenCV SOLVEPNP_IPPE. 질문 3, 5, 10"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/09_Schweighofer2006_PAMI_평면타깃_자세두해모호성/요약.md",
+   "why": "평면 타깃 자세의 두 국소 최솟값 모호성. 질문 5"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/10_Oberkampf1996_CVIU_동일평면점_자세추정_약원근/요약.md",
+   "why": "동일 평면 점 자세 추정, 약원근에서의 모호성. 질문 5, 8"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/02_Malis1999_TRA_2.5D시각서보_회전평행이동분리/요약.md",
+   "why": "호모그래피 기반 회전과 평행이동 분리. 질문 8"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/11_Hou2020_AppSci_회전축정렬_카메라보정/요약.md",
+   "why": "광학 중심 궤적 원 맞춤으로 회전 중심과 오프셋 d 추정, 22.5도 범위 기준. 질문 7"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/07_Ji2004_TRA_오프셋있는회전카메라_자기보정/요약.md",
+   "why": "평행이동 오프셋 있는 회전 카메라 자기 보정, d=0 가정의 계통 오차. 질문 6, 7"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/12_Chai2023_OE_회전대카메라_회전축보정/요약.md",
+   "why": "광학 중심이 회전 중심에 있지 않은 회전대 카메라 축 보정. 질문 7"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/03_Ha2008_KSPE_비전얼라이너_회전중심_자동보정/요약.md",
+   "why": "xyθ 스테이지 회전 중심, 픽셀당 거리 자동 보정. 질문 3, 7"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/08_Nahvi1996_ICRA_잡음증폭지수_보정자세선택/요약.md",
+   "why": "보정 자세 선택의 관측성 지수(식별성). 질문 7, 9"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/06_Kimura2007_SPIE_Hitachi_카메라파라미터없는_비전보정/요약.md",
+   "why": "평면 2자유도에서 호모그래피만으로 좌표 관계를 구하는 보정 없는 방식. 질문 3"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/06_Adiv1989_PAMI_회전평행이동_고유모호성/요약.md",
+   "why": "회전과 평행이동 고유 모호성(cos 0.99999 문제). 질문 8"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/특허/01_US10334239_Omron_스테이지이동_좌표보정_회전중심/요약.md",
+   "why": "스테이지 이동으로 카메라 좌표와 회전 중심 보정. 질문 7"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/특허/02_US9247684_Cognex_기준마크각도_회전중심특정/요약.md",
+   "why": "기준 마크 각도로 회전 중심 특정. 질문 7"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/특허/05_US10076842_Cognex_기구_핸드아이_동시보정/요약.md",
+   "why": "XYθ 스테이지 기구 매개변수와 핸드아이를 한 번의 비선형 최소제곱으로 동시 보정. 질문 3, 9"
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/특허/06_US11749547_Kawasaki_기판재치부_회전축탐색/요약.md",
+   "why": "기판 재치부 회전축 탐색. 질문 7"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/05_US12198955_TEL_두지점측정차_물리모델보정/요약.md",
+   "why": "두 지점 측정 차로 물리 모델 매개변수를 고치는 방식(물리식 보정 혼합). 질문 4, 9"
+  }
+ ]
+}

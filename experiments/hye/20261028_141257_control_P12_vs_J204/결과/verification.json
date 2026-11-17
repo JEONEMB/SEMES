@@ -1,0 +1,14 @@
+{
+  "original_baseline_max_difference": 3.3295588508508445E-13,
+  "cache_replay_max_prediction_difference": 0.0,
+  "scope": "Original exposed development data. No final-model replacement. No physical robot evaluation.",
+  "prediction_rows": 1680,
+  "original_run": "results_141520",
+  "raw_measurement_J204_valid": 341,
+  "cache_replay_rows": 1680,
+  "original_baseline_axis_mismatches": 0,
+  "model_roundtrip_tolerance": 1E-12,
+  "cache_replay": "results_142317_cache_replay",
+  "raw_measurement_P12_valid": 341,
+  "saved_models": 20
+}
