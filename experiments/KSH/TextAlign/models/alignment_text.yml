@@ -1,0 +1,28 @@
+%YAML:1.0
+---
+# 기준 사진 없이 텍스트만으로 측정하는 설정 — ROI 는 모두 사진 절대 좌표 (px, 3840×2160 보정 프레임)
+# roi_setup.py 가 센터 사진 한 장에서 박스를 다시 맞추고 영점(zero_*)을 적는다. 이후 알고리즘은 사진 파일을 쓰지 않음.
+image_width_px: 3840
+image_height_px: 2160
+# ① 대략 위치 : QR 사이 어두운 틈 2곳을 찾아 아래 박스를 통째로 옮김 (±coarse_range_px 안)
+coarse_range_px: 350
+coarse_max_spread_px: 15
+# ② QR : 밝은 사각형 4변을 행·열마다 서브픽셀로 잡아 직선 맞춤 → 중심 (박스 ± qr_search_px 안)
+qr_search_px: 40
+qr_rois:
+   - { name: QR_L, cx_px: 1650, cy_px: 1065, hw_px: 110 }
+   - { name: QR_C, cx_px: 1907, cy_px: 1065, hw_px: 110 }
+   - { name: QR_R, cx_px: 2165, cy_px: 1065, hw_px: 110 }
+# ③ 배경(뒷벽 홀) : 어두운 링의 방사 대칭 중심 (Parthasarathy 2012), 좌우·상하 대칭 4곳 평균
+bg_method: "radial"
+bg_search_px: 40
+background_rois:
+   - { name: W1, cx_px: 966, cy_px: 1358, hw_px: 60 }
+   - { name: W2, cx_px: 2865, cy_px: 1359, hw_px: 60 }
+   - { name: W3, cx_px: 1009, cy_px: 1684, hw_px: 60 }
+   - { name: W4, cx_px: 2821, cy_px: 1685, hw_px: 60 }
+# ④ 영점 : 목표 자세(센터)에서 잰 s, d (px). s = QR 3개 중심 x 평균, d = s − 배경 4곳 x 평균. (center1.bmp 1장, 2026-10-15 세트 기준 예시)
+zero_s_px: 1901.126242
+zero_d_px: -14.107034
+# ⑤ 보정식 (s − zero_s, d − zero_d ↔ Y·Θ). 형식은 config/model_*.yml 과 같음
+model_file: "model_text_s1d2.yml"
