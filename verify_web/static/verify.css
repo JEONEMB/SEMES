@@ -123,6 +123,8 @@ h1{font-size:19px;margin:0;color:var(--accent);letter-spacing:-.4px}.title p{mar
 .verdict{padding:9px 12px;border-radius:4px;font-weight:700;font-size:15px;background:var(--surface2);color:var(--muted)}
 .verdict.ok{background:#1b7f4b;color:#fff}.verdict.bad{background:#fff0f1;color:#b12c39}.verdict.moving{background:#fff3df;color:var(--amber)}
 .pos-card[data-ok="ok"]{border-color:#1b7f4b}.pos-card[data-ok="ok"] strong{color:var(--green)}
+@keyframes celebrate{0%{background:#d6f2e1;box-shadow:0 0 0 0 rgba(27,127,75,.5)}60%{box-shadow:0 0 0 16px rgba(27,127,75,0)}100%{box-shadow:0 0 0 0 rgba(27,127,75,0)}}
+.pos-card.celebrate{animation:celebrate 1.4s ease-out 2}
 .pos-card[data-ok="bad"]{border-color:#e3b3b8}.pos-card[data-ok="moving"]{border-color:#efd3a6}.pos-card[data-ok="moving"] strong{color:var(--amber)}
 
 .plot-card{flex:1;display:flex;flex-direction:column;min-height:240px}

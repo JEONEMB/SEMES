@@ -262,6 +262,34 @@
   }
   setInterval(() => { if (state && state.moving) renderAxes(); }, 200);
 
+  // ---------- 보정 성공 알림 (초록으로 번쩍 + 짧은 '띵동') ----------
+  let audio = null, doneRun;        // doneRun 이 undefined 면 첫 화면: 이미 끝난 보정은 울리지 않는다
+  document.addEventListener('pointerdown', () => {   // 브라우저는 화면을 한 번 누른 뒤에야 소리를 허락한다
+    try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); audio.resume(); } catch (e) { /* 소리 없이 진행 */ }
+  }, {passive: true});
+  function chime() {
+    if (!audio || audio.state !== 'running') return;
+    const t0 = audio.currentTime;
+    [[880, 0], [1318.5, 0.13]].forEach(([hz, d]) => {   // 라 → 미, 0.5초 남짓
+      const o = audio.createOscillator(), g = audio.createGain();
+      o.type = 'sine'; o.frequency.value = hz;
+      g.gain.setValueAtTime(0.0001, t0 + d);
+      g.gain.linearRampToValueAtTime(0.15, t0 + d + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + d + 0.6);
+      o.connect(g).connect(audio.destination);
+      o.start(t0 + d); o.stop(t0 + d + 0.65);
+    });
+  }
+  function notifyDone(s) {
+    const run = s.run, ok = run && run.result === 'converged' ? run.id : null;
+    if (doneRun !== undefined && ok && ok !== doneRun) {
+      const card = $('pos-card');
+      card.classList.remove('celebrate'); void card.offsetWidth; card.classList.add('celebrate');
+      chime();
+    }
+    doneRun = ok;
+  }
+
   // ---------- 렌더 ----------
   function render(s) {
     state = s;
@@ -279,6 +307,7 @@
     drawOverlay(s);
     clockSkew = s.now ? s.now - Date.now() / 1000 : 0;
     renderPosition(s);
+    notifyDone(s);
     renderAxes();            // 위치 카드 위에 이동 중 예상값·게이지를 덮어쓴다
     drawPlot(s);
     renderFlow(s);
