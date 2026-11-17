@@ -1,0 +1,18 @@
+%YAML:1.0
+---
+trained_at: "2026-11-16 17:27"
+note: "align_train : 1st 4th (423장, 세트별 상수 + 세트 균형 가중), s = QR 중심 x, d = s − 홀 x 평균, Θ 차수 s1 d1, c = 첫 세트(1st) 상수 — 사용 때는 영점(zero)을 뺌"
+n_samples: 423
+theta_order_s: 1
+theta_order_d: 1
+model:
+   s:
+      c_px: 1.9007891680074395e+03
+      a_px_per_mm: 1.4296988442314419e+01
+      theta_px_per_deg_k: [ 8.0182433374847761e+01 ]
+      sigma_px: 2.7860428926236380e-01
+   d:
+      c_px: -1.3946552665512964e+01
+      a_px_per_mm: 3.0164633630473801e+00
+      theta_px_per_deg_k: [ -1.2433877235317394e+00 ]
+      sigma_px: 6.8474585901325311e-02
