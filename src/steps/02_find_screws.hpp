@@ -12,7 +12,8 @@ struct ScrewShift {
     bool found = false;
     double dx = 0;            // 가로 이동 (px, 오른쪽이 +). 머리 테두리 맞춤 결과
     double dy = 0;            // 세로 이동(px, 아래가 +). Y, T 계산 제외
-    double area_dx = 0;       // 가로 이동 (px). 나사 둘레 121×121 영역 밝기 맞춤 결과. Y, T 계산에 dx 와 함께 쓴다
+    double area_dx = 0;       // 영역 맞춤 성공 시 해당 값, 실패 시 3단계 dx. 같은 Y, T 계산식에 넣는다
+    bool area_fallback = false; // 영역 맞춤만 실패하여 dx를 대신 사용했는지 여부
     double similarity = 0;    // 처음 찾은 위치의 닮은 정도 (0~1)
     double shape_similarity = 0;   // 최종 위치에서 흐린 기준 조각과의 닮은 정도 (0~1). 추정 품질 점검용
     bool quality_warning = false; // 위치 계산은 성공했지만 모양 또는 맞춤 차이 기준 초과

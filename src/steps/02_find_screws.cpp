@@ -368,10 +368,16 @@ ScrewShift ScrewFinder::find_one(const cv::Mat& gray, int screw_index, cv::Point
         if (!result.problem.empty()) result.problem += "; ";
         result.problem += detail;
     }
-    // 둘레 영역 맞춤: 테두리 맞춤 위치에서 출발. 계산 실패 시 제외, 테두리와 차이가 큰 경우 계산값 유지 및 경고
+    // 영역 맞춤 성공 시 기존 값을 유지하고, 실패 시 계산된 테두리 값으로 측정을 계속한다.
     double area_dy = 0;
     if (!refine_by_area(gray, screw_index, cv::Point(cvRound(result.dx), cvRound(result.dy)), result.area_dx, area_dy)) {
-        result.problem = "나사 둘레 영역 맞춤 계산이 완료되지 않았습니다";
+        result.area_dx = result.dx;
+        result.area_fallback = true;
+        result.quality_warning = true;
+        result.found = true;
+        if (!result.problem.empty()) result.problem += "; ";
+        result.problem += "나사 위치 추정이 불안정합니다 (영역 맞춤 미완료, 3단계 값으로 대체)";
+        if (record) result.trace += "영역 맞춤 미완료: area_dx = dx, 3단계 값으로 측정 계속\n";
         return result;
     }
     const double area_gap = std::hypot(result.area_dx - result.dx, area_dy - result.dy);
