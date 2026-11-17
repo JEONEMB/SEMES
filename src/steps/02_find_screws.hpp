@@ -1,7 +1,7 @@
 #pragma once
 // 2단계: 나사별 가로 이동량(px)
 // 처리: 닮은 위치 찾기 -> 밝기 차이 보정 -> 테두리 위치 맞추기 -> 둘레 영역 맞추기
-// 중간 실패 시 해당 나사만 제외. 머리 일부가 가려지거나 오염된 것으로 보이면 일부 가림으로 표시 (측정 실패 처리)
+// 중간 실패 시 해당 나사만 제외. 위치 계산 후 품질 기준 초과는 경고로 기록하고 계산값 유지
 #include "common/reference.hpp"
 #include <array>
 #include <string>
@@ -14,8 +14,9 @@ struct ScrewShift {
     double dy = 0;            // 세로 이동(px, 아래가 +). Y, T 계산 제외
     double area_dx = 0;       // 가로 이동 (px). 나사 둘레 121×121 영역 밝기 맞춤 결과. Y, T 계산에 dx 와 함께 쓴다
     double similarity = 0;    // 처음 찾은 위치의 닮은 정도 (0~1)
-    double shape_similarity = 0;   // 최종 위치에서 흐린 기준 조각과의 닮은 정도 (0~1). 일부 가림 점검용
-    bool partial = false;     // 머리 일부 가림 또는 오염 의심 (found = false)
+    double shape_similarity = 0;   // 최종 위치에서 흐린 기준 조각과의 닮은 정도 (0~1). 추정 품질 점검용
+    bool quality_warning = false; // 위치 계산은 성공했지만 모양 또는 맞춤 차이 기준 초과
+    bool partial = false;     // 이전 자료형 호환용. 품질 경고는 quality_warning 사용
     std::string problem;      // 검출 또는 위치 맞춤 실패 사유
     std::string trace;        // 실제 수행한 하위 단계의 중간값 (진단 기록)
 };

@@ -93,7 +93,7 @@ Result failed(const std::string& code, const std::string& message) {
 //   입력: result (수정할 결과), status (상태), code (알림 코드), message (내용)
 //   출력: 없음 (result.status/code/message를 직접 바꿈, 가장 제한적인 조치의 대표 코드를 선택)
 void add_notice(Result& result, Status status, const std::string& code, const std::string& message) {
-    const Action action = status == Status::Failed ? Action::Stop : (code == "W_SCREW_MISSING" || code == "W_OUT_OF_RANGE") ? Action::Correct : code == "W_VALUES_DISAGREE" ? Action::Recapture : Action::Review;
+    const Action action = status == Status::Failed ? Action::Stop : (code == "W_SCREW_MISSING" || code == "W_OUT_OF_RANGE" || code == "W_SCREW_UNSTABLE") ? Action::Correct : code == "W_VALUES_DISAGREE" ? Action::Recapture : Action::Review;
     if (result.code.empty() || int(action) > int(result.action)) result.code = code;
     if (result.notices.empty() || int(action) > int(result.action)) result.action = action;
     result.notices.push_back({status, code, message, action});
@@ -248,6 +248,12 @@ std::string used_screws(const std::string& screws) {
 void add_notices(Result& result, const Measured& measured, const AgreementResult& agreement, double absolute_y, double absolute_t) {
     const std::string missing = missing_screws(measured);
     const std::string used = used_screws(measured.set->screws);
+
+    // 계산이 끝난 나사는 품질 경고가 있어도 Y/T 계산에 사용한다.
+    for (int k = 0; k < 4; ++k)
+        if (measured.screws[k].found && measured.screws[k].quality_warning)
+            add_notice(result, Status::Warning, "W_SCREW_UNSTABLE",
+                       "나사 " + std::to_string(k + 1) + ": " + measured.screws[k].problem + " (계산값 유지)");
 
     // 머리 일부 가림 또는 오염 의심 나사는 빼고 계산했다. 좌우 나사 조합이 남지 않았거나 설정에서 실패로 정했으면 실패
     const std::string partial = partial_screws(measured);
@@ -420,7 +426,7 @@ Result set_zero_from_photos(const std::vector<cv::Mat>& zero_photos) {
         // 학습 범위 초과만 있는 사진은 측정 실패가 아니다. 경고는 유지하고 영점을 설정한다.
         bool blocking = checked.status == Status::Failed;
         for (const Notice& notice : checked.notices)
-            if (notice.code != "W_OUT_OF_RANGE") blocking = true;
+            if (notice.code != "W_OUT_OF_RANGE" && notice.code != "W_SCREW_UNSTABLE") blocking = true;
         if (blocking) return failed("E_ZERO", "영점 사진 점검에 실패했습니다. 가림과 촬영 자세를 확인하세요.");
         state.zero.y_mm = measured.raw.y_mm + state.carry_over.y_mm;
         state.zero.t_deg = measured.raw.t_deg + state.carry_over.t_deg;

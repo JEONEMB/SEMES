@@ -1,4 +1,5 @@
 #include "common/reference.hpp"
+#include "alignment.hpp"
 #include "steps/02_find_screws.hpp"
 #include <opencv2/imgproc.hpp>
 #include <iostream>
@@ -8,7 +9,7 @@ using namespace alignment;
 //   입력: 모델 폴더
 //   출력: 검사 개수와 실패 개수, 실패 시 종료 코드 1
 int main(int argc, char** argv) {
-    if (argc != 2) return 2;
+    if (argc != 2 && argc != 3) return 2;
     cv::setNumThreads(1);
     Reference ref; std::string error;
     if (!load_reference(argv[1], ref, error)) { std::cerr << error; return 2; }
@@ -36,10 +37,23 @@ int main(int argc, char** argv) {
     auto hidden=ref.photo.clone();
     for (const auto& p:ref.screw) hidden(cv::Rect(p.x-120,p.y-120,240,240)).setTo(128);
     for (const auto& s:finder.find_screw_shifts(hidden,0,0,wanted)) expect(!s.found,"covered screw rejected");
-    // 나사 머리 중앙 절반을 가린 영상은 모양 또는 맞춤 품질 검사에서 제외해야 한다.
+    // 위치 계산이 끝난 불안정 관측은 경고로 반환하고, 계산 실패만 제외한다.
     auto partial=ref.photo.clone();
     for (const auto& p:ref.screw) partial(cv::Rect(p.x,p.y-35,35,70)).setTo(128);
-    for (const auto& s:finder.find_screw_shifts(partial,0,0,wanted)) expect(!s.found,"partial screw rejected");
+    for (const auto& s:finder.find_screw_shifts(partial,0,0,wanted)) expect(!s.found || (s.quality_warning && std::isfinite(s.dx) && std::isfinite(s.dy)),"unstable estimate retained with warning or calculation failure");
+    if (argc == 3) {
+        const auto problem = read_photo(argv[2]);
+        expect(initialize(argv[1]).status == Status::Ok, "regression initialize");
+        const auto r = measure_diagnostic(problem);
+        bool warned = false;
+        for (const auto& n : r.notices) if (n.code == "W_SCREW_UNSTABLE") warned = true;
+        expect(r.status == Status::Warning && warned && std::isfinite(r.y_mm) && std::isfinite(r.t_deg)
+               && r.screws_used == "1234", "previously rejected photo returns all-screw Y/T");
+        expect(set_zero_from_photos({ref.photo}).status != Status::Failed, "regression zero");
+        const auto measured = measure_alignment(problem);
+        expect(measured.status != Status::Failed && std::isfinite(measured.y_mm) && std::isfinite(measured.t_deg), "operational measurement retains values");
+        std::cout << "Regression Y=" << r.y_mm << " T=" << r.t_deg << " screws=" << r.screws_used << "\n" << r.message << "\n";
+    }
     std::cout<<checks<<" checks, "<<failures<<" failures\n";
     return failures?1:0;
 }
