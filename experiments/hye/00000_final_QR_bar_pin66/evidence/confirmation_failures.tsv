@@ -1,0 +1,2 @@
+split	fold	config	index	pred_y	pred_t	y	t	relative_path	error_y	error_t
+20261107	4	full66_d1_r1e-07_noise0_tail1_legacy0	420	0.05406108549187	0.3193577720555051	0.05	0.33	data/clean/clean_20261029/Y+0.05 T+0.32/Y+0.05 T+0.33 (3).bmp	0.004061085491869995	0.01064222794449493

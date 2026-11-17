@@ -527,12 +527,17 @@ struct Config {
     std::string date="all";
     bool verifyOnly=false,selfTest=false;
 };
-static const std::map<std::string,size_t> expectedImages{{"20261014",281},{"20261020",60},{"20261029",234}};
-static const std::map<std::string,size_t> expectedTxt{{"20261014",0},{"20261020",60},{"20261029",234}};
+static const std::map<std::string,size_t> expectedImages{{"20261014",281},{"20261020",60},{"20261029",234},{"round4",144}};
+static const std::map<std::string,size_t> expectedTxt{{"20261014",0},{"20261020",60},{"20261029",234},{"round4",0}};
+
+static fs::path rawArchive(const std::string& date) {
+    if(date=="round4")return L"data/raw/[교보재] 세메스 데이터 4차.zip";
+    return fs::path(L"data/raw")/(L"zip_"+decode(date)+L".zip");
+}
 // 6. 재실행 경로: 기존 원본/사진/TXT/메타데이터를 검사하고 수정하지 않습니다.
 static void verifyExisting(const Config& cfg,const std::string& date) {
     auto target=cfg.output/(L"clean_"+decode(date));
-    auto raw=cfg.repo/L"data/raw"/(L"zip_"+decode(date)+L".zip");
+    auto raw=cfg.repo/rawArchive(date);
     auto meta=target/L"_metadata";
     require(fs::is_regular_file(meta/L"provenance.json")&&fs::is_regular_file(meta/L"file_inventory.csv")&&fs::is_regular_file(meta/L"manifest.csv"),"Existing clean lacks metadata; refusing overwrite");
     auto provenance=text(meta/L"provenance.json");
@@ -611,7 +616,8 @@ static void publishDirectory(const fs::path& stage,const fs::path& target,const 
 }
 // 8. 신규 생성 경로: 압축 해제, 원본 검사, 메타데이터 작성 후 검증 폴더 게시.
 static void createClean(const Config& cfg,const std::string& date) {
-    auto raw=cfg.repo/L"data/raw"/(L"zip_"+decode(date)+L".zip");
+    auto sourceArchive=rawArchive(date);
+    auto raw=cfg.repo/sourceArchive;
     auto target=cfg.output/(L"clean_"+decode(date));
     auto before=shaFile(raw);
     fs::create_directories(cfg.output);
@@ -701,7 +707,7 @@ static void createClean(const Config& cfg,const std::string& date) {
     for(const auto& h:hashes)if(h.second>1)duplicates++;
     std::ostringstream j;
     j<<"{\n  \"dataset\": "<<quoted(date)<<",\n  \"status\": \"verified\",\n  \"preparation_tool\": \"tool/01_prepare_clean.cpp\",\n  \"source_archive\": "
-    <<quoted("data/raw/zip_"+date+".zip")<<",\n  \"source_archive_path_basis\": \"repository_root\",\n  \"source_archive_sha256\": "
+    <<quoted(relativeName(sourceArchive))<<",\n  \"source_archive_path_basis\": \"repository_root\",\n  \"source_archive_sha256\": "
     <<quoted(before)<<",\n  \"source_archive_bytes\": "<<fs::file_size(raw)<<",\n  \"source_archive_unchanged\": true,\n  \"normalized_joined_sha256\": "
     <<quoted(joinedHash)<<",\n  \"removed_common_wrapper\": "<<(strip?quoted(utf8(prefix)):"null")<<",\n  \"images\": "
     <<images.size()<<",\n  \"sidecar_txt\": "<<txt<<",\n  \"all_source_files\": "<<files.size()<<",\n  \"conditions\": {";
@@ -718,11 +724,12 @@ static void createClean(const Config& cfg,const std::string& date) {
         j<<"\n    {\"member\":"<<quoted(r.at("member"))<<",\"bytes\":"<<r.at("bytes")<<",\"crc32\":"<<quoted(r.at("crc32"))
         <<",\"sha256\":"<<quoted(r.at("sha256"))<<'}';
     }
-    j<<"\n  ],\n  \"transformation\": \"Extract exact original BMP/TXT bytes. Remove one common wrapper. No pixel processing, filtering, deduplication, label conversion or dataset splitting.\",\n  \"labels\": \"Filename commands and sidecar Y_Actual/T_Actual are separate raw fields. Units/origin are not inferred. Never use labels as image inference inputs.\",\n  \"evaluation_status\": \"Previously exposed development data, not new independent test data.\"\n}\n";
+    j<<"\n  ],\n  \"transformation\": \"Extract exact original BMP/TXT bytes. Remove one common wrapper. No pixel processing, filtering, deduplication, label conversion or dataset splitting.\",\n  \"labels\": \"Filename commands and sidecar Y_Actual/T_Actual are separate raw fields. Units/origin are not inferred. Never use labels as image inference inputs.\",\n  \"evaluation_status\": "<<quoted(date=="round4"?"Unassigned":"Previously exposed development data, not new independent test data.")<<"\n}\n";
     writeText(meta/L"provenance.json",j.str());
     std::ostringstream readme;
-    readme<<"clean_"<<date<<"\n\nC++ 원본 정리 도구: tool/01_prepare_clean.cpp\n입력: data/raw/zip_"<<date<<".zip\nBMP "<<images.size()
-    <<"장 / 동봉 TXT "<<txt<<"개\n\nBMP/TXT 바이트와 촬영별 폴더명을 그대로 보존했습니다.\n공통 최상위 포장 폴더 한 개만 제거했습니다. 사진 가공/제외/중복 제거는 없습니다.\n\n_metadata/manifest.csv: 사진별 해시/크기/파일명 명령/동봉 TXT 원시값\n_metadata/file_inventory.csv: 원본 ZIP 멤버와 전체 파일의 해시/CRC\n_metadata/provenance.json: 원본 ZIP/분할 조각/검증 내역\n\n파일명의 명령과 TXT의 Y_Actual/T_Actual은 서로 다른 필드입니다. 좌표계/원점/단위는 변환하지 않습니다.\n파일명/TXT/정답 명령은 영상 추론 입력이 아닙니다.\n기준 영상은 clean_20261014/center.bmp입니다. clean_20261020/기준 위치/center1~3.bmp로 자동 교체하지 않습니다.\n이 자료는 이미 개발에서 사용한 자료이며 독립 신규 시험 자료가 아닙니다.\n";
+    readme<<"clean_"<<date<<"\n\nC++ 원본 정리 도구: tool/01_prepare_clean.cpp\n입력: "<<relativeName(sourceArchive)<<"\nBMP "<<images.size()
+    <<"장 / 동봉 TXT "<<txt<<"개\n\nBMP/TXT 바이트와 촬영별 폴더명을 그대로 보존했습니다.\n공통 최상위 포장 폴더 한 개만 제거했습니다. 사진 가공/제외/중복 제거는 없습니다.\n\n_metadata/manifest.csv: 사진별 해시/크기/파일명 명령/동봉 TXT 원시값\n_metadata/file_inventory.csv: 원본 ZIP 멤버와 전체 파일의 해시/CRC\n_metadata/provenance.json: 원본 ZIP/분할 조각/검증 내역\n\n파일명의 명령과 TXT의 Y_Actual/T_Actual은 서로 다른 필드입니다. 좌표계/원점/단위는 변환하지 않습니다.\n파일명/TXT/정답 명령은 영상 추론 입력이 아닙니다.\n기준 영상은 clean_20261014/center.bmp입니다. clean_20261020/기준 위치/center1~3.bmp로 자동 교체하지 않습니다.\n";
+    readme<<(date=="round4"?"평가 용도는 지정하지 않았습니다.\n":"이 자료는 이미 개발에서 사용한 자료이며 독립 신규 시험 자료가 아닙니다.\n");
     writeText(stage/L"README.txt",readme.str());
     // Never remove nonempty user data. Both resolved paths are checked first.
     require(within(stage,scratch.path)&&within(target,cfg.output)&&target.filename()==L"clean_"+decode(date),"Invalid publication path");
@@ -784,7 +791,7 @@ int wmain(int argc,wchar_t** argv) {
         for(int i=1;i<argc;i++) {
             std::wstring a=argv[i];
             if(a==L"--help"||a==L"-h") {
-                std::cout<<"01_prepare_clean.exe [--date all|20261014|20261020|20261029] [--verify-only]\n                     [--repo-root PATH] [--output-root PATH] [--self-test]\n\n기본 입력: 저장소/data/raw/zip_날짜.zip\n기본 출력: 저장소/data/clean/clean_날짜\n기존 clean은 검증만 수행합니다. 원본/기존 데이터를 덮어쓰지 않습니다.\nPython 없이 C++/OpenCV/Windows tar.exe/BCrypt로 실행합니다.\n";
+                std::cout<<"01_prepare_clean.exe [--date all|20261014|20261020|20261029|round4] [--verify-only]\n                     [--repo-root PATH] [--output-root PATH] [--self-test]\n\n기본 입력: 저장소/data/raw/zip_날짜.zip\n기본 출력: 저장소/data/clean/clean_날짜\n기존 clean은 검증만 수행합니다. 원본/기존 데이터를 덮어쓰지 않습니다.\nPython 없이 C++/OpenCV/Windows tar.exe/BCrypt로 실행합니다.\n";
                 return 0;
             }
             if(a==L"--verify-only")cfg.verifyOnly=true;
@@ -811,7 +818,8 @@ int wmain(int argc,wchar_t** argv) {
         for(const auto& entry:expectedImages) {
             if(cfg.date!="all"&&cfg.date!=entry.first)continue;
             auto date=entry.first;
-            auto raw=cfg.repo/L"data/raw"/(L"zip_"+decode(date)+L".zip"),target=cfg.output/(L"clean_"+decode(date));
+            auto raw=cfg.repo/rawArchive(date),target=cfg.output/(L"clean_"+decode(date));
+            if(cfg.date=="all"&&date=="round4"&&!fs::exists(raw)&&!fs::exists(target))continue;
             require(fs::is_regular_file(raw),"Raw ZIP missing: "+display(raw));
             if(fs::exists(target)) {
                 require(fs::is_directory(target),"Clean destination is not a directory");
