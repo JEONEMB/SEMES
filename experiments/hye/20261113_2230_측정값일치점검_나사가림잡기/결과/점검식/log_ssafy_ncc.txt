@@ -1,0 +1,8 @@
+photos 1959 used qr_dx_mean screw1_x screw2_x screw3_x screw4_x
+scale px 0.0047371 0.051506 0.043718 0.061627 0.058252
+fit photos (resubstitution)
+photos 1959 threshold 7.44
+  no recentre: H median 1.31 p99 4.16 max 5.56 over 0/1959
+  recentre near-centre mean (30 photos): H median 2.03 p99 3.91 max 4.92 over 0/1959
+  recentre on photo id 100181: H median 2.67 p99 4.80 max 5.87 over 0/1959
+sha256 47c37a945ce89d354023932ff6c627dfd4d865863ee8fd1d004be329d388137b

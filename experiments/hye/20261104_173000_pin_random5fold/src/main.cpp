@@ -50,7 +50,7 @@ static cv::Mat target(const Row&r){return (cv::Mat_<double>(1,2)<<r.y,r.t);}
 static cv::Mat basis(double y,double t,int degree){cv::Mat b=(cv::Mat_<double>(1,6)<<1.,y,t,y*y,y*t,t*t);return degree==1?b.colRange(0,3).clone():b;}
 static cv::Mat features(const Row&r,const std::string&m){if(m=="v1_joint_GLS")return r.qr.empty()?cv::Mat():fmap(r.qr);if(m=="v2_joint")return r.v2;if(m.find("pin_only")==0)return r.pins;if(m.find("qr_pin_bars_")==0)return r.bars;if(r.qr.empty()||r.pins.empty())return {};return final_pin::relative_features(r.qr,r.pins);}
 static void measure(const fs::path&root,const fs::path&out,std::vector<Row>&rows){
-    auto assets=root/"experiments/hye/v2_Y_T_joint/assets";alignment_detail::Observer qr(assets);final_pin::Observer pin(alignment_detail::read_gray(assets/"center.bmp"));auto bx=qr.block_centers();
+    auto assets=root/std::filesystem::u8path(u8"experiments/hye/20261104_1435_v2_joint_강등/assets");alignment_detail::Observer qr(assets);final_pin::Observer pin(alignment_detail::read_gray(assets/"center.bmp"));auto bx=qr.block_centers();
     fs::create_directories(out/"measure_cache");std::atomic<int> next{0},done{0};
     auto work=[&](){for(int i;(i=next++)<int(rows.size());){auto&r=rows[i];auto cache=out/"measure_cache"/(std::to_string(i)+".yml");
         // Cache is reusable only for identical source bytes and tracker version.
@@ -65,7 +65,7 @@ static void measure(const fs::path&root,const fs::path&out,std::vector<Row>&rows
 }
 static void load_measurements(const fs::path&out,std::vector<Row>&rows){std::ifstream f(out/"features.tsv");if(!f)throw std::runtime_error("Run measure first");std::string l;std::getline(f,l);std::set<int> seen;while(std::getline(f,l)){auto v=fields(l,'\t');if(v.size()!=16)throw std::runtime_error("Bad measurement row");int i=std::stoi(v[0]);auto&r=rows.at(i);if(r.rel!=v[2]||r.hash!=v[3]||r.fold!=std::stoi(v[7])||!seen.insert(i).second)throw std::runtime_error("Measurement manifest mismatch");r.qr=numbers(v[8]);r.pins=numbers(v[9]);r.quality=numbers(v[10]);r.v2=numbers(v[11]);r.jms=std::stod(v[12]);r.pms=std::stod(v[13]);r.jerror=v[14];r.perror=v[15];}if(seen.size()!=rows.size())throw std::runtime_error("Incomplete measurement table");}
 static void populate_bars(const fs::path&root,std::vector<Row>&rows){
-    cv::FileStorage protocol((root/"experiments/hye/v2_Y_T_joint/assets/line_protocol.json").u8string(),cv::FileStorage::READ);
+    cv::FileStorage protocol((root/std::filesystem::u8path(u8"experiments/hye/20261104_1435_v2_joint_강등/assets/line_protocol.json")).u8string(),cv::FileStorage::READ);
     if(!protocol.isOpened())throw std::runtime_error("Missing line protocol");
     std::vector<double> bx;for(auto it=protocol["blocks"].begin();it!=protocol["blocks"].end();++it){auto b=(*it)["read_box"];bx.push_back((double(b[0])+double(b[2]))/2.);}
     for(auto&r:rows)if(!r.qr.empty()&&!r.pins.empty())r.bars=final_pin::with_bars_features(r.qr,r.pins,bx);
@@ -133,12 +133,12 @@ static void summarize(const fs::path&out,const std::vector<Row>&rows){
     for(auto&p:ss){auto&s=p.second;sm<<p.first.first<<'\t'<<p.first.second<<'\t'<<s.n<<'\t'<<s.stop<<'\t'<<s.pass<<'\t'<<s.false_stop<<'\t'<<s.turns/s.n<<'\t'<<s.maxturn<<'\n';md<<"| "<<p.first.first<<" | "<<p.first.second<<" | "<<s.pass<<"/"<<s.n<<" | "<<s.false_stop<<" | "<<s.turns/s.n<<" | "<<s.maxturn<<" |\n";}
 }
 static void selftest(const fs::path&root,const fs::path&out){
-    auto center=alignment_detail::read_gray(root/"experiments/hye/v2_Y_T_joint/assets/center.bmp");final_pin::Observer pin(center);auto zero=pin.measure(center);double ident=cv::norm(zero.displacement,cv::NORM_INF);if(ident>1e-4)throw std::runtime_error("Pin identity failed");
+    auto center=alignment_detail::read_gray(root/std::filesystem::u8path(u8"experiments/hye/20261104_1435_v2_joint_강등/assets/center.bmp"));final_pin::Observer pin(center);auto zero=pin.measure(center);double ident=cv::norm(zero.displacement,cv::NORM_INF);if(ident>1e-4)throw std::runtime_error("Pin identity failed");
     cv::Mat shifted;cv::Mat warp=(cv::Mat_<double>(2,3)<<1,0,3.25,0,1,-2.375);cv::warpAffine(center,shifted,warp,center.size(),cv::INTER_CUBIC,cv::BORDER_REFLECT_101);auto m=pin.measure(shifted);double worst=0;for(int k=0;k<4;++k)worst=std::max(worst,std::max(std::abs(m.displacement.at<double>(2*k)-3.25),std::abs(m.displacement.at<double>(2*k+1)+2.375)));if(worst>.04)throw std::runtime_error("Pin synthetic translation error exceeds .04px");
     std::ofstream f(out/"selftest.txt");f<<std::setprecision(17)<<"identity_max_px "<<ident<<"\nsynthetic_translation_max_error_px "<<worst<<"\n";std::cout<<"identity "<<ident<<" translation "<<worst<<std::endl;
     for(const std::string kind:{"linear","quadratic","bars_linear","bars_quadratic"}){auto model=out/("development_all_qr_pin_"+kind+".yml");
     if(fs::exists(model)){auto rows=dataset(root);load_measurements(out,rows);populate_bars(root,rows);const auto&r=rows.front();auto image=alignment_detail::read_gray(root/fs::u8path(r.rel)),before=image.clone();
-        final_pin::Estimator pipeline((root/"experiments/hye/v2_Y_T_joint/assets").u8string(),model.u8string());auto actual=pipeline.predict(image);final_pin::Regressor reg;reg.load(model.u8string());auto expected=reg.predict(features(r,"qr_pin_"+kind));double parity=cv::norm(actual-expected),mutation=cv::norm(image,before,cv::NORM_INF);if(parity>1e-9||mutation!=0)throw std::runtime_error("Public inference parity or input preservation failed");f<<"public_image_api_parity_"<<kind<<' '<<parity<<"\ninput_mutation_max_"<<kind<<' '<<mutation<<"\n";std::cout<<"public API "<<kind<<" parity "<<parity<<std::endl;
+        final_pin::Estimator pipeline((root/std::filesystem::u8path(u8"experiments/hye/20261104_1435_v2_joint_강등/assets")).u8string(),model.u8string());auto actual=pipeline.predict(image);final_pin::Regressor reg;reg.load(model.u8string());auto expected=reg.predict(features(r,"qr_pin_"+kind));double parity=cv::norm(actual-expected),mutation=cv::norm(image,before,cv::NORM_INF);if(parity>1e-9||mutation!=0)throw std::runtime_error("Public inference parity or input preservation failed");f<<"public_image_api_parity_"<<kind<<' '<<parity<<"\ninput_mutation_max_"<<kind<<' '<<mutation<<"\n";std::cout<<"public API "<<kind<<" parity "<<parity<<std::endl;
     }}
 }
 int main(int argc,char**argv){try{

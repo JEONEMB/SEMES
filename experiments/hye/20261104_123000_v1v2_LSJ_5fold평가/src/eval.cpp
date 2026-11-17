@@ -43,7 +43,7 @@ static cv::Mat arr(const cv::FileNode& n){return alignment_detail::node_matrix(n
 struct FrozenJ{cv::Mat o,p,i;double sy,st;cv::Mat predict(const cv::Mat& x){cv::Mat q=(x-o)*p*i;q.at<double>(0)*=sy;q.at<double>(1)*=st;return q;}};
 int main(int argc,char**argv){try{
  if(argc!=4)throw std::runtime_error("eval REPO INPUT_TSV OUTPUT");fs::path root=fs::u8path(argv[1]),input=fs::u8path(argv[2]),out=fs::u8path(argv[3]);fs::create_directories(out);cv::setNumThreads(1);
- auto jassets=root/"experiments/hye/v2_Y_T_joint/assets",cassets=root/"experiments/hye/v2_Y_T control/assets";
+ auto jassets=root/std::filesystem::u8path(u8"experiments/hye/20261104_1435_v2_joint_강등/assets"),cassets=root/std::filesystem::u8path(u8"experiments/hye/20261104_1435_v2_control_강등/assets");
  auto init=Clock::now();alignment_detail::Observer obs(jassets);legacy_control::Tracker tracker(cassets);auto bx=obs.block_centers();double initMs=ms(init);
  cv::FileStorage frozen((root/"experiments/hye/20261028_1258_final_Y_T_joint/assets/both_model.json").u8string(),cv::FileStorage::READ);auto n=frozen["model"];FrozenJ fj{arr(n["origin"]),arr(n["projector"]),arr(n["initial"]),double(n["scale"][0]),double(n["scale"][1])};
  std::ifstream in(input);std::string line;std::getline(in,line);std::vector<Row> rows;while(std::getline(in,line)){auto v=split(line);if(v.size()!=6)throw std::runtime_error("Bad TSV");rows.push_back({v[0],v[1],v[5],"","",std::stoi(v[4]),std::stod(v[2]),std::stod(v[3])});}

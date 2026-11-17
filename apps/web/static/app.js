@@ -1,21 +1,26 @@
 // Service tab. Plays one alignment session step by step.
-// Data source today: window.SEMES_DEMO (demo/data.js, real joint/control results on scenario photos).
+// Data source today: window.SEMES_DEMO (demo/data.js, real Y/T estimates of two selectable 7-value models on scenario photos)
+// and window.SEMES_SIM (demo/sim.js, every photo's real estimate, for the simulation input).
 // Later: the same shapes from the C++ service API (/api/session ...).
 (() => {
   const D = window.SEMES_DEMO;
-  const TOL = D.rules.tolerance;
+  const SIM = window.SEMES_SIM;
+  const TOL_Y = D.rules.tolerance_y, TOL_T = D.rules.tolerance_t;   // 한 장 허용오차
   const STEP_MS = 1600;
   const $ = (id) => document.getElementById(id);
 
-  const state = { sc: 0, revealed: 0, current: 0, view: "qr", timer: null };
-  const scenario = () => D.scenarios[state.sc];
+  // model: 고른 모델(semes = SEMES 사진으로 학습한 채택 모듈, rig = 우리 장비 사진 전체로 학습). 시나리오는 모델마다 자기 사진으로 재생한다
+  // source: sim = 입력한 (Y, T)에서 바로 시뮬레이션, scenario = 미리 만든 시나리오 재생
+  const state = { model: D.default_model, sc: D.scenarios.findIndex((x) => x.model === D.default_model), revealed: 0, current: 0, view: "qr", timer: null,
+                  source: SIM ? "sim" : "scenario", simSc: null, simIn: { y: 0.5, t: 0.3 }, simSeed: 1 };
+  const scenario = () => (state.source === "sim" ? state.simSc : D.scenarios[state.sc]);
   const step = () => (state.current > 0 ? scenario().steps[state.current - 1] : null);
   const finished = () => state.revealed === scenario().steps.length;
 
   // ---------- formatting ----------
   const fmt = (v, d = 4) => (v === 0 ? "0" : (v > 0 ? "+" : "−") + Math.abs(v).toFixed(d));
-  const stageName = (s) => (s === "joint" ? "1차 joint" : "2차 control");
-  const isCenter = (e) => e && e.ok && Math.abs(e.y) <= TOL && Math.abs(e.t) <= TOL;
+  const stageName = () => "Y·T 추정";   // 2차 control 없이 값 7개 모듈 하나로 Y와 T를 함께 보정한다
+  const isCenter = (s) => s && s.estimate.ok && Math.abs(s.estimate.y) <= TOL_Y && Math.abs(s.estimate.t) <= TOL_T;
   const el = (tag, cls, text) => {
     const n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -23,15 +28,124 @@
     return n;
   };
 
+  // ---------- simulation ----------
+  // 입력한 자세에서 시작해 Y와 T를 함께 움직인다(규칙은 make_demo.py 와 같다). 매 단계 자세 근처(모델별 허용)에 실제 사진이 있으면
+  // 그 사진의 실제 모델 추정값을 쓰고, 없으면 참 자세에 그 모델의 검증 오차(주 검증 rms, Y·T 독립 정규)를 더한 값을 쓴다(오차 모형).
+  const rng = (seed) => () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const gauss = (r) => Math.sqrt(-2 * Math.log(1 - r())) * Math.cos(2 * Math.PI * r());
+  const r6 = (v) => Math.round(v * 1e6) / 1e6;
+  function simImage(model, ph) {
+    const key = `sim:${ph.p}`;
+    if (!D.images[key]) {
+      D.images[key] = { key, path: ph.p, qr: ph.img, full: ph.img, crop: true, roi: SIM.models[model].roi, motion: null,
+                        qr_boxes: ph.q.map(([x, y, w, h, ncc]) => ({ x, y, w, h, ncc })) };
+    }
+    return key;
+  }
+  function simulate(model, y0, t0, seed) {
+    const M = SIM.models[model], R = SIM.rules, r = rng(seed);
+    const near = (y, t) => {
+      let best = null, bd = Infinity;
+      for (const ph of M.photos) {
+        const dy = Math.abs(ph.y - y), dt = Math.abs(ph.t - t);
+        if (dy > M.tol_y || dt > M.tol_t) continue;
+        const d = dy / M.tol_y + dt / M.tol_t;
+        if (d < bd) { bd = d; best = ph; }
+      }
+      return best;
+    };
+    let pose = { y: y0, t: t0 }, result = null;
+    const steps = [];
+    for (let i = 0; i < R.max_iterations; i++) {
+      const ph = near(pose.y, pose.t);
+      const rec = { index: i + 1, stage: "joint", pose_before: { y: r6(pose.y), t: r6(pose.t) }, command: { dy: 0, dt: 0 }, moved: false };
+      if (ph) {
+        rec.frame = { image: simImage(model, ph), label: `실제 사진 (명령 Y ${fmt(ph.cy, 2)}, T ${fmt(ph.ct, 2)})`, pose: { y: ph.y, t: ph.t } };
+        rec.source = "photo";
+        rec.estimate = ph.ok ? { ok: true, y: ph.ey, t: ph.et } : { ok: false, error: ph.err };
+      } else {
+        rec.frame = { image: null, label: "근처에 실제 사진 없음", pose: null };
+        rec.source = "error";
+        rec.estimate = { ok: true, y: r6(pose.y + M.err.sd_y * gauss(r)), t: r6(pose.t + M.err.sd_t * gauss(r)) };
+      }
+      const how = rec.source === "photo" ? "실제 사진 추정" : "오차 모형 추정";
+      if (!rec.estimate.ok) {
+        rec.decision = `${how}. 측정 실패`;
+        rec.next = "failed";
+        steps.push(rec);
+        result = { status: "failed", reason: rec.estimate.error || "측정 실패" };
+        break;
+      }
+      const e = rec.estimate;
+      if (Math.abs(e.y) <= R.tolerance_y && Math.abs(e.t) <= R.tolerance_t) {
+        rec.decision = `${how}. Y ${Math.abs(e.y).toFixed(4)}, T ${Math.abs(e.t).toFixed(4)} 모두 기준 이내`;
+        rec.next = "done";
+      } else {
+        const over = [["Y", e.y, R.tolerance_y], ["T", e.t, R.tolerance_t]].filter(([, v, k]) => Math.abs(v) > k).map(([n]) => n);
+        rec.command = { dy: r6(-e.y), dt: r6(-e.t) };
+        rec.moved = true;
+        rec.decision = `${how}. ${over.join(", ")}가 기준 밖이라 Y와 T를 함께 이동`;
+        rec.next = "joint";
+      }
+      pose = { y: pose.y + rec.command.dy, t: pose.t + rec.command.dt };
+      rec.pose_after = { y: r6(pose.y), t: r6(pose.t) };
+      steps.push(rec);
+      if (rec.next === "done") { result = { status: "done", reason: "Y, T 기준 이내" }; break; }
+    }
+    if (!result) result = { status: "failed", reason: `최대 ${R.max_iterations}회를 넘었습니다` };
+    Object.assign(result, { steps: steps.length, moves: steps.filter((s) => s.moved).length, final_pose: { y: r6(pose.y), t: r6(pose.t) },
+                            photo_steps: steps.filter((s) => s.source === "photo").length });
+    return { id: "SIM", model, category: "시뮬레이션", description: `시작 Y ${fmt(y0, 3)}, T ${fmt(t0, 3)}`, start: { y: y0, t: t0 }, steps, result };
+  }
+  function rebuildSim() {
+    reset();
+    state.simSc = simulate(state.model, state.simIn.y, state.simIn.t, state.simSeed);
+  }
+
   // ---------- static parts ----------
-  $("jointModel").textContent = D.models.joint;
-  $("controlModel").textContent = D.models.control;
-  $("pageFoot").textContent = `데모 데이터  ${D.source}  생성 ${D.generated}`;
+  function renderModel() {
+    const M = D.models[state.model];
+    const pick = $("modelPick");
+    pick.replaceChildren();
+    Object.values(D.models).forEach((m) => {
+      const b = el("button", m.id === state.model ? "is-on" : "", m.label);
+      b.title = `${m.name}
+${m.train}`;
+      b.addEventListener("click", () => selectModel(m.id));
+      pick.append(b);
+    });
+    $("jointModel").textContent = M.name;
+    $("jointModel").title = `${M.path}
+${M.train}`;
+    const badge = $("modelBadge");
+    badge.className = "badge " + (M.adopted ? "badge-adopted" : "badge-trial");
+    badge.textContent = M.adopted ? "채택" : "실험";
+    $("pageFoot").textContent = `학습 ${M.train}. ${M.note}. T 단위 ${M.t_unit}.  ${D.source}  생성 ${D.generated}`;
+  }
+
+  function renderInput() {
+    document.querySelectorAll(".source-tabs button[data-source]").forEach((b) => b.classList.toggle("is-on", b.dataset.source === state.source));
+    const sim = state.source === "sim";
+    $("scenarioList").hidden = sim;
+    $("simForm").hidden = !sim;
+    if (sim) {
+      const M = SIM.models[state.model], unit = D.models[state.model].t_unit;
+      if (document.activeElement !== $("simY")) $("simY").value = state.simIn.y;
+      if (document.activeElement !== $("simT")) $("simT").value = state.simIn.t;
+      $("simTUnit").textContent = unit;
+      const res = state.simSc.result;
+      $("simNote").textContent = `범위 Y ${M.range.y[0]}~${M.range.y[1]} mm, T ${M.range.t[0]}~${M.range.t[1]} ${unit}. ` +
+        `실제 사진 ${res.photo_steps} / ${res.steps}단계, 나머지는 오차 모형(σY ${M.err.sd_y.toFixed(4)}, σT ${M.err.sd_t.toFixed(4)})`;
+    }
+  }
 
   function renderScenarioList() {
+    renderInput();
+    if (state.source === "sim") return;
     const ul = $("scenarioList");
     ul.replaceChildren();
     D.scenarios.forEach((sc, i) => {
+      if (sc.model !== state.model) return;
       const b = el("button", i === state.sc ? "is-on" : "");
       b.append(el("span", "sc-cat", sc.category));
       b.append(el("span", "sc-start", `Y ${fmt(sc.start.y, 2)}  T ${fmt(sc.start.t, 2)}`));
@@ -50,16 +164,21 @@
   function renderViewer() {
     const sc = scenario(), s = step();
     const imgKey = s ? s.frame.image : sc.steps[0].frame.image;
-    const img = D.images[imgKey];
-    $("frameImg").src = state.view === "qr" ? img.qr : img.full;
-    $("framePath").textContent = `data/${img.path}`;
-    $("frameSub").textContent = s ? `${s.index}단계  ${stageName(s.stage)} 입력` : "실행 전  시작 사진";
+    const img = imgKey ? D.images[imgKey] : null;
+    const noPhoto = $("noPhoto");
+    noPhoto.hidden = !!img;
+    $("frameImg").hidden = !img;
+    if (img) $("frameImg").src = state.view === "qr" ? img.qr : img.full;
+    $("framePath").textContent = img ? `data/${img.path}` : "사진 없음, 오차 모형으로 추정";
+    $("frameSub").textContent = s ? `${s.index}단계  ${stageName(s.stage)} 입력` + (state.source === "sim" ? `  ${s.frame.label}` : "")
+      : state.source === "sim" ? `실행 전  ${sc.steps[0].frame.label}` : "실행 전  시작 사진";
 
-    const box = state.view === "qr" ? D.roi : { x: 0, y: 0, w: D.frame.w, h: D.frame.h };
-    const pass = s && isCenter(s.estimate), fail = s && !pass;
+    // 시뮬레이션 미리보기는 QR 확대 영역만 있으므로 전체 보기에서도 같은 영역을 쓴다
+    const box = state.view === "qr" || (img && img.crop) ? (img && img.roi) || D.roi : { x: 0, y: 0, w: D.frame.w, h: D.frame.h };
+    const pass = s && isCenter(s), fail = s && !pass;
     const overlay = $("overlay");
     overlay.replaceChildren();
-    img.qr_boxes.forEach((q, i) => {
+    (img ? img.qr_boxes : []).forEach((q, i) => {
       const d = el("div", "qr-box" + (pass ? " is-pass" : fail ? " is-fail" : ""));
       d.style.left = `${((q.x - box.x) / box.w) * 100}%`;
       d.style.top = `${((q.y - box.y) / box.h) * 100}%`;
@@ -74,11 +193,9 @@
     tag.className = "estimate-tag";
     if (s && s.estimate.ok) {
       tag.classList.add(pass ? "is-pass" : "is-fail");
-      if (pass) {
-        tag.append(el("span", "num", "Y = 0"), el("span", "num", "T = 0"), el("span", "state", "센터"));
-      } else {
-        tag.append(el("span", "num", `Y ${fmt(s.estimate.y)}`), el("span", "num", `T ${fmt(s.estimate.t)}`), el("span", "state", "센터 아님"));
-      }
+      // 추정값은 통과해도 0으로 바꾸지 않고 그대로 보여 준다. 상태는 그 단계의 판정이다
+      const label = pass ? "기준 이내" : "기준 밖";
+      tag.append(el("span", "num", `Y ${fmt(s.estimate.y)}`), el("span", "num", `T ${fmt(s.estimate.t)}`), el("span", "state", label));
     } else {
       tag.append(el("span", "state", "추정 전"));
     }
@@ -90,7 +207,7 @@
     const last = state.current === sc.steps.length && finished();
     if (!s) {
       chip.classList.add("is-idle");
-      chip.append(el("span", null, "실행을 누르면 1차 joint부터 시작합니다"));
+      chip.append(el("span", null, "실행을 누르면 Y와 T를 함께 추정합니다"));
     } else if (last && res.status === "done") {
       chip.classList.add("is-done");
       chip.append(el("span", null, "도착"), el("span", "sep"), el("span", null, `${res.steps}단계`), el("span", "sep"), el("span", null, `이동 ${res.moves}회`));
@@ -98,13 +215,7 @@
       chip.classList.add("is-fail");
       chip.append(el("span", null, "중단"), el("span", "sep"), el("span", null, res.reason));
     } else if (s.moved) {
-      const axis = s.command.dt !== 0 ? "T" : "Y";
-      const v = s.command.dt !== 0 ? s.command.dt : s.command.dy;
-      chip.append(el("span", null, stageName(s.stage)), el("span", "sep"), el("span", null, `${axis} ${fmt(v)} 이동`));
-    } else if (s.next === "control") {
-      chip.append(el("span", null, "1차 완료"), el("span", "sep"), el("span", null, "2차 control로 전환"));
-    } else if (s.next === "joint") {
-      chip.append(el("span", null, "1차 joint로 복귀"));
+      chip.append(el("span", null, "동시 이동"), el("span", "sep"), el("span", null, `Y ${fmt(s.command.dy)}`), el("span", "sep"), el("span", null, `T ${fmt(s.command.dt)}`));
     }
   }
 
@@ -128,7 +239,7 @@
       return n;
     };
     svg.replaceChildren();
-    add("rect", { x: X(-TOL), y: Y(TOL), width: 2 * TOL * k, height: 2 * TOL * k, fill: "#e6f4ee", stroke: "#b7dfcd", rx: 2 });
+    add("rect", { x: X(-TOL_Y), y: Y(TOL_T), width: 2 * TOL_Y * k, height: Math.max(2, 2 * TOL_T * k), fill: "#e6f4ee", stroke: "#b7dfcd", rx: 2 });
     add("line", { x1: 8, y1: cy, x2: W - 8, y2: cy, stroke: "#d5dbe5" });
     add("line", { x1: cx, y1: 6, x2: cx, y2: H - 6, stroke: "#d5dbe5" });
     add("text", { x: W - 8, y: cy - 8, "text-anchor": "end", "font-size": 13, "font-weight": 700, fill: "#8a94a6" }, "Y");
@@ -150,8 +261,16 @@
   // ---------- feature-point motion components ----------
   function renderMotion() {
     const sc = scenario(), s = step();
-    const m = D.images[s ? s.frame.image : sc.steps[0].frame.image].motion;
+    const key = s ? s.frame.image : sc.steps[0].frame.image;
+    const m = key ? D.images[key].motion : null;
     const svg = $("motionField");
+    if (!m) {
+      svg.replaceChildren();
+      $("motionComps").replaceChildren();
+      $("motionScale").textContent = "시뮬레이션에서는 특징점 이동 성분을 계산하지 않습니다";
+      $("motionNote").textContent = "";
+      return;
+    }
     const ns = "http://www.w3.org/2000/svg";
     const add = (tag, attrs) => {
       const n = document.createElementNS(ns, tag);
@@ -229,8 +348,7 @@
         if (s.estimate.ok) body.append(el("div", "tl-est", `y ${fmt(s.estimate.y)}   t ${fmt(s.estimate.t)}`));
         body.append(el("div", "tl-decision", s.decision));
         if (s.moved) {
-          const axis = s.command.dt !== 0 ? "T" : "Y";
-          body.append(el("div", "tl-cmd", `${axis} ${fmt(s.command.dt !== 0 ? s.command.dt : s.command.dy)} 이동`));
+          body.append(el("div", "tl-cmd", `Y ${fmt(s.command.dy)}, T ${fmt(s.command.dt)} 이동`));
         }
         li.addEventListener("click", () => { stop(); state.current = i + 1; render(); });
       }
@@ -246,6 +364,7 @@
   }
 
   function render() {
+    renderModel();
     renderScenarioList();
     renderViewer();
     renderPlane();
@@ -276,6 +395,41 @@
     state.sc = i;
     render();
   }
+  function selectModel(m) {
+    if (m === state.model) return;
+    state.model = m;
+    state.sc = D.scenarios.findIndex((x) => x.model === m);
+    rebuildSim();
+    reset();
+    render();
+  }
+  function selectSource(src) {
+    if (src === state.source) return;
+    state.source = src;
+    reset();
+    render();
+  }
+  function setSimInput(y, t) {
+    const M = SIM.models[state.model];
+    const cl = (v, [a, b]) => Math.min(b, Math.max(a, v));
+    if (!Number.isFinite(y) || !Number.isFinite(t)) return;
+    state.simIn = { y: cl(y, M.range.y), t: cl(t, M.range.t) };
+    state.simSeed = (state.simSeed * 1103515245 + 12345) & 0x7fffffff;
+    rebuildSim();
+    render();
+  }
+  document.querySelectorAll(".source-tabs button[data-source]").forEach((b) => b.addEventListener("click", () => selectSource(b.dataset.source)));
+  if (SIM) {
+    const readIn = () => setSimInput(parseFloat($("simY").value), parseFloat($("simT").value));
+    $("simY").addEventListener("change", readIn);
+    $("simT").addEventListener("change", readIn);
+    $("simRandom").addEventListener("click", () => {
+      const M = SIM.models[state.model], u = Math.random;
+      const v = (a, b) => Math.round((a + (b - a) * u()) * 1000) / 1000;
+      setSimInput(v(...M.range.y), v(...M.range.t));
+      $("runBtn").click();
+    });
+  }
 
   $("runBtn").addEventListener("click", () => {
     if (state.timer) { stop(); render(); return; }
@@ -286,10 +440,10 @@
   });
   $("stepBtn").addEventListener("click", () => { stop(); advance(); });
   $("resetBtn").addEventListener("click", () => { reset(); render(); });
-  document.querySelectorAll(".segmented button").forEach((b) =>
+  document.querySelectorAll(".segmented button[data-view]").forEach((b) =>
     b.addEventListener("click", () => {
       state.view = b.dataset.view;
-      document.querySelectorAll(".segmented button").forEach((x) => x.classList.toggle("is-on", x === b));
+      document.querySelectorAll(".segmented button[data-view]").forEach((x) => x.classList.toggle("is-on", x === b));
       renderViewer();
     })
   );
@@ -298,10 +452,14 @@
   const [hashId, hashStep, hashView] = decodeURIComponent(location.hash.slice(1)).split("/");
   const hashIdx = D.scenarios.findIndex((sc) => sc.id === hashId);
   if (hashIdx >= 0) {
+    state.source = "scenario";
     state.sc = hashIdx;
+    state.model = scenario().model;
     state.revealed = state.current = Math.min(Number(hashStep) || 0, scenario().steps.length);
     if (hashView === "full") document.querySelector('.segmented button[data-view="full"]').click();
   }
+  if (SIM) state.simSc = simulate(state.model, state.simIn.y, state.simIn.t, state.simSeed);
+  else document.querySelector('.source-tabs button[data-source="sim"]').disabled = true;
   window.addEventListener("resize", renderPlane);
   render();
 })();

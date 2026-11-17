@@ -1,0 +1,7 @@
+photos 3638 dev 2910 final 728
+main_cv_fails 9 9 9 9 9 9 9 9 9 9 mean 9.00 worst 9 rmsY 0.01187 rmsT 0.00404 max|eY| 0.04896 max|eT| 0.01165
+half_fails 10 10 10 9 9 10 10 9 10 9 mean 9.60
+leave_one_session rig_1st 99.6% rig_grid 91.4% rig_grid_rev 91.3% all 92.0%
+final_check fails 2/728 max|eY| 0.04516 max|eT| 0.01320
+all_photos_resubstitution fails 11/3638
+label_range Y -2.006780 2.313560 T -1.054790 0.980350

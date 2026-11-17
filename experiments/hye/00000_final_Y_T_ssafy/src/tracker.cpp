@@ -1,7 +1,6 @@
 #include "control_internal.hpp"
 #include "site.hpp"
-#include <windows.h>
-#include <bcrypt.h>
+#include "sha256.hpp"
 #include <fstream>
 #include <sstream>
 #include <iomanip>
@@ -11,16 +10,7 @@
 namespace legacy_control {
 static std::vector<unsigned char> bytes(const fs::path& p){std::ifstream f(p,std::ios::binary);if(!f)throw std::runtime_error("Cannot read "+p.u8string());return {std::istreambuf_iterator<char>(f),std::istreambuf_iterator<char>()};}
 cv::Mat read_gray(const fs::path& p){auto r=cv::imdecode(bytes(p),cv::IMREAD_GRAYSCALE);if(r.empty())throw std::runtime_error("Cannot decode "+p.u8string());return r;}
-std::string sha256(const fs::path& p){
-    auto data=bytes(p);BCRYPT_ALG_HANDLE a=nullptr;BCRYPT_HASH_HANDLE h=nullptr;DWORD n=0,written=0;
-    if(BCryptOpenAlgorithmProvider(&a,BCRYPT_SHA256_ALGORITHM,nullptr,0)<0)throw std::runtime_error("SHA256 provider failed");
-    auto s=BCryptGetProperty(a,BCRYPT_OBJECT_LENGTH,reinterpret_cast<PUCHAR>(&n),sizeof(n),&written,0);std::vector<unsigned char> object(n),digest(32);
-    if(s>=0)s=BCryptCreateHash(a,&h,object.data(),n,nullptr,0,0);
-    if(s>=0)s=BCryptHashData(h,data.data(),ULONG(data.size()),0);
-    if(s>=0)s=BCryptFinishHash(h,digest.data(),32,0);
-    if(h)BCryptDestroyHash(h);BCryptCloseAlgorithmProvider(a,0);if(s<0)throw std::runtime_error("SHA256 failed");
-    std::ostringstream out;out<<std::hex<<std::setfill('0');for(auto v:digest)out<<std::setw(2)<<int(v);return out.str();
-}
+std::string sha256(const fs::path& p){return final00_sha::sha256_hex(bytes(p));}   // 운영체제 라이브러리 없는 SHA-256 (리눅스 빌드)
 cv::Mat checked_gray(const cv::Mat& input){
     if(input.empty()||input.depth()!=CV_8U||input.size()!=cv::Size(3840,2160))throw std::invalid_argument("control expects3840x2160 uint8 image");
     cv::Mat gray;if(input.channels()==1)gray=input;else if(input.channels()==3)cv::cvtColor(input,gray,cv::COLOR_BGR2GRAY);else if(input.channels()==4)cv::cvtColor(input,gray,cv::COLOR_BGRA2GRAY);else throw std::invalid_argument("control expects1/3/4 channels");return gray;
@@ -51,7 +41,7 @@ Tracker::Tracker(const fs::path& assets){
         int id=int(points_.size());points_.emplace_back(x,y);regions_.push_back(k);selected_.push_back(static_cast<unsigned char>(selected));
         // Match Python's global->crop float32 cast before local QR subtraction.
         cv::Point2f crop(float(x-site::get().full_crop.x),float(y-site::get().full_crop.y));auto local=site::get().qr[k].tl()-site::get().full_crop.tl();
-        panels_[k].points.emplace_back(crop.x-float(local.x),crop.y-float(local.y));panels_[k].ids.push_back(id);
+        if(selected){panels_[k].points.emplace_back(crop.x-float(local.x),crop.y-float(local.y));panels_[k].ids.push_back(id);}   // 2026-11-13: 선택 안 된 94점은 추적하지 않는다(쓰지 않는 값, 점마다 독립이라 536점 결과는 같다)
     }
     if(std::count(selected_.begin(),selected_.end(),1)!=536)throw std::runtime_error("Expected fixed536 interior selection");
     for(int k=0;k<3;++k){auto original=reference_(site::get().qr[k]).clone();cv::GaussianBlur(original,panels_[k].blurred8,cv::Size(),.8);panels_[k].models=reference_models(original,panels_[k].points);}

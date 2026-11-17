@@ -37,6 +37,7 @@ button, input, select { font:inherit; color:inherit; }
 .field-note { font-weight:500; color:var(--muted); }
 .field input[type=text], .field select { font-size:13px; font-weight:500; color:var(--ink); padding:9px 12px;
   border:1px solid var(--line); border-radius:10px; background:var(--surface); width:100%; min-width:0; }
+.field input[type=range] { width:100%; margin:2px 0 0; accent-color:var(--blue); cursor:pointer; }
 .field input:focus, .field select:focus { outline:2px solid var(--blue-soft); border-color:var(--blue); }
 .inline { display:flex; gap:8px; }
 .segmented { display:flex; background:var(--bg); border-radius:10px; padding:3px; }
@@ -117,6 +118,12 @@ details.notes[open] summary::after { content:"접기"; }
       <div class="field">봉우리 폭 배율 <span class="field-note">×1은 실제 폭, 그 외는 시각화용 확대</span>
         <div class="segmented" id="scale" data-key="scale"><button data-v="1">×1</button><button data-v="2">×2</button><button data-v="4">×4</button><button data-v="8">×8</button><button data-v="16">×16</button></div>
       </div>
+      <div class="field">점 크기 <span class="field-note" id="pszNote"></span>
+        <input type="range" id="psz" min="0.5" max="8" step="0.1" value="2">
+      </div>
+      <div class="field">모양 <span class="field-note">높이와 색은 같은 값이다. 평면은 색으로만 본다</span>
+        <div class="segmented" id="flat" data-key="flat"><button data-v="0">입체</button><button data-v="1">평면</button></div>
+      </div>
       <div class="field">곡면
         <div class="segmented" id="mode" data-key="mode"><button data-v="max">포락선 (최대)</button><button data-v="sum">합 (겹침 누적)</button></div>
       </div>
@@ -194,7 +201,7 @@ function paleScale(a) {
 }
 const COLORSCALE = [[0,'#170d72'],[0.12,'#2a3fd0'],[0.3,'#2fa6d8'],[0.45,'#47d1b8'],[0.6,'#b6e04a'],[0.75,'#f6d33a'],[0.88,'#f08a2a'],[1,'#b11e1b']];
 
-let state = { view:'full', c:[0.05,0.10], win:1, scale:1, mode:'max', pts:true, links:false, ctr:false, rev:0, sel:null, focus:null, cam:null };
+let state = { view:'full', c:[0.05,0.10], win:1, scale:1, psz:2, flat:0, mode:'max', pts:true, links:false, ctr:false, rev:0, sel:null, focus:null, cam:null };
 const scaleOf = st => st.scale;
 
 function windowOf(st) {
@@ -249,7 +256,9 @@ function buildSurface(w, s, mode) {
 }
 
 const LOCAL_ASPECT = { x:1.6, y:1.4, z:0.28 };
-const defCam = st => st.view === 'full' ? { eye:{ x:-0.3, y:1.55, z:1.35 }, center:{ x:0, y:0, z:-0.15 } } : { eye:{ x:-1.35, y:-1.75, z:0.9 }, center:{ x:0.03, y:0, z:-0.12 } };
+const FLAT_Z = 0.001;
+const LIT = () => state.flat ? { ambient:1, diffuse:0, specular:0, roughness:1, fresnel:0 } : { ambient:0.6, diffuse:0.75, specular:0.15, roughness:0.6 };
+const defCam = st => st.flat ? { eye:{ x:0, y:-0.02, z: st.view === 'full' ? 1.9 : 1.7 }, center:{ x:0, y:0, z:0 } } : st.view === 'full' ? { eye:{ x:-0.3, y:1.55, z:1.35 }, center:{ x:0, y:0, z:-0.15 } } : { eye:{ x:-1.35, y:-1.75, z:0.9 }, center:{ x:0.03, y:0, z:-0.12 } };
 const sameLabel = (a, b) => a && b && a.Y === b.Y && a.T === b.T;
 function nearestLabel(y, t, s) {
   let best = null, bd = Infinity;
@@ -331,10 +340,10 @@ function peakMesh(w, s, st) {
     // 바닥은 봉우리 mesh 와 같은 조명으로 칠해 봉우리 둘레에 네모 경계가 보이지 않게 하고, 봉우리는 바닥보다 살짝 위에 둔다
     { type:'surface', name:'peaks', x:[w.y0, w.y1], y:[w.t0, w.t1], z:[[0, 0], [0, 0]], showscale:false,
       colorscale:[[0, floorC], [1, floorC]], cmin:0, cmax:1,
-      lighting:{ ambient:0.6, diffuse:0.75, specular:0.15, roughness:0.6 }, lightposition:{ x:-10000, y:-6000, z:12000 },
+      lighting:LIT(), lightposition:{ x:-10000, y:-6000, z:12000 },
       hovertemplate:'Y %{x:.3f} mm, T %{y:.3f}<extra></extra>' },
     { type:'mesh3d', name:'peaks', x:X, y:Y, z:Z, i:I, j:J, k:K, intensity:Z, colorscale:cs, cmin:0, cmax:1, showscale:false, opacity: fo ? 0.18 : 1,
-      flatshading:false, lighting:{ ambient:0.6, diffuse:0.75, specular:0.15, roughness:0.6 }, lightposition:{ x:-10000, y:-6000, z:12000 },
+      flatshading:false, lighting:LIT(), lightposition:{ x:-10000, y:-6000, z:12000 },
       hovertemplate:'Y %{x:.3f} mm, T %{y:.3f}<extra></extra>' }
   ];
 }
@@ -357,7 +366,7 @@ function render() {
     hovertemplate:'Y %{x:.3f} mm, T %{y:.3f}<extra></extra>' }, {
     type:'surface', x:S.xs, y:S.ys, z:S.z, name:'peaks', showscale:false, showlegend:false, opacity: fo ? 0.12 : 1,
     colorscale: fo ? paleScale(0.55) : COLORSCALE, cmin:0, cmax:zTop,
-    lighting:{ ambient:0.62, diffuse:0.7, specular:0.1, roughness:0.75, fresnel:0.05 },
+    lighting:LIT(),
     lightposition:{ x:-10000, y:-6000, z:12000 },
     contours:{
       x:{ show:true, start:w.y0, end:w.y1, size:(w.y1 - w.y0) / w.M, color:'rgba(25,32,40,0.35)', width:1, highlight:false },
@@ -406,7 +415,7 @@ function render() {
     for (let i = 0; i < n; i++) { xs.push(F.Y - ry + 2 * ry * i / (n - 1)); ys.push(F.T - rt + 2 * rt * i / (n - 1)); }
     const z = ys.map(t => xs.map(y => { const c = Math.exp(-0.5 * DISP.q(y - F.Y, t - F.T)); return c < 0.02 || !inWin(w, y, t) ? null : c + 0.004 * zTop; }));
     traces.push({ type:'surface', name:'focus', x:xs, y:ys, z, showscale:false, colorscale:COLORSCALE, cmin:0, cmax:zTop,
-      lighting:{ ambient:0.6, diffuse:0.75, specular:0.15, roughness:0.6 }, lightposition:{ x:-10000, y:-6000, z:12000 },
+      lighting:LIT(), lightposition:{ x:-10000, y:-6000, z:12000 },
       contours:{ x:{ show:true, start:xs[0], end:xs[n - 1], size:(xs[n - 1] - xs[0]) / 24, color:'rgba(20,26,34,0.6)', width:1, highlight:false },
                  y:{ show:true, start:ys[0], end:ys[n - 1], size:(ys[n - 1] - ys[0]) / 24, color:'rgba(20,26,34,0.6)', width:1, highlight:false }, z:{ highlight:false } },
       hoverinfo:'skip' });
@@ -430,7 +439,7 @@ function render() {
     });
     const inP = vis.filter(p => inWin(w, p.pY, p.pT));
     let rest = inP.filter(p => !inFocus(p));
-    const base = full ? 1.2 : 1.8;
+    const base = (full ? 1.2 : 1.8) * st.psz;
     const ctrP = rest.filter(p => p.center);
     rest.splice(0, rest.length, ...rest.filter(p => !p.center));
     traces.push(mk(ctrP, F ? { size:base + 0.6, symbol:'square', color:'#f1d2b0', line:{ width:0 } } : { size:base + 1, symbol:'square', color:'#e07b00', line:{ color:'#ffffff', width:0.5 } }));
@@ -485,15 +494,15 @@ function render() {
   const yTick = st.view === 'full' ? 0.5 : (span <= 0.31 ? 0.05 : span <= 0.61 ? 0.1 : 0.2);
   const tTick = st.view === 'full' ? 0.25 : (span <= 0.31 ? 0.01 : span <= 0.61 ? 0.02 : 0.05);
   const layout = {
-    paper_bgcolor:'#ffffff', margin:{ l:0, r:0, t:0, b:0 }, uirevision: st.view + '|' + st.c + '|' + st.win + '|' + st.rev,
+    paper_bgcolor:'#ffffff', margin:{ l:0, r:0, t:0, b:0 }, uirevision: st.view + '|' + st.c + '|' + st.win + '|' + st.rev + '|' + st.flat,
     showlegend:false, font:{ family:'Pretendard, Malgun Gothic, sans-serif', color:'#0f1b33' },
     hoverlabel:{ bgcolor:'#ffffff', bordercolor:'#e4e8ef', font:{ size:12, color:'#0f1b33', family:'Pretendard, Malgun Gothic, sans-serif' } },
     scene:{
       bgcolor:'#ffffff',
       xaxis:ax('Y (mm)', [w.y0, w.y1], yTick),
       yaxis:ax('T (명령 단위)', [w.t0, w.t1], tTick),
-      zaxis:Object.assign(ax(st.mode === 'max' ? '상대 밀도' : '상대 밀도 합', [0, zTop * 1.06], null), { zeroline:false }),
-      aspectmode:'manual', aspectratio: st.view === 'full' ? { x:1.9, y:1.2, z:0.022 } : LOCAL_ASPECT,
+      zaxis:Object.assign(ax(st.mode === 'max' ? '상대 밀도' : '상대 밀도 합', [0, zTop * 1.06], null), { zeroline:false, visible: !st.flat }),
+      aspectmode:'manual', aspectratio: st.view === 'full' ? { x:1.9, y:1.2, z: st.flat ? FLAT_Z : 0.022 } : (st.flat ? { x:LOCAL_ASPECT.x, y:LOCAL_ASPECT.y, z:FLAT_Z } : LOCAL_ASPECT),
       camera: st.cam || defCam(st),
       dragmode:'pan'
     }
@@ -513,7 +522,8 @@ function render() {
 
 function syncControls() {
   const on = (id, v) => document.querySelectorAll(`#${id} button`).forEach(x => x.classList.toggle('is-on', x.dataset.v === String(v)));
-  on('win', state.win); on('scale', state.scale); on('mode', state.mode);
+  on('win', state.win); on('scale', state.scale); on('flat', state.flat); on('mode', state.mode);
+  document.getElementById('pszNote').textContent = '×' + state.psz.toFixed(1);
   document.getElementById('win').classList.toggle('is-off', state.view === 'full');
   document.getElementById('winNote').textContent = state.view === 'full' ? '전체 좌표에서는 쓰지 않음'
     : `Y±${(BASE_HY * state.win).toFixed(2)}, T±${(BASE_HT * state.win).toFixed(3)}`;
@@ -585,8 +595,16 @@ function init() {
   sel.onchange = () => { if (sel.value !== 'custom') setView(sel.value); };
   document.querySelectorAll('.segmented[data-key]').forEach(g => g.addEventListener('click', e => {
     const bt = e.target.closest('button'); if (!bt) return;
-    const k = g.dataset.key, v = bt.dataset.v; state[k] = k === 'mode' ? v : +v; render();
+    const k = g.dataset.key, v = bt.dataset.v; state[k] = k === 'mode' ? v : +v;
+    if (k === 'flat') state.cam = null;
+    render();
   }));
+  // 막대를 미는 동안에는 숫자만 바꾸고, 멈추면 다시 그린다
+  let pszTimer = 0;
+  document.getElementById('psz').oninput = e => {
+    state.psz = +e.target.value; document.getElementById('pszNote').textContent = '×' + state.psz.toFixed(1);
+    clearTimeout(pszTimer); pszTimer = setTimeout(render, 120);
+  };
   document.getElementById('showPts').onchange = e => { state.pts = e.target.checked; render(); };
   document.getElementById('showLinks').onchange = e => { state.links = e.target.checked; render(); };
   document.getElementById('showCtr').onchange = e => { state.ctr = e.target.checked; render(); };

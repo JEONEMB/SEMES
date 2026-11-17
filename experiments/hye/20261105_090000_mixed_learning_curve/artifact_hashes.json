@@ -663,27 +663,27 @@
       "sha256": "ca0d44b1ba9110c63013b0f84a39c18d5d45c5ff85cc133adc4e849cadfaf816"
     },
     {
-      "path": "experiments/hye/final_pin/CMakeLists.txt",
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/CMakeLists.txt",
       "sha256": "ddcc8744ad9922fb41d5b78652a2c98e1ec2add848995298d5544a78cf1d13cc"
     },
     {
-      "path": "experiments/hye/final_pin/README.md",
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/README.md",
       "sha256": "f2c21785844fd2afabb2038d9cdd2df554e62b8b671ae5227818c91fecae1698"
     },
     {
-      "path": "experiments/hye/final_pin/include/final_pin.hpp",
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/include/final_pin.hpp",
       "sha256": "70aa4789db4ac7052e13df7e316ed2ab75412f9f32e89ae651ba4fdae0d251d8"
     },
     {
-      "path": "experiments/hye/final_pin/src/estimator.cpp",
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/src/estimator.cpp",
       "sha256": "39060c1c77648ff610c4d42c72ecb60193f61fafb5a4734bc6c274eccf17bb4a"
     },
     {
-      "path": "experiments/hye/final_pin/src/final_pin.cpp",
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/src/final_pin.cpp",
       "sha256": "fc5c3cde0546d892ace7cf10ad44a9085d39c3945a0e5b4130299a806cce26d8"
     },
     {
-      "path": "experiments/hye/v2_Y_T_joint/assets/line_protocol.json",
+      "path": "experiments/hye/20261104_1435_v2_joint_강등/assets/line_protocol.json",
       "sha256": "526f34ec495941759efd7564351aed4227160258495448bb7b63683a1a241caa"
     }
   ]
