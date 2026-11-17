@@ -1,0 +1,14 @@
+{
+  "three_seeds": {
+    "pass_count_preserved": true,
+    "max_Y_reduced": true,
+    "max_T_reduced": true,
+    "every_prediction_within_tolerance": false
+  },
+  "group_holdout": {
+    "pass_count_preserved": true,
+    "max_Y_reduced": true,
+    "max_T_reduced": true,
+    "every_prediction_within_tolerance": false
+  }
+}
