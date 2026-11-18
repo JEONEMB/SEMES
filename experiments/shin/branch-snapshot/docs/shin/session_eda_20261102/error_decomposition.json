@@ -1,0 +1,15 @@
+{
+  "images": 571,
+  "poses": 377,
+  "repeated_poses": 97,
+  "pooled_within_pose_sd_ticks": 0.5852841633653714,
+  "within_pose_SSE_fraction": 0.21901435491054252,
+  "MAE_ticks": 0.5687094683660345,
+  "RMSE_ticks": 0.7289780514629309,
+  "max_ticks": 2.640013256021476,
+  "pass_1tick": 473,
+  "oracle_session_centered_RMSE_ticks": 0.7091170555813554,
+  "oracle_session_centered_max_ticks": 2.9673843823044352,
+  "oracle_session_centering_note": "In-sample descriptive removal of session means. Not predictive evaluation or deployable correction.",
+  "nonzero_pose_cross_session_overlap": 0
+}

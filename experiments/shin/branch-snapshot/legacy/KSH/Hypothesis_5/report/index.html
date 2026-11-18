@@ -1,0 +1,612 @@
+<meta charset="utf-8">
+<title>Y·Θ 위치 추정 보고서</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Nanum+Myeongjo:wght@700;800&display=swap">
+<style>
+/* 배치 : 왼쪽 정렬 한 단(본문 68ch) + 넓은 그림은 단 밖으로 펼침. 도면 메모처럼 차분하게 */
+:root {
+  --bg: #f4f5f2; --paper: #ffffff; --ink: #1d2422; --muted: #5d6763; --line: #d9ddd8;
+  --accent: #1f6f78; --accent-soft: #d8ebec; --ok: #2e7d4f; --bad: #c2412d; --warn: #a86b00;
+  --tol: #9aa19d; --tol-fill: rgba(130,138,134,.20);
+  --z-door: #2e7d4f; --z-wall: #3a5fc8; --z-bracket: #c77800; --z-ledge: #9b3fb5; --z-bottom: #7d7d7d;
+  --f-display: "Nanum Myeongjo", "Noto Serif KR", serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #151a19; --paper: #1d2422; --ink: #e6ebe8; --muted: #9aa5a0; --line: #33403c;
+  --accent: #6cc3cc; --accent-soft: #1f3a3d; --ok: #6fcf97; --bad: #ff8a73; --warn: #f2b84b;
+  --tol: #7d8884; --tol-fill: rgba(170,180,176,.16);
+  --z-door: #6fcf97; --z-wall: #8aa7ff; --z-bracket: #f2b84b; --z-ledge: #d58ae8; --z-bottom: #a8a8a8; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #151a19; --paper: #1d2422; --ink: #e6ebe8; --muted: #9aa5a0; --line: #33403c;
+  --accent: #6cc3cc; --accent-soft: #1f3a3d; --ok: #6fcf97; --bad: #ff8a73; --warn: #f2b84b;
+  --tol: #7d8884; --tol-fill: rgba(170,180,176,.16);
+  --z-door: #6fcf97; --z-wall: #8aa7ff; --z-bracket: #f2b84b; --z-ledge: #d58ae8; --z-bottom: #a8a8a8; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.7; }
+.page { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 80px; }
+.col { max-width: 68ch; }
+h1, h2 { font-family: var(--f-display); font-weight: 800; text-wrap: balance; letter-spacing: -.01em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.2; margin: 0 0 .4em; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); line-height: 1.3; margin: 0; }
+h3 { font-size: 1.08rem; font-weight: 600; margin: 1.6em 0 .4em; }
+p { margin: .6em 0; }
+.eyebrow { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.lede { font-size: 1.12rem; color: var(--muted); }
+section { padding-top: 56px; display: grid; gap: 14px; }
+.sec-head { display: grid; gap: 4px; border-top: 2px solid var(--ink); padding-top: 14px; }
+.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; margin-top: 24px; }
+.kpi { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; display: grid; gap: 2px; }
+.kpi b { font-family: var(--f-display); font-size: 1.9rem; font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--muted); font-size: .85rem; }
+.ok { color: var(--ok); } .bad { color: var(--bad); } .warn { color: var(--warn); }
+.callout { background: var(--accent-soft); border-radius: 6px; padding: 12px 16px; }
+.analogy { border-left: 3px solid var(--accent); padding: 2px 0 2px 14px; color: var(--ink); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 18px; align-items: start; }
+.grid2 > * { min-width: 0; }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
+figcaption { font-size: .88rem; color: var(--muted); }
+video { width: 100%; height: auto; border-radius: 6px; background: #000; display: block; }
+.tbl-wrap { overflow-x: auto; background: var(--paper); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .9rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: .8rem; white-space: nowrap; }
+td.r, th.r { text-align: right; }
+tr:last-child td { border-bottom: 0; }
+.chart { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 10px; position: relative; min-width: 0; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { fill: var(--muted); font-family: var(--f-body); font-size: 12px; }
+.axis path, .axis line { stroke: var(--line); }
+.tip { position: absolute; pointer-events: none; background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; font-size: .8rem; box-shadow: 0 4px 14px rgba(0,0,0,.12); white-space: nowrap; z-index: 3; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; max-width: 100%; }
+.seg button { font: inherit; font-size: .85rem; background: var(--paper); color: var(--ink); border: 0; padding: 6px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--paper); }
+.seg button:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .82rem; color: var(--muted); }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.eq { font-family: var(--f-mono); background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; overflow-x: auto; font-size: .92rem; line-height: 1.9; }
+.roi-img { position: relative; }
+.roi-img img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.roi-img svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+ol.steps { padding-left: 1.3em; margin: .4em 0; }
+ol.steps li { margin: .25em 0; }
+.small { font-size: .85rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="page">
+  <header class="col">
+    <div class="eyebrow">SEMES × SSAFY · 비전 정렬 · Hypothesis 5</div>
+    <h1>사진 한 장으로 로봇이 얼마나 옆으로 갔고 얼마나 돌았는지 읽기</h1>
+    <p class="lede">플레이트의 QR 3개와 뒤쪽 하단 문의 작은 홀 2개를 함께 보면, 로봇의 옆 이동 Y 와 회전 Θ 를 따로 읽을 수 있습니다. 어떤 배경 영역(ROI)을 쓸지는 1차 첫 번째 측정 사진만으로 골랐고, 2차 사진 57장은 마지막 시험에만 썼습니다.</p>
+  </header>
+
+  <div class="kpis" id="kpis">
+    <div class="kpi"><span>2차 · 목표 근처(Θ ≤ 0.2°) 허용 안</span><b class="ok" id="k-near">—</b><span>Y ±90 µm 와 Θ ±0.01° 동시 만족</span></div>
+    <div class="kpi"><span>목표 근처 Θ 오차 RMS</span><b id="k-trms">—</b><span>허용 0.01° 의 약 1/4</span></div>
+    <div class="kpi"><span>목표 근처 Y 오차 RMS</span><b id="k-yrms">—</b><span>허용 90 µm 의 약 1/8</span></div>
+    <div class="kpi"><span>사용하는 영역</span><b>QR 3 + 홀 2</b><span>후보 58곳 중 데이터로 선택</span></div>
+  </div>
+
+  <!-- ===================================================== 1 -->
+  <section aria-labelledby="s1">
+    <div class="sec-head"><div class="eyebrow">01 · 문제</div><h2 id="s1">무엇을 맞혀야 하나</h2></div>
+    <div class="col">
+      <p>로봇 팔 끝의 카메라가 플레이트를 찍습니다. 로봇이 <b>옆으로 Y mm</b> 가도, <b>Θ 도</b> 돌아도 사진 속 QR 은 똑같이 옆으로 밀려 보입니다. 사진에서 "밀린 양" 하나만 재면 두 경우를 구별할 수 없습니다.</p>
+      <p>맞혀야 하는 정밀도는 매우 작습니다.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>허용 오차</th><th>실제 크기</th><th>사진 속 크기</th></tr></thead>
+        <tbody>
+          <tr><td>Y ±90 µm</td><td>머리카락 굵기 정도</td><td class="num">플레이트 약 1.3 px</td></tr>
+          <tr><td>Θ ±0.01°</td><td>1 m 앞에서 0.17 mm 어긋나는 각도</td><td class="num">플레이트 약 0.8 px</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small">화면은 3840×2160 화소, 카메라에서 플레이트까지 385 mm. 1 px(화소) 는 플레이트 위 약 0.07 mm.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 2 -->
+  <section aria-labelledby="s2">
+    <div class="sec-head"><div class="eyebrow">02 · 원리 ① 시차</div><h2 id="s2">가까운 것과 먼 것은 다르게 움직인다</h2></div>
+    <div class="grid2">
+      <div class="col">
+        <p class="analogy">달리는 기차 창밖을 보면 가까운 전봇대는 휙 지나가고 먼 산은 천천히 움직입니다. 몸이 <b>옆으로 움직이면</b> 가까운 것과 먼 것의 움직임이 다릅니다. 그런데 제자리에서 <b>고개만 돌리면</b> 가까운 것과 먼 것이 거의 같이 움직입니다.</p>
+        <p>카메라도 같습니다. 플레이트(385 mm, 가까움)와 그 뒤 하단 문(약 494 mm, 멂)의 움직임을 비교하면 Y 와 Θ 가 구별됩니다. 아래 표는 실제 사진에서 잰 값입니다.</p>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>사진</th><th class="r">플레이트 QR 이동</th><th class="r">하단 문 홀 이동</th><th class="r">차이</th></tr></thead>
+          <tbody>
+            <tr><td>Y +1.00 mm (옆으로)</td><td class="r num">13.8 px</td><td class="r num">10.8 px</td><td class="r num"><b>3.0 px</b></td></tr>
+            <tr><td>Θ +0.18° (회전)</td><td class="r num">13.6 px</td><td class="r num">13.9 px</td><td class="r num"><b>−0.3 px</b></td></tr>
+          </tbody>
+        </table></div>
+        <p>플레이트는 두 사진에서 거의 똑같이 약 13.7 px 움직였지만, 홀은 Y 이동에서 덜 움직였습니다. 이 <b>차이(시차)</b> 가 Y 를 알려 주는 단서입니다.</p>
+      </div>
+      <figure>
+        <video src="media/v1_parallax.mp4" controls loop muted playsinline preload="metadata" aria-label="Y 이동과 Θ 회전에서 QR 과 홀이 움직이는 모습"></video>
+        <figcaption>실제 사진. 위 줄 = Y +1.00 mm, 아래 줄 = Θ +0.18°. 왼쪽 = 플레이트 QR, 오른쪽 = 하단 문 홀. 빨간 십자는 기준 사진의 같은 자리. 기준(REFERENCE)과 움직인 사진(MOVED)을 번갈아 보여 줍니다. 홀은 위 줄에서 덜 움직입니다.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================================================== 3 -->
+  <section aria-labelledby="s3">
+    <div class="sec-head"><div class="eyebrow">03 · 원리 ② 위상 상관</div><h2 id="s3">두 사진을 겹쳐서 어디가 맞는지 한 번에 찾기</h2></div>
+    <div class="grid2">
+      <figure>
+        <video src="media/v2_phasecorr.mp4" controls loop muted playsinline preload="metadata" aria-label="Θ 를 0.01° 씩 늘릴 때 위상 상관 봉우리가 움직이는 모습"></video>
+        <figcaption>Θ 를 0.01° 씩 키운 실제 사진 30장. 오른쪽 그림의 밝은 점(봉우리)이 "얼마나 밀렸는지"를 가리키며 오른쪽으로 걸어갑니다. 아래 숫자는 정수 칸(peak)과 화소보다 작은 단위까지 읽은 값.</figcaption>
+      </figure>
+      <div class="col">
+        <p class="analogy">투명 종이에 그린 그림 두 장을 겹쳐 놓고 한 장을 조금씩 밀어 보며 가장 잘 겹치는 자리를 찾는다고 생각해 보세요. 모든 자리를 하나씩 밀어 보면 오래 걸립니다.</p>
+        <p><b>위상 상관</b>은 사진을 "줄무늬들의 합"으로 바꾸는 푸리에 변환을 써서, 모든 밀기를 한 번에 계산합니다. 결과 그림에 <b>밝은 점 하나</b>가 생기고 그 위치가 곧 밀린 양입니다. 무늬의 밝기가 조금 달라져도(조명) 위치만 보기 때문에 잘 버팁니다.</p>
+        <p>이 단계는 "대략 몇 칸" 을 빠르게 찾는 데 씁니다. 0.01° 를 읽으려면 칸보다 훨씬 작은 단위가 필요해서, 다음 두 단계가 이어집니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== 4 -->
+  <section aria-labelledby="s4">
+    <div class="sec-head"><div class="eyebrow">04 · 원리 ③ 서브픽셀</div><h2 id="s4">화소 한 칸보다 작은 움직임도 밝기에 남는다</h2></div>
+    <div class="grid2">
+      <div class="col">
+        <p class="analogy">흰 종이와 검은 종이의 경계가 모눈 한 칸 안에서 반쯤 걸쳐 있으면, 그 칸은 회색이 됩니다. 경계가 조금 오른쪽으로 가면 칸이 조금 더 밝아집니다.</p>
+        <p>카메라 화소도 칸 하나에 들어온 빛을 평균합니다. 그래서 무늬가 0.3 칸만 움직여도 경계 근처 화소의 밝기가 조금씩 바뀝니다. 이 변화를 모든 화소에서 모아 계산하면 칸의 1/50 까지 읽을 수 있습니다.</p>
+        <p>오른쪽 영상은 실제 QR 모서리를 정확히 0 ~ 1 px 옮긴 것입니다. 노란 점(밝기)이 조금씩 바뀌고, 측정값(measured)이 정답(true move)을 따라갑니다.</p>
+      </div>
+      <figure>
+        <video src="media/v3_subpixel.mp4" controls loop muted playsinline preload="metadata" aria-label="QR 모서리를 1 px 보다 작게 옮길 때 화소 밝기 변화"></video>
+        <figcaption>왼쪽 = 16×16 화소를 크게 확대. 오른쪽 = 노란 줄의 밝기. 회색은 옮기기 전, 노란색은 옮긴 뒤.</figcaption>
+      </figure>
+    </div>
+    <h3>정말 서브픽셀이 필요한가 — 같은 데이터를 일부러 거칠게 만들어 본 결과</h3>
+    <div class="grid2">
+      <div class="chart" id="ch-precision"></div>
+      <div class="col">
+        <p>측정값을 0.01, 0.05, 0.1, 0.25, 0.5, 1 px 단위로 일부러 반올림한 뒤 똑같이 계산했습니다.</p>
+        <p><b>0.1 px 단위까지는 결과가 유지</b>되고, <b>0.25 px 부터 무너집니다</b>. 화소 단위(1 px)로 위치를 찾는 보통의 템플릿 매칭으로는 1차 사진 240장 중 <b id="p-1px">—</b>장만 허용 안에 듭니다.</p>
+        <p class="small">세로축 = 1차 첫 번째 측정 사진 중 Y·Θ 둘 다 허용 안에 든 장 수(블록 교차검증). 막대 위 숫자는 2차 목표 근처 33장 중 통과 수.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== 5 -->
+  <section aria-labelledby="s5">
+    <div class="sec-head"><div class="eyebrow">05 · 원리 ④ 가우스–뉴턴</div><h2 id="s5">조금씩 고쳐 가며 정답에 다가가기</h2></div>
+    <div class="grid2">
+      <figure>
+        <video src="media/v4_gaussnewton.mp4" controls loop muted playsinline preload="metadata" aria-label="가우스–뉴턴 반복으로 어긋남이 줄어드는 모습"></video>
+        <figcaption>Θ +0.05° 사진. "안 움직였다(0 px)" 에서 출발해 한 걸음마다 추정값을 고칩니다. 오른쪽 차이 그림이 어두워질수록 잘 맞은 것. 처음 몇 걸음은 사진을 흐리게 해서 멀리서도 방향을 잡고, 그다음 선명한 사진으로 다듬습니다.</figcaption>
+      </figure>
+      <div class="col">
+        <p class="analogy">눈을 가리고 골짜기의 가장 낮은 곳을 찾는다고 해 봅시다. 발밑의 기울기를 느끼고, 내리막 쪽으로 알맞은 만큼 걸음을 옮깁니다. 몇 걸음이면 바닥에 닿습니다.</p>
+        <p>여기서 "높이" 는 두 사진의 <b>밝기 차이</b>, "기울기" 는 무늬의 경계가 어느 쪽으로 밝아지는지입니다. 이것이 <b>가우스–뉴턴 방법</b>이고, OpenCV 의 <code>findTransformECC</code>(M1)가 이 원리로 마지막 0.01 px 를 맞춥니다.</p>
+        <p class="small">영상 속 단순화 버전은 3.205 px 에서 멈추고, 실제 사용하는 ECC 는 3.228 px 입니다. 밝기·대비 보정이 있는 ECC 가 더 정확합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== 6 -->
+  <section aria-labelledby="s6">
+    <div class="sec-head"><div class="eyebrow">06 · 원리 ⑤ 연립방정식</div><h2 id="s6">숫자 두 개로 모르는 것 두 개 풀기</h2></div>
+    <div class="col">
+      <p>사진 한 장에서 두 숫자를 잽니다. <b>s</b> = QR 3개가 밀린 양, <b>d</b> = s − 하단 문 홀(W2, W3)이 밀린 양(시차). 1차 사진 240장으로 "Y 와 Θ 가 이만큼이면 s 와 d 는 이만큼" 이라는 관계를 배웠습니다(최소제곱).</p>
+      <div class="eq" id="eq-model">—</div>
+      <p>새 사진에서 s, d 를 재면 위의 두 식을 동시에 만족하는 Y 와 Θ 를 구하면 됩니다. 중학교에서 배우는 연립일차방정식과 같습니다. 실제 2차 사진 한 장으로 해 보면 이렇습니다.</p>
+      <div class="eq" id="eq-example">—</div>
+      <p class="small">s 만 있으면 식이 하나라 답이 무수히 많습니다(Y 를 조금 늘리고 Θ 를 조금 줄여도 같은 s). d 가 있어야 답이 하나로 정해집니다. 두 식의 잡음이 다르므로 잡음이 작은 식을 더 믿도록 가중치(1/σ²)를 줍니다.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 7 -->
+  <section aria-labelledby="s7">
+    <div class="sec-head"><div class="eyebrow">07 · 최적 ROI</div><h2 id="s7">어떤 배경을 같이 볼 것인가 — 58곳을 시험해 2곳을 골랐다</h2></div>
+    <div class="col">
+      <p>후보는 사진 전체를 격자로 훑어, 무늬가 뚜렷한 곳(Shi–Tomasi 질감 점수)을 구역마다 골라 만들었습니다. 요청하신 <b>하단 문</b>과 <b>중간 돌출부</b>(플레이트 브래킷 위·아래, 벽을 가로지르는 선반)를 포함했습니다.</p>
+      <p>각 후보를 1차 첫 번째 측정 사진 240장에서 모두 쟀습니다. 그리고 "어떤 묶음을 평균해서 d 를 만들면 교차검증 오차가 가장 작은가" 를 빔 탐색으로 찾았습니다.</p>
+    </div>
+    <div class="legend" id="zone-legend"></div>
+    <div class="roi-img chart" id="roi-figure">
+      <img src="media/center_1920.jpg" alt="기준 사진 위에 ROI 후보 58곳과 선택된 2곳을 표시한 그림" width="1920" height="1080">
+      <svg viewBox="0 0 3840 2160" preserveAspectRatio="none" id="roi-svg" aria-hidden="true"></svg>
+    </div>
+    <p class="small">굵은 테두리 = 선택된 ROI(W2, W3). 흰 테두리 = QR 3개. 상자에 마우스를 올리면 수치가 나옵니다. 좌표는 기준 사진(3840×2160) 기준, 상자는 120×120 px.</p>
+    <h3>구역별로 가장 좋은 후보</h3>
+    <div class="tbl-wrap"><table id="zone-table">
+      <thead><tr><th>구역</th><th>후보 수</th><th>혼자 썼을 때 가장 좋은 후보</th><th class="r">Y 감도 (px/mm)</th><th class="r">잡음 σ (px)</th><th class="r">혼자 쓴 J</th><th>데이터가 말하는 것</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <div class="col">
+      <p><b>왜 하단 문 홀 W2·W3 인가.</b> 시차가 생기려면 플레이트와 <b>깊이가 달라야</b> 합니다. 하단 문 홀은 플레이트보다 약 110 mm 뒤에 있어 Y 1 mm 에 3.1 px 의 시차가 생깁니다.</p>
+      <ul>
+        <li><b>홀 하나만 쓰면</b> 화면 가장자리의 원근 때문에 Θ 에 대해 살짝 휜 응답을 보여 잡음이 커집니다(σ 0.10 px). 그런데 <b>왼쪽 홀(W3)과 오른쪽 홀(W2)을 평균하면</b> 좌우 휨이 서로 지워져 σ 0.040 px 로 줄어듭니다. 그래서 짝이 하나보다 훨씬 좋습니다.</li>
+        <li>플레이트 아래 하우징과 브래킷은 플레이트와 거의 같은 깊이라 시차가 0.04~0.8 px/mm 뿐입니다. 무늬가 아무리 선명해도(ADDRESS 글자) 쓸모가 없습니다.</li>
+        <li>문 아래 경첩(bottom_04)은 혼자 쓰면 가장 좋은 후보(J 0.454)였습니다. 하지만 Θ 에 반대 방향으로 반응해(+2.2 px/°) W2·W3 와 섞으면 오히려 나빠져 빠졌습니다.</li>
+      </ul>
+      <p>선택 과정 :</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>묶음 크기</th><th>가장 좋은 묶음</th><th class="r">교차검증 J</th><th>결정</th></tr></thead>
+        <tbody>
+          <tr><td>(기존)</td><td>하단 문 홀 W1~W4 평균</td><td class="r num">0.370</td><td>비교 기준</td></tr>
+          <tr><td>1</td><td>bottom_04</td><td class="r num">0.454</td><td>홀 하나로는 기존보다 나쁨</td></tr>
+          <tr><td>2</td><td><b>W2 + W3</b></td><td class="r num"><b>0.360</b></td><td>채택 (기존보다 2.5 % 좋음)</td></tr>
+          <tr><td>3</td><td>W2 + W3 + bracket_lower_01</td><td class="r num">0.358</td><td>개선 0.6 % → 2 % 미만이라 중단</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small">J = √평균((Y 오차/90 µm)² + (Θ 오차/0.01°)²). 1 이면 허용 오차만큼 틀린 것, 0.36 은 허용의 약 1/3. 같은 데이터로 고르고 평가했으므로 J 는 낙관적이고, 공정한 성적은 2차 시험(9절)입니다.</p>
+      <p><b>정직한 해석 :</b> 기존 4곳 평균과 선택된 2곳의 차이는 작습니다(J 2.5 %, 2차 성적 동일). 이 탐색의 가치는 두 가지입니다. 하단 문 홀이 사진에서 가장 좋은 배경임을 58곳과 비교해 확인했고, 홀 2개로 줄여도 된다는 것을 보였습니다.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 8 -->
+  <section aria-labelledby="s8">
+    <div class="sec-head"><div class="eyebrow">08 · 데이터 검증</div><h2 id="s8">1차 사진의 "중심 어긋남" — 정말 있었나</h2></div>
+    <div class="col">
+      <p>촬영 기록을 보면 1차는 두 번에 나눠 찍었습니다.</p>
+      <ul>
+        <li>첫 번째 측정(12:13~12:46) : center → Y 0.1 mm 배수 40장 → Θ 0.01° 간격 200장</li>
+        <li>두 번째 측정(13:01~13:11, 약 48분 뒤) : Y 0.05 mm 홀수 값 40장</li>
+      </ul>
+      <p>라벨 0 근처를 직선으로 이어 "0 에서의 값(영점)" 을 구했습니다. 기준 사진(center)과 같은 자리로 돌아왔다면 0 이어야 합니다.</p>
+    </div>
+    <div class="grid2">
+      <div class="tbl-wrap"><table id="off-table">
+        <thead><tr><th>촬영 묶음</th><th class="r">플레이트 s 영점 (px)</th><th class="r">시차 d 영점 (px)</th></tr></thead><tbody></tbody>
+      </table></div>
+      <div class="col">
+        <p>두 번째 측정(0.05 묶음)은 첫 번째(0.1 묶음)보다 플레이트가 <b>0.20 px</b> 더 어긋나 있습니다(Y 로 약 14 µm). 말씀하신 현상이 데이터로 확인됩니다.</p>
+        <p>다만 Θ 스윕도 + 쪽과 − 쪽이 0.42 px 다르고(방향에 따른 차이), 첫 번째 측정조차 영점이 −0.23 px 입니다. 그러니 "0.1·0.01 묶음은 중심과 일치" 는 근사적으로만 맞습니다.</p>
+        <p>상대값(시차 d)으로 보면 0.05 묶음의 추가 어긋남이 0.065 px 로 약 1/3 이 됩니다. 하지만 0 은 아닙니다.</p>
+      </div>
+    </div>
+    <div class="callout col">
+      <p><b>학습에 넣을지 판정 (결과를 보기 전에 정한 기준).</b> 첫 번째 측정으로 학습한 모델로 두 번째 측정 40장을 예측해, 평균 치우침이 Y 22.5 µm, Θ 0.0025°(허용의 1/4) 이하이면 "의미 없음" 으로 보고 학습에 넣기로 했습니다.</p>
+      <p>결과는 Y −4.1 µm, Θ <b>+0.00253°</b> 로 Θ 기준을 근소하게 넘었습니다. → <b>첫 번째 측정만으로 학습</b>했습니다. 40장 모두 허용 안이므로 실용상 큰 문제는 아니지만, 정한 규칙을 따랐습니다.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 9 -->
+  <section aria-labelledby="s9">
+    <div class="sec-head"><div class="eyebrow">09 · 결과</div><h2 id="s9">2차 사진 57장 시험 — 라벨과 예측을 Y·Θ 좌표에 그대로 찍기</h2></div>
+    <div class="col">
+      <p>가로축은 Y 이동, 세로축은 Θ 회전입니다.</p>
+      <ul>
+        <li><b>검은 +</b> = 라벨(로봇에 명령한 정답 위치)</li>
+        <li><b>회색 상자</b> = 허용 범위 (가로 ±0.09 mm, 세로 ±0.01°)</li>
+        <li><b>동그라미</b> = OpenCV 로 사진에서 읽은 위치 (초록 = 상자 안, 빨강 = 상자 밖)</li>
+      </ul>
+      <p>2차 사진은 ROI 선택과 학습에 한 번도 쓰지 않았습니다.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <div class="seg" role="group" aria-label="모델 선택">
+        <button type="button" id="m-sel" aria-pressed="true">선택 ROI (W2+W3)</button>
+        <button type="button" id="m-base" aria-pressed="false">기존 (W1~W4)</button>
+      </div>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--tol-fill);border:1px solid var(--tol)"></span>허용 범위</span>
+        <span><span class="sw" style="background:var(--ok);border-radius:50%"></span>허용 안</span>
+        <span><span class="sw" style="background:var(--bad);border-radius:50%"></span>허용 밖</span>
+      </div>
+    </div>
+    <div class="grid2" id="yt-panels">
+      <div class="chart" id="yt-near"></div>
+      <div style="display:grid;gap:18px;min-width:0">
+        <div class="chart" id="yt-1"></div>
+        <div class="chart" id="yt-2"></div>
+      </div>
+    </div>
+    <h3>정확도 한눈에</h3>
+    <div class="tbl-wrap"><table id="acc-table">
+      <thead><tr><th>2차 묶음</th><th class="r">장 수</th><th class="r">둘 다 허용 안</th><th class="r">Θ 오차 RMS</th><th class="r">Θ 최대</th><th class="r">Y 오차 RMS</th><th class="r">Y 최대</th></tr></thead><tbody></tbody>
+    </table></div>
+    <h3>과녁으로 보기 — 오차를 허용 범위로 나눈 값</h3>
+    <div class="grid2">
+      <div class="chart" id="target"></div>
+      <div class="col">
+        <p>오차를 허용 범위로 나눠서 그렸습니다. 가운데 회색 네모(±1) 안이면 Y·Θ 둘 다 합격입니다.</p>
+        <div class="seg" role="group" aria-label="데이터 묶음" id="tg-seg">
+          <button type="button" data-k="train" aria-pressed="false">1차 교차검증 240</button>
+          <button type="button" data-k="batch2" aria-pressed="false">1차 두 번째 측정 40</button>
+          <button type="button" data-k="near" aria-pressed="true">2차 목표 근처 33</button>
+          <button type="button" data-k="t1" aria-pressed="false">2차 Θ 1° 12</button>
+          <button type="button" data-k="t2" aria-pressed="false">2차 Θ 2° 12</button>
+        </div>
+        <p id="tg-note" class="small">—</p>
+      </div>
+    </div>
+    <h3>Θ 가 클수록 오차가 커지는 이유</h3>
+    <div class="grid2">
+      <div class="chart" id="err-vs-t"></div>
+      <div class="col">
+        <p>2차의 Θ 오차는 Θ 크기에 거의 <b>비례</b>합니다(1° 에서 약 +0.009°, 2° 에서 약 +0.02°). 즉 2차 날의 Θ 배율이 1차보다 약 1 % 큽니다. 1차 하루치 사진만으로는 이 날짜 간 배율 차를 알 수 없고, ROI 를 바꿔도 줄지 않았습니다.</p>
+        <p>실제 정렬은 한 번에 끝내지 않고 <b>찍고 → 고치고 → 다시 찍기</b>를 반복합니다(최대 20회). Θ 2° 에서 출발해도 첫 보정 뒤 남는 오차는 약 0.02° 입니다. 이는 이미 "목표 근처" 영역이고, 그 영역에서는 33/33 이 허용 안이었습니다. 반복 수렴은 다음 단계 시뮬레이터에서 확인할 예정입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== 10 -->
+  <section aria-labelledby="s10">
+    <div class="sec-head"><div class="eyebrow">10 · 당위성</div><h2 id="s10">왜 이 기술이어야 하나</h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>다른 방법</th><th>무엇이 부족한가</th><th>근거 (이 데이터)</th></tr></thead>
+      <tbody>
+        <tr><td>QR 만 보고 위치 하나만 재기</td><td>식이 하나라 Y 와 Θ 를 나눌 수 없음</td><td>Y 1 mm 와 Θ 0.18° 가 플레이트를 거의 똑같이 13.7 px 옮김 (2절)</td></tr>
+        <tr><td>QR 만 보고 좌·우 크기 차이(원근)</td><td>신호가 잡음보다 작음</td><td>H4 트랙 A : 1차 Θ RMS 0.025°, 허용 안 84/280</td></tr>
+        <tr><td>정수 화소 템플릿 매칭 / 특징점</td><td>칸 단위로는 시차 0.19 px(=0.01°)를 못 읽음</td><td>1 px 반올림 시 1차 78/240, 0.25 px 에서 이미 227/240 (4절)</td></tr>
+        <tr><td>신경망 회귀</td><td>사진 240장으로는 일반화·외삽 검증이 어렵고, 근거 설명이 어려움</td><td>현재 모델은 계수 6개로 설명 가능. 신경망은 후순위로 보류</td></tr>
+        <tr><td>Θ² 곡선 모델</td><td>1차 날의 휜 모양을 외워서 2° 로 외삽할 때 틀림</td><td>교차검증 J 0.399 vs 직선 0.370 → 직선 채택. 물리 모델(핀홀)도 곡률 거의 0 (0.006 px/°²)</td></tr>
+        <tr><td><b>위상 상관 + ECC 서브픽셀 정합 + 깊이가 다른 ROI 의 시차 + 가중 최소제곱</b></td><td>—</td><td>2차 목표 근처 33/33, Θ RMS 0.0024°, Y RMS 11 µm. 계산은 OpenCV 기본 함수만으로 장당 약 0.12 초</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- ===================================================== 11 -->
+  <section aria-labelledby="s11">
+    <div class="sec-head"><div class="eyebrow">11 · 재검증</div><h2 id="s11">다시 계산해 보고, 지나치게 복잡하지 않은지 따져 봄</h2></div>
+    <div class="col">
+      <h3>독립 재계산 (C++ 와 다른 코드로)</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>점검</th><th>결과</th></tr></thead>
+        <tbody>
+          <tr><td>라벨 : 파일 이름을 다시 읽어 CSV 의 정답과 비교 (337장)</td><td class="ok">불일치 0</td></tr>
+          <tr><td>학습/시험 분리 : 학습 240장이 모두 1차 첫 번째 측정인지, 2차와 겹치는지</td><td class="ok">모두 첫 번째 측정, 겹침 0</td></tr>
+          <tr><td>모델 계수를 numpy 최소제곱으로 다시 계산</td><td class="ok">6자리까지 동일</td></tr>
+          <tr><td>2차 57장의 Y·Θ 를 다른 식(닫힌 꼴 가중 최소제곱)으로 다시 계산</td><td class="ok">최대 차 2×10⁻⁵ µm, 통과 수 33·9·0 동일</td></tr>
+          <tr><td>블록 교차검증을 다시 구현</td><td class="ok">J 0.3603 동일</td></tr>
+          <tr><td>측정 자체를 Python OpenCV 로 다시 구현 (무작위 12장, QR·W2·W3)</td><td class="ok">최대 차 0.017 px (필요 정밀도 0.1 px 의 1/6)</td></tr>
+          <tr><td>Windows(Visual Studio) 실행과 리눅스 실행 비교 (H4)</td><td class="ok">이동량 최대 차 8×10⁻⁵ px</td></tr>
+        </tbody>
+      </table></div>
+      <h3>밝혀 둘 점</h3>
+      <ul>
+        <li>모델 형태(Θ² 유무)를 정하는 단계는 처음 계획에 없었습니다. Θ² 모델로 첫 실행을 했을 때 2차 Θ 2° 오차가 컸고, Python 탐색에서 2차 결과를 본 뒤 이 단계를 넣었습니다. 대신 결정 자체는 1차 교차검증(J 0.370 &lt; 0.399)으로만 내렸고, 물리 모델도 같은 방향을 가리킵니다. 그래도 2차를 완전히 보지 않은 상태라고 할 수는 없어, 다음 데이터에서 다시 확인해야 합니다.</li>
+        <li>ROI 선택은 단순 전진 선택(한 개씩 추가)을 먼저 썼습니다. 첫 선택(하단 바닥 1곳)에 갇혀 기존보다 나빠서, 폭 5 의 빔 탐색으로 바꿨습니다. 이전 판과 결과는 모두 보관했습니다.</li>
+      </ul>
+      <h3>오버엔지니어링 점검</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>구성</th><th>필요했나</th><th>판단</th></tr></thead>
+        <tbody>
+          <tr><td>후보 58곳 측정 (약 5분)</td><td>"최적" 을 주장하려면 비교 대상이 필요</td><td>오프라인 1회. 운영에는 QR 3 + 홀 2 만 측정</td></tr>
+          <tr><td>빔 탐색</td><td>단순 전진 선택이 실패</td><td>필요. 다만 결과가 기존과 거의 같아 운영 코드는 단순 (평균 하나)</td></tr>
+          <tr><td>Θ² 제거</td><td>2차 Θ 2° 오차 0.029° → 0.020°</td><td>단순해지면서 좋아짐</td></tr>
+          <tr><td>선택 ROI 3개째 이상</td><td>개선 0.6 %</td><td>넣지 않음 (2개로 충분)</td></tr>
+          <tr><td>측정 정밀도 시험(반올림)</td><td>서브픽셀이 꼭 필요한 근거</td><td>설득용 근거. 운영에는 없음</td></tr>
+          <tr><td>가우스–뉴턴 영상의 단순 구현</td><td>설명용</td><td>운영은 OpenCV ECC 그대로</td></tr>
+        </tbody>
+      </table></div>
+      <p><b>결론 :</b> 운영에 필요한 것은 기존 M1(위상 상관 + ECC)으로 QR 3곳과 하단 문 홀 2곳을 재고, 계수 6개짜리 직선 모델로 연립방정식을 푸는 것뿐입니다. 탐색 도구는 새 장비나 새 데이터가 들어왔을 때 다시 돌리는 오프라인 도구로 둡니다.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== 12 -->
+  <section aria-labelledby="s12">
+    <div class="sec-head"><div class="eyebrow">12 · 한계와 다음 단계</div><h2 id="s12">아직 증명하지 못한 것</h2></div>
+    <div class="col">
+      <ol class="steps">
+        <li><b>날짜 간 Θ 배율 차(약 1 %)</b> : 한 장 판정으로는 Θ 1° 에서 9/12, 2° 에서 0/12. 반복 보정이 이를 흡수하는지 시뮬레이터로 확인합니다.</li>
+        <li><b>Θ 2° 는 학습 범위(±1°) 밖</b>입니다. 1차에 ±2° 사진이 있으면 직접 확인할 수 있습니다.</li>
+        <li><b>1차 촬영 자체의 어긋남</b>(Θ +쪽/−쪽 0.42 px)은 다가가는 방향에 따른 로봇 쪽 차이로 추정됩니다. 판정에서 제외하기로 한 기계 오차에 해당하지만, 확인하지는 않았습니다.</li>
+        <li>처리 시간은 리눅스 최적화 빌드 기준 장당 약 0.12 초입니다. Windows Release 빌드로 다시 재야 합니다.</li>
+      </ol>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(() => {
+  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const TOLY = 0.09, TOLT = 0.01;   // mm, °
+  const zoneName = {door_panel: '하단 문', bottom: '문 아래 바닥', bracket_upper: '돌출부 · 브래킷 위', bracket_lower: '돌출부 · 플레이트 아래', ledge: '돌출부 · 벽 선반', wall: '나머지 벽'};
+  const zoneVar = {door_panel: '--z-door', bottom: '--z-bottom', bracket_upper: '--z-bracket', bracket_lower: '--z-bracket', ledge: '--z-ledge', wall: '--z-wall'};
+  const zoneWhy = {
+    door_panel: 'W1~W4 홀 : Y 감도 3.1 로 가장 큼. 하나는 휨 때문에 잡음 0.1 px → 좌우 짝(W2+W3)은 0.04 px. 채택',
+    bottom: '경첩(bottom_04)이 단독 1위. 그러나 Θ 반응이 반대(+2.2 px/°)라 홀과 섞으면 나빠짐',
+    bracket_upper: '플레이트와 깊이가 비슷 → Y 감도 0.8 이하, 시차 작음',
+    bracket_lower: '플레이트와 같은 깊이 → Y 감도 0.2 이하 (글자는 선명하지만 무용)',
+    ledge: '가로 선 무늬뿐이라 가로 이동이 불안정 (감도 들쭉날쭉)',
+    wall: '위쪽 벽 나사(U1·U2)는 Y 감도 1.1 → 하단 문의 1/3'};
+  const tipEl = (box) => { let t = box.querySelector('.tip'); if (!t) { t = document.createElement('div'); t.className = 'tip'; t.hidden = true; box.append(t); } return t; };
+  const showTip = (box, ev, lines) => {
+    const t = tipEl(box); t.replaceChildren(...lines.map((l, i) => { const d = document.createElement('div'); d.textContent = l; if (i === 0) d.style.fontWeight = '600'; return d; }));
+    t.hidden = false; const r = box.getBoundingClientRect();
+    const x = ev.clientX - r.left, y = ev.clientY - r.top;
+    t.style.left = Math.max(4, Math.min(r.width - t.offsetWidth - 4, x + 12)) + 'px';
+    t.style.top = Math.max(4, y - t.offsetHeight - 10) + 'px';
+  };
+  const hideTip = (box) => { const t = box.querySelector('.tip'); if (t) t.hidden = true; };
+  const f = (v, n) => (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(n);
+
+  fetch('data.json').then((r) => r.json()).then((D) => {
+    const rms = (a) => Math.sqrt(d3.mean(a, (x) => x * x));
+    const groupOf = (t) => (t <= 0.2 + 1e-9 ? 'near' : Math.abs(t - 1) < 1e-6 ? 't1' : 't2');
+    // ---------------- KPI
+    const near = D.set2.filter((r) => groupOf(r.t_deg) === 'near');
+    document.getElementById('k-near').textContent = `${d3.sum(near, (r) => r.in_tol)} / ${near.length}`;
+    document.getElementById('k-trms').textContent = rms(near.map((r) => r.err_t_deg)).toFixed(4) + '°';
+    document.getElementById('k-yrms').textContent = rms(near.map((r) => r.err_y_um)).toFixed(1) + ' µm';
+
+    // ---------------- 모델 식과 예시
+    const [ms, md] = D.model;
+    document.getElementById('eq-model').innerHTML =
+      `s = ${ms.c.toFixed(3)} + <b>${ms.a_Y.toFixed(3)}</b>·Y + <b>${ms.b_T.toFixed(3)}</b>·Θ    (잡음 σ ${ms.sigma.toFixed(3)} px)<br>` +
+      `d = ${md.c.toFixed(3)} + <b>${md.a_Y.toFixed(3)}</b>·Y ${md.b_T < 0 ? '−' : '+'} <b>${Math.abs(md.b_T).toFixed(3)}</b>·Θ    (잡음 σ ${md.sigma.toFixed(3)} px)<br>` +
+      `<span style="color:var(--muted)">Y : mm,  Θ : °,  s·d : px.  Y 계수가 두 식에서 크게 다르고(14.1 vs 3.1), Θ 계수도 다름(80.1 vs −1.2) → 풀 수 있음</span>`;
+    const ex = D.meas2.find((r) => r.stem === 'Y+0.50 T+0.10 (2)');
+    if (ex) {
+      const s = ex.s, d = s - (ex.wall_W2_dx + ex.wall_W3_dx) / 2;
+      const w1 = 1 / ms.sigma ** 2, w2 = 1 / md.sigma ** 2;
+      const J = [[ms.a_Y, ms.b_T], [md.a_Y, md.b_T]], r = [s - ms.c, d - md.c];
+      const a11 = w1 * J[0][0] ** 2 + w2 * J[1][0] ** 2, a12 = w1 * J[0][0] * J[0][1] + w2 * J[1][0] * J[1][1], a22 = w1 * J[0][1] ** 2 + w2 * J[1][1] ** 2;
+      const b1 = w1 * J[0][0] * r[0] + w2 * J[1][0] * r[1], b2 = w1 * J[0][1] * r[0] + w2 * J[1][1] * r[1];
+      const det = a11 * a22 - a12 * a12, Y = (a22 * b1 - a12 * b2) / det, T = (a11 * b2 - a12 * b1) / det;
+      document.getElementById('eq-example').innerHTML =
+        `사진 "${ex.stem}" (정답 Y 0.50 mm, Θ 0.10°)<br>` +
+        `잰 값 : s = ${s.toFixed(3)} px,  홀 W2 ${ex.wall_W2_dx.toFixed(3)} px, W3 ${ex.wall_W3_dx.toFixed(3)} px → d = ${d.toFixed(3)} px<br>` +
+        `풀이 : <b>Y = ${Y.toFixed(4)} mm</b> (오차 ${f((Y - 0.5) * 1000, 1)} µm),  <b>Θ = ${T.toFixed(4)}°</b> (오차 ${f(T - 0.1, 4)}°) → 둘 다 허용 안`;
+    }
+
+    // ---------------- 정밀도 차트
+    {
+      const box = document.getElementById('ch-precision');
+      const rows = D.precision; const W = 560, H = 300, m = {t: 24, r: 16, b: 46, l: 48};
+      const x = d3.scaleBand(rows.map((r) => r.step_px), [m.l, W - m.r]).padding(0.28);
+      const y = d3.scaleLinear([0, 240], [H - m.b, m.t]);
+      const svg = d3.select(box).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '측정 단위별 허용 안 장 수');
+      svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(W - m.l - m.r))).call((g) => g.select('.domain').remove()).selectAll('line').attr('stroke', css('--line'));
+      svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (r) => x(r.step_px)).attr('width', x.bandwidth())
+        .attr('y', (r) => y(r.cv_pass_both)).attr('height', (r) => y(0) - y(r.cv_pass_both)).attr('rx', 3)
+        .attr('fill', (r) => (r.cv_pass_both >= 228 ? css('--accent') : css('--bad')))
+        .on('pointermove', (ev, r) => showTip(box, ev, [r.step_px === 0 ? '반올림 없음' : `${r.step_px} px 단위`, `1차 허용 안 ${r.cv_pass_both}/240`, `Θ RMS ${r.cv_theta_rms_deg.toFixed(4)}°, Y RMS ${r.cv_y_rms_um.toFixed(1)} µm`, `2차 목표 근처 ${r.set2_near_pass}/33`]))
+        .on('pointerleave', () => hideTip(box));
+      svg.append('g').selectAll('text.v').data(rows).join('text').attr('class', 'v').attr('x', (r) => x(r.step_px) + x.bandwidth() / 2).attr('y', (r) => y(r.cv_pass_both) - 5)
+        .attr('text-anchor', 'middle').style('fill', css('--ink')).style('font-weight', 600).text((r) => r.cv_pass_both);
+      svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickFormat((v) => (v === 0 ? '없음' : v + ''))).attr('class', 'axis');
+      svg.append('text').attr('x', (W + m.l) / 2).attr('y', H - 8).attr('text-anchor', 'middle').text('측정값을 반올림한 단위 (px)');
+      svg.append('text').attr('x', m.l).attr('y', 14).text('1차 허용 안 (장, 240 중)');
+      document.getElementById('p-1px').textContent = rows.find((r) => r.step_px === 1).cv_pass_both;
+    }
+
+    // ---------------- ROI 그림
+    {
+      const svg = d3.select('#roi-svg'); const box = document.getElementById('roi-figure');
+      const leg = document.getElementById('zone-legend');
+      for (const z of Object.keys(zoneName)) { const s = document.createElement('span'); const w = document.createElement('span'); w.className = 'sw'; w.style.background = `var(${zoneVar[z]})`; s.append(w, zoneName[z] + ` (${D.cands.filter((c) => c.zone === z).length})`); leg.append(s); }
+      for (const q of [1650, 1907, 2165]) svg.append('rect').attr('x', q - 110).attr('y', 1065 - 110).attr('width', 220).attr('height', 220).attr('fill', 'none').attr('stroke', '#ffffff').attr('stroke-width', 7);
+      svg.selectAll('rect.c').data(D.cands).join('rect').attr('class', 'c')
+        .attr('x', (c) => c.cx - c.hw).attr('y', (c) => c.cy - c.hw).attr('width', (c) => 2 * c.hw).attr('height', (c) => 2 * c.hw)
+        .attr('fill', 'transparent').attr('stroke', (c) => css(zoneVar[c.zone])).attr('stroke-width', (c) => (D.selected.includes(c.name) ? 16 : 5))
+        .on('pointermove', (ev, c) => showTip(box, ev, [`${c.name} · ${zoneName[c.zone]}`, `중심 (${c.cx}, ${c.cy})`, `Y 감도 ${c.dY_px_per_mm.toFixed(2)} px/mm, 잡음 ${c.sigma_px.toFixed(3)} px`, `0.01° 신호/잡음 ${c.snr_per_0p01deg.toFixed(2)}, 단독 J ${c.cv_J_alone > 1e6 ? '측정 실패 있음' : c.cv_J_alone.toFixed(3)}`]))
+        .on('pointerleave', () => hideTip(box));
+      svg.selectAll('text.sel').data(D.cands.filter((c) => D.selected.includes(c.name))).join('text').attr('class', 'sel')
+        .attr('x', (c) => c.cx).attr('y', (c) => c.cy - c.hw - 22).attr('text-anchor', 'middle').style('font-size', '64px').style('font-weight', 700)
+        .style('fill', '#ffffff').style('paint-order', 'stroke').style('stroke', '#000').style('stroke-width', '10px').text((c) => c.name.replace('wall_', ''));
+      // 구역 표
+      const tb = document.querySelector('#zone-table tbody');
+      for (const z of Object.keys(zoneName)) {
+        const cs = D.cands.filter((c) => c.zone === z && c.cv_J_alone < 1e6);
+        if (!cs.length) continue;
+        const b = cs.reduce((a, c) => (c.cv_J_alone < a.cv_J_alone ? c : a));
+        const tr = document.createElement('tr');
+        for (const [v, cl] of [[zoneName[z]], [String(D.cands.filter((c) => c.zone === z).length), 'r'], [b.name], [b.dY_px_per_mm.toFixed(2), 'r'], [b.sigma_px.toFixed(3), 'r'], [b.cv_J_alone.toFixed(3), 'r'], [zoneWhy[z]]]) {
+          const td = document.createElement('td'); td.textContent = v; if (cl) td.className = cl + ' num'; tr.append(td);
+        }
+        tb.append(tr);
+      }
+    }
+
+    // ---------------- 중심 어긋남 표
+    {
+      const tb = document.querySelector('#off-table tbody');
+      for (const r of D.offsets) { const tr = document.createElement('tr'); for (const [v, cl] of [[r.series], [f(r.s_intercept_px, 3), 'r num'], [f(r.d_intercept_px, 3), 'r num']]) { const td = document.createElement('td'); td.textContent = v; if (cl) td.className = cl; tr.append(td); } tb.append(tr); }
+    }
+
+    // ---------------- Y–Θ 좌표 패널
+    let model = 'sel';
+    const panels = [
+      {id: 'yt-near', title: '목표 근처 : Θ 0 ~ 0.2°', tmin: -0.02, tmax: 0.225, H: 520, sel: (r) => r.t_deg <= 0.2 + 1e-9},
+      {id: 'yt-1', title: 'Θ = 1°', tmin: 0.975, tmax: 1.025, H: 250, sel: (r) => Math.abs(r.t_deg - 1) < 1e-6},
+      {id: 'yt-2', title: 'Θ = 2° (학습 범위 ±1° 밖)', tmin: 1.97, tmax: 2.035, H: 250, sel: (r) => Math.abs(r.t_deg - 2) < 1e-6}];
+    const drawYT = () => {
+      const rows = model === 'sel' ? D.set2 : D.set2base;
+      for (const P of panels) {
+        const box = document.getElementById(P.id); box.replaceChildren();
+        const W = 560, H = P.H, m = {t: 30, r: 14, b: 40, l: 56};
+        const x = d3.scaleLinear([-0.05, 1.12], [m.l, W - m.r]), y = d3.scaleLinear([P.tmin, P.tmax], [H - m.b, m.t]);
+        const svg = d3.select(box).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', P.title + ' 라벨과 예측 위치');
+        svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat((v) => v.toFixed(1)));
+        svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(H > 300 ? 8 : 4).tickFormat((v) => v.toFixed(2)));
+        svg.append('text').attr('x', W - m.r).attr('y', H - 6).attr('text-anchor', 'end').text('Y 이동 (mm)');
+        svg.append('text').attr('x', m.l).attr('y', 14).style('fill', css('--ink')).style('font-weight', 600).text(P.title + '  — 세로 Θ (°)');
+        const sub = rows.filter(P.sel);
+        const labels = d3.groups(sub, (r) => r.y_mm + '|' + r.t_deg).map(([k, v]) => v[0]);
+        svg.append('g').selectAll('rect').data(labels).join('rect')
+          .attr('x', (r) => x(r.y_mm - TOLY)).attr('width', (r) => x(r.y_mm + TOLY) - x(r.y_mm - TOLY))
+          .attr('y', (r) => y(r.t_deg + TOLT)).attr('height', (r) => y(r.t_deg - TOLT) - y(r.t_deg + TOLT))
+          .attr('fill', css('--tol-fill')).attr('stroke', css('--tol')).attr('stroke-width', 1);
+        svg.append('g').selectAll('line').data(sub).join('line').attr('x1', (r) => x(r.y_mm)).attr('y1', (r) => y(r.t_deg)).attr('x2', (r) => x(r.y_est)).attr('y2', (r) => y(r.t_est))
+          .attr('stroke', (r) => (r.in_tol ? css('--ok') : css('--bad'))).attr('stroke-opacity', 0.45);
+        const cl = (v, a, b) => Math.max(a, Math.min(b, v));
+        svg.append('g').selectAll('circle').data(sub).join('circle').attr('cx', (r) => x(r.y_est)).attr('cy', (r) => cl(y(r.t_est), m.t, H - m.b)).attr('r', 4.2)
+          .attr('fill', (r) => (r.in_tol ? css('--ok') : css('--bad'))).attr('fill-opacity', 0.85).attr('stroke', css('--paper')).attr('stroke-width', 1)
+          .on('pointermove', (ev, r) => showTip(box, ev, [r.stem, `정답 Y ${r.y_mm.toFixed(2)} mm, Θ ${r.t_deg.toFixed(2)}°`, `예측 Y ${r.y_est.toFixed(4)} mm, Θ ${r.t_est.toFixed(4)}°`, `오차 Y ${f(r.err_y_um, 1)} µm, Θ ${f(r.err_t_deg, 4)}°`, r.in_tol ? '허용 안' : '허용 밖']))
+          .on('pointerleave', () => hideTip(box));
+        const cross = svg.append('g').selectAll('g').data(labels).join('g').attr('transform', (r) => `translate(${x(r.y_mm)},${y(r.t_deg)})`);
+        cross.append('line').attr('x1', -6).attr('x2', 6).attr('stroke', css('--ink')).attr('stroke-width', 2);
+        cross.append('line').attr('y1', -6).attr('y2', 6).attr('stroke', css('--ink')).attr('stroke-width', 2);
+        const pass = d3.sum(sub, (r) => r.in_tol);
+        svg.append('text').attr('x', W - m.r).attr('y', 14).attr('text-anchor', 'end').style('font-weight', 600).style('fill', pass === sub.length ? css('--ok') : css('--bad')).text(`허용 안 ${pass}/${sub.length}`);
+      }
+      // 정확도 표
+      const tb = document.querySelector('#acc-table tbody'); tb.replaceChildren();
+      const G = [['전체', () => true], ['목표 근처 Θ ≤ 0.2°', (r) => groupOf(r.t_deg) === 'near'], ['Θ = 1°', (r) => groupOf(r.t_deg) === 't1'], ['Θ = 2° (학습 범위 밖)', (r) => groupOf(r.t_deg) === 't2']];
+      for (const [n, s] of G) {
+        const v = rows.filter(s); const p = d3.sum(v, (r) => r.in_tol);
+        const tr = document.createElement('tr');
+        const cells = [[n], [String(v.length), 'r'], [`${p} / ${v.length}`, 'r ' + (p === v.length ? 'ok' : p >= 0.95 * v.length ? '' : 'bad')], [rms(v.map((r) => r.err_t_deg)).toFixed(4) + '°', 'r'], [d3.max(v, (r) => Math.abs(r.err_t_deg)).toFixed(4) + '°', 'r'], [rms(v.map((r) => r.err_y_um)).toFixed(1) + ' µm', 'r'], [d3.max(v, (r) => Math.abs(r.err_y_um)).toFixed(1) + ' µm', 'r']];
+        for (const [c, k] of cells) { const td = document.createElement('td'); td.textContent = c; if (k) td.className = k + ' num'; tr.append(td); }
+        tb.append(tr);
+      }
+    };
+    const bS = document.getElementById('m-sel'), bB = document.getElementById('m-base');
+    bS.addEventListener('click', () => { model = 'sel'; bS.setAttribute('aria-pressed', 'true'); bB.setAttribute('aria-pressed', 'false'); drawYT(); });
+    bB.addEventListener('click', () => { model = 'base'; bB.setAttribute('aria-pressed', 'true'); bS.setAttribute('aria-pressed', 'false'); drawYT(); });
+    drawYT();
+
+    // ---------------- 과녁
+    {
+      const box = document.getElementById('target'); const sets = {
+        train: {rows: D.train, note: '1차 첫 번째 측정 240장. 학습 데이터지만 블록 교차검증(이웃 라벨 묶음을 통째로 빼고 예측)이라 자기 사진을 외워서 맞힌 것은 아님.'},
+        batch2: {rows: D.batch2, note: '1차 두 번째 측정 40장(학습에 안 씀). 평균이 Θ 쪽으로 +0.25 만큼(=0.0025°) 치우친 것이 8절의 "중심 어긋남".'},
+        near: {rows: D.set2.filter((r) => groupOf(r.t_deg) === 'near'), note: '2차 목표 근처 33장. 반복 보정의 마지막 판정이 일어나는 구간. 모두 네모 안.'},
+        t1: {rows: D.set2.filter((r) => groupOf(r.t_deg) === 't1'), note: '2차 Θ 1° 12장. Θ 쪽으로 위로 치우침(날짜 간 배율 차).'},
+        t2: {rows: D.set2.filter((r) => groupOf(r.t_deg) === 't2'), note: '2차 Θ 2° 12장(학습 범위 밖). Θ 쪽으로 약 2 칸 위 — 첫 보정 뒤에는 목표 근처로 들어오는 크기.'}};
+      let key = 'near';
+      const draw = () => {
+        box.replaceChildren();
+        const W = 460, H = 460, m = 40, L = 3;
+        const sc = d3.scaleLinear([-L, L], [m, W - m]), sy = d3.scaleLinear([-L, L], [H - m, m]);
+        const svg = d3.select(box).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', '허용 범위로 나눈 오차 과녁');
+        for (const k of [1, 2, 3]) svg.append('rect').attr('x', sc(-k)).attr('y', sy(k)).attr('width', sc(k) - sc(-k)).attr('height', sy(-k) - sy(k)).attr('fill', k === 1 ? css('--tol-fill') : 'none').attr('stroke', k === 1 ? css('--tol') : css('--line')).attr('stroke-dasharray', k === 1 ? null : '3 3');
+        svg.append('line').attr('x1', sc(0)).attr('x2', sc(0)).attr('y1', m).attr('y2', H - m).attr('stroke', css('--line'));
+        svg.append('line').attr('y1', sy(0)).attr('y2', sy(0)).attr('x1', m).attr('x2', W - m).attr('stroke', css('--line'));
+        svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m})`).call(d3.axisBottom(sc).ticks(6));
+        svg.append('g').attr('class', 'axis').attr('transform', `translate(${m},0)`).call(d3.axisLeft(sy).ticks(6));
+        svg.append('text').attr('x', W - m).attr('y', H - 6).attr('text-anchor', 'end').text('Y 오차 ÷ 90 µm');
+        svg.append('text').attr('x', m + 4).attr('y', m - 10).text('Θ 오차 ÷ 0.01°');
+        const rows = sets[key].rows; const cl = (v) => Math.max(-L, Math.min(L, v));
+        svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx', (r) => sc(cl(r.err_y_um / 90))).attr('cy', (r) => sy(cl(r.err_t_deg / TOLT))).attr('r', 3.6)
+          .attr('fill', (r) => (r.in_tol ? css('--ok') : css('--bad'))).attr('fill-opacity', 0.7)
+          .on('pointermove', (ev, r) => showTip(box, ev, [r.stem, `Y 오차 ${f(r.err_y_um, 1)} µm`, `Θ 오차 ${f(r.err_t_deg, 4)}°`]))
+          .on('pointerleave', () => hideTip(box));
+        const p = d3.sum(rows, (r) => r.in_tol);
+        svg.append('text').attr('x', W - m).attr('y', m - 10).attr('text-anchor', 'end').style('font-weight', 600).style('fill', p === rows.length ? css('--ok') : css('--bad')).text(`네모 안 ${p}/${rows.length}`);
+        document.getElementById('tg-note').textContent = sets[key].note;
+      };
+      document.querySelectorAll('#tg-seg button').forEach((b) => b.addEventListener('click', () => { key = b.dataset.k; document.querySelectorAll('#tg-seg button').forEach((o) => o.setAttribute('aria-pressed', String(o === b))); draw(); }));
+      draw();
+    }
+
+    // ---------------- 오차 vs Θ
+    {
+      const box = document.getElementById('err-vs-t'); const rows = D.set2;
+      const W = 560, H = 300, m = {t: 20, r: 16, b: 42, l: 60};
+      const x = d3.scaleLinear([-0.05, 2.1], [m.l, W - m.r]); const y = d3.scaleLinear([-0.012, 0.03], [H - m.b, m.t]);
+      const svg = d3.select(box).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Θ 정답 대비 Θ 오차');
+      svg.append('rect').attr('x', m.l).attr('width', W - m.l - m.r).attr('y', y(TOLT)).attr('height', y(-TOLT) - y(TOLT)).attr('fill', css('--tol-fill'));
+      svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', css('--tol'));
+      svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(5).tickFormat((v) => v + '°'));
+      svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(6).tickFormat((v) => (v > 0 ? '+' : '') + v.toFixed(3)));
+      svg.append('text').attr('x', W - m.r).attr('y', H - 6).attr('text-anchor', 'end').text('정답 Θ (°)');
+      svg.append('text').attr('x', m.l).attr('y', 12).text('Θ 오차 (°)');
+      svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx', (r) => x(r.t_deg) + (r.y_mm - 0.5) * 18).attr('cy', (r) => y(r.err_t_deg)).attr('r', 3.6)
+        .attr('fill', (r) => (r.in_tol ? css('--ok') : css('--bad'))).attr('fill-opacity', 0.75)
+        .on('pointermove', (ev, r) => showTip(box, ev, [r.stem, `Θ 오차 ${f(r.err_t_deg, 4)}°`])).on('pointerleave', () => hideTip(box));
+      svg.append('text').attr('x', x(0.05)).attr('y', y(TOLT) - 6).style('fill', css('--muted')).text('허용 ±0.01°');
+    }
+  }).catch(() => {
+    for (const id of ['k-near', 'k-trms', 'k-yrms']) document.getElementById(id).textContent = '데이터를 불러오지 못함';
+  });
+})();
+</script>

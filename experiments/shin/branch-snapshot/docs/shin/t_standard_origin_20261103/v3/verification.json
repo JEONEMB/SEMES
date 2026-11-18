@@ -1,0 +1,96 @@
+{
+  "source_images": 575,
+  "reference_images": 4,
+  "evaluation_images": 571,
+  "upstream_input_hashes_unchanged": true,
+  "origin_train_test_isolation_25_splits": true,
+  "prediction_counts_folds_and_error_arithmetic_14_runs": true,
+  "audited_pose_grouping": true,
+  "unidentifiable_crossfit_targets": [
+    "Y+0.10 T+0.01/Y+0.1 T+0.01 (1).bmp",
+    "Y+0.10 T+0.01/Y+0.1 T+0.01 (2).bmp",
+    "Y+0.10 T+0.01/Y+0.1 T+0.01 (3).bmp"
+  ],
+  "raw_image_smoke": [
+    {
+      "path": "Theta/T+0.50.bmp",
+      "native": {
+        "coordinate_frame": "standard_origin_v3_assumed",
+        "physical_accuracy_certified": false,
+        "t_deg": 0.5247768082272483,
+        "t_ticks": 52.47768082272483,
+        "tick_deg": 0.01,
+        "method": 7,
+        "known_session": false,
+        "outside_T_training_range": false,
+        "cost": null
+      },
+      "scene": {
+        "coordinate_frame": "standard_origin_v3_assumed",
+        "t_deg": 0.5277360278284227,
+        "t_ticks": 52.77360278284227,
+        "tick_deg": 0.01,
+        "strict_valid_A_features": 22,
+        "total_A_features": 22,
+        "physical_accuracy_certified": false
+      },
+      "QR104_max_difference": 7.105427357601002e-15,
+      "natural_max_difference_px": 0.0,
+      "image_hash_unchanged": true
+    },
+    {
+      "path": "Y/Y+0.10.bmp",
+      "native": {
+        "coordinate_frame": "standard_origin_v3_assumed",
+        "physical_accuracy_certified": false,
+        "t_deg": 0.02403394986848178,
+        "t_ticks": 2.403394986848178,
+        "tick_deg": 0.01,
+        "method": 7,
+        "known_session": false,
+        "outside_T_training_range": false,
+        "cost": null
+      },
+      "scene": {
+        "coordinate_frame": "standard_origin_v3_assumed",
+        "t_deg": 0.030235884834625464,
+        "t_ticks": 3.023588483462546,
+        "tick_deg": 0.01,
+        "strict_valid_A_features": 22,
+        "total_A_features": 22,
+        "physical_accuracy_certified": false
+      },
+      "QR104_max_difference": 2.220446049250313e-16,
+      "natural_max_difference_px": 0.0,
+      "image_hash_unchanged": true
+    },
+    {
+      "path": "Y+1.00 T+2.00/Y+1.00 T+2.00 (3).bmp",
+      "native": {
+        "coordinate_frame": "standard_origin_v3_assumed",
+        "physical_accuracy_certified": false,
+        "t_deg": 1.9481694548146848,
+        "t_ticks": 194.81694548146848,
+        "tick_deg": 0.01,
+        "method": 7,
+        "known_session": false,
+        "outside_T_training_range": false,
+        "cost": null
+      },
+      "scene": {
+        "coordinate_frame": "standard_origin_v3_assumed",
+        "t_deg": 1.9574568527327574,
+        "t_ticks": 195.74568527327574,
+        "tick_deg": 0.01,
+        "strict_valid_A_features": 22,
+        "total_A_features": 22,
+        "physical_accuracy_certified": false
+      },
+      "QR104_max_difference": 2.842170943040401e-14,
+      "natural_max_difference_px": 0.0,
+      "image_hash_unchanged": true
+    }
+  ],
+  "scene_all575_serialization_max_difference_deg": 4.440892098500626e-16,
+  "native_all575_roundtrip": "checked during each training run; threshold 1e-10 deg"
+}

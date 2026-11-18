@@ -1,0 +1,13 @@
+{
+  "images": 575,
+  "distinct_images": 575,
+  "coordinate_groups": 378,
+  "held_models": 378,
+  "fold_count_mismatches": 0,
+  "full_training_images": 575,
+  "all_positive_weights": true,
+  "downweighted_images": 4,
+  "label_correction": "0.32000000000000001",
+  "training_hash_matches": 57,
+  "raw_failures": 0
+}

@@ -1,0 +1,84 @@
+# CMake build output
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+
+# Visual Studio / MSVC local and generated files
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.VC.opendb
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.pch
+*.tlog/
+
+# Personal VS Code settings (shared configuration can be committed)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+CMakeUserPresets.json
+
+# Windows / editor temporary files
+Thumbs.db
+Desktop.ini
+~$*
+*.swp
+*.swo
+*~
+
+# Raw acquisition inputs and local analysis scratch (curated results are tracked).
+/data/**/*.[bB][mM][pP]
+/data/**/*.txt
+/docs/offaxis-eda/smoke/
+/docs/offaxis-eda/raw/points.csv
+/docs/validation-runs/*
+!/docs/validation-runs/README.md
+/tool/qr-subpixel/build/
+/tool/qr-subpixel/results/
+/tool/qr-subpixel/pipeline-*/
+/docs/offaxis-eda/ppt-method-v2/smoke/
+
+# Local analysis dependencies and plotting cache
+/.analysis_packages/
+# Root-level generated validation output
+/result_*.png
+/result_*.csv
+
+# KSH ignore files
+.CLAUDE
+img
+specification
+
+# MFC (Visual Studio) build output
+x64/
+Debug/
+Release/
+*.aps
+
+# Python 가상환경·캐시 (의존성은 각 폴더의 requirements.txt 로 기록)
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# 백업·캐시 (이전 판 코드·결과, 프로젝트 설정 사본, 계산 캐시 — 로컬에만 보관)
+backup/
+project_backup/
+cache/
+.cache/
+*.bak
+*.bak_*

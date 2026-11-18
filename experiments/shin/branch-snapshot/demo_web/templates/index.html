@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block scripts %}<script src="/static/demo.js" defer></script>{% endblock %}
+{% block nav %}<button id="fullscreen" class="text-button">전체 화면 ↗</button><a href="/admin" class="nav-link">관리자</a>{% endblock %}
+{% block content %}
+<main class="demo-shell" data-operator="{{ 'true' if operator else 'false' }}">
+  <div class="page-heading"><div><p class="eyebrow">정렬 시연</p><h1>비전 얼라인먼트</h1><p class="subtitle">카메라 중심을 기준으로 Y · θ 축의 정렬 과정을 확인합니다.</p></div><span id="mode" class="pill">연결 확인 중</span></div>
+  <div class="demo-grid">
+    <section class="camera-panel panel">
+      <div class="panel-heading"><span><i class="dot" id="camera-dot"></i> 카메라 화면</span><span class="muted" id="camera-label">영상 연결 확인 중</span></div>
+      <div class="camera-view">
+        <img id="camera-feed" alt="실시간 장치 카메라 영상" hidden>
+        <div id="camera-empty" class="camera-empty"><div class="camera-glyph">◎</div><strong>카메라 연결 대기</strong><span id="camera-message">카메라가 연결되면 실시간 영상이 표시됩니다.</span></div>
+        <div class="crosshair" aria-hidden="true"></div>
+        <span class="camera-corner top-left"></span><span class="camera-corner top-right"></span><span class="camera-corner bottom-left"></span><span class="camera-corner bottom-right"></span>
+        <span class="video-tag">중앙 기준</span>
+      </div>
+      <div class="camera-footer"><span><span class="red-line"></span>중앙 기준선</span><span id="hardware-label">제어기 연결 확인 중</span></div>
+    </section>
+    <section class="control-panel panel">
+      <div class="panel-heading"><span>보정 제어</span><span class="tiny-label">Y / θ</span></div>
+      <div class="trial-block"><span class="eyebrow">Trial</span><div class="trial-value"><strong id="trial">00</strong><span>/ 20</span></div><progress id="trial-progress" max="20" value="0" aria-label="보정 시도 횟수"></progress><p>중앙까지의 보정 시도 횟수</p></div>
+      <div class="metric"><div><span class="axis">Y</span><span class="metric-title">이동 보정량</span></div><div><strong id="y-value">0.000</strong><span class="unit">mm</span></div></div>
+      <div class="metric"><div><span class="axis">θ</span><span class="metric-title">회전 보정량</span></div><div><strong id="t-value">0.000</strong><span class="unit">°</span></div></div>
+      <p class="metric-note">현재 Trial에 보낸 보정 명령값</p>
+      <div class="execution-state" id="execution-state"><span class="status-light"></span><div><strong id="status-title">연결 중</strong><p id="status-message">서버 상태를 확인하고 있습니다.</p></div></div>
+      <div class="demo-buttons"><button id="home" class="button secondary home-button" disabled><span>⌂</span> Y 원점 복귀</button><button id="random" class="button secondary" disabled><span>↝</span> Random</button><button id="correct" class="button primary" disabled><span>⊕</span> 자동보정</button></div>
+      <button id="stop" class="stop-button" disabled>■ &nbsp; 정지</button>
+      {% if not operator %}<a class="login-note" href="/login">조작하려면 운영자로 로그인하세요 ↗</a>{% endif %}
+    </section>
+  </div>
+  <footer class="demo-footer"><span>SSAFY × SEMES · A507</span><span id="mode-description">로컬 시연 시스템</span><span class="session-status" id="connection-status">서버 연결 중</span></footer>
+</main>
+{% endblock %}

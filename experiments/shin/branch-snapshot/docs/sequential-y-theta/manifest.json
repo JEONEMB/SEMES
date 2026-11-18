@@ -1,0 +1,16 @@
+{
+  "base_commit": "28f6759",
+  "extraction": {
+    "workers": 4,
+    "images": 281,
+    "wall_seconds": 36.90670279999904
+  },
+  "sha256": {
+    "src/alignment.cpp": "af86f1500106caf3aad4f5c4dbe46b99a294377b072fe2a44e2b1868799f2e13",
+    "src/qr_features.cpp": "a88980efa6a2bbd44bbeb1d215917a67ca19cc38f10f9b3ff67ff66a762316b1",
+    "src/qr_model.cpp": "4720e71f479a51190187ce1c0b727f80c5f4b34b43e415158745b171c87cf944",
+    "src/qr_decode.cpp": "e4635c827e5e962e46380a9ab7178ef9bbfc8d5feea2f9ffe151fb9c7f50299e",
+    "tool/sequential/sequential.py": "a66779d65b85be2ae47e212c0c6d083d70eb22c6fc42b666d449223fbca2dfe3",
+    "tool/sequential/evaluate.py": "e511c82ccc85495f13b48c007f729fb3bd970f45e3366f513354a2558597cb36"
+  }
+}

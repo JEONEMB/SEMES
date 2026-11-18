@@ -1,0 +1,29 @@
+{
+  "created_date": "2026-11-02",
+  "method": "lanczos3",
+  "basis_branch": "feature/shin/QRwithBar",
+  "basis_commit": "e4784ac6d8f0419d9b2c71824d61672594cb7f76",
+  "comparison": "20261102_094950_interpolation_comparison",
+  "source_reference": "기준 위치/center1.bmp",
+  "source_reference_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+  "reference_png_grayscale_lossless": true,
+  "training_images": 57,
+  "training_coordinate_groups": 19,
+  "inference_uses_labels_or_fold": false,
+  "deployment_model": "all57 Lanczos features; internal coordinate validation selects ridge alpha",
+  "labels": "historical Actual relative to reference mean; same labels as approved comparison",
+  "compiler": "MSVC v14119.16",
+  "opencv": "3.4.15 vc15",
+  "language": "C++17",
+  "python_runtime_required": false,
+  "assets_sha256": {
+    "model.json": "ef23570ea6a13a40c413f9d99a64d25a68feef43fb05d02ad3a3509ab2d8a470",
+    "reference.png": "811b543399d9758125bd576852d7bf573a93a6a6b3823cba8c9757e516be1732",
+    "template_0.png": "3bb37b57d94fd0df20346dcbd4925edcdd7f3881efcb22063132e9bb6dddd5e4",
+    "template_1.png": "178255ff2f3ce27d5c00e381fe0bf91d72d890bd7b717c37733e348e84ad9835",
+    "template_2.png": "d29d7c17356e793a5223088abe5551d9d2dc8a8965ae2e8226de794d6da9f63f"
+  },
+  "source_geometry_sha256": "31f42662334ccef6f1ab68dcde8e7f959bb725dfb365a31ced34f1218753a524",
+  "training_features_sha256": "796d34e784f162ea7a93252b7edff8d292f63a46b4c722398274c88dfba40f95",
+  "training_manifest_sha256": "04cd6a345a6c01031750e4aaef113b1b1cb69624c3d50bb17a3b6842f7254ab3"
+}

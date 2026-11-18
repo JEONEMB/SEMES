@@ -1,0 +1,4 @@
+path,QR_component_RMS_px,right_component_RMS_px,right_normalized_RMS,right_features,note
+기준 위치/center1.bmp,0.10005996991638663,0.3112851463343565,5.2096574063372465,17,held-out zero image; training anchors and gauge rebuilt without that image; Oct4 anchor not held out because it defines image frame
+기준 위치/center2.bmp,0.0312147036756392,0.24619336155770047,3.8818669973910946,17,held-out zero image; training anchors and gauge rebuilt without that image; Oct4 anchor not held out because it defines image frame
+기준 위치/center3.bmp,0.4696327821111796,0.667555742179539,6.11382788227017,17,held-out zero image; training anchors and gauge rebuilt without that image; Oct4 anchor not held out because it defines image frame

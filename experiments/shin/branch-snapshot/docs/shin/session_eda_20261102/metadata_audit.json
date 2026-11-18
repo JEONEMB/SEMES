@@ -1,0 +1,16 @@
+{
+  "images": 575,
+  "creation_min": "2026-11-02 07:21:30.700762500+00:00",
+  "creation_max": "2026-11-02 07:24:48.785313100+00:00",
+  "creation_span_s": 198.08455,
+  "modification_dates": [
+    "2026-10-04",
+    "2026-10-15"
+  ],
+  "internal_capture_tags": 0,
+  "bmp_header_sizes": [
+    40
+  ],
+  "sidecar_images": 293,
+  "interpretation": "CreationTime is a copy/import artifact; sessions use modified-time proxies only."
+}

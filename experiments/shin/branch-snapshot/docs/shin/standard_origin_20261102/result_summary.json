@@ -1,0 +1,40 @@
+{
+  "selected_model": {
+    "config": "bias_deg3_t010",
+    "degree": 3,
+    "bias": true,
+    "sigma_Y": 0.05,
+    "sigma_T": 0.01,
+    "n_test": 567,
+    "median_normalized_RMS": 1.9337705265820675,
+    "mean_normalized_RMS": 2.756122862342014,
+    "p95_normalized_RMS": 7.827136480464842,
+    "QR_RMSE_px": 0.0962251120984537,
+    "line_RMSE_px": 0.1118068146334606
+  },
+  "same_degree_baseline": {
+    "config": "no_bias_deg3",
+    "degree": 3,
+    "bias": false,
+    "sigma_Y": 0.05,
+    "sigma_T": 0.01,
+    "n_test": 567,
+    "median_normalized_RMS": 3.0067966924369127,
+    "mean_normalized_RMS": 3.735140836657343,
+    "p95_normalized_RMS": 8.364584368890638,
+    "QR_RMSE_px": 0.1332373477367842,
+    "line_RMSE_px": 0.1316786888571919
+  },
+  "normalized_forward_median_reduction_percent": 35.68668838015755,
+  "QR_forward_RMSE_reduction_percent": 27.779174733686286,
+  "origin_f0_prior_shape_range": [
+    0.0880958880268888,
+    0.2479596572649532
+  ],
+  "multistart_origin_f0_range": [
+    0.171407119567706,
+    0.1714235056270803
+  ],
+  "status": "virtual standard reference constructed; individual Y/T bias decomposition remains model-dependent",
+  "not_a_T_accuracy_measurement": true
+}

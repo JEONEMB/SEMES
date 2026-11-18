@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-19",
+  "baseline_feature_commit": "464a494",
+  "plate_fallback_commit": "6ecf6df",
+  "decode_gaussian_commit": "37580e5",
+  "images": 281,
+  "parallel_workers": 4,
+  "source_sha256": {
+    "include/alignment.hpp": "3abea15d477a7d49a88f0099b0459ce7045728496d9023fd62ad89e7dcea5109",
+    "src/alignment.cpp": "89cbc736cfdb92ac0294b20f04ab6f77da5f5ec79068141e3fd65a1108cc8d3d",
+    "src/qr_features.cpp": "de9a9c2e52284e8155f6753275be54ed73b1f740126a05f8da67d4043549aa76",
+    "src/main.cpp": "0e301c903950f1a1508bc3b93e0dba9e67cebab7c980a410241417f5fec66a64",
+    "src/qrcodegen.cpp": "6ff22a6276887fc49eb9cbc131d1f12b2dd9da1afb07cf5c39e19a4186618abf",
+    "include/third_party/qrcodegen.hpp": "b779c3b156cf7a57ce789d6fee4fc991ccc2913774d26c909d22bb8f26b2a793"
+  }
+}

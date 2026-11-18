@@ -1,0 +1,17 @@
+{
+  "path_new_no_diagonal630": "path_new_no_diagonal630.png",
+  "path_new_ECC": "path_new_ECC.png",
+  "path_old_no_diagonal630": "path_old_no_diagonal630.png",
+  "path_old_ECC": "path_old_ECC.png",
+  "zero_intercepts": "zero_intercepts.png",
+  "steps": "steps.png",
+  "timing_brightness": "timing_brightness.png",
+  "noise_decomposition": "noise_decomposition.png",
+  "point_noise_map": "point_noise_map.png",
+  "photo_reference": "photo_reference.png",
+  "photo_features": "photo_features.png",
+  "photo_ecc": "photo_ecc.png",
+  "fit_group_maps": "fit_group_maps.png",
+  "method_difference": "method_difference.png",
+  "patch_sensitivity": "patch_sensitivity.png"
+}

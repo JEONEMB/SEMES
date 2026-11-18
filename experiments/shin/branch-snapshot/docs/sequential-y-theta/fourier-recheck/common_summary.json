@@ -1,0 +1,206 @@
+{
+  "corner": {
+    "interleaved_degree1": {
+      "features_fitted": 115,
+      "train": 184,
+      "test": 96,
+      "axes": {
+        "T": {
+          "n": 68,
+          "success": 68,
+          "y_rmse": 0.9854831535135276,
+          "theta_rmse": 0.17602853403215016,
+          "oracle_theta_y_rmse": 0.005630636610976691,
+          "joint_pass": 2,
+          "theta_boundary": 2
+        },
+        "Y": {
+          "n": 28,
+          "success": 28,
+          "y_rmse": 0.9359629413091978,
+          "theta_rmse": 0.16717259333710388,
+          "oracle_theta_y_rmse": 0.002556147773505803,
+          "joint_pass": 2,
+          "theta_boundary": 0
+        }
+      }
+    },
+    "interleaved_degree2": {
+      "features_fitted": 115,
+      "train": 184,
+      "test": 96,
+      "axes": {
+        "T": {
+          "n": 68,
+          "success": 68,
+          "y_rmse": 0.8428577902106074,
+          "theta_rmse": 0.1505152870961289,
+          "oracle_theta_y_rmse": 0.0034622645945980622,
+          "joint_pass": 3,
+          "theta_boundary": 1
+        },
+        "Y": {
+          "n": 28,
+          "success": 28,
+          "y_rmse": 0.9270982085205967,
+          "theta_rmse": 0.1655932834747108,
+          "oracle_theta_y_rmse": 0.002556147773505868,
+          "joint_pass": 1,
+          "theta_boundary": 0
+        }
+      }
+    },
+    "blocked_degree1": {
+      "features_fitted": 115,
+      "train": 186,
+      "test": 94,
+      "axes": {
+        "T": {
+          "n": 66,
+          "success": 66,
+          "y_rmse": 1.0120166958562506,
+          "theta_rmse": 0.18058117407748894,
+          "oracle_theta_y_rmse": 0.0027397255419633927,
+          "joint_pass": 8,
+          "theta_boundary": 0
+        },
+        "Y": {
+          "n": 28,
+          "success": 28,
+          "y_rmse": 0.9379590646644663,
+          "theta_rmse": 0.1675227736349387,
+          "oracle_theta_y_rmse": 0.00192192536242606,
+          "joint_pass": 2,
+          "theta_boundary": 0
+        }
+      }
+    },
+    "blocked_degree2": {
+      "features_fitted": 115,
+      "train": 186,
+      "test": 94,
+      "axes": {
+        "T": {
+          "n": 66,
+          "success": 66,
+          "y_rmse": 1.0165872571930012,
+          "theta_rmse": 0.18135783095610436,
+          "oracle_theta_y_rmse": 0.0038971282851890127,
+          "joint_pass": 9,
+          "theta_boundary": 0
+        },
+        "Y": {
+          "n": 28,
+          "success": 28,
+          "y_rmse": 0.9029950768534142,
+          "theta_rmse": 0.16122744057621044,
+          "oracle_theta_y_rmse": 0.0019219253624259652,
+          "joint_pass": 1,
+          "theta_boundary": 0
+        }
+      }
+    }
+  },
+  "fourier": {
+    "interleaved_degree1": {
+      "features_fitted": 115,
+      "train": 184,
+      "test": 96,
+      "axes": {
+        "T": {
+          "n": 68,
+          "success": 68,
+          "y_rmse": 0.2659962517203213,
+          "theta_rmse": 0.048020789582846286,
+          "oracle_theta_y_rmse": 0.005659503031712503,
+          "joint_pass": 21,
+          "theta_boundary": 2
+        },
+        "Y": {
+          "n": 28,
+          "success": 28,
+          "y_rmse": 0.2987063314042099,
+          "theta_rmse": 0.05337485641802026,
+          "oracle_theta_y_rmse": 0.0023072150211633224,
+          "joint_pass": 5,
+          "theta_boundary": 0
+        }
+      }
+    },
+    "interleaved_degree2": {
+      "features_fitted": 115,
+      "train": 184,
+      "test": 96,
+      "axes": {
+        "T": {
+          "n": 68,
+          "success": 68,
+          "y_rmse": 0.20354181854832845,
+          "theta_rmse": 0.03642427067779849,
+          "oracle_theta_y_rmse": 0.003233439219392719,
+          "joint_pass": 22,
+          "theta_boundary": 3
+        },
+        "Y": {
+          "n": 28,
+          "success": 28,
+          "y_rmse": 0.3104708145985641,
+          "theta_rmse": 0.05546505586308303,
+          "oracle_theta_y_rmse": 0.002307215021163371,
+          "joint_pass": 5,
+          "theta_boundary": 0
+        }
+      }
+    },
+    "blocked_degree1": {
+      "features_fitted": 115,
+      "train": 186,
+      "test": 94,
+      "axes": {
+        "T": {
+          "n": 66,
+          "success": 66,
+          "y_rmse": 0.24034188464203393,
+          "theta_rmse": 0.042802142726423104,
+          "oracle_theta_y_rmse": 0.0023815069513184726,
+          "joint_pass": 21,
+          "theta_boundary": 0
+        },
+        "Y": {
+          "n": 28,
+          "success": 28,
+          "y_rmse": 0.2717211411356731,
+          "theta_rmse": 0.04848066712886739,
+          "oracle_theta_y_rmse": 0.0017019264087623474,
+          "joint_pass": 7,
+          "theta_boundary": 0
+        }
+      }
+    },
+    "blocked_degree2": {
+      "features_fitted": 115,
+      "train": 186,
+      "test": 94,
+      "axes": {
+        "T": {
+          "n": 66,
+          "success": 66,
+          "y_rmse": 0.23188839350537477,
+          "theta_rmse": 0.04131897776227664,
+          "oracle_theta_y_rmse": 0.0035547696674534546,
+          "joint_pass": 21,
+          "theta_boundary": 0
+        },
+        "Y": {
+          "n": 28,
+          "success": 28,
+          "y_rmse": 0.2762262554903014,
+          "theta_rmse": 0.04928740997813929,
+          "oracle_theta_y_rmse": 0.0017019264087622498,
+          "joint_pass": 7,
+          "theta_boundary": 0
+        }
+      }
+    }
+  }
+}
