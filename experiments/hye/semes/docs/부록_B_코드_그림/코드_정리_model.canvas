@@ -1,0 +1,1955 @@
+{
+  "nodes": [
+    {
+      "id": "gP",
+      "type": "group",
+      "x": -60,
+      "y": -234,
+      "width": 8060,
+      "height": 4505,
+      "label": "처리: measure_alignment(사진)"
+    },
+    {
+      "id": "gI",
+      "type": "group",
+      "x": -4200,
+      "y": -234,
+      "width": 3800,
+      "height": 4574,
+      "label": "입력과 미리 준비"
+    },
+    {
+      "id": "gO",
+      "type": "group",
+      "x": 8240,
+      "y": -234,
+      "width": 3520,
+      "height": 4072,
+      "label": "출력"
+    },
+    {
+      "id": "a4",
+      "type": "text",
+      "text": "### 4. 점검식 11개를 읽었는가?\n`load_agreement_checks`\n값들이 서로 맞는지 보는 식. 나사 2개 이상인 조합만 (16 − 5 = 11)\n\n> **파일** `src/steps/04_check_result.cpp`\n> **함수** `initialize` → `load_agreement_checks` → `load_one_check` (읽는 폴더 `data/model/checks`)\n> **안에서 부르는 함수** `load_one_check` → `value_index_of`",
+      "x": -4140,
+      "y": 2211,
+      "width": 560,
+      "height": 372,
+      "color": "3"
+    },
+    {
+      "id": "b4",
+      "type": "text",
+      "text": "### QR 과 좌우 나사를 찾았는가?\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_zero_from_photos` (`measured.has_value`, `measured.set->precise` 확인)",
+      "x": -2860,
+      "y": 2129,
+      "width": 560,
+      "height": 225,
+      "color": "3"
+    },
+    {
+      "id": "c3",
+      "type": "text",
+      "text": "### 새 사진에서 QR 과 나사 자리를 찾았는가?\n`find_new_reference`\n\n> **파일** `src/setup/find_new_reference.cpp`\n> **함수** `set_reference_from_photos` → `find_new_reference` → `find_qr_box`, `find_screw_center`\n> **안에서 부르는 함수** `find_qr_box` (QR 3개), `find_screw_center` (나사 4개) → `inside_photo`\n> **조정 상수** `kQrSearch` 120 px, `kQrMinSimilarity` 0.5, `kScrewHalf` 70 px, `kEdgeBlurSigma` 1.5 px, `kStrongEdge` 0.35, `kCenterSteps` 3 번",
+      "x": -1580,
+      "y": 1518,
+      "width": 560,
+      "height": 428,
+      "color": "3"
+    },
+    {
+      "id": "c4",
+      "type": "text",
+      "text": "### 새 기준으로 쟀을 때 값이 나오고 좌우 나사가 있는가?\n`use_reference`, `measure_values`\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_reference_from_photos` → `use_reference` → `measure_values`",
+      "x": -1580,
+      "y": 2181,
+      "width": 560,
+      "height": 298,
+      "color": "3"
+    },
+    {
+      "id": "cw",
+      "type": "text",
+      "text": "### 경고 `W_ZERO_RESET`\n이어 갈 수 없어 이 사진을 새 영점으로 삼는다\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_reference_from_photos` → `add_notice`\n\n![[코드정리_warning_W_ZERO_RESET.jpg|412]]",
+      "x": -920,
+      "y": 2559,
+      "width": 460,
+      "height": 557,
+      "color": "2"
+    },
+    {
+      "id": "b2",
+      "type": "text",
+      "text": "### 사진이 있고 형식이 맞는가?\n`average_gray` 여러 장이면 화소 평균\n\n> **파일** `src/common/reference.cpp`\n> **함수** `set_zero_from_photos` → `average_gray` → `to_gray`",
+      "x": -2860,
+      "y": 1187,
+      "width": 560,
+      "height": 251,
+      "color": "3"
+    },
+    {
+      "id": "b3",
+      "type": "text",
+      "text": "### 1 → 2 → 3단계로 잰다\n`measure_values` (오른쪽 처리와 같은 코드)\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_zero_from_photos` → `measure_values`",
+      "x": -2860,
+      "y": 1798,
+      "width": 560,
+      "height": 251,
+      "color": "4"
+    },
+    {
+      "id": "b1",
+      "type": "text",
+      "text": "### 준비 ①을 했는가?\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_zero_from_photos` (`state.ready` 확인)",
+      "x": -2860,
+      "y": 882,
+      "width": 560,
+      "height": 225,
+      "color": "3"
+    },
+    {
+      "id": "c5",
+      "type": "text",
+      "text": "### 바꾸기 전 기준으로도 잴 수 있었는가?\n(영점을 그대로 이어 갈 수 있는가)\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_reference_from_photos` (바꾸기 전 `measure_values` 결과 확인)",
+      "x": -1580,
+      "y": 2559,
+      "width": 560,
+      "height": 264,
+      "color": "3"
+    },
+    {
+      "id": "bf3",
+      "type": "text",
+      "text": "### 실패 `E_ZERO`\n영점은 이전 그대로다\n화면이 많이 밀렸으면 기준부터 다시 잡는다\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_zero_from_photos` → `failed`\n\n![[코드정리_fail_E_ZERO.jpg|412]]",
+      "x": -2200,
+      "y": 2129,
+      "width": 460,
+      "height": 557,
+      "color": "1"
+    },
+    {
+      "id": "a0",
+      "type": "text",
+      "text": "## 미리 준비 ①: 모델 파일\n`initialize(\"data/model\")`\n프로그램을 시작할 때 한 번\n\n> **파일** `src/alignment.cpp`\n> **함수** `initialize`",
+      "x": -4140,
+      "y": 520,
+      "width": 1120,
+      "height": 264,
+      "color": "4"
+    },
+    {
+      "id": "a1",
+      "type": "text",
+      "text": "### 1. 설정을 읽었는가?\n`load_settings`\n쓸 나사, 값이 안 맞으면 실패로 볼지, 로그 파일\n\n> **파일** `src/setup/settings.cpp`\n> **함수** `initialize` → `load_settings` (읽는 파일 `config/settings.json`)\n> **설정 키** `screws` (쓸 나사 번호, 기본 1, 2, 3, 4), `fail_on_disagreement` (0 경고, 1 실패), `log_file` (비우면 콘솔에만)",
+      "x": -4140,
+      "y": 864,
+      "width": 560,
+      "height": 359,
+      "color": "3"
+    },
+    {
+      "id": "b0",
+      "type": "text",
+      "text": "## 미리 준비 ②: 그날 영점\n`set_zero_from_photos(명령 0 사진들)`\n매일 한 번. 로봇을 **명령 0** 으로 보내 찍은 사진 5 ~ 10장\n\n왜: 로봇의 \"명령 0\" 자리가 날마다 Y 로 0.04 ~ 0.13 mm 다르다\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_zero_from_photos`",
+      "x": -2860,
+      "y": 520,
+      "width": 1120,
+      "height": 282,
+      "color": "4"
+    },
+    {
+      "id": "bf1",
+      "type": "text",
+      "text": "### 실패 `E_NOT_INITIALIZED`\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_zero_from_photos` → `failed`",
+      "x": -2200,
+      "y": 882,
+      "width": 460,
+      "height": 225,
+      "color": "1"
+    },
+    {
+      "id": "bf2",
+      "type": "text",
+      "text": "### 실패 `E_PHOTO`\n영점은 이전 그대로다\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_zero_from_photos` → `failed`\n\n![[코드정리_fail_E_PHOTO.jpg|412]]",
+      "x": -2200,
+      "y": 1187,
+      "width": 460,
+      "height": 531,
+      "color": "1"
+    },
+    {
+      "id": "a2",
+      "type": "text",
+      "text": "### 2. 기준 사진과 위치를 읽었는가?\n`load_reference`\n비교할 원본 사진, 그 안에서 QR 3개와 나사 4개가 있는 자리\n\n> **파일** `src/common/reference.cpp`\n> **함수** `initialize` → `load_reference` (읽는 파일 `data/model/center.bmp`, `reference.json`)\n> **안에서 부르는 함수** `inside_photo` (QR 상자가 사진 안에 있는지)",
+      "x": -4140,
+      "y": 1303,
+      "width": 560,
+      "height": 346,
+      "color": "3"
+    },
+    {
+      "id": "af2",
+      "type": "text",
+      "text": "### 실패 `E_DATA`\n시작하지 못한다\n\n받은 model 폴더를 그대로 다시 복사한다\n그 전에 성공한 상태는 그대로 남는다\n\n읽는 중 예상 못 한 오류가 나도 `E_INTERNAL` 이 아니라 `E_DATA` 로 돌려준다\n\n> **파일** `src/alignment.cpp`\n> **함수** `initialize` → `failed`",
+      "x": -3480,
+      "y": 1303,
+      "width": 460,
+      "height": 376,
+      "color": "1"
+    },
+    {
+      "id": "af1",
+      "type": "text",
+      "text": "### 실패 `E_SETTINGS`\n시작하지 못한다\n\n> **파일** `src/alignment.cpp`\n> **함수** `initialize` → `failed`",
+      "x": -3480,
+      "y": 864,
+      "width": 460,
+      "height": 225,
+      "color": "1"
+    },
+    {
+      "id": "c2",
+      "type": "text",
+      "text": "### 사진이 있고 형식이 맞는가?\n`average_gray` 여러 장이면 화소 평균\n\n> **파일** `src/common/reference.cpp`\n> **함수** `set_reference_from_photos` → `average_gray` → `to_gray`",
+      "x": -1580,
+      "y": 1187,
+      "width": 560,
+      "height": 251,
+      "color": "3"
+    },
+    {
+      "id": "c1",
+      "type": "text",
+      "text": "### 준비 ①을 했는가?\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_reference_from_photos` (`state.ready` 확인)",
+      "x": -1580,
+      "y": 882,
+      "width": 560,
+      "height": 225,
+      "color": "3"
+    },
+    {
+      "id": "cf3",
+      "type": "text",
+      "text": "### 실패 `E_REFERENCE`\n기준은 이전 그대로다\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_reference_from_photos` → `failed` (새 기준으로 못 재면 `use_reference` 로 되돌림)\n\n![[코드정리_fail_E_REFERENCE.jpg|412]]",
+      "x": -920,
+      "y": 1518,
+      "width": 460,
+      "height": 583,
+      "color": "1"
+    },
+    {
+      "id": "c0",
+      "type": "text",
+      "text": "## 기준 다시 잡기 (필요할 때만)\n`set_reference_from_photos(센터 사진들)`\n카메라나 판을 건드려 화면이 밀렸을 때. 센터에서 찍은 사진 여러 장\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_reference_from_photos`",
+      "x": -1580,
+      "y": 520,
+      "width": 1120,
+      "height": 282,
+      "color": "4"
+    },
+    {
+      "id": "s1",
+      "type": "text",
+      "text": "## 사진 검사\n`to_gray` (`src/common/reference`)\n크기, 비트 수, 채널을 확인하고 회색으로 바꾼다\n\n> **파일** `src/common/reference.cpp`\n> **함수** `measure_alignment` → `to_gray`\n\n![[코드정리_step_02.jpg|432]]",
+      "x": 0,
+      "y": 467,
+      "width": 480,
+      "height": 568,
+      "color": "4"
+    },
+    {
+      "id": "d1",
+      "type": "text",
+      "text": "### 사진 형식이 맞는가?\n3840×2160, 8비트, 채널 1 / 3 / 4\n\n> **파일** `src/common/reference.cpp`\n> **함수** `to_gray` (크기, 비트 수, 채널 확인)\n> **조정 상수** `kPhotoWidth` 3840, `kPhotoHeight` 2160 (`src/common/reference.hpp`)",
+      "x": 0,
+      "y": 1115,
+      "width": 480,
+      "height": 320,
+      "color": "3"
+    },
+    {
+      "id": "f1",
+      "type": "text",
+      "text": "### 실패 `E_PHOTO`\n값이 없다. 여기서 끝난다\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` → `failed`\n\n![[코드정리_fail_E_PHOTO.jpg|412]]",
+      "x": 580,
+      "y": 1115,
+      "width": 460,
+      "height": 449,
+      "color": "1"
+    },
+    {
+      "id": "d2a",
+      "type": "text",
+      "text": "### 좁은 창(±110 px)에서\n### QR 3개를 다 찾았는가?\n\n> **파일** `src/steps/01_find_qr.cpp`\n> **함수** `find_qr_shift` → `find_all(kNarrowHalfWidth)` → `find_one` (QR 3개 동시에)\n> **조정 상수** `kNarrowHalfWidth` 110 px, `kSearchHalfHeight` 22 px (`src/steps/01_find_qr.hpp`)\n\n![[코드정리_step_03_좁은창.jpg|432]]",
+      "x": 1240,
+      "y": 634,
+      "width": 480,
+      "height": 749,
+      "color": "3"
+    },
+    {
+      "id": "cf2",
+      "type": "text",
+      "text": "### 실패 `E_PHOTO`\n기준은 이전 그대로다\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_reference_from_photos` → `failed`",
+      "x": -920,
+      "y": 1187,
+      "width": 460,
+      "height": 251,
+      "color": "1"
+    },
+    {
+      "id": "d0",
+      "type": "text",
+      "text": "### 준비 ①을 했는가?\n`initialize` 가 성공한 적이 있는가\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` (`state.ready` 확인)",
+      "x": 0,
+      "y": 136,
+      "width": 480,
+      "height": 251,
+      "color": "3"
+    },
+    {
+      "id": "f0",
+      "type": "text",
+      "text": "### 실패 `E_NOT_INITIALIZED`\n값이 없다. 여기서 끝난다\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` → `failed`",
+      "x": 580,
+      "y": 136,
+      "width": 460,
+      "height": 225,
+      "color": "1"
+    },
+    {
+      "id": "cf1",
+      "type": "text",
+      "text": "### 실패 `E_NOT_INITIALIZED`\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_reference_from_photos` → `failed`",
+      "x": -920,
+      "y": 882,
+      "width": 460,
+      "height": 225,
+      "color": "1"
+    },
+    {
+      "id": "ov_in",
+      "type": "text",
+      "text": "# 입력\n**사진 한 장** (3840×2160, 8비트)\n\n미리 준비해 둔 것\n- **모델 파일** (프로그램을 시작할 때 한 번)\n- **그날 영점** (매일 한 번)\n\n초록 = 하는 일, 노랑 = 갈림길 (예 / 아니오), 파랑 = 나온 결과 (다음으로 넘기는 것), 주황 = 경고 (계속 진행), 빨강 = 실패 (멈춤), 회색 = 참고",
+      "x": -4200,
+      "y": -742,
+      "width": 3800,
+      "height": 408,
+      "color": "5"
+    },
+    {
+      "id": "i1",
+      "type": "text",
+      "text": "## 사진 한 장\n- 3840×2160, 8비트\n- 회색, 또는 컬러 (BGR 순서)\n- 판이 멈춘 뒤 찍은 사진\n\n> **파일** `include/alignment.hpp`\n> **함수** `read_photo` (파일에서 읽을 때), `measure_alignment` 의 입력\n\n![[코드정리_step_01.jpg|512]]",
+      "x": -4140,
+      "y": -156,
+      "width": 560,
+      "height": 644,
+      "color": "5"
+    },
+    {
+      "id": "a3",
+      "type": "text",
+      "text": "### 3. 계수 16개를 읽었는가?\n`load_coefficient_sets`\npx 를 mm, 도로 바꾸는 숫자. 찾은 나사 조합마다 하나 (2×2×2×2 = 16)\n\n> **파일** `src/steps/03_compute_yt.cpp`\n> **함수** `initialize` → `load_coefficient_sets` → `load_one_set` (읽는 폴더 `data/model/coefficients`)\n> **안에서 부르는 함수** `load_one_set` → `value_index_of` (열 이름 `qr`, `screw1` … 을 번호로)",
+      "x": -4140,
+      "y": 1759,
+      "width": 560,
+      "height": 372,
+      "color": "3"
+    },
+    {
+      "id": "z1",
+      "type": "text",
+      "text": "### 영점을 숫자로 넣는다\n저장해 둔 영점 값을 프로그램을 다시 켠 뒤 그대로 넣을 때\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_zero_value(y_mm, t_deg)`",
+      "x": -2860,
+      "y": 3510,
+      "width": 560,
+      "height": 220,
+      "color": "4"
+    },
+    {
+      "id": "z2",
+      "type": "text",
+      "text": "### 영점을 지운다\n영점을 (0, 0) 으로 되돌린다\n\n> **파일** `src/alignment.cpp`\n> **함수** `clear_zero()`",
+      "x": -2860,
+      "y": 3810,
+      "width": 560,
+      "height": 200,
+      "color": "4"
+    },
+    {
+      "id": "d2b",
+      "type": "text",
+      "text": "### 넓은 창(±250 px)에서\n### QR 3개를 다 찾았는가?\n\n> **파일** `src/steps/01_find_qr.cpp`\n> **함수** `find_qr_shift` → `find_all(kWideHalfWidth)` → `find_one`\n> **조정 상수** `kWideHalfWidth` 250 px (`src/steps/01_find_qr.hpp`)\n\n![[코드정리_step_03_넓은창.jpg|432]]",
+      "x": 1240,
+      "y": 1463,
+      "width": 480,
+      "height": 697,
+      "color": "3"
+    },
+    {
+      "id": "s0",
+      "type": "text",
+      "text": "## 시작\n`measure_alignment(사진)`\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment`",
+      "x": 0,
+      "y": -156,
+      "width": 1040,
+      "height": 212,
+      "color": "4"
+    },
+    {
+      "id": "fe",
+      "type": "text",
+      "text": "### 실패 `E_INTERNAL`\n어느 단계에서든 예상 못 한 오류가 나면 값 없이 여기서 끝난다\n(영점 잡기, 기준 다시 잡기도 같다. 준비 ①만 `E_DATA` 로 돌려준다)\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` 의 `catch` → `failed`",
+      "x": 580,
+      "y": 467,
+      "width": 460,
+      "height": 310,
+      "color": "1"
+    },
+    {
+      "id": "m1",
+      "type": "text",
+      "text": "### 회색 사진이 준비됨\n3840×2160, 8비트 회색\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` 안의 `gray` → `measure_values` 로 넘김",
+      "x": 0,
+      "y": 1644,
+      "width": 1040,
+      "height": 212,
+      "color": "5"
+    },
+    {
+      "id": "z3",
+      "type": "text",
+      "text": "### zero 가 바뀜\n실패가 없다 (값을 넣기만 한다)\n\n> **파일** `src/alignment.cpp` 의 `state.zero`",
+      "x": -2860,
+      "y": 4090,
+      "width": 1120,
+      "height": 190,
+      "color": "5"
+    },
+    {
+      "id": "d7",
+      "type": "text",
+      "text": "### 경고(W_)가 하나라도 붙었는가?\n\n> **파일** `src/alignment.cpp`\n> **함수** `add_notice` (`result.status` 를 바꿈)",
+      "x": 6900,
+      "y": 400,
+      "width": 480,
+      "height": 225,
+      "color": "3"
+    },
+    {
+      "id": "wnn",
+      "type": "text",
+      "text": "## 경고 (Warning)\n값은 돌려준다. 안내대로 옮기고 다시 잰다\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` 가 `Result` 를 돌려줌",
+      "x": 7480,
+      "y": 400,
+      "width": 460,
+      "height": 251,
+      "color": "2"
+    },
+    {
+      "id": "t2c",
+      "type": "text",
+      "text": "### 경고 `W_FAR`\nQR 이 250 px 넘게 떨어져 있다\n\n> **파일** `src/alignment.cpp`\n> **함수** `make_result` → `add_notices` → `add_notice`\n\n![[코드정리_warning_W_FAR.jpg|412]]",
+      "x": 1820,
+      "y": 2240,
+      "width": 460,
+      "height": 531,
+      "color": "2"
+    },
+    {
+      "id": "f2",
+      "type": "text",
+      "text": "### 실패 `E_QR_NOT_FOUND`\n값이 없다. 여기서 끝난다\n2 ~ 4단계로 가지 않는다\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` → `failed` (`measure_values` 가 값 없이 돌아옴)\n\n![[코드정리_fail_E_QR_NOT_FOUND.jpg|412]]",
+      "x": 1820,
+      "y": 3362,
+      "width": 460,
+      "height": 557,
+      "color": "1"
+    },
+    {
+      "id": "d2c",
+      "type": "text",
+      "text": "### 사진 전체 폭에서\n### QR 을 몇 개 찾았는가?\n\n> **파일** `src/steps/01_find_qr.cpp`\n> **함수** `find_qr_shift` → `find_all(0)` → `find_one` (0 은 사진 전체 폭)",
+      "x": 1240,
+      "y": 2240,
+      "width": 480,
+      "height": 251,
+      "color": "3"
+    },
+    {
+      "id": "w6",
+      "type": "text",
+      "text": "### 경고 `W_VALUES_DISAGREE`\n가림이나 반사가 의심된다. 이 값으로 보정하지 않는다\n\n> **파일** `src/alignment.cpp`\n> **함수** `add_notices` → `add_notice` (상태 Warning)\n\n![[코드정리_warning_W_VALUES_DISAGREE.jpg|412]]",
+      "x": 5680,
+      "y": 1507,
+      "width": 460,
+      "height": 544,
+      "color": "2"
+    },
+    {
+      "id": "s7",
+      "type": "text",
+      "text": "## 알림 붙이기\n`add_notices`, `report`\n\n위에서 생긴 경고를 중요한 순서대로 붙이다\n`W_COARSE` → `W_QR_PARTIAL` → `W_VALUES_DISAGREE` → `W_SCREW_MISSING` → `W_FAR` → `W_OUT_OF_RANGE` → `N_WIDE_SEARCH`\n\n`code` 에는 맨 앞 하나, `message` 에는 모두. 콘솔과 로그 파일에 한 줄 쓴다\n\n> **파일** `src/alignment.cpp`\n> **함수** `make_result` → `add_notices` → `add_notice`, `add_info`, 그 뒤 `measure_alignment` → `report`\n> **안에서 부르는 함수** `missing_screws`, `used_screws`, `exceeded_axis`, `px_text` (알림 문구 만들기)",
+      "x": 6900,
+      "y": -156,
+      "width": 1040,
+      "height": 476,
+      "color": "4"
+    },
+    {
+      "id": "m2",
+      "type": "text",
+      "text": "### QR 이동이 정해짐\n가로 이동, 세로 이동 (찾은 QR 의 평균)\n\n> **파일** `src/steps/01_find_qr.hpp`\n> **함수** `QrShift` (`dx`, `dy`, `found_count`, `search`)",
+      "x": 1240,
+      "y": 3999,
+      "width": 1120,
+      "height": 212,
+      "color": "5"
+    },
+    {
+      "id": "d6c",
+      "type": "text",
+      "text": "### 실패로 보기로 했는가?\n설정 `fail_on_disagreement` = 1\n\n> **파일** `src/alignment.cpp`\n> **함수** `add_notices` (`state.settings.fail_on_disagreement`, 설정 파일 `config/settings.json`)",
+      "x": 5680,
+      "y": 869,
+      "width": 460,
+      "height": 290,
+      "color": "3"
+    },
+    {
+      "id": "m4",
+      "type": "text",
+      "text": "### Y, T 가 정해짐\n영점을 뺀 값\n\n> **파일** `src/alignment.cpp`\n> **함수** `make_result` 의 `result.y_mm`, `result.t_deg`",
+      "x": 3860,
+      "y": 3298,
+      "width": 1040,
+      "height": 212,
+      "color": "5"
+    },
+    {
+      "id": "d3f",
+      "type": "text",
+      "text": "### 찾은 나사 조합에 맞는 계수가 있는가?\n\n> **파일** `src/steps/03_compute_yt.cpp`\n> **함수** `measure_values` → `choose_coefficient_set` (맞는 것이 없으면 `nullptr`)",
+      "x": 3860,
+      "y": 512,
+      "width": 480,
+      "height": 250,
+      "color": "3"
+    },
+    {
+      "id": "s5",
+      "type": "text",
+      "text": "## 영점 빼기\n`make_result`\n\n`출력 = 계산값 + carry_over − zero`\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` → `make_result`\n\n![[코드정리_step_06.jpg|432]]",
+      "x": 3860,
+      "y": 2624,
+      "width": 480,
+      "height": 594,
+      "color": "4"
+    },
+    {
+      "id": "w3b",
+      "type": "text",
+      "text": "### 경고 `W_SCREW_MISSING`\n남은 나사 조합의 계수를 쓴다\n정밀값이다\n\n> **파일** `src/alignment.cpp`\n> **함수** `make_result` → `add_notices` → `add_notice`\n\n![[코드정리_warning_W_SCREW_MISSING.jpg|412]]",
+      "x": 4440,
+      "y": 1519,
+      "width": 460,
+      "height": 557,
+      "color": "2"
+    },
+    {
+      "id": "d3d",
+      "type": "text",
+      "text": "### 왼쪽(1, 3)과 오른쪽(2, 4)에\n### 나사가 하나씩은 남았는가?\n\n> **파일** `src/steps/03_compute_yt.cpp`\n> **함수** `choose_coefficient_set` (고른 계수의 `precise` 가 좌우 나사가 다 있는지를 뜻함)",
+      "x": 3860,
+      "y": 882,
+      "width": 480,
+      "height": 264,
+      "color": "3"
+    },
+    {
+      "id": "w3a",
+      "type": "text",
+      "text": "### 경고 `W_COARSE`\n대략값용 계수를 쓴다\n방향과 크기만 믿는다\n\n> **파일** `src/alignment.cpp`\n> **함수** `make_result` → `add_notices` → `add_notice`\n\n![[코드정리_warning_W_COARSE.jpg|412]]",
+      "x": 4440,
+      "y": 882,
+      "width": 460,
+      "height": 557,
+      "color": "2"
+    },
+    {
+      "id": "m6",
+      "type": "text",
+      "text": "### 점검이 끝남\n붙일 경고가 정해짐\n\n> **파일** `src/alignment.cpp`\n> **함수** `make_result` 가 `Result` 를 돌려줌",
+      "x": 5100,
+      "y": 2716,
+      "width": 1600,
+      "height": 212,
+      "color": "5"
+    },
+    {
+      "id": "d6d",
+      "type": "text",
+      "text": "### Y, T 가 학습한 범위 안인가?\n`check_in_trained_range`\n\n> **파일** `src/steps/04_check_result.cpp`\n> **함수** `add_notices` → `check_in_trained_range`\n> **읽는 값** 범위는 상수가 아니라 `data/model/reference.json` 의 `trained_y_mm`, `trained_t_deg`",
+      "x": 5100,
+      "y": 2131,
+      "width": 480,
+      "height": 333,
+      "color": "3"
+    },
+    {
+      "id": "w6d",
+      "type": "text",
+      "text": "### 경고 `W_OUT_OF_RANGE`\n옮긴 뒤 다시 잰다\n\n> **파일** `src/alignment.cpp`\n> **함수** `add_notices` → `add_notice`\n\n![[코드정리_warning_W_OUT_OF_RANGE.jpg|412]]",
+      "x": 5680,
+      "y": 2131,
+      "width": 460,
+      "height": 505,
+      "color": "2"
+    },
+    {
+      "id": "f6",
+      "type": "text",
+      "text": "### 실패 `W_VALUES_DISAGREE`\n멈춘다\n(지금 코드는 값을 채워서 돌려준다)\n\n> **파일** `src/alignment.cpp`\n> **함수** `add_notices` → `add_notice` (상태 Failed)\n\n![[코드정리_fail_W_VALUES_DISAGREE.jpg|392]]",
+      "x": 6240,
+      "y": 869,
+      "width": 440,
+      "height": 558,
+      "color": "1"
+    },
+    {
+      "id": "t2b",
+      "type": "text",
+      "text": "### 참고 `N_WIDE_SEARCH`\n상태는 정상이다. QR 단계가 5 ~ 9 ms 더 걸린다\n\n> **파일** `src/alignment.cpp`\n> **함수** `make_result` → `add_notices` → `add_info`\n\n![[코드정리_warning_N_WIDE_SEARCH.jpg|412]]\n\n**왜 두 번에 나눠 찾는가**\n- 값은 같다: 두 창의 차이 최대 0.00007 px\n- 좁은 창만 쓰면 ±200 px 부터 못 찾는다\n- 넓은 창만 쓰면 2배 느리다 (9 → 19 ms)\n- 그래서 좁게 먼저, 못 찾을 때만 넓게\n\n![[코드정리_창_비교_그래프.jpg]]",
+      "x": 1820,
+      "y": 634,
+      "width": 460,
+      "height": 1526
+    },
+    {
+      "id": "d6a",
+      "type": "text",
+      "text": "### 찾은 나사가 2개 이상인가?\n(점검식이 있는 조합인가)\n\n> **파일** `src/steps/04_check_result.cpp`\n> **함수** `make_result` → `find_agreement_check`\n> **조정 상수** `kCheckNames` (점검식이 있는 조합 11개: 1234, 234, 134, 124, 123, 12, 13, 14, 23, 24, 34)",
+      "x": 5100,
+      "y": 456,
+      "width": 480,
+      "height": 333,
+      "color": "3"
+    },
+    {
+      "id": "f3",
+      "type": "text",
+      "text": "### 실패 `E_QR_NOT_FOUND`\n메시지: 검출한 나사 조합의 계수 미확보\nQR 0개일 때와 같은 코드다. 계수 16개가 다 있으면 일어나지 않는다\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` → `failed`",
+      "x": 4440,
+      "y": 512,
+      "width": 460,
+      "height": 290,
+      "color": "1"
+    },
+    {
+      "id": "okk",
+      "type": "text",
+      "text": "## 정상 (Ok)\n값을 돌려준다. **이 값으로 보정한다**\n\n여기까지 오는 길: 준비 됨 → 형식 맞음 → 좁은 창에서 QR 3개 → 나사 4개 모두 찾음 → 값이 서로 맞음 → 범위 안\n\n> **파일** `src/alignment.cpp`\n> **함수** `measure_alignment` 가 `Result` 를 돌려줌\n\n![[코드정리_step_08.jpg|432]]",
+      "x": 6900,
+      "y": 731,
+      "width": 1040,
+      "height": 672,
+      "color": "4"
+    },
+    {
+      "id": "s4",
+      "type": "text",
+      "text": "### 고른 계수로 Y, T 를 계산한다 `compute_yt`\n`Y = 절편 + Σ 가중치 × (값 − 평균) ÷ 크기`, T 도 같은 식\n\nT 는 QR 과 나사가 **같이** 움직인 양, Y 는 **다르게** 움직인 양\n\n> **파일** `src/steps/03_compute_yt.cpp`\n> **함수** `measure_values` → `compute_yt`\n> **읽는 값** 절편, 가중치, 평균, 크기는 `data/model/coefficients/screws_*.tsv` 에서 읽는다",
+      "x": 3860,
+      "y": 2156,
+      "width": 480,
+      "height": 388,
+      "color": "4"
+    },
+    {
+      "id": "d3e",
+      "type": "text",
+      "text": "### 쓰기로 한 나사를\n### 모두 찾았는가?\n\n> **파일** `src/alignment.cpp`\n> **함수** `add_notices` → `missing_screws`",
+      "x": 3860,
+      "y": 1519,
+      "width": 480,
+      "height": 225,
+      "color": "3"
+    },
+    {
+      "id": "t2d",
+      "type": "text",
+      "text": "### 경고 `W_QR_PARTIAL`\n찾은 QR 만 평균한다\n\n> **파일** `src/alignment.cpp`\n> **함수** `make_result` → `add_notices` → `add_notice`\n\n![[코드정리_warning_W_QR_PARTIAL.jpg|412]]",
+      "x": 1820,
+      "y": 2801,
+      "width": 460,
+      "height": 531,
+      "color": "2"
+    },
+    {
+      "id": "d3a",
+      "type": "text",
+      "text": "### 나사를 찾았는가?\n닮은 정도 0.6 이상\n\n> **파일** `src/steps/02_find_screws.cpp`\n> **함수** `locate_screw` 의 반환값\n> **조정 상수** `kMinSimilarity` 0.6, `kMaxAwayFromQr` 100 px (QR 이동과 이보다 다르면 다른 나사를 잡은 것)",
+      "x": 2560,
+      "y": 1004,
+      "width": 480,
+      "height": 294,
+      "color": "3"
+    },
+    {
+      "id": "s3b",
+      "type": "text",
+      "text": "### 밝기로 다듬기 `refine_by_brightness`\n밝기를 맞춰 가며 조금씩 민다 (소수 px)\n\n> **파일** `src/steps/02_find_screws.cpp`\n> **함수** `find_one` → `refine_by_brightness`\n> **안에서 부르는 함수** `cut_patch` → `cubic_weight` (소수 위치의 조각을 잘라 냄)\n> **조정 상수** `kBrightnessMaxSteps` 50 번, `kBrightnessDone` 0.0001 px (이보다 적게 움직이면 끝)",
+      "x": 2560,
+      "y": 1378,
+      "width": 480,
+      "height": 389,
+      "color": "4"
+    },
+    {
+      "id": "d6b",
+      "type": "text",
+      "text": "### 값들이 서로 맞는가?\n`check_values_agree` 점검값이 기준 이하\n\n> **파일** `src/steps/04_check_result.cpp`\n> **함수** `make_result` → `check_values_agree` → `expected_differences`\n> **안에서 부르는 함수** `AgreementResult::agrees` (점검값이 한계 이하인지)\n> **읽는 값** 한계와 식은 상수가 아니라 `data/model/checks/screws_*.tsv` 에서 읽는다",
+      "x": 5100,
+      "y": 869,
+      "width": 480,
+      "height": 363,
+      "color": "3"
+    },
+    {
+      "id": "h4",
+      "type": "text",
+      "text": "## 3단계: Y, T 계산\n`choose_coefficient_set`, `compute_yt` (`src/steps/03_compute_yt`)\n찾은 나사에 맞는 계수를 고르고 (16가지 중 하나), 그 계수로 Y, T 를 계산한다\n\n> **파일** `src/steps/03_compute_yt.cpp`\n> **함수** `measure_values` → `choose_coefficient_set` → `compute_yt`\n> **조정 상수** `kSetNames` (조합 이름 16개: 1234, 234, …, none), `kValueCount` 5, `kValueNames` (qr, screw1 ~ screw4)\n\n![[코드정리_step_05.jpg|432]]",
+      "x": 3860,
+      "y": -156,
+      "width": 1040,
+      "height": 588,
+      "color": "4"
+    },
+    {
+      "id": "h6",
+      "type": "text",
+      "text": "## 4단계: 결과 점검\n`check_values_agree`, `check_in_trained_range` (`src/steps/04_check_result`)\n나온 값을 믿어도 되는지 두 가지를 본다: 값들이 서로 맞는가, 학습한 범위 안인가\n\n> **파일** `src/steps/04_check_result.cpp`\n> **함수** `make_result` → `find_agreement_check`, `check_values_agree`, `check_in_trained_range`\n\n![[코드정리_step_07.jpg|432]]",
+      "x": 5100,
+      "y": -156,
+      "width": 1600,
+      "height": 532,
+      "color": "4"
+    },
+    {
+      "id": "ov_proc",
+      "type": "text",
+      "text": "# 처리\n초록 = 하는 일, 노랑 = 갈림길 (예 / 아니오), 파랑 = 나온 결과 (다음으로 넘기는 것), 주황 = 경고 (계속 진행), 빨강 = 실패 (멈춤), 회색 = 참고\n\n**초록 화살표만 따라 내려가면 정상(Ok)으로 끝나는 길이다**\n\n사진 검사 → **1단계** QR 이동 → **2단계** 나사 이동 → **3단계** Y, T 계산 → 영점 빼기 → **4단계** 결과 점검 → 알림 붙이기",
+      "x": -60,
+      "y": -724,
+      "width": 8060,
+      "height": 390,
+      "color": "4"
+    },
+    {
+      "id": "s2",
+      "type": "text",
+      "text": "## 1단계: QR 이동\n`QrFinder::find_qr_shift` (`src/steps/01_find_qr`)\n\nQR 3개가 기준에서 가로로 몇 px 움직였는지 잰다\n\nQR 하나 (`find_one`): 창을 흐리게 → 가장 닮은 자리 (NCC) → 포물선으로 소수 px. 닮은 정도 0.8 미만이면 못 찾은 것이다\n\n> **파일** `src/steps/01_find_qr.cpp`\n> **함수** `measure_values` → `QrFinder::find_qr_shift`\n> **안에서 부르는 함수** `find_one` → `blurred_area` (창을 흐리게) → `cv::matchTemplate` (가장 닮은 자리) → `parabola_offset` (소수 px)\n> **조정 상수** `kBlurSigma` 2.0 px (흐리는 정도), `kBlurMargin` 8 px, `kMinSimilarity` 0.8 (이보다 덜 닮으면 못 찾은 것)\n\n![[코드정리_step_03.jpg|432]]",
+      "x": 1240,
+      "y": -156,
+      "width": 1120,
+      "height": 710,
+      "color": "4"
+    },
+    {
+      "id": "d3b",
+      "type": "text",
+      "text": "### 자리를 잡았는가?\n한 번에 3 px 넘게 가지 않고, 처음 자리에서 8 px 넘게 벗어나지 않아야 한다\n\n> **파일** `src/steps/02_find_screws.cpp`\n> **함수** `refine_by_brightness` 의 반환값\n> **조정 상수** `kBrightnessMaxStep` 3.0 px, `kMaxDriftFromLocate` 8.0 px",
+      "x": 2560,
+      "y": 1847,
+      "width": 480,
+      "height": 307,
+      "color": "3"
+    },
+    {
+      "id": "m3",
+      "type": "text",
+      "text": "### 나사 이동이 정해짐\n찾은 나사의 가로 이동 (못 찾은 나사는 빠짐)\n\n> **파일** `src/steps/02_find_screws.hpp`\n> **함수** `ScrewShift` 4개 (`found`, `dx`, `dy`)",
+      "x": 2560,
+      "y": 3190,
+      "width": 1120,
+      "height": 225,
+      "color": "5"
+    },
+    {
+      "id": "s3c",
+      "type": "text",
+      "text": "### 테두리로 정밀 맞춤 `refine_by_edges`\n나사 테두리만 남긴 그림으로 맞춘다 (최종 값)\n\n> **파일** `src/steps/02_find_screws.cpp`\n> **함수** `find_one` → `refine_by_edges` → `ecc_shift`\n> **안에서 부르는 함수** `square_around`, `edge_picture` (테두리만 남긴 그림), `ecc_shift` → `prepare_ecc`, `read_shifted_patch` → `value_at`, `sum_ecc_terms`, `update_ecc_shift`\n> **조정 상수** `kEdgeHalf` 70 px (테두리 그림 한 변 141 px), `kEdgeMaskRadius` 45 px, `kEdgeBlurSigma` 1.5 px, `kEdgeSmoothing` 5 px",
+      "x": 2560,
+      "y": 2256,
+      "width": 480,
+      "height": 493,
+      "color": "4"
+    },
+    {
+      "id": "d3c",
+      "type": "text",
+      "text": "### 맞춤이 끝났는가?\n\n> **파일** `src/steps/02_find_screws.cpp`\n> **함수** `refine_by_edges` 의 반환값 (`ecc_shift` 가 끝까지 갔는가)\n> **조정 상수** `kEdgeMaxSteps` 200 번, `kEdgeDone` 1e-8",
+      "x": 2560,
+      "y": 2829,
+      "width": 480,
+      "height": 281,
+      "color": "3"
+    },
+    {
+      "id": "x3",
+      "type": "text",
+      "text": "### 그 나사만 뺀다\n멈추지 않는다. 다른 나사는 계속 잰다\n\n(가려졌거나, 반사됐거나, 사진 밖)\n\n> **파일** `src/steps/02_find_screws.cpp`\n> **함수** `find_one` (`ScrewShift.found = false`)",
+      "x": 3140,
+      "y": 1847,
+      "width": 460,
+      "height": 329,
+      "color": "2"
+    },
+    {
+      "id": "case_warning_W_QR_PARTIAL_title",
+      "type": "text",
+      "text": "W_QR_PARTIAL\n\n![[코드정리_warning_W_QR_PARTIAL.jpg|592]]",
+      "x": 9680,
+      "y": 1485,
+      "width": 640,
+      "height": 435,
+      "color": "2"
+    },
+    {
+      "id": "case_fail_E_DATA",
+      "type": "text",
+      "text": "### E_DATA\n\ninitialize에서 기준 사진, 위치 정보, 계수 또는 점검식을 읽거나 검증하지 못함.",
+      "x": 8990,
+      "y": 3618,
+      "width": 640,
+      "height": 160,
+      "color": "1"
+    },
+    {
+      "id": "case_fail_E_REFERENCE_title",
+      "type": "text",
+      "text": "E_REFERENCE\n\n![[코드정리_fail_E_REFERENCE.jpg|592]]",
+      "x": 10370,
+      "y": 3133,
+      "width": 640,
+      "height": 435,
+      "color": "1"
+    },
+    {
+      "id": "case_fail_W_VALUES_DISAGREE_title",
+      "type": "text",
+      "text": "W_VALUES_DISAGREE\n\n![[코드정리_fail_W_VALUES_DISAGREE.jpg|592]]",
+      "x": 11060,
+      "y": 3133,
+      "width": 640,
+      "height": 435,
+      "color": "1"
+    },
+    {
+      "id": "case_fail_E_QR_NOT_FOUND_title",
+      "type": "text",
+      "text": "E_QR_NOT_FOUND\n\n![[코드정리_fail_E_QR_NOT_FOUND.jpg|592]]",
+      "x": 8990,
+      "y": 3133,
+      "width": 640,
+      "height": 435,
+      "color": "1"
+    },
+    {
+      "id": "case_warning_W_COARSE_title",
+      "type": "text",
+      "text": "W_COARSE\n\n![[코드정리_warning_W_COARSE.jpg|592]]",
+      "x": 10370,
+      "y": 1485,
+      "width": 640,
+      "height": 435,
+      "color": "2"
+    },
+    {
+      "id": "o2",
+      "type": "text",
+      "text": "## 상태마다 할 일\n- **정상**: 그 값으로 보정\n- **경고**: 값은 나옴. 안내대로 옮기고 다시 잰다\n- **실패**: 값 없음 (NaN). 멈춘다\n\n어떤 함수도 예외를 던지지 않는다. 예상 못 한 오류도 `E_INTERNAL` 로 돌려준다",
+      "x": 9690,
+      "y": -156,
+      "width": 2010,
+      "height": 390
+    },
+    {
+      "id": "case_warning_W_SCREW_MISSING_title",
+      "type": "text",
+      "text": "W_SCREW_MISSING\n\n![[코드정리_warning_W_SCREW_MISSING.jpg|592]]",
+      "x": 11060,
+      "y": 1485,
+      "width": 640,
+      "height": 435,
+      "color": "2"
+    },
+    {
+      "id": "s3a",
+      "type": "text",
+      "text": "### 대략 찾기 `locate_screw`\nQR 이 움직인 자리 ±60 px 를 먼저, 못 찾으면 원래 자리 ±260 px 를 찾는다\n\n> **파일** `src/steps/02_find_screws.cpp`\n> **함수** `find_one` → `locate_screw`\n> **안에서 부르는 함수** `square_around` (나사 주변 네모), `inside_photo`, `cv::matchTemplate`\n> **조정 상수** `kNearSearch` 60 px, `kFarSearch` 260 px",
+      "x": 2560,
+      "y": 548,
+      "width": 480,
+      "height": 376,
+      "color": "4"
+    },
+    {
+      "id": "s3",
+      "type": "text",
+      "text": "## 2단계: 나사 이동\n`ScrewFinder::find_screw_shifts` (`src/steps/02_find_screws`)\n\n나사 4개를 동시에 찾는다. 나사마다 아래를 차례로 한다 (`find_one`)\n\n> **파일** `src/steps/02_find_screws.cpp`\n> **함수** `measure_values` → `ScrewFinder::find_screw_shifts` → `find_one` (나사 4개 동시에)\n> **조정 상수** `kPatchRadius` 45 px (나사 조각 반지름, 조각 한 변 91 px)\n\n![[코드정리_step_04.jpg|432]]",
+      "x": 2560,
+      "y": -156,
+      "width": 1120,
+      "height": 624,
+      "color": "4"
+    },
+    {
+      "id": "case_fail_E_INTERNAL",
+      "type": "text",
+      "text": "### E_INTERNAL\n\n측정, 영점 설정 또는 기준 갱신 중 예외가 발생함.",
+      "x": 10370,
+      "y": 3618,
+      "width": 640,
+      "height": 160,
+      "color": "1"
+    },
+    {
+      "id": "case_fail_E_NOT_INITIALIZED",
+      "type": "text",
+      "text": "### E_NOT_INITIALIZED\n\n초기화 성공 전에 측정, 영점 설정 또는 기준 갱신을 호출함.",
+      "x": 9680,
+      "y": 3618,
+      "width": 640,
+      "height": 160,
+      "color": "1"
+    },
+    {
+      "id": "case_fail_E_ZERO_title",
+      "type": "text",
+      "text": "E_ZERO\n\n![[코드정리_fail_E_ZERO.jpg|592]]",
+      "x": 9680,
+      "y": 3133,
+      "width": 640,
+      "height": 435,
+      "color": "1"
+    },
+    {
+      "id": "o4",
+      "type": "text",
+      "text": "## 실패 (값이 없다, 멈춘다)\n- `E_SETTINGS`, `E_DATA` 설정이나 모델 파일을 못 읽음\n- `E_NOT_INITIALIZED` 준비를 안 함\n- `E_PHOTO` 사진 크기나 형식이 다름\n- `E_QR_NOT_FOUND` QR 을 하나도 못 찾음\n- `E_ZERO` 영점을 잡지 못함\n- `E_REFERENCE` 기준을 다시 잡지 못함\n- `E_INTERNAL` 예상 못 한 오류",
+      "x": 8300,
+      "y": 2485,
+      "width": 3400,
+      "height": 598,
+      "color": "1"
+    },
+    {
+      "id": "ov_out",
+      "type": "text",
+      "text": "# 출력\n**Y (mm), T (도)**\n**상태**: 정상 / 경고 / 실패\n코드와 메시지 (무슨 일인지, 다음에 할 일)",
+      "x": 8240,
+      "y": -672,
+      "width": 3520,
+      "height": 338,
+      "color": "6"
+    },
+    {
+      "id": "o1",
+      "type": "text",
+      "text": "## Result\n- `y_mm`, `t_deg` - 기준에서 벗어난 양. 보정 이동은 (−y, −t)\n- `status` - 정상 / 경고 / 실패\n- `code` - 가장 중요한 알림 하나\n- `message` - 사람이 읽는 설명과 다음 할 일\n- 확인용: `qr_shift_px`, `screw_shift_px[4]`, `screws_used`, `check_value`, `check_limit`\n\n> **파일** `include/alignment.hpp`\n> **함수** `struct Result`, `enum class Status`\n\n![[코드정리_ok_OK.jpg|630]]",
+      "x": 8300,
+      "y": -156,
+      "width": 1340,
+      "height": 913,
+      "color": "6"
+    },
+    {
+      "id": "case_warning_W_VALUES_DISAGREE_title",
+      "type": "text",
+      "text": "W_VALUES_DISAGREE\n\n![[코드정리_warning_W_VALUES_DISAGREE.jpg|592]]",
+      "x": 8300,
+      "y": 1970,
+      "width": 640,
+      "height": 435,
+      "color": "2"
+    },
+    {
+      "id": "case_warning_W_OUT_OF_RANGE_title",
+      "type": "text",
+      "text": "W_OUT_OF_RANGE\n\n![[코드정리_warning_W_OUT_OF_RANGE.jpg|592]]",
+      "x": 8990,
+      "y": 1970,
+      "width": 640,
+      "height": 435,
+      "color": "2"
+    },
+    {
+      "id": "case_warning_W_ZERO_RESET_title",
+      "type": "text",
+      "text": "W_ZERO_RESET\n\n![[코드정리_warning_W_ZERO_RESET.jpg|592]]",
+      "x": 9680,
+      "y": 1970,
+      "width": 640,
+      "height": 435,
+      "color": "2"
+    },
+    {
+      "id": "case_warning_N_WIDE_SEARCH_title",
+      "type": "text",
+      "text": "N_WIDE_SEARCH\n\n![[코드정리_warning_N_WIDE_SEARCH.jpg|592]]",
+      "x": 8300,
+      "y": 1485,
+      "width": 640,
+      "height": 435,
+      "color": "2"
+    },
+    {
+      "id": "case_warning_W_FAR_title",
+      "type": "text",
+      "text": "W_FAR\n\n![[코드정리_warning_W_FAR.jpg|592]]",
+      "x": 8990,
+      "y": 1485,
+      "width": 640,
+      "height": 435,
+      "color": "2"
+    },
+    {
+      "id": "o3",
+      "type": "text",
+      "text": "## 경고 (값은 나온다)\n- `W_COARSE` 나사가 한쪽에만 있거나 없음 → 대략값\n- `W_QR_PARTIAL` QR 을 1 ~ 2개만 찾음\n- `W_VALUES_DISAGREE` 값이 서로 안 맞음 (가림, 반사 의심)\n- `W_SCREW_MISSING` 나사 일부를 못 찾음\n- `W_FAR` QR 이 250 px 넘게 떨어져 있음\n- `W_OUT_OF_RANGE` 학습한 범위 밖\n- `W_ZERO_RESET` 기준을 다시 잡다가 영점이 새로 정해짐\n- `N_WIDE_SEARCH` 넓은 창에서 찾음 (참고, 상태는 정상)",
+      "x": 8300,
+      "y": 837,
+      "width": 3400,
+      "height": 598,
+      "color": "2"
+    },
+    {
+      "id": "case_fail_E_PHOTO_title",
+      "type": "text",
+      "text": "E_PHOTO\n\n![[코드정리_fail_E_PHOTO.jpg|592]]",
+      "x": 8300,
+      "y": 3133,
+      "width": 640,
+      "height": 435,
+      "color": "1"
+    },
+    {
+      "id": "case_fail_E_SETTINGS",
+      "type": "text",
+      "text": "### E_SETTINGS\n\ninitialize에서 설정 파일을 읽을 수 없거나 나사 설정이 유효하지 않음.",
+      "x": 8300,
+      "y": 3618,
+      "width": 640,
+      "height": 160,
+      "color": "1"
+    },
+    {
+      "id": "a5",
+      "type": "text",
+      "text": "### 5. 조각을 미리 잘라 둔다\n`use_reference`\n기준 사진에서 QR 조각 3개, 나사 조각 4개\n(사진마다 다시 하지 않기 위해서다)\n\n> **파일** `src/alignment.cpp`\n> **함수** `initialize` → `use_reference` → `QrFinder`, `ScrewFinder` 를 새로 만든다\n> **안에서 부르는 함수** `QrFinder::QrFinder` (흐린 기준 사진에서 QR 조각 3개), `ScrewFinder::ScrewFinder` (나사마다 조각 3가지: 대략 찾기용, 밝기용, 테두리용) → `square_around`, `edge_picture`, `make_edge_mask`",
+      "x": -4140,
+      "y": 2663,
+      "width": 560,
+      "height": 411,
+      "color": "4"
+    },
+    {
+      "id": "a6",
+      "type": "text",
+      "text": "### 준비가 끝남\n\n> **파일** `src/alignment.cpp`\n> **함수** `initialize` (`state.ready = true`)",
+      "x": -4140,
+      "y": 3154,
+      "width": 1120,
+      "height": 199,
+      "color": "5"
+    },
+    {
+      "id": "b5",
+      "type": "text",
+      "text": "### 영점이 바뀜\n`zero` = 그 사진의 Y, T\n`reset_baselines` 점검의 기준도 다시 잡는다\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_zero_from_photos` (`state.zero` 를 바꿈) → `reset_baselines`",
+      "x": -2860,
+      "y": 2766,
+      "width": 1120,
+      "height": 264,
+      "color": "5"
+    },
+    {
+      "id": "c6",
+      "type": "text",
+      "text": "### 기준이 바뀜\n영점은 이어진다 (`carry_over`). `reset_baselines` 점검의 기준도 다시 잡는다\n\n> **파일** `src/alignment.cpp`\n> **함수** `set_reference_from_photos` (`state.carry_over` 를 바꿈) → `reset_baselines`",
+      "x": -1580,
+      "y": 3196,
+      "width": 1120,
+      "height": 264,
+      "color": "5"
+    },
+    {
+      "id": "z0",
+      "type": "text",
+      "text": "## 영점을 직접 다루기 (필요할 때만)\n사진 없이 영점 값을 넣거나 지운다\n\n> **파일** `src/alignment.cpp`",
+      "x": -2860,
+      "y": 3230,
+      "width": 1120,
+      "height": 200,
+      "color": "4"
+    },
+    {
+      "id": "audit_20261116",
+      "type": "text",
+      "text": "# 현재 구현과 다른 과거 그림\n\n다음 그림은 과거 구현과 실험을 설명하는 기록입니다.\n\n현재 API 구현과 다른 설명이 있어 현장 호출 순서로 그대로 사용하면 안 됩니다.\n\n\n\n1. initialize 실패 후 이전 모델로 측정을 계속할 수 없습니다.\n\n2. 영점 설정 실패, clear_zero, 기준 재등록 시도는 운영용 영점을 무효화합니다.\n\n3. 기준 재등록 후에는 좌표 연결 여부와 관계없이 영점을 다시 설정해야 합니다.\n\n4. 영점 없는 운영 측정은 E_ZERO_REQUIRED로 실패합니다.\n\n5. 실패 결과의 Y, T는 NaN입니다. 정상 상태도 정확도를 보장하지 않습니다.\n\n6. code는 조치 우선순위로 결정하며 전체 알림은 notices로 확인합니다.\n\n7. 보정 여부는 correction_allowed와 action, 장비 조건을 확인합니다.\n\n8. set_zero_value와 clear_zero는 값 일치 점검의 기준 어긋남을 삭제합니다.\n\n9. 내부 계수 평가는 전처리된 라벨을 사용하며 현장 center 평가와 다릅니다.\n\n\n\n현재 설명: docs/03_상태와_알림.md\n\n평가 조건: docs/06_평가_방법/6-1_정확도.md\n\n검토 기록: docs/검토_20261116/검토결과.md\n\n기존 그림은 비교를 위해 보존했습니다. 그림 전체를 최신 구현으로 다시 그린 것은 아닙니다.",
+      "x": -4200,
+      "y": -1442,
+      "width": 1000,
+      "height": 650,
+      "color": "2"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_ov1",
+      "fromNode": "ov_in",
+      "fromSide": "right",
+      "toNode": "ov_proc",
+      "toSide": "left"
+    },
+    {
+      "id": "e_ov2",
+      "fromNode": "ov_proc",
+      "fromSide": "right",
+      "toNode": "ov_out",
+      "toSide": "left"
+    },
+    {
+      "id": "ea0",
+      "fromNode": "a0",
+      "fromSide": "bottom",
+      "toNode": "a1",
+      "toSide": "top"
+    },
+    {
+      "id": "ea1",
+      "fromNode": "a1",
+      "fromSide": "bottom",
+      "toNode": "a2",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "ea1f",
+      "fromNode": "a1",
+      "fromSide": "right",
+      "toNode": "af1",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "ea2",
+      "fromNode": "a2",
+      "fromSide": "bottom",
+      "toNode": "a3",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "ea2f",
+      "fromNode": "a2",
+      "fromSide": "right",
+      "toNode": "af2",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "ea3",
+      "fromNode": "a3",
+      "fromSide": "bottom",
+      "toNode": "a4",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "ea3f",
+      "fromNode": "a3",
+      "fromSide": "right",
+      "toNode": "af2",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "ea4",
+      "fromNode": "a4",
+      "fromSide": "bottom",
+      "toNode": "a5",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "ea4f",
+      "fromNode": "a4",
+      "fromSide": "right",
+      "toNode": "af2",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "ea5",
+      "fromNode": "a5",
+      "fromSide": "bottom",
+      "toNode": "a6",
+      "toSide": "top"
+    },
+    {
+      "id": "eb0",
+      "fromNode": "b0",
+      "fromSide": "bottom",
+      "toNode": "b1",
+      "toSide": "top"
+    },
+    {
+      "id": "eb1",
+      "fromNode": "b1",
+      "fromSide": "bottom",
+      "toNode": "b2",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "eb1f",
+      "fromNode": "b1",
+      "fromSide": "right",
+      "toNode": "bf1",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "eb2",
+      "fromNode": "b2",
+      "fromSide": "bottom",
+      "toNode": "b3",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "eb2f",
+      "fromNode": "b2",
+      "fromSide": "right",
+      "toNode": "bf2",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "eb3",
+      "fromNode": "b3",
+      "fromSide": "bottom",
+      "toNode": "b4",
+      "toSide": "top"
+    },
+    {
+      "id": "eb4",
+      "fromNode": "b4",
+      "fromSide": "bottom",
+      "toNode": "b5",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "eb4f",
+      "fromNode": "b4",
+      "fromSide": "right",
+      "toNode": "bf3",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "eb5",
+      "fromNode": "b5",
+      "fromSide": "right",
+      "toNode": "gP",
+      "toSide": "left",
+      "label": "zero (영점 빼기에서 쓴다)"
+    },
+    {
+      "id": "ei1",
+      "fromNode": "i1",
+      "fromSide": "right",
+      "toNode": "s0",
+      "toSide": "left",
+      "label": "사진"
+    },
+    {
+      "id": "e01",
+      "fromNode": "s0",
+      "fromSide": "bottom",
+      "toNode": "d0",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e02",
+      "fromNode": "d0",
+      "fromSide": "bottom",
+      "toNode": "s1",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e02f",
+      "fromNode": "d0",
+      "fromSide": "right",
+      "toNode": "f0",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "e03",
+      "fromNode": "s1",
+      "fromSide": "bottom",
+      "toNode": "d1",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e04",
+      "fromNode": "d1",
+      "fromSide": "bottom",
+      "toNode": "m1",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e04f",
+      "fromNode": "d1",
+      "fromSide": "right",
+      "toNode": "f1",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "e05",
+      "fromNode": "s2",
+      "fromSide": "bottom",
+      "toNode": "d2a",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e06n",
+      "fromNode": "d2a",
+      "fromSide": "bottom",
+      "toNode": "d2b",
+      "toSide": "top",
+      "label": "아니오"
+    },
+    {
+      "id": "e07y",
+      "fromNode": "d2b",
+      "fromSide": "right",
+      "toNode": "t2b",
+      "toSide": "left",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e07n",
+      "fromNode": "d2b",
+      "fromSide": "bottom",
+      "toNode": "d2c",
+      "toSide": "top",
+      "label": "아니오"
+    },
+    {
+      "id": "e08a",
+      "fromNode": "d2c",
+      "fromSide": "right",
+      "toNode": "t2c",
+      "toSide": "left",
+      "color": "2",
+      "label": "3개"
+    },
+    {
+      "id": "e08b",
+      "fromNode": "d2c",
+      "fromSide": "right",
+      "toNode": "t2d",
+      "toSide": "left",
+      "color": "2",
+      "label": "1 ~ 2개"
+    },
+    {
+      "id": "e08c",
+      "fromNode": "d2c",
+      "fromSide": "right",
+      "toNode": "f2",
+      "toSide": "left",
+      "color": "1",
+      "label": "0개"
+    },
+    {
+      "id": "e09b",
+      "fromNode": "t2b",
+      "fromSide": "right",
+      "toNode": "m2",
+      "toSide": "right",
+      "color": "4"
+    },
+    {
+      "id": "e09c",
+      "fromNode": "t2c",
+      "fromSide": "right",
+      "toNode": "m2",
+      "toSide": "right",
+      "color": "2"
+    },
+    {
+      "id": "e09d",
+      "fromNode": "t2d",
+      "fromSide": "right",
+      "toNode": "m2",
+      "toSide": "right",
+      "color": "2"
+    },
+    {
+      "id": "e10",
+      "fromNode": "m2",
+      "fromSide": "right",
+      "toNode": "s3",
+      "toSide": "left",
+      "color": "4",
+      "label": "QR 이동 (나사를 어디서 찾을지 정한다)"
+    },
+    {
+      "id": "e11",
+      "fromNode": "s3",
+      "fromSide": "bottom",
+      "toNode": "s3a",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e12",
+      "fromNode": "s3a",
+      "fromSide": "bottom",
+      "toNode": "d3a",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e13y",
+      "fromNode": "d3a",
+      "fromSide": "bottom",
+      "toNode": "s3b",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e13n",
+      "fromNode": "d3a",
+      "fromSide": "right",
+      "toNode": "x3",
+      "toSide": "top",
+      "color": "2",
+      "label": "아니오"
+    },
+    {
+      "id": "e14",
+      "fromNode": "s3b",
+      "fromSide": "bottom",
+      "toNode": "d3b",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e15y",
+      "fromNode": "d3b",
+      "fromSide": "bottom",
+      "toNode": "s3c",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e15n",
+      "fromNode": "d3b",
+      "fromSide": "right",
+      "toNode": "x3",
+      "toSide": "left",
+      "color": "2",
+      "label": "아니오"
+    },
+    {
+      "id": "e16",
+      "fromNode": "s3c",
+      "fromSide": "bottom",
+      "toNode": "d3c",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e17y",
+      "fromNode": "d3c",
+      "fromSide": "bottom",
+      "toNode": "m3",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e17n",
+      "fromNode": "d3c",
+      "fromSide": "right",
+      "toNode": "x3",
+      "toSide": "bottom",
+      "color": "2",
+      "label": "아니오"
+    },
+    {
+      "id": "e18",
+      "fromNode": "x3",
+      "fromSide": "right",
+      "toNode": "m3",
+      "toSide": "right",
+      "color": "2",
+      "label": "남은 나사로 계속"
+    },
+    {
+      "id": "e19",
+      "fromNode": "m3",
+      "fromSide": "right",
+      "toNode": "h4",
+      "toSide": "left",
+      "color": "4"
+    },
+    {
+      "id": "e20y",
+      "fromNode": "d3d",
+      "fromSide": "bottom",
+      "toNode": "d3e",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e20n",
+      "fromNode": "d3d",
+      "fromSide": "right",
+      "toNode": "w3a",
+      "toSide": "left",
+      "color": "2",
+      "label": "아니오"
+    },
+    {
+      "id": "e21y",
+      "fromNode": "d3e",
+      "fromSide": "bottom",
+      "toNode": "s4",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e21n",
+      "fromNode": "d3e",
+      "fromSide": "right",
+      "toNode": "w3b",
+      "toSide": "left",
+      "color": "2",
+      "label": "아니오"
+    },
+    {
+      "id": "e22a",
+      "fromNode": "w3a",
+      "fromSide": "right",
+      "toNode": "s4",
+      "toSide": "right",
+      "color": "2",
+      "label": "계속"
+    },
+    {
+      "id": "e22b",
+      "fromNode": "w3b",
+      "fromSide": "bottom",
+      "toNode": "s4",
+      "toSide": "right",
+      "color": "2",
+      "label": "계속"
+    },
+    {
+      "id": "e23",
+      "fromNode": "s4",
+      "fromSide": "bottom",
+      "toNode": "s5",
+      "toSide": "top",
+      "color": "4",
+      "label": "Y, T (영점 빼기 전)"
+    },
+    {
+      "id": "e24",
+      "fromNode": "s5",
+      "fromSide": "bottom",
+      "toNode": "m4",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e25y",
+      "fromNode": "d6a",
+      "fromSide": "bottom",
+      "toNode": "d6b",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e26y",
+      "fromNode": "d6b",
+      "fromSide": "bottom",
+      "toNode": "d6d",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e26n",
+      "fromNode": "d6b",
+      "fromSide": "right",
+      "toNode": "d6c",
+      "toSide": "left",
+      "color": "2",
+      "label": "아니오"
+    },
+    {
+      "id": "e27y",
+      "fromNode": "d6c",
+      "fromSide": "right",
+      "toNode": "f6",
+      "toSide": "left",
+      "color": "1",
+      "label": "예"
+    },
+    {
+      "id": "e27n",
+      "fromNode": "d6c",
+      "fromSide": "bottom",
+      "toNode": "w6",
+      "toSide": "top",
+      "color": "2",
+      "label": "아니오"
+    },
+    {
+      "id": "e27b",
+      "fromNode": "w6",
+      "fromSide": "bottom",
+      "toNode": "d6d",
+      "toSide": "right",
+      "color": "2",
+      "label": "계속"
+    },
+    {
+      "id": "e28y",
+      "fromNode": "d6d",
+      "fromSide": "bottom",
+      "toNode": "m6",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e28n",
+      "fromNode": "d6d",
+      "fromSide": "right",
+      "toNode": "w6d",
+      "toSide": "left",
+      "color": "2",
+      "label": "아니오"
+    },
+    {
+      "id": "e28b",
+      "fromNode": "w6d",
+      "fromSide": "right",
+      "toNode": "m6",
+      "toSide": "right",
+      "color": "2",
+      "label": "계속"
+    },
+    {
+      "id": "e29",
+      "fromNode": "s7",
+      "fromSide": "bottom",
+      "toNode": "d7",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e30y",
+      "fromNode": "d7",
+      "fromSide": "bottom",
+      "toNode": "okk",
+      "toSide": "top",
+      "color": "4",
+      "label": "아니오"
+    },
+    {
+      "id": "e30n",
+      "fromNode": "d7",
+      "fromSide": "right",
+      "toNode": "wnn",
+      "toSide": "left",
+      "color": "2",
+      "label": "예"
+    },
+    {
+      "id": "e31",
+      "fromNode": "okk",
+      "fromSide": "right",
+      "toNode": "o1",
+      "toSide": "left",
+      "color": "4",
+      "label": "Result (정상)"
+    },
+    {
+      "id": "e32",
+      "fromNode": "wnn",
+      "fromSide": "right",
+      "toNode": "o3",
+      "toSide": "left",
+      "color": "2",
+      "label": "Result (경고)"
+    },
+    {
+      "id": "e06y",
+      "fromNode": "d2a",
+      "fromSide": "left",
+      "toNode": "m2",
+      "toSide": "left",
+      "color": "4",
+      "label": "예 (평소의 경우, 알림 없음)"
+    },
+    {
+      "id": "b2cf48992cac8a5b",
+      "fromNode": "a6",
+      "fromSide": "right",
+      "toNode": "b0",
+      "toSide": "left"
+    },
+    {
+      "id": "e25n",
+      "fromNode": "d6a",
+      "fromSide": "left",
+      "toNode": "d6d",
+      "toSide": "left",
+      "label": "아니오 (값 일치 점검을 건너뛴다)"
+    },
+    {
+      "id": "ec0",
+      "fromNode": "c0",
+      "fromSide": "bottom",
+      "toNode": "c1",
+      "toSide": "top"
+    },
+    {
+      "id": "ec1",
+      "fromNode": "c1",
+      "fromSide": "bottom",
+      "toNode": "c2",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "ec1f",
+      "fromNode": "c1",
+      "fromSide": "right",
+      "toNode": "cf1",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "ec2",
+      "fromNode": "c2",
+      "fromSide": "bottom",
+      "toNode": "c3",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "ec2f",
+      "fromNode": "c2",
+      "fromSide": "right",
+      "toNode": "cf2",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "ec3",
+      "fromNode": "c3",
+      "fromSide": "bottom",
+      "toNode": "c4",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "ec3f",
+      "fromNode": "c3",
+      "fromSide": "right",
+      "toNode": "cf3",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "ec4",
+      "fromNode": "c4",
+      "fromSide": "bottom",
+      "toNode": "c5",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "ec4f",
+      "fromNode": "c4",
+      "fromSide": "right",
+      "toNode": "cf3",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    },
+    {
+      "id": "ec5",
+      "fromNode": "c5",
+      "fromSide": "bottom",
+      "toNode": "c6",
+      "toSide": "top",
+      "label": "예"
+    },
+    {
+      "id": "ec5w",
+      "fromNode": "c5",
+      "fromSide": "right",
+      "toNode": "cw",
+      "toSide": "left",
+      "color": "2",
+      "label": "아니오"
+    },
+    {
+      "id": "ec6",
+      "fromNode": "cw",
+      "fromSide": "right",
+      "toNode": "c6",
+      "toSide": "right",
+      "color": "2",
+      "label": "계속"
+    },
+    {
+      "id": "efe",
+      "fromNode": "s1",
+      "fromSide": "right",
+      "toNode": "fe",
+      "toSide": "left",
+      "color": "1",
+      "label": "어디서든 예상 못 한 오류"
+    },
+    {
+      "id": "ebc",
+      "fromNode": "b5",
+      "fromSide": "right",
+      "toNode": "c0",
+      "toSide": "left",
+      "label": "화면이 밀렸으면"
+    },
+    {
+      "id": "e19b",
+      "fromNode": "h4",
+      "fromSide": "bottom",
+      "toNode": "d3f",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e24b",
+      "fromNode": "h6",
+      "fromSide": "bottom",
+      "toNode": "d6a",
+      "toSide": "top",
+      "color": "4"
+    },
+    {
+      "id": "e28c",
+      "fromNode": "m6",
+      "fromSide": "right",
+      "toNode": "s7",
+      "toSide": "left",
+      "color": "4"
+    },
+    {
+      "id": "e04b",
+      "fromNode": "m1",
+      "fromSide": "right",
+      "toNode": "s2",
+      "toSide": "left",
+      "color": "4"
+    },
+    {
+      "id": "e24c",
+      "fromNode": "m4",
+      "fromSide": "right",
+      "toNode": "h6",
+      "toSide": "left",
+      "color": "4",
+      "label": "Y, T"
+    },
+    {
+      "id": "ez0",
+      "fromNode": "z0",
+      "fromSide": "bottom",
+      "toNode": "z1",
+      "toSide": "top"
+    },
+    {
+      "id": "ez1",
+      "fromNode": "z1",
+      "fromSide": "bottom",
+      "toNode": "z2",
+      "toSide": "top",
+      "label": "또는"
+    },
+    {
+      "id": "ez2",
+      "fromNode": "z2",
+      "fromSide": "bottom",
+      "toNode": "z3",
+      "toSide": "top"
+    },
+    {
+      "id": "e19c",
+      "fromNode": "d3f",
+      "fromSide": "bottom",
+      "toNode": "d3d",
+      "toSide": "top",
+      "color": "4",
+      "label": "예"
+    },
+    {
+      "id": "e19f",
+      "fromNode": "d3f",
+      "fromSide": "right",
+      "toNode": "f3",
+      "toSide": "left",
+      "color": "1",
+      "label": "아니오"
+    }
+  ]
+}
