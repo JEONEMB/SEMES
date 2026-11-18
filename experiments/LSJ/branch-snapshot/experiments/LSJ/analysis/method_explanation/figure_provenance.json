@@ -1,0 +1,26 @@
+{
+  "condition": {
+    "label_y_mm": 0.1,
+    "label_theta_degree": 0.1
+  },
+  "pair": "photos 1 and 2",
+  "marker": "C",
+  "existing_measurements": {
+    "ecc_translation": {
+      "dx": 0.5797526836395264,
+      "dy": -0.004674696363508701,
+      "ecc": 0.9991238877376029,
+      "initial_zncc": 0.9700078368186951
+    },
+    "phase_correlation": {
+      "dx": 0.547,
+      "dy": -0.013000000000000001,
+      "phase_peak": 0.5397709870141748
+    },
+    "brightness_difference_dn": 0.056624737945469406
+  },
+  "ecc_display": "0, illustrative +0.30 px sampling offset, stored final ECC dx/dy; not iteration history",
+  "wave_display": "Illustrative sine waves only, not actual QR Fourier components",
+  "phase_maps": "Recomputed from original pair with existing analysis preprocessing",
+  "scope": "Method explanation; no new acceptance threshold or physical motion estimate"
+}

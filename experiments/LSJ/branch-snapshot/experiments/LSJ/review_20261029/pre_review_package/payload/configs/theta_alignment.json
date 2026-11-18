@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "width": 3840,
+  "height": 2160,
+  "locator_roi_xywh": [
+    1803,
+    963,
+    195,
+    210
+  ],
+  "search_margin_px": 110,
+  "tick_deg": 0.01,
+  "tolerance_deg": 0.005,
+  "max_step_deg": 1.0,
+  "target_source": "first_center_image_measured_by_runtime",
+  "lines": [
+    {
+      "name": "rail_UL_edge",
+      "x0": 200,
+      "x1": 1100,
+      "expected_y": 711,
+      "half_height": 10,
+      "polarity": 1,
+      "group4_slope": -0.09973119703735522,
+      "group5_slope": -0.10272760252945867
+    },
+    {
+      "name": "rail_UR_edge",
+      "x0": 2700,
+      "x1": 3550,
+      "expected_y": 722,
+      "half_height": 10,
+      "polarity": 1,
+      "group4_slope": -0.09756346065703894,
+      "group5_slope": -0.09448536313207767
+    }
+  ]
+}

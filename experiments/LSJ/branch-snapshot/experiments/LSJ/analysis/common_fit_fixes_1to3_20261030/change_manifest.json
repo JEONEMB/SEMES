@@ -1,0 +1,66 @@
+{
+  "scope": "Only requested common-fit fixes 1-3",
+  "changed_files": [
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt",
+      "before_sha256": "624031d90837a8a0b4cbf428946885909ae37193bdd8787088d90a62d7522a4c",
+      "after_sha256": "d2b5f8ec720b4bbd648b39ecaecd040c13e3b1b1e4cb22c5347d6ace4625ea1a",
+      "diff": "patches/cpp__CMakeLists.txt.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/include/common.hpp",
+      "before_sha256": "589b18b5c9d39c0570609c66c399316ed691c7700d64b941653ea1a27dd8d2c3",
+      "after_sha256": "cdd183ad69b642d1031f6c53ec6144d88737d34b708abec1400ff2e00f610010",
+      "diff": "patches/cpp__include__common.hpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+      "before_sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa",
+      "after_sha256": "e8ccd21f5a626c94aab8d00309b59566a98e066d4355dde38ea6c3c18fc097ff",
+      "diff": "patches/cpp__src__line_fit.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/main.cpp",
+      "before_sha256": "ec7255180c4e19242d72dfc6a30062f4c542feaff5c6c6af8c88e8c93bc5da21",
+      "after_sha256": "0cd2ebd888a4703518781f8d39a3e233a0688a0fd17c1e353b85878491748d6d",
+      "diff": "patches/cpp__src__main.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/tests/line_selftest.cpp",
+      "before_sha256": "52395f57979eabc937ade24bdf9617961769738066e2e7b7c34e58abc7942ab6",
+      "after_sha256": "0db80f78676cb7358c217782c5a9515babc29f675ddb2f10b33dfcd9fa3920ec",
+      "diff": "patches/cpp__tests__line_selftest.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/fit_point_views.py",
+      "before_sha256": null,
+      "after_sha256": "7a04b773fea07eb5be41e7a27eccf8267500e9b3c7183a92eb594f8af737e06a",
+      "diff": "patches/tools__fit_point_views.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/make_figures.py",
+      "before_sha256": "5ab81f711f7b83746467d1902989ab1f4e7edcc090de2547ecbe058921839518",
+      "after_sha256": "c5eb12ef539bec886c882910bb4e1fd2552fcadca3492a57199a3c4d19160a00",
+      "diff": "patches/tools__make_figures.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/make_report.py",
+      "before_sha256": "845b410aa71c038d1b9b0e93a7e4266035978aa9749257ddd670f489ef4d4847",
+      "after_sha256": "cd3bec678abfe2299fe535fdc1cc109e71038f0ca6fb438087c7a6f5c8a886f6",
+      "diff": "patches/tools__make_report.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/test_fit_point_views.py",
+      "before_sha256": null,
+      "after_sha256": "4fad821614e60126f5380b5ae4d21967d1232c4642a9fcf59a9c72b697d8b782",
+      "diff": "patches/tools__test_fit_point_views.py.diff"
+    }
+  ],
+  "known_point_checks_passed": 33,
+  "report_record_tests_passed": 6,
+  "executable": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_fit_fixes_1to3_20261030\\build\\Release\\line_methods.exe",
+  "executable_sha256": "8043bee260a3f0640b21c6c443ec19af5efafe285c2fe8930c9d180c92455a9e",
+  "image_pipeline_run": false,
+  "statistical_validation_run": false,
+  "unchanged": "Configs, original measured results, figures/reports/logs, selected results, native detector sources; see preservation_check.json."
+}

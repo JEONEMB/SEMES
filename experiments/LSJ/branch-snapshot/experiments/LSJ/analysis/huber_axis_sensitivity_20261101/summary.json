@@ -1,0 +1,218 @@
+{
+  "images_measured": 575,
+  "lines_measured": 1150,
+  "primary_group_count": 20,
+  "primary_computable_group_count": 15,
+  "primary_computable_line_groups": 30,
+  "common_condition_line_groups": 8,
+  "not_computable": [
+    {
+      "id": "D2_Y_fixed_0",
+      "label": "2차 theta=0 고정",
+      "axis": "Y",
+      "target": "upper_structure",
+      "n": 3,
+      "levels": [
+        0.0
+      ],
+      "status": "insufficient_axis_variation"
+    },
+    {
+      "id": "D2_Y_fixed_0",
+      "label": "2차 theta=0 고정",
+      "axis": "Y",
+      "target": "lower_structure",
+      "n": 3,
+      "levels": [
+        0.0
+      ],
+      "status": "insufficient_axis_variation"
+    },
+    {
+      "id": "D2_Y_fixed_0.02",
+      "label": "2차 theta=0.02 고정",
+      "axis": "Y",
+      "target": "upper_structure",
+      "n": 3,
+      "levels": [
+        0.05
+      ],
+      "status": "insufficient_axis_variation"
+    },
+    {
+      "id": "D2_Y_fixed_0.02",
+      "label": "2차 theta=0.02 고정",
+      "axis": "Y",
+      "target": "lower_structure",
+      "n": 3,
+      "levels": [
+        0.05
+      ],
+      "status": "insufficient_axis_variation"
+    },
+    {
+      "id": "D2_Y_fixed_0.03",
+      "label": "2차 theta=0.03 고정",
+      "axis": "Y",
+      "target": "upper_structure",
+      "n": 3,
+      "levels": [
+        0.05
+      ],
+      "status": "insufficient_axis_variation"
+    },
+    {
+      "id": "D2_Y_fixed_0.03",
+      "label": "2차 theta=0.03 고정",
+      "axis": "Y",
+      "target": "lower_structure",
+      "n": 3,
+      "levels": [
+        0.05
+      ],
+      "status": "insufficient_axis_variation"
+    },
+    {
+      "id": "D2_Y_fixed_0.2",
+      "label": "2차 theta=0.2 고정",
+      "axis": "Y",
+      "target": "upper_structure",
+      "n": 3,
+      "levels": [
+        0.1
+      ],
+      "status": "insufficient_axis_variation"
+    },
+    {
+      "id": "D2_Y_fixed_0.2",
+      "label": "2차 theta=0.2 고정",
+      "axis": "Y",
+      "target": "lower_structure",
+      "n": 3,
+      "levels": [
+        0.1
+      ],
+      "status": "insufficient_axis_variation"
+    },
+    {
+      "id": "D2_theta_fixed_0",
+      "label": "2차 Y=0 고정",
+      "axis": "theta",
+      "target": "upper_structure",
+      "n": 3,
+      "levels": [
+        0.0
+      ],
+      "status": "insufficient_axis_variation"
+    },
+    {
+      "id": "D2_theta_fixed_0",
+      "label": "2차 Y=0 고정",
+      "axis": "theta",
+      "target": "lower_structure",
+      "n": 3,
+      "levels": [
+        0.0
+      ],
+      "status": "insufficient_axis_variation"
+    }
+  ],
+  "fit_stops": {
+    "tolerance": 1150
+  },
+  "extraction_endpoint_counts": {
+    "total": 352,
+    "lines_with_endpoint_points": 117
+  },
+  "interactions": {
+    "upper_structure": {
+      "common_theta_levels_deg": [
+        0.01,
+        0.1,
+        1.0,
+        2.0
+      ],
+      "sensitivities_by_y": [
+        {
+          "y_mm": 0.05,
+          "n": 12,
+          "a_theta": -0.08793629372137941,
+          "pearson_r": -0.9999940668464582,
+          "rmse_deg": 0.00024384938660137364,
+          "image_angle_change_per_tick_deg": -0.0008793629372137942
+        },
+        {
+          "y_mm": 0.1,
+          "n": 12,
+          "a_theta": -0.08818467729531883,
+          "pearson_r": -0.9999516398928829,
+          "rmse_deg": 0.0006981701765058009,
+          "image_angle_change_per_tick_deg": -0.0008818467729531883
+        },
+        {
+          "y_mm": 0.5,
+          "n": 12,
+          "a_theta": -0.08810351679575924,
+          "pearson_r": -0.9999170650302746,
+          "rmse_deg": 0.0009134775709724515,
+          "image_angle_change_per_tick_deg": -0.0008810351679575925
+        },
+        {
+          "y_mm": 1.0,
+          "n": 12,
+          "a_theta": -0.0878710038097512,
+          "pearson_r": -0.9998937549182045,
+          "rmse_deg": 0.0010312011710268728,
+          "image_angle_change_per_tick_deg": -0.000878710038097512
+        }
+      ],
+      "a_theta_max_minus_min": 0.0003136734855676282,
+      "interpretation": "Observed differences over matched theta levels; no significance or causal claim."
+    },
+    "lower_structure": {
+      "common_theta_levels_deg": [
+        0.01,
+        0.1,
+        1.0,
+        2.0
+      ],
+      "sensitivities_by_y": [
+        {
+          "y_mm": 0.05,
+          "n": 12,
+          "a_theta": 0.19881762298364414,
+          "pearson_r": 0.9998033125951945,
+          "rmse_deg": 0.0031747973462603386,
+          "image_angle_change_per_tick_deg": 0.0019881762298364415
+        },
+        {
+          "y_mm": 0.1,
+          "n": 12,
+          "a_theta": 0.2003339626852027,
+          "pearson_r": 0.9997143359051235,
+          "rmse_deg": 0.0038555315065140713,
+          "image_angle_change_per_tick_deg": 0.002003339626852027
+        },
+        {
+          "y_mm": 0.5,
+          "n": 12,
+          "a_theta": 0.19905918788046276,
+          "pearson_r": 0.9997306329567927,
+          "rmse_deg": 0.0037200689857091115,
+          "image_angle_change_per_tick_deg": 0.0019905918788046275
+        },
+        {
+          "y_mm": 1.0,
+          "n": 12,
+          "a_theta": 0.19639647148648615,
+          "pearson_r": 0.9998494652949367,
+          "rmse_deg": 0.002743530668698995,
+          "image_angle_change_per_tick_deg": 0.0019639647148648617
+        }
+      ],
+      "a_theta_max_minus_min": 0.003937491198716558,
+      "interpretation": "Observed differences over matched theta levels; no significance or causal claim."
+    }
+  },
+  "policy": "No image/point rejection, no condition averages, no data pooling across datasets/capture segments, no physical theta error conversion, no arbitrary r acceptance threshold or hypothesis-test p-value."
+}

@@ -1,0 +1,96 @@
+"""Record the scoped source diff, test evidence and preservation checks."""
+import difflib
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+HERE=Path(__file__).resolve().parent
+ROOT=HERE.parent.parent
+BASE=ROOT/'analysis/reference_line_methods_108_20261030'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+subprocess.run([sys.executable,str(HERE/'safeguard.py'),'--verify'],check=True)
+proof=json.loads((HERE/'preservation_check.json').read_text(encoding='utf-8'))
+validation=json.loads((HERE/'validation.json').read_text(encoding='utf-8'))
+assert len(validation['steps'])==4 and all(s['exit_code']==0 for s in validation['steps'])
+patchdir=HERE/'patches';patchdir.mkdir(exist_ok=True)
+changes=[]
+for path in proof['changed_files']:
+    current=ROOT/path;relative=current.relative_to(BASE)
+    before=HERE/'before'/relative
+    a=before.read_text(encoding='utf-8-sig') if before.exists() else ''
+    b=current.read_text(encoding='utf-8-sig')
+    patch=patchdir/(relative.as_posix().replace('/','__')+'.diff')
+    patch.write_text(''.join(difflib.unified_diff(a.splitlines(True),b.splitlines(True),fromfile='before/'+relative.as_posix(),tofile='after/'+relative.as_posix())),encoding='utf-8')
+    changes.append(dict(path=path,before_sha256=sha(before) if before.exists() else None,after_sha256=sha(current),diff=patch.relative_to(HERE).as_posix()))
+known=(HERE/'logs/03_known_points.stdout.txt').read_text(encoding='utf-8-sig')
+npass=sum(line.startswith('PASS ') for line in known.splitlines())
+assert '0 failure(s)' in known
+build=HERE/'build/Release/line_methods.exe'
+payload=dict(scope='Only requested common-fit fixes 1-3',changed_files=changes,
+             known_point_checks_passed=npass,report_record_tests_passed=6,
+             executable=str(build),executable_sha256=sha(build),
+             image_pipeline_run=False,statistical_validation_run=False,
+             unchanged='Configs, original measured results, figures/reports/logs, selected results, native detector sources; see preservation_check.json.')
+(HERE/'change_manifest.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
+report=f'''공통 직선 피팅 1~3번 보완 결과
+
+적용 소스: {BASE}
+새 빌드: {build}
+기존 build 실행 파일과 측정 결과는 교체하지 않음.
+
+1. 실제 사용점과 최종 선별점 분리
+- fit_points_used_flag: 마지막 Huber 계산에 실제로 넣은 점.
+- fit_points_final_inlier_flag: 완성된 직선에서 기존 거리 제한 안에 든 점.
+- 기존 fit_points_inlier_flag는 최종 거리 분류의 호환 별칭으로 유지.
+- 새 fit_rms_px는 실제 마지막 피팅 입력점의 비가중 RMS. 최종 거리 내 점 RMS는 diagnostics.fit_rms_final_inlier_px에 따로 기록.
+- n_selected는 기존 최종 거리 내 점 수 의미를 유지. n_fit_used를 별도로 추가.
+- 그림/보고서 생성 코드는 실제 사용점과 최종 거리 분류를 구분. 과거 결과의 사용점·수렴 상태를 추정해 채우지 않음.
+- 실제 사용점과 최종 거리 분류가 다른 경우에도, 마스크를 같게 만들기 위한 추가 피팅은 하지 않음.
+
+2. 유효성 검사
+- NaN/무한대 입력, 잘못된 마스크 길이, 유효하지 않은 계산 설정을 실패 처리.
+- 계산 중 중심·가중 산포·직선·잔차·최종 표현의 비정상 숫자 검사.
+- 일치한 점, 방향이 유일하게 정해지지 않는 정확히 등방성인 점 집합, 최종 지지 범위가 0인 경우를 거부.
+- 마지막 거리 분류 이후에도 기존 최소 점 수(외부 50, QR 20)를 재검사.
+- 잘못된 입력점을 자동 제거하거나 0 방향을 수평선으로 대체하지 않음.
+- 퇴화 검사는 정확한 0과 비정상 숫자에 대한 검사. 거의 퇴화한 경우의 품질 임계값을 새로 도입하지 않았음.
+
+3. 종료 상태 기록
+- 최초 피팅과 각 trim 피팅의 종료 사유, 반복 횟수, 마지막 각도/중심 변화량을 diagnostics.irls_runs에 기록.
+- converged / max_iterations / invalid_input / numerical_error / degenerate_geometry를 구분.
+- 첫 반복처럼 이전 계산값이 없는 경우 변화량은 0이 아닌 null.
+- 어느 피팅 단계든 반복 상한에 도달하면 해당 지점에서 중단하고 fit_failed로 반환. 성공 직선·RMS를 외부로 반환하지 않음.
+- 정상 종료뿐 아니라 마지막 점 수·기하 조건 검사까지 통과해야 성공으로 반환.
+
+기존 설정 유지
+Huber C=1.345px, 최대 100회, 각도 변화 <1e-13rad, 중심 변화 각 <1e-9px,
+trim 2회, 거리 외부 2px/QR 1px, 최소 개수 외부 50/QR 20을 유지.
+이 값들의 적정성이 이번 수정으로 검증된 것은 아님.
+
+시험 결과
+- C++ 전체 타깃 빌드 성공 (OpenCV 3.4.15 / MSVC v141).
+- 알려진 점 좌표의 코드 검사 {npass}개 통과.
+- 기록 해석·과거 결과 호환성 Python 시험 6개 통과.
+- 수정한 Python 파일 문법 검사 통과.
+- 세부 로그: logs/ 및 validation.json.
+- 다중 MSBuild 작업자 실행은 원인 메시지 없이 종료되어 단일 작업자로 다시 빌드했고 통과. 설치·환경 설정 변경 없음.
+- 이번 시험은 소프트웨어 동작 검증. 실제 촬영 이미지의 검출 정확도나 통계적 타당성을 검증한 결과가 아님.
+
+결과 해석 시 유의
+- 기존 첫 선별 보고서와 216개 측정값은 수정 전 기록 그대로임.
+- 새 실행에서는 미수렴/퇴화 입력이 실패로 분류될 수 있음.
+- RMS 계산 대상이 명확히 달라졌으므로 과거 RMS와 같은 정의라고 비교하면 안 됨.
+- 전체 이미지 재측정, 통계 검정, 후보 변경, Git/Jira 작업은 하지 않음.
+- 요청하지 않은 4~6번(선분 영역 처리·길이 가중 설명·설정 적용 범위)과 재실행 비교 로직은 수정하지 않음.
+
+변경 파일
+'''+ '\n'.join('- '+x['path'] for x in changes)+'''
+
+변경 전 소스는 before/, 파일별 diff는 patches/에 보존.
+원본 결과·설정·선별본·검출기 소스 보존 확인: preservation_check.json.
+수정 전후 해시와 실행 파일 해시: change_manifest.json.
+'''
+(HERE/'changes.txt').write_text(report,encoding='utf-8')
+print(json.dumps({'changed_files':len(changes),'known_point_checks':npass,'python_tests':6,'protected_artifacts_unchanged':True},ensure_ascii=True))

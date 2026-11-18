@@ -1,0 +1,16 @@
+diff --git a/ED_Lib/CHANGES.diff b/ED_Lib/CHANGES.diff
+new file mode 100644
+index 0000000..e69de29
+diff --git a/_pristine/ED_Lib/EDLines.h b/ED_Lib/EDLines.h
+index b74e546..9844a7e 100644
+--- a/_pristine/ED_Lib/EDLines.h
++++ b/ED_Lib/EDLines.h
+@@ -71,6 +71,8 @@ public:
+ 	EDLines();
+ 
+ 	std::vector<LS> getLines();
++	// LSJ: fitted line records (segmentNo/firstPixelIndex/len), same order as getLines().
++	const std::vector<LineSegment>& getLineSegments() const { return lines; }
+ 	int getLinesNo();
+ 	cv::Mat getLineImage();
+ 	cv::Mat drawOnImage();

@@ -1,0 +1,21 @@
+PASS valid moments preserve the previous ramp formula
+PASS centered valid edge has zero shift
+PASS zero first moment is rejected before division
+PASS NaN moment cannot become a selected point
+PASS infinite moment rejected
+PASS overflowed projected denominator rejected
+PASS overflowed moment ratio rejected
+PASS negative discriminant rejected before square root
+PASS overflowed squared width rejected
+PASS overflowed discriminant rejected
+PASS zero model width rejected
+PASS nonfinite model width rejected
+PASS existing polarity/orientation gate retained
+PASS existing configured shift gate retained
+PASS existing small-width step-limit branch retained
+PASS small nonzero denominator is not rejected by a new arbitrary epsilon
+PASS uncomputed diagnostic values serialize as null rather than fabricated zero
+PASS all common-fit coordinates round-trip without decimal truncation
+PASS calculation precision is explicitly recorded
+PASS invalid coordinates remain failed, not successfully reconstructed points
+0 failure(s)

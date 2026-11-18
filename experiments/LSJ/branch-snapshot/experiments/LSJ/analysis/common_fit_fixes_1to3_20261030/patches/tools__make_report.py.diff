@@ -1,0 +1,71 @@
+--- before/tools/make_report.py
++++ after/tools/make_report.py
+@@ -2,6 +2,7 @@
+ import html
+ import json
+ from pathlib import Path
++from fit_point_views import fit_point_view, convergence_label, rms_label
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ RES = ROOT / "results"
+@@ -29,7 +30,7 @@
+ QR_T = ["qr_L", "qr_C", "qr_R"]
+ E_IDS = [f"E{i:02d}" for i in range(1, 10)]
+ Q_IDS = [f"Q{i:02d}" for i in range(1, 13)]
+-CAT_KO = {"detection_failed": "검출 실패", "fit_failed": "피팅 실패(지지점 부족·합의선 없음)", "corner_not_identified": "코너 식별 실패",
++CAT_KO = {"detection_failed": "검출 실패", "fit_failed": "피팅 실패(상세 사유 확인)", "corner_not_identified": "코너 식별 실패",
+           "boundary_confusion": "경계 혼동", "not_implemented": "미구현", "input_mismatch": "입력 불일치", "exception": "실행 예외"}
+ T_KO = {"upper_structure": "상단 구조물", "lower_structure": "하단 구조물", "qr_L": "QR L", "qr_C": "QR C", "qr_R": "QR R"}
+ e = html.escape
+@@ -65,19 +66,19 @@
+ # ---------------------------------------------------------------- data embedded in the HTML
+ def pts_of(r):
+     it = jload(RES / r["intermediate_json"])["intermediates"]
+-    p = it.get("fit_points", [])
+-    f = it.get("fit_points_inlier_flag", [1] * len(p))
+-    if len(f) != len(p): f = [1] * len(p)
+-    return [[round(a, 2), round(b, 2), int(c)] for (a, b), c in zip(p, f)]
++    view = fit_point_view(it)
++    return ([[round(a, 2), round(b, 2), int(c)] for (a, b), c in zip(view['points'], view['display_mask'])], view['label'])
+ 
+ 
+ DATA = {"crops": crops, "records": {}, "combos": [], "methods": {}, "targets": {}}
+ for mid, r in recs.items():
++    point_rows, point_label = pts_of(r) if r['status'] == 'ok' else ([], '사용점 없음')
+     DATA["records"][mid] = {
+         "ref": r["reference_id"], "m": r["method_id"], "t": r["target_id"], "st": r["status"],
+         "cat": r["failure_category"], "why": r["failure_reason"], "ang": r["image_angle_deg"], "slope": r["slope_dy_dx"],
+         "b": r["intercept_y_px"], "rms": r["fit_rms_px"], "rmsnull": r["fit_rms_null_reason"], "nc": r["n_candidates"], "ns": r["n_selected"],
+-        "sup": r["support_type"], "draw": r["draw_endpoints_at_x_range"], "fc": r["feature_class"], "pts": pts_of(r) if r["status"] == "ok" else []}
++        "sup": r["support_type"], "draw": r["draw_endpoints_at_x_range"], "fc": r["feature_class"], "pts": point_rows,
++        "point_label": point_label, "rms_label": rms_label(r), "fit_trace": convergence_label(r), "n_fit_used": r.get('n_fit_used')}
+ for c in combos["combinations"]:
+     DATA["combos"].append([c["combination_id"], c["status"], c["lines_ok"], c["failed_measurements"]])
+ for m in mstatus["methods"]:
+@@ -297,12 +298,13 @@
+   document.getElementById('zinfo').textContent=`원본 픽셀 ×${z} 확대 (가로·세로 같은 배율). 보이는 범위 x ${(C[0]+S.px).toFixed(0)}–${(C[0]+S.px+cv.width/z).toFixed(0)}, y ${(C[1]+S.py).toFixed(0)}–${(C[1]+S.py+cv.height/z).toFixed(0)}. 드래그로 이동.`;
+ }
+ function table(){
+-  const I=ids(S.ref); let h='<table><tr><th>대상</th><th>측정 ID</th><th>상태</th><th>m (dy/dx)</th><th>b (px)</th><th>영상 각도(°)</th><th>fit RMS(px)</th><th>지지점 수</th><th>추출 과정</th></tr>';
++  const I=ids(S.ref); let h='<table><tr><th>대상</th><th>측정 ID</th><th>상태</th><th>m (dy/dx)</th><th>b (px)</th><th>영상 각도(°)</th><th>RMS(px)·계산 대상</th><th>점·수렴 기록</th><th>추출 과정</th></tr>';
+   for(const t in I){ const r=D.records[I[t]]; if(!r) continue; const ok=r.st==='ok';
+     h+=`<tr><th class="l"><span class="sw" style="background:${COL[t]}"></span>${TK[t]}${r.fc==='qr_finder_center_baseline'?' <span class="badge">파인더 중심선</span>':''}</th><td><code>${I[t]}</code></td>`+
+       `<td class="${ok?'ok':'bad'}">${ok?'ok':(CAT[r.cat]||r.cat)+'<br><small>'+(r.why||'')+'</small>'}</td>`+
+       `<td class="num">${ok?r.slope.toFixed(8):'—'}</td><td class="num">${ok?r.b.toFixed(3):'—'}</td><td class="num">${ok?r.ang.toFixed(5):'—'}</td>`+
+-      `<td class="num">${r.rms==null?('null'+(r.rmsnull&&ok?'<br><small>'+r.rmsnull.slice(0,60)+'</small>':'')):r.rms.toFixed(3)}</td><td class="num">${r.ns}</td>`+
++      `<td class="num">${r.rms==null?('null'+(r.rmsnull&&ok?'<br><small>'+r.rmsnull.slice(0,60)+'</small>':'')):r.rms.toFixed(3)}<br><small>${r.rms_label}</small></td>`+
++      `<td>기존 선택 수: ${r.ns}<br>실제 fit 입력: ${r.n_fit_used==null?'미기록/해당 없음':r.n_fit_used}<br><small>${r.point_label}<br>${r.fit_trace}</small></td>`+
+       `<td><a href="#m-${r.m}" onclick="goFig('${r.m}','${S.ref}')">${r.m} ${S.ref}</a></td></tr>`; }
+   document.getElementById('vtable').innerHTML=h+'</table>';
+   const c=D.combos.find(x=>x[0]===`${S.ref}_${S.e}_${S.q}`);
+@@ -380,8 +382,8 @@
+ <img class="fig" src="figures/targets_4refs_same_regions.png" alt="네 장 같은 범위">
+ 
+ <h2 id="s3">3. 방법별 추출 과정</h2>
+-<p>각 그림은 C++ 실행이 저장한 후보·선택점·선분·코너·중간 영상(results/intermediates)으로 그렸습니다. 영상 패널은 원본 좌표·가로:세로 1:1이며, 잔차/거리 패널은 각도를 시각적으로 과장하지 않는 별도 축입니다. 범례: <span class="sw" style="background:#8fb8de"></span>후보(옅은 색) <span class="sw" style="background:#bdbdbd"></span>제외 <span class="sw" style="background:#ff9f1c"></span>선택 지지점/선분 <span class="sw" style="background:#9b59b6"></span>피팅 trim 제외 <span class="sw" style="background:#e3172b"></span>최종 직선(굵게).</p>
+-<p class="small">공통 직선 피팅: Huber(C=1.345 px, OpenCV DIST_HUBER 기본 상수와 동일) 배정밀도 IRLS 직교 회귀 → 잔차 &gt; inlier_px(external 2.0, QR 1.0)인 점 제외 후 재피팅 2회 (<code>cpp/src/line_fit.cpp::robust_fit</code>). 선분형 방법 공통 선택 규칙: <code>cpp/src/methods_segments.cpp::select_and_fit</code>. fit RMS는 지지점의 직선 잔차이며 측정 정확도가 아닙니다.</p>
++<p>각 그림은 저장된 후보·점·선분·코너·중간 영상으로 그립니다. 새 공통 피팅 결과는 실제 마지막 피팅 입력점과 최종 거리 분류를 따로 저장합니다. 주황 점의 의미는 각 그림·조회 표에 표시합니다. 과거 결과에는 실제 입력 마스크와 수렴 상태가 없어 최종 거리 내 점으로만 표시합니다. 선분의 주황색은 기존 선택 선분을 뜻합니다. 영상 패널은 원본 좌표·가로:세로 1:1입니다.</p>
++<p class="small">공통 직선 피팅의 Huber C=1.345px, 제외 거리 external 2.0px/QR 1.0px, 재피팅 2회는 유지했습니다. 새 결과는 모든 IRLS 호출의 종료 사유·횟수·마지막 변화량을 저장하며, 반복 한도 종료나 유효성 검사 실패를 성공으로 반환하지 않습니다. 새 fit RMS는 실제 마지막 피팅 입력점 기준이며 최종 거리 내 점 RMS는 diagnostics에 별도 저장합니다. 과거 RMS는 최종 거리 내 점 기준입니다. 어느 잔차도 측정 정확도 자체가 아닙니다.</p>
+ {method_sections()}
+ 
+ <h2 id="viewer">4. 108개 조합 열람</h2>

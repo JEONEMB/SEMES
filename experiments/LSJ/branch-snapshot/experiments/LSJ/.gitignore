@@ -1,0 +1,16 @@
+# Local input data, machine-specific links, caches and generated build files
+/Links.md
+/analysis/second_data_inspection/extracted/
+*.bmp
+*.BMP
+*.zip
+*.z01
+*.z02
+*.z03
+*.z04
+*.mp4
+*.pptx
+__pycache__/
+*.pyc
+.venv/
+build/

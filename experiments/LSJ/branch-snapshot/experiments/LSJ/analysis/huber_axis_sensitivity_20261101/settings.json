@@ -1,0 +1,80 @@
+{
+  "targets": [
+    {
+      "id": "upper_structure",
+      "kind": "external",
+      "name_ko": "상단 외부 구조물",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "x_range": [
+        24,
+        3816
+      ],
+      "band_y": [
+        692,
+        736
+      ],
+      "exclude_x": [
+        [
+          1370,
+          2450
+        ]
+      ],
+      "polarity": 1,
+      "exclude_reason": "중앙 커넥터·QR 장착부가 상단 구조물 경계를 가림",
+      "source": "analysis/reference_full_width_20261029/measure_full_width.py REGIONS['upper']"
+    },
+    {
+      "id": "lower_structure",
+      "kind": "external",
+      "name_ko": "하단 외부 구조물",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "x_range": [
+        24,
+        3816
+      ],
+      "band_y": [
+        1845,
+        1905
+      ],
+      "exclude_x": [
+        [
+          1560,
+          2300
+        ]
+      ],
+      "polarity": 1,
+      "exclude_reason": "중앙 하단 장착물/반사부가 하단 구조물 경계를 가림",
+      "source": "analysis/reference_full_width_20261029/measure_full_width.py REGIONS['lower']"
+    }
+  ],
+  "range_convention": "inclusive",
+  "gradient": {
+    "dx": 0,
+    "dy": 1,
+    "ksize": 3,
+    "scale": 1,
+    "depth": "CV_32F",
+    "border": "BORDER_REFLECT_101"
+  },
+  "selection": "maximum signed positive Gy in the unchanged band per visible x; first y wins exact ties",
+  "column_step_px": 1,
+  "gaussian": false,
+  "point_rejection": false,
+  "minimum_point_count_filter": false,
+  "roi_tracking": false,
+  "huber": {
+    "t": 1.345,
+    "residual": "vertical",
+    "scale_est": "mad",
+    "scale_center": 0,
+    "update_scale": true,
+    "maxiter": 50,
+    "tol": 1e-08,
+    "conv": "dev",
+    "start_params": "OLS",
+    "cov": "H1"
+  },
+  "axis_models": "per original capture group / fixed coordinate, intercept plus one predictor, OLS",
+  "replicates": "keep every image; no averaging, no p-values or independence claim",
+  "cross_Y_theta_sensitivity_comparison": "second dataset additionally restricted to theta levels shared by every Y group; all images remain in full per-group analysis"
+}

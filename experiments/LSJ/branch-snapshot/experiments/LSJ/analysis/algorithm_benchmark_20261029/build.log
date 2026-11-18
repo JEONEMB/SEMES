@@ -1,0 +1,14 @@
+msbuild 버전 18.11.0-1.26475.11+3cde5c8ec(.NET Framework용)
+
+  1>Checking Build System
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/theta_implementation_20261029/payload/CMakeLists.txt
+  alignment.cpp
+  theta_alignment.cpp
+  y_alignment.cpp
+  sequential_alignment.cpp
+  path_validation.cpp
+  코드를 생성하고 있습니다...
+  alignment_core.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\algorithm_benchmark_20261029\build\alignment_payload\Release\alignment_core.lib
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/analysis/algorithm_benchmark_20261029/CMakeLists.txt
+  benchmark.cpp
+  alignment_benchmark.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\algorithm_benchmark_20261029\build\Release\alignment_benchmark.exe

@@ -1,0 +1,332 @@
+{
+  "scope": "Exactly four reference images; two whole-structure slopes per image (upper/lower)",
+  "method": {
+    "edge": "Existing sigma=1 Gaussian, vertical gradient, 11-sample Gaussian-blurred-step subpixel least-squares fit",
+    "line": "ONE Huber line through ALL retained edge points per structure, shared slope and intercept",
+    "sampling": "Every 2nd column; fixed bands and visibility masks identical for all four images",
+    "coordinates": "Original pixels, x right / y down, atan(dy/dx) image degrees",
+    "no_resampling": true,
+    "no_local_angle_averaging": true,
+    "no_robot_theta_conversion": true,
+    "roi_selection": "First reference geometry only; excluded center denotes occlusion, not separate structure models"
+  },
+  "regions": {
+    "upper": {
+      "x_range": [
+        24,
+        3816
+      ],
+      "search_y": [
+        692,
+        736
+      ],
+      "exclude_x": [
+        [
+          1370,
+          2450
+        ]
+      ],
+      "visibility_reason": "Central connector and QR mounting assembly covers the upper rail"
+    },
+    "lower": {
+      "x_range": [
+        24,
+        3816
+      ],
+      "search_y": [
+        1845,
+        1905
+      ],
+      "exclude_x": [
+        [
+          1560,
+          2300
+        ]
+      ],
+      "visibility_reason": "Central lower bracket/reflection covers the lower rail boundary"
+    }
+  },
+  "opencv_version": "5.0.0",
+  "helper_sha256": "3fb65025bfe545608cb43415d71deb04921c4699db17a9c4bf8ba495537efce2",
+  "legacy_native_crosscheck": [
+    {
+      "file": "center.bmp",
+      "line": "rail_UL_edge",
+      "python_minus_native_image_deg": 0.0
+    },
+    {
+      "file": "center.bmp",
+      "line": "rail_UR_edge",
+      "python_minus_native_image_deg": 5.551115123125783e-17
+    },
+    {
+      "file": "center1.bmp",
+      "line": "rail_UL_edge",
+      "python_minus_native_image_deg": 0.0
+    },
+    {
+      "file": "center1.bmp",
+      "line": "rail_UR_edge",
+      "python_minus_native_image_deg": 0.0
+    },
+    {
+      "file": "center2.bmp",
+      "line": "rail_UL_edge",
+      "python_minus_native_image_deg": 0.0
+    },
+    {
+      "file": "center2.bmp",
+      "line": "rail_UR_edge",
+      "python_minus_native_image_deg": 0.0
+    },
+    {
+      "file": "center3.bmp",
+      "line": "rail_UL_edge",
+      "python_minus_native_image_deg": 0.0
+    },
+    {
+      "file": "center3.bmp",
+      "line": "rail_UR_edge",
+      "python_minus_native_image_deg": 0.0
+    }
+  ],
+  "rows": [
+    {
+      "file": "center.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "dataset": "first",
+      "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "structures": {
+        "upper": {
+          "image_angle_deg": 0.2730049141089884,
+          "slope_dy_dx": 0.004764870685364617,
+          "intercept_y_px": 707.485910293771,
+          "edge_fit_rms_px": 0.2504157323658242,
+          "edge_fit_max_abs_residual_px": 1.1287399987682203,
+          "sample_x_min_max": [
+            26.0,
+            3814.0
+          ],
+          "visible_candidate_columns": 1354,
+          "accepted_edge_columns": 1354,
+          "excluded_boundary_or_nonpositive_gradient_columns": 0,
+          "step_center_at_bound_fraction": 0.0,
+          "median_step_width_px": 1.036593821829269,
+          "delta_from_first_center_image_deg": 0.0
+        },
+        "lower": {
+          "image_angle_deg": 0.21760556095890923,
+          "slope_dy_dx": 0.0037979517703303225,
+          "intercept_y_px": 1871.0207071291281,
+          "edge_fit_rms_px": 1.8379345940477667,
+          "edge_fit_max_abs_residual_px": 4.5353124226805805,
+          "sample_x_min_max": [
+            26.0,
+            3814.0
+          ],
+          "visible_candidate_columns": 1524,
+          "accepted_edge_columns": 1524,
+          "excluded_boundary_or_nonpositive_gradient_columns": 0,
+          "step_center_at_bound_fraction": 0.006561679790026247,
+          "median_step_width_px": 3.618083197036448,
+          "delta_from_first_center_image_deg": 0.0
+        }
+      }
+    },
+    {
+      "file": "center1.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "dataset": "second",
+      "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "structures": {
+        "upper": {
+          "image_angle_deg": 0.27340595931846057,
+          "slope_dy_dx": 0.004771870403870769,
+          "intercept_y_px": 707.6806424669418,
+          "edge_fit_rms_px": 0.24696971993119432,
+          "edge_fit_max_abs_residual_px": 1.1731329702979463,
+          "sample_x_min_max": [
+            26.0,
+            3814.0
+          ],
+          "visible_candidate_columns": 1354,
+          "accepted_edge_columns": 1354,
+          "excluded_boundary_or_nonpositive_gradient_columns": 0,
+          "step_center_at_bound_fraction": 0.0,
+          "median_step_width_px": 1.0677123553139776,
+          "delta_from_first_center_image_deg": 0.0004010452094721506
+        },
+        "lower": {
+          "image_angle_deg": 0.21670659752367433,
+          "slope_dy_dx": 0.0037822616731465327,
+          "intercept_y_px": 1870.9724507665337,
+          "edge_fit_rms_px": 1.8407748800363093,
+          "edge_fit_max_abs_residual_px": 4.323083062284603,
+          "sample_x_min_max": [
+            26.0,
+            3814.0
+          ],
+          "visible_candidate_columns": 1524,
+          "accepted_edge_columns": 1524,
+          "excluded_boundary_or_nonpositive_gradient_columns": 0,
+          "step_center_at_bound_fraction": 0.001968503937007874,
+          "median_step_width_px": 3.7171661872706903,
+          "delta_from_first_center_image_deg": -0.0008989634352349063
+        }
+      }
+    },
+    {
+      "file": "center2.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "dataset": "second",
+      "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "structures": {
+        "upper": {
+          "image_angle_deg": 0.2724681900535498,
+          "slope_dy_dx": 0.004755502871158452,
+          "intercept_y_px": 707.7293503090104,
+          "edge_fit_rms_px": 0.24907847095624375,
+          "edge_fit_max_abs_residual_px": 1.0456931144717365,
+          "sample_x_min_max": [
+            26.0,
+            3814.0
+          ],
+          "visible_candidate_columns": 1354,
+          "accepted_edge_columns": 1354,
+          "excluded_boundary_or_nonpositive_gradient_columns": 0,
+          "step_center_at_bound_fraction": 0.0,
+          "median_step_width_px": 1.0762472017079245,
+          "delta_from_first_center_image_deg": -0.0005367240554386421
+        },
+        "lower": {
+          "image_angle_deg": 0.2199724034804433,
+          "slope_dy_dx": 0.0038392615675738083,
+          "intercept_y_px": 1870.9312946646676,
+          "edge_fit_rms_px": 1.804966478187109,
+          "edge_fit_max_abs_residual_px": 4.762120866761982,
+          "sample_x_min_max": [
+            26.0,
+            3814.0
+          ],
+          "visible_candidate_columns": 1524,
+          "accepted_edge_columns": 1524,
+          "excluded_boundary_or_nonpositive_gradient_columns": 0,
+          "step_center_at_bound_fraction": 0.0026246719160104987,
+          "median_step_width_px": 3.661148085537457,
+          "delta_from_first_center_image_deg": 0.002366842521534074
+        }
+      }
+    },
+    {
+      "file": "center3.bmp",
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "dataset": "second",
+      "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "structures": {
+        "upper": {
+          "image_angle_deg": 0.27178305487922616,
+          "slope_dy_dx": 0.004743544736799911,
+          "intercept_y_px": 707.7807130680035,
+          "edge_fit_rms_px": 0.24600768093313155,
+          "edge_fit_max_abs_residual_px": 1.004922368123462,
+          "sample_x_min_max": [
+            26.0,
+            3814.0
+          ],
+          "visible_candidate_columns": 1354,
+          "accepted_edge_columns": 1354,
+          "excluded_boundary_or_nonpositive_gradient_columns": 0,
+          "step_center_at_bound_fraction": 0.0,
+          "median_step_width_px": 1.0895803187629218,
+          "delta_from_first_center_image_deg": -0.0012218592297622566
+        },
+        "lower": {
+          "image_angle_deg": 0.21740871418972024,
+          "slope_dy_dx": 0.0037945160965739302,
+          "intercept_y_px": 1871.0405285043958,
+          "edge_fit_rms_px": 1.8219788882505366,
+          "edge_fit_max_abs_residual_px": 4.489940269484808,
+          "sample_x_min_max": [
+            26.0,
+            3814.0
+          ],
+          "visible_candidate_columns": 1524,
+          "accepted_edge_columns": 1524,
+          "excluded_boundary_or_nonpositive_gradient_columns": 0,
+          "step_center_at_bound_fraction": 0.007874015748031496,
+          "median_step_width_px": 3.666774137295895,
+          "delta_from_first_center_image_deg": -0.0001968467691889908
+        }
+      }
+    }
+  ],
+  "ranges": {
+    "upper": {
+      "min_file": "center3.bmp",
+      "max_file": "center1.bmp",
+      "max_minus_min_image_deg": 0.0016229044392344072
+    },
+    "lower": {
+      "min_file": "center1.bmp",
+      "max_file": "center2.bmp",
+      "max_minus_min_image_deg": 0.00326580595676898
+    }
+  },
+  "pairwise": [
+    {
+      "first": "center.bmp",
+      "second": "center1.bmp",
+      "difference_image_deg": {
+        "upper": 0.0004010452094721506,
+        "lower": -0.0008989634352349063
+      }
+    },
+    {
+      "first": "center.bmp",
+      "second": "center2.bmp",
+      "difference_image_deg": {
+        "upper": -0.0005367240554386421,
+        "lower": 0.002366842521534074
+      }
+    },
+    {
+      "first": "center.bmp",
+      "second": "center3.bmp",
+      "difference_image_deg": {
+        "upper": -0.0012218592297622566,
+        "lower": -0.0001968467691889908
+      }
+    },
+    {
+      "first": "center1.bmp",
+      "second": "center2.bmp",
+      "difference_image_deg": {
+        "upper": -0.0009377692649107927,
+        "lower": 0.00326580595676898
+      }
+    },
+    {
+      "first": "center1.bmp",
+      "second": "center3.bmp",
+      "difference_image_deg": {
+        "upper": -0.0016229044392344072,
+        "lower": 0.0007021166660459155
+      }
+    },
+    {
+      "first": "center2.bmp",
+      "second": "center3.bmp",
+      "difference_image_deg": {
+        "upper": -0.0006851351743236145,
+        "lower": -0.0025636892907230646
+      }
+    }
+  ],
+  "limitations": [
+    "These are raw IMAGE angles, not robot theta",
+    "One line summarizes potentially curved/nonuniform visible boundaries; fit residual is included",
+    "Single observation per saved reference, no inferential equivalence or uncertainty bound",
+    "New upper/lower features do not inherit the former left/right robot-angle calibration",
+    "No motion-image testing or algorithm/controller/config changes performed"
+  ]
+}

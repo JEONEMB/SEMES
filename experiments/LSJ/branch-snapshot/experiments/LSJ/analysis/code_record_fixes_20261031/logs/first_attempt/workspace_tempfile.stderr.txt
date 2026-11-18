@@ -1,0 +1,1066 @@
+test_both_missing_expected_id (test_code_records.ComparisonTests.test_both_missing_expected_id) ... ERROR
+test_both_missing_expected_id (test_code_records.ComparisonTests.test_both_missing_expected_id) ... ERROR
+test_duplicate_id_rejected (test_code_records.ComparisonTests.test_duplicate_id_rejected) ... ERROR
+test_duplicate_id_rejected (test_code_records.ComparisonTests.test_duplicate_id_rejected) ... ERROR
+test_empty_never_passes (test_code_records.ComparisonTests.test_empty_never_passes) ... ERROR
+test_empty_never_passes (test_code_records.ComparisonTests.test_empty_never_passes) ... ERROR
+test_expected_ids_come_from_plan (test_code_records.ComparisonTests.test_expected_ids_come_from_plan) ... ERROR
+test_full_complete (test_code_records.ComparisonTests.test_full_complete) ... ERROR
+test_full_complete (test_code_records.ComparisonTests.test_full_complete) ... ERROR
+test_full_missing_id (test_code_records.ComparisonTests.test_full_missing_id) ... ERROR
+test_full_missing_id (test_code_records.ComparisonTests.test_full_missing_id) ... ERROR
+test_legacy_comparison_is_not_upgraded (test_code_records.ComparisonTests.test_legacy_comparison_is_not_upgraded) ... ERROR
+test_missing_field_rejected (test_code_records.ComparisonTests.test_missing_field_rejected) ... ERROR
+test_missing_field_rejected (test_code_records.ComparisonTests.test_missing_field_rejected) ... ERROR
+test_nonfinite_field_rejected (test_code_records.ComparisonTests.test_nonfinite_field_rejected) ... ERROR
+test_nonfinite_field_rejected (test_code_records.ComparisonTests.test_nonfinite_field_rejected) ... ERROR
+test_subset_has_separate_success (test_code_records.ComparisonTests.test_subset_has_separate_success) ... ERROR
+test_subset_has_separate_success (test_code_records.ComparisonTests.test_subset_has_separate_success) ... ERROR
+test_subset_missing_or_unexpected (test_code_records.ComparisonTests.test_subset_missing_or_unexpected) ... ERROR
+test_subset_missing_or_unexpected (test_code_records.ComparisonTests.test_subset_missing_or_unexpected) ... ERROR
+test_subset_requires_declared_selection (test_code_records.ComparisonTests.test_subset_requires_declared_selection) ... ERROR
+test_subset_requires_declared_selection (test_code_records.ComparisonTests.test_subset_requires_declared_selection) ... ERROR
+test_value_difference (test_code_records.ComparisonTests.test_value_difference) ... ERROR
+test_value_difference (test_code_records.ComparisonTests.test_value_difference) ... ERROR
+test_precision_labels_distinguish_old_records (test_code_records.PrecisionDisplayTests.test_precision_labels_distinguish_old_records) ... ok
+test_report_viewer_rounding_does_not_mutate_source (test_code_records.PrecisionDisplayTests.test_report_viewer_rounding_does_not_mutate_source) ... ok
+test_changed_input_cannot_complete (test_code_records.ProvenanceTests.test_changed_input_cannot_complete) ... ERROR
+test_changed_source_cannot_complete (test_code_records.ProvenanceTests.test_changed_source_cannot_complete) ... ERROR
+test_complete_immutable_runs_and_links (test_code_records.ProvenanceTests.test_complete_immutable_runs_and_links) ... ERROR
+test_exception_records_failure (test_code_records.ProvenanceTests.test_exception_records_failure) ... ERROR
+test_legacy_log_is_not_replaced (test_code_records.ProvenanceTests.test_legacy_log_is_not_replaced) ... ERROR
+test_legacy_producer_remains_unknown (test_code_records.ProvenanceTests.test_legacy_producer_remains_unknown) ... ERROR
+test_missing_output_does_not_claim_success (test_code_records.ProvenanceTests.test_missing_output_does_not_claim_success) ... ERROR
+test_no_finish_is_not_success (test_code_records.ProvenanceTests.test_no_finish_is_not_success) ... ERROR
+test_actual_mask_is_not_replaced_by_final_mask (test_fit_point_views.PointViewsTest.test_actual_mask_is_not_replaced_by_final_mask) ... ok
+test_bad_record_mask_is_not_silently_replaced (test_fit_point_views.PointViewsTest.test_bad_record_mask_is_not_silently_replaced) ... ok
+test_convergence_and_missing_history_differ (test_fit_point_views.PointViewsTest.test_convergence_and_missing_history_differ) ... ok
+test_legacy_mask_does_not_claim_actual_fit_use (test_fit_point_views.PointViewsTest.test_legacy_mask_does_not_claim_actual_fit_use) ... ok
+test_rms_basis_is_not_relabelled_in_old_results (test_fit_point_views.PointViewsTest.test_rms_basis_is_not_relabelled_in_old_results) ... ok
+test_unknown_mask_is_not_all_selected (test_fit_point_views.PointViewsTest.test_unknown_mask_is_not_all_selected) ... ok
+
+======================================================================
+ERROR: test_both_missing_expected_id (test_code_records.ComparisonTests.test_both_missing_expected_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 44, in test_both_missing_expected_id
+    self.write([record('A')],[record('A')])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_sjl0jjmu\\a.json'
+
+======================================================================
+ERROR: test_both_missing_expected_id (test_code_records.ComparisonTests.test_both_missing_expected_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_sjl0jjmu'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_sjl0jjmu'
+
+======================================================================
+ERROR: test_duplicate_id_rejected (test_code_records.ComparisonTests.test_duplicate_id_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 66, in test_duplicate_id_rejected
+    self.write([record('A'),record('A')],[record('A')])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_m87ppm35\\a.json'
+
+======================================================================
+ERROR: test_duplicate_id_rejected (test_code_records.ComparisonTests.test_duplicate_id_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_m87ppm35'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_m87ppm35'
+
+======================================================================
+ERROR: test_empty_never_passes (test_code_records.ComparisonTests.test_empty_never_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 59, in test_empty_never_passes
+    self.write([],[])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_nuz90f5z\\a.json'
+
+======================================================================
+ERROR: test_empty_never_passes (test_code_records.ComparisonTests.test_empty_never_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_nuz90f5z'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_nuz90f5z'
+
+======================================================================
+ERROR: test_expected_ids_come_from_plan (test_code_records.ComparisonTests.test_expected_ids_come_from_plan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_3flxp94h'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_3flxp94h'
+
+======================================================================
+ERROR: test_full_complete (test_code_records.ComparisonTests.test_full_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 36, in test_full_complete
+    self.write([record('A'),record('B')],[record('B'),record('A')])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_kpobm0ll\\a.json'
+
+======================================================================
+ERROR: test_full_complete (test_code_records.ComparisonTests.test_full_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_kpobm0ll'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_kpobm0ll'
+
+======================================================================
+ERROR: test_full_missing_id (test_code_records.ComparisonTests.test_full_missing_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 40, in test_full_missing_id
+    self.write([record('A'),record('B')],[record('A')])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_zqng5qdd\\a.json'
+
+======================================================================
+ERROR: test_full_missing_id (test_code_records.ComparisonTests.test_full_missing_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_zqng5qdd'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_zqng5qdd'
+
+======================================================================
+ERROR: test_legacy_comparison_is_not_upgraded (test_code_records.ComparisonTests.test_legacy_comparison_is_not_upgraded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test__vmik9kt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test__vmik9kt'
+
+======================================================================
+ERROR: test_missing_field_rejected (test_code_records.ComparisonTests.test_missing_field_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 69, in test_missing_field_rejected
+    r=record('A');del r['fit_rms_px'];self.write([r],[r])
+                                      ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_jvvuv09w\\a.json'
+
+======================================================================
+ERROR: test_missing_field_rejected (test_code_records.ComparisonTests.test_missing_field_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_jvvuv09w'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_jvvuv09w'
+
+======================================================================
+ERROR: test_nonfinite_field_rejected (test_code_records.ComparisonTests.test_nonfinite_field_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 72, in test_nonfinite_field_rejected
+    self.write([record('A',float('nan'))],[record('A',float('nan'))])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_1jebn_lx\\a.json'
+
+======================================================================
+ERROR: test_nonfinite_field_rejected (test_code_records.ComparisonTests.test_nonfinite_field_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_1jebn_lx'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_1jebn_lx'
+
+======================================================================
+ERROR: test_subset_has_separate_success (test_code_records.ComparisonTests.test_subset_has_separate_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 48, in test_subset_has_separate_success
+    self.write([record('A'),record('B')],[record('B')])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_kgdfow9c\\a.json'
+
+======================================================================
+ERROR: test_subset_has_separate_success (test_code_records.ComparisonTests.test_subset_has_separate_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_kgdfow9c'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_kgdfow9c'
+
+======================================================================
+ERROR: test_subset_missing_or_unexpected (test_code_records.ComparisonTests.test_subset_missing_or_unexpected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 55, in test_subset_missing_or_unexpected
+    self.write([record('A'),record('B')],[record('A')])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_uqa1ukru\\a.json'
+
+======================================================================
+ERROR: test_subset_missing_or_unexpected (test_code_records.ComparisonTests.test_subset_missing_or_unexpected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_uqa1ukru'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_uqa1ukru'
+
+======================================================================
+ERROR: test_subset_requires_declared_selection (test_code_records.ComparisonTests.test_subset_requires_declared_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 52, in test_subset_requires_declared_selection
+    self.write([record('A')],[record('A')])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_w3kg7ur3\\a.json'
+
+======================================================================
+ERROR: test_subset_requires_declared_selection (test_code_records.ComparisonTests.test_subset_requires_declared_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_w3kg7ur3'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_w3kg7ur3'
+
+======================================================================
+ERROR: test_value_difference (test_code_records.ComparisonTests.test_value_difference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 62, in test_value_difference
+    self.write([record('A')],[record('A',.5)])
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 33, in write
+    self.a.write_text(json.dumps({'records':a}),encoding='utf-8')
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_h_ltwing\\a.json'
+
+======================================================================
+ERROR: test_value_difference (test_code_records.ComparisonTests.test_value_difference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_h_ltwing'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 31, in tearDown
+    def tearDown(self):cleanup_fixture(self.tmp)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 21, in cleanup_fixture
+    tmp.cleanup()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 954, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_h_ltwing'
+
+======================================================================
+ERROR: test_changed_input_cannot_complete (test_code_records.ProvenanceTests.test_changed_input_cannot_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 87, in setUp
+    self.source=self.root/'code.py';self.source.write_text('pass')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_hwfs88pd\\code.py'
+
+======================================================================
+ERROR: test_changed_source_cannot_complete (test_code_records.ProvenanceTests.test_changed_source_cannot_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 87, in setUp
+    self.source=self.root/'code.py';self.source.write_text('pass')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_a6jmuhhl\\code.py'
+
+======================================================================
+ERROR: test_complete_immutable_runs_and_links (test_code_records.ProvenanceTests.test_complete_immutable_runs_and_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 87, in setUp
+    self.source=self.root/'code.py';self.source.write_text('pass')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_uxxat1uf\\code.py'
+
+======================================================================
+ERROR: test_exception_records_failure (test_code_records.ProvenanceTests.test_exception_records_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 87, in setUp
+    self.source=self.root/'code.py';self.source.write_text('pass')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_lrxmwiwo\\code.py'
+
+======================================================================
+ERROR: test_legacy_log_is_not_replaced (test_code_records.ProvenanceTests.test_legacy_log_is_not_replaced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 87, in setUp
+    self.source=self.root/'code.py';self.source.write_text('pass')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_dlm_u184\\code.py'
+
+======================================================================
+ERROR: test_legacy_producer_remains_unknown (test_code_records.ProvenanceTests.test_legacy_producer_remains_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 87, in setUp
+    self.source=self.root/'code.py';self.source.write_text('pass')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_7wzckae2\\code.py'
+
+======================================================================
+ERROR: test_missing_output_does_not_claim_success (test_code_records.ProvenanceTests.test_missing_output_does_not_claim_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 87, in setUp
+    self.source=self.root/'code.py';self.source.write_text('pass')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_5etqy0cf\\code.py'
+
+======================================================================
+ERROR: test_no_finish_is_not_success (test_code_records.ProvenanceTests.test_no_finish_is_not_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\analysis\reference_line_methods_108_20261030\tools\test_code_records.py", line 87, in setUp
+    self.source=self.root/'code.py';self.source.write_text('pass')
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_9m4jmi69\\code.py'
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.040s
+
+FAILED (errors=32)
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_9m4jmi69'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 666, in _exitfunc
+    f()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 590, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 939, in _cleanup
+    cls._rmtree(name, ignore_errors=ignore_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_9m4jmi69'
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_5etqy0cf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 666, in _exitfunc
+    f()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 590, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 939, in _cleanup
+    cls._rmtree(name, ignore_errors=ignore_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_5etqy0cf'
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_7wzckae2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 666, in _exitfunc
+    f()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 590, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 939, in _cleanup
+    cls._rmtree(name, ignore_errors=ignore_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_7wzckae2'
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_dlm_u184'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 666, in _exitfunc
+    f()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 590, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 939, in _cleanup
+    cls._rmtree(name, ignore_errors=ignore_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_dlm_u184'
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_lrxmwiwo'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 666, in _exitfunc
+    f()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 590, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 939, in _cleanup
+    cls._rmtree(name, ignore_errors=ignore_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_lrxmwiwo'
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_uxxat1uf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 666, in _exitfunc
+    f()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 590, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 939, in _cleanup
+    cls._rmtree(name, ignore_errors=ignore_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_uxxat1uf'
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_a6jmuhhl'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 666, in _exitfunc
+    f()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 590, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 939, in _cleanup
+    cls._rmtree(name, ignore_errors=ignore_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_a6jmuhhl'
+Traceback (most recent call last):
+  File "<frozen os>", line 366, in walk
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_hwfs88pd'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 666, in _exitfunc
+    f()
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\weakref.py", line 590, in __call__
+    return info.func(*info.args, **(info.kwargs or {}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 939, in _cleanup
+    cls._rmtree(name, ignore_errors=ignore_errors)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 934, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 781, in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 623, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 369, in walk
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\shutil.py", line 621, in onerror
+    onexc(os.scandir, err.filename, err)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 906, in onexc
+    _resetperms(path)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 286, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+  File "C:\Users\SSAFY\AppData\Local\Programs\Python\Python312\Lib\tempfile.py", line 277, in _dont_follow_symlinks
+    func(path, *args)
+PermissionError: [WinError 5] 액세스가 거부되었습니다: 'C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\qa\\code_record_fixtures\\test_hwfs88pd'

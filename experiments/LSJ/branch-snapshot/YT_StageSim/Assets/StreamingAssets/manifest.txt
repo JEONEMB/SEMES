@@ -1,0 +1,16 @@
+qr_plate.png
+stl/07_motor_base_uclamp_v5.stl
+stl/08_clamp_cover.stl
+stl/09_harmonic_motor_psh42_v2.stl
+stl/14_theta_dog_v5.stl
+stl/15_y_dog_v4.stl
+stl/15_y_switch_bracket_v5.stl
+stl/17_qr_plate_69x15.stl
+stl/18_rpi5_holder.stl
+stl/19_background_board_400x360x5.stl
+stl/20_plate_bracket.stl
+stl/21_side_stand_left.stl
+stl/21_side_stand_right.stl
+stl/23_strip_lower_400.stl
+stl/23_strip_upper_400.stl
+stl/24_flange_coupling_d10.stl

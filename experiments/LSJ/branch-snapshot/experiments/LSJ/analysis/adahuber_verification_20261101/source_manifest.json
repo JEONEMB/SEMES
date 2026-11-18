@@ -1,0 +1,69 @@
+{
+  "retrieved_utc": "2026-11-01T08:17:09.356333+00:00",
+  "adahuber_commit": "b3130d4d9d905b7d339039c61dbfe52f5e7011ae",
+  "armadillo_dependency_commit": "33036ee0be22ee5f5dd6b0059c97f75be0e1d276",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/XiaoouPan/adaHuber/b3130d4d9d905b7d339039c61dbfe52f5e7011ae/src/adaHuber.cpp",
+      "file": "sources\\adaHuber\\src\\adaHuber.cpp",
+      "sha256": "5242829f08449edd6d6819ee3e0ef6fe3298e8480a9ef0feb2e4f96e759a0c32",
+      "bytes": 19424
+    },
+    {
+      "url": "https://raw.githubusercontent.com/XiaoouPan/adaHuber/b3130d4d9d905b7d339039c61dbfe52f5e7011ae/R/adaHuber.R",
+      "file": "sources\\adaHuber\\R\\adaHuber.R",
+      "sha256": "ccbe1d8db0dfe245ad7796f405f35a0829259b8d35ea643575e0ff0dc57530f0",
+      "bytes": 12811
+    },
+    {
+      "url": "https://raw.githubusercontent.com/XiaoouPan/adaHuber/b3130d4d9d905b7d339039c61dbfe52f5e7011ae/R/RcppExports.R",
+      "file": "sources\\adaHuber\\R\\RcppExports.R",
+      "sha256": "f38ecea5254ebb010dac325f9eb0064bd69e0c2c3ac799192da068ca8357e88e",
+      "bytes": 3928
+    },
+    {
+      "url": "https://raw.githubusercontent.com/XiaoouPan/adaHuber/b3130d4d9d905b7d339039c61dbfe52f5e7011ae/src/RcppExports.cpp",
+      "file": "sources\\adaHuber\\src\\RcppExports.cpp",
+      "sha256": "66134bfd73a2977fdeeda6a2321d88cd1f24d75081c6ba7f7fd67b5f37a53b37",
+      "bytes": 22461
+    },
+    {
+      "url": "https://raw.githubusercontent.com/XiaoouPan/adaHuber/b3130d4d9d905b7d339039c61dbfe52f5e7011ae/DESCRIPTION",
+      "file": "sources\\adaHuber\\DESCRIPTION",
+      "sha256": "5866364e7bca6a9519f920660652360e6a9b79d5441e4c684d91a765b29ae5fa",
+      "bytes": 674
+    },
+    {
+      "url": "https://raw.githubusercontent.com/XiaoouPan/adaHuber/b3130d4d9d905b7d339039c61dbfe52f5e7011ae/NAMESPACE",
+      "file": "sources\\adaHuber\\NAMESPACE",
+      "sha256": "29e388237be011071161f067f4463fcaced3ae3b6984bd343e83b16ca4ceb49a",
+      "bytes": 204
+    },
+    {
+      "url": "https://raw.githubusercontent.com/XiaoouPan/adaHuber/b3130d4d9d905b7d339039c61dbfe52f5e7011ae/README.md",
+      "file": "sources\\adaHuber\\README.md",
+      "sha256": "2b6a197f729de4ae29fc52288767f27e9e882c9527ee26f37c9782146cd63347",
+      "bytes": 5538
+    },
+    {
+      "url": "https://www3.stat.sinica.edu.tw/ss_newpaper/SS-2019-0045_na.pdf",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    },
+    {
+      "url": "https://www3.stat.sinica.edu.tw/preprint/supp/2019-0045_supp.pdf",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>"
+    },
+    {
+      "url": "https://arxiv.org/pdf/1706.06991",
+      "file": "sources\\sun2020_preprint.pdf",
+      "sha256": "e73628d72e2306bec13e95b3f5f596784178996b65d47454567cd75568f8fa75",
+      "bytes": 1080943
+    },
+    {
+      "url": "https://codeload.github.com/RcppCore/RcppArmadillo/tar.gz/33036ee0be22ee5f5dd6b0059c97f75be0e1d276",
+      "file": "sources\\rcpparmadillo_source.tar.gz",
+      "sha256": "7b134a87d6e4994d1823a5de107d62ce8d45613eb436315aa54c6be0521348c9",
+      "bytes": 1073253
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "html_preview": "report_preview.png",
+  "html_render": "Edge headless exit 0; Korean text and table layout visually checked",
+  "figures_visually_checked": [
+    "figures/D3_theta_fixed_0.05.png",
+    "figures/D2_Y_fixed_1.png",
+    "sensitivity_overview.png",
+    "figures/overlay_D1_241.png",
+    "figures/overlay_D2_058.png",
+    "figures/overlay_D3_232.png"
+  ],
+  "notes": "All measurements kept. A few fixture/edge points visible at extreme positions; disclosed in report. No ROI or point-selection change."
+}

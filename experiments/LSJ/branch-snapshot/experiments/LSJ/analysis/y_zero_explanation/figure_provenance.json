@@ -1,0 +1,67 @@
+{
+  "purpose": "Explain existing per-run zero candidates and the concept of uncertainty intervals",
+  "sources": {
+    "slopes": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_slope_results.json",
+      "sha256": "92d321cd6e7904aef474b45375c3fdff74e78a245bf6dca22848a4e59f0155a1"
+    },
+    "zeros": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_zero_candidates.json",
+      "sha256": "d405dd70a53254fbefb83c5953a6be643ef587963bdb8436b57d13520bd4cfcb"
+    },
+    "measurements": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\measurements.json",
+      "sha256": "60b4322cc9679bc91af9c1a61f819273a2c2bcf03d83705451455e4f90b7943c"
+    }
+  },
+  "01_saved_candidates": {
+    "status": "Previously computed results only; central QR shown as an example",
+    "coordinates": "Original-image tracked ROI-center x and nominal Y labels, not first-frame differences",
+    "new_regression_or_registration": false
+  },
+  "02_interval_concept": {
+    "status": "Fully synthetic schematic, not derived uncertainty or actual data",
+    "schematic_intervals": [
+      [
+        [
+          3.0,
+          5.5
+        ],
+        [
+          4.0,
+          6.0
+        ],
+        [
+          4.4,
+          6.5
+        ],
+        [
+          3.8,
+          6.2
+        ]
+      ],
+      [
+        [
+          3.0,
+          5.5
+        ],
+        [
+          7.2,
+          9.0
+        ],
+        [
+          4.4,
+          6.5
+        ],
+        [
+          3.8,
+          6.2
+        ]
+      ]
+    ],
+    "no_numeric_scale": true,
+    "no_claim_of_coverage_or_true_alignment": true
+  },
+  "confidence_intervals_computed": false,
+  "mean_slopes_used": false
+}

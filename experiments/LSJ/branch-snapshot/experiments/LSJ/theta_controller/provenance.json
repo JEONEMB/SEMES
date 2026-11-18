@@ -1,0 +1,16 @@
+{
+  "reference_file": "center.bmp",
+  "reference_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+  "saved_reference_image_angles_deg": {
+    "rail_UL_edge": 0.2220793541086069,
+    "rail_UR_edge": 0.314167700500224
+  },
+  "source_hashes": {
+    "line_measurements.json": "2486e980c2ce772a31a46769c870f7a7b042ed3ad1547e7a178e6ed1414404b3",
+    "hypothesis_results.json": "2d89f4c8e889b3bcbcefd6c4bd0b9df921ae92fc949627fe4e7c3bd16fc0ed0d",
+    "measure_lines.py": "3fb65025bfe545608cb43415d71deb04921c4699db17a9c4bf8ba495537efce2"
+  },
+  "refit_performed": false,
+  "second_dataset_used": false,
+  "runtime_target": "Measure the supplied first center.bmp with the same native OpenCV implementation used for incoming images; saved Python angles above are provenance, not another target."
+}

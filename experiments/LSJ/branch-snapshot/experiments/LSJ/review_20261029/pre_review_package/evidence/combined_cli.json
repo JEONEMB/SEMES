@@ -1,0 +1,191 @@
+{
+    "schema_version": 1,
+    "opencv_version": "3.4.15",
+    "stage": "theta_then_y",
+    "reference": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+    "config": "configs/theta_alignment.json",
+    "y_config": "configs/y_alignment.json",
+    "mode": "independent_offline_images_no_machine_moves",
+    "results": [
+        {
+            "file": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+            "valid": 1,
+            "status": "aligned",
+            "command_y_mm": 0.0,
+            "command_theta_deg": 0.0,
+            "command_available": 1,
+            "aligned": 1,
+            "y_evaluated": 1,
+            "theta": {
+                "status": "theta_within_tolerance",
+                "estimated_theta_deg": 0.0,
+                "continuous_correction_deg": 0.0,
+                "command_deg": 0.0,
+                "group": 0,
+                "theta_within_tolerance": 1,
+                "command_available": 1,
+                "outside_calibration": 0,
+                "fit_residual_image_deg": 0.0,
+                "zncc": 1.0,
+                "ecc": 1.0000000244328540e+00,
+                "shift_xy_px": [
+                    6.5125078663186287e-09,
+                    3.4567335660540266e-09
+                ],
+                "lines": [
+                    {
+                        "angle_deg": 2.2207935410860691e-01,
+                        "target_deg": 2.2207935410860691e-01,
+                        "estimated_theta_deg": 0.0,
+                        "edge_rms_px": 1.2170099873116670e-01,
+                        "points": 449
+                    },
+                    {
+                        "angle_deg": 3.1416770050022397e-01,
+                        "target_deg": 3.1416770050022397e-01,
+                        "estimated_theta_deg": 0.0,
+                        "edge_rms_px": 1.2747060919842759e-01,
+                        "points": 424
+                    }
+                ]
+            },
+            "y": {
+                "status": "y_within_target",
+                "command_mm": 0.0,
+                "within_target": 1,
+                "command_available": 1,
+                "common_interval_mm": [
+                    -3.3194927003184861e-02,
+                    3.6172662178864902e-03
+                ],
+                "markers": [
+                    {
+                        "name": "L",
+                        "x_px": 1.6420000000042392e+03,
+                        "inside": 1,
+                        "interval_mm": [
+                            -3.4165529555323954e-02,
+                            3.6172662178864902e-03
+                        ],
+                        "zncc": 9.9999916553497314e-01,
+                        "ecc": 1.0000000339916928e+00
+                    },
+                    {
+                        "name": "C",
+                        "x_px": 1.9000000000065124e+03,
+                        "inside": 1,
+                        "interval_mm": [
+                            -3.3407518336808932e-02,
+                            4.6492289047321616e-03
+                        ],
+                        "zncc": 1.0,
+                        "ecc": 1.0000000244328540e+00
+                    },
+                    {
+                        "name": "R",
+                        "x_px": 2.1590000000170767e+03,
+                        "inside": 1,
+                        "interval_mm": [
+                            -3.3194927003184861e-02,
+                            5.0517941878479309e-03
+                        ],
+                        "zncc": 9.9999904632568359e-01,
+                        "ecc": 1.0000000517015164e+00
+                    }
+                ]
+            }
+        },
+        {
+            "file": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\Theta\\T+0.10.bmp",
+            "valid": 1,
+            "status": "move_theta",
+            "command_y_mm": 0.0,
+            "command_theta_deg": -8.0000000000000002e-02,
+            "command_available": 1,
+            "aligned": 0,
+            "y_evaluated": 0,
+            "theta": {
+                "status": "move",
+                "estimated_theta_deg": 7.6211902843640975e-02,
+                "continuous_correction_deg": -7.6211902843640975e-02,
+                "command_deg": -8.0000000000000002e-02,
+                "group": 4,
+                "theta_within_tolerance": 0,
+                "command_available": 1,
+                "outside_calibration": 0,
+                "fit_residual_image_deg": 1.8064119276174594e-03,
+                "zncc": 9.9027621746063232e-01,
+                "ecc": 9.9921657208271319e-01,
+                "shift_xy_px": [
+                    7.2101663901048596e+00,
+                    4.6874234478309518e-02
+                ],
+                "lines": [
+                    {
+                        "angle_deg": 2.1626510631212911e-01,
+                        "target_deg": 2.2207935410860691e-01,
+                        "estimated_theta_deg": 5.8299187909075387e-02,
+                        "edge_rms_px": 1.1593458233461917e-01,
+                        "points": 449
+                    },
+                    {
+                        "angle_deg": 3.0490605421475780e-01,
+                        "target_deg": 3.1416770050022397e-01,
+                        "estimated_theta_deg": 9.4929456408104157e-02,
+                        "edge_rms_px": 1.2661000092073493e-01,
+                        "points": 424
+                    }
+                ]
+            }
+        },
+        {
+            "file": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\Theta\\T-0.10.bmp",
+            "valid": 1,
+            "status": "move_theta",
+            "command_y_mm": 0.0,
+            "command_theta_deg": 1.3000000000000000e-01,
+            "command_available": 1,
+            "aligned": 0,
+            "y_evaluated": 0,
+            "theta": {
+                "status": "move",
+                "estimated_theta_deg": -1.2652201551004469e-01,
+                "continuous_correction_deg": 1.2652201551004469e-01,
+                "command_deg": 1.3000000000000000e-01,
+                "group": 5,
+                "theta_within_tolerance": 0,
+                "command_available": 1,
+                "outside_calibration": 0,
+                "fit_residual_image_deg": 1.1252435025098663e-03,
+                "zncc": 9.8809289932250977e-01,
+                "ecc": 9.9865455913325984e-01,
+                "shift_xy_px": [
+                    -8.2246062274061842e+00,
+                    5.6459820463715005e-02
+                ],
+                "lines": [
+                    {
+                        "angle_deg": 2.3615393252679537e-01,
+                        "target_deg": 2.2207935410860691e-01,
+                        "estimated_theta_deg": -1.3700873058097862e-01,
+                        "edge_rms_px": 1.1774738009186630e-01,
+                        "points": 449
+                    },
+                    {
+                        "angle_deg": 3.2495093006970255e-01,
+                        "target_deg": 3.1416770050022397e-01,
+                        "estimated_theta_deg": -1.1412592609084958e-01,
+                        "edge_rms_px": 1.2866641751493391e-01,
+                        "points": 424
+                    }
+                ]
+            }
+        },
+        {
+            "file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\theta_implementation_20261029\\validation\\intentional_missing_image_for_error_contract.bmp",
+            "valid": 0,
+            "status": "measurement_failed",
+            "error": "Cannot open input: C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\.tmp\\theta_implementation_20261029\\validation\\intentional_missing_image_for_error_contract.bmp"
+        }
+    ]
+}

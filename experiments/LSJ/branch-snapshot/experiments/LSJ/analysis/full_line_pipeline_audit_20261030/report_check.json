@@ -1,0 +1,9 @@
+{
+  "ok": true,
+  "local_links_checked": 579,
+  "coverage_sections": 53,
+  "findings": 32,
+  "code_evidence_locations": 65,
+  "errors": [],
+  "scope": "Report coverage/links only. No measurement or statistical test."
+}

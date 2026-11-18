@@ -1,0 +1,30 @@
+{
+  "checkpoint_selftest_exact_cases": 96,
+  "baseline_800_exact_fits": 691680,
+  "raw_returns": 19367040,
+  "all_visible_columns": true,
+  "unchanged_files": {
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp\\src\\methods_points.cpp": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp\\src\\effective_settings.cpp": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\methods.json": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\targets.json": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\inputs_manifest.json": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_no_rejection_20261101\\profiles.jsonl": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_no_rejection_20261101\\arrays.npz": true,
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_no_rejection_20261101\\report.html": true
+  },
+  "unchanged_images": {
+    "R01": true,
+    "R02": true,
+    "R03": true,
+    "R04": true
+  },
+  "experiment_sources_unchanged": {
+    "experiment.cpp": true,
+    "CMakeLists.txt": true,
+    "prepare.py": true,
+    "original_nelder_mead.hpp": true
+  },
+  "stopping_semantics_verified_returns": 19367040,
+  "earlier_stop_outputs_preserved": true
+}

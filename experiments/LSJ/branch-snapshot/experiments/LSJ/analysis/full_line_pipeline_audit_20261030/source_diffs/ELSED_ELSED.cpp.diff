@@ -1,0 +1,18 @@
+--- pristine/ELSED/ELSED.cpp
++++ used/ELSED/ELSED.cpp
+@@ -196,6 +196,7 @@
+   imgInfo = nullptr;
+   edges.clear();
+   segments.clear();
++  validSegmentPixels.clear();  // LSJ
+   salientSegments.clear();
+   anchors.clear();
+   drawer = nullptr;
+@@ -365,6 +366,7 @@
+     if (valid) {
+       const Segment &endpoints = detectedSeg.getEndpoints();
+       segments.push_back(endpoints);
++      validSegmentPixels.push_back(detectedSeg.getPixels());  // LSJ: keep support pixels of each returned segment
+       salientSegments.emplace_back(endpoints, saliency);
+     }
+   }

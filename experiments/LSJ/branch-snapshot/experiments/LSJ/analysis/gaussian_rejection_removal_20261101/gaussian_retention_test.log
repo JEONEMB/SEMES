@@ -1,0 +1,10 @@
+PASS weak-response profiles are fitted and forwarded
+PASS coarse maxima at search-band endpoints are retained
+PASS returned positions more than 2px from coarse locations reach common fit
+PASS nonconvergence is recorded without removing points
+PASS negative-amplitude results are retained
+PASS zero-amplitude results are retained
+PASS shared Q01 path also retains weak profiles
+PASS removed threshold configuration cannot silently remain active
+PASS removed threshold configuration cannot silently remain active
+0 failure(s)

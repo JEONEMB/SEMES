@@ -1,0 +1,2634 @@
+{
+  "meta": {
+    "source_meta": {
+      "tool": "line_methods (reference_line_methods_108_20261030)",
+      "opencv_version": "3.4.15",
+      "msvc_version": 1916,
+      "msvc_full_version": 191627054,
+      "cplusplus": 199711,
+      "opencv_threads": 1,
+      "config_sha256": {
+        "inputs_manifest.json": "178be414cae0a4a671d794af9d3f962aeff3fd5af04cf45a7e4393a3dcb39b23",
+        "method_sources.json": "6cbb91d9fcc0eb9f453964b1d97534fd7bd13a484e23c61874e636db59db2d89",
+        "methods.json": "e05075300ae7813bf4998571e5e630697577cc33dcfac2021495dd81b8ee4e92",
+        "targets.json": "d530775949f67078223b7fdca735f36831891335b00bc32803f8ff26fe530999"
+      },
+      "coordinate_convention": "원본 3840x2160 픽셀 중심 좌표. 좌상단 (0,0), +x 오른쪽, +y 아래. 정수 좌표 = 픽셀 중심.",
+      "angle_convention": "image_angle_deg = atan2(dy, dx) with dx > 0 (x-increasing direction), range [-90, 90). Image line angle only; NOT robot theta.",
+      "inputs": [
+        {
+          "reference_id": "R01",
+          "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+          "expected_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+          "sha256_before": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+          "bmp_header": {
+            "valid": true,
+            "width": 3840,
+            "height": 2160,
+            "bits_per_pixel": 24
+          },
+          "status": "ok",
+          "sha256_after": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+          "unchanged_after_run": true
+        },
+        {
+          "reference_id": "R02",
+          "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+          "expected_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+          "sha256_before": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+          "bmp_header": {
+            "valid": true,
+            "width": 3840,
+            "height": 2160,
+            "bits_per_pixel": 24
+          },
+          "status": "ok",
+          "sha256_after": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+          "unchanged_after_run": true
+        },
+        {
+          "reference_id": "R03",
+          "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+          "expected_sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+          "sha256_before": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+          "bmp_header": {
+            "valid": true,
+            "width": 3840,
+            "height": 2160,
+            "bits_per_pixel": 24
+          },
+          "status": "ok",
+          "sha256_after": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+          "unchanged_after_run": true
+        },
+        {
+          "reference_id": "R04",
+          "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+          "expected_sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+          "sha256_before": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+          "bmp_header": {
+            "valid": true,
+            "width": 3840,
+            "height": 2160,
+            "bits_per_pixel": 24
+          },
+          "status": "ok",
+          "sha256_after": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+          "unchanged_after_run": true
+        }
+      ],
+      "refs_filter": [],
+      "methods_filter": [],
+      "slot_count": 216,
+      "total_runtime_ms": 7755.5283
+    },
+    "selection_manifest": "../selection_manifest.json",
+    "meaning": "기준 4장 기울기 범위에 따른 후속 검증 후보. 정확도 합격·통계 검정·θ 판별 검증 결과가 아님."
+  },
+  "records": [
+    {
+      "measurement_id": "R01_E01_upper_structure",
+      "reference_id": "R01",
+      "dataset": "first",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "input_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "method_id": "E01",
+      "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+      "implementation": "methods_points.cpp::method_profile_gaussian",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size",
+        "profile_examples_every": 100
+      },
+      "config_hash": "a38d38c75da4f0d35ef270a646e7d4febb065a387f4188191f1edaef878f44e2",
+      "line": {
+        "point_xy": [
+          1931.1456166419248,
+          716.6104266800818
+        ],
+        "direction_xy": [
+          0.9999886712398265,
+          0.004759978151872575
+        ],
+        "slope_dy_dx": 0.004760032077134395,
+        "intercept_y_px": 707.4181115992487,
+        "general_form_abc": [
+          -0.004759978151872575,
+          0.9999886712398265,
+          -707.41009742912
+        ],
+        "image_angle_deg": 0.27272768856641677
+      },
+      "slope_dy_dx": 0.004760032077134395,
+      "intercept_y_px": 707.4181115992487,
+      "image_angle_deg": 0.27272768856641677,
+      "line_endpoints_xy": [
+        [
+          23.999223518349936,
+          707.5323486730224
+        ],
+        [
+          3815.999949211775,
+          725.5823937638401
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.5323523691
+        ],
+        [
+          3816.0,
+          725.5823940055936
+        ]
+      ],
+      "n_candidates": 1356,
+      "n_selected": 1346,
+      "support_type": "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)",
+      "fit_rms_px": 0.26910009942284835,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "visible_columns": 1356,
+        "occluded_columns_skipped": 541,
+        "nelder_mead_not_converged": 10,
+        "fit_input_points": 1346,
+        "fit_inlier_points": 1346,
+        "fit_rms_all_input_px": 0.26910009942284835,
+        "fit_max_abs_inlier_residual_px": 1.1476917844746284,
+        "huber_all_points_angle_before_trim_deg": 0.27272768856641677
+      },
+      "intermediate_json": "intermediates/R01/E01/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 66.8691
+    },
+    {
+      "measurement_id": "R01_E01_lower_structure",
+      "reference_id": "R01",
+      "dataset": "first",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "input_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "method_id": "E01",
+      "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+      "implementation": "methods_points.cpp::method_profile_gaussian",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size",
+        "profile_examples_every": 100
+      },
+      "config_hash": "53dbbe90e8904476051de9a02744af775ec446e6e1abacc38655957fe8827eaf",
+      "line": {
+        "point_xy": [
+          1879.4500183057576,
+          1878.577748965313
+        ],
+        "direction_xy": [
+          0.9999930879323394,
+          0.0037180757851911143
+        ],
+        "slope_dy_dx": 0.0037181014849601473,
+        "intercept_y_px": 1871.589763061342,
+        "general_form_abc": [
+          -0.0037180757851911143,
+          0.9999930879323394,
+          -1871.5768265062668
+        ],
+        "image_angle_deg": 0.2130305412286383
+      },
+      "slope_dy_dx": 0.0037181014849601473,
+      "intercept_y_px": 1871.589763061342,
+      "image_angle_deg": 0.2130305412286383,
+      "line_endpoints_xy": [
+        [
+          32.00252248225411,
+          1871.7087516877057
+        ],
+        [
+          3813.9956458525303,
+          1885.770585935818
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1871.678997496981
+        ],
+        [
+          3816.0,
+          1885.7780383279498
+        ]
+      ],
+      "n_candidates": 1526,
+      "n_selected": 771,
+      "support_type": "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)",
+      "fit_rms_px": 1.1396847844817328,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "visible_columns": 1526,
+        "occluded_columns_skipped": 371,
+        "nelder_mead_not_converged": 32,
+        "fit_input_points": 1079,
+        "fit_inlier_points": 771,
+        "fit_rms_all_input_px": 1.893451677882513,
+        "fit_max_abs_inlier_residual_px": 1.999577043603301,
+        "huber_all_points_angle_before_trim_deg": 0.21494673111917906
+      },
+      "intermediate_json": "intermediates/R01/E01/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 52.8398
+    },
+    {
+      "measurement_id": "R01_E02_upper_structure",
+      "reference_id": "R01",
+      "dataset": "first",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "input_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "method_id": "E02",
+      "method_name": "Canny–Devernay 서브픽셀 경계점",
+      "implementation": "methods_points.cpp::method_canny_devernay",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "config_hash": "3f478c5bd8c5fa6371a977d80ad7e3e5264a1badec417d862338013625cd95ad",
+      "line": {
+        "point_xy": [
+          1924.875460574815,
+          716.5990724596643
+        ],
+        "direction_xy": [
+          0.9999886840346917,
+          0.004757289413682443
+        ],
+        "slope_dy_dx": 0.004757343247613593,
+        "intercept_y_px": 707.4417791848016,
+        "general_form_abc": [
+          -0.004757289413682443,
+          0.9999886840346917,
+          -707.4337737981706
+        ],
+        "image_angle_deg": 0.272573633471639
+      },
+      "slope_dy_dx": 0.004757343247613593,
+      "intercept_y_px": 707.4417791848016,
+      "image_angle_deg": 0.272573633471639,
+      "line_endpoints_xy": [
+        [
+          24.99873387434127,
+          707.5607067425975
+        ],
+        [
+          3816.000046032747,
+          725.5958012366887
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.5559554227443
+        ],
+        [
+          3816.0,
+          725.5958010176951
+        ]
+      ],
+      "n_candidates": 9768,
+      "n_selected": 1357,
+      "support_type": "subpixel_edge_points: Canny-Devernay points, strongest per column bin",
+      "fit_rms_px": 0.26377354599062347,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "devernay_points_in_region": 16594,
+        "devernay_curves_in_region": 523,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ],
+        "integer_pixel_note": "x_rounded/y_rounded = nearest pixel of each Devernay point (the NMS pixel; the correction offset is within +-0.5 px along one axis).",
+        "fit_input_points": 1357,
+        "fit_inlier_points": 1357,
+        "fit_rms_all_input_px": 0.26377354599062347,
+        "fit_max_abs_inlier_residual_px": 1.129642470677343,
+        "huber_all_points_angle_before_trim_deg": 0.272573633471639
+      },
+      "intermediate_json": "intermediates/R01/E02/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 78.3753
+    },
+    {
+      "measurement_id": "R01_E02_lower_structure",
+      "reference_id": "R01",
+      "dataset": "first",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "input_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "method_id": "E02",
+      "method_name": "Canny–Devernay 서브픽셀 경계점",
+      "implementation": "methods_points.cpp::method_canny_devernay",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "config_hash": "a3041666814fc6eabaed011a44a79a26106ddac52ce4b63c55b643aa48df2660",
+      "line": {
+        "point_xy": [
+          1861.7043701708626,
+          1877.7524052891356
+        ],
+        "direction_xy": [
+          0.9999916863374217,
+          0.0040776532515215515
+        ],
+        "slope_dy_dx": 0.004077687152036633,
+        "intercept_y_px": 1870.1609572979994,
+        "general_form_abc": [
+          -0.0040776532515215515,
+          0.9999916863374217,
+          -1870.1454094108333
+        ],
+        "image_angle_deg": 0.23363296907889822
+      },
+      "slope_dy_dx": 0.004077687152036633,
+      "intercept_y_px": 1870.1609572979994,
+      "image_angle_deg": 0.23363296907889822,
+      "line_endpoints_xy": [
+        [
+          38.99503865040424,
+          1870.3199668660973
+        ],
+        [
+          3809.9935518133475,
+          1885.696919053571
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1870.2588217896482
+        ],
+        [
+          3816.0,
+          1885.7214114701712
+        ]
+      ],
+      "n_candidates": 7908,
+      "n_selected": 795,
+      "support_type": "subpixel_edge_points: Canny-Devernay points, strongest per column bin",
+      "fit_rms_px": 1.185359370719505,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "devernay_points_in_region": 8344,
+        "devernay_curves_in_region": 473,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ],
+        "integer_pixel_note": "x_rounded/y_rounded = nearest pixel of each Devernay point (the NMS pixel; the correction offset is within +-0.5 px along one axis).",
+        "fit_input_points": 1527,
+        "fit_inlier_points": 795,
+        "fit_rms_all_input_px": 2.342966893831189,
+        "fit_max_abs_inlier_residual_px": 1.996957656207841,
+        "huber_all_points_angle_before_trim_deg": 0.22110723125850795
+      },
+      "intermediate_json": "intermediates/R01/E02/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 84.536
+    },
+    {
+      "measurement_id": "R01_E06_upper_structure",
+      "reference_id": "R01",
+      "dataset": "first",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "input_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "method_id": "E06",
+      "method_name": "PAE(부분 면적 효과)",
+      "implementation": "methods_points.cpp::method_pae",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "config_hash": "7febbcba0fbbdbed10049baa3b0ec346b272544bdcca850be71a978541850278",
+      "line": {
+        "point_xy": [
+          1920.3295540438514,
+          716.6951848605871
+        ],
+        "direction_xy": [
+          0.9999886619656813,
+          0.0047619260899865986
+        ],
+        "slope_dy_dx": 0.004761980081480188,
+        "intercept_y_px": 707.5506137743525,
+        "general_form_abc": [
+          -0.0047619260899865986,
+          0.9999886619656813,
+          -707.5425915412113
+        ],
+        "image_angle_deg": 0.27283929846402233
+      },
+      "slope_dy_dx": 0.004761980081480188,
+      "intercept_y_px": 707.5506137743525,
+      "image_angle_deg": 0.27283929846402233,
+      "line_endpoints_xy": [
+        [
+          23.997565466875358,
+          707.6648897031098
+        ],
+        [
+          3815.9986566169573,
+          725.7223233681177
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.664901296308
+        ],
+        [
+          3816.0,
+          725.722329765281
+        ]
+      ],
+      "n_candidates": 1356,
+      "n_selected": 1323,
+      "support_type": "subpixel_edge_points: PAE second-order a at column centre (1 per column)",
+      "fit_rms_px": 0.32451503089858164,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "window": "3x9",
+        "visible_columns": 1356,
+        "occluded_columns_skipped": 541,
+        "fit_input_points": 1323,
+        "fit_inlier_points": 1323,
+        "fit_rms_all_input_px": 0.32451503089858164,
+        "fit_max_abs_inlier_residual_px": 1.3193505638128222,
+        "huber_all_points_angle_before_trim_deg": 0.27283929846402233
+      },
+      "intermediate_json": "intermediates/R01/E06/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 5.6697
+    },
+    {
+      "measurement_id": "R01_E06_lower_structure",
+      "reference_id": "R01",
+      "dataset": "first",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "input_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "method_id": "E06",
+      "method_name": "PAE(부분 면적 효과)",
+      "implementation": "methods_points.cpp::method_pae",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "config_hash": "12e55b809d3fe019aa8a1531650ed6012b9dc7b34b1ef698026c2faa419ad00e",
+      "line": {
+        "point_xy": [
+          2044.0663867187618,
+          1878.5652408003764
+        ],
+        "direction_xy": [
+          0.9999943403948824,
+          0.0033643986392734707
+        ],
+        "slope_dy_dx": 0.003364417680548993,
+        "intercept_y_px": 1871.6881477086838,
+        "general_form_abc": [
+          -0.0033643986392734707,
+          0.9999943403948824,
+          -1871.6775546928648
+        ],
+        "image_angle_deg": 0.19276620629026672
+      },
+      "slope_dy_dx": 0.003364417680548993,
+      "intercept_y_px": 1871.6881477086838,
+      "image_angle_deg": 0.19276620629026672,
+      "line_endpoints_xy": [
+        [
+          33.996593438113905,
+          1871.8025264487255
+        ],
+        [
+          3815.995870738884,
+          1884.5267516850997
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1871.768893733017
+        ],
+        [
+          3816.0,
+          1884.5267655776588
+        ]
+      ],
+      "n_candidates": 1526,
+      "n_selected": 801,
+      "support_type": "subpixel_edge_points: PAE second-order a at column centre (1 per column)",
+      "fit_rms_px": 1.095544779795725,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "window": "3x9",
+        "visible_columns": 1526,
+        "occluded_columns_skipped": 371,
+        "fit_input_points": 1452,
+        "fit_inlier_points": 801,
+        "fit_rms_all_input_px": 2.3457475531790646,
+        "fit_max_abs_inlier_residual_px": 1.994516985213843,
+        "huber_all_points_angle_before_trim_deg": 0.20502996073374952
+      },
+      "intermediate_json": "intermediates/R01/E06/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 8.3555
+    },
+    {
+      "measurement_id": "R02_E01_upper_structure",
+      "reference_id": "R02",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "input_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "method_id": "E01",
+      "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+      "implementation": "methods_points.cpp::method_profile_gaussian",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size",
+        "profile_examples_every": 100
+      },
+      "config_hash": "a38d38c75da4f0d35ef270a646e7d4febb065a387f4188191f1edaef878f44e2",
+      "line": {
+        "point_xy": [
+          1930.9873980726582,
+          716.8144862657502
+        ],
+        "direction_xy": [
+          0.9999886307627761,
+          0.004768474094325184
+        ],
+        "slope_dy_dx": 0.004768528308854736,
+        "intercept_y_px": 707.606518193999,
+        "general_form_abc": [
+          -0.004768474094325184,
+          0.9999886307627761,
+          -707.5984732476326
+        ],
+        "image_angle_deg": 0.27321447573648133
+      },
+      "slope_dy_dx": 0.004768528308854736,
+      "intercept_y_px": 707.606518193999,
+      "image_angle_deg": 0.27321447573648133,
+      "line_endpoints_xy": [
+        [
+          23.999216231262835,
+          707.7209591359881
+        ],
+        [
+          3815.9993634809425,
+          725.8032191853296
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.7209628734115
+        ],
+        [
+          3816.0,
+          725.8032222205887
+        ]
+      ],
+      "n_candidates": 1356,
+      "n_selected": 1349,
+      "support_type": "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)",
+      "fit_rms_px": 0.2686228435453111,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "visible_columns": 1356,
+        "occluded_columns_skipped": 541,
+        "nelder_mead_not_converged": 7,
+        "fit_input_points": 1349,
+        "fit_inlier_points": 1349,
+        "fit_rms_all_input_px": 0.2686228435453111,
+        "fit_max_abs_inlier_residual_px": 1.172055740826388,
+        "huber_all_points_angle_before_trim_deg": 0.27321447573648133
+      },
+      "intermediate_json": "intermediates/R02/E01/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 59.0866
+    },
+    {
+      "measurement_id": "R02_E01_lower_structure",
+      "reference_id": "R02",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "input_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "method_id": "E01",
+      "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+      "implementation": "methods_points.cpp::method_profile_gaussian",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size",
+        "profile_examples_every": 100
+      },
+      "config_hash": "53dbbe90e8904476051de9a02744af775ec446e6e1abacc38655957fe8827eaf",
+      "line": {
+        "point_xy": [
+          1915.8000387051475,
+          1878.6526787270425
+        ],
+        "direction_xy": [
+          0.9999926723550908,
+          0.0038282157886002327
+        ],
+        "slope_dy_dx": 0.0038282438406117224,
+        "intercept_y_px": 1871.3185290290257,
+        "general_form_abc": [
+          -0.0038282157886002327,
+          0.9999926723550908,
+          -1871.304816671333
+        ],
+        "image_angle_deg": 0.21934114350373907
+      },
+      "slope_dy_dx": 0.0038282438406117224,
+      "intercept_y_px": 1871.3185290290257,
+      "image_angle_deg": 0.21934114350373907,
+      "line_endpoints_xy": [
+        [
+          61.99381184212916,
+          1871.5558564573664
+        ],
+        [
+          3812.000012561687,
+          1885.911794597527
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1871.4104068812005
+        ],
+        [
+          3816.0,
+          1885.9271075248
+        ]
+      ],
+      "n_candidates": 1526,
+      "n_selected": 693,
+      "support_type": "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)",
+      "fit_rms_px": 1.1222051358422005,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "visible_columns": 1526,
+        "occluded_columns_skipped": 371,
+        "nelder_mead_not_converged": 40,
+        "fit_input_points": 1028,
+        "fit_inlier_points": 693,
+        "fit_rms_all_input_px": 2.086127643416662,
+        "fit_max_abs_inlier_residual_px": 1.9890382788756282,
+        "huber_all_points_angle_before_trim_deg": 0.21880700675552012
+      },
+      "intermediate_json": "intermediates/R02/E01/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 50.122
+    },
+    {
+      "measurement_id": "R02_E02_upper_structure",
+      "reference_id": "R02",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "input_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "method_id": "E02",
+      "method_name": "Canny–Devernay 서브픽셀 경계점",
+      "implementation": "methods_points.cpp::method_canny_devernay",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "config_hash": "3f478c5bd8c5fa6371a977d80ad7e3e5264a1badec417d862338013625cd95ad",
+      "line": {
+        "point_xy": [
+          1924.8865143699143,
+          716.8057580963175
+        ],
+        "direction_xy": [
+          0.9999886507250737,
+          0.004764285995457582
+        ],
+        "slope_dy_dx": 0.004764340067262848,
+        "intercept_y_px": 707.634944150971,
+        "general_form_abc": [
+          -0.004764285995457582,
+          0.9999886507250737,
+          -707.6269130074425
+        ],
+        "image_angle_deg": 0.2729745126213821
+      },
+      "slope_dy_dx": 0.004764340067262848,
+      "intercept_y_px": 707.634944150971,
+      "image_angle_deg": 0.2729745126213821,
+      "line_endpoints_xy": [
+        [
+          23.99961180173659,
+          707.7492864630767
+        ],
+        [
+          3815.999560318447,
+          725.8156637528535
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.7492883125853
+        ],
+        [
+          3816.0,
+          725.8156658476461
+        ]
+      ],
+      "n_candidates": 9225,
+      "n_selected": 1357,
+      "support_type": "subpixel_edge_points: Canny-Devernay points, strongest per column bin",
+      "fit_rms_px": 0.257785306768304,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "devernay_points_in_region": 15582,
+        "devernay_curves_in_region": 482,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ],
+        "integer_pixel_note": "x_rounded/y_rounded = nearest pixel of each Devernay point (the NMS pixel; the correction offset is within +-0.5 px along one axis).",
+        "fit_input_points": 1357,
+        "fit_inlier_points": 1357,
+        "fit_rms_all_input_px": 0.257785306768304,
+        "fit_max_abs_inlier_residual_px": 1.162715010698684,
+        "huber_all_points_angle_before_trim_deg": 0.2729745126213821
+      },
+      "intermediate_json": "intermediates/R02/E02/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 63.6817
+    },
+    {
+      "measurement_id": "R02_E02_lower_structure",
+      "reference_id": "R02",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "input_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "method_id": "E02",
+      "method_name": "Canny–Devernay 서브픽셀 경계점",
+      "implementation": "methods_points.cpp::method_canny_devernay",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "config_hash": "a3041666814fc6eabaed011a44a79a26106ddac52ce4b63c55b643aa48df2660",
+      "line": {
+        "point_xy": [
+          2042.6182312512306,
+          1878.7631964307895
+        ],
+        "direction_xy": [
+          0.9999931239430597,
+          0.0037083778934093865
+        ],
+        "slope_dy_dx": 0.0037084033926022717,
+        "intercept_y_px": 1871.1883440522263,
+        "general_form_abc": [
+          -0.0037083778934093865,
+          0.9999931239430597,
+          -1871.1754776546265
+        ],
+        "image_angle_deg": 0.21247488912867485
+      },
+      "slope_dy_dx": 0.0037084033926022717,
+      "intercept_y_px": 1871.1883440522263,
+      "image_angle_deg": 0.21247488912867485,
+      "line_endpoints_xy": [
+        [
+          23.992976256809243,
+          1871.2773196867756
+        ],
+        [
+          3811.996786699502,
+          1885.3247658686116
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1871.2773457336486
+        ],
+        [
+          3816.0,
+          1885.3396113983965
+        ]
+      ],
+      "n_candidates": 7916,
+      "n_selected": 783,
+      "support_type": "subpixel_edge_points: Canny-Devernay points, strongest per column bin",
+      "fit_rms_px": 1.1667743409345388,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "devernay_points_in_region": 8337,
+        "devernay_curves_in_region": 428,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ],
+        "integer_pixel_note": "x_rounded/y_rounded = nearest pixel of each Devernay point (the NMS pixel; the correction offset is within +-0.5 px along one axis).",
+        "fit_input_points": 1515,
+        "fit_inlier_points": 783,
+        "fit_rms_all_input_px": 2.3360386279932897,
+        "fit_max_abs_inlier_residual_px": 1.9998464502739952,
+        "huber_all_points_angle_before_trim_deg": 0.21524328675715235
+      },
+      "intermediate_json": "intermediates/R02/E02/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 84.0944
+    },
+    {
+      "measurement_id": "R02_E06_upper_structure",
+      "reference_id": "R02",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "input_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "method_id": "E06",
+      "method_name": "PAE(부분 면적 효과)",
+      "implementation": "methods_points.cpp::method_pae",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "config_hash": "7febbcba0fbbdbed10049baa3b0ec346b272544bdcca850be71a978541850278",
+      "line": {
+        "point_xy": [
+          1921.2299625467954,
+          716.9075368814849
+        ],
+        "direction_xy": [
+          0.9999886138365741,
+          0.004772022339331422
+        ],
+        "slope_dy_dx": 0.004772076674976324,
+        "intercept_y_px": 707.7392801899497,
+        "general_form_abc": [
+          -0.004772022339331422,
+          0.9999886138365741,
+          -707.7312217548425
+        ],
+        "image_angle_deg": 0.2734177775131236
+      },
+      "slope_dy_dx": 0.004772076674976324,
+      "intercept_y_px": 707.7392801899497,
+      "image_angle_deg": 0.2734177775131236,
+      "line_endpoints_xy": [
+        [
+          24.00036299415092,
+          707.8538117623851
+        ],
+        [
+          3815.998332078925,
+          725.9495168222121
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.8538100301491
+        ],
+        [
+          3816.0,
+          725.9495247816593
+        ]
+      ],
+      "n_candidates": 1356,
+      "n_selected": 1335,
+      "support_type": "subpixel_edge_points: PAE second-order a at column centre (1 per column)",
+      "fit_rms_px": 0.3228646006752836,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "window": "3x9",
+        "visible_columns": 1356,
+        "occluded_columns_skipped": 541,
+        "fit_input_points": 1335,
+        "fit_inlier_points": 1335,
+        "fit_rms_all_input_px": 0.3228646006752836,
+        "fit_max_abs_inlier_residual_px": 1.2475960542948565,
+        "huber_all_points_angle_before_trim_deg": 0.2734177775131236
+      },
+      "intermediate_json": "intermediates/R02/E06/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 4.6462
+    },
+    {
+      "measurement_id": "R02_E06_lower_structure",
+      "reference_id": "R02",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "input_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "method_id": "E06",
+      "method_name": "PAE(부분 면적 효과)",
+      "implementation": "methods_points.cpp::method_pae",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "config_hash": "12e55b809d3fe019aa8a1531650ed6012b9dc7b34b1ef698026c2faa419ad00e",
+      "line": {
+        "point_xy": [
+          2024.8362757317063,
+          1878.3375131489759
+        ],
+        "direction_xy": [
+          0.999993475055394,
+          0.0036124571467509112
+        ],
+        "slope_dy_dx": 0.0036124807179874862,
+        "intercept_y_px": 1871.0228311458134,
+        "general_form_abc": [
+          -0.0036124571467509112,
+          0.999993475055394,
+          -1871.0106228254838
+        ],
+        "image_angle_deg": 0.20697899835639413
+      },
+      "slope_dy_dx": 0.0036124807179874862,
+      "intercept_y_px": 1871.0228311458134,
+      "image_angle_deg": 0.20697899835639413,
+      "line_endpoints_xy": [
+        [
+          23.995965332095693,
+          1871.1095161078852
+        ],
+        [
+          3815.9947457654434,
+          1884.8080385848327
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1871.109530683045
+        ],
+        [
+          3816.0,
+          1884.8080575656536
+        ]
+      ],
+      "n_candidates": 1526,
+      "n_selected": 794,
+      "support_type": "subpixel_edge_points: PAE second-order a at column centre (1 per column)",
+      "fit_rms_px": 1.1823107329369282,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "window": "3x9",
+        "visible_columns": 1526,
+        "occluded_columns_skipped": 371,
+        "fit_input_points": 1467,
+        "fit_inlier_points": 794,
+        "fit_rms_all_input_px": 2.430446843588615,
+        "fit_max_abs_inlier_residual_px": 1.9982633960518559,
+        "huber_all_points_angle_before_trim_deg": 0.2151915911968669
+      },
+      "intermediate_json": "intermediates/R02/E06/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 5.7837
+    },
+    {
+      "measurement_id": "R03_E01_upper_structure",
+      "reference_id": "R03",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "input_sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "method_id": "E01",
+      "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+      "implementation": "methods_points.cpp::method_profile_gaussian",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size",
+        "profile_examples_every": 100
+      },
+      "config_hash": "a38d38c75da4f0d35ef270a646e7d4febb065a387f4188191f1edaef878f44e2",
+      "line": {
+        "point_xy": [
+          1930.5022222221971,
+          716.8353132040355
+        ],
+        "direction_xy": [
+          0.9999887089052387,
+          0.004752058715326264
+        ],
+        "slope_dy_dx": 0.004752112371877371,
+        "intercept_y_px": 707.6613497098766,
+        "general_form_abc": [
+          -0.004752058715326264,
+          0.9999887089052387,
+          -707.6533594385182
+        ],
+        "image_angle_deg": 0.27227393314425297
+      },
+      "slope_dy_dx": 0.004752112371877371,
+      "intercept_y_px": 707.6613497098766,
+      "image_angle_deg": 0.27227393314425297,
+      "line_endpoints_xy": [
+        [
+          23.99894480219905,
+          707.7753953923832
+        ],
+        [
+          3815.999827352541,
+          725.7954097005206
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.7754004068016
+        ],
+        [
+          3816.0,
+          725.7954105209607
+        ]
+      ],
+      "n_candidates": 1356,
+      "n_selected": 1350,
+      "support_type": "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)",
+      "fit_rms_px": 0.27149477135874656,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "visible_columns": 1356,
+        "occluded_columns_skipped": 541,
+        "nelder_mead_not_converged": 6,
+        "fit_input_points": 1350,
+        "fit_inlier_points": 1350,
+        "fit_rms_all_input_px": 0.27149477135874656,
+        "fit_max_abs_inlier_residual_px": 1.216228364657387,
+        "huber_all_points_angle_before_trim_deg": 0.27227393314425297
+      },
+      "intermediate_json": "intermediates/R03/E01/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 59.719
+    },
+    {
+      "measurement_id": "R03_E01_lower_structure",
+      "reference_id": "R03",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "input_sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "method_id": "E01",
+      "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+      "implementation": "methods_points.cpp::method_profile_gaussian",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size",
+        "profile_examples_every": 100
+      },
+      "config_hash": "53dbbe90e8904476051de9a02744af775ec446e6e1abacc38655957fe8827eaf",
+      "line": {
+        "point_xy": [
+          2011.4867061431487,
+          1878.9416990030602
+        ],
+        "direction_xy": [
+          0.999993341787216,
+          0.003649161716920193
+        ],
+        "slope_dy_dx": 0.0036491860139771628,
+        "intercept_y_px": 1871.6014098477017,
+        "general_form_abc": [
+          -0.003649161716920193,
+          0.999993341787216,
+          -1871.588948327268
+        ],
+        "image_angle_deg": 0.2090820291779928
+      },
+      "slope_dy_dx": 0.0036491860139771628,
+      "intercept_y_px": 1871.6014098477017,
+      "image_angle_deg": 0.2090820291779928,
+      "line_endpoints_xy": [
+        [
+          53.99603812888677,
+          1871.7984514348518
+        ],
+        [
+          3811.9946377616743,
+          1885.5120873651774
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1871.688990312037
+        ],
+        [
+          3816.0,
+          1885.5267036770385
+        ]
+      ],
+      "n_candidates": 1526,
+      "n_selected": 765,
+      "support_type": "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)",
+      "fit_rms_px": 1.1180671119813248,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "visible_columns": 1526,
+        "occluded_columns_skipped": 371,
+        "nelder_mead_not_converged": 31,
+        "fit_input_points": 1077,
+        "fit_inlier_points": 765,
+        "fit_rms_all_input_px": 1.8696679839124133,
+        "fit_max_abs_inlier_residual_px": 1.9973560775639125,
+        "huber_all_points_angle_before_trim_deg": 0.2161612060763727
+      },
+      "intermediate_json": "intermediates/R03/E01/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 49.0105
+    },
+    {
+      "measurement_id": "R03_E02_upper_structure",
+      "reference_id": "R03",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "input_sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "method_id": "E02",
+      "method_name": "Canny–Devernay 서브픽셀 경계점",
+      "implementation": "methods_points.cpp::method_canny_devernay",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "config_hash": "3f478c5bd8c5fa6371a977d80ad7e3e5264a1badec417d862338013625cd95ad",
+      "line": {
+        "point_xy": [
+          1924.880619012536,
+          716.8268968677343
+        ],
+        "direction_xy": [
+          0.9999887346570057,
+          0.0047466366071915265
+        ],
+        "slope_dy_dx": 0.004746690080283369,
+        "intercept_y_px": 707.6900851277378,
+        "general_form_abc": [
+          -0.0047466366071915265,
+          0.9999887346570057,
+          -707.682112756195
+        ],
+        "image_angle_deg": 0.2719632657282946
+      },
+      "slope_dy_dx": 0.004746690080283369,
+      "intercept_y_px": 707.6900851277378,
+      "image_angle_deg": 0.2719632657282946,
+      "line_endpoints_xy": [
+        [
+          23.999481080338,
+          707.8040032265137
+        ],
+        [
+          3815.9999744726765,
+          725.8034543529288
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.8040056896646
+        ],
+        [
+          3816.0,
+          725.8034544740991
+        ]
+      ],
+      "n_candidates": 9058,
+      "n_selected": 1357,
+      "support_type": "subpixel_edge_points: Canny-Devernay points, strongest per column bin",
+      "fit_rms_px": 0.2601423066967905,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "devernay_points_in_region": 15379,
+        "devernay_curves_in_region": 442,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ],
+        "integer_pixel_note": "x_rounded/y_rounded = nearest pixel of each Devernay point (the NMS pixel; the correction offset is within +-0.5 px along one axis).",
+        "fit_input_points": 1357,
+        "fit_inlier_points": 1357,
+        "fit_rms_all_input_px": 0.2601423066967905,
+        "fit_max_abs_inlier_residual_px": 1.0782819742311673,
+        "huber_all_points_angle_before_trim_deg": 0.2719632657282946
+      },
+      "intermediate_json": "intermediates/R03/E02/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 62.293
+    },
+    {
+      "measurement_id": "R03_E02_lower_structure",
+      "reference_id": "R03",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "input_sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "method_id": "E02",
+      "method_name": "Canny–Devernay 서브픽셀 경계점",
+      "implementation": "methods_points.cpp::method_canny_devernay",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "config_hash": "a3041666814fc6eabaed011a44a79a26106ddac52ce4b63c55b643aa48df2660",
+      "line": {
+        "point_xy": [
+          2026.527051071944,
+          1878.5086283405842
+        ],
+        "direction_xy": [
+          0.9999927575494013,
+          0.0038058965756311673
+        ],
+        "slope_dy_dx": 0.0038059241398487324,
+        "intercept_y_px": 1870.795820116853,
+        "general_form_abc": [
+          -0.0038058965756311673,
+          0.9999927575494013,
+          -1870.7822709705456
+        ],
+        "image_angle_deg": 0.21806233748244813
+      },
+      "slope_dy_dx": 0.0038059241398487324,
+      "intercept_y_px": 1870.795820116853,
+      "image_angle_deg": 0.21806233748244813,
+      "line_endpoints_xy": [
+        [
+          26.99406713061194,
+          1870.898557488578
+        ],
+        [
+          3813.9936530681352,
+          1885.3115906302949
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1870.8871622962095
+        ],
+        [
+          3816.0,
+          1885.3192266345159
+        ]
+      ],
+      "n_candidates": 7911,
+      "n_selected": 820,
+      "support_type": "subpixel_edge_points: Canny-Devernay points, strongest per column bin",
+      "fit_rms_px": 1.1788278373639156,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "devernay_points_in_region": 8341,
+        "devernay_curves_in_region": 462,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ],
+        "integer_pixel_note": "x_rounded/y_rounded = nearest pixel of each Devernay point (the NMS pixel; the correction offset is within +-0.5 px along one axis).",
+        "fit_input_points": 1518,
+        "fit_inlier_points": 820,
+        "fit_rms_all_input_px": 2.277950599441634,
+        "fit_max_abs_inlier_residual_px": 1.992514091667171,
+        "huber_all_points_angle_before_trim_deg": 0.217406414695328
+      },
+      "intermediate_json": "intermediates/R03/E02/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 68.9805
+    },
+    {
+      "measurement_id": "R03_E06_upper_structure",
+      "reference_id": "R03",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "input_sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "method_id": "E06",
+      "method_name": "PAE(부분 면적 효과)",
+      "implementation": "methods_points.cpp::method_pae",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "config_hash": "7febbcba0fbbdbed10049baa3b0ec346b272544bdcca850be71a978541850278",
+      "line": {
+        "point_xy": [
+          1919.7505125359307,
+          716.9155034408823
+        ],
+        "direction_xy": [
+          0.9999886613163603,
+          0.004762062443282732
+        ],
+        "slope_dy_dx": 0.004762116439414494,
+        "intercept_y_px": 707.7734279655605,
+        "general_form_abc": [
+          -0.004762062443282732,
+          0.9999886613163603,
+          -707.7654027465722
+        ],
+        "image_angle_deg": 0.27284711102099496
+      },
+      "slope_dy_dx": 0.004762116439414494,
+      "intercept_y_px": 707.7734279655605,
+      "image_angle_deg": 0.27284711102099496,
+      "line_endpoints_xy": [
+        [
+          24.000114506996624,
+          707.8877193054021
+        ],
+        [
+          3815.998549130665,
+          725.9456573891575
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.8877187601064
+        ],
+        [
+          3816.0,
+          725.9456642983662
+        ]
+      ],
+      "n_candidates": 1356,
+      "n_selected": 1337,
+      "support_type": "subpixel_edge_points: PAE second-order a at column centre (1 per column)",
+      "fit_rms_px": 0.3286581632061881,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "window": "3x9",
+        "visible_columns": 1356,
+        "occluded_columns_skipped": 541,
+        "fit_input_points": 1337,
+        "fit_inlier_points": 1337,
+        "fit_rms_all_input_px": 0.3286581632061881,
+        "fit_max_abs_inlier_residual_px": 1.4206590053468267,
+        "huber_all_points_angle_before_trim_deg": 0.27284711102099496
+      },
+      "intermediate_json": "intermediates/R03/E06/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 6.0658
+    },
+    {
+      "measurement_id": "R03_E06_lower_structure",
+      "reference_id": "R03",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "input_sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "method_id": "E06",
+      "method_name": "PAE(부분 면적 효과)",
+      "implementation": "methods_points.cpp::method_pae",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "config_hash": "12e55b809d3fe019aa8a1531650ed6012b9dc7b34b1ef698026c2faa419ad00e",
+      "line": {
+        "point_xy": [
+          2051.379027018132,
+          1878.497116072876
+        ],
+        "direction_xy": [
+          0.9999935914523423,
+          0.003580091373945604
+        ],
+        "slope_dy_dx": 0.003580114317278826,
+        "intercept_y_px": 1871.152944648083,
+        "general_form_abc": [
+          -0.003580091373945604,
+          0.9999935914523423,
+          -1871.1409532752623
+        ],
+        "image_angle_deg": 0.2051245641819776
+      },
+      "slope_dy_dx": 0.003580114317278826,
+      "intercept_y_px": 1871.152944648083,
+      "image_angle_deg": 0.2051245641819776,
+      "line_endpoints_xy": [
+        [
+          53.99772857093217,
+          1871.3462626892401
+        ],
+        [
+          3816.002386434655,
+          1884.8146694265276
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1871.2388673916976
+        ],
+        [
+          3816.0,
+          1884.814660882819
+        ]
+      ],
+      "n_candidates": 1526,
+      "n_selected": 810,
+      "support_type": "subpixel_edge_points: PAE second-order a at column centre (1 per column)",
+      "fit_rms_px": 1.118249421757764,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "window": "3x9",
+        "visible_columns": 1526,
+        "occluded_columns_skipped": 371,
+        "fit_input_points": 1469,
+        "fit_inlier_points": 810,
+        "fit_rms_all_input_px": 2.519444182556663,
+        "fit_max_abs_inlier_residual_px": 1.998826436750043,
+        "huber_all_points_angle_before_trim_deg": 0.2164402097754981
+      },
+      "intermediate_json": "intermediates/R03/E06/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 4.8609
+    },
+    {
+      "measurement_id": "R04_E01_upper_structure",
+      "reference_id": "R04",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "input_sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "method_id": "E01",
+      "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+      "implementation": "methods_points.cpp::method_profile_gaussian",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size",
+        "profile_examples_every": 100
+      },
+      "config_hash": "a38d38c75da4f0d35ef270a646e7d4febb065a387f4188191f1edaef878f44e2",
+      "line": {
+        "point_xy": [
+          1928.6686390532661,
+          716.8553513903385
+        ],
+        "direction_xy": [
+          0.9999887717686098,
+          0.004738811740018133
+        ],
+        "slope_dy_dx": 0.004738864949090308,
+        "intercept_y_px": 707.7156511783193,
+        "general_form_abc": [
+          -0.004738811740018133,
+          0.9999887717686098,
+          -707.7077047832294
+        ],
+        "image_angle_deg": 0.2715149288216611
+      },
+      "slope_dy_dx": 0.004738864949090308,
+      "intercept_y_px": 707.7156511783193,
+      "image_angle_deg": 0.2715149288216611,
+      "line_endpoints_xy": [
+        [
+          23.999076640702015,
+          707.8293795614223
+        ],
+        [
+          3815.9999832353346,
+          725.7991597446023
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.8293839370974
+        ],
+        [
+          3816.0,
+          725.7991598240478
+        ]
+      ],
+      "n_candidates": 1356,
+      "n_selected": 1352,
+      "support_type": "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)",
+      "fit_rms_px": 0.26285715175619,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "visible_columns": 1356,
+        "occluded_columns_skipped": 541,
+        "nelder_mead_not_converged": 4,
+        "fit_input_points": 1352,
+        "fit_inlier_points": 1352,
+        "fit_rms_all_input_px": 0.26285715175619,
+        "fit_max_abs_inlier_residual_px": 1.1323430359027533,
+        "huber_all_points_angle_before_trim_deg": 0.2715149288216611
+      },
+      "intermediate_json": "intermediates/R04/E01/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 55.0798
+    },
+    {
+      "measurement_id": "R04_E01_lower_structure",
+      "reference_id": "R04",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "input_sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "method_id": "E01",
+      "method_name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+      "implementation": "methods_points.cpp::method_profile_gaussian",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "gradient": "sobel_y_ksize3_raw",
+        "half_window": 5,
+        "min_peak": 8.0,
+        "nm_max_iter": 800,
+        "nm_tol": 1e-10,
+        "max_center_shift_px": 2.0,
+        "init_sigma": "neighborhood_size",
+        "profile_examples_every": 100
+      },
+      "config_hash": "53dbbe90e8904476051de9a02744af775ec446e6e1abacc38655957fe8827eaf",
+      "line": {
+        "point_xy": [
+          1963.2506449302516,
+          1878.6509172833194
+        ],
+        "direction_xy": [
+          0.9999924869777513,
+          0.003876336937351706
+        ],
+        "slope_dy_dx": 0.003876366060576163,
+        "intercept_y_px": 1871.0406391149074,
+        "general_form_abc": [
+          -0.003876336937351706,
+          0.9999924869777513,
+          -1871.0265819449578
+        ],
+        "image_angle_deg": 0.22209830269102857
+      },
+      "slope_dy_dx": 0.003876366060576163,
+      "intercept_y_px": 1871.0406391149074,
+      "image_angle_deg": 0.22209830269102857,
+      "line_endpoints_xy": [
+        [
+          35.992705292320124,
+          1871.180160016131
+        ],
+        [
+          3813.9962314657196,
+          1885.8250846617266
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1871.1336719003612
+        ],
+        [
+          3816.0,
+          1885.8328520020661
+        ]
+      ],
+      "n_candidates": 1526,
+      "n_selected": 699,
+      "support_type": "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)",
+      "fit_rms_px": 1.1196690342097493,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "visible_columns": 1526,
+        "occluded_columns_skipped": 371,
+        "nelder_mead_not_converged": 29,
+        "fit_input_points": 1051,
+        "fit_inlier_points": 699,
+        "fit_rms_all_input_px": 1.861994901769507,
+        "fit_max_abs_inlier_residual_px": 1.997664204704951,
+        "huber_all_points_angle_before_trim_deg": 0.22055528017973122
+      },
+      "intermediate_json": "intermediates/R04/E01/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 48.9569
+    },
+    {
+      "measurement_id": "R04_E02_upper_structure",
+      "reference_id": "R04",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "input_sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "method_id": "E02",
+      "method_name": "Canny–Devernay 서브픽셀 경계점",
+      "implementation": "methods_points.cpp::method_canny_devernay",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "config_hash": "3f478c5bd8c5fa6371a977d80ad7e3e5264a1badec417d862338013625cd95ad",
+      "line": {
+        "point_xy": [
+          1924.8784082534826,
+          716.8544397768857
+        ],
+        "direction_xy": [
+          0.999988793178737,
+          0.0047342915978120705
+        ],
+        "slope_dy_dx": 0.0047343446547664135,
+        "intercept_y_px": 707.7414019736955,
+        "general_form_abc": [
+          -0.0047342915978120705,
+          0.999988793178737,
+          -707.7334704423032
+        ],
+        "image_angle_deg": 0.27125594084525084
+      },
+      "slope_dy_dx": 0.0047343446547664135,
+      "intercept_y_px": 707.7414019736955,
+      "image_angle_deg": 0.27125594084525084,
+      "line_endpoints_xy": [
+        [
+          23.999578239246148,
+          707.8550242486491
+        ],
+        [
+          3816.0001674363652,
+          725.8076619689856
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.8550262454098
+        ],
+        [
+          3816.0,
+          725.8076611762841
+        ]
+      ],
+      "n_candidates": 8891,
+      "n_selected": 1357,
+      "support_type": "subpixel_edge_points: Canny-Devernay points, strongest per column bin",
+      "fit_rms_px": 0.25130339614997,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "devernay_points_in_region": 15269,
+        "devernay_curves_in_region": 456,
+        "detector_region_xywh": [
+          8,
+          676,
+          3825,
+          77
+        ],
+        "integer_pixel_note": "x_rounded/y_rounded = nearest pixel of each Devernay point (the NMS pixel; the correction offset is within +-0.5 px along one axis).",
+        "fit_input_points": 1357,
+        "fit_inlier_points": 1357,
+        "fit_rms_all_input_px": 0.25130339614997,
+        "fit_max_abs_inlier_residual_px": 1.039682142261647,
+        "huber_all_points_angle_before_trim_deg": 0.27125594084525084
+      },
+      "intermediate_json": "intermediates/R04/E02/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 55.1408
+    },
+    {
+      "measurement_id": "R04_E02_lower_structure",
+      "reference_id": "R04",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "input_sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "method_id": "E02",
+      "method_name": "Canny–Devernay 서브픽셀 경계점",
+      "implementation": "methods_points.cpp::method_canny_devernay",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "sigma": 1.0,
+        "th_h": 4.0,
+        "th_l": 2.0
+      },
+      "config_hash": "a3041666814fc6eabaed011a44a79a26106ddac52ce4b63c55b643aa48df2660",
+      "line": {
+        "point_xy": [
+          2003.5262051697805,
+          1878.232215016966
+        ],
+        "direction_xy": [
+          0.9999914048506237,
+          0.004146109607339758
+        ],
+        "slope_dy_dx": 0.004146145244077467,
+        "intercept_y_px": 1869.9253043700166,
+        "general_form_abc": [
+          -0.004146109607339758,
+          0.9999914048506237,
+          -1869.9092320827028
+        ],
+        "image_angle_deg": 0.23755526250725656
+      },
+      "slope_dy_dx": 0.004146145244077467,
+      "intercept_y_px": 1869.9253043700166,
+      "image_angle_deg": 0.23755526250725656,
+      "line_endpoints_xy": [
+        [
+          28.99877418845449,
+          1870.0455374997023
+        ],
+        [
+          3815.9967991922986,
+          1885.7469813504026
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1870.0248118558745
+        ],
+        [
+          3816.0,
+          1885.7469946214162
+        ]
+      ],
+      "n_candidates": 7919,
+      "n_selected": 819,
+      "support_type": "subpixel_edge_points: Canny-Devernay points, strongest per column bin",
+      "fit_rms_px": 1.1667594732034003,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "devernay_points_in_region": 8370,
+        "devernay_curves_in_region": 460,
+        "detector_region_xywh": [
+          8,
+          1829,
+          3825,
+          93
+        ],
+        "integer_pixel_note": "x_rounded/y_rounded = nearest pixel of each Devernay point (the NMS pixel; the correction offset is within +-0.5 px along one axis).",
+        "fit_input_points": 1520,
+        "fit_inlier_points": 819,
+        "fit_rms_all_input_px": 2.3552800058432264,
+        "fit_max_abs_inlier_residual_px": 1.996959609538269,
+        "huber_all_points_angle_before_trim_deg": 0.2244995632643634
+      },
+      "intermediate_json": "intermediates/R04/E02/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 68.8048
+    },
+    {
+      "measurement_id": "R04_E06_upper_structure",
+      "reference_id": "R04",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "input_sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "method_id": "E06",
+      "method_name": "PAE(부분 면적 효과)",
+      "implementation": "methods_points.cpp::method_pae",
+      "target_id": "upper_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 상단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          692,
+          736
+        ],
+        "exclude_x_inclusive": [
+          [
+            1370,
+            2450
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "config_hash": "7febbcba0fbbdbed10049baa3b0ec346b272544bdcca850be71a978541850278",
+      "line": {
+        "point_xy": [
+          1919.6396396396347,
+          716.9390783306511
+        ],
+        "direction_xy": [
+          0.9999887156026789,
+          0.004750649145605051
+        ],
+        "slope_dy_dx": 0.004750702754422486,
+        "intercept_y_px": 707.8194410071166,
+        "general_form_abc": [
+          -0.004750649145605051,
+          0.9999887156026789,
+          -707.8114536913126
+        ],
+        "image_angle_deg": 0.2721931698366623
+      },
+      "slope_dy_dx": 0.004750702754422486,
+      "intercept_y_px": 707.8194410071166,
+      "image_angle_deg": 0.2721931698366623,
+      "line_endpoints_xy": [
+        [
+          24.000365600100622,
+          707.93345961008
+        ],
+        [
+          3815.999276534729,
+          725.9481192810242
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          707.9334578732227
+        ],
+        [
+          3816.0,
+          725.9481227179928
+        ]
+      ],
+      "n_candidates": 1356,
+      "n_selected": 1332,
+      "support_type": "subpixel_edge_points: PAE second-order a at column centre (1 per column)",
+      "fit_rms_px": 0.3224776163898625,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "window": "3x9",
+        "visible_columns": 1356,
+        "occluded_columns_skipped": 541,
+        "fit_input_points": 1332,
+        "fit_inlier_points": 1332,
+        "fit_rms_all_input_px": 0.3224776163898625,
+        "fit_max_abs_inlier_residual_px": 1.2094034084179857,
+        "huber_all_points_angle_before_trim_deg": 0.2721931698366623
+      },
+      "intermediate_json": "intermediates/R04/E06/upper_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 4.4154
+    },
+    {
+      "measurement_id": "R04_E06_lower_structure",
+      "reference_id": "R04",
+      "dataset": "second",
+      "input_path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "input_sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "method_id": "E06",
+      "method_name": "PAE(부분 면적 효과)",
+      "implementation": "methods_points.cpp::method_pae",
+      "target_id": "lower_structure",
+      "target_kind": "external",
+      "feature_definition": "QR 장착부 주변 하단 외부 구조물 1개 전체의 경계: y가 증가할 때 어두움→밝음으로 바뀌는 물리적 경계. 중앙 가림 구간은 제외하고 양쪽 가시 구간을 하나의 직선으로 산출.",
+      "feature_class": "external_structure_edge",
+      "status": "ok",
+      "failure_category": null,
+      "failure_reason": null,
+      "roi": {
+        "x_range_inclusive": [
+          24,
+          3816
+        ],
+        "band_y_inclusive": [
+          1845,
+          1905
+        ],
+        "exclude_x_inclusive": [
+          [
+            1560,
+            2300
+          ]
+        ],
+        "detector_margin_px": 16,
+        "column_step_px": 2,
+        "polarity": 1
+      },
+      "parameters": {
+        "half_height": 4,
+        "min_grad": 1.0,
+        "min_contrast": 3.0,
+        "max_abs_a_px": 1.5
+      },
+      "config_hash": "12e55b809d3fe019aa8a1531650ed6012b9dc7b34b1ef698026c2faa419ad00e",
+      "line": {
+        "point_xy": [
+          2090.148916933144,
+          1878.9039288629567
+        ],
+        "direction_xy": [
+          0.999992954300826,
+          0.0037538445234296313
+        ],
+        "slope_dy_dx": 0.0037538709720752383,
+        "intercept_y_px": 1871.057779516367,
+        "general_form_abc": [
+          -0.0037538445234296313,
+          0.999992954300826,
+          -1871.0445966061154
+        ],
+        "image_angle_deg": 0.21507995327060273
+      },
+      "slope_dy_dx": 0.0037538709720752383,
+      "intercept_y_px": 1871.057779516367,
+      "image_angle_deg": 0.21507995327060273,
+      "line_endpoints_xy": [
+        [
+          27.993530775882846,
+          1871.1628636189523
+        ],
+        [
+          3814.0012550199885,
+          1885.375048115045
+        ]
+      ],
+      "draw_endpoints_at_x_range": [
+        [
+          24.0,
+          1871.1478724196968
+        ],
+        [
+          3816.0,
+          1885.382551145806
+        ]
+      ],
+      "n_candidates": 1526,
+      "n_selected": 788,
+      "support_type": "subpixel_edge_points: PAE second-order a at column centre (1 per column)",
+      "fit_rms_px": 1.1614937100466824,
+      "fit_rms_null_reason": null,
+      "fit_rms_note": "fit RMS is the residual of the support points to the fitted line, not measurement accuracy",
+      "diagnostics": {
+        "window": "3x9",
+        "visible_columns": 1526,
+        "occluded_columns_skipped": 371,
+        "fit_input_points": 1468,
+        "fit_inlier_points": 788,
+        "fit_rms_all_input_px": 2.536895140305538,
+        "fit_max_abs_inlier_residual_px": 1.9916707068506074,
+        "huber_all_points_angle_before_trim_deg": 0.2160889326277188
+      },
+      "intermediate_json": "intermediates/R04/E06/lower_structure.json",
+      "intermediate_images": {},
+      "runtime_ms": 5.5901
+    }
+  ]
+}

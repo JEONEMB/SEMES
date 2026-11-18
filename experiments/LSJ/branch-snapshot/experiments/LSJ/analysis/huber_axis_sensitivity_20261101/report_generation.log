@@ -1,0 +1,62 @@
+﻿{
+  "quick": {
+    "upper_structure": {
+      "theta_pearson_range": [
+        -0.9999856937972287,
+        -0.99945398487294
+      ],
+      "theta_sensitivity_range": [
+        -0.08865655068687774,
+        -0.0875951977245911
+      ],
+      "theta_step_range": [
+        -0.0008865655068687774,
+        -0.000875951977245911
+      ],
+      "theta_residual_rms_range": [
+        0.00035104757555218404,
+        0.0010312011710268728
+      ],
+      "max_abs_y_step_response": 8.68508950983222e-05,
+      "y_sensitivity_range": [
+        -0.0017370179019664438,
+        1.7561503899426058e-05
+      ]
+    },
+    "lower_structure": {
+      "theta_pearson_range": [
+        0.9984659274194834,
+        0.9998494652949367
+      ],
+      "theta_sensitivity_range": [
+        0.19639647148648615,
+        0.20001243649043013
+      ],
+      "theta_step_range": [
+        0.0019639647148648617,
+        0.0020001243649043015
+      ],
+      "theta_residual_rms_range": [
+        0.0024696267305722875,
+        0.003842002111298965
+      ],
+      "max_abs_y_step_response": 0.00022681915864893357,
+      "y_sensitivity_range": [
+        -0.004536383172978671,
+        0.0023997009559525244
+      ]
+    }
+  },
+  "verification": {
+    "source_image_hashes_all_match": true,
+    "reference_point_sets_match": 8,
+    "reference_coefficients_max_abs_difference": 0.0,
+    "regression_groups_crosschecked": 38,
+    "max_independent_ols_coefficient_difference": 4.440892098500626e-16,
+    "max_independent_pearson_difference": 7.771561172376096e-16,
+    "all_rows_retained": true,
+    "all_huber_tolerance_met": true,
+    "local_links_checked": 36,
+    "missing_links": []
+  }
+}

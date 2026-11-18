@@ -1,0 +1,433 @@
+{
+  "direct_line_checks": [
+    {
+      "angle": -0.3,
+      "estimated": -0.3000000081454608
+    },
+    {
+      "angle": 0.0,
+      "estimated": 0.0
+    },
+    {
+      "angle": 0.25,
+      "estimated": 0.2499999952904376
+    },
+    {
+      "angle": 0.4,
+      "estimated": 0.3999999947362164
+    }
+  ],
+  "synthetic_edges": [
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.20000009524785453,
+      "error_image_deg": 9.524785452019735e-08
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.20079061670680284,
+      "error_image_deg": 0.0007906167068028325
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.2000000418873274,
+      "error_image_deg": 4.1887327384415585e-08
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.19990903550781652,
+      "error_image_deg": -9.096449218348734e-05
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.1999997350642964,
+      "error_image_deg": -2.649357035977573e-07
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.2005077258778166,
+      "error_image_deg": 0.0005077258778165838
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.2000001085879863,
+      "error_image_deg": 1.085879862972039e-07
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.19984621682632558,
+      "error_image_deg": -0.00015378317367442662
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.25000020873182105,
+      "error_image_deg": 2.0873182104974575e-07
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.24930090650262127,
+      "error_image_deg": -0.0006990934973787333
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.25000002197061055,
+      "error_image_deg": 2.1970610553090353e-08
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.2496955329470775,
+      "error_image_deg": -0.0003044670529225024
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.24999975516888118,
+      "error_image_deg": -2.448311188230079e-07
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.2494330534040059,
+      "error_image_deg": -0.0005669465959941
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.25000002197061055,
+      "error_image_deg": 2.1970610553090353e-08
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.24992425027904425,
+      "error_image_deg": -7.574972095575339e-05
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.3000002482660075,
+      "error_image_deg": 2.482660075298071e-07
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.29996134873729496,
+      "error_image_deg": -3.865126270502506e-05
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.29999992810527853,
+      "error_image_deg": -7.189472145396891e-08
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.30033569665953735,
+      "error_image_deg": 0.0003356966595373656
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.29999979470497473,
+      "error_image_deg": -2.05295025257346e-07
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.29913849108606305,
+      "error_image_deg": -0.000861508913936937
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.29999992810527853,
+      "error_image_deg": -7.189472145396891e-08
+    },
+    {
+      "length_px": 166,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.30040609656054257,
+      "error_image_deg": 0.00040609656054257925
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.20000001520706384,
+      "error_image_deg": 1.520706383040249e-08
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.2000024030906522,
+      "error_image_deg": 2.4030906521921302e-06
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.20000000186693206,
+      "error_image_deg": 1.866932053395942e-09
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.20000154932221845,
+      "error_image_deg": 1.5493222184359556e-06
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.1999999885268003,
+      "error_image_deg": -1.1473199723610605e-08
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.2000414496562695,
+      "error_image_deg": 4.144965626948216e-05
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.1999999885268003,
+      "error_image_deg": -1.1473199723610605e-08
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.2,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.20000154932221845,
+      "error_image_deg": 1.5493222184359556e-06
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.2499999952904376,
+      "error_image_deg": -4.709562406723933e-09
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.24993524251041016,
+      "error_image_deg": -6.475748958983951e-05
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.2499999952904376,
+      "error_image_deg": -4.709562406723933e-09
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.250009706873378,
+      "error_image_deg": 9.706873377979264e-06
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.2499999952904376,
+      "error_image_deg": -4.709562406723933e-09
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.25004817968257764,
+      "error_image_deg": 4.81796825776426e-05
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.2499999952904376,
+      "error_image_deg": -4.709562406723933e-09
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.25,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.25000962683285927,
+      "error_image_deg": 9.626832859266354e-06
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.3000000081454608,
+      "error_image_deg": 8.145460805852878e-09
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.0,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.3000288226109968,
+      "error_image_deg": 2.882261099679262e-05
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.3000000081454608,
+      "error_image_deg": 8.145460805852878e-09
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.25,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.3000083856845304,
+      "error_image_deg": 8.38568453043198e-06
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.3000000081454608,
+      "error_image_deg": 8.145460805852878e-09
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.5,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.3000195379498962,
+      "error_image_deg": 1.9537949896231144e-05
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": false,
+      "estimated_angle_image_deg": 0.3000000081454608,
+      "error_image_deg": 8.145460805852878e-09
+    },
+    {
+      "length_px": 900,
+      "true_angle_image_deg": 0.3,
+      "vertical_phase_px": 0.75,
+      "quantized_uint8": true,
+      "estimated_angle_image_deg": 0.3000083590044697,
+      "error_image_deg": 8.359004469715714e-06
+    }
+  ],
+  "summary": [
+    {
+      "length_px": 166,
+      "quantized_uint8": false,
+      "max_abs_error_image_deg": 2.649357035977573e-07,
+      "rms_error_image_deg": 1.610914349446049e-07
+    },
+    {
+      "length_px": 166,
+      "quantized_uint8": true,
+      "max_abs_error_image_deg": 0.000861508913936937,
+      "rms_error_image_deg": 0.00048688471491045514
+    },
+    {
+      "length_px": 900,
+      "quantized_uint8": false,
+      "max_abs_error_image_deg": 1.520706383040249e-08,
+      "rms_error_image_deg": 8.426757426197522e-09
+    },
+    {
+      "length_px": 900,
+      "quantized_uint8": true,
+      "max_abs_error_image_deg": 6.475748958983951e-05,
+      "rms_error_image_deg": 2.8552627247388314e-05
+    }
+  ],
+  "scope": "Noiseless ideal blurred step edges with known angle and pixel phase; numerical sampling sensitivity only. Does not model real texture, distortion, illumination, or physical camera angles."
+}

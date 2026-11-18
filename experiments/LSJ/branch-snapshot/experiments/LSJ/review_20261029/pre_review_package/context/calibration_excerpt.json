@@ -1,0 +1,254 @@
+{
+  "kind": "Verbatim selected fields from saved results; no refit or image measurement",
+  "sources": {
+    "y_slopes": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\first_y_slopes\\y_slope_results.json",
+      "sha256": "92d321cd6e7904aef474b45375c3fdff74e78a245bf6dca22848a4e59f0155a1"
+    },
+    "y_ranges": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\without_group4\\equivalence_results.json",
+      "sha256": "d0857c8d2da6ad8d8f673b7615f270136e952615501849f1b029e69bf8171c82"
+    },
+    "theta_fits": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\hypothesis_results.json",
+      "sha256": "2d89f4c8e889b3bcbcefd6c4bd0b9df921ae92fc949627fe4e7c3bd16fc0ed0d"
+    },
+    "line_measurements": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\theta_line_hypothesis\\line_measurements.json",
+      "sha256": "2486e980c2ce772a31a46769c870f7a7b042ed3ad1547e7a178e6ed1414404b3"
+    },
+    "qr_measurements": {
+      "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\initial_error\\measurements.json",
+      "sha256": "60b4322cc9679bc91af9c1a61f819273a2c2bcf03d83705451455e4f90b7943c"
+    }
+  },
+  "reference": {
+    "file": "center.bmp",
+    "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+    "image_shape": [
+      2160,
+      3840
+    ],
+    "saved_structure_angles_deg": {
+      "rail_UL_edge": 0.2220793541086069,
+      "rail_UR_edge": 0.314167700500224
+    }
+  },
+  "qr_rois_xyxy_exclusive": {
+    "L": [
+      1545,
+      963,
+      1740,
+      1173
+    ],
+    "C": [
+      1803,
+      963,
+      1998,
+      1173
+    ],
+    "R": [
+      2062,
+      965,
+      2257,
+      1175
+    ]
+  },
+  "y_targets": {
+    "L": {
+      "low_px": 1641.5084992273016,
+      "high_px": 1642.0520375163053,
+      "width_px": 0.5435382890036635,
+      "nonempty": true
+    },
+    "C": {
+      "low_px": 1899.5189918887024,
+      "high_px": 1900.0669405323601,
+      "width_px": 0.547948643657719,
+      "nonempty": true
+    },
+    "R": {
+      "low_px": 2158.5222280477115,
+      "high_px": 2159.072710092858,
+      "width_px": 0.5504820451465093,
+      "nonempty": true
+    }
+  },
+  "y_slopes_by_group": {
+    "2": {
+      "L": 14.352305508186676,
+      "C": 14.364361777917091,
+      "R": 14.36347691337856
+    },
+    "3": {
+      "L": 14.385867373770537,
+      "C": 14.39819961963544,
+      "R": 14.392023325755037
+    },
+    "6": {
+      "L": 14.378173033603522,
+      "C": 14.392832328030458,
+      "R": 14.392921223155035
+    },
+    "7": {
+      "L": 14.353736988623314,
+      "C": 14.369078730878131,
+      "R": 14.364955210461236
+    }
+  },
+  "theta_first_fits": {
+    "rail_UL_edge": {
+      "4": {
+        "intercept_image_deg": 0.22671878178851565,
+        "slope_image_deg_per_label_unit": -0.09973119703735522,
+        "rms_image_deg": 0.00172229156673061,
+        "max_abs_residual_image_deg": 0.005966172980998746,
+        "r2": 0.9964336468309056,
+        "rms_equivalent_label_unit": 0.017269336154518533,
+        "hac_covariance_b_a": [
+          [
+            2.270296261991106e-07,
+            -3.4474355528518396e-07
+          ],
+          [
+            -3.4474355528518396e-07,
+            6.33355708634542e-07
+          ]
+        ],
+        "hac_lags": 4,
+        "hac_slope_approx95": [
+          -0.10129103654521827,
+          -0.09817135752949217
+        ],
+        "hac_intercept_approx95": [
+          0.2257848883192128,
+          0.2276526752578185
+        ],
+        "phi_min_max": [
+          0.1283806089830881,
+          0.2241926945515377
+        ],
+        "label_min_max": [
+          0.01,
+          1.0
+        ],
+        "axis": "Theta",
+        "n": 100
+      },
+      "5": {
+        "intercept_image_deg": 0.22561837948656216,
+        "slope_image_deg_per_label_unit": -0.10272760252945867,
+        "rms_image_deg": 0.0018742223015623606,
+        "max_abs_residual_image_deg": 0.005765790696855122,
+        "r2": 0.9960211174345746,
+        "rms_equivalent_label_unit": 0.018244583300042454,
+        "hac_covariance_b_a": [
+          [
+            1.387512435582018e-07,
+            1.953579514882272e-07
+          ],
+          [
+            1.953579514882272e-07,
+            3.807232772808355e-07
+          ]
+        ],
+        "hac_lags": 4,
+        "hac_slope_approx95": [
+          -0.10393697697188833,
+          -0.10151822808702901
+        ],
+        "hac_intercept_approx95": [
+          0.22488829265799093,
+          0.2263484663151334
+        ],
+        "phi_min_max": [
+          0.22554594214795437,
+          0.32940192946135854
+        ],
+        "label_min_max": [
+          -1.0,
+          -0.01
+        ],
+        "axis": "Theta",
+        "n": 100
+      }
+    },
+    "rail_UR_edge": {
+      "4": {
+        "intercept_image_deg": 0.31593521957747733,
+        "slope_image_deg_per_label_unit": -0.09756346065703894,
+        "rms_image_deg": 0.0016994543034984765,
+        "max_abs_residual_image_deg": 0.00510042521800147,
+        "r2": 0.9963718043672268,
+        "rms_equivalent_label_unit": 0.017418962919658033,
+        "hac_covariance_b_a": [
+          [
+            2.139047661067554e-07,
+            -3.0854533363844754e-07
+          ],
+          [
+            -3.0854533363844754e-07,
+            5.466402261487708e-07
+          ]
+        ],
+        "hac_lags": 4,
+        "hac_slope_approx95": [
+          -0.09901258904775287,
+          -0.09611433226632501
+        ],
+        "hac_intercept_approx95": [
+          0.31502872272173227,
+          0.3168417164332224
+        ],
+        "phi_min_max": [
+          0.21788790453017043,
+          0.31396477222598485
+        ],
+        "label_min_max": [
+          0.01,
+          1.0
+        ],
+        "axis": "Theta",
+        "n": 100
+      },
+      "5": {
+        "intercept_image_deg": 0.316355898466828,
+        "slope_image_deg_per_label_unit": -0.09448536313207767,
+        "rms_image_deg": 0.0016486258805946557,
+        "max_abs_residual_image_deg": 0.0041408154920336004,
+        "r2": 0.9963595429146047,
+        "rms_equivalent_label_unit": 0.017448479065377578,
+        "hac_covariance_b_a": [
+          [
+            9.721965220209927e-08,
+            1.5181169342522301e-07
+          ],
+          [
+            1.5181169342522301e-07,
+            3.125319591657875e-07
+          ]
+        ],
+        "hac_lags": 4,
+        "hac_slope_approx95": [
+          -0.09558109246650807,
+          -0.09338963379764727
+        ],
+        "hac_intercept_approx95": [
+          0.3157447691712615,
+          0.3169670277623945
+        ],
+        "phi_min_max": [
+          0.3175911536437107,
+          0.4114208989208493
+        ],
+        "label_min_max": [
+          -1.0,
+          -0.01
+        ],
+        "axis": "Theta",
+        "n": 100
+      }
+    }
+  },
+  "theta_fit_intercepts_are_not_runtime_targets": true
+}

@@ -1,0 +1,39 @@
+--- before/tools/test_fit_point_views.py
++++ after/tools/test_fit_point_views.py
+@@ -0,0 +1,36 @@
++"""Known-record regression checks; no image reads, fits, or report writes."""
++import unittest
++from fit_point_views import fit_point_view, convergence_label, rms_label
++
++class PointViewsTest(unittest.TestCase):
++    def test_actual_mask_is_not_replaced_by_final_mask(self):
++        v=fit_point_view({'fit_points':[[0,0],[1,1]], 'fit_points_used_flag':[1,1],
++                          'fit_points_final_inlier_flag':[1,0], 'fit_points_inlier_flag':[1,0]})
++        self.assertEqual(v['display_mask'],[True,True])
++        self.assertEqual(v['final_inlier'],[True,False])
++        self.assertEqual(v['basis'],'actual_last_fit_input')
++    def test_legacy_mask_does_not_claim_actual_fit_use(self):
++        v=fit_point_view({'fit_points':[[0,0],[1,1]], 'fit_points_inlier_flag':[1,0]})
++        self.assertIsNone(v['used'])
++        self.assertEqual(v['basis'],'legacy_final_distance_inliers')
++        self.assertIn('미기록',v['label'])
++    def test_unknown_mask_is_not_all_selected(self):
++        v=fit_point_view({'fit_points':[[0,0],[1,1]]})
++        self.assertEqual(v['basis'],'unrecorded')
++        self.assertEqual(v['display_mask'],[False,False])
++    def test_bad_record_mask_is_not_silently_replaced(self):
++        with self.assertRaises(ValueError):
++            fit_point_view({'fit_points':[[0,0]],'fit_points_used_flag':[1,0]})
++        with self.assertRaises(ValueError):
++            fit_point_view({'fit_points':[[0,0]],'fit_points_final_inlier_flag':[2]})
++    def test_convergence_and_missing_history_differ(self):
++        self.assertIn('미기록',convergence_label({'method_id':'E01'}))
++        self.assertEqual(convergence_label({'method_id':'Q11'}),'IRLS 미사용')
++        r={'method_id':'E01','diagnostics':{'irls_runs':[{'stage':'initial','termination':'max_iterations','iterations':100}]}}
++        self.assertIn('수렴 미확인',convergence_label(r))
++        self.assertIn('100회',convergence_label(r))
++    def test_rms_basis_is_not_relabelled_in_old_results(self):
++        self.assertIn('과거',rms_label({'fit_rms_px':0.1}))
++        self.assertIn('실제',rms_label({'fit_rms_px':0.1,'fit_rms_point_set':'actual_last_fit_input'}))
++
++if __name__=='__main__':unittest.main()

@@ -1,0 +1,82 @@
+--- before/cpp/src/main.cpp
++++ after/cpp/src/main.cpp
+@@ -5,6 +5,7 @@
+ //   --root  analysis folder that contains configs/ (default: current directory)
+ //   --out   results folder (default: <root>/results)
+ #include "common.hpp"
++#include "effective_settings.hpp"
+ #include "io_utils.hpp"
+ 
+ #include <opencv2/core.hpp>
+@@ -108,9 +109,11 @@
+     std::vector<std::string> args(argv + 1, argv + argc);
+ #endif
+     std::string root = ".", out;
++    bool check_config = false;
+     std::set<std::string> want_refs, want_methods;
+     for (size_t i = 0; i < args.size(); ++i) {
+-        if (args[i] == "--root" && i + 1 < args.size()) root = args[++i];
++        if (args[i] == "--check-config") check_config = true;
++        else if (args[i] == "--root" && i + 1 < args.size()) root = args[++i];
+         else if (args[i] == "--out" && i + 1 < args.size()) out = args[++i];
+         else if (args[i] == "--refs" && i + 1 < args.size()) for (auto& s : split(args[++i])) want_refs.insert(s);
+         else if (args[i] == "--methods" && i + 1 < args.size()) for (auto& s : split(args[++i])) want_methods.insert(s);
+@@ -140,6 +143,17 @@
+         std::vector<const MethodInfo*> methods;
+         for (auto& m : registry())
+             if (want_methods.empty() || want_methods.count(m.id)) methods.push_back(&m);
++        if(methods.empty())throw std::invalid_argument("no selected method is registered");
++        for(const auto& wanted:want_methods) {
++            bool found=false;for(const auto* m:methods)if(m->id==wanted)found=true;
++            if(!found)throw std::invalid_argument("unknown requested method: "+wanted);
++        }
++        // Resolve/validate before image reads or output directory creation.
++        json settings_by_slot=json::object();
++        cv::Size frame(manifest.at("expected_width").get<int>(),manifest.at("expected_height").get<int>());
++        for(const auto* m:methods)for(const auto& t:targets)if(t.kind==(m->family=="E"?"external":"qr"))
++            settings_by_slot[m->id+"_"+t.id]=effective_settings(m->id,method_config(methods_cfg.at("methods"),m->id).at(t.kind),common,t,frame);
++        if(check_config){std::cout<<settings_by_slot.dump(2)<<std::endl;return 0;}
+         make_dirs(out);
+ 
+         json records = json::array();
+@@ -184,7 +198,10 @@
+                     json params = mcfg.at(kind);
+                     json hashed = {{"method", params}, {"common_fit", common.at("fit")}, {"segment_selection", common.at("segment_selection").at(kind)},
+                                    {"roi", roi_json(t)}};
+-                    std::string dumped = hashed.dump();
++                    const json& settings=settings_by_slot.at(m->id+"_"+t.id);
++                    std::string configured_dump=hashed.dump();
++                    std::string configured_hash=sha256_hex(std::vector<uint8_t>(configured_dump.begin(),configured_dump.end()));
++                    std::string dumped = settings.at("applied").dump();
+                     std::string config_hash = sha256_hex(std::vector<uint8_t>(dumped.begin(), dumped.end()));
+                     std::string rel_dir = "intermediates/" + rid + "/" + m->id;
+                     Sink sink{join_path(out, rel_dir), rel_dir, t.id};
+@@ -194,7 +211,7 @@
+                     if (!problem.empty()) {
+                         res.fail("input_mismatch", problem);
+                     } else {
+-                        MethodContext ctx{gray, t, params, common, fit_params_for(common, kind), sink};
++                        MethodContext ctx{gray, t, params, common, uses_common_fit(m->id)?fit_params_for(common, kind):FitParams{}, sink};
+                         try {
+                             res = m->fn(ctx);
+                         } catch (const std::exception& e) {
+@@ -221,7 +238,11 @@
+                     rec["failure_reason"] = res.status == "ok" ? json(nullptr) : json(res.failure_reason);
+                     rec["roi"] = roi_json(t);
+                     rec["parameters"] = params;
++                    rec["parameters_note"] = "configured values; see settings.applied, settings.inactive and settings.reporting_only for actual scope";
++                    rec["settings"] = settings;
+                     rec["config_hash"] = config_hash;
++                    rec["config_hash_scope"] = "settings.applied only; inactive, display and explanatory values excluded";
++                    rec["configured_config_hash"] = configured_hash;
+                     if (res.has_line) {
+                         json lj = line_json(res.line);
+                         rec["line"] = lj;
+@@ -283,6 +304,7 @@
+         meta["cplusplus"] = (long)__cplusplus;
+         meta["opencv_threads"] = cv::getNumThreads();
+         meta["config_sha256"] = cfg_hash;
++        meta["settings_schema_version"] = 2;
+         meta["coordinate_convention"] = targets_cfg.at("coordinate_convention");
+         meta["angle_convention"] = "image_angle_deg = atan2(dy, dx) with dx > 0 (x-increasing direction), range [-90, 90). Image line angle only; NOT robot theta.";
+         meta["inputs"] = inputs;

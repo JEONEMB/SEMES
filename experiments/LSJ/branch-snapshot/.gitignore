@@ -1,0 +1,40 @@
+# CMake build output
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+
+# Visual Studio / MSVC local and generated files
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.VC.opendb
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.pch
+*.tlog/
+
+# Personal VS Code settings (shared configuration can be committed)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+CMakeUserPresets.json
+
+# Windows / editor temporary files
+Thumbs.db
+Desktop.ini
+~$*
+*.swp
+*.swo
+*~

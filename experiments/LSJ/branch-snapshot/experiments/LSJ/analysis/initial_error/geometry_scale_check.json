@@ -1,0 +1,383 @@
+{
+  "reference": "center.bmp",
+  "reference_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+  "method": "Threshold bright patches; external contours; minimum-area rectangle centers; horizontal center spacing. No inter-frame registration used for static geometry.",
+  "settings_used": {
+    "distance_mm": 385,
+    "focal_length_mm": 12,
+    "assumed_sensor_pitch_um": 2.8,
+    "assumed_horizontal_resize": 0.9375,
+    "assumed_patch_width_mm": 13,
+    "assumed_edge_gap_mm": 5
+  },
+  "nominal_pinhole_px_per_mm": 10.43599257884972,
+  "nominal_pinhole_expected_pitch_px": 187.84786641929497,
+  "static_geometry_px_per_mm": 14.347250620524088,
+  "threshold_sensitivity": [
+    {
+      "threshold": 110,
+      "patches": [
+        {
+          "center_xy_px": [
+            1643.0,
+            1067.0
+          ],
+          "corners_xy_px": [
+            [
+              1737.0,
+              1167.0
+            ],
+            [
+              1549.0,
+              1167.0
+            ],
+            [
+              1549.0,
+              967.0
+            ],
+            [
+              1737.0,
+              967.0
+            ]
+          ],
+          "horizontal_span_px": 188.0
+        },
+        {
+          "center_xy_px": [
+            1901.0,
+            1068.5
+          ],
+          "corners_xy_px": [
+            [
+              1995.0,
+              1168.0
+            ],
+            [
+              1807.0,
+              1168.0
+            ],
+            [
+              1807.0,
+              969.0
+            ],
+            [
+              1995.0,
+              969.0
+            ]
+          ],
+          "horizontal_span_px": 188.0
+        },
+        {
+          "center_xy_px": [
+            2159.541015625,
+            1069.6996612548828
+          ],
+          "corners_xy_px": [
+            [
+              2253.0714111328125,
+              1170.2869110107422
+            ],
+            [
+              2064.8863525390625,
+              1169.2296905517578
+            ],
+            [
+              2066.0106201171875,
+              969.1124114990234
+            ],
+            [
+              2254.1956787109375,
+              970.1696319580078
+            ]
+          ],
+          "horizontal_span_px": 189.309326171875
+        }
+      ],
+      "adjacent_center_dx_px": [
+        258.0,
+        258.541015625
+      ],
+      "mean_pitch_px": 258.2705078125,
+      "conditional_scale_px_per_mm": 14.34836154513889
+    },
+    {
+      "threshold": 130,
+      "patches": [
+        {
+          "center_xy_px": [
+            1643.000015258789,
+            1066.999984741211
+          ],
+          "corners_xy_px": [
+            [
+              1737.0,
+              1166.9999694824219
+            ],
+            [
+              1549.0000305175781,
+              1166.9999694824219
+            ],
+            [
+              1549.0000305175781,
+              967.0
+            ],
+            [
+              1737.0,
+              967.0
+            ]
+          ],
+          "horizontal_span_px": 187.99996948242188
+        },
+        {
+          "center_xy_px": [
+            1901.0,
+            1068.5
+          ],
+          "corners_xy_px": [
+            [
+              1995.0,
+              1168.0
+            ],
+            [
+              1807.0,
+              1168.0
+            ],
+            [
+              1807.0,
+              969.0
+            ],
+            [
+              1995.0,
+              969.0
+            ]
+          ],
+          "horizontal_span_px": 188.0
+        },
+        {
+          "center_xy_px": [
+            2159.5010375976562,
+            1069.8070678710938
+          ],
+          "corners_xy_px": [
+            [
+              2252.9876098632812,
+              1170.277099609375
+            ],
+            [
+              2064.9279174804688,
+              1169.2550354003906
+            ],
+            [
+              2066.0144653320312,
+              969.337043762207
+            ],
+            [
+              2254.0741577148438,
+              970.3591079711914
+            ]
+          ],
+          "horizontal_span_px": 189.146240234375
+        }
+      ],
+      "adjacent_center_dx_px": [
+        257.99998474121094,
+        258.50103759765625
+      ],
+      "mean_pitch_px": 258.2505111694336,
+      "conditional_scale_px_per_mm": 14.347250620524088
+    },
+    {
+      "threshold": 150,
+      "patches": [
+        {
+          "center_xy_px": [
+            1643.0,
+            1067.5
+          ],
+          "corners_xy_px": [
+            [
+              1737.0,
+              1167.0
+            ],
+            [
+              1549.0,
+              1167.0
+            ],
+            [
+              1549.0,
+              968.0
+            ],
+            [
+              1737.0,
+              968.0
+            ]
+          ],
+          "horizontal_span_px": 188.0
+        },
+        {
+          "center_xy_px": [
+            1900.862548828125,
+            1068.4655151367188
+          ],
+          "corners_xy_px": [
+            [
+              1993.9956359863281,
+              1168.7752380371094
+            ],
+            [
+              1806.6083068847656,
+              1167.7225036621094
+            ],
+            [
+              1807.7294616699219,
+              968.1557922363281
+            ],
+            [
+              1995.1167907714844,
+              969.2085266113281
+            ]
+          ],
+          "horizontal_span_px": 188.50848388671875
+        },
+        {
+          "center_xy_px": [
+            2159.5,
+            1070.0
+          ],
+          "corners_xy_px": [
+            [
+              2253.0,
+              1170.0
+            ],
+            [
+              2066.0,
+              1170.0
+            ],
+            [
+              2066.0,
+              970.0
+            ],
+            [
+              2253.0,
+              970.0
+            ]
+          ],
+          "horizontal_span_px": 187.0
+        }
+      ],
+      "adjacent_center_dx_px": [
+        257.862548828125,
+        258.637451171875
+      ],
+      "mean_pitch_px": 258.25,
+      "conditional_scale_px_per_mm": 14.347222222222221
+    },
+    {
+      "threshold": 170,
+      "patches": [
+        {
+          "center_xy_px": [
+            1643.5,
+            1067.5
+          ],
+          "corners_xy_px": [
+            [
+              1737.0,
+              1167.0
+            ],
+            [
+              1550.0,
+              1167.0
+            ],
+            [
+              1550.0,
+              968.0
+            ],
+            [
+              1737.0,
+              968.0
+            ]
+          ],
+          "horizontal_span_px": 187.0
+        },
+        {
+          "center_xy_px": [
+            1900.5,
+            1068.499984741211
+          ],
+          "corners_xy_px": [
+            [
+              1994.0,
+              1167.9999694824219
+            ],
+            [
+              1807.0,
+              1167.9999694824219
+            ],
+            [
+              1807.0,
+              969.0
+            ],
+            [
+              1994.0,
+              969.0
+            ]
+          ],
+          "horizontal_span_px": 187.0
+        },
+        {
+          "center_xy_px": [
+            2159.4999389648438,
+            1069.499984741211
+          ],
+          "corners_xy_px": [
+            [
+              2252.9999389648438,
+              1168.9999694824219
+            ],
+            [
+              2065.9999389648438,
+              1168.9999694824219
+            ],
+            [
+              2065.9999389648438,
+              970.0
+            ],
+            [
+              2252.9999389648438,
+              970.0
+            ]
+          ],
+          "horizontal_span_px": 187.0
+        }
+      ],
+      "adjacent_center_dx_px": [
+        257.0,
+        258.99993896484375
+      ],
+      "mean_pitch_px": 257.9999694824219,
+      "conditional_scale_px_per_mm": 14.333331637912327
+    }
+  ],
+  "all_y_global_linear_fits_excluding_center": {
+    "zncc_quadratic": {
+      "intercept_px": -0.3282609186901627,
+      "slope_px_per_nominal_mm": 14.24770359489687
+    },
+    "translation": {
+      "intercept_px": -0.32918268531599737,
+      "slope_px_per_nominal_mm": 14.248955440065036
+    },
+    "affine": {
+      "intercept_px": -0.3293810000116612,
+      "slope_px_per_nominal_mm": 14.248791220747258
+    }
+  },
+  "limitations": [
+    "13 mm must refer to the detected outer bright patches, with a 5 mm edge gap; no independent physical measurement supplied.",
+    "Static horizontal scale assumes approximately frontal plate orientation and comparable plate-horizontal and robot-Y directions.",
+    "Threshold variation is a robustness check, not a confidence interval or a subpixel accuracy guarantee.",
+    "Pinhole estimate assumes 2.8 um is the actual sensor pitch, horizontal resampling rather than cropping, and 385 mm as optical depth.",
+    "Agreement of the static scale and motion slope does not verify positioning accuracy, zero repeatability, or simultaneous Y/theta separation."
+  ]
+}

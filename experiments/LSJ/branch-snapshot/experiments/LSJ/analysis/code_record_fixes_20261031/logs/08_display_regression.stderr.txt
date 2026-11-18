@@ -1,0 +1,9 @@
+test_current_settings_table_uses_stored_scope (__main__.DisplayContract.test_current_settings_table_uses_stored_scope) ... ok
+test_legacy_segment_records_are_not_reconstructed (__main__.DisplayContract.test_legacy_segment_records_are_not_reconstructed) ... ok
+test_legacy_settings_are_marked_unrecorded (__main__.DisplayContract.test_legacy_settings_are_marked_unrecorded) ... ok
+test_selected_segment_draws_clipped_pieces (__main__.DisplayContract.test_selected_segment_draws_clipped_pieces) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.048s
+
+OK

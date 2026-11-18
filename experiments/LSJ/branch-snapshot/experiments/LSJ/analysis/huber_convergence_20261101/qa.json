@@ -1,0 +1,10 @@
+{
+  "local_report_links_checked": 16,
+  "missing_links": [],
+  "html_headless_render": "Edge exit 0; preview visually reviewed",
+  "figures_visually_reviewed": [
+    "convergence_history.png",
+    "points_and_lines.png"
+  ],
+  "data_tests": "72 saved runs, source hashes and history assertions passed"
+}

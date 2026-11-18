@@ -1,0 +1,24 @@
+{
+  "calibration_images": 40,
+  "lines": 80,
+  "point_count": 230560,
+  "all_points_exactly_equal": true,
+  "maximum_absolute_difference": {
+    "slope": 8.770761894538737e-15,
+    "intercept_px": 2.3419488570652902e-11,
+    "angle_deg": 5.025424520965771e-13,
+    "scale_px": 1.3821388478163499e-11
+  },
+  "iteration_count_differences": 19,
+  "held_out_images_executed": 0,
+  "skeleton_command_exactly_matches_detector": true,
+  "comparison_purpose": "Floating-point implementation parity, not alignment accuracy.",
+  "numeric_parity_limits": {
+    "slope": 1e-10,
+    "intercept_px": 1e-07,
+    "angle_deg": 1e-08,
+    "scale_px": 1e-07
+  },
+  "limits_note": "Engineering regression-test tolerances only, not image acceptance/rejection or alignment criteria.",
+  "passed": true
+}

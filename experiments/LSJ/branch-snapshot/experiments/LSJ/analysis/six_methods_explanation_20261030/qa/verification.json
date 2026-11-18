@@ -1,0 +1,24 @@
+{
+  "scope": "Report QA only; no detector runs, refits or statistical tests",
+  "local_links_and_images_exist": true,
+  "copied_evidence_hashes_match": 94,
+  "original_measurement_records_unchanged": 56,
+  "method_figures_present": 24,
+  "browser_renders": [
+    {
+      "section": "overview",
+      "screenshot": "qa\\overview.png",
+      "isolated_exact_markup_preview": false
+    },
+    {
+      "section": "E06",
+      "screenshot": "qa\\E06.png",
+      "isolated_exact_markup_preview": true
+    },
+    {
+      "section": "Q04",
+      "screenshot": "qa\\Q04.png",
+      "isolated_exact_markup_preview": true
+    }
+  ]
+}

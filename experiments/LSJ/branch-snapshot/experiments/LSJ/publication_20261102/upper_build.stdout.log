@@ -1,0 +1,18 @@
+msbuild 버전 18.11.0-1.26475.11+3cde5c8ec(.NET Framework용)
+
+  1>Checking Build System
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/algorithm/theta_huber_upper_only_20261101/CMakeLists.txt
+  edge_points.cpp
+  huber_line.cpp
+  utf8_io.cpp
+  upper_theta.cpp
+  alignment.cpp
+  코드를 생성하고 있습니다...
+  upper_alignment_core.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_upper\Release\upper_alignment_core.lib
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/algorithm/theta_huber_upper_only_20261101/CMakeLists.txt
+  main.cpp
+  theta_upper_alignment.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_upper\Release\theta_upper_alignment.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/algorithm/theta_huber_upper_only_20261101/CMakeLists.txt
+  upper_tests.cpp
+  upper_tests.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_upper\Release\upper_tests.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/algorithm/theta_huber_upper_only_20261101/CMakeLists.txt

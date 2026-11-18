@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "calibration_id": "D2_repeat12_upper_only_20261101",
+  "image": {
+    "width": 3840,
+    "height": 2160
+  },
+  "upper_region": {
+    "x_first": 24,
+    "x_last": 3816,
+    "y_first": 692,
+    "y_last": 736,
+    "excluded_x": [
+      [
+        1370,
+        2450
+      ]
+    ]
+  },
+  "huber": {
+    "t": 1.345,
+    "max_iterations": 50,
+    "tolerance": 1e-08
+  },
+  "model": {
+    "type": "affine_forward_upper_only",
+    "intercept_deg": 0.27101545388280657,
+    "per_theta_deg": -0.08829275104680276,
+    "target_theta_deg": 0.0
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "html_images_valid": 4,
+  "local_links_valid": true,
+  "attempt_count": 345840,
+  "baseline_examples_exact": 120,
+  "original_sources_unchanged": true,
+  "output_hashes_valid": true,
+  "figures_visually_inspected": true
+}

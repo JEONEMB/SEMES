@@ -1,0 +1,32 @@
+{
+  "upper": {
+    "slope": 0.0047702990141109125,
+    "intercept_px": 707.5671907751824,
+    "angle_deg": 0.2733159273666705,
+    "mad_scale_px": 0.42504060890054984,
+    "tau_px": 0.5716796189712395,
+    "point_count": 2712,
+    "iterations": 16,
+    "deviance_delta": 3.72710928786546e-09,
+    "downweighted_points": 387,
+    "converged": true
+  },
+  "lower": {
+    "slope": 0.003707070794818468,
+    "intercept_px": 1870.8299059486978,
+    "angle_deg": 0.21239853794949806,
+    "mad_scale_px": 3.117178462879799,
+    "tau_px": 4.192605032573329,
+    "point_count": 3052,
+    "iterations": 11,
+    "deviance_delta": 1.248565695277648e-09,
+    "downweighted_points": 268,
+    "converged": true
+  },
+  "theta_estimate_deg": -0.021399274345457017,
+  "theta_correction_deg": 0.021399274345457017,
+  "nuisance_y_estimate_mm": -0.02180560724150721,
+  "y_correction_mm": 0,
+  "y_command_available": false,
+  "sensitivity_determinant": -0.00030489448630119126
+}

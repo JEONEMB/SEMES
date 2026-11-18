@@ -1,0 +1,6 @@
+# Recorded Python research environment; separate from the C++ OpenCV 3.4.15 target.
+numpy==2.5.1
+scipy==1.18.0
+matplotlib==3.11.1
+opencv-python==5.0.0.93
+Pillow==12.3.0

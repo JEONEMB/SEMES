@@ -1,0 +1,99 @@
+{
+  "scope": "Requested common pipeline fixes 4-6; baseline already includes fixes 1-3",
+  "changed_files": [
+    {
+      "path": "analysis/reference_line_methods_108_20261030/configs/methods.json",
+      "before_sha256": "e05075300ae7813bf4998571e5e630697577cc33dcfac2021495dd81b8ee4e92",
+      "after_sha256": "787bae12925225df779092ec4583f45fd09f331028cb8e6f7dab33bd5e10626c",
+      "diff": "patches/configs__methods.json.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/CMakeLists.txt",
+      "before_sha256": "d2b5f8ec720b4bbd648b39ecaecd040c13e3b1b1e4cb22c5347d6ace4625ea1a",
+      "after_sha256": "942bc0258e85349bdb083ddf10cd9300b587821d883023711bc28840ee933bb9",
+      "diff": "patches/cpp__CMakeLists.txt.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/include/effective_settings.hpp",
+      "before_sha256": null,
+      "after_sha256": "6cde20a80cdb4e4a81b1afb36c86df1946ec7b157be2542754bc11e60947cf95",
+      "diff": "patches/cpp__include__effective_settings.hpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/include/segment_support.hpp",
+      "before_sha256": null,
+      "after_sha256": "ff71059da0c8611641d3519930e3662870f42a1f8eb748a47a2fddcbd27abe7b",
+      "diff": "patches/cpp__include__segment_support.hpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/effective_settings.cpp",
+      "before_sha256": null,
+      "after_sha256": "d78982172c24c1e4733b67806a16b22e5a557e72f258bd3416c7a5642eec4a38",
+      "diff": "patches/cpp__src__effective_settings.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/main.cpp",
+      "before_sha256": "0cd2ebd888a4703518781f8d39a3e233a0688a0fd17c1e353b85878491748d6d",
+      "after_sha256": "424d939ef27c9b20937eb520ebfa3f4f220d3bed345013deb15dbca33b2cd2f1",
+      "diff": "patches/cpp__src__main.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+      "before_sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668",
+      "after_sha256": "0d95bebac6f90f870336963f90ccce46632c3a4c660c7c7719b65a033c9e094b",
+      "diff": "patches/cpp__src__methods_points.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+      "before_sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41",
+      "after_sha256": "a268af8bd9e2a7f620e11eeff8451bf324404384eb2ae323d0235a9cd840aca6",
+      "diff": "patches/cpp__src__methods_qr.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+      "before_sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc",
+      "after_sha256": "b896cebeb56a9640cee3a2e54c2847ebeddcb6f50108e46a0357d65ae09d3392",
+      "diff": "patches/cpp__src__methods_segments.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/src/segment_support.cpp",
+      "before_sha256": null,
+      "after_sha256": "97493db54a168ce71682d3451a3c11e0507b1db762cb731d02a30a9a6ca166cb",
+      "diff": "patches/cpp__src__segment_support.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/cpp/tests/pipeline_contract_test.cpp",
+      "before_sha256": null,
+      "after_sha256": "a253f20f86cb148bd36e1a37708b582a83103cbc08d98639c99c96a197adba6c",
+      "diff": "patches/cpp__tests__pipeline_contract_test.cpp.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/make_figures.py",
+      "before_sha256": "c5eb12ef539bec886c882910bb4e1fd2552fcadca3492a57199a3c4d19160a00",
+      "after_sha256": "a2cbcf094fb779d856bbc43c15069775874d09a1fcb7e3ed23aef96ba7d20803",
+      "diff": "patches/tools__make_figures.py.diff"
+    },
+    {
+      "path": "analysis/reference_line_methods_108_20261030/tools/make_report.py",
+      "before_sha256": "cd3bec678abfe2299fe535fdc1cc109e71038f0ca6fb438087c7a6f5c8a886f6",
+      "after_sha256": "345aeb3ce47991982ea76ef3e553cbed704ad83e81dd3887d8ecd659c1d185cd",
+      "diff": "patches/tools__make_report.py.diff"
+    }
+  ],
+  "passed_checks": {
+    "03_fit_regression": 33,
+    "04_geometry_settings": 40,
+    "06_report_regression": 6,
+    "07_display_contract": 4
+  },
+  "configuration_slots_checked": 54,
+  "methods_checked": 21,
+  "executable": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_pipeline_fixes_4to6_20261030\\build\\Release\\line_methods.exe",
+  "executable_sha256": "4a8bfa1ba7b921c3fa84b93c8eb825b1c621198b8627390311e8f5b8fd5a2cde",
+  "configured_control_values_unchanged": true,
+  "protected_artifacts_unchanged": true,
+  "captured_image_pipeline_run": false,
+  "statistical_validation_run": false,
+  "geometry_fixture": "Known segment coordinates and an artificial intensity ramp; native detectors not run by these fixtures",
+  "result_files_regenerated": false
+}

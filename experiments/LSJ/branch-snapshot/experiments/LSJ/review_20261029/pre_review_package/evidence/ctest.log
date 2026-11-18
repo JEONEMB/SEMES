@@ -1,0 +1,9 @@
+Test project C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/theta_implementation_20261029/build
+    Start 1: theta_alignment_contract
+1/2 Test #1: theta_alignment_contract .........   Passed    0.03 sec
+    Start 2: y_alignment_contract
+2/2 Test #2: y_alignment_contract .............   Passed    0.02 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   0.06 sec

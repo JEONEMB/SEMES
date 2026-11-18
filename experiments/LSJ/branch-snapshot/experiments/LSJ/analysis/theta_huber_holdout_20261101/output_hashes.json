@@ -1,0 +1,13 @@
+{
+  "summary.json": "94bfc3737b9b37e8728c89374051dd8d12d68e0227f7f4ff464489b11ba3381a",
+  "results.json": "d0165a2b8c0dffbf3c5efc91415cb98ecf05b27cfde1dd2bb494a39446e8b9ef",
+  "protocol.json": "8101d1a3ef6b4ade2ca3399033c554d4fce8fda47e887f121e9cd8c95e1b25ad",
+  "holdout_manifest.json": "5783530bc56e91d328e9e143aa6e6358b08e41d3d2d5e10ecd57d78594fcd225",
+  "frozen_calibration.json": "eae6dddc56d30bec996bbd2780c81a7d8861baa511c427efcda7ebabfd797e21",
+  "condition_summary.json": "d68531d1d269efa8cc4b3eabcd6ebac58de3c61c253712e2b1a76c3f8dbdd675",
+  "report.html": "27ed992cc0d32d8143e7cdc9a131e68ec842adf7db50bb7fe5073bdd2ffce2a2",
+  "theta_error.png": "76eb1a93c4080b84a4274a4e295eb14416e87e2c8f0105bb15093b24d5ed9e2d",
+  "theta_error.svg": "7c24335d1f0c32500186f4b56c43ed69ca00c5e3bb908a570917549810102e7b",
+  "evaluate.py": "0a16f66af93933c010b033b781ef07976bd267bd8b20c9e1e8542c732d3ad3b8",
+  "make_report.py": "d1a68406dec943467835251d90061ae89a42b7e5ac43102a724bd0f99526e3ab"
+}

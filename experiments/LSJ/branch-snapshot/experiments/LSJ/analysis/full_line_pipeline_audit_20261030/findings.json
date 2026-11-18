@@ -1,0 +1,1727 @@
+[
+  {
+    "id": "F01",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "Huber 1.345px의 적용 근거",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10"
+    ],
+    "current": "픽셀 단위 직교잔차 r에 w=min(1,1.345/|r|)를 적용한다. 잔차 scale 추정은 없다.",
+    "judgement": "1.345라는 상수의 출처는 있지만 이 영상에서 1.345px가 적정하다는 근거는 없다. 고정 scale Huber 자체를 수학적 오류라고 단정할 수는 없다.",
+    "effect": "방법별 점 산포와 입력 종류가 달라도 같은 px 경계로 가중치가 바뀐다. 표준화된 Huber의 효율 설명을 그대로 붙일 수 없다.",
+    "proposal": "고정 px 모델을 유지할지, 실제 경계점의 scale을 추정할지 먼저 명시하고 비교 근거를 확보한다. 선분 위 인공 표본까지 일괄 MAD 표준화하지 않는다.",
+    "evidence": [
+      [
+        "cpp/src/line_fit.cpp",
+        "w[i] = r <= p.huber_c"
+      ],
+      [
+        "configs/methods.json",
+        "\"huber_c_px\""
+      ]
+    ],
+    "sources": [
+      "S10",
+      "S11"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+        "line": 109,
+        "other_matches": [],
+        "needle": "w[i] = r <= p.huber_c",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__line_fit.cpp.html#L109",
+        "sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/configs/methods.json",
+        "line": 6,
+        "other_matches": [],
+        "needle": "\"huber_c_px\"",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__configs__methods.json.html#L6",
+        "sha256": "e05075300ae7813bf4998571e5e630697577cc33dcfac2021495dd81b8ee4e92"
+      }
+    ]
+  },
+  {
+    "id": "F02",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "2px/1px hard trimming과 2회 재피팅",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10"
+    ],
+    "current": "외부 2px, QR 1px 밖의 점을 제외한 뒤 두 번 재피팅한다. 최소 점 수는 50/20이다.",
+    "judgement": "설정 설명은 경계 혼동점 제거용 초기값이다. 이 거리 밖의 점이 잘못 검출된 점이라는 근거나 임계값 비교 기록은 없다.",
+    "effect": "진짜 경계의 휨·계단·방법 편향도 잘라낼 수 있다. 잔차가 줄었다는 사실만으로 추출이 정확해졌다고 판단할 수 없다.",
+    "proposal": "제외 전후 점·각도·범위를 분리 기록하고, 점을 제외할 이유와 임계값을 검증한 뒤 확정한다. 지금은 더 작은 임계값으로 바꾸지 않는다.",
+    "evidence": [
+      [
+        "cpp/src/line_fit.cpp",
+        "for (int it = 0; it < p.trim_iterations"
+      ],
+      [
+        "configs/methods.json",
+        "\"trim_iterations\""
+      ]
+    ],
+    "sources": [],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+        "line": 125,
+        "other_matches": [],
+        "needle": "for (int it = 0; it < p.trim_iterations",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__line_fit.cpp.html#L125",
+        "sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/configs/methods.json",
+        "line": 9,
+        "other_matches": [],
+        "needle": "\"trim_iterations\"",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__configs__methods.json.html#L9",
+        "sha256": "e05075300ae7813bf4998571e5e630697577cc33dcfac2021495dd81b8ee4e92"
+      }
+    ]
+  },
+  {
+    "id": "F03",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "수렴 조건과 종료 사유 미기록",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10"
+    ],
+    "current": "각도 변화 1e-13rad, 중심 x/y 변화 각각 1e-9px를 모두 만족하면 종료한다. 최대 100회이며 종료 사유를 반환하지 않는다.",
+    "judgement": "현재 수치에 대한 문헌/안정성 근거가 없다. 과거 Python의 cv::fitLine(reps=1e-6, aeps=1e-8)과 다른 기준이다.",
+    "effect": "100회 제한으로 종료해도 정상 수렴과 구분되지 않는다. 소수 자릿수나 엄격한 수렴값이 측정 정확도를 보장하지 않는다.",
+    "proposal": "각 반복의 종료 사유·횟수·최종 변화량을 저장하도록 수정안을 마련한다. 허용 계산 오차와 실제 출력 안정성에 근거해 종료값을 정한다.",
+    "evidence": [
+      [
+        "cpp/src/line_fit.cpp",
+        "bool converged ="
+      ],
+      [
+        "cpp/include/common.hpp",
+        "struct FitResult"
+      ]
+    ],
+    "sources": [],
+    "observed": "기존 결과에 Huber 반복 횟수와 수렴 플래그가 없어 과거 수렴 여부는 확정할 수 없음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+        "line": 102,
+        "other_matches": [],
+        "needle": "bool converged =",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__line_fit.cpp.html#L102",
+        "sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/include/common.hpp",
+        "line": 65,
+        "other_matches": [],
+        "needle": "struct FitResult",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__include__common.hpp.html#L65",
+        "sha256": "589b18b5c9d39c0570609c66c399316ed691c7700d64b941653ea1a27dd8d2c3"
+      }
+    ]
+  },
+  {
+    "id": "F04",
+    "category": "조건부 코드 위험",
+    "priority": "우선",
+    "title": "마지막 피팅에 사용한 점과 최종 표시 점이 달라질 수 있음",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10"
+    ],
+    "current": "마지막 Huber 호출 뒤 전체 점의 inlier 여부를 다시 계산하지만 그 집합으로 다시 피팅하지 않는다. 그 뒤 최소 점 수도 재검사하지 않는다.",
+    "judgement": "최종 flags와 n_selected는 마지막 직선에 가까운 점 목록이다. 마지막 피팅에 실제 사용한 집합과 같다는 보장이 없다.",
+    "effect": "보고서의 “피팅 사용점” 표현이 엄밀히 맞지 않을 수 있다. 마지막 분류에서 점이 크게 줄어도 f.ok=true가 될 수 있다.",
+    "proposal": "실제 fit 입력 마스크와 최종 진단 마스크를 따로 보존하고 마지막 유효성 검사를 추가한다. 집합 안정화를 요구할지는 별도 설계한다.",
+    "evidence": [
+      [
+        "cpp/src/line_fit.cpp",
+        "double s_in = 0"
+      ],
+      [
+        "cpp/src/line_fit.cpp",
+        "f.ok = true;"
+      ],
+      [
+        "tools/make_figures.py",
+        "선택 지지점(피팅 사용)"
+      ]
+    ],
+    "sources": [],
+    "observed": "저장된 성공 결과에서 최종 점 개수 50/20 미달은 0건. 과거 마지막 fit 입력 마스크는 저장되지 않아 두 집합의 일치 여부는 확인 불가.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+        "line": 137,
+        "other_matches": [],
+        "needle": "double s_in = 0",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__line_fit.cpp.html#L137",
+        "sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+        "line": 144,
+        "other_matches": [],
+        "needle": "f.ok = true;",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__line_fit.cpp.html#L144",
+        "sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/tools/make_figures.py",
+        "line": 120,
+        "other_matches": [],
+        "needle": "선택 지지점(피팅 사용)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__tools__make_figures.py.html#L120",
+        "sha256": "5ab81f711f7b83746467d1902989ab1f4e7edcc090de2547ecbe058921839518"
+      }
+    ]
+  },
+  {
+    "id": "F05",
+    "category": "조건부 코드 위험",
+    "priority": "후속",
+    "title": "유한값·퇴화 직선 방어가 충분하지 않음",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12"
+    ],
+    "current": "피팅에서 NaN/Inf, 분산이 없는 점 집합, 너무 짧은 기준선에 대한 공통 검사가 없다. 길이 0인 normalize_line은 수평 방향을 반환한다.",
+    "judgement": "현재 고정 입력에서 오류가 관측됐다는 뜻은 아니다. 입력이 잘못되었을 때 정상 직선처럼 반환될 수 있는 방어 누락이다.",
+    "effect": "이후 모듈을 다른 데이터에 재사용할 때 예외 상황을 성공으로 해석할 위험이 있다.",
+    "proposal": "유한값·서로 다른 점·기하적 길이·행렬 퇴화를 확인하고 실패 원인을 반환한다. 새로운 임계값은 목적과 단위를 명시한다.",
+    "evidence": [
+      [
+        "cpp/src/line_fit.cpp",
+        "if (n <= 0)"
+      ],
+      [
+        "cpp/src/line_fit.cpp",
+        "double cx = sx / sw"
+      ],
+      [
+        "cpp/src/methods_qr.cpp",
+        "void two_point_result"
+      ]
+    ],
+    "sources": [],
+    "observed": "216개 저장 기록의 성공 각도/기울기/절편 및 저장 fit 좌표에서 비정상 숫자는 발견되지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+        "line": 28,
+        "other_matches": [],
+        "needle": "if (n <= 0)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__line_fit.cpp.html#L28",
+        "sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+        "line": 93,
+        "other_matches": [],
+        "needle": "double cx = sx / sw",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__line_fit.cpp.html#L93",
+        "sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+        "line": 24,
+        "other_matches": [],
+        "needle": "void two_point_result",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_qr.cpp.html#L24",
+        "sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41"
+      }
+    ]
+  },
+  {
+    "id": "F06",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "입력 종류가 달라도 동일한 직교 피팅을 선택함",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10"
+    ],
+    "current": "고정 열에서 y만 추정한 점, x/y 모두 보정한 점, 정수 경계점, 검출 선분을 샘플링한 점을 같은 직교 Huber에 넘긴다.",
+    "judgement": "공통 인터페이스는 유용하지만 오차의 성격까지 같아지는 것은 아니다. 다른 손실함수보다 적합하다는 비교가 없다.",
+    "effect": "방법 고유 성능과 공통 후처리 효과가 결합된다. 현재 순위를 원래 논문 방법의 순위로 해석할 수 없다.",
+    "proposal": "각 입력의 측정 정의를 유지하고 기본 추정치와 후처리 추정치를 구분한다. OLS/TLS/Huber 선택은 데이터 정의에 맞춰 근거를 마련한다.",
+    "evidence": [
+      [
+        "cpp/src/line_fit.cpp",
+        "void finish_with_points"
+      ],
+      [
+        "cpp/src/methods_segments.cpp",
+        "segment_samples: points"
+      ]
+    ],
+    "sources": [],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/line_fit.cpp",
+        "line": 166,
+        "other_matches": [],
+        "needle": "void finish_with_points",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__line_fit.cpp.html#L166",
+        "sha256": "38dd1c72d1b94487694f756fdec7ceccc629f8e5484e8648fef3397b966333fa"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 173,
+        "other_matches": [],
+        "needle": "segment_samples: points",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L173",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      }
+    ]
+  },
+  {
+    "id": "F07",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "ROI는 대상 근거가 있으나 경계 선택의 안정성은 미검증",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12"
+    ],
+    "current": "R01과 기존 지정 영역으로 외부 두 띠·가림 영역·QR 세 영역을 고정한다. 점 방식에는 열별 가장 강한 전이를 주로 사용한다.",
+    "judgement": "영역 선정이 무근거한 것은 아니다. 그러나 가장 강한 전이가 항상 같은 물리적 경계라는 검증, ROI 이동 민감도 검증은 없다.",
+    "effect": "반사·다중 경계·국소 휨이 있으면 방법별로 다른 부분을 대표할 수 있다. 기준 4장용 고정 범위를 이동 사진 전체의 탐색 범위로 확장할 수도 없다.",
+    "proposal": "현재 ROI와 가림 의미는 보존한다. “동일 물리 경계”의 판단 근거와 검출 실패/혼동 기록을 보강한 뒤 일반화 범위를 정한다.",
+    "evidence": [
+      [
+        "configs/targets.json",
+        "\"selection_basis\""
+      ],
+      [
+        "cpp/src/methods_points.cpp",
+        "if (v > best)"
+      ]
+    ],
+    "sources": [],
+    "observed": "원본 확대·프로파일 그림을 확인. 저장 성공 외부 결과는 모두 좌우 가시 구간의 지지를 가지며, 좌우 별도 선의 평균을 낸 구현은 아님.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/configs/targets.json",
+        "line": 4,
+        "other_matches": [],
+        "needle": "\"selection_basis\"",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__configs__targets.json.html#L4",
+        "sha256": "d530775949f67078223b7fdca735f36831891335b00bc32803f8ff26fe530999"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 127,
+        "other_matches": [],
+        "needle": "if (v > best)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L127",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      }
+    ]
+  },
+  {
+    "id": "F08",
+    "category": "조건부 코드 위험",
+    "priority": "후속",
+    "title": "선분의 band 검사는 중점만 검사함",
+    "methods": [
+      "E04",
+      "E07",
+      "E08",
+      "E09",
+      "Q04",
+      "Q07",
+      "Q08",
+      "Q09"
+    ],
+    "current": "선분 양 끝 평균 y가 band 안에 있으면 통과한다. 이후 visible x만 잘라 표본을 만들고 y band로 다시 자르지 않는다.",
+    "judgement": "“최종 선택은 band 안에서만”이라는 설명을 일반적으로 보장하는 코드가 아니다.",
+    "effect": "다른 입력에서는 끝부분이 band 밖인 선분이 피팅에 들어갈 수 있다.",
+    "proposal": "band가 검출 후보 중점 조건인지 최종 지지 범위인지 명시하고, 후자라면 교차 구간을 정확히 자른다.",
+    "evidence": [
+      [
+        "cpp/src/methods_segments.cpp",
+        "double my = 0.5"
+      ],
+      [
+        "cpp/src/methods_segments.cpp",
+        "pts.emplace_back(x, s.y1"
+      ]
+    ],
+    "sources": [],
+    "observed": "현재 저장 성공 결과의 최종 fit 점에서 band 이탈은 0건. 현재 값이 이 이유로 틀렸다고 주장하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 72,
+        "other_matches": [],
+        "needle": "double my = 0.5",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L72",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 167,
+        "other_matches": [],
+        "needle": "pts.emplace_back(x, s.y1",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L167",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      }
+    ]
+  },
+  {
+    "id": "F09",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "선분 consensus는 별도 설계된 측정 단계",
+    "methods": [
+      "E04",
+      "E07",
+      "E08",
+      "E09",
+      "Q04",
+      "Q07",
+      "Q08",
+      "Q09"
+    ],
+    "current": "각도 3°/5°, 최소 가시 길이 20/10px, 양쪽 밝기차 3/20, 거리 2/1px로 선분을 걸러 길이 합이 가장 큰 가설을 선택한다. 가설 생성은 긴 선분 최대 300개다.",
+    "judgement": "LSD/EDLines/FLD/ELSED 원논문이 이 공통 선택 규칙을 검증해 준 것은 아니다. 최대 길이 합이 정답 경계라는 보장도 없다.",
+    "effect": "겹치는 검출 선분의 지지가 중복 계산될 수 있고 동점은 탐색 순서에 의존한다. 원 검출기가 같은데도 선택기 때문에 결과가 달라질 수 있다.",
+    "proposal": "검출과 선택을 별도 모듈로 명시하고 후보/선택 이유를 유지한다. 길이 중복·동점·300개 제한의 영향을 별도로 검증한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_segments.cpp",
+        "auto score_of"
+      ],
+      [
+        "cpp/src/methods_segments.cpp",
+        "if (order.size() > 300)"
+      ],
+      [
+        "configs/methods.json",
+        "\"segment_selection\""
+      ]
+    ],
+    "sources": [],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 105,
+        "other_matches": [],
+        "needle": "auto score_of",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L105",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 118,
+        "other_matches": [],
+        "needle": "if (order.size() > 300)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L118",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/configs/methods.json",
+        "line": 30,
+        "other_matches": [],
+        "needle": "\"segment_selection\"",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__configs__methods.json.html#L30",
+        "sha256": "e05075300ae7813bf4998571e5e630697577cc33dcfac2021495dd81b8ee4e92"
+      }
+    ]
+  },
+  {
+    "id": "F10",
+    "category": "기록·설명 문제",
+    "priority": "우선",
+    "title": "“1px 샘플링 = 정확한 길이 가중”은 부정확",
+    "methods": [
+      "E04",
+      "E07",
+      "E08",
+      "E09",
+      "Q04",
+      "Q07",
+      "Q08",
+      "Q09"
+    ],
+    "current": "선분을 호 길이 기준이 아니라 x 좌표 1px 간격으로 샘플링한다. 이를 length weighting과 동일하다고 기록했다.",
+    "judgement": "표본 수는 대략 가로 투영 길이에 비례한다. 실제 선분 길이와 정확히 같지 않고 시작점·끝점 포함 방식과 중복 선분에도 의존한다.",
+    "effect": "현재처럼 작은 각도에서는 차이가 작을 수 있으나 정확히 동등하다고 설명할 수 없다. 이 점들이 독립된 새 관측값이 되는 것도 아니다.",
+    "proposal": "실제 샘플링 정의를 그대로 기록한다. 길이 가중을 의도했다면 호 길이/명시적 가중 방식 중 선택하여 검증한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_segments.cpp",
+        "for (double x = pc.xa; x <= pc.xb + 1e-9"
+      ],
+      [
+        "cpp/src/methods_segments.cpp",
+        "segment_samples: points"
+      ]
+    ],
+    "sources": [],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 166,
+        "other_matches": [],
+        "needle": "for (double x = pc.xa; x <= pc.xb + 1e-9",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L166",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 173,
+        "other_matches": [],
+        "needle": "segment_samples: points",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L173",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      }
+    ]
+  },
+  {
+    "id": "F11",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "원 지지점이 있어도 최종선은 선분 표본으로 계산",
+    "methods": [
+      "E04",
+      "E07",
+      "E08",
+      "E09",
+      "Q04",
+      "Q07",
+      "Q08",
+      "Q09"
+    ],
+    "current": "선분 검출기의 원 지지 화소를 보관하지만 최종선은 선분 위 인공 표본으로 피팅한다. 원 지지 화소는 뒤에서 진단값만 계산한다.",
+    "judgement": "원래 검출 선분을 유지하려는 선택은 가능하다. 다만 최초 작업서는 원 지지점 사용을 우선 검토하도록 했고, 이 선택의 방법별 근거는 부족하다.",
+    "effect": "인공 표본의 잔차는 경계 검출 오차가 아니다. 원 지지점 재피팅도 원 검출기의 고유 추정치를 바꾸므로 무조건 더 좋은 대안은 아니다.",
+    "proposal": "native 선분 통합과 실제 경계점 재피팅 중 무엇을 비교할지 분리 명명한다. 단일 선분 잔차 null 처리는 유지한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_segments.cpp",
+        "// Diagnostic: the detector"
+      ],
+      [
+        "cpp/src/methods_segments.cpp",
+        "if (r.has_rms && members.size() == 1)"
+      ]
+    ],
+    "sources": [],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 180,
+        "other_matches": [],
+        "needle": "// Diagnostic: the detector",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L180",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 175,
+        "other_matches": [],
+        "needle": "if (r.has_rms && members.size() == 1)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L175",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      }
+    ]
+  },
+  {
+    "id": "F12",
+    "category": "레퍼런스 대비 변형",
+    "priority": "우선",
+    "title": "Gaussian 방식은 원문 전체 재현이 아님",
+    "methods": [
+      "E01",
+      "Q01"
+    ],
+    "current": "원문의 Sobel gradient magnitude·ISODATA·골격화 대신 부호 있는 세로 Sobel의 열별 최대를 쓰고, 마지막 spline 대신 Huber 직선을 쓴다.",
+    "judgement": "Gaussian 모델, Nelder–Mead, A/μ/σ 초기값의 기본 아이디어는 원문에 있다. 거친 경계·표본 구성·최종 연결은 변형이다.",
+    "effect": "논문의 성능 결론을 현재 전체 처리에 적용할 수 없다. 수직 탐색은 거의 수평인 현재 대상에 맞춘 제한이다.",
+    "proposal": "“논문 기반 Gaussian 경계점 + 자체 선택/직선 피팅”으로 명시하고 변형의 필요성과 영향을 검증한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_points.cpp",
+        "MethodResult method_profile_gaussian"
+      ],
+      [
+        "cpp/src/methods_points.cpp",
+        "cv::Sobel(bp.f, gy"
+      ]
+    ],
+    "sources": [
+      "S01"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 104,
+        "other_matches": [],
+        "needle": "MethodResult method_profile_gaussian",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L104",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 117,
+        "other_matches": [],
+        "needle": "cv::Sobel(bp.f, gy",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L117",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      }
+    ]
+  },
+  {
+    "id": "F13",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "Gaussian 창·최적화·채택 조건의 검증 부족",
+    "methods": [
+      "E01",
+      "Q01"
+    ],
+    "current": "11개 표본, peak 8/40, μ 이동 제한 2px, 최대 800회, 함수값 spread 상대 1e-10을 사용한다. 초기 simplex 크기 0.2A/1/5.5도 코드에서 정한다.",
+    "judgement": "11표본은 기존 ERF 창과 맞춘 이유다. 현재 Sobel 프로파일에서 최선이라는 근거가 아니다. 최적화 종료가 Gaussian 모델 적합성을 의미하지 않는다.",
+    "effect": "잘못된 peak나 Gaussian과 다른 음영에도 계산이 수렴할 수 있다. A와 μ 제한만으로 경계의 정확성은 판단할 수 없다.",
+    "proposal": "창 크기·초기화·종료·채택을 따로 평가한다. 프로파일 잔차 및 파라미터 이상 상태를 보존하되 새 통과 임계는 임의로 정하지 않는다.",
+    "evidence": [
+      [
+        "cpp/src/methods_points.cpp",
+        "std::fabs(v[3] - v[0])"
+      ],
+      [
+        "cpp/src/methods_points.cpp",
+        "std::array<double, 3> st ="
+      ]
+    ],
+    "sources": [
+      "S01"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 72,
+        "other_matches": [],
+        "needle": "std::fabs(v[3] - v[0])",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L72",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 150,
+        "other_matches": [],
+        "needle": "std::array<double, 3> st =",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L150",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      }
+    ]
+  },
+  {
+    "id": "F14",
+    "category": "레퍼런스 대비 변형",
+    "priority": "후속",
+    "title": "Devernay 이후의 선택은 자체 구현",
+    "methods": [
+      "E02",
+      "Q02"
+    ],
+    "current": "원 검출기 뒤에서 극성·|gy|>|gx|·열 구간별 최강점을 적용한다. 검출기 평활은 대칭 경계, 선택용 OpenCV 평활은 BORDER_REPLICATE다.",
+    "judgement": "원 검출기 c/h는 수정되지 않았다. 그러나 선택은 원 논문의 성능 보장 대상이 아니며 “same Gaussian-smoothed patch”라는 주석도 영상 경계에서는 엄밀히 같지 않다.",
+    "effect": "서로 다른 곡선의 최강점이 같은 최종선에 섞일 수 있다. 경계 처리 차이는 현재 여백 내부에서의 실질 영향이 확인된 오류는 아니다.",
+    "proposal": "곡선 ID·선택 이유를 계속 보존하고 선택용 gradient의 정의를 정확히 기록한다. core와 wrapper를 별도로 검증한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_points.cpp",
+        "Gradient of the same Gaussian"
+      ],
+      [
+        "cpp/src/methods_points.cpp",
+        "best_in_bin"
+      ]
+    ],
+    "sources": [
+      "S02"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 198,
+        "other_matches": [],
+        "needle": "Gradient of the same Gaussian",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L198",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 211,
+        "other_matches": [
+          228,
+          230
+        ],
+        "needle": "best_in_bin",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L211",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      }
+    ]
+  },
+  {
+    "id": "F15",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "Hough의 세밀한 격자가 서브픽셀 정확도를 보장하지 않음",
+    "methods": [
+      "E03",
+      "Q03"
+    ],
+    "current": "Canny 정수 화소에 Hough rho=1px, theta=0.01°를 쓰고 최다 득표선 주변 1.5/1px 점을 Huber에 넘긴다.",
+    "judgement": "0.01°는 검색 격자이다. 최종 영상 각도의 정확도나 장비 최소 이동량과 같지 않다. 임계 득표 150/40 및 재피팅 거리의 데이터 검증도 없다.",
+    "effect": "후보선이 고른 좁은 점 집합에 결과가 의존한다. 동일 행의 정수 점은 결과 0°를 만들 수 있다.",
+    "proposal": "Hough 후보 각도와 최종 재피팅 각도를 유지하고 격자·후보 선택·양자화 영향을 분리 검토한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_hough.cpp",
+        "cv::HoughLines"
+      ],
+      [
+        "cpp/src/methods_hough.cpp",
+        "double dmax"
+      ]
+    ],
+    "sources": [
+      "S03"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_hough.cpp",
+        "line": 46,
+        "other_matches": [],
+        "needle": "cv::HoughLines",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_hough.cpp.html#L46",
+        "sha256": "be4d7335b8e489990b21144045312ba8d56d5b994ea1948acff2db7419a34f24"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_hough.cpp",
+        "line": 80,
+        "other_matches": [],
+        "needle": "double dmax",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_hough.cpp.html#L80",
+        "sha256": "be4d7335b8e489990b21144045312ba8d56d5b994ea1948acff2db7419a34f24"
+      }
+    ]
+  },
+  {
+    "id": "F16",
+    "category": "레퍼런스 대비 변형",
+    "priority": "우선",
+    "title": "LSD scale=1은 기본 전처리를 바꿈",
+    "methods": [
+      "E04",
+      "Q04"
+    ],
+    "current": "저자 기본 scale=0.8 대신 1.0을 사용한다. 이 분기에서는 Gaussian subsampling이 실행되지 않아 sigma_scale=0.6도 적용되지 않는다.",
+    "judgement": "원본 해상도 유지라는 작업서 이유가 있으므로 무근거 변경으로 단정하면 안 된다. 다만 기본 LSD와 같은 전처리·성능이라고 할 수 없다.",
+    "effect": "논문이 설명하는 계단 양자화 완화 단계가 빠진다. 현재 실패나 편차의 원인이라고 확정하려면 별도 비교가 필요하다.",
+    "proposal": "scale=1 변형을 정확히 명명하고 sigma_scale 비활성 상태를 기록한다. 해상도 요구 해석을 정한 뒤 기본 설정 비교 여부를 결정한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_segments.cpp",
+        "LineSegmentDetection(&n"
+      ],
+      [
+        "configs/methods.json",
+        "scale만 0.8"
+      ]
+    ],
+    "sources": [
+      "S04"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 219,
+        "other_matches": [],
+        "needle": "LineSegmentDetection(&n",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L219",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/configs/methods.json",
+        "line": 137,
+        "other_matches": [],
+        "needle": "scale만 0.8",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__configs__methods.json.html#L137",
+        "sha256": "e05075300ae7813bf4998571e5e630697577cc33dcfac2021495dd81b8ee4e92"
+      }
+    ]
+  },
+  {
+    "id": "F17",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "Zernike의 흐림 폭은 측정값이 아님",
+    "methods": [
+      "E05",
+      "Q05"
+    ],
+    "current": "blur_sigma_px를 외부 1.5, QR 1.0으로 가정하고 w=2×1.8×sigma/7을 계산한다.",
+    "judgement": "원문 근사식은 폭 w를 알고 있다는 조건을 둔다. 식이 맞아도 입력 폭이 타당하다는 근거가 없으면 결과 위치의 타당성은 별도이다.",
+    "effect": "경계점의 이동량에 직접 영향을 준다. coarse 검출용 Gaussian sigma=1과 광학 흐림 sigma를 혼동하면 안 된다.",
+    "proposal": "폭을 어떻게 정할지와 적용 가능한 영상 조건을 먼저 명시한다. 지금 값으로 얻은 결과는 가정한 폭에 조건부인 결과로 다룬다.",
+    "evidence": [
+      [
+        "cpp/src/methods_points.cpp",
+        "const double wbar"
+      ],
+      [
+        "configs/methods.json",
+        "\"blur_sigma_px\""
+      ]
+    ],
+    "sources": [
+      "S05"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 312,
+        "other_matches": [],
+        "needle": "const double wbar",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L312",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/configs/methods.json",
+        "line": 145,
+        "other_matches": [
+          156
+        ],
+        "needle": "\"blur_sigma_px\"",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__configs__methods.json.html#L145",
+        "sha256": "e05075300ae7813bf4998571e5e630697577cc33dcfac2021495dd81b8ee4e92"
+      }
+    ]
+  },
+  {
+    "id": "F18",
+    "category": "조건부 코드 위험",
+    "priority": "우선",
+    "title": "Zernike 수치 근사와 수식의 유효 조건 검사",
+    "methods": [
+      "E05",
+      "Q05"
+    ],
+    "current": "7×7 마스크를 화소당 64×64 적분으로 만들고 창 평균을 뺀다. A20/A11p 나눗셈 전에 분모·유한값 검사가 없다.",
+    "judgement": "논문은 화소 내부 적분 마스크를 정의하므로 직접 수치적분 자체가 잘못은 아니다. 64의 충분성, 이산 마스크에서 평균 제거 영향, 근사식의 적용 범위는 미검증이다.",
+    "effect": "작은 A11p나 퇴화 영상에서는 비정상 결과 경로가 있다. 판별식이 음수가 아니라는 것만으로 모델의 모든 전제가 만족되는 것은 아니다.",
+    "proposal": "분모/유한값·파라미터 범위 방어를 추가하고 마스크·근사식은 원문 조건과 분리해 확인한다. 결과가 좋게 나오도록 sigma를 조정하지 않는다.",
+    "evidence": [
+      [
+        "cpp/src/methods_points.cpp",
+        "Q = a20 / a11p"
+      ],
+      [
+        "cpp/src/methods_points.cpp",
+        "double mean = cv::mean(win)"
+      ]
+    ],
+    "sources": [
+      "S05"
+    ],
+    "observed": "현재 저장 성공 결과에서 NaN/Inf는 발견되지 않음. 근사 오차의 크기는 이번에 새로 계산하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 344,
+        "other_matches": [],
+        "needle": "Q = a20 / a11p",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L344",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 334,
+        "other_matches": [],
+        "needle": "double mean = cv::mean(win)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L334",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      }
+    ]
+  },
+  {
+    "id": "F19",
+    "category": "레퍼런스 대비 변형",
+    "priority": "우선",
+    "title": "PAE는 3×9·A/B 추정이 바뀐 기본형",
+    "methods": [
+      "E06",
+      "Q06"
+    ],
+    "current": "3×5 기본 설명을 3×9로 일반화하고, 모서리 세 점 평균 대신 맨 위/아래 행 세 점 평균으로 A/B를 구한다. 평활·floating window는 쓰지 않는다.",
+    "judgement": "열 합으로 a,b,c를 구하는 대수는 일관된다. 그러나 창의 두 영역이 일정한 밝기이고 경계가 창을 가로지른다는 영상 가정은 별도로 확인해야 한다. 원논문 전문은 미확인이다.",
+    "effect": "변형한 A/B와 창 크기 때문에 원문 PAE의 성능을 그대로 주장할 수 없다. 하단처럼 넓은 전이에서는 끝 행이 평탄한 밝기인지도 쟁점이다.",
+    "proposal": "현재 버전을 “PAE 2차 기본형의 3×9 변형”으로 유지 표기한다. 원형과 변형의 비교 근거를 마련한 뒤 채택한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_points.cpp",
+        "MethodResult method_pae"
+      ],
+      [
+        "cpp/src/methods_points.cpp",
+        "A = (I(x - 1"
+      ]
+    ],
+    "sources": [
+      "S06"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 392,
+        "other_matches": [],
+        "needle": "MethodResult method_pae",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L392",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 426,
+        "other_matches": [],
+        "needle": "A = (I(x - 1",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L426",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      }
+    ]
+  },
+  {
+    "id": "F20",
+    "category": "레퍼런스 대비 변형",
+    "priority": "후속",
+    "title": "EDLines 임계 변경과 지지 화소의 불완전성",
+    "methods": [
+      "E07",
+      "Q07"
+    ],
+    "current": "QR은 저자 EDLines 기본 ED 36/8, 외부는 12/2다. getLineSegments 접근자를 추가해 체인 구간을 재구성한다.",
+    "judgement": "낮춘 이유는 약한 하단 경계라는 관찰이다. 적정값이라는 비교는 없다. 저자 병합 코드는 일부 경우 더 긴 원 구간만 남겨 전체 병합 선의 지지를 완전히 담지 못한다.",
+    "effect": "support_pixels 진단 잔차는 전체 병합 선의 모든 근거 화소 잔차라고 할 수 없다. 최종선은 별도 선분 표본이므로 이것이 곧 최종선 계산 오류는 아니다.",
+    "proposal": "변경 임계와 지지점 범위를 분리 기록한다. 원 지지점 기반 재피팅을 채택할 경우 병합 provenance부터 해결한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_segments.cpp",
+        "MethodResult method_edlines"
+      ],
+      [
+        "cpp/src/methods_segments.cpp",
+        "collinear joins may not extend"
+      ]
+    ],
+    "sources": [
+      "S07"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 242,
+        "other_matches": [],
+        "needle": "MethodResult method_edlines",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L242",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 269,
+        "other_matches": [],
+        "needle": "collinear joins may not extend",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L269",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      }
+    ]
+  },
+  {
+    "id": "F21",
+    "category": "레퍼런스 대비 변형",
+    "priority": "후속",
+    "title": "FLD 검출 코어와 자체 적용 설정 구분",
+    "methods": [
+      "E08",
+      "Q08"
+    ],
+    "current": "공식 3.4 소스를 이식하고 지지점 반환을 추가했다. QR Canny 50/50은 기본값, 외부 10/20은 변경값이다. do_merge=false이다.",
+    "judgement": "실제 diff에서 검출 계산식 변경은 확인되지 않았다. 외부 임계 변경과 뒤의 consensus/Huber는 별도 검증 대상이다.",
+    "effect": "E08 하단 실패는 현재 설정의 전체 파이프라인 결과이지 FLD 자체가 원천적으로 불가능하다는 뜻은 아니다. merge를 켜면 지지점 목록 정렬을 그대로 신뢰할 수 없다.",
+    "proposal": "이식 변경은 보존하고 원본 검출과 wrapper 성능을 구분한다. merge 설정을 확장한다면 지원 범위를 명시적으로 검사한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_segments.cpp",
+        "MethodResult method_fld"
+      ],
+      [
+        "cpp/src/methods_segments.cpp",
+        "support_list_aligned"
+      ]
+    ],
+    "sources": [
+      "S08"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 274,
+        "other_matches": [],
+        "needle": "MethodResult method_fld",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L274",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 296,
+        "other_matches": [
+          330
+        ],
+        "needle": "support_list_aligned",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L296",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      }
+    ]
+  },
+  {
+    "id": "F22",
+    "category": "레퍼런스 대비 변형",
+    "priority": "후속",
+    "title": "ELSED 설정과 숨은 기본값",
+    "methods": [
+      "E09",
+      "Q09"
+    ],
+    "current": "QR은 기본 gradient/anchor 30/8, 외부는 10/4다. 나머지 주요 값은 기본값이다. listJunctionSizes={5,7,9}는 저자 구조체 기본값으로만 존재한다.",
+    "judgement": "실제 변경은 반환 선분별 픽셀 보관과 접근자 추가다. 원 검출식 변경은 확인되지 않았다. 임계 변경의 데이터 근거와 모든 유효 설정의 출력은 부족하다.",
+    "effect": "현재 해시로 소스를 추적할 수 있지만 methods.json만으로는 유효 설정을 전부 알 수 없다.",
+    "proposal": "저자 기본값을 이유 없이 바꾸지 말고, 변경한 두 임계와 미출력 기본값을 명시한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_segments.cpp",
+        "upm::ELSEDParams ep;"
+      ]
+    ],
+    "sources": [
+      "S09"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 304,
+        "other_matches": [],
+        "needle": "upm::ELSEDParams ep;",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L304",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      }
+    ]
+  },
+  {
+    "id": "F23",
+    "category": "설정 근거·검증 부족",
+    "priority": "후속",
+    "title": "Q10 윤곽 선택과 2%·8% 기준",
+    "methods": [
+      "Q10"
+    ],
+    "current": "Otsu 이진화 후 ROI 경계에 닿지 않는 가장 큰 밝은 윤곽을 고른다. 둘레의 2%로 다각형 근사, 네 꼭짓점 요구, 상단 양끝 8%를 제외한다.",
+    "judgement": "API는 표준이지만 가장 큰 윤곽=QR 외곽이라는 규칙과 2%·8% 선택은 프로젝트 자체 설정이다.",
+    "effect": "조명/연결 상태가 바뀌면 다른 윤곽을 선택하거나 꼭짓점이 사라질 수 있다. 정수 윤곽점의 계단이 기울기에 영향을 줄 수 있다.",
+    "proposal": "물리적 외곽 식별과 파라미터 민감도를 검토한다. Otsu 임계 자체는 영상에서 자동 계산되는 값임을 구분한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_qr.cpp",
+        "if (!border && area > best_area)"
+      ],
+      [
+        "cpp/src/methods_qr.cpp",
+        "double trim ="
+      ]
+    ],
+    "sources": [
+      "S10"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+        "line": 55,
+        "other_matches": [],
+        "needle": "if (!border && area > best_area)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_qr.cpp.html#L55",
+        "sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+        "line": 87,
+        "other_matches": [],
+        "needle": "double trim =",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_qr.cpp.html#L87",
+        "sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41"
+      }
+    ]
+  },
+  {
+    "id": "F24",
+    "category": "기록·설명 문제",
+    "priority": "우선",
+    "title": "Q10의 “항상 약 0.5px 위, 기울기 영향 없음” 설명",
+    "methods": [
+      "Q10"
+    ],
+    "current": "diagnostics에 physical boundary lies about 0.5 px above (constant offset, no slope effect)라고 저장한다.",
+    "judgement": "실제 밝기 전이·Otsu 임계·계단 윤곽으로부터 항상 일정한 0.5px 차이가 나온다고 보장할 수 없다. 이것은 좌표 규약만으로 결론낼 수 없다.",
+    "effect": "정수 윤곽의 위치/기울기 편향을 없다고 오해하게 만든다. 이 문구는 계산에 0.5를 빼는 코드가 아니라 설명 오류다.",
+    "proposal": "“밝은 영역의 외곽 화소 중심이며 실제 경계와의 차이는 별도 검증 대상”으로 설명을 수정한다. 수치를 임의로 0.5px 이동하지 않는다.",
+    "evidence": [
+      [
+        "cpp/src/methods_qr.cpp",
+        "contour_offset_note"
+      ]
+    ],
+    "sources": [
+      "S10"
+    ],
+    "observed": "Q10의 저장 진단값에 해당 문구 존재. 기존 Q10 그림에서 계단 윤곽도 확인.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+        "line": 98,
+        "other_matches": [],
+        "needle": "contour_offset_note",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_qr.cpp.html#L98",
+        "sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41"
+      }
+    ]
+  },
+  {
+    "id": "F25",
+    "category": "설정 근거·검증 부족",
+    "priority": "후속",
+    "title": "Q11 코너 식별·정밀화 기준",
+    "methods": [
+      "Q11"
+    ],
+    "current": "Shi–Tomasi 후보 300개, quality=.01, minDistance=4, block=5. 사분면 밝기차 40, 가장 위 코너, 폭≥ROI 절반·높이차≤15px·refine 이동≤3px 조건을 쓴다.",
+    "judgement": "cornerSubPix 원리는 근거가 있으나 외곽 코너를 고르는 규칙은 자체 설계다. 100회/1e-5px 종료를 쓴다는 사실만으로 성공 수렴·정확도를 알 수 없다.",
+    "effect": "두 코너가 잘못 식별되거나 둥근 경계의 서로 다른 위치로 보정되면 직선은 계산돼도 대상 방향과 어긋날 수 있다.",
+    "proposal": "식별과 정밀화를 별도 상태로 관리하고 코너 품질/이동 정보를 유지한다. 두 점의 잔차 null은 그대로 유지한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_qr.cpp",
+        "MethodResult method_qr_corners"
+      ],
+      [
+        "cpp/src/methods_qr.cpp",
+        "b0.x - a0.x < 0.5"
+      ]
+    ],
+    "sources": [
+      "S03"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+        "line": 106,
+        "other_matches": [],
+        "needle": "MethodResult method_qr_corners",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_qr.cpp.html#L106",
+        "sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+        "line": 149,
+        "other_matches": [],
+        "needle": "b0.x - a0.x < 0.5",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_qr.cpp.html#L149",
+        "sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41"
+      }
+    ]
+  },
+  {
+    "id": "F26",
+    "category": "설정 근거·검증 부족",
+    "priority": "후속",
+    "title": "Q12는 별도 특징이며 파인더 식별 기준이 경험값",
+    "methods": [
+      "Q12"
+    ],
+    "current": "Otsu 역이진화·중첩 윤곽·면적비·볼록 4각형·변 길이비로 3개 파인더를 고른다. 코너를 정밀화하고 대각선 교점을 연결한다.",
+    "judgement": "기존 Python을 이식했다는 것은 출처이지 면적 200, 비율 .25~.85/.1~.8, 꼭짓점 근사 .03, 변비 .65의 검증은 아니다. 실제 결과는 다른 feature_class로 이미 구분한다.",
+    "effect": "바깥 테두리와 내부 파인더 중심선이 같은 물리 방향이라고 자동 가정할 수 없다. refine 후 이동량 검사는 Q11과 달리 없고 대각선 교차 검사가 주 방어다.",
+    "proposal": "Q12를 다른 특징으로 계속 분리하고 파인더 배치·refine 유효성·조건 적용 범위를 검토한다. Q01~Q11과 무조건 통합하지 않는다.",
+    "evidence": [
+      [
+        "cpp/src/methods_qr.cpp",
+        "MethodResult method_qr_finders"
+      ],
+      [
+        "cpp/src/main.cpp",
+        "std::string q12_definition"
+      ]
+    ],
+    "sources": [
+      "S03",
+      "S10"
+    ],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+        "line": 198,
+        "other_matches": [],
+        "needle": "MethodResult method_qr_finders",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_qr.cpp.html#L198",
+        "sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/main.cpp",
+        "line": 45,
+        "other_matches": [],
+        "needle": "std::string q12_definition",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__main.cpp.html#L45",
+        "sha256": "ec7255180c4e19242d72dfc6a30062f4c542feaff5c6c6af8c88e8c93bc5da21"
+      }
+    ]
+  },
+  {
+    "id": "F27",
+    "category": "기록·설명 문제",
+    "priority": "우선",
+    "title": "기록된 설정과 실제 적용되는 설정이 다름",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12"
+    ],
+    "current": "Q10~Q12는 t.roi를 쓰지만 공통 band/x_range/margin/column_step을 검색 제한으로 쓰지 않는다. Q11/12에도 사용하지 않는 common_fit 해시가 붙는다. E01 gradient/init_sigma, Q10 threshold/contour_mode 문자열은 실행 분기를 바꾸지 않는다.",
+    "judgement": "현재 값과 하드코딩된 동작은 대체로 일치하지만 설정 파일만 바꾸면 반영될 것처럼 읽힌다. 보고서의 Q01~Q11 모두 동일 band 검색이라는 설명은 정확하지 않다.",
+    "effect": "방법 비교에서 실제 탐색 영역 차이가 가려지고, 향후 설정 변경이 조용히 무시될 수 있다.",
+    "proposal": "유효 설정과 설명용 메타데이터를 구분해 저장한다. 지원하지 않는 값을 넣으면 명시적으로 실패하도록 수정안을 마련한다.",
+    "evidence": [
+      [
+        "cpp/src/methods_qr.cpp",
+        "cv::Mat crop = c.gray(t.roi)"
+      ],
+      [
+        "cpp/src/main.cpp",
+        "json hashed ="
+      ],
+      [
+        "tools/make_report.py",
+        "Q01~Q11 주 선"
+      ]
+    ],
+    "sources": [],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_qr.cpp",
+        "line": 41,
+        "other_matches": [
+          110,
+          202
+        ],
+        "needle": "cv::Mat crop = c.gray(t.roi)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_qr.cpp.html#L41",
+        "sha256": "71b5836529a005fdc8b02f7d2155178ec3d2471d54f839cbf0be31a701fefe41"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/main.cpp",
+        "line": 185,
+        "other_matches": [],
+        "needle": "json hashed =",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__main.cpp.html#L185",
+        "sha256": "ec7255180c4e19242d72dfc6a30062f4c542feaff5c6c6af8c88e8c93bc5da21"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/tools/make_report.py",
+        "line": 376,
+        "other_matches": [],
+        "needle": "Q01~Q11 주 선",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__tools__make_report.py.html#L376",
+        "sha256": "845b410aa71c038d1b9b0e93a7e4266035978aa9749257ddd670f489ef4d4847"
+      }
+    ]
+  },
+  {
+    "id": "F28",
+    "category": "코드 논리 문제",
+    "priority": "우선",
+    "title": "재실행 비교의 identical이 누락 ID를 무시함",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12"
+    ],
+    "current": "compare_runs는 두 파일의 공통 measurement_id만 비교한다. only_in_a/b는 따로 계산하지만 identical=not diffs이다.",
+    "judgement": "공통 결과가 같으면 일부 기록이 빠져도 identical=true가 된다. 전체 비교와 부분 비교의 성공 조건이 섞였다.",
+    "effect": "향후 누락된 전체 실행을 완전히 동일하다고 보고할 수 있다. 이 검사는 통계적 재현성이나 측정 정확도 검증도 아니다.",
+    "proposal": "전체 비교는 ID 집합까지 동일해야 하고, 부분 비교는 의도한 부분집합과 비교 개수가 맞아야 한다. 두 모드를 분리한다.",
+    "evidence": [
+      [
+        "tools/run_pipeline.py",
+        "\"identical\": not diffs"
+      ]
+    ],
+    "sources": [],
+    "observed": "기존 full/repeat는 실제 216개 ID 집합이 같아 이번 로그의 동일 결론은 뒤집히지 않음. 단독 실행은 의도적으로 5개만 비교한 기록.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/tools/run_pipeline.py",
+        "line": 79,
+        "other_matches": [],
+        "needle": "\"identical\": not diffs",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__tools__run_pipeline.py.html#L79",
+        "sha256": "1839bcf383fb21f35b4b45787833fc7d41155023495aeb98dd422425918ef329"
+      }
+    ]
+  },
+  {
+    "id": "F29",
+    "category": "기록·설명 문제",
+    "priority": "후속",
+    "title": "그림 생성 스크립트의 실행 기록 해시가 현재와 다름",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12"
+    ],
+    "current": "logs/hashes.json과 현재 파일을 대조하면 tools/make_figures.py 하나가 다르다.",
+    "judgement": "측정 C++ 코드·설정·기록된 검출 소스 해시는 일치한다. 그림 코드 변경 자체를 측정값 변조로 볼 수 없다. 다만 어떤 그림 코드 버전이 어느 산출물을 만들었는지 추적이 불완전하다.",
+    "effect": "측정과 보고서 생성의 provenance를 하나의 시점으로 취급하면 재현 설명이 어긋난다.",
+    "proposal": "측정 실행과 그림/보고서 생성을 별도 버전·해시로 기록한다. 기존 로그는 덮어쓰지 않고 변경 이력을 보충한다.",
+    "evidence": [
+      [
+        "tools/run_pipeline.py",
+        "\"tools\": tree_hashes"
+      ]
+    ],
+    "sources": [],
+    "observed": "artifact_checks.json에 파일별 대조 결과 보관. 본 점검 시작 이후 원본 변경 여부와는 별개인 기존 기록 차이.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/tools/run_pipeline.py",
+        "line": 153,
+        "other_matches": [],
+        "needle": "\"tools\": tree_hashes",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__tools__run_pipeline.py.html#L153",
+        "sha256": "1839bcf383fb21f35b4b45787833fc7d41155023495aeb98dd422425918ef329"
+      }
+    ]
+  },
+  {
+    "id": "F30",
+    "category": "기록·설명 문제",
+    "priority": "후속",
+    "title": "반올림 중간 좌표와 피팅 입력의 정밀도가 다름",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12"
+    ],
+    "current": "최종선은 C++ 원래 좌표로 계산하지만 저장 fit_points는 4~5자리(정수법은 1자리), HTML 표시점은 2자리로 저장한다.",
+    "judgement": "표시용 반올림은 가능하다. 다만 저장 중간 좌표를 다시 피팅해서 원래 결과를 비트 단위로 복원할 수 있다고 주장하면 안 된다.",
+    "effect": "후속 공통 피팅 수정 시 원래 검출 결과를 정확히 재사용하려면 현재 중간 파일 정밀도에 한계가 있다.",
+    "proposal": "재계산용 원정밀 좌표와 표시용 좌표를 분리한다. 기존 수치를 보존하고 복원 오차를 숨기지 않는다.",
+    "evidence": [
+      [
+        "cpp/src/methods_points.cpp",
+        "round_pt(q.x, q.y, 5)"
+      ],
+      [
+        "cpp/src/methods_segments.cpp",
+        "round_pt(q.x, q.y, 4)"
+      ],
+      [
+        "tools/make_report.py",
+        "return [[round(a, 2)"
+      ]
+    ],
+    "sources": [],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_points.cpp",
+        "line": 172,
+        "other_matches": [
+          249,
+          378,
+          452
+        ],
+        "needle": "round_pt(q.x, q.y, 5)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_points.cpp.html#L172",
+        "sha256": "d1ad04445c7e58171f9dbbcb288c195b469da3a5f9f157b9a29f5354a3950668"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/src/methods_segments.cpp",
+        "line": 170,
+        "other_matches": [],
+        "needle": "round_pt(q.x, q.y, 4)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__src__methods_segments.cpp.html#L170",
+        "sha256": "046695e3ba0e17009e01648147f1b31b24a8112863af979368279f02535bfadc"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/tools/make_report.py",
+        "line": 71,
+        "other_matches": [],
+        "needle": "return [[round(a, 2)",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__tools__make_report.py.html#L71",
+        "sha256": "845b410aa71c038d1b9b0e93a7e4266035978aa9749257ddd670f489ef4d4847"
+      }
+    ]
+  },
+  {
+    "id": "F31",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "현재 선별 순위는 정확도 순위가 아님",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12"
+    ],
+    "current": "기준 4장 모두 성공한 방법에서 대상별 최대−최소 각도 폭의 최댓값으로 외부 상위 3개를 남겼다. QR은 사용자 지시로 Q02/Q04만 남겼다.",
+    "judgement": "기준 4장의 실제 영상 선 각도 정답이 없으며 서로 같은 자세라고 검증된 반복 실험도 아니다. 이 폭에는 촬영 차이와 방법 효과가 함께 들어갈 수 있다.",
+    "effect": "작은 폭은 참고 관찰값일 뿐 정확한 선이나 θ 민감도를 보장하지 않는다. 공통 선택/피팅을 바꾸면 순위도 달라질 수 있다.",
+    "proposal": "기존 후보 선택은 기록으로 보존한다. 정확도 합격 또는 보류 방법의 영구 탈락으로 승격하지 말고, 수정 후 필요한 평가 범위를 별도로 결정한다.",
+    "evidence": [
+      [
+        "selection/select_existing_results.py",
+        "item['score_deg']"
+      ],
+      [
+        "selection/select_existing_results.py",
+        "QR_METHODS ="
+      ]
+    ],
+    "sources": [],
+    "observed": "현재 active 후보는 E01/E06/E02 + Q02/Q04. 사용자가 상세 확인을 요청한 E05는 active 후보에 자동 복귀시키지 않았음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_selection_20261030/select_existing_results.py",
+        "line": 89,
+        "other_matches": [],
+        "needle": "item['score_deg']",
+        "view": "source_views/analysis__reference_line_methods_selection_20261030__select_existing_results.py.html#L89",
+        "sha256": "4f02f5713e56584bf366962f375fd5280361772c2f6f2455d6598baf652600d5"
+      },
+      {
+        "path": "analysis/reference_line_methods_selection_20261030/select_existing_results.py",
+        "line": 18,
+        "other_matches": [],
+        "needle": "QR_METHODS =",
+        "view": "source_views/analysis__reference_line_methods_selection_20261030__select_existing_results.py.html#L18",
+        "sha256": "4f02f5713e56584bf366962f375fd5280361772c2f6f2455d6598baf652600d5"
+      }
+    ]
+  },
+  {
+    "id": "F32",
+    "category": "설정 근거·검증 부족",
+    "priority": "우선",
+    "title": "기존 시험이 확인한 범위가 좁음",
+    "methods": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12"
+    ],
+    "current": "자체 시험은 각도 규약·한 직선과 이상점·SHA를 확인한다. 재실행 비교는 같은 프로그램이 같은 값을 내는지 확인한다.",
+    "judgement": "점 추출 수식, 후보 선택, 단위 변화에 대한 Huber 동작, 각 방법의 설정 민감도, 실제 경계 정확도까지 검증한 시험은 아니다.",
+    "effect": "11개 자체 시험 통과와 216개 재실행 일치를 방법 타당성의 근거로 사용할 수 없다.",
+    "proposal": "수정 범위를 정한 후 알려진 기하/광학 조건의 검증과 실제 영상 경계 검토를 단계별로 설계한다. 이번 점검에서는 새 시험이나 통계 검정을 실행하지 않았다.",
+    "evidence": [
+      [
+        "cpp/tests/line_selftest.cpp",
+        "// Exact points on y"
+      ],
+      [
+        "tools/run_pipeline.py",
+        "def numeric_fields"
+      ]
+    ],
+    "sources": [],
+    "observed": "정적 검토. 현재 결과에서의 영향 크기는 측정하지 않음.",
+    "code_evidence": [
+      {
+        "path": "analysis/reference_line_methods_108_20261030/cpp/tests/line_selftest.cpp",
+        "line": 33,
+        "other_matches": [],
+        "needle": "// Exact points on y",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__cpp__tests__line_selftest.cpp.html#L33",
+        "sha256": "52395f57979eabc937ade24bdf9617961769738066e2e7b7c34e58abc7942ab6"
+      },
+      {
+        "path": "analysis/reference_line_methods_108_20261030/tools/run_pipeline.py",
+        "line": 61,
+        "other_matches": [],
+        "needle": "def numeric_fields",
+        "view": "source_views/analysis__reference_line_methods_108_20261030__tools__run_pipeline.py.html#L61",
+        "sha256": "1839bcf383fb21f35b4b45787833fc7d41155023495aeb98dd422425918ef329"
+      }
+    ]
+  }
+]

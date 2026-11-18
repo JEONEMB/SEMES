@@ -1,0 +1,20 @@
+{
+  "source": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\zero_equivalence\\equivalence_results.json",
+  "source_sha256": "54dfb25a127b43b9797c6628ab851faec624a5a7b9b15f709edcc4f04dc6488b",
+  "script_sha256": "08a04ac2b88f51b37dfc3eab4f234f34f434549cd8f2da56c9ec478c538da5f0",
+  "figures": [
+    "six_run_range_rectangles.png",
+    "six_run_range_rectangles.svg",
+    "center_range_rectangles_zoom.png",
+    "center_range_rectangles_zoom.svg"
+  ],
+  "x": "Saved admissible target-coordinate interval, original image horizontal pixels",
+  "y": "Artificial layout only; no image-y measurement or statistical bound",
+  "rectangles": "6 acquisition runs per QR, group numbers 2 through 7",
+  "yellow": "Intersection of the 6 saved x intervals",
+  "red_hatch": "Empty-intersection gap: minimum upper bound to maximum lower bound",
+  "new_image_registration": false,
+  "new_regression": false,
+  "new_statistical_test": false,
+  "saved_source_modified": false
+}

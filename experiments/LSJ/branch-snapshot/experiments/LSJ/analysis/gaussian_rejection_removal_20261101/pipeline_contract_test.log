@@ -1,0 +1,41 @@
+PASS clip segment against y band and subtract central occlusion
+PASS every generated point satisfies x AND y bounds and exclusion mask
+PASS closed occlusion endpoints are not accidentally sampled
+PASS reversing endpoints preserves the visible support
+PASS negative slopes are clipped on the correct side
+PASS horizontal segment outside band is removed
+PASS horizontal segment retains only target x support
+PASS valid crossing part is retained even when original midpoint is outside band
+PASS overlapping unsorted occlusions do not duplicate support
+PASS fully hidden segment has no support
+PASS zero sampling step is rejected
+PASS non-finite segment geometry is rejected
+PASS pair hypothesis anchor uses visible support rather than original midpoint
+PASS x-step sampling has equal counts for equal x spans, not equal arc lengths
+PASS selector fits the supplied clipped line through the real common pipeline
+PASS selector never passes out-of-region samples to Huber
+PASS consensus score uses clipped arc length only
+PASS native support diagnostics are restricted to allowed regions too
+PASS clipped pieces and honest sampling semantics are recorded
+PASS all configured method keys are classified across all 21 methods
+PASS Q12 records Huber and common band as inactive
+PASS unused Huber setting cannot change the Q12 effective hash payload
+PASS unused QR band/margin/step do not affect applied settings
+PASS Q10 uses Huber but searches ROI without common band
+PASS LSD scale=1 records sigma_scale as inactive and excludes it from applied hash
+PASS display-only example frequency is excluded from measurement settings
+PASS active column step changes measurement settings
+PASS unsupported Gaussian mode is rejected
+PASS unsupported initialization mode is rejected
+PASS unsupported contour mode is rejected
+PASS unsupported threshold mode is rejected
+PASS unknown ED operator does not fall back to Sobel
+PASS native ED sigma clamping is not silently recorded as the requested value
+PASS unsupported scaled LSD support mapping is explicit
+PASS unsupported merged FLD support mapping is explicit
+PASS double-to-float overflow is rejected before recording applied settings
+PASS unknown method key is rejected
+PASS fractional integer parameter is rejected
+PASS invalid active common sampling step is rejected before execution
+PASS unknown common fit key is rejected
+0 failure(s)

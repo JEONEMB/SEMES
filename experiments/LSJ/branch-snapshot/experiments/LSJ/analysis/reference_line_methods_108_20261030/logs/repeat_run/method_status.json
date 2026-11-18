@@ -1,0 +1,467 @@
+{
+ "meta": {
+  "tool": "line_methods (reference_line_methods_108_20261030)",
+  "opencv_version": "3.4.15",
+  "msvc_version": 1916,
+  "msvc_full_version": 191627054,
+  "cplusplus": 199711,
+  "opencv_threads": 1,
+  "config_sha256": {
+   "inputs_manifest.json": "178be414cae0a4a671d794af9d3f962aeff3fd5af04cf45a7e4393a3dcb39b23",
+   "method_sources.json": "6cbb91d9fcc0eb9f453964b1d97534fd7bd13a484e23c61874e636db59db2d89",
+   "methods.json": "e05075300ae7813bf4998571e5e630697577cc33dcfac2021495dd81b8ee4e92",
+   "targets.json": "d530775949f67078223b7fdca735f36831891335b00bc32803f8ff26fe530999"
+  },
+  "coordinate_convention": "원본 3840x2160 픽셀 중심 좌표. 좌상단 (0,0), +x 오른쪽, +y 아래. 정수 좌표 = 픽셀 중심.",
+  "angle_convention": "image_angle_deg = atan2(dy, dx) with dx > 0 (x-increasing direction), range [-90, 90). Image line angle only; NOT robot theta.",
+  "inputs": [
+   {
+    "reference_id": "R01",
+    "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+    "expected_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+    "sha256_before": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+    "bmp_header": {
+     "valid": true,
+     "width": 3840,
+     "height": 2160,
+     "bits_per_pixel": 24
+    },
+    "status": "ok",
+    "sha256_after": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+    "unchanged_after_run": true
+   },
+   {
+    "reference_id": "R02",
+    "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+    "expected_sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+    "sha256_before": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+    "bmp_header": {
+     "valid": true,
+     "width": 3840,
+     "height": 2160,
+     "bits_per_pixel": 24
+    },
+    "status": "ok",
+    "sha256_after": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+    "unchanged_after_run": true
+   },
+   {
+    "reference_id": "R03",
+    "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+    "expected_sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+    "sha256_before": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+    "bmp_header": {
+     "valid": true,
+     "width": 3840,
+     "height": 2160,
+     "bits_per_pixel": 24
+    },
+    "status": "ok",
+    "sha256_after": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+    "unchanged_after_run": true
+   },
+   {
+    "reference_id": "R04",
+    "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+    "expected_sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+    "sha256_before": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+    "bmp_header": {
+     "valid": true,
+     "width": 3840,
+     "height": 2160,
+     "bits_per_pixel": 24
+    },
+    "status": "ok",
+    "sha256_after": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+    "unchanged_after_run": true
+   }
+  ],
+  "refs_filter": [],
+  "methods_filter": [],
+  "slot_count": 216,
+  "total_runtime_ms": 8085.189
+ },
+ "methods": [
+  {
+   "method_id": "E01",
+   "name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+   "family": "external",
+   "implementation": "methods_points.cpp::method_profile_gaussian",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 8
+   },
+   "source": {
+    "sources": [
+     "S01"
+    ],
+    "third_party_code": null,
+    "change": "논문의 ISODATA 임계+골격화 거친 경계 대신 band 안 열별 극성 Sobel 최대값을 거친 경계로 사용. Gaussian 피팅·Nelder–Mead·초기값(A=최대, μ=중심, σ=이웃 크기)은 논문 III.B를 따름. 3차 스플라인 연결은 구현하지 않고 직선 피팅으로 대체. 기존 ERF(흐린 계단) 코드와의 차이: ERF는 σ=1 평활 밝기에 누적정규 계단을, 여기서는 평활 없는 Sobel 미분에 Gaussian을 맞춤."
+   }
+  },
+  {
+   "method_id": "E02",
+   "name": "Canny–Devernay 서브픽셀 경계점",
+   "family": "external",
+   "implementation": "methods_points.cpp::method_canny_devernay",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 8
+   },
+   "source": {
+    "sources": [
+     "S02"
+    ],
+    "third_party_code": "third_party/devernay_1.0 (수정 없음)",
+    "change": "검출기 코드는 그대로. 후보 선별(극성·가로 경계·열 구간별 최강점)과 직선 피팅은 이번 도구에서 추가."
+   }
+  },
+  {
+   "method_id": "E03",
+   "name": "Canny → 허프 변환 → 재피팅",
+   "family": "external",
+   "implementation": "methods_hough.cpp::method_canny_hough",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 8
+   },
+   "source": {
+    "sources": [
+     "S03"
+    ],
+    "third_party_code": "OpenCV 3.4.15 Canny/HoughLines",
+    "change": "투표 화소를 극성·band·가림 마스크로 제한, θ 범위 제한, 선택 선 주변 Canny 화소 재피팅은 이번 도구에서 추가."
+   }
+  },
+  {
+   "method_id": "E04",
+   "name": "LSD",
+   "family": "external",
+   "implementation": "methods_segments.cpp::method_lsd",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "failed": 4,
+    "ok": 4
+   },
+   "source": {
+    "sources": [
+     "S04"
+    ],
+    "third_party_code": "third_party/lsd_1.6 (수정 없음)",
+    "change": "scale = 1.0(저자 기본값 0.8; 재표본화 금지 요구 때문). 선분 선택·통합은 공통 규칙."
+   }
+  },
+  {
+   "method_id": "E05",
+   "name": "Zernike 모멘트(ramp edge)",
+   "family": "external",
+   "implementation": "methods_points.cpp::method_zernike",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 8
+   },
+   "source": {
+    "sources": [
+     "S05"
+    ],
+    "third_party_code": null,
+    "change": "논문 식을 직접 구현(저자 코드 없음). 마스크는 64×64 부표본 수치적분으로 생성, 모멘트 계산 전 창 평균을 뺌(상수 밝기 성분 제거). 흐림 σ는 계측하지 않은 설정값(external 1.5 px, QR 1.0 px). 초기점은 σ=1 평활 세로 경사 최대 화소."
+   }
+  },
+  {
+   "method_id": "E06",
+   "name": "PAE(부분 면적 효과)",
+   "family": "external",
+   "implementation": "methods_points.cpp::method_pae",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 8
+   },
+   "source": {
+    "sources": [
+     "S06"
+    ],
+    "third_party_code": null,
+    "change": "2차 기본형을 창 높이 9(m=4)로 일반화해 직접 유도·구현. A/B는 창 맨 위·아래 행 3화소 평균(Method.md의 모서리 3화소 추정과 다름). 평활 변형·floating window·기울기>1 경우는 구현하지 않음. 원 논문 본문을 확인하지 못했으므로 원 논문 그대로의 재현이 아님."
+   }
+  },
+  {
+   "method_id": "E07",
+   "name": "EDLines",
+   "family": "external",
+   "implementation": "methods_segments.cpp::method_edlines",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 8
+   },
+   "source": {
+    "sources": [
+     "S07"
+    ],
+    "third_party_code": "third_party/ED_Lib (EDLines.h에 getLineSegments() 접근자 1개 추가)",
+    "change": "external은 ED 경사/앵커 임계 36/8 → 12/2. 지지 픽셀은 ED 체인 구간으로 재구성(공선 병합 시 일부 누락 가능)."
+   }
+  },
+  {
+   "method_id": "E08",
+   "name": "FLD(Fast Line Detector)",
+   "family": "external",
+   "implementation": "methods_segments.cpp::method_fld",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "failed": 3,
+    "ok": 5
+   },
+   "source": {
+    "sources": [
+     "S08"
+    ],
+    "third_party_code": "third_party/fld_port (ximgproc 인터페이스·매크로 제거, 지지 픽셀 출력 추가)",
+    "change": "검출 계산 코드는 그대로. precomp.hpp·CV_INSTRUMENT_REGION·CV_OVERRIDE·추상 인터페이스·export 제거. external Canny 50/50 → 10/20."
+   }
+  },
+  {
+   "method_id": "E09",
+   "name": "ELSED",
+   "family": "external",
+   "implementation": "methods_segments.cpp::method_elsed",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 8
+   },
+   "source": {
+    "sources": [
+     "S09"
+    ],
+    "third_party_code": "third_party/ELSED (반환 선분별 픽셀 보관·접근자 추가)",
+    "change": "external 경사/앵커 임계 30/8 → 10/4. _USE_MATH_DEFINES로 MSVC M_PI 정의."
+   }
+  },
+  {
+   "method_id": "Q01",
+   "name": "밝기 프로파일 모델 피팅(Gaussian 미분 프로파일)",
+   "family": "qr",
+   "implementation": "methods_points.cpp::method_profile_gaussian",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S01"
+    ],
+    "third_party_code": null,
+    "change": "논문의 ISODATA 임계+골격화 거친 경계 대신 band 안 열별 극성 Sobel 최대값을 거친 경계로 사용. Gaussian 피팅·Nelder–Mead·초기값(A=최대, μ=중심, σ=이웃 크기)은 논문 III.B를 따름. 3차 스플라인 연결은 구현하지 않고 직선 피팅으로 대체. 기존 ERF(흐린 계단) 코드와의 차이: ERF는 σ=1 평활 밝기에 누적정규 계단을, 여기서는 평활 없는 Sobel 미분에 Gaussian을 맞춤."
+   }
+  },
+  {
+   "method_id": "Q02",
+   "name": "Canny–Devernay 서브픽셀 경계점",
+   "family": "qr",
+   "implementation": "methods_points.cpp::method_canny_devernay",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S02"
+    ],
+    "third_party_code": "third_party/devernay_1.0 (수정 없음)",
+    "change": "검출기 코드는 그대로. 후보 선별(극성·가로 경계·열 구간별 최강점)과 직선 피팅은 이번 도구에서 추가."
+   }
+  },
+  {
+   "method_id": "Q03",
+   "name": "Canny → 허프 변환 → 재피팅",
+   "family": "qr",
+   "implementation": "methods_hough.cpp::method_canny_hough",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S03"
+    ],
+    "third_party_code": "OpenCV 3.4.15 Canny/HoughLines",
+    "change": "투표 화소를 극성·band·가림 마스크로 제한, θ 범위 제한, 선택 선 주변 Canny 화소 재피팅은 이번 도구에서 추가."
+   }
+  },
+  {
+   "method_id": "Q04",
+   "name": "LSD",
+   "family": "qr",
+   "implementation": "methods_segments.cpp::method_lsd",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S04"
+    ],
+    "third_party_code": "third_party/lsd_1.6 (수정 없음)",
+    "change": "scale = 1.0(저자 기본값 0.8; 재표본화 금지 요구 때문). 선분 선택·통합은 공통 규칙."
+   }
+  },
+  {
+   "method_id": "Q05",
+   "name": "Zernike 모멘트(ramp edge)",
+   "family": "qr",
+   "implementation": "methods_points.cpp::method_zernike",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S05"
+    ],
+    "third_party_code": null,
+    "change": "논문 식을 직접 구현(저자 코드 없음). 마스크는 64×64 부표본 수치적분으로 생성, 모멘트 계산 전 창 평균을 뺌(상수 밝기 성분 제거). 흐림 σ는 계측하지 않은 설정값(external 1.5 px, QR 1.0 px). 초기점은 σ=1 평활 세로 경사 최대 화소."
+   }
+  },
+  {
+   "method_id": "Q06",
+   "name": "PAE(부분 면적 효과)",
+   "family": "qr",
+   "implementation": "methods_points.cpp::method_pae",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S06"
+    ],
+    "third_party_code": null,
+    "change": "2차 기본형을 창 높이 9(m=4)로 일반화해 직접 유도·구현. A/B는 창 맨 위·아래 행 3화소 평균(Method.md의 모서리 3화소 추정과 다름). 평활 변형·floating window·기울기>1 경우는 구현하지 않음. 원 논문 본문을 확인하지 못했으므로 원 논문 그대로의 재현이 아님."
+   }
+  },
+  {
+   "method_id": "Q07",
+   "name": "EDLines",
+   "family": "qr",
+   "implementation": "methods_segments.cpp::method_edlines",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S07"
+    ],
+    "third_party_code": "third_party/ED_Lib (EDLines.h에 getLineSegments() 접근자 1개 추가)",
+    "change": "external은 ED 경사/앵커 임계 36/8 → 12/2. 지지 픽셀은 ED 체인 구간으로 재구성(공선 병합 시 일부 누락 가능)."
+   }
+  },
+  {
+   "method_id": "Q08",
+   "name": "FLD(Fast Line Detector)",
+   "family": "qr",
+   "implementation": "methods_segments.cpp::method_fld",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S08"
+    ],
+    "third_party_code": "third_party/fld_port (ximgproc 인터페이스·매크로 제거, 지지 픽셀 출력 추가)",
+    "change": "검출 계산 코드는 그대로. precomp.hpp·CV_INSTRUMENT_REGION·CV_OVERRIDE·추상 인터페이스·export 제거. external Canny 50/50 → 10/20."
+   }
+  },
+  {
+   "method_id": "Q09",
+   "name": "ELSED",
+   "family": "qr",
+   "implementation": "methods_segments.cpp::method_elsed",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S09"
+    ],
+    "third_party_code": "third_party/ELSED (반환 선분별 픽셀 보관·접근자 추가)",
+    "change": "external 경사/앵커 임계 30/8 → 10/4. _USE_MATH_DEFINES로 MSVC M_PI 정의."
+   }
+  },
+  {
+   "method_id": "Q10",
+   "name": "이진화 → 윤곽선 → 상단 변 윤곽점 피팅",
+   "family": "qr",
+   "implementation": "methods_qr.cpp::method_qr_contour",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S10"
+    ],
+    "third_party_code": "OpenCV 3.4.15",
+    "change": "이번 도구에서 설계. 윤곽점은 정수 픽셀."
+   }
+  },
+  {
+   "method_id": "Q11",
+   "name": "사각 테두리 코너 검출 → cornerSubPix → 상단 두 코너 연결",
+   "family": "qr",
+   "implementation": "methods_qr.cpp::method_qr_corners",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S03"
+    ],
+    "third_party_code": "OpenCV 3.4.15 goodFeaturesToTrack/cornerSubPix",
+    "change": "사분면 밝기 패턴으로 바깥 테두리 코너를 식별하는 규칙은 이번 도구에서 설계."
+   }
+  },
+  {
+   "method_id": "Q12",
+   "name": "파인더 검출 → 코너 정밀화·중심 → 위쪽 두 중심 연결",
+   "family": "qr",
+   "implementation": "methods_qr.cpp::method_qr_finders",
+   "compiled_in_this_binary": true,
+   "ran_in_this_run": true,
+   "slot_status_counts": {
+    "ok": 12
+   },
+   "source": {
+    "sources": [
+     "S10",
+     "S03"
+    ],
+    "third_party_code": "OpenCV 3.4.15",
+    "change": "기존 Python measure_finders.py와 같은 정의·설정을 C++로 이식."
+   }
+  }
+ ]
+}

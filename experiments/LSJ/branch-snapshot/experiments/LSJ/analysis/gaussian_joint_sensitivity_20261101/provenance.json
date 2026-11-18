@@ -1,0 +1,154 @@
+{
+  "created_utc": "2026-11-01T07:09:40.578813+00:00",
+  "design": {
+    "scope": "Joint sensitivity checks of Gaussian sample count (2), initial sigma (3), numerical stopping (4). No Huber, line fitting, theta calibration, significance tests or production setting selection.",
+    "inputs": "Exactly the previously verified 23056 visible-column profiles from four reference images, horizontal step 1 pixel. No new coarse-edge selection or image preprocessing.",
+    "sample_counts": [
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      39,
+      41,
+      43,
+      45,
+      47,
+      49,
+      51,
+      53,
+      55,
+      57,
+      59,
+      61
+    ],
+    "sample_count_basis": "Paper 2015 tests odd N=3..21; 23..61 is the already discussed extension. Neither range boundary is an acceptance rule.",
+    "fixed_initialization_arms": {
+      "sigma": [
+        5,
+        11,
+        21
+      ],
+      "basis": "Reuse the three previously compared initial widths as an explicit exploratory range, not a paper-prescribed optimum or exhaustive initialization test.",
+      "A": "coarse_response, fixed across all N and sigma arms at a given location",
+      "mu": "coarse_y, fixed across all N and sigma arms",
+      "simplex_steps": [
+        "0.2*A",
+        1,
+        5.5
+      ],
+      "simplex_basis": "Existing 11-sample implementation step sizes held fixed to avoid changing search size when changing N or initial sigma. These inherited numerical choices are not validated by the paper.",
+      "limits": "Only initial sigma sensitivity is varied; this is not an exhaustive test of all A/mu/simplex initializations."
+    },
+    "paper_reproduction_arm": {
+      "A": "max of fitted neighborhood",
+      "mu": "coarse_y",
+      "sigma": "N",
+      "simplex_steps": [
+        "0.2*A",
+        1,
+        "0.5*N"
+      ],
+      "role": "Reproduce previous unfiltered output and compare its numerical settings. Not pooled into fixed-start window/initial-sigma effects."
+    },
+    "iteration_caps": [
+      800,
+      1600,
+      3200,
+      6400
+    ],
+    "iteration_basis": "Doubling the inherited 800 cap is an exploratory numerical sensitivity sequence. 6400 is a finite experiment budget, not proof that every solve is sufficient.",
+    "legacy_stopping": "Original objective-only: max f-min f <= 1e-10*(abs(best f)+1e-30), evaluated before the iteration cap.",
+    "dual_stopping": {
+      "tolerances": [
+        1e-06,
+        1e-08,
+        1e-10
+      ],
+      "cap": 6400,
+      "function_test": "max f-min f <= tol*(abs(best f)+1e-30)",
+      "parameter_test": "max over vertices and A,mu,sigma of abs(q_vertex-q_best)/(1+abs(q_best-origin)) <= tol; origin=(0, coarse_y, 0)",
+      "reason": "MathWorks fminsearch documents checking both function and parameter termination. This experiment adds that principle to the existing solver; the scaling and tolerance grid here are explicitly our experiment design, not an exact MATLAB implementation or Fabijanska prescription.",
+      "tolerance_basis": "Logarithmically spaced probes ending at the inherited 1e-10, not px thresholds or task-accuracy acceptance limits."
+    },
+    "objective": "Same unweighted SSE, A*exp(-(y-mu)^2/(2*(abs(sigma)+1e-12)^2)); no offset, no position/sigma/amplitude bounds.",
+    "rejection_policy": "None. Keep weak, endpoint, nonconverged, nonpositive-amplitude, large-shift, out-of-image and nonfinite returns. Nonfinite summary statistics are marked unavailable, never silently removed.",
+    "checkpoint_implementation": "One identical simplex trajectory per profile,N,initialization is continued to the strictest pending stopping condition or 6400 steps; all seven conditions retain their own first stop/cap return. Continuing a trajectory does not mutate an already recorded result.",
+    "reporting": "Raw binary64 results for every combination, counts, medians and maxima over all locations. No good-case selection, no best-start merging, no acceptance cutoff. SSE is compared only for the same input sample set.",
+    "sources": [
+      "https://www.researchgate.net/publication/283556095_Subpixel_edge_detection_in_blurry_and_noisy_images",
+      "https://www.annals-csis.org/Volume_2/pliks/136.pdf",
+      "https://www.mathworks.com/help/matlab/ref/fminsearch.html",
+      "https://www.itl.nist.gov/div898/handbook/pmd/section1/pmd142.htm"
+    ]
+  },
+  "inputs": {
+    "description": "기준 이미지 정확히 4장. 원본은 읽기 전용. 해시는 2026-10-30 작업 문서 기재값.",
+    "expected_width": 3840,
+    "expected_height": 2160,
+    "expected_bits_per_pixel": 24,
+    "references": [
+      {
+        "reference_id": "R01",
+        "dataset": "first",
+        "label": "1차 기준",
+        "file": "center.bmp",
+        "path": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+        "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685"
+      },
+      {
+        "reference_id": "R02",
+        "dataset": "second",
+        "label": "2차 기준",
+        "file": "center1.bmp",
+        "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+        "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c"
+      },
+      {
+        "reference_id": "R03",
+        "dataset": "second",
+        "label": "2차 기준",
+        "file": "center2.bmp",
+        "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+        "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d"
+      },
+      {
+        "reference_id": "R04",
+        "dataset": "second",
+        "label": "2차 기준",
+        "file": "center3.bmp",
+        "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+        "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19"
+      }
+    ]
+  },
+  "unchanged_files": {
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp\\src\\methods_points.cpp": "cb6747b5bd3799692d571970b128bd199c1725d081557dff20260e79811aeebd",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp\\src\\effective_settings.cpp": "218811d22587f6ad07b1fde2b761cc537e9863db968a0a0b97896ce021da890e",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\methods.json": "dfa26d86e70cd5ff7957b8f897b6a1d366b9918a3b003228eda2648d21df9d4d",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\targets.json": "d530775949f67078223b7fdca735f36831891335b00bc32803f8ff26fe530999",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\configs\\inputs_manifest.json": "178be414cae0a4a671d794af9d3f962aeff3fd5af04cf45a7e4393a3dcb39b23",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_no_rejection_20261101\\profiles.jsonl": "697124f6e25177ea3d6199d78a9c17aef5a4f16496e0d4334cfc98fe829b3c67",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_no_rejection_20261101\\arrays.npz": "6bd6fca265cae75afc3800d68bcd6fada07ddbe3dccb8f974e0bff7aae33830d",
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\gaussian_window_no_rejection_20261101\\report.html": "70a06dfe6098c3e86c96dd22d950a23f0666684295040bcfa481d8408a8cdb0b"
+  },
+  "experiment_sources": {
+    "experiment.cpp": "ec088730facd6c9cea3907151937cbf23cd4069633a0ea84e78f33d3f23f3e30",
+    "CMakeLists.txt": "b3924b5470421d81f9bbb93f0d4099ed3def95bb8ffd4118eebfacb4927912b1",
+    "prepare.py": "73ef2343d17fb4577fe5aee39796a2d68126a2669322d0e2ad78ce7737e82011",
+    "original_nelder_mead.hpp": "8ac6b3167f16f6107590cfe909fd51a6a20b7b56b6afb4152e8cad22c04c4537"
+  }
+}

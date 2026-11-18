@@ -1,0 +1,104 @@
+{
+  "columns": 23056,
+  "elapsed_seconds": 9.8868778,
+  "fits": 691680,
+  "groups": [
+    {
+      "fits": 81360,
+      "nonconverged": 2455,
+      "nonfinite": 0,
+      "profiles": 2712,
+      "ref": "R01",
+      "target": "upper_structure"
+    },
+    {
+      "fits": 91560,
+      "nonconverged": 2411,
+      "nonfinite": 0,
+      "profiles": 3052,
+      "ref": "R01",
+      "target": "lower_structure"
+    },
+    {
+      "fits": 81360,
+      "nonconverged": 2275,
+      "nonfinite": 0,
+      "profiles": 2712,
+      "ref": "R02",
+      "target": "upper_structure"
+    },
+    {
+      "fits": 91560,
+      "nonconverged": 2389,
+      "nonfinite": 0,
+      "profiles": 3052,
+      "ref": "R02",
+      "target": "lower_structure"
+    },
+    {
+      "fits": 81360,
+      "nonconverged": 2199,
+      "nonfinite": 0,
+      "profiles": 2712,
+      "ref": "R03",
+      "target": "upper_structure"
+    },
+    {
+      "fits": 91560,
+      "nonconverged": 2387,
+      "nonfinite": 0,
+      "profiles": 3052,
+      "ref": "R03",
+      "target": "lower_structure"
+    },
+    {
+      "fits": 81360,
+      "nonconverged": 2072,
+      "nonfinite": 0,
+      "profiles": 2712,
+      "ref": "R04",
+      "target": "upper_structure"
+    },
+    {
+      "fits": 91560,
+      "nonconverged": 2378,
+      "nonfinite": 0,
+      "profiles": 3052,
+      "ref": "R04",
+      "target": "lower_structure"
+    }
+  ],
+  "opencv_version": "3.4.15",
+  "sample_counts": [
+    3,
+    5,
+    7,
+    9,
+    11,
+    13,
+    15,
+    17,
+    19,
+    21,
+    23,
+    25,
+    27,
+    29,
+    31,
+    33,
+    35,
+    37,
+    39,
+    41,
+    43,
+    45,
+    47,
+    49,
+    51,
+    53,
+    55,
+    57,
+    59,
+    61
+  ]
+}

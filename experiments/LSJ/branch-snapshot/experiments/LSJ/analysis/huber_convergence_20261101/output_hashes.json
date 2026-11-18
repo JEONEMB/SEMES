@@ -1,0 +1,23 @@
+{
+  "comparisons.csv": "3572904c4eef5f566863b5f0c13f6ad1c1d30709361b6691e4e59349025dfae9",
+  "comparisons.json": "d3d3a35368586598a9bc3dcdfde93e0332362ed690fcb91b0f4e9cedbdf9fb62",
+  "convergence_history.png": "bcef7081de72aa640309760fab4df34ca2d2588ecf108d398831d573d076241b",
+  "histories.json": "0d65e1480ea9b1f76e09a5a6b3f7256abd9b99aebd7e0c517858b22c69765949",
+  "initial_40_runs_summary.json": "e9ed1d78222e283695da5321ec11fe17d5279ec571c20935bc6557d07eb94296",
+  "inputs.npz": "d6455ddf1d0c5c29cef1ea49e73adb94b0126b91e5f36d1a3ea9acefd57cf5e0",
+  "install_report.json": "7866bf9e486db434b8b1fb6aa977c9902c137de8bf0a8c73eb5affb4dab87ab4",
+  "points_and_lines.png": "3f1801e3cd60e3b41e2e06dbafb7c98da0ec99c0bf6dee12c9f7b016f2801199",
+  "provenance.json": "03dbc6ba471a175ffe610d3d25ca3f4afa55c120abf38e847b2e7466d0f4ba75",
+  "pypi_statsmodels.json": "8ddf3f7a9cfa95a21efebb40d90e6d12e7aaf25fed95889ffd76a18bfaf6cc6b",
+  "qa.json": "504a3118d4b9819e7b969da74209d3f05cc3824175797b2d99c34453f479ab52",
+  "report.html": "0597c1afe26e0dc5d8392c42a58738e35524d8a23f6c72a411fed95d3814ca36",
+  "report.txt": "44f1d9006fa9cc7f374718ab514ece1488794e5273b0d145a0bfdf7e5cb295c7",
+  "report_preview.png": "6f08e08353e6080c101b340f11cfd62946c34ff5bf4a5b432bd0da6f4e2412bc",
+  "results.csv": "9ab1716b10318ad51b614d089d1a1844a8dc2c446ef0a1c0fcf0673cf647dad7",
+  "results.json": "0db83306a034393441c33efffea44e12cf4da880e215ebd5d03d17deda04d4bc",
+  "run_experiment.py": "ce62affe5097ac937ffcbdcbed0de58ffe0f46d12722b823d2de760100d3ebf5",
+  "settings.json": "0128765dd3695e268f3df7841e4be537ec8afa8bd55bd911a62b8f466849d374",
+  "summary.json": "379687dbfdff2aee2f49ae26f77adaf6d9b8ecc32a599fd8689bad141fbce6cb",
+  "verification.json": "7cadee388bed955dfc926a4a2c140dfc7a4b3cde8c575bcc75d0beb8dfb06331",
+  "verify_and_report.py": "1a294d22f8b041cfa7f5b8fb3ea25f20ada1e82561a3af193df3b17f51e30669"
+}

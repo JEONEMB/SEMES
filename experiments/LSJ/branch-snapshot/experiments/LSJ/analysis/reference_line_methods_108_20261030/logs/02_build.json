@@ -1,0 +1,16 @@
+{
+  "step": "02_build",
+  "command": [
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+    "--build",
+    "build",
+    "--config",
+    "Release",
+    "--",
+    "-m"
+  ],
+  "cwd": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030",
+  "exit_code": 0,
+  "wall_time_s": 5.856,
+  "started": "2026-10-30T10:25:38"
+}

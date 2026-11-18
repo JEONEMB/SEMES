@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-10-30T10:26:01",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "machine": "AMD64",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "cmake": "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+  "generator": "Visual Studio 18 2026",
+  "toolset": "v141",
+  "msvc_toolsets_installed": [
+    "14.16.27023",
+    "14.51.36231"
+  ],
+  "opencv_dir": "C:/Users/SSAFY/opencv/build",
+  "opencv_dll": {
+    "path": "C:\\Users\\SSAFY\\opencv\\build\\x64\\vc15\\bin\\opencv_world3415.dll",
+    "size": 55650816,
+    "sha256": "3efb02b69038309da6adc09ed9b4688c966cf88871d433a49687c3840aba9343"
+  },
+  "opencv_dll_copied_next_to_exe": {
+    "path": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\build\\Release\\opencv_world3415.dll",
+    "sha256": "3efb02b69038309da6adc09ed9b4688c966cf88871d433a49687c3840aba9343"
+  },
+  "exe_sha256": "3e794fc6ab9664d3c8f5e0f956d3bad1e5d3d053bf56c73ecc988ded0673897b",
+  "inputs_sha256_before": {
+    "R01": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+    "R02": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+    "R03": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+    "R04": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19"
+  },
+  "inputs_sha256_after": {
+    "R01": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+    "R02": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+    "R03": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+    "R04": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19"
+  },
+  "inputs_match_manifest": true,
+  "system_changes": "none (no PATH change, no install, no OpenCV change)"
+}

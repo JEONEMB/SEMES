@@ -1,0 +1,21 @@
+UpdateCTestConfiguration  from :C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/build_baseline/DartConfiguration.tcl
+Parse Config file:C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/build_baseline/DartConfiguration.tcl
+Test project C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/build_baseline
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: theta_components
+
+1: Test command: C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_baseline\Release\theta_tests.exe
+1: Working Directory: C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/build_baseline
+1: Test timeout computed to be: 1500
+1: 52 component checks passed
+1/1 Test #1: theta_components .................   Passed    0.06 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.07 sec

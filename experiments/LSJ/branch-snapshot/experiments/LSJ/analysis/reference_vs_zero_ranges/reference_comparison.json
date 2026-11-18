@@ -1,0 +1,3740 @@
+{
+  "purpose": "Position containment of first/second supplied references in six saved first-data target-coordinate ranges",
+  "source_sha256": {
+    "initial_error\\measurements.json": "60b4322cc9679bc91af9c1a61f819273a2c2bcf03d83705451455e4f90b7943c",
+    "increment_consistency\\second_measurements.json": "2932159bc0833b65114261ade6386020b99932c4128e6003b7f4848cd8cca4ab",
+    "zero_equivalence\\equivalence_results.json": "54dfb25a127b43b9797c6628ab851faec624a5a7b9b15f709edcc4f04dc6488b"
+  },
+  "script_sha256": "f88ef3886e673583e2d43748b754441e9b5a7746b972db3e1b6a28cdb1c0b6ba",
+  "method": {
+    "registration": "Reuse initial_error.analyze_images.measure: ZNCC integer initialization -> ECC affine, 60 iterations, epsilon 1e-6, Gaussian 5, search +/-110 pixels",
+    "coordinate": "Track the SAME first-data ROI center in every reference image; x right, y down, pixels",
+    "new_registrations": 9,
+    "new_regressions": 0,
+    "new_statistical_tests": 0,
+    "primary_position": "affine dx/dy at first-data ROI center; translation retained only as implementation output",
+    "matching_scores": "Image registration diagnostics, not ground-truth accuracy certificates",
+    "comparison": "Each reference supplies a point coordinate. Report containment and pixel distance, not rectangle area or percentage overlap.",
+    "reference_roi_xyxy": {
+      "L": [
+        1545,
+        963,
+        1740,
+        1173
+      ],
+      "C": [
+        1803,
+        963,
+        1998,
+        1173
+      ],
+      "R": [
+        2062,
+        965,
+        2257,
+        1175
+      ]
+    }
+  },
+  "limitations": [
+    "Six intervals all originate from first data; second references are comparison targets, not members of those fits.",
+    "This comparison uses estimated image positions without a new uncertainty estimate for the cross-dataset registration.",
+    "Horizontal tracking-center coordinates only; not full QR area overlap or a physical Y/theta correction estimate.",
+    "Reference images are reported separately; no three-image or three-QR averaging.",
+    "An empty HAC intersection cannot contain any reference point; distance to an empty set is not reported as a finite gap."
+  ],
+  "references": [
+    {
+      "dataset": "first",
+      "file": "C:\\Users\\SSAFY\\Desktop\\[기업연계_세메스] 교보재\\[기업연계_세메스] 교보재\\SSAFY Test Image Set\\center.bmp",
+      "name": "center.bmp",
+      "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "position_xy_px": {
+        "L": [
+          1642.0,
+          1067.5
+        ],
+        "C": [
+          1900.0,
+          1067.5
+        ],
+        "R": [
+          2159.0,
+          1069.5
+        ]
+      },
+      "measurement": "Definition of the first-data template coordinates; displacement exactly zero",
+      "comparisons": {
+        "L": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.8002204271525,
+                "high_px": 1642.0919279228892,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.09192792288922647
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.4471315807664,
+                "high_px": 1642.7418596444058,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.5528684192336186
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.7553002594548,
+                "high_px": 1641.558487832698,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.4415121673021076,
+                "outside_distance_px": 0.4415121673021076,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.391613074625,
+                "high_px": 1642.2013114782483,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.20131147824827167
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.8784571968197,
+                "high_px": 1642.172492769844,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.1724927698439842
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.8968264758907,
+                "high_px": 1642.1886628048667,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.18866280486668074
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.4471315807664,
+              "high_px": 1641.558487832698,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.4415121673021076,
+              "outside_distance_px": 0.4415121673021076,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.8375327112192,
+                "high_px": 1642.0569937085313,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.056993708531308584
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.4921153729892,
+                "high_px": 1642.6938136795925,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.5078846270107533
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.7816434682823,
+                "high_px": 1641.5325348865817,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.4674651134182568,
+                "outside_distance_px": 0.4674651134182568,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.4139279114054,
+                "high_px": 1642.1786610861648,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.17866108616476595
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.9165091767527,
+                "high_px": 1642.1369260319925,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.13692603199251607
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.9549633569793,
+                "high_px": 1642.1264635826105,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.12646358261054047
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.4921153729892,
+              "high_px": 1641.5325348865817,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.4674651134182568,
+              "outside_distance_px": 0.4674651134182568,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.84255695748,
+                "high_px": 1642.0520375163053,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.05203751630529041
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.5084992273016,
+                "high_px": 1642.6762055745291,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4915007726983731
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.8265602337976,
+                "high_px": 1641.4882501263126,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.5117498736874495,
+                "outside_distance_px": 0.5117498736874495,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.4281485507377,
+                "high_px": 1642.1642036348126,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.16420363481256572
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.940866352586,
+                "high_px": 1642.113760464333,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.11376046433292686
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.955441575224,
+                "high_px": 1642.1244408235448,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.1244408235447736
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.5084992273016,
+              "high_px": 1641.4882501263126,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        },
+        "C": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.8161939170932,
+                "high_px": 1900.1089864771056,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.10898647710564546
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.4659487968413,
+                "high_px": 1900.7617867626084,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.5340512031586968
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.7668338595745,
+                "high_px": 1899.5682800509094,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.4317199490906205,
+                "outside_distance_px": 0.4317199490906205,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.4049586222907,
+                "high_px": 1900.2112370351172,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.21123703511716485
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.9025990487637,
+                "high_px": 1900.1979539582865,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.19795395828646178
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.927879020915,
+                "high_px": 1900.221096106694,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.22109610669394897
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.4659487968413,
+              "high_px": 1899.5682800509094,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.4317199490906205,
+              "outside_distance_px": 0.4317199490906205,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.850188304702,
+                "high_px": 1900.0771586956284,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.07715869562844091
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.5073218422024,
+                "high_px": 1900.7175973382978,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.49267815779762714
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.7951088858365,
+                "high_px": 1899.5404239063594,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.459576093640635,
+                "outside_distance_px": 0.459576093640635,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.425891317393,
+                "high_px": 1900.189989568416,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.18998956841596737
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.932712090544,
+                "high_px": 1900.1698076525015,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.16980765250150398
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.9875736091017,
+                "high_px": 1900.1572303318435,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.15723033184349333
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.5073218422024,
+              "high_px": 1899.5404239063594,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.459576093640635,
+              "outside_distance_px": 0.459576093640635,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.8608577544355,
+                "high_px": 1900.0669405323601,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.06694053236014952
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.5189918887024,
+                "high_px": 1900.7053291927314,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4810081112975695
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.8431490116973,
+                "high_px": 1899.493070126566,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.5069298734340464,
+                "outside_distance_px": 0.5069298734340464,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.439186360123,
+                "high_px": 1900.1765236878402,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.17652368784024475
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.9466041222918,
+                "high_px": 1900.1564542135425,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.15645421354247446
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.9900291455256,
+                "high_px": 1900.153031373017,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.15303137301702918
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.5189918887024,
+              "high_px": 1899.493070126566,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        },
+        "R": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.824677842131,
+                "high_px": 2159.1173907643356,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.11739076433559603
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.4724906078077,
+                "high_px": 2159.7677727071255,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.5275093921923144
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.768485672569,
+                "high_px": 2158.5728836214294,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.4271163785706449,
+                "outside_distance_px": 0.4271163785706449,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.4129415856305,
+                "high_px": 2159.2205922489156,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.22059224891563645
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.928143551377,
+                "high_px": 2159.223506461461,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.22350646146105646
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2157.9485903636287,
+                "high_px": 2159.2414363325706,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.24143633257062902
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.4724906078077,
+              "high_px": 2158.5728836214294,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.4271163785706449,
+              "outside_distance_px": 0.4271163785706449,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.8592641655423,
+                "high_px": 2159.085008773629,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.08500877362894244
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.511794581945,
+                "high_px": 2159.7257932015054,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4882054180548039
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.8007128830805,
+                "high_px": 2158.54113384245,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.4588661575498918,
+                "outside_distance_px": 0.4588661575498918,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.4358274404,
+                "high_px": 2159.1973622522637,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.19736225226370152
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.957999009575,
+                "high_px": 2159.19560091602,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.1956009160198846
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2158.0060360473285,
+                "high_px": 2159.1799766054373,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.17997660543733218
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.511794581945,
+              "high_px": 2158.54113384245,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.4588661575498918,
+              "outside_distance_px": 0.4588661575498918,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.8721662420817,
+                "high_px": 2159.072710092858,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.07271009285796026
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.5222280477115,
+                "high_px": 2159.714706939329,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4777719522885491
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.8545383237333,
+                "high_px": 2158.4880983809066,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.5119016190933507,
+                "outside_distance_px": 0.5119016190933507,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.449706053825,
+                "high_px": 2159.183341258467,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.18334125846695315
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.96587480091,
+                "high_px": 2159.1879422725133,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.18794227251328266
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2158.0167898288337,
+                "high_px": 2159.1671584650694,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.1671584650694058
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.5222280477115,
+              "high_px": 2158.4880983809066,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "dataset": "second",
+      "file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center1.bmp",
+      "name": "center1.bmp",
+      "sha256": "e50e9579a787bf1dfa2f82b6f5efa6036026c6195986d7855ce2989e9d890c6c",
+      "position_xy_px": {
+        "L": [
+          1641.7654179012943,
+          1067.9059527724112
+        ],
+        "C": [
+          1899.7825241983446,
+          1067.9041329898864
+        ],
+        "R": [
+          2158.791786811744,
+          1069.905680275122
+        ]
+      },
+      "registration": {
+        "L": {
+          "ncc": 0.9678475260734558,
+          "ncc_dx": -0.1898445188999176,
+          "ncc_dy": 0.35689571499824524,
+          "translation": {
+            "correlation": 0.996716899741096,
+            "dx": -0.23392795026302338,
+            "dy": 0.40598464012145996,
+            "warp": [
+              [
+                1.0,
+                0.0,
+                -0.23392795026302338
+              ],
+              [
+                0.0,
+                1.0,
+                0.40598464012145996
+              ]
+            ]
+          },
+          "affine": {
+            "correlation": 0.996649571884952,
+            "dx": -0.2345820987056868,
+            "dy": 0.40595277241112626,
+            "warp": [
+              [
+                1.0001040697097778,
+                -1.534550938231405e-05,
+                -0.2430732548236847
+              ],
+              [
+                6.782938157812168e-07,
+                1.00002121925354,
+                0.4036695659160614
+              ]
+            ]
+          },
+          "brightness": 140.0447619047619,
+          "laplacian_variance": 2315.904052734375
+        },
+        "C": {
+          "ncc": 0.9689610600471497,
+          "ncc_dx": -0.17477399110794067,
+          "ncc_dy": 0.3608548045158386,
+          "translation": {
+            "correlation": 0.9974542191362028,
+            "dx": -0.2177148014307022,
+            "dy": 0.404262512922287,
+            "warp": [
+              [
+                1.0,
+                0.0,
+                -0.2177148014307022
+              ],
+              [
+                0.0,
+                1.0,
+                0.404262512922287
+              ]
+            ]
+          },
+          "affine": {
+            "correlation": 0.9974097933613831,
+            "dx": -0.21747580165538238,
+            "dy": 0.40413298988642055,
+            "warp": [
+              [
+                0.9999828338623047,
+                -3.5131946788169444e-05,
+                -0.21213939785957336
+              ],
+              [
+                3.2550258765695617e-05,
+                1.0001097917556763,
+                0.3895023763179779
+              ]
+            ]
+          },
+          "brightness": 137.23484737484736,
+          "laplacian_variance": 2446.520751953125
+        },
+        "R": {
+          "ncc": 0.9692820310592651,
+          "ncc_dx": -0.16617438197135925,
+          "ncc_dy": 0.36590996384620667,
+          "translation": {
+            "correlation": 0.9973165669551992,
+            "dx": -0.20815140008926392,
+            "dy": 0.405608594417572,
+            "warp": [
+              [
+                1.0,
+                0.0,
+                -0.20815140008926392
+              ],
+              [
+                0.0,
+                1.0,
+                0.405608594417572
+              ]
+            ]
+          },
+          "affine": {
+            "correlation": 0.99723315934469,
+            "dx": -0.20821318825619528,
+            "dy": 0.4056802751219948,
+            "warp": [
+              [
+                1.0000916719436646,
+                8.329299453180283e-05,
+                -0.2258094847202301
+              ],
+              [
+                2.5473367713857442e-05,
+                1.0001026391983032,
+                0.39248356223106384
+              ]
+            ]
+          },
+          "brightness": 132.5875457875458,
+          "laplacian_variance": 2244.616455078125
+        }
+      },
+      "comparisons": {
+        "L": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.8002204271525,
+                "high_px": 1642.0919279228892,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.32651002159491327
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.4471315807664,
+                "high_px": 1642.7418596444058,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3182863205279318
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.7553002594548,
+                "high_px": 1641.558487832698,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.20693006859642082,
+                "outside_distance_px": 0.20693006859642082,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.391613074625,
+                "high_px": 1642.2013114782483,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.37380482666935677
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.8784571968197,
+                "high_px": 1642.172492769844,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.407074868549671
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.8968264758907,
+                "high_px": 1642.1886628048667,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.42324490357236755
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.4471315807664,
+              "high_px": 1641.558487832698,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.20693006859642082,
+              "outside_distance_px": 0.20693006859642082,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.8375327112192,
+                "high_px": 1642.0569937085313,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2915758072369954
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.4921153729892,
+                "high_px": 1642.6938136795925,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2733025283050665
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.7816434682823,
+                "high_px": 1641.5325348865817,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.23288301471257,
+                "outside_distance_px": 0.23288301471257,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.4139279114054,
+                "high_px": 1642.1786610861648,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.35148998988893254
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.9165091767527,
+                "high_px": 1642.1369260319925,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3715081306982029
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.9549633569793,
+                "high_px": 1642.1264635826105,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3610456813162273
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.4921153729892,
+              "high_px": 1641.5325348865817,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.23288301471257,
+              "outside_distance_px": 0.23288301471257,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.84255695748,
+                "high_px": 1642.0520375163053,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2866196150109772
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.5084992273016,
+                "high_px": 1642.6762055745291,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2569186739926863
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.8265602337976,
+                "high_px": 1641.4882501263126,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.2771677749817627,
+                "outside_distance_px": 0.2771677749817627,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.4281485507377,
+                "high_px": 1642.1642036348126,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3372693505566531
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.940866352586,
+                "high_px": 1642.113760464333,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.34834256303861366
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.955441575224,
+                "high_px": 1642.1244408235448,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3590229222504604
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.5084992273016,
+              "high_px": 1641.4882501263126,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        },
+        "C": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.8161939170932,
+                "high_px": 1900.1089864771056,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.32646227876102785
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.4659487968413,
+                "high_px": 1900.7617867626084,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3165754015033144
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.7668338595745,
+                "high_px": 1899.5682800509094,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.21424414743523812,
+                "outside_distance_px": 0.21424414743523812,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.4049586222907,
+                "high_px": 1900.2112370351172,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.37756557605393937
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.9025990487637,
+                "high_px": 1900.1979539582865,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.41542975994184417
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.927879020915,
+                "high_px": 1900.221096106694,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.43857190834933135
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.4659487968413,
+              "high_px": 1899.5682800509094,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.21424414743523812,
+              "outside_distance_px": 0.21424414743523812,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.850188304702,
+                "high_px": 1900.0771586956284,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2946344972838233
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.5073218422024,
+                "high_px": 1900.7175973382978,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.27520235614224475
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.7951088858365,
+                "high_px": 1899.5404239063594,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.24210029198525262,
+                "outside_distance_px": 0.24210029198525262,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.425891317393,
+                "high_px": 1900.189989568416,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3566328809515653
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.932712090544,
+                "high_px": 1900.1698076525015,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.38728345415688636
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.9875736091017,
+                "high_px": 1900.1572303318435,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3747061334988757
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.5073218422024,
+              "high_px": 1899.5404239063594,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.24210029198525262,
+              "outside_distance_px": 0.24210029198525262,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.8608577544355,
+                "high_px": 1900.0669405323601,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2844163340155319
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.5189918887024,
+                "high_px": 1900.7053291927314,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2635323096421871
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.8431490116973,
+                "high_px": 1899.493070126566,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.289454071778664,
+                "outside_distance_px": 0.289454071778664,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.439186360123,
+                "high_px": 1900.1765236878402,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.34333783822171426
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.9466041222918,
+                "high_px": 1900.1564542135425,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.37393001519785685
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.9900291455256,
+                "high_px": 1900.153031373017,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.37050717467241157
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.5189918887024,
+              "high_px": 1899.493070126566,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        },
+        "R": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.824677842131,
+                "high_px": 2159.1173907643356,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3256039525917913
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.4724906078077,
+                "high_px": 2159.7677727071255,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3192962039361191
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.768485672569,
+                "high_px": 2158.5728836214294,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.2189031903144496,
+                "outside_distance_px": 0.2189031903144496,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.4129415856305,
+                "high_px": 2159.2205922489156,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.37884522611329885
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.928143551377,
+                "high_px": 2159.223506461461,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.43171964971725174
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2157.9485903636287,
+                "high_px": 2159.2414363325706,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4496495208268243
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.4724906078077,
+              "high_px": 2158.5728836214294,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.2189031903144496,
+              "outside_distance_px": 0.2189031903144496,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.8592641655423,
+                "high_px": 2159.085008773629,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2932219618851377
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.511794581945,
+                "high_px": 2159.7257932015054,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2799922297986086
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.8007128830805,
+                "high_px": 2158.54113384245,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.2506529692936965,
+                "outside_distance_px": 0.2506529692936965,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.4358274404,
+                "high_px": 2159.1973622522637,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3559593713439426
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.957999009575,
+                "high_px": 2159.19560091602,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4038141042760799
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2158.0060360473285,
+                "high_px": 2159.1799766054373,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.38818979369352746
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.511794581945,
+              "high_px": 2158.54113384245,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.2506529692936965,
+              "outside_distance_px": 0.2506529692936965,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.8721662420817,
+                "high_px": 2159.072710092858,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.28092328111415554
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.5222280477115,
+                "high_px": 2159.714706939329,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2695587640323538
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.8545383237333,
+                "high_px": 2158.4880983809066,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.30368843083715547,
+                "outside_distance_px": 0.30368843083715547,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.449706053825,
+                "high_px": 2159.183341258467,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.34208075791866577
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.96587480091,
+                "high_px": 2159.1879422725133,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.39615546076947794
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2158.0167898288337,
+                "high_px": 2159.1671584650694,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3753716533256011
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.5222280477115,
+              "high_px": 2158.4880983809066,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "dataset": "second",
+      "file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center2.bmp",
+      "name": "center2.bmp",
+      "sha256": "abdf70712c40e5103e4a1d37dfec692cdeee360f0fff11dea5f466ce0fb6fe4d",
+      "position_xy_px": {
+        "L": [
+          1641.674326053956,
+          1067.944108079113
+        ],
+        "C": [
+          1899.7062558101088,
+          1067.936645634405
+        ],
+        "R": [
+          2158.729857285867,
+          1069.9319294336692
+        ]
+      },
+      "registration": {
+        "L": {
+          "ncc": 0.9566065669059753,
+          "ncc_dx": -0.2782770097255707,
+          "ncc_dy": 0.40674182772636414,
+          "translation": {
+            "correlation": 0.9956424345860408,
+            "dx": -0.3245342969894409,
+            "dy": 0.44409120082855225,
+            "warp": [
+              [
+                1.0,
+                0.0,
+                -0.3245342969894409
+              ],
+              [
+                0.0,
+                1.0,
+                0.44409120082855225
+              ]
+            ]
+          },
+          "affine": {
+            "correlation": 0.995449477507347,
+            "dx": -0.32567394604393485,
+            "dy": 0.44410807911299344,
+            "warp": [
+              [
+                1.0001814365386963,
+                -2.7842577765113674e-05,
+                -0.3403637409210205
+              ],
+              [
+                -2.179983312089462e-05,
+                1.00009024143219,
+                0.43679243326187134
+              ]
+            ]
+          },
+          "brightness": 139.8759706959707,
+          "laplacian_variance": 2287.75537109375
+        },
+        "C": {
+          "ncc": 0.9602048397064209,
+          "ncc_dx": -0.24575094878673553,
+          "ncc_dy": 0.40303701162338257,
+          "translation": {
+            "correlation": 0.9967945528488819,
+            "dx": -0.2938113808631897,
+            "dy": 0.4368492662906647,
+            "warp": [
+              [
+                1.0,
+                0.0,
+                -0.2938113808631897
+              ],
+              [
+                0.0,
+                1.0,
+                0.4368492662906647
+              ]
+            ]
+          },
+          "affine": {
+            "correlation": 0.996687008124929,
+            "dx": -0.29374418989118567,
+            "dy": 0.43664563440506754,
+            "warp": [
+              [
+                1.0000383853912354,
+                -2.9623350201291032e-05,
+                -0.29437193274497986
+              ],
+              [
+                1.5695453839725815e-05,
+                1.0001906156539917,
+                0.41520383954048157
+              ]
+            ]
+          },
+          "brightness": 137.06131868131868,
+          "laplacian_variance": 2420.7763671875
+        },
+        "R": {
+          "ncc": 0.9624760150909424,
+          "ncc_dx": -0.22403094172477722,
+          "ncc_dy": 0.3995139002799988,
+          "translation": {
+            "correlation": 0.9967904725963195,
+            "dx": -0.27008751034736633,
+            "dy": 0.4318804144859314,
+            "warp": [
+              [
+                1.0,
+                0.0,
+                -0.27008751034736633
+              ],
+              [
+                0.0,
+                1.0,
+                0.4318804144859314
+              ]
+            ]
+          },
+          "affine": {
+            "correlation": 0.9966511354336954,
+            "dx": -0.27014271413281676,
+            "dy": 0.431929433669211,
+            "warp": [
+              [
+                1.000156283378601,
+                0.00011128177720820531,
+                -0.2969311475753784
+              ],
+              [
+                1.8321918105357327e-05,
+                1.0001477003097534,
+                0.41471752524375916
+              ]
+            ]
+          },
+          "brightness": 132.44139194139194,
+          "laplacian_variance": 2211.6904296875
+        }
+      },
+      "comparisons": {
+        "L": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.8002204271525,
+                "high_px": 1642.0919279228892,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4176018689331613
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.4471315807664,
+                "high_px": 1642.7418596444058,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.22719447318968378
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.7553002594548,
+                "high_px": 1641.558487832698,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.11583822125817278,
+                "outside_distance_px": 0.11583822125817278,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.391613074625,
+                "high_px": 1642.2013114782483,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2827129793311087
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.8784571968197,
+                "high_px": 1642.172492769844,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.49816671588791905
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.8968264758907,
+                "high_px": 1642.1886628048667,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.5143367509106156
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.4471315807664,
+              "high_px": 1641.558487832698,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.11583822125817278,
+              "outside_distance_px": 0.11583822125817278,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.8375327112192,
+                "high_px": 1642.0569937085313,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.38266765457524343
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.4921153729892,
+                "high_px": 1642.6938136795925,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.18221068096681847
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.7816434682823,
+                "high_px": 1641.5325348865817,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.14179116737432196,
+                "outside_distance_px": 0.14179116737432196,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.4139279114054,
+                "high_px": 1642.1786610861648,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2603981425506845
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.9165091767527,
+                "high_px": 1642.1369260319925,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4625999780364509
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.9549633569793,
+                "high_px": 1642.1264635826105,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4521375286544753
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.4921153729892,
+              "high_px": 1641.5325348865817,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.14179116737432196,
+              "outside_distance_px": 0.14179116737432196,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.84255695748,
+                "high_px": 1642.0520375163053,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.37771146234922526
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.5084992273016,
+                "high_px": 1642.6762055745291,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.16582682665443826
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.8265602337976,
+                "high_px": 1641.4882501263126,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.18607592764351466,
+                "outside_distance_px": 0.18607592764351466,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.4281485507377,
+                "high_px": 1642.1642036348126,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.24617750321840504
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.940866352586,
+                "high_px": 1642.113760464333,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4394344103768617
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.955441575224,
+                "high_px": 1642.1244408235448,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.45011476958870844
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.5084992273016,
+              "high_px": 1641.4882501263126,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        },
+        "C": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.8161939170932,
+                "high_px": 1900.1089864771056,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.40273066699683113
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.4659487968413,
+                "high_px": 1900.7617867626084,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.24030701326751114
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.7668338595745,
+                "high_px": 1899.5682800509094,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.13797575919943483,
+                "outside_distance_px": 0.13797575919943483,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.4049586222907,
+                "high_px": 1900.2112370351172,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3012971878181361
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.9025990487637,
+                "high_px": 1900.1979539582865,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.49169814817764745
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.927879020915,
+                "high_px": 1900.221096106694,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.5148402965851346
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.4659487968413,
+              "high_px": 1899.5682800509094,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.13797575919943483,
+              "outside_distance_px": 0.13797575919943483,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.850188304702,
+                "high_px": 1900.0771586956284,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3709028855196266
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.5073218422024,
+                "high_px": 1900.7175973382978,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.19893396790644147
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.7951088858365,
+                "high_px": 1899.5404239063594,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.16583190374944934,
+                "outside_distance_px": 0.16583190374944934,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.425891317393,
+                "high_px": 1900.189989568416,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.280364492715762
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.932712090544,
+                "high_px": 1900.1698076525015,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.46355184239268965
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.9875736091017,
+                "high_px": 1900.1572303318435,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.450974521734679
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.5073218422024,
+              "high_px": 1899.5404239063594,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.16583190374944934,
+              "outside_distance_px": 0.16583190374944934,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.8608577544355,
+                "high_px": 1900.0669405323601,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3606847222513352
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.5189918887024,
+                "high_px": 1900.7053291927314,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.18726392140638382
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.8431490116973,
+                "high_px": 1899.493070126566,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.21318568354286072,
+                "outside_distance_px": 0.21318568354286072,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.439186360123,
+                "high_px": 1900.1765236878402,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.267069449985911
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.9466041222918,
+                "high_px": 1900.1564542135425,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.45019840343366013
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.9900291455256,
+                "high_px": 1900.153031373017,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.44677556290821485
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.5189918887024,
+              "high_px": 1899.493070126566,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        },
+        "R": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.824677842131,
+                "high_px": 2159.1173907643356,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3875334784684128
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.4724906078077,
+                "high_px": 2159.7677727071255,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.25736667805949764
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.768485672569,
+                "high_px": 2158.5728836214294,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.15697366443782812,
+                "outside_distance_px": 0.15697366443782812,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.4129415856305,
+                "high_px": 2159.2205922489156,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.31691570023667737
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.928143551377,
+                "high_px": 2159.223506461461,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4936491755938732
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2157.9485903636287,
+                "high_px": 2159.2414363325706,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.5115790467034458
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.4724906078077,
+              "high_px": 2158.5728836214294,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.15697366443782812,
+              "outside_distance_px": 0.15697366443782812,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.8592641655423,
+                "high_px": 2159.085008773629,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3551514877617592
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.511794581945,
+                "high_px": 2159.7257932015054,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.21806270392198712
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.8007128830805,
+                "high_px": 2158.54113384245,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.18872344341707503,
+                "outside_distance_px": 0.18872344341707503,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.4358274404,
+                "high_px": 2159.1973622522637,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.29402984546732114
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.957999009575,
+                "high_px": 2159.19560091602,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.46574363015270137
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2158.0060360473285,
+                "high_px": 2159.1799766054373,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.45011931957014895
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.511794581945,
+              "high_px": 2158.54113384245,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.18872344341707503,
+              "outside_distance_px": 0.18872344341707503,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.8721662420817,
+                "high_px": 2159.072710092858,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.342852806990777
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.5222280477115,
+                "high_px": 2159.714706939329,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2076292381557323
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.8545383237333,
+                "high_px": 2158.4880983809066,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.24175890496053398,
+                "outside_distance_px": 0.24175890496053398,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.449706053825,
+                "high_px": 2159.183341258467,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2801512320420443
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.96587480091,
+                "high_px": 2159.1879422725133,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4580849866460994
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2158.0167898288337,
+                "high_px": 2159.1671584650694,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.43730117920222256
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.5222280477115,
+              "high_px": 2158.4880983809066,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "dataset": "second",
+      "file": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\second_data_inspection\\extracted\\일부 데이터 추출\\기준 위치\\center3.bmp",
+      "name": "center3.bmp",
+      "sha256": "7f98694dfe72563e36371c255b3211f409def1d3f0f410e2945acbfbc7225f19",
+      "position_xy_px": {
+        "L": [
+          1641.7273335163718,
+          1067.9883341533914
+        ],
+        "C": [
+          1899.7558187821178,
+          1067.9850367335366
+        ],
+        "R": [
+          2158.77431371688,
+          1069.9871533057476
+        ]
+      },
+      "registration": {
+        "L": {
+          "ncc": 0.9557281136512756,
+          "ncc_dx": -0.2252957820892334,
+          "ncc_dy": 0.4655910134315491,
+          "translation": {
+            "correlation": 0.9956508645650101,
+            "dx": -0.2715162932872772,
+            "dy": 0.48848092555999756,
+            "warp": [
+              [
+                1.0,
+                0.0,
+                -0.2715162932872772
+              ],
+              [
+                0.0,
+                1.0,
+                0.48848092555999756
+              ]
+            ]
+          },
+          "affine": {
+            "correlation": 0.9954732578936922,
+            "dx": -0.2726664836281998,
+            "dy": 0.4883341533914063,
+            "warp": [
+              [
+                1.0002001523971558,
+                4.402872946229763e-05,
+                -0.2966822683811188
+              ],
+              [
+                1.2593829524121247e-05,
+                1.0000766515731812,
+                0.4791024625301361
+              ]
+            ]
+          },
+          "brightness": 139.66612942612943,
+          "laplacian_variance": 2245.1201171875
+        },
+        "C": {
+          "ncc": 0.9576022028923035,
+          "ncc_dx": -0.19945085048675537,
+          "ncc_dy": 0.47201940417289734,
+          "translation": {
+            "correlation": 0.9967182801857157,
+            "dx": -0.24402084946632385,
+            "dy": 0.48547545075416565,
+            "warp": [
+              [
+                1.0,
+                0.0,
+                -0.24402084946632385
+              ],
+              [
+                0.0,
+                1.0,
+                0.48547545075416565
+              ]
+            ]
+          },
+          "affine": {
+            "correlation": 0.998272018721545,
+            "dx": -0.2441812178822147,
+            "dy": 0.48503673353661725,
+            "warp": [
+              [
+                0.9999985098838806,
+                1.1839914805023e-05,
+                -0.24527394771575928
+              ],
+              [
+                8.250970495282672e-06,
+                1.000153660774231,
+                0.4681788384914398
+              ]
+            ]
+          },
+          "brightness": 136.87741147741147,
+          "laplacian_variance": 2381.5771484375
+        },
+        "R": {
+          "ncc": 0.9586305618286133,
+          "ncc_dx": -0.18351706862449646,
+          "ncc_dy": 0.47607290744781494,
+          "translation": {
+            "correlation": 0.9965489927595919,
+            "dx": -0.22557581961154938,
+            "dy": 0.48704537749290466,
+            "warp": [
+              [
+                1.0,
+                0.0,
+                -0.22557581961154938
+              ],
+              [
+                0.0,
+                1.0,
+                0.48704537749290466
+              ]
+            ]
+          },
+          "affine": {
+            "correlation": 0.9979542647307517,
+            "dx": -0.22568628312001238,
+            "dy": 0.4871533057475972,
+            "warp": [
+              [
+                1.0001026391983032,
+                0.0001197174860863015,
+                -0.24815276265144348
+              ],
+              [
+                1.1997576621070039e-05,
+                1.0001038312911987,
+                0.47513917088508606
+              ]
+            ]
+          },
+          "brightness": 132.23909645909646,
+          "laplacian_variance": 2175.031494140625
+        }
+      },
+      "comparisons": {
+        "L": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.8002204271525,
+                "high_px": 1642.0919279228892,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.36459440651742625
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.4471315807664,
+                "high_px": 1642.7418596444058,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.28020193560541884
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.7553002594548,
+                "high_px": 1641.558487832698,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.16884568367390784,
+                "outside_distance_px": 0.16884568367390784,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.391613074625,
+                "high_px": 1642.2013114782483,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3357204417468438
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.8784571968197,
+                "high_px": 1642.172492769844,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.445159253472184
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.8968264758907,
+                "high_px": 1642.1886628048667,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.46132928849488053
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.4471315807664,
+              "high_px": 1641.558487832698,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.16884568367390784,
+              "outside_distance_px": 0.16884568367390784,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.8375327112192,
+                "high_px": 1642.0569937085313,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.32966019215950837
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.4921153729892,
+                "high_px": 1642.6938136795925,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.23521814338255354
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.7816434682823,
+                "high_px": 1641.5325348865817,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.19479862979005702,
+                "outside_distance_px": 0.19479862979005702,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.4139279114054,
+                "high_px": 1642.1786610861648,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.31340560496641956
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.9165091767527,
+                "high_px": 1642.1369260319925,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.40959251562071586
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.9549633569793,
+                "high_px": 1642.1264635826105,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.39913006623874026
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.4921153729892,
+              "high_px": 1641.5325348865817,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.19479862979005702,
+              "outside_distance_px": 0.19479862979005702,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1640.84255695748,
+                "high_px": 1642.0520375163053,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3247039999334902
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1641.5084992273016,
+                "high_px": 1642.6762055745291,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.21883428907017333
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1640.8265602337976,
+                "high_px": 1641.4882501263126,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.23908339005924972,
+                "outside_distance_px": 0.23908339005924972,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1641.4281485507377,
+                "high_px": 1642.1642036348126,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2991849656341401
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1640.940866352586,
+                "high_px": 1642.113760464333,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.38642694796112664
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1640.955441575224,
+                "high_px": 1642.1244408235448,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3971073071729734
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1641.5084992273016,
+              "high_px": 1641.4882501263126,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        },
+        "C": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.8161939170932,
+                "high_px": 1900.1089864771056,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.35316769498786016
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.4659487968413,
+                "high_px": 1900.7617867626084,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2898699852764821
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.7668338595745,
+                "high_px": 1899.5682800509094,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.1875387312084058,
+                "outside_distance_px": 0.1875387312084058,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.4049586222907,
+                "high_px": 1900.2112370351172,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.35086015982710705
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.9025990487637,
+                "high_px": 1900.1979539582865,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4421351761686765
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.927879020915,
+                "high_px": 1900.221096106694,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.46527732457616366
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.4659487968413,
+              "high_px": 1899.5682800509094,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.1875387312084058,
+              "outside_distance_px": 0.1875387312084058,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.850188304702,
+                "high_px": 1900.0771586956284,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3213399135106556
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.5073218422024,
+                "high_px": 1900.7175973382978,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.24849693991541244
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.7951088858365,
+                "high_px": 1899.5404239063594,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.2153948757584203,
+                "outside_distance_px": 0.2153948757584203,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.425891317393,
+                "high_px": 1900.189989568416,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.329927464724733
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.932712090544,
+                "high_px": 1900.1698076525015,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4139888703837187
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.9875736091017,
+                "high_px": 1900.1572303318435,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.40141154972570803
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.5073218422024,
+              "high_px": 1899.5404239063594,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.2153948757584203,
+              "outside_distance_px": 0.2153948757584203,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 1898.8608577544355,
+                "high_px": 1900.0669405323601,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3111217502423642
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 1899.5189918887024,
+                "high_px": 1900.7053291927314,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2368268934153548
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 1898.8431490116973,
+                "high_px": 1899.493070126566,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.2627486555518317,
+                "outside_distance_px": 0.2627486555518317,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 1899.439186360123,
+                "high_px": 1900.1765236878402,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.31663242199488195
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 1898.9466041222918,
+                "high_px": 1900.1564542135425,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.40063543142468916
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 1898.9900291455256,
+                "high_px": 1900.153031373017,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3972125908992439
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 1899.5189918887024,
+              "high_px": 1899.493070126566,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        },
+        "R": {
+          "point_only": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.824677842131,
+                "high_px": 2159.1173907643356,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3430770474556084
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.4724906078077,
+                "high_px": 2159.7677727071255,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.30182310907230203
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.768485672569,
+                "high_px": 2158.5728836214294,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.2014300954506325,
+                "outside_distance_px": 0.2014300954506325,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.4129415856305,
+                "high_px": 2159.2205922489156,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.36137213124948175
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.928143551377,
+                "high_px": 2159.223506461461,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.44919274458106884
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2157.9485903636287,
+                "high_px": 2159.2414363325706,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.4671226156906414
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.4724906078077,
+              "high_px": 2158.5728836214294,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.2014300954506325,
+              "outside_distance_px": 0.2014300954506325,
+              "inside_margin_px": null
+            }
+          },
+          "OLS_iid": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.8592641655423,
+                "high_px": 2159.085008773629,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3106950567489548
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.511794581945,
+                "high_px": 2159.7257932015054,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2625191349347915
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.8007128830805,
+                "high_px": 2158.54113384245,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.23317987442987942,
+                "outside_distance_px": 0.23317987442987942,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.4358274404,
+                "high_px": 2159.1973622522637,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.3384862764801255
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.957999009575,
+                "high_px": 2159.19560091602,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.421287199139897
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2158.0060360473285,
+                "high_px": 2159.1799766054373,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.40566288855734456
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.511794581945,
+              "high_px": 2158.54113384245,
+              "inside": false,
+              "empty_interval": false,
+              "signed_outside_distance_px": 0.23317987442987942,
+              "outside_distance_px": 0.23317987442987942,
+              "inside_margin_px": null
+            }
+          },
+          "HAC_sensitivity": {
+            "inside_groups": [
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "outside_groups": [
+              4
+            ],
+            "inside_count": 5,
+            "checks": [
+              {
+                "group": 2,
+                "axis": "Y",
+                "low_px": 2157.8721662420817,
+                "high_px": 2159.072710092858,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.29839637597797264
+              },
+              {
+                "group": 3,
+                "axis": "Y",
+                "low_px": 2158.5222280477115,
+                "high_px": 2159.714706939329,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.2520856691685367
+              },
+              {
+                "group": 4,
+                "axis": "Theta",
+                "low_px": 2157.8545383237333,
+                "high_px": 2158.4880983809066,
+                "inside": false,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.28621533597333837,
+                "outside_distance_px": 0.28621533597333837,
+                "inside_margin_px": null
+              },
+              {
+                "group": 5,
+                "axis": "Theta",
+                "low_px": 2158.449706053825,
+                "high_px": 2159.183341258467,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.32460766305484867
+              },
+              {
+                "group": 6,
+                "axis": "Y",
+                "low_px": 2157.96587480091,
+                "high_px": 2159.1879422725133,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.41362855563329504
+              },
+              {
+                "group": 7,
+                "axis": "Y",
+                "low_px": 2158.0167898288337,
+                "high_px": 2159.1671584650694,
+                "inside": true,
+                "empty_interval": false,
+                "signed_outside_distance_px": 0.0,
+                "outside_distance_px": 0.0,
+                "inside_margin_px": 0.39284474818941817
+              }
+            ],
+            "six_way_common_interval": {
+              "low_px": 2158.5222280477115,
+              "high_px": 2158.4880983809066,
+              "inside": false,
+              "empty_interval": true
+            }
+          }
+        }
+      }
+    }
+  ]
+}

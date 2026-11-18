@@ -1,0 +1,18 @@
+--- before/cpp/src/methods_qr.cpp
++++ after/cpp/src/methods_qr.cpp
+@@ -4,6 +4,7 @@
+ //   Q12 finder patterns -> cornerSubPix -> diagonal-intersection centres -> line through A and B
+ //       (port of analysis/reference_qr_finder_20261029/measure_finders.py)
+ #include "common.hpp"
++#include "effective_settings.hpp"
+ #include "methods.hpp"
+ 
+ #include <opencv2/imgproc.hpp>
+@@ -35,6 +36,7 @@
+ }  // namespace
+ 
+ MethodResult method_qr_contour(MethodContext& c) {
++    validate_method_parameters("Q10",c.params);
+     MethodResult r;
+     const TargetSpec& t = c.target;
+     const json& p = c.params;

@@ -1,0 +1,12 @@
+{
+  "summary.json": "d28b80ddc8ae2849d00604a6f3103694adf01a8fcbf4c56189fd8e20af0ccdc6",
+  "results.json": "57fc82d7345e1ce2291fc6ad992bc7e508b03673c3f7d7530d9fdeba6039f6c4",
+  "protocol.json": "f2ff42e8c49ac813b9c21058805ecd7c1258fafc8d575ff6930bed362fbfcbc4",
+  "holdout_manifest.json": "5783530bc56e91d328e9e143aa6e6358b08e41d3d2d5e10ecd57d78594fcd225",
+  "frozen_calibration.json": "de352c58c9dbd85c31e96f779748a839dd0cd86e1f48df3af926072892ef6d79",
+  "comparison.png": "9f5bace018131727e3878d1d45f3310ffd253a0e5dd8a9038a9fc9d6d3b2867f",
+  "comparison.svg": "862d0c971c8419e1bb1fac9686389bab3ee81c26fc3fad1ac684ef857b0a1117",
+  "report.html": "e01819ffa9b5eb5f76e6e179b3808e9a04407b6c14146bf106e370a30d0347b5",
+  "evaluate.py": "47ed2ba7d7c8739672d969d6b2f8304fb9746dcde96f2bce4a4a76be2bc481e5",
+  "make_report.py": "f03effdb8fc1b09b43708588070d98ec195397089992545f74f2443e2218f3dd"
+}

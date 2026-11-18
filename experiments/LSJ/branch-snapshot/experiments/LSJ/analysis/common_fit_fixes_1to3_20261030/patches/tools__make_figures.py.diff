@@ -1,0 +1,56 @@
+--- before/tools/make_figures.py
++++ after/tools/make_figures.py
+@@ -15,6 +15,7 @@
+ import matplotlib.pyplot as plt
+ from matplotlib.patches import Rectangle, FancyArrowPatch
+ from matplotlib.lines import Line2D
++from fit_point_views import fit_point_view, rms_label
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ RES = ROOT / "results"
+@@ -89,14 +90,12 @@
+ 
+ 
+ def fit_points(it):
+-    pts = np.array(it["intermediates"].get("fit_points", []), dtype=float).reshape(-1, 2)
+-    flag = np.array(it["intermediates"].get("fit_points_inlier_flag", [1] * len(pts)), dtype=bool)
+-    if len(flag) != len(pts): flag = np.ones(len(pts), bool)
+-    return pts, flag
++    view = fit_point_view(it["intermediates"])
++    return np.array(view["points"], dtype=float).reshape(-1, 2), np.array(view["display_mask"], dtype=bool)
+ 
+ 
+ def scatter_points(ax, rec, it, x0, x1, y0, y1):
+-    """Candidates (light), fit inliers (orange), trimmed (purple) inside the view window."""
++    """Actual last-fit input when recorded; legacy results show final classification only."""
+     iv = it["intermediates"]
+     mid = rec["method_id"][1:]
+     if mid in ("01", "05", "06") and "columns" in iv:
+@@ -115,10 +114,16 @@
+         ok = (vp[:, 0] >= x0) & (vp[:, 0] <= x1)
+         ax.scatter(vp[ok & (vp[:, 2] == 0), 0], vp[ok & (vp[:, 2] == 0), 1], s=4, marker="s", color=C_CAND, label="투표 Canny 화소")
+     pts, flag = fit_points(it)
++    point_view = fit_point_view(iv)
+     if len(pts):
+         ok = (pts[:, 0] >= x0) & (pts[:, 0] <= x1)
+-        ax.scatter(pts[ok & flag, 0], pts[ok & flag, 1], s=4, color=C_SEL, label="선택 지지점(피팅 사용)")
+-        ax.scatter(pts[ok & ~flag, 0], pts[ok & ~flag, 1], s=10, marker="x", color=C_OUT, lw=.8, label="피팅에서 제외(trim)")
++        ax.scatter(pts[ok & flag, 0], pts[ok & flag, 1], s=4, color=C_SEL, label=point_view['label'])
++        ax.scatter(pts[ok & ~flag, 0], pts[ok & ~flag, 1], s=10, marker="x", color=C_OUT, lw=.8, label=point_view['excluded_label'])
++        if point_view['used'] is not None and point_view['final_inlier'] is not None:
++            changed = ok & (flag != np.array(point_view['final_inlier'], dtype=bool))
++            if np.any(changed):
++                ax.scatter(pts[changed, 0], pts[changed, 1], s=24, facecolors='none', edgecolors=C_AUX,
++                           label='사용 여부와 최종 거리 분류가 다른 점')
+ 
+ 
+ def draw_segments(ax, it, x0, x1, y0, y1, lw_sel=2.0):
+@@ -141,7 +146,7 @@
+     for a, b in t.get("exclude_x", []): ax.axvspan(a, b, color="gray", alpha=.25, hatch="//")
+     ax.axhline(0, color=C_FINAL, lw=1)
+     rms = rec["fit_rms_px"]
+-    ax.set_title(f"최종선 대비 수직 잔차(전 구간) | fit RMS {'-' if rms is None else f'{rms:.3f}'} px", fontsize=8)
++    ax.set_title(f"최종선 대비 수직 잔차 | {rms_label(rec)} {'-' if rms is None else f'{rms:.3f}'} px", fontsize=8)
+     ax.set_xlabel("원본 x (px)", fontsize=7); ax.set_ylabel("잔차 (px)", fontsize=7); ax.tick_params(labelsize=6)
+     lim = max(2.5, float(np.percentile(np.abs(d), 99.5)) * 1.1) if len(d) else 2.5
+     ax.set_ylim(lim, -lim)

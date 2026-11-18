@@ -1,0 +1,1592 @@
+{
+  "purpose": "Assess nominal-zero target equivalence with coefficient uncertainty and data-dependent target selection",
+  "alpha_family": 0.05,
+  "family_size": 18,
+  "tolerances": {
+    "Y": 0.045,
+    "Theta": 0.005
+  },
+  "data": {
+    "images": 280,
+    "runs": 6,
+    "fits": 18,
+    "raw_images_reregistered": false,
+    "source_sha256": {
+      "first_zero_regions\\zero_region_results.json": "7414e920bfa71f18ab45e46e058af04605da07dacfa5cd922e3a4c31e6f65ab8",
+      "initial_error\\measurements.json": "60b4322cc9679bc91af9c1a61f819273a2c2bcf03d83705451455e4f90b7943c",
+      "initial_error\\capture_order.json": "b7561a628231df3a94821e8ffbe4f5365c02a0dd3b975f516d81b2d8f7ec1a1f"
+    },
+    "script_sha256": "eb6e1763b75bcafa88c3b705564759764c81c721bc950e4fac973ba4d4389a73"
+  },
+  "method": {
+    "primary": "OLS joint coefficient ellipses: c=sqrt(2 F_(2,n-2)(1-alpha/18)); Working-Hotelling band; Bonferroni across 18 fits",
+    "coverage": "At least 95% joint coverage conditional on correct linear mean and independent, normal, homoscedastic residuals within each fit; cross-fit independence is NOT required",
+    "equivalence": "For every line in each ellipse, -T < (x*-b)/a < T. Positive slope verified on each ellipse. A conservative confidence-set equivalence assessment, not ordinary 90%-CI TOST",
+    "target_search": "Intersect simultaneous admissible target sets, then select a midpoint for display; coverage event holds for all choices, so no unadjusted post-selection pointwise test",
+    "endpoint_formula": "lower=b-a*T+c*sqrt([1,-T] V [1,-T]^T); upper=b+a*T-c*sqrt([1,T] V [1,T]^T)",
+    "inverse": "Invert (x*-b_hat-a_hat*q)^2 <= c^2*[1,q] V [1,q]^T; includes covariance between intercept and slope",
+    "sensitivity": "Newey-West/Bartlett HAC covariance with lags=floor(4*(n/100)^(2/9)) and n/(n-2) scale; same F multiplier as primary. This is a sensitivity calculation without exact finite-sample 95% coverage",
+    "hac_order": "Consecutive acquisition index within each run, not equal elapsed capture time; index-stationarity is an additional approximation",
+    "reference": "Conditional on the saved center.bmp/template coordinate system; no new independent reference-image uncertainty experiment",
+    "scope": "Mean-response nominal-zero agreement only; not future-image prediction, mixed-axis observability, or final control accuracy"
+  },
+  "assumption_status": "Residual serial structure observed; primary exact-model coverage not established for these data. HAC is approximate with only 20 images per Y run. Report model-conditional/sensitivity results, not unconditional validation.",
+  "sources": [
+    "https://arxiv.org/html/2004.01757v8#S2",
+    "https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd431.htm",
+    "https://www.stat.purdue.edu/~bacraig/notes525/topic3.pdf",
+    "https://www.itl.nist.gov/div898/handbook/prc/section4/prc473.htm",
+    "https://www.statsmodels.org/stable/generated/statsmodels.stats.sandwich_covariance.cov_hac.html"
+  ],
+  "summaries": {
+    "L": {
+      "point_only": {
+        "low_px": 1641.4471315807664,
+        "high_px": 1641.558487832698,
+        "width_px": 0.111356251931511,
+        "nonempty": true
+      },
+      "OLS_iid": {
+        "low_px": 1641.4921153729892,
+        "high_px": 1641.5325348865817,
+        "width_px": 0.040419513592496514,
+        "nonempty": true,
+        "lower_limiting_group": 3,
+        "upper_limiting_group": 4
+      },
+      "HAC_sensitivity": {
+        "low_px": 1641.5084992273016,
+        "high_px": 1641.4882501263126,
+        "width_px": -0.020249100989076396,
+        "nonempty": false,
+        "lower_limiting_group": 3,
+        "upper_limiting_group": 4
+      },
+      "intersection_of_primary_and_sensitivity": {
+        "low_px": 1641.5084992273016,
+        "high_px": 1641.4882501263126,
+        "width_px": -0.020249100989076396,
+        "nonempty": false
+      },
+      "illustrative_target_px": 1641.5123251297855
+    },
+    "C": {
+      "point_only": {
+        "low_px": 1899.4659487968413,
+        "high_px": 1899.5682800509094,
+        "width_px": 0.1023312540680763,
+        "nonempty": true
+      },
+      "OLS_iid": {
+        "low_px": 1899.5073218422024,
+        "high_px": 1899.5404239063594,
+        "width_px": 0.03310206415699213,
+        "nonempty": true,
+        "lower_limiting_group": 3,
+        "upper_limiting_group": 4
+      },
+      "HAC_sensitivity": {
+        "low_px": 1899.5189918887024,
+        "high_px": 1899.493070126566,
+        "width_px": -0.0259217621364769,
+        "nonempty": false,
+        "lower_limiting_group": 3,
+        "upper_limiting_group": 4
+      },
+      "intersection_of_primary_and_sensitivity": {
+        "low_px": 1899.5189918887024,
+        "high_px": 1899.493070126566,
+        "width_px": -0.0259217621364769,
+        "nonempty": false
+      },
+      "illustrative_target_px": 1899.5238728742809
+    },
+    "R": {
+      "point_only": {
+        "low_px": 2158.4724906078077,
+        "high_px": 2158.5728836214294,
+        "width_px": 0.10039301362166952,
+        "nonempty": true
+      },
+      "OLS_iid": {
+        "low_px": 2158.511794581945,
+        "high_px": 2158.54113384245,
+        "width_px": 0.02933926050491209,
+        "nonempty": true,
+        "lower_limiting_group": 3,
+        "upper_limiting_group": 4
+      },
+      "HAC_sensitivity": {
+        "low_px": 2158.5222280477115,
+        "high_px": 2158.4880983809066,
+        "width_px": -0.03412966680480167,
+        "nonempty": false,
+        "lower_limiting_group": 3,
+        "upper_limiting_group": 4
+      },
+      "intersection_of_primary_and_sensitivity": {
+        "low_px": 2158.5222280477115,
+        "high_px": 2158.4880983809066,
+        "width_px": -0.03412966680480167,
+        "nonempty": false
+      },
+      "illustrative_target_px": 2158.5264642121974
+    }
+  },
+  "fits": [
+    {
+      "group": 2,
+      "name": "Y_positive_0.10_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "L",
+      "n": 20,
+      "beta_b_a": [
+        1641.4460741750208,
+        14.352305508186777
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 1640.8002204271525,
+        "high_px": 1642.0919279228892
+      },
+      "residual_sd_px": 0.01907246911530237,
+      "residual_lag1_correlation": -0.018017454274344,
+      "durbin_watson": 1.753017344154405,
+      "existing_quadratic_minus_linear_intercept_px": 0.018503154205063765,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              7.849538002274033e-05,
+              -5.743564391907827e-05
+            ],
+            [
+              -5.7435643919078284e-05,
+              5.470061325626504e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1640.8375327112192,
+            "high_px": 1642.0569937085313,
+            "width_px": 1.219460997312126,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.03731228406681094,
+            "upper_endpoint_uncertainty_px": 0.03493421435795115,
+            "slope_lower_bound": 14.322155336473076
+          },
+          "equivalent_offset_bounds": [
+            0.0021034384678389998,
+            0.007119434176185855
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.000101700579976565,
+              -6.724076502305414e-05
+            ],
+            [
+              -6.724076502305414e-05,
+              5.109179392543536e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1640.84255695748,
+            "high_px": 1642.0520375163053,
+            "width_px": 1.209480558825362,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.0423365303274556,
+            "upper_endpoint_uncertainty_px": 0.03989040658388609,
+            "slope_lower_bound": 14.323166868839355
+          },
+          "equivalent_offset_bounds": [
+            0.0017549725200771845,
+            0.00746631535746466
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1641.5123251297855,
+      "point_equivalent_offset": 0.004616049646299994
+    },
+    {
+      "group": 2,
+      "name": "Y_positive_0.10_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "C",
+      "n": 20,
+      "beta_b_a": [
+        1899.4625901970994,
+        14.36436177791764
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 1898.8161939170932,
+        "high_px": 1900.1089864771056
+      },
+      "residual_sd_px": 0.01737650009846663,
+      "residual_lag1_correlation": -0.0661362611320558,
+      "durbin_watson": 1.6676560775353315,
+      "existing_quadratic_minus_linear_intercept_px": 0.01977136171103666,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              6.515606832922333e-05,
+              -4.767517194821218e-05
+            ],
+            [
+              -4.7675171948212186e-05,
+              4.540492566496399e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1898.850188304702,
+            "high_px": 1900.0771586956284,
+            "width_px": 1.2269703909264535,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.03399438760872133,
+            "upper_endpoint_uncertainty_px": 0.03182778147711101,
+            "slope_lower_bound": 14.33689263070945
+          },
+          "equivalent_offset_bounds": [
+            0.0019788287597695157,
+            0.006546122917679955
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00011309955175383802,
+              -7.588571494814925e-05
+            ],
+            [
+              -7.588571494814925e-05,
+              5.450530461754973e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1898.8608577544355,
+            "high_px": 1900.0669405323601,
+            "width_px": 1.206082777924621,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.04466383734229546,
+            "upper_endpoint_uncertainty_px": 0.042045944745383645,
+            "slope_lower_bound": 14.334265479957384
+          },
+          "equivalent_offset_bounds": [
+            0.0012507036983857413,
+            0.007269710020905885
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1899.5238728742809,
+      "point_equivalent_offset": 0.004266300036780088
+    },
+    {
+      "group": 2,
+      "name": "Y_positive_0.10_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "R",
+      "n": 20,
+      "beta_b_a": [
+        2158.4710343032334,
+        14.36347691337869
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 2157.824677842131,
+        "high_px": 2159.1173907643356
+      },
+      "residual_sd_px": 0.01767907276560993,
+      "residual_lag1_correlation": -0.012029789653604048,
+      "durbin_watson": 1.6301282780710868,
+      "existing_quadratic_minus_linear_intercept_px": 0.021345842703340168,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              6.744491667326816e-05,
+              -4.93499390292206e-05
+            ],
+            [
+              -4.934993902922061e-05,
+              4.6999941932591063e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 2157.8592641655423,
+            "high_px": 2159.085008773629,
+            "width_px": 1.225744608086643,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.03458632341100534,
+            "upper_endpoint_uncertainty_px": 0.03238199070659983,
+            "slope_lower_bound": 14.335529452753653
+          },
+          "equivalent_offset_bounds": [
+            0.0015308776418589526,
+            0.006179375493064003
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00012778710594417872,
+              -8.651281203377217e-05
+            ],
+            [
+              -8.651281203377217e-05,
+              6.379813003878046e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 2157.8721662420817,
+            "high_px": 2159.072710092858,
+            "width_px": 1.2005438507762847,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.04748839995042169,
+            "upper_endpoint_uncertainty_px": 0.04468067147756356,
+            "slope_lower_bound": 14.330915918423905
+          },
+          "equivalent_offset_bounds": [
+            0.0006521840542875706,
+            0.007052092506919731
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 2158.5264642121974,
+      "point_equivalent_offset": 0.0038590871345632067
+    },
+    {
+      "group": 3,
+      "name": "Y_negative_0.10_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "L",
+      "n": 20,
+      "beta_b_a": [
+        1642.0944956125861,
+        14.385867373770205
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 1641.4471315807664,
+        "high_px": 1642.7418596444058
+      },
+      "residual_sd_px": 0.024559074924949846,
+      "residual_lag1_correlation": 0.6044162552322825,
+      "durbin_watson": 0.7376839692785504,
+      "existing_quadratic_minus_linear_intercept_px": -0.047115756921130014,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00013015302425232257,
+              9.523392018462626e-05
+            ],
+            [
+              9.523392018462628e-05,
+              9.069897160440598e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1641.4921153729892,
+            "high_px": 1642.6938136795925,
+            "width_px": 1.201698306603248,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.04498379222293889,
+            "upper_endpoint_uncertainty_px": 0.04804596481336573,
+            "slope_lower_bound": 14.347043856917697
+          },
+          "equivalent_offset_bounds": [
+            -0.04359844723332346,
+            -0.037323292719250674
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00024262855320298269,
+              0.00018201750144363236
+            ],
+            [
+              0.00018201750144363236,
+              0.00018248622892915305
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1641.5084992273016,
+            "high_px": 1642.6762055745291,
+            "width_px": 1.1677063472275222,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.061367646535310454,
+            "upper_endpoint_uncertainty_px": 0.06565406987666816,
+            "slope_lower_bound": 14.330798177180196
+          },
+          "equivalent_offset_bounds": [
+            -0.04473491862055148,
+            -0.03617348013655737
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1641.5123251297855,
+      "point_equivalent_offset": -0.04046822257391957
+    },
+    {
+      "group": 3,
+      "name": "Y_negative_0.10_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "C",
+      "n": 20,
+      "beta_b_a": [
+        1900.1138677797248,
+        14.39819961963492
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 1899.4659487968413,
+        "high_px": 1900.7617867626084
+      },
+      "residual_sd_px": 0.022587773744430446,
+      "residual_lag1_correlation": 0.5518246274315862,
+      "durbin_watson": 0.8543959445500513,
+      "existing_quadratic_minus_linear_intercept_px": -0.03772027508307474,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00011009741279954116,
+              8.055908253624962e-05
+            ],
+            [
+              8.055908253624963e-05,
+              7.672293574880918e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1899.5073218422024,
+            "high_px": 1900.7175973382978,
+            "width_px": 1.2102754960953916,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.04137304536116557,
+            "upper_endpoint_uncertainty_px": 0.04418942431071181,
+            "slope_lower_bound": 14.362492378327689
+          },
+          "equivalent_offset_bounds": [
+            -0.04385294678315779,
+            -0.03808862483437765
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00018031275793211268,
+              0.00012499170001329692
+            ],
+            [
+              0.00012499170001329692,
+              0.00011935180160035454
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1899.5189918887024,
+            "high_px": 1900.7053291927314,
+            "width_px": 1.1863373040289389,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.05304309186123749,
+            "upper_endpoint_uncertainty_px": 0.05645756987702483,
+            "slope_lower_bound": 14.353663929998108
+          },
+          "equivalent_offset_bounds": [
+            -0.04466188041868767,
+            -0.03727284749162687
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1899.5238728742809,
+      "point_equivalent_offset": -0.0409769916399404
+    },
+    {
+      "group": 3,
+      "name": "Y_negative_0.10_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "R",
+      "n": 20,
+      "beta_b_a": [
+        2159.1201316574666,
+        14.392023325754606
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 2158.4724906078077,
+        "high_px": 2159.7677727071255
+      },
+      "residual_sd_px": 0.02145815632680293,
+      "residual_lag1_correlation": 0.5190709200619966,
+      "durbin_watson": 0.8831760405299046,
+      "existing_quadratic_minus_linear_intercept_px": -0.0410953909786258,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              9.936079679350526e-05,
+              7.270302204402822e-05
+            ],
+            [
+              7.270302204402824e-05,
+              6.9240973375265e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 2158.511794581945,
+            "high_px": 2159.7257932015054,
+            "width_px": 1.2139986195602432,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.03930397413754443,
+            "upper_endpoint_uncertainty_px": 0.04197950562013606,
+            "slope_lower_bound": 14.358101808094709
+          },
+          "equivalent_offset_bounds": [
+            -0.04398279086288686,
+            -0.03850551254024802
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00015892247550497595,
+              0.00011438600197842517
+            ],
+            [
+              0.00011438600197842517,
+              0.00011494499344409358
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 2158.5222280477115,
+            "high_px": 2159.714706939329,
+            "width_px": 1.1924788916176112,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.04973743990371632,
+            "upper_endpoint_uncertainty_px": 0.053065767796251655,
+            "slope_lower_bound": 14.348317561166093
+          },
+          "equivalent_offset_bounds": [
+            -0.04470640330482904,
+            -0.03777551395810483
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 2158.5264642121974,
+      "point_equivalent_offset": -0.04124975563420444
+    },
+    {
+      "group": 4,
+      "name": "Theta_positive",
+      "axis": "Theta",
+      "unit": "degree",
+      "marker": "L",
+      "n": 100,
+      "beta_b_a": [
+        1641.1568940460763,
+        80.31875732429467
+      ],
+      "tolerance": 0.005,
+      "point_only_interval": {
+        "low_px": 1640.7553002594548,
+        "high_px": 1641.558487832698
+      },
+      "residual_sd_px": 0.03668922302475553,
+      "residual_lag1_correlation": 0.738008583495258,
+      "durbin_watson": 0.47063586864249746,
+      "existing_quadratic_minus_linear_intercept_px": 0.03520483524107476,
+      "hac_lags": 4,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              5.465978107438597e-05,
+              -8.158176279759102e-05
+            ],
+            [
+              -8.158176279759102e-05,
+              0.00016154804514374458
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 1640.7816434682823,
+            "high_px": 1641.5325348865817,
+            "width_px": 0.7508914182994886,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.026343208827462668,
+            "upper_endpoint_uncertainty_px": 0.025952946116181326,
+            "slope_lower_bound": 80.27380494110704
+          },
+          "equivalent_offset_bounds": [
+            0.004101696408336093,
+            0.004748502517244496
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.0004001601091623961,
+              -0.0005782029974828143
+            ],
+            [
+              -0.0005782029974828143,
+              0.0008768672253344879
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 1640.8265602337976,
+            "high_px": 1641.4882501263126,
+            "width_px": 0.6616898925149144,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.07125997434277796,
+            "upper_endpoint_uncertainty_px": 0.07023770638533844,
+            "slope_lower_bound": 80.2140278830467
+          },
+          "equivalent_offset_bounds": [
+            0.0035489229852148467,
+            0.0052993623506282115
+          ],
+          "inside_tolerance": false
+        }
+      },
+      "illustrative_target_px": 1641.5123251297855,
+      "point_equivalent_offset": 0.0044252562608019
+    },
+    {
+      "group": 4,
+      "name": "Theta_positive",
+      "axis": "Theta",
+      "unit": "degree",
+      "marker": "C",
+      "n": 100,
+      "beta_b_a": [
+        1899.167556955242,
+        80.14461913347218
+      ],
+      "tolerance": 0.005,
+      "point_only_interval": {
+        "low_px": 1898.7668338595745,
+        "high_px": 1899.5682800509094
+      },
+      "residual_sd_px": 0.03937974114504615,
+      "residual_lag1_correlation": 0.8000609894451539,
+      "durbin_watson": 0.3598164601417525,
+      "existing_quadratic_minus_linear_intercept_px": 0.05053154016172812,
+      "hac_lags": 4,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              6.297041748339778e-05,
+              -9.39856977364146e-05
+            ],
+            [
+              -9.39856977364146e-05,
+              0.00018611029254735564
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 1898.7951088858365,
+            "high_px": 1899.5404239063594,
+            "width_px": 0.7453150205228667,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.02827502626194649,
+            "upper_endpoint_uncertainty_px": 0.027856144550048326,
+            "slope_lower_bound": 80.09637027269397
+          },
+          "equivalent_offset_bounds": [
+            0.004097868000731933,
+            0.004793593044127773
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.0004588847426871883,
+              -0.0006694259956213091
+            ],
+            [
+              -0.0006694259956213091,
+              0.001047521358170841
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 1898.8431490116973,
+            "high_px": 1899.493070126566,
+            "width_px": 0.6499211148686754,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.07631515212288557,
+            "upper_endpoint_uncertainty_px": 0.07520992434335537,
+            "slope_lower_bound": 80.03015134008265
+          },
+          "equivalent_offset_bounds": [
+            0.0035054241682904346,
+            0.005383810563554579
+          ],
+          "inside_tolerance": false
+        }
+      },
+      "illustrative_target_px": 1899.5238728742809,
+      "point_equivalent_offset": 0.004445911938835578
+    },
+    {
+      "group": 4,
+      "name": "Theta_positive",
+      "axis": "Theta",
+      "unit": "degree",
+      "marker": "R",
+      "n": 100,
+      "beta_b_a": [
+        2158.1706846469992,
+        80.43979488602902
+      ],
+      "tolerance": 0.005,
+      "point_only_interval": {
+        "low_px": 2157.768485672569,
+        "high_px": 2158.5728836214294
+      },
+      "residual_sd_px": 0.04488410359029053,
+      "residual_lag1_correlation": 0.8067184059110519,
+      "durbin_watson": 0.34970219838786964,
+      "existing_quadratic_minus_linear_intercept_px": 0.06621201574216684,
+      "hac_lags": 4,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              8.180426944967479e-05,
+              -0.00012209592455175345
+            ],
+            [
+              -0.00012209592455175345,
+              0.00024177410802327416
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 2157.8007128830805,
+            "high_px": 2158.54113384245,
+            "width_px": 0.7404209593696578,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.032227210511236185,
+            "upper_endpoint_uncertainty_px": 0.031749778979127695,
+            "slope_lower_bound": 80.38480196829232
+          },
+          "equivalent_offset_bounds": [
+            0.004027651568590268,
+            0.004817740092530763
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.0005833140179547312,
+              -0.0008655014935239633
+            ],
+            [
+              -0.0008655014935239633,
+              0.0014059586022347418
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 2157.8545383237333,
+            "high_px": 2158.4880983809066,
+            "width_px": 0.6335600571733266,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.08605265116438192,
+            "upper_endpoint_uncertainty_px": 0.08478524052250083,
+            "slope_lower_bound": 80.30718126482245
+          },
+          "equivalent_offset_bounds": [
+            0.0033663362175090808,
+            0.005476201138338263
+          ],
+          "inside_tolerance": false
+        }
+      },
+      "illustrative_target_px": 2158.5264642121974,
+      "point_equivalent_offset": 0.0044229297911845275
+    },
+    {
+      "group": 5,
+      "name": "Theta_negative",
+      "axis": "Theta",
+      "unit": "degree",
+      "marker": "L",
+      "n": 100,
+      "beta_b_a": [
+        1641.7964622764366,
+        80.96984036234416
+      ],
+      "tolerance": 0.005,
+      "point_only_interval": {
+        "low_px": 1641.391613074625,
+        "high_px": 1642.2013114782483
+      },
+      "residual_sd_px": 0.03154609190537284,
+      "residual_lag1_correlation": 0.44763834325726526,
+      "durbin_watson": 1.0508171746059316,
+      "existing_quadratic_minus_linear_intercept_px": -0.01922688014110463,
+      "hac_lags": 4,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              4.0409361376757205e-05,
+              6.031247966680181e-05
+            ],
+            [
+              6.031247966680181e-05,
+              0.00011943065280554814
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 1641.4139279114054,
+            "high_px": 1642.1786610861648,
+            "width_px": 0.7647331747593853,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.02231483678037634,
+            "upper_endpoint_uncertainty_px": 0.02265039208360569,
+            "slope_lower_bound": 80.9311894481385
+          },
+          "equivalent_offset_bounds": [
+            -0.003785269369121577,
+            -0.0032328473240606733
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00010839181894212627,
+              0.00016849012685304525
+            ],
+            [
+              0.00016849012685304525,
+              0.000326620291297973
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 1641.4281485507377,
+            "high_px": 1642.1642036348126,
+            "width_px": 0.7360550840749056,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.03653547611259844,
+            "upper_endpoint_uncertainty_px": 0.037107843435740445,
+            "slope_lower_bound": 80.90592232244292
+          },
+          "equivalent_offset_bounds": [
+            -0.003961128982705069,
+            -0.003056577698722938
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1641.5123251297855,
+      "point_equivalent_offset": -0.003509172617601701
+    },
+    {
+      "group": 5,
+      "name": "Theta_negative",
+      "axis": "Theta",
+      "unit": "degree",
+      "marker": "C",
+      "n": 100,
+      "beta_b_a": [
+        1899.808097828704,
+        80.62784128266907
+      ],
+      "tolerance": 0.005,
+      "point_only_interval": {
+        "low_px": 1899.4049586222907,
+        "high_px": 1900.2112370351172
+      },
+      "residual_sd_px": 0.029592182547534342,
+      "residual_lag1_correlation": 0.448190945635433,
+      "durbin_watson": 1.0819716217158672,
+      "existing_quadratic_minus_linear_intercept_px": -0.003548267375663272,
+      "hac_lags": 4,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              3.5558616333989054e-05,
+              5.307256169252098e-05
+            ],
+            [
+              5.307256169252098e-05,
+              0.00010509418156934847
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 1899.425891317393,
+            "high_px": 1900.189989568416,
+            "width_px": 0.7640982510229151,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.02093269510226914,
+            "upper_endpoint_uncertainty_px": 0.021247466701164563,
+            "slope_lower_bound": 80.59158433799794
+          },
+          "equivalent_offset_bounds": [
+            -0.003785240922459885,
+            -0.0032648493142006306
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              9.499201349225782e-05,
+              0.00013382323021977042
+            ],
+            [
+              0.00013382323021977042,
+              0.00023585608708957446
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 1899.439186360123,
+            "high_px": 1900.1765236878402,
+            "width_px": 0.7373373277173414,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.034227737832325196,
+            "upper_endpoint_uncertainty_px": 0.034713347276979716,
+            "slope_lower_bound": 80.57352557875554
+          },
+          "equivalent_offset_bounds": [
+            -0.003950292861943162,
+            -0.0030994883993592237
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1899.5238728742809,
+      "point_equivalent_offset": -0.0035251465238490356
+    },
+    {
+      "group": 5,
+      "name": "Theta_negative",
+      "axis": "Theta",
+      "unit": "degree",
+      "marker": "R",
+      "n": 100,
+      "beta_b_a": [
+        2158.816766917273,
+        80.76506632847169
+      ],
+      "tolerance": 0.005,
+      "point_only_interval": {
+        "low_px": 2158.4129415856305,
+        "high_px": 2159.2205922489156
+      },
+      "residual_sd_px": 0.032353329983507276,
+      "residual_lag1_correlation": 0.4309513876915226,
+      "durbin_watson": 1.1247652616654897,
+      "existing_quadratic_minus_linear_intercept_px": 0.010655551347554137,
+      "hac_lags": 4,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              4.25039050839119e-05,
+              6.343866430434614e-05
+            ],
+            [
+              6.343866430434614e-05,
+              0.00012562111743434878
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 2158.4358274404,
+            "high_px": 2159.1973622522637,
+            "width_px": 0.7615348118638394,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.02288585476924509,
+            "upper_endpoint_uncertainty_px": 0.023229996651721693,
+            "slope_lower_bound": 80.72542636973414
+          },
+          "equivalent_offset_bounds": [
+            -0.003878249522411161,
+            -0.0033103274989062176
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00010949053787438912,
+              0.000143943286280885
+            ],
+            [
+              0.000143943286280885,
+              0.00023515429134993968
+            ]
+          ],
+          "critical_multiplier": 3.5367296849826975,
+          "acceptable_target_interval": {
+            "low_px": 2158.449706053825,
+            "high_px": 2159.183341258467,
+            "width_px": 0.7336352046418142,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.036764468194801204,
+            "upper_endpoint_uncertainty_px": 0.037250990448503815,
+            "slope_lower_bound": 80.71083149363388
+          },
+          "equivalent_offset_bounds": [
+            -0.0040501832261915895,
+            -0.0031380865545417545
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 2158.5264642121974,
+      "point_equivalent_offset": -0.003594409294421733
+    },
+    {
+      "group": 6,
+      "name": "Y_positive_0.05_offset_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "L",
+      "n": 20,
+      "beta_b_a": [
+        1641.5254749833318,
+        14.37817303360354
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 1640.8784571968197,
+        "high_px": 1642.172492769844
+      },
+      "residual_sd_px": 0.020167838351523696,
+      "residual_lag1_correlation": 0.36495919215768075,
+      "durbin_watson": 1.1607491011973279,
+      "existing_quadratic_minus_linear_intercept_px": 0.02016645201410938,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              8.150125116959041e-05,
+              -6.116416598093088e-05
+            ],
+            [
+              -6.116416598093088e-05,
+              6.116416598093088e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1640.9165091767527,
+            "high_px": 1642.1369260319925,
+            "width_px": 1.2204168552398187,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.038051979933011675,
+            "upper_endpoint_uncertainty_px": 0.03556673785143369,
+            "slope_lower_bound": 14.346291278508456
+          },
+          "equivalent_offset_bounds": [
+            -0.0034808599623626793,
+            0.0016418763555188273
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00022075537617147827,
+              -0.00014890485616075616
+            ],
+            [
+              -0.00014890485616075616,
+              0.0001071991299917366
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1640.940866352586,
+            "high_px": 1642.113760464333,
+            "width_px": 1.1728941117469276,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.06240915576623996,
+            "upper_endpoint_uncertainty_px": 0.05873230551110268,
+            "slope_lower_bound": 14.33596556339303
+          },
+          "equivalent_offset_bounds": [
+            -0.005141737795862256,
+            0.0032886410303662197
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1641.5123251297855,
+      "point_equivalent_offset": -0.0009145705449228564
+    },
+    {
+      "group": 6,
+      "name": "Y_positive_0.05_offset_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "C",
+      "n": 20,
+      "beta_b_a": [
+        1899.550276503525,
+        14.392832328030792
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 1898.9025990487637,
+        "high_px": 1900.1979539582865
+      },
+      "residual_sd_px": 0.015960140838141356,
+      "residual_lag1_correlation": 0.28565675994430884,
+      "durbin_watson": 1.2442152609822144,
+      "existing_quadratic_minus_linear_intercept_px": 0.014533925157138583,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              5.104098080472668e-05,
+              -3.830467602606129e-05
+            ],
+            [
+              -3.830467602606129e-05,
+              3.830467602606129e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1898.932712090544,
+            "high_px": 1900.1698076525015,
+            "width_px": 1.2370955619574033,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.03011304178045992,
+            "upper_endpoint_uncertainty_px": 0.02814630578488588,
+            "slope_lower_bound": 14.36760219217708
+          },
+          "equivalent_offset_bounds": [
+            -0.0038638863105776478,
+            0.00018873225250084748
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00010997608518927964,
+              -7.161358690286232e-05
+            ],
+            [
+              -7.161358690286232e-05,
+              5.107419765496354e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1898.9466041222918,
+            "high_px": 1900.1564542135425,
+            "width_px": 1.2098500912507006,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.044005073527981664,
+            "upper_endpoint_uncertainty_px": 0.04149974474408464,
+            "slope_lower_bound": 14.363698706862358
+          },
+          "equivalent_offset_bounds": [
+            -0.0048140853979932625,
+            0.001133583321454067
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1899.5238728742809,
+      "point_equivalent_offset": -0.0018344984949759887
+    },
+    {
+      "group": 6,
+      "name": "Y_positive_0.05_offset_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "R",
+      "n": 20,
+      "beta_b_a": [
+        2158.575825006419,
+        14.392921223155422
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 2157.928143551377,
+        "high_px": 2159.223506461461
+      },
+      "residual_sd_px": 0.015823619582981487,
+      "residual_lag1_correlation": 0.1236089133381262,
+      "durbin_watson": 1.5285386709962772,
+      "existing_quadratic_minus_linear_intercept_px": 0.010925323889296124,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              5.017151776871651e-05,
+              -3.7652170933370734e-05
+            ],
+            [
+              -3.7652170933370734e-05,
+              3.7652170933370734e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 2157.957999009575,
+            "high_px": 2159.19560091602,
+            "width_px": 1.2376019064449792,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.029855458197567884,
+            "upper_endpoint_uncertainty_px": 0.02790554544117493,
+            "slope_lower_bound": 14.367906903054813
+          },
+          "equivalent_offset_bounds": [
+            -0.005443916676493385,
+            -0.0014211827105625396
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              8.080636203749391e-05,
+              -5.3099216249735974e-05
+            ],
+            [
+              -5.3099216249735974e-05,
+              4.0489431023073215e-05
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 2157.96587480091,
+            "high_px": 2159.1879422725133,
+            "width_px": 1.222067471603168,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.03773124953294569,
+            "upper_endpoint_uncertainty_px": 0.03556418894759155,
+            "slope_lower_bound": 14.366981548230928
+          },
+          "equivalent_offset_bounds": [
+            -0.0059855896625101305,
+            -0.0008819896580838355
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 2158.5264642121974,
+      "point_equivalent_offset": -0.003429518820840351
+    },
+    {
+      "group": 7,
+      "name": "Y_negative_0.05_offset_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "L",
+      "n": 20,
+      "beta_b_a": [
+        1641.5427446403787,
+        14.353736988623654
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 1640.8968264758907,
+        "high_px": 1642.1886628048667
+      },
+      "residual_sd_px": 0.03296606016983006,
+      "residual_lag1_correlation": 0.052970532380333585,
+      "durbin_watson": 1.2680645912059412,
+      "existing_quadratic_minus_linear_intercept_px": 0.036334143494286764,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              0.0002177607814373744,
+              0.00016342272528133166
+            ],
+            [
+              0.00016342272528133164,
+              0.00016342272528133164
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1640.9549633569793,
+            "high_px": 1642.1264635826105,
+            "width_px": 1.1715002256312346,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.05813688108851544,
+            "upper_endpoint_uncertainty_px": 0.062199222256164866,
+            "slope_lower_bound": 14.30162352765351
+          },
+          "equivalent_offset_bounds": [
+            -0.006290513661640418,
+            0.0020782721900375295
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.0002268735835729683,
+              0.00023024542641846338
+            ],
+            [
+              0.00023024542641846338,
+              0.0002922920637262753
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1640.955441575224,
+            "high_px": 1642.1244408235448,
+            "width_px": 1.168999248320688,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.058615099333386614,
+            "upper_endpoint_uncertainty_px": 0.06422198132186899,
+            "slope_lower_bound": 14.28404189528213
+          },
+          "equivalent_offset_bounds": [
+            -0.006369446953364228,
+            0.0021679417686488517
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1641.5123251297855,
+      "point_equivalent_offset": -0.0021192746263449763
+    },
+    {
+      "group": 7,
+      "name": "Y_negative_0.05_offset_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "C",
+      "n": 20,
+      "beta_b_a": [
+        1899.5744875638045,
+        14.369078730878648
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 1898.927879020915,
+        "high_px": 1900.221096106694
+      },
+      "residual_sd_px": 0.033849345701521996,
+      "residual_lag1_correlation": 0.08028055880394853,
+      "durbin_watson": 1.2723082877529395,
+      "existing_quadratic_minus_linear_intercept_px": 0.03808514646743788,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00022958638457010164,
+              0.0001722974743490444
+            ],
+            [
+              0.00017229747434904439,
+              0.00017229747434904439
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1898.9875736091017,
+            "high_px": 1900.1572303318435,
+            "width_px": 1.16965672274182,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.059694588186622856,
+            "upper_endpoint_uncertainty_px": 0.0638657748505098,
+            "slope_lower_bound": 14.3155689530346
+          },
+          "equivalent_offset_bounds": [
+            -0.007796053891659589,
+            0.0007787465586904144
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00025494385497549534,
+              0.00025747003833129776
+            ],
+            [
+              0.00025747003833129776,
+              0.00032633339350121175
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 1898.9900291455256,
+            "high_px": 1900.153031373017,
+            "width_px": 1.1630022274914609,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.062150124610520364,
+            "upper_endpoint_uncertainty_px": 0.06806473367690777,
+            "slope_lower_bound": 14.29543692145469
+          },
+          "equivalent_offset_bounds": [
+            -0.008015724504066646,
+            0.0010120412165274947
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 1899.5238728742809,
+      "point_equivalent_offset": -0.003522472837096913
+    },
+    {
+      "group": 7,
+      "name": "Y_negative_0.05_offset_grid",
+      "axis": "Y",
+      "unit": "mm",
+      "marker": "R",
+      "n": 20,
+      "beta_b_a": [
+        2158.5950133480997,
+        14.364955210461325
+      ],
+      "tolerance": 0.045,
+      "point_only_interval": {
+        "low_px": 2157.9485903636287,
+        "high_px": 2159.2414363325706
+      },
+      "residual_sd_px": 0.032574122138660115,
+      "residual_lag1_correlation": 0.22860050575431634,
+      "durbin_watson": 1.0884115194720492,
+      "existing_quadratic_minus_linear_intercept_px": 0.04164916702075061,
+      "hac_lags": 2,
+      "methods": {
+        "OLS_iid": {
+          "covariance_beta_order_b_a": [
+            [
+              0.00021261358640775068,
+              0.00015955991475253336
+            ],
+            [
+              0.00015955991475253333,
+              0.00015955991475253333
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 2158.0060360473285,
+            "high_px": 2159.1799766054373,
+            "width_px": 1.173940558108825,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.05744568369960067,
+            "upper_endpoint_uncertainty_px": 0.06145972713342971,
+            "slope_lower_bound": 14.313461333608448
+          },
+          "equivalent_offset_bounds": [
+            -0.008882364498958802,
+            -0.0006359979231092143
+          ],
+          "inside_tolerance": true
+        },
+        "HAC_sensitivity": {
+          "covariance_beta_order_b_a": [
+            [
+              0.0003052430405349639,
+              0.0002895178379055677
+            ],
+            [
+              0.0002895178379055677,
+              0.00034335675351408463
+            ]
+          ],
+          "critical_multiplier": 4.076558624706418,
+          "acceptable_target_interval": {
+            "low_px": 2158.0167898288337,
+            "high_px": 2159.1671584650694,
+            "width_px": 1.1503686362357257,
+            "nonempty": true,
+            "lower_endpoint_uncertainty_px": 0.06819946520492304,
+            "upper_endpoint_uncertainty_px": 0.07427786750138606,
+            "slope_lower_bound": 14.289417035255713
+          },
+          "equivalent_offset_bounds": [
+            -0.009684545926985411,
+            0.0001869752318351988
+          ],
+          "inside_tolerance": true
+        }
+      },
+      "illustrative_target_px": 2158.5264642121974,
+      "point_equivalent_offset": -0.004771970040833099
+    }
+  ],
+  "conclusion": {
+    "all_primary_model_conditional_pass": true,
+    "all_hac_sensitivity_nonempty": false,
+    "interpretation": "Primary model-conditional equivalence holds, but does not survive the HAC sensitivity calculation. Unconditional equivalence is not established; this does not prove actual non-equivalence.",
+    "target_configuration_changed": false
+  },
+  "verification": {
+    "source_hashes_match": true,
+    "source_values_checked": 840,
+    "saved_coefficients_reproduced": 18,
+    "hac_two_formulas_match": true,
+    "inverse_intervals_match_ellipse_boundary": true,
+    "endpoint_and_inverse_acceptance_agree": true
+  }
+}

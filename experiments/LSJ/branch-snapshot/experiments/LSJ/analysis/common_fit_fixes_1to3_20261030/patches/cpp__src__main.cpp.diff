@@ -1,0 +1,33 @@
+--- before/cpp/src/main.cpp
++++ after/cpp/src/main.cpp
+@@ -246,7 +246,10 @@
+                         rec["fit_rms_px"] = nullptr;
+                         rec["fit_rms_null_reason"] = !res.rms_null_reason.empty() ? res.rms_null_reason : std::string("no line");
+                     }
+-                    rec["fit_rms_note"] = "fit RMS is the residual of the support points to the fitted line, not measurement accuracy";
++                    rec["fit_rms_point_set"] = res.has_rms && res.diagnostics.contains("fit_rms_point_set")
++                        ? res.diagnostics["fit_rms_point_set"] : json(nullptr);
++                    rec["n_fit_used"] = res.diagnostics.contains("fit_used_points") ? res.diagnostics["fit_used_points"] : json(nullptr);
++                    rec["fit_rms_note"] = "common fit RMS uses actual last-solve input points; final-distance-inlier RMS is separate in diagnostics; neither is measurement accuracy";
+                     rec["diagnostics"] = res.diagnostics;
+                     std::string inter_rel = rel_dir + "/" + t.id + ".json";
+                     rec["intermediate_json"] = inter_rel;
+@@ -293,7 +296,7 @@
+         // CSV (one row per main-line slot).
+         std::ostringstream csv;
+         csv << "measurement_id,reference_id,method_id,target_id,feature_class,status,failure_category,failure_reason,slope_dy_dx,intercept_y_px,image_angle_deg,"
+-               "point_x,point_y,dir_x,dir_y,gen_a,gen_b,gen_c,end1_x,end1_y,end2_x,end2_y,n_candidates,n_selected,support_type,fit_rms_px,fit_rms_null_reason,runtime_ms,config_hash,input_sha256\n";
++               "point_x,point_y,dir_x,dir_y,gen_a,gen_b,gen_c,end1_x,end1_y,end2_x,end2_y,n_candidates,n_selected,support_type,fit_rms_px,fit_rms_null_reason,runtime_ms,config_hash,input_sha256,fit_rms_point_set,n_fit_used\n";
+         for (auto& r : records) {
+             const json& l = r["line"];
+             auto g = [&](const json& v) { return num_or_empty(v); };
+@@ -311,7 +314,8 @@
+             csv << r["n_candidates"].get<int>() << "," << r["n_selected"].get<int>() << ","
+                 << csv_escape(r["support_type"].is_null() ? "" : r["support_type"].get<std::string>()) << "," << g(r["fit_rms_px"]) << ","
+                 << csv_escape(r["fit_rms_null_reason"].is_null() ? "" : r["fit_rms_null_reason"].get<std::string>()) << ","
+-                << g(r["runtime_ms"]) << "," << r["config_hash"].get<std::string>() << "," << r["input_sha256"].get<std::string>() << "\n";
++                << g(r["runtime_ms"]) << "," << r["config_hash"].get<std::string>() << "," << r["input_sha256"].get<std::string>() << ","
++                << (r["fit_rms_point_set"].is_null() ? "" : r["fit_rms_point_set"].get<std::string>()) << "," << g(r["n_fit_used"]) << "\n";
+         }
+         write_text(join_path(out, "line_measurements.csv"), "\xEF\xBB\xBF" + csv.str());
+ 

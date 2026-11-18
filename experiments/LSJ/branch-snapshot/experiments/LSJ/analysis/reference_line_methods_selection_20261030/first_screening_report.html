@@ -1,0 +1,110 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>직선 추출 방법 1차 분리 보고서</title><style>body{max-width:1220px;margin:34px auto;padding:0 26px;font-family:system-ui,"Malgun Gothic",sans-serif;color:#1c2b3b;line-height:1.7}h1{font-size:30px}h2{font-size:22px;margin-top:36px;border-bottom:2px solid #dbe4ed;padding-bottom:7px}h3{font-size:18px}.lead{background:#eaf4ee;padding:18px;border-left:4px solid #2b7650}.note{background:#f2f5fa;padding:16px;border-left:4px solid #55749b}table{border-collapse:collapse;width:100%;font-size:14px;margin:16px 0}td,th{border:1px solid #d7dee6;padding:8px 10px;text-align:left;vertical-align:top}th{background:#eef3f8}tbody tr:nth-child(even){background:#fafbfd}.table-wrap{overflow:auto}a{color:#165ca0}@media print{body{margin:0;padding:0;font-size:10pt;max-width:none}h1{font-size:20pt}h2{font-size:15pt}table{font-size:8pt}thead{display:table-header-group}tr{break-inside:avoid}h2,h3{break-after:avoid}.table-wrap{overflow:visible}a{color:inherit;text-decoration:none}}</style></head><body><h1>직선 추출 방법 1차 분리 보고서</h1>
+<p class="">작성일: 2026-10-30 | 대상: 1·2차 데이터의 기준 이미지 4장 | 기존 결과를 이용한 후보 선별</p>
+<p class="lead">외부 구조물 E01·E06·E02는 유지하고, 사용자 지시에 따라 QR은 Q02·Q04만 사용한다. 현재 48개 직선 측정값, 6개 방법 조합을 보존했다. 이번 결과는 정확도 합격 판정이 아니다.</p>
+<h2>1. 목적과 사용 데이터</h2>
+<p class="">동일한 기준으로 제공된 4장에서 같은 대상의 선 각도가 얼마나 달라지는지 비교하여 검토할 방법 수를 줄였다. 여기서 “1차 분리”는 첫 번째 선별 단계라는 뜻이며, 1차 촬영 데이터만 사용했다는 뜻이 아니다.</p>
+<div class="table-wrap"><table><thead><tr><th>기준 ID</th><th>데이터 구분</th><th>파일명</th></tr></thead><tbody>
+<tr><td>R01</td><td>1차 기준</td><td>center.bmp</td></tr>
+<tr><td>R02</td><td>2차 기준</td><td>center1.bmp</td></tr>
+<tr><td>R03</td><td>2차 기준</td><td>center2.bmp</td></tr>
+<tr><td>R04</td><td>2차 기준</td><td>center3.bmp</td></tr>
+</tbody></table></div>
+<p class="">외부 구조물은 상단·하단 전체 경계를 각각 하나의 직선으로, QR은 왼쪽·중앙·오른쪽을 각각 별도로 비교했다. QR Q01~Q11은 바깥 밝은 테두리 상단, Q12는 위쪽 두 파인더 중심 연결선이다. Q12는 다른 특징이므로 절대 각도를 같은 경계의 정답과 직접 비교하지 않는다.</p>
+<div class="table-wrap"><table><thead><tr><th>항목</th><th>분리 전</th><th>분리 후</th></tr></thead><tbody>
+<tr><td>외부 구조물 방법</td><td>9개</td><td>3개</td></tr>
+<tr><td>QR 방법</td><td>12개</td><td>2개</td></tr>
+<tr><td>방법 조합</td><td>9 × 12 = 108개</td><td>3 × 2 = 6개</td></tr>
+<tr><td>직선 측정 항목</td><td>216개: 성공 209 / 실패 7</td><td>48개: 외부 24 / QR 24</td></tr>
+<tr><td>기준 4장에 대한 조합 항목</td><td>432개</td><td>24개</td></tr>
+<tr><td>추출 과정 그림</td><td>84개</td><td>20개</td></tr>
+</tbody></table></div>
+<h2>2. 적용한 선별 기준</h2>
+<p class="">① 한 방법이 담당하는 모든 대상에 대해 기준 4장 전부 추출에 성공해야 한다. 외부 구조물은 8개, QR은 12개 측정 항목을 모두 충족해야 한다.</p>
+<p class="">② 같은 대상의 영상 선 각도 φ에 대해 R = max(φ_R01, φ_R02, φ_R03, φ_R04) − min(φ_R01, φ_R02, φ_R03, φ_R04)를 사용했다. 이 값은 표준편차나 정답 대비 오차가 아니라 최댓값과 최솟값의 차이인 범위다.</p>
+<p class="">③ 외부 구조물 점수 = max(R_상단, R_하단), QR 점수 = max(R_왼쪽, R_중앙, R_오른쪽)으로 정했다. 대상 간 평균으로 불균일한 결과가 가려지지 않도록 가장 큰 범위를 사용했다.</p>
+<p class="note">④ 초기에는 외부 구조물과 QR에서 각각 상위 3개를 남겼다. 이후 사용자 지시에 따라 QR Q01을 제외하고 Q02·Q04만 사용하도록 변경했다. 외부 구조물은 상위 3개를 유지한다. 개수는 운영상 선택이며 통계적으로 도출한 합격 개수나 허용오차 기준이 아니다.</p>
+<p class="">이하 모든 수치의 단위는 영상 속 선 각도의 도(°)다. 로봇 θ의 도(°)와 바로 같은 값으로 취급하거나 정렬 허용오차 ±0.005°에 직접 대입하지 않는다. 순위는 반올림 전 원본 값으로 정했고 표만 소수점 6자리로 표시했다.</p>
+<h2>3. 선별 결과</h2>
+<div class="table-wrap"><table><thead><tr><th>구분</th><th>ID</th><th>방법</th><th>순위</th><th>최대 범위(°)</th><th>점수 결정 대상</th></tr></thead><tbody>
+<tr><td>외부 구조물</td><td>E01</td><td>Gaussian 프로파일 피팅</td><td>1</td><td>0.013016</td><td>하단</td></tr>
+<tr><td>외부 구조물</td><td>E06</td><td>PAE 변형</td><td>2</td><td>0.022314</td><td>하단</td></tr>
+<tr><td>외부 구조물</td><td>E02</td><td>Canny–Devernay</td><td>3</td><td>0.025080</td><td>하단</td></tr>
+<tr><td>QR</td><td>Q02</td><td>Canny–Devernay</td><td>1</td><td>0.032376</td><td>왼쪽</td></tr>
+<tr><td>QR</td><td>Q04</td><td>LSD</td><td>2</td><td>0.040357</td><td>중앙</td></tr>
+</tbody></table></div>
+<p class="">보존한 6개 조합: E01·E06·E02 각각에 Q02·Q04를 조합했다. 조합은 외부 선 2개와 QR 선 3개를 함께 열람하기 위한 묶음이다. 각도를 평균하거나 새로운 추정값을 만든 것이 아니다.</p>
+<h2>4. 전체 방법의 수치와 처리 결과</h2>
+<h3>외부 구조물 9개</h3>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>방법</th><th>상단 범위(°)</th><th>하단 범위(°)</th><th>점수(°)</th><th>처리</th></tr></thead><tbody>
+<tr><td>E01</td><td>Gaussian 프로파일 피팅</td><td>0.001700</td><td>0.013016</td><td>0.013016</td><td>선별</td></tr>
+<tr><td>E06</td><td>PAE 변형</td><td>0.001225</td><td>0.022314</td><td>0.022314</td><td>선별</td></tr>
+<tr><td>E02</td><td>Canny–Devernay</td><td>0.001719</td><td>0.025080</td><td>0.025080</td><td>선별</td></tr>
+<tr><td>E05</td><td>Zernike 모멘트</td><td>0.000729</td><td>0.029247</td><td>0.029247</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>E03</td><td>Canny–Hough 재피팅</td><td>0.001759</td><td>0.115560</td><td>0.115560</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>E09</td><td>ELSED</td><td>0.002583</td><td>0.200080</td><td>0.200080</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>E07</td><td>EDLines</td><td>0.006438</td><td>0.202184</td><td>0.202184</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>E04</td><td>LSD</td><td>0.001326</td><td>—</td><td>—</td><td>제외: 일부 추출 실패</td></tr>
+<tr><td>E08</td><td>FLD</td><td>0.002665</td><td>—</td><td>—</td><td>제외: 일부 추출 실패</td></tr>
+</tbody></table></div>
+<h3>QR 12개</h3>
+<div class="table-wrap"><table><thead><tr><th>ID</th><th>방법</th><th>왼쪽 범위(°)</th><th>중앙 범위(°)</th><th>오른쪽 범위(°)</th><th>점수(°)</th><th>처리</th></tr></thead><tbody>
+<tr><td>Q02</td><td>Canny–Devernay</td><td>0.032376</td><td>0.013067</td><td>0.008991</td><td>0.032376</td><td>선별</td></tr>
+<tr><td>Q04</td><td>LSD</td><td>0.020228</td><td>0.040357</td><td>0.015934</td><td>0.040357</td><td>선별</td></tr>
+<tr><td>Q01</td><td>Gaussian 프로파일 피팅</td><td>0.037804</td><td>0.097624</td><td>0.108362</td><td>0.108362</td><td>제외: 사용자 지정</td></tr>
+<tr><td>Q11</td><td>외곽 코너·cornerSubPix</td><td>0.127241</td><td>0.042211</td><td>0.105257</td><td>0.127241</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>Q06</td><td>PAE 변형</td><td>0.120874</td><td>0.172644</td><td>0.032620</td><td>0.172644</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>Q12</td><td>파인더 중심 연결선</td><td>0.135854</td><td>0.090911</td><td>0.225730</td><td>0.225730</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>Q05</td><td>Zernike 모멘트</td><td>0.161804</td><td>0.284195</td><td>0.311805</td><td>0.311805</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>Q08</td><td>FLD</td><td>0.293212</td><td>0.298525</td><td>0.324787</td><td>0.324787</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>Q07</td><td>EDLines</td><td>0.294570</td><td>0.327705</td><td>0.346275</td><td>0.346275</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>Q09</td><td>ELSED</td><td>0.331231</td><td>0.368628</td><td>0.363496</td><td>0.368628</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>Q03</td><td>Canny–Hough 재피팅</td><td>0.320544</td><td>0.461856</td><td>0.437876</td><td>0.461856</td><td>보류: 선택 대상 밖</td></tr>
+<tr><td>Q10</td><td>이진화·윤곽선 상단 피팅</td><td>0.387471</td><td>0.264701</td><td>0.474117</td><td>0.474117</td><td>보류: 선택 대상 밖</td></tr>
+</tbody></table></div>
+<p class="">“보류”는 현재 선택 대상에 포함되지 않았다는 뜻이며 방법론 자체를 사용할 수 없다고 확정한 것이 아니다. Q01은 초기 3위였지만 사용자 지시로 제외했다. “—”는 4장 모두의 값이 없어 범위 또는 최종 점수를 산출하지 않은 항목이다.</p>
+<div class="table-wrap"><table><thead><tr><th>추출 실패 방법</th><th>실패 항목</th><th>기존 실행 결과에 기록된 사유</th></tr></thead><tbody>
+<tr><td>E04 LSD</td><td>R01~R04 하단: 4개</td><td>검출 선분 중 각도·탐색 영역·가림·길이·극성 선택 조건을 통과한 선분 없음</td></tr>
+<tr><td>E08 FLD</td><td>R01~R03 하단: 3개</td><td>최종 피팅용 표본 26·24·24개로 설정 최소 50개에 미달</td></tr>
+</tbody></table></div>
+<p class="">E04·E08의 상단 결과는 존재하지만, 이번에는 방법 하나가 상·하단을 모두 담당하는 기준으로 선별하여 제외했다. E08의 표본 수는 선택 선분에서 생성한 피팅용 표본 수이며, 원본 경계 픽셀 수와 같다는 의미가 아니다.</p>
+<h2>5. 결과에서 확인할 점</h2>
+<p class="">외부 구조물에서 선별된 3개 방법은 모두 하단 구조물의 범위가 최종 점수를 결정했다. E05 Zernike는 상단 범위가 0.000729°로 가장 작지만 하단을 포함한 점수는 0.029247°로 4위여서 보류됐다. 따라서 상단만 사용할 경우의 순위와 이번 순위는 다를 수 있다.</p>
+<p class="">현재 QR은 Q02(0.032376°)와 Q04(0.040357°)만 사용한다. Q01(0.108362°)은 초기 3위 후보였으나 사용자 지시에 따라 제외했다. 수치와 최초 결과는 기존 전체 추출 결과 및 변경 전 보관본에 남아 있다.</p>
+<p class="">E06은 기존 보고서의 PAE 변형 구현이다. 이 선별 결과를 원 논문 PAE의 완전한 재현이나 일반적인 우수성에 대한 결론으로 해석하지 않는다.</p>
+<p class="">기준 4장에서 출력이 비슷하다는 것만으로 정확한 경계를 잡았거나 θ 변화에 반응한다고 결론 내릴 수 없다. 이번에 확인된 것은 저장된 결과의 추출 성공 여부와 기준 4장 사이의 수치 범위다. 별도의 경계 정답 대조, 통계적 균일성 검정, Y·θ 상관관계 검정은 수행하지 않았다.</p>
+<h2>6. 선별 방법의 기준별 원본 각도</h2>
+<h3>외부 구조물</h3>
+<div class="table-wrap"><table><thead><tr><th>방법</th><th>대상</th><th>R01(°)</th><th>R02(°)</th><th>R03(°)</th><th>R04(°)</th><th>범위(°)</th></tr></thead><tbody>
+<tr><td>E01</td><td>상단</td><td>0.272728</td><td>0.273214</td><td>0.272274</td><td>0.271515</td><td>0.001700</td></tr>
+<tr><td>E01</td><td>하단</td><td>0.213031</td><td>0.219341</td><td>0.209082</td><td>0.222098</td><td>0.013016</td></tr>
+<tr><td>E06</td><td>상단</td><td>0.272839</td><td>0.273418</td><td>0.272847</td><td>0.272193</td><td>0.001225</td></tr>
+<tr><td>E06</td><td>하단</td><td>0.192766</td><td>0.206979</td><td>0.205125</td><td>0.215080</td><td>0.022314</td></tr>
+<tr><td>E02</td><td>상단</td><td>0.272574</td><td>0.272975</td><td>0.271963</td><td>0.271256</td><td>0.001719</td></tr>
+<tr><td>E02</td><td>하단</td><td>0.233633</td><td>0.212475</td><td>0.218062</td><td>0.237555</td><td>0.025080</td></tr>
+</tbody></table></div>
+<h3>QR</h3>
+<div class="table-wrap"><table><thead><tr><th>방법</th><th>대상</th><th>R01(°)</th><th>R02(°)</th><th>R03(°)</th><th>R04(°)</th><th>범위(°)</th></tr></thead><tbody>
+<tr><td>Q02</td><td>왼쪽</td><td>0.303641</td><td>0.275039</td><td>0.271994</td><td>0.271266</td><td>0.032376</td></tr>
+<tr><td>Q02</td><td>중앙</td><td>0.290368</td><td>0.279055</td><td>0.280323</td><td>0.277301</td><td>0.013067</td></tr>
+<tr><td>Q02</td><td>오른쪽</td><td>0.254599</td><td>0.263590</td><td>0.260142</td><td>0.261702</td><td>0.008991</td></tr>
+<tr><td>Q04</td><td>왼쪽</td><td>0.265242</td><td>0.278317</td><td>0.278093</td><td>0.285471</td><td>0.020228</td></tr>
+<tr><td>Q04</td><td>중앙</td><td>0.291575</td><td>0.262899</td><td>0.257643</td><td>0.251219</td><td>0.040357</td></tr>
+<tr><td>Q04</td><td>오른쪽</td><td>0.274563</td><td>0.258629</td><td>0.258843</td><td>0.263914</td><td>0.015934</td></tr>
+</tbody></table></div>
+<h2>7. 산출물과 원본 보존 확인</h2>
+<p class="">현재 직선 측정값 48개, 중간 결과 JSON 48개, 추출 과정 그림 20개를 별도 폴더에서 제공한다. 선별 시 레코드 동일성, 복사 파일 해시 일치, 조합 참조 연결을 확인했다. 영상 재측정이나 C++ 알고리즘 코드 변경은 없었다.</p>
+<ul><li><a href="selection.html">선별 결과 열람 및 20개 추출 그림</a></li><li><a href="rankings.json">전체 순위와 대상별 범위</a></li><li><a href="results/line_measurements.json">선별 직선 48개</a></li><li><a href="results/external_lines.json">외부 구조물 직선 24개</a></li><li><a href="results/qr_lines.json">QR 직선 24개</a></li><li><a href="results/combinations.json">6개 방법 조합 × 기준 4장</a></li><li><a href="selection_manifest.json">선별 기준·파일 해시·보존 확인 기록</a></li><li><a href="source_configs/inputs_manifest.json">기준 이미지의 원본 경로·SHA-256</a></li><li><a href="../reference_line_methods_108_20261030/report.html">기존 전체 추출 보고서</a></li></ul>
+<p class="">보고서의 수치는 rankings.json과 기존 측정 JSON에서 가져왔다. Q01을 선택 대상에서 제외했으며 남은 측정값은 변경하지 않았다. 변경 전 결과는 history/before_qr_q02_q04_only.zip에 보존했다.</p>
+<h2>8. E06(PAE)·Q04(LSD)의 레퍼런스 대응 확인</h2>
+<div class="table-wrap"><table><thead><tr><th>방법</th><th>확인 결과</th><th>변형 또는 추가 처리</th></tr></thead><tbody>
+<tr><td>E06 PAE</td><td>PAE 기본 원리에 기반한 자체 변형 구현. 원 논문 그대로의 재현이라고 확인할 수 없음.</td><td>EdgeLocator Method.md의 2차 면적식 참고. 기본 창 3×5를 3×9로 일반화, A/B 밝기 추정을 모서리 3화소에서 위·아래 행 평균으로 변경. 평활 보정·가변 창·수직 방향 일반화는 미구현.</td></tr>
+<tr><td>Q04 LSD</td><td>저자 공개 LSD 1.6 핵심 검출 소스를 사용함. lsd.c·lsd.h는 보관된 IPOL 배포 ZIP과 바이트 동일.</td><td>공식 함수 LineSegmentDetection 호출. scale 기본값 0.8을 1.0으로 설정. ROI·극성·선분 선택·여러 선분의 공통 직선 피팅은 별도 자체 후처리.</td></tr>
+</tbody></table></div>
+<p class="">PAE 코드의 a,b,c 계산은 Method.md의 고정 창 2차 기본형을 창 높이 2m+1로 일반화한 식에 대응한다. 다만 A/B 추정 등 주변 절차가 달라 전체 결과가 원문 구현과 동등하다고 확인한 것은 아니다. 2013년 원 논문 전문과의 완전한 대조 및 출력 동등성 시험은 미수행이다.</p>
+<p class="">LSD의 최종 QR 각도는 “공개 LSD 검출 + 프로젝트용 선분 선택·통합” 결과다. 공개 소스를 그대로 사용했다는 사실과 최종 측정 전체가 원 논문 절차 그대로라는 주장은 구분해야 한다.</p>
+<p class="">LSD 검증 범위: IPOL 공식 페이지의 버전 1.6 배포 정보 확인, 로컬 배포 ZIP과 컴파일 대상 lsd.c·lsd.h의 바이트·SHA-256 대조, CMake 빌드 연결 및 실제 호출 코드 확인. 이번 세션의 ZIP 재다운로드는 연결 오류로 완료되지 않아 공식 서버와의 새 다운로드 해시 대조는 미수행이다.</p>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>로컬 배포 ZIP 및 실제 사용 소스 SHA-256</th></tr></thead><tbody>
+<tr><td>lsd.c</td><td>f4b0c6194724e9d2cec01503fc2f4b7120f2e7d1fa570de6e67b4193a6b6723f</td></tr>
+<tr><td>lsd.h</td><td>02edcbb6e7b19dfd7117ae1a13b9b5810c74e1cf69ea5492eafe7ccc65026eaa</td></tr>
+</tbody></table></div>
+<ul><li><a href="../reference_line_methods_108_20261030/cpp/src/methods_points.cpp">PAE 실제 구현: method_pae, 392행부터</a></li><li><a href="../reference_line_methods_108_20261030/cpp/src/methods_segments.cpp">LSD 호출 및 선분 후처리: method_lsd / select_and_fit</a></li><li><a href="../reference_line_methods_108_20261030/configs/method_sources.json">방법별 출처·변경 내역</a></li><li><a href="https://github.com/juanse77/EdgeLocator/blob/master/Method.md">PAE 참고 구현 문서: EdgeLocator Method.md</a></li><li><a href="https://doi.org/10.1016/j.imavis.2012.10.005">PAE 원 논문 서지 정보</a></li><li><a href="https://www.ipol.im/pub/art/2012/gjmr-lsd/">LSD 공식 논문·소스 배포 페이지</a></li></ul></body></html>

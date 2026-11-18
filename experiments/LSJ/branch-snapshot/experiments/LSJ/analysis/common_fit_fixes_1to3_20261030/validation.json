@@ -1,0 +1,65 @@
+{
+  "steps": [
+    {
+      "name": "01_configure",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "-S",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\cpp",
+        "-B",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_fit_fixes_1to3_20261030\\build",
+        "-G",
+        "Visual Studio 18 2026",
+        "-A",
+        "x64",
+        "-T",
+        "v141",
+        "-DCMAKE_GENERATOR_INSTANCE=C:/Program Files (x86)/Microsoft Visual Studio/18/BuildTools",
+        "-DOpenCV_DIR=C:/Users/SSAFY/opencv/build"
+      ],
+      "exit_code": 0,
+      "seconds": 0.23
+    },
+    {
+      "name": "02_build",
+      "command": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+        "--build",
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_fit_fixes_1to3_20261030\\build",
+        "--config",
+        "Release",
+        "--",
+        "-m:1",
+        "/nr:false",
+        "/v:normal"
+      ],
+      "exit_code": 0,
+      "seconds": 11.33
+    },
+    {
+      "name": "03_known_points",
+      "command": [
+        "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\common_fit_fixes_1to3_20261030\\build\\Release\\line_selftest.exe"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07
+    },
+    {
+      "name": "04_report_records",
+      "command": [
+        "C:\\Users\\SSAFY\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_fit_point_views.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.06
+    }
+  ],
+  "scope": "Compile and known-input software checks only; no image measurement/statistical validation."
+}

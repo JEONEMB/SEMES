@@ -1,0 +1,15 @@
+/Library/
+/Temp/
+/Logs/
+/UserSettings/
+/obj/
+/Build/
+/Builds/
+/Captures/
+*.csproj
+*.sln
+*.slnx
+*.user
+.vs/
+.vscode/
+/Build_Web/

@@ -1,0 +1,75 @@
+{
+  "model": "Two OLS forward equations: phi = b + aY*Y + aTheta*theta; invert the 2x2 sensitivity matrix.",
+  "new_assumption": "One additive affine response across the second-data calibration range. No claim of accuracy before held-out testing.",
+  "target": "Nominal second-data theta=0. The intercept is an OLS estimate, not a measured mechanical truth.",
+  "labels": "Nominal corrected relative movement labels, not absolute encoder positions.",
+  "calibration_images": [
+    "D2_001",
+    "D2_002",
+    "D2_003",
+    "D2_004",
+    "D2_006",
+    "D2_007",
+    "D2_009",
+    "D2_010",
+    "D2_012",
+    "D2_013",
+    "D2_015",
+    "D2_016",
+    "D2_018",
+    "D2_019",
+    "D2_021",
+    "D2_022",
+    "D2_025",
+    "D2_026",
+    "D2_028",
+    "D2_029",
+    "D2_031",
+    "D2_032",
+    "D2_034",
+    "D2_035",
+    "D2_037",
+    "D2_038",
+    "D2_040",
+    "D2_041",
+    "D2_043",
+    "D2_044",
+    "D2_046",
+    "D2_047",
+    "D2_049",
+    "D2_050",
+    "D2_052",
+    "D2_053",
+    "D2_055",
+    "D2_056",
+    "D2_058",
+    "D2_059"
+  ],
+  "sources": {
+    "analysis\\huber_axis_sensitivity_20261101\\manifest.json": "f007bf83cbf409ebd956bf342af7a8cabc61d07da7fabf0c3b840056e6c01c9a",
+    "analysis\\huber_axis_sensitivity_20261101\\measurements.json": "206fee03af1825a142672de7772f2c3126d3e91f6d5bb728a059a93a595b30a9",
+    "analysis\\huber_axis_sensitivity_20261101\\settings.json": "500151495990d024b5fc36a573cef4bf3095ab3d37293549c30042903c19d9ef",
+    "algorithm\\theta_huber_20261101\\tools\\prepare_calibration.py": "f7ba218d3b50db395ded7513c49e1b411a0fcce5f6c1be554977a08c6a676ff3"
+  },
+  "sensitivity_determinant": -0.0003048944863011914,
+  "condition_number_in_mm_degree_coordinates": 153.986154452049,
+  "condition_number_note": "Depends on the chosen mm/degree units; diagnostic only, no acceptance cutoff.",
+  "theta_deg_per_angle_deg": [
+    -1.7651038419787561,
+    4.266067505850628
+  ],
+  "data_range": {
+    "y_mm": [
+      0.0,
+      1.0
+    ],
+    "theta_deg": [
+      0.0,
+      2.0
+    ]
+  },
+  "held_out_evaluation": false,
+  "gaussian": false,
+  "extra_point_rejection": false,
+  "coefficient_regularization": false
+}

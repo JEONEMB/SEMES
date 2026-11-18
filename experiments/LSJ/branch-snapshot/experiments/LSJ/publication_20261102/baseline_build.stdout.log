@@ -1,0 +1,22 @@
+msbuild 버전 18.11.0-1.26475.11+3cde5c8ec(.NET Framework용)
+
+  1>Checking Build System
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/algorithm/theta_huber_20261101/CMakeLists.txt
+  edge_points.cpp
+  huber_line.cpp
+  theta_decoder.cpp
+  theta_pipeline.cpp
+  alignment.cpp
+  utf8_io.cpp
+  코드를 생성하고 있습니다...
+  alignment_core.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_baseline\Release\alignment_core.lib
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/algorithm/theta_huber_20261101/CMakeLists.txt
+  main.cpp
+  theta_alignment.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_baseline\Release\theta_alignment.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/algorithm/theta_huber_20261101/CMakeLists.txt
+  parity_probe.cpp
+  theta_parity_probe.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_baseline\Release\theta_parity_probe.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/algorithm/theta_huber_20261101/CMakeLists.txt
+  theta_tests.cpp
+  theta_tests.vcxproj -> C:\Users\SSAFY\Desktop\LSJ_Private\자율PJT\.tmp\gitlab_20261102\build_baseline\Release\theta_tests.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/LSJ_Private/자율PJT/.tmp/gitlab_20261102/repo/experiments/LSJ/algorithm/theta_huber_20261101/CMakeLists.txt

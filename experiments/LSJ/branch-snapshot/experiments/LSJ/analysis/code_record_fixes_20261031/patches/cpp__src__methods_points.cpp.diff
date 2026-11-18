@@ -1,0 +1,118 @@
+--- before/cpp/src/methods_points.cpp
++++ after/cpp/src/methods_points.cpp
+@@ -6,6 +6,7 @@
+ #include "common.hpp"
+ #include "effective_settings.hpp"
+ #include "methods.hpp"
++#include "zernike_location.hpp"
+ 
+ extern "C" {
+ #include "devernay.h"
+@@ -170,9 +171,6 @@
+     r.intermediates["columns_fields"] = {"x", "coarse_peak_y", "state", "mu", "A", "sigma"};
+     r.intermediates["columns"] = cand;
+     r.intermediates["profile_examples"] = examples;
+-    json fitpts = json::array();
+-    for (auto& q : pts) fitpts.push_back(round_pt(q.x, q.y, 5));
+-    r.intermediates["fit_points"] = fitpts;
+     r.diagnostics["visible_columns"] = (int)cols.size();
+     r.diagnostics["occluded_columns_skipped"] = occluded;
+     r.diagnostics["nelder_mead_not_converged"] = nm_not_conv;
+@@ -247,9 +245,6 @@
+     r.n_candidates = (int)cands.size();
+     r.intermediates["band_points_fields"] = {"x_subpixel", "y_subpixel", "x_rounded", "y_rounded", "curve", "strength", "state"};
+     r.intermediates["band_points"] = arr;
+-    json fitpts = json::array();
+-    for (auto& q : pts) fitpts.push_back(round_pt(q.x, q.y, 5));
+-    r.intermediates["fit_points"] = fitpts;
+     r.diagnostics["devernay_points_in_region"] = in_region_total;
+     r.diagnostics["devernay_curves_in_region"] = M;
+     r.diagnostics["detector_region_xywh"] = {reg.x, reg.y, reg.width, reg.height};
+@@ -297,6 +292,7 @@
+ }  // namespace
+ 
+ MethodResult method_zernike(MethodContext& c) {
++    validate_method_parameters(c.target.kind=="qr"?"Q05":"E05",c.params);
+     MethodResult r;
+     const TargetSpec& t = c.target;
+     const json& p = c.params;
+@@ -309,9 +305,10 @@
+     const double max_shift = p.at("max_shift_px").get<double>();
+     const double max_dev = p.at("max_orientation_dev_deg").get<double>();
+     const int ex_every = p.at("window_examples_every").get<int>();
+-    const ZernikeMasks& Z = zernike_masks(Np, ss);
+     const int h = Np / 2;
+     const double wbar = 2.0 * k_edge * blur_px / Np;
++    if (!std::isfinite(wbar) || wbar<=0) { r.fail("invalid_parameters", "Zernike normalized width must be positive and finite"); return r; }
++    const ZernikeMasks& Z = zernike_masks(Np, ss);
+ 
+     BandPatch bp = band_patch(c.gray, t, 12);
+     cv::Mat sm; cv::GaussianBlur(bp.f, sm, cv::Size(0, 0), cb, cb, cv::BORDER_REFLECT101);
+@@ -328,7 +325,8 @@
+             if (t.polarity * g > best) { best = t.polarity * g; best_y = y; }
+         }
+         std::string state;
+-        double psi = 0, Q = 0, l = 0, shift = 0, u = 0, v = 0, are = 0, aim = 0, a20 = 0;
++        const double missing=std::numeric_limits<double>::quiet_NaN();
++        double psi=missing,Q=missing,l=missing,shift=missing,u=missing,v=missing,are=0,aim=0,a20=0;
+         if (best < min_g) state = excluded("weak_coarse_gradient");
+         else if (best_y == t.y0 || best_y == t.y1) state = excluded("peak_at_band_edge");
+         else {
+@@ -341,26 +339,17 @@
+                     aim += Z.im11.at<double>(j, i) * I;
+                     a20 += Z.m20.at<double>(j, i) * I;
+                 }
+-            psi = std::atan2(aim, are);
+-            double a11p = are * std::cos(psi) + aim * std::sin(psi);
+-            Q = a20 / a11p;
+-            double dev = std::acos(std::max(-1.0, std::min(1.0, t.polarity * std::sin(psi)))) * 180.0 / kPi;
+-            double disc = (wbar * wbar - 1) * (wbar * wbar - 1) - 2 * wbar * wbar * Q;
+-            if (dev > max_dev) state = excluded("orientation_not_matching_target");
+-            else if (disc < 0) state = excluded("ramp_model_no_real_solution");
+-            else {
+-                l = wbar > 1e-9 ? (1 - wbar * wbar - std::sqrt(disc)) / (wbar * wbar) : Q;
+-                shift = Np * l / 2.0;
+-                u = x + shift * std::cos(psi);
+-                v = best_y + shift * std::sin(psi);
+-                if (std::fabs(shift) > max_shift) state = excluded("shift_exceeds_limit");
+-                else { state = "selected"; pts.emplace_back(u, v); }
+-            }
++            auto location=zernike_location(are,aim,a20,wbar,Np,x,best_y,t.polarity,max_dev,max_shift);
++            psi=location.psi;Q=location.ratio;l=location.distance;shift=location.shift;u=location.u;v=location.v;
++            if (!location.ok) state=excluded(location.reason);
++            else { state="selected"; pts.emplace_back(u,v); }
+             if (ex_every > 0 && ci % ex_every == 0) {
+                 json w = json::array();
+                 for (int j = 0; j < Np; ++j) { json row = json::array(); for (int i = 0; i < Np; ++i) row.push_back(win.at<double>(j, i)); w.push_back(row); }
+                 examples.push_back({{"x", x}, {"coarse_y", best_y}, {"window", w}, {"A11_re", are}, {"A11_im", aim},
+-                                    {"A20", a20}, {"psi_deg", psi * 180 / kPi}, {"Q_E", Q}, {"l_ramp", l},
++                                    {"A20", a20}, {"A11_projected", location.denominator}, {"ramp_discriminant", location.discriminant},
++                                    {"failure_reason", location.ok ? json(nullptr) : json(location.reason)},
++                                    {"psi_deg", psi * 180 / kPi}, {"Q_E", Q}, {"l_ramp", l},
+                                     {"l_step_model", Q}, {"shift_px", shift}, {"u", u}, {"v", v}, {"state", state}});
+             }
+         }
+@@ -376,10 +365,10 @@
+     auto m2j = [](const cv::Mat& m) { json a = json::array(); for (int j = 0; j < m.rows; ++j) { json row = json::array(); for (int i = 0; i < m.cols; ++i) row.push_back(m.at<double>(j, i)); a.push_back(row); } return a; };
+     masks["M11_re"] = m2j(Z.re11); masks["M11_im"] = m2j(Z.im11); masks["M20"] = m2j(Z.m20);
+     r.intermediates["zernike_masks"] = masks;
+-    json fitpts = json::array();
+-    for (auto& q : pts) fitpts.push_back(round_pt(q.x, q.y, 5));
+-    r.intermediates["fit_points"] = fitpts;
+     r.diagnostics["w_bar_normalised"] = wbar;
++    r.diagnostics["numeric_guard_policy"] = "finite moments/denominator/ratio/discriminant/location; exact zero denominator and negative discriminant rejected; no new near-zero tolerance";
++    json counts=json::object();for(const auto& row:cand){std::string key=row[2];counts[key]=counts.value(key,0)+1;}
++    r.diagnostics["candidate_state_counts"]=counts;
+     r.diagnostics["visible_columns"] = (int)cols.size();
+     r.diagnostics["occluded_columns_skipped"] = occluded;
+     finish_with_points(r, pts, c.fit, "subpixel_edge_points: Zernike ramp-edge location (2D, 1 per column)");
+@@ -450,9 +439,6 @@
+     r.intermediates["columns_fields"] = {"x", "edge_pixel_y", "state", "a", "b", "c", "A", "B"};
+     r.intermediates["columns"] = cand;
+     r.intermediates["window_examples"] = examples;
+-    json fitpts = json::array();
+-    for (auto& q : pts) fitpts.push_back(round_pt(q.x, q.y, 5));
+-    r.intermediates["fit_points"] = fitpts;
+     r.diagnostics["window"] = "3x" + std::to_string(2 * m + 1);
+     r.diagnostics["visible_columns"] = (int)cols.size();
+     r.diagnostics["occluded_columns_skipped"] = occluded;

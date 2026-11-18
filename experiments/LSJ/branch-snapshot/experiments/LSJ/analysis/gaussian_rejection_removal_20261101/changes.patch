@@ -1,0 +1,136 @@
+--- before/cpp/src/methods_points.cpp
++++ after/cpp/src/methods_points.cpp
+@@ -109,10 +109,8 @@
+     const TargetSpec& t = c.target;
+     const json& p = c.params;
+     const int hw = p.at("half_window").get<int>();
+-    const double min_peak = p.at("min_peak").get<double>();
+     const int max_iter = p.at("nm_max_iter").get<int>();
+     const double tol = p.at("nm_tol").get<double>();
+-    const double max_shift = p.at("max_center_shift_px").get<double>();
+     const int ex_every = p.at("profile_examples_every").get<int>();
+ 
+     BandPatch bp = band_patch(c.gray, t, hw + 4);
+@@ -130,11 +128,11 @@
+             if (v > best) { best = v; best_y = y; }
+         }
+         json row = {x, best_y};
+-        std::string state;
++        // Every visible column is fitted and forwarded. "selected" is a legacy display label,
++        // not a statement that the numerical solve converged or found the physical boundary.
++        const std::string state = "selected";
+         double A = 0, mu = 0, s = 0; int iters = 0; bool conv = false;
+-        if (best < min_peak) state = excluded("weak_peak");
+-        else if (best_y == t.y0 || best_y == t.y1) state = excluded("peak_at_band_edge");
+-        else {
++        {
+             std::vector<double> ys, fs;
+             for (int k = -hw; k <= hw; ++k) {
+                 ys.push_back(best_y + k);
+@@ -154,26 +152,30 @@
+             auto q = nelder_mead3(sse, x0, st, max_iter, tol, &iters, &conv);
+             A = q[0]; mu = q[1]; s = std::fabs(q[2]);
+             if (!conv) ++nm_not_conv;
+-            if (!conv) state = excluded("nelder_mead_not_converged");
+-            else if (A <= 0) state = excluded("non_positive_amplitude");
+-            else if (std::fabs(mu - best_y) > max_shift) state = excluded("center_shift_exceeds_limit");
+-            else { state = "selected"; pts.emplace_back((double)x, mu); }
++            // No response, band-endpoint, convergence, amplitude, or displacement rejection.
++            // Numerical state is recorded below; no replacement acceptance threshold is used.
++            pts.emplace_back((double)x, mu);
+             if (ex_every > 0 && ci % ex_every == 0) {
+                 examples.push_back({{"x", x}, {"y_samples", ys}, {"sobel_samples", fs}, {"A", A}, {"mu", mu},
+                                     {"sigma", s}, {"nm_iterations", iters}, {"converged", conv}, {"state", state}});
+             }
+         }
+         row.push_back(state); row.push_back(rnd(mu, 5)); row.push_back(rnd(A, 3)); row.push_back(rnd(s, 4));
++        row.push_back(best); row.push_back(iters); row.push_back(conv);
++        row.push_back(std::isfinite(A) && std::isfinite(mu) && std::isfinite(s));
+         cand.push_back(row);
+         ++ci;
+     }
+     r.n_candidates = (int)cols.size();
+-    r.intermediates["columns_fields"] = {"x", "coarse_peak_y", "state", "mu", "A", "sigma"};
++    r.intermediates["columns_fields"] = {"x", "coarse_peak_y", "state", "mu", "A", "sigma",
++                                        "coarse_response", "nm_iterations", "nm_converged", "parameters_finite"};
+     r.intermediates["columns"] = cand;
+     r.intermediates["profile_examples"] = examples;
+     r.diagnostics["visible_columns"] = (int)cols.size();
+     r.diagnostics["occluded_columns_skipped"] = occluded;
+     r.diagnostics["nelder_mead_not_converged"] = nm_not_conv;
++    r.diagnostics["gaussian_rejection_policy"] = "none: every visible column fitted and all returned positions forwarded";
++    r.diagnostics["gaussian_selected_state_note"] = "selected means forwarded to common fit, not converged or validated";
+     finish_with_points(r, pts, c.fit, "subpixel_edge_points: Gaussian mu on Sobel derivative profile (1 per column)");
+     return r;
+ }
+--- before/cpp/src/effective_settings.cpp
++++ after/cpp/src/effective_settings.cpp
+@@ -45,7 +45,7 @@
+ void validate_method_parameters(const std::string& id,const json& p) {
+     int n=family(id);
+     static const char* schema[]={"",
+-        "gradient half_window min_peak nm_max_iter nm_tol max_center_shift_px init_sigma profile_examples_every",
++        "gradient half_window nm_max_iter nm_tol init_sigma profile_examples_every",
+         "sigma th_h th_l",
+         "blur_sigma canny_low canny_high canny_aperture l2gradient hough_rho hough_theta_deg theta_min_deg theta_max_deg hough_threshold max_candidates_saved refit_dist_px",
+         "scale sigma_scale quant ang_th log_eps density_th n_bins",
+@@ -143,7 +143,10 @@
+     for(const char* key:{"profile_examples_every","window_examples_every","max_candidates_saved"})if(p.contains(key)) {
+         report["method"][key]=p.at(key);a["method"].erase(key);
+     }
+-    if(n==1)result["fixed_modes"]={{"gradient",p.at("gradient")},{"init_sigma",p.at("init_sigma")}};
++    if(n==1) {
++        result["fixed_modes"]={{"gradient",p.at("gradient")},{"init_sigma",p.at("init_sigma")}};
++        a["gaussian_rejection_policy"]="none: fit every visible column and forward every returned position";
++    }
+     if(n==4)inactive_method("sigma_scale","scale=1 bypasses Gaussian subsampling");
+     if(n==10)result["fixed_modes"]={{"threshold",p.at("threshold")},{"contour_mode",p.at("contour_mode")}};
+     if(n==8)a["method"]["distance_threshold"]=static_cast<double>(p.at("distance_threshold").get<float>());
+--- before/configs/methods.json
++++ after/configs/methods.json
+@@ -52,20 +52,16 @@
+       "external": {
+         "gradient": "sobel_y_ksize3_raw",
+         "half_window": 5,
+-        "min_peak": 8.0,
+         "nm_max_iter": 800,
+         "nm_tol": 1e-10,
+-        "max_center_shift_px": 2.0,
+         "init_sigma": "neighborhood_size",
+         "profile_examples_every": 100
+       },
+       "qr": {
+         "gradient": "sobel_y_ksize3_raw",
+         "half_window": 5,
+-        "min_peak": 40.0,
+         "nm_max_iter": 800,
+         "nm_tol": 1e-10,
+-        "max_center_shift_px": 2.0,
+         "init_sigma": "neighborhood_size",
+         "profile_examples_every": 20
+       },
+--- before/cpp/CMakeLists.txt
++++ after/cpp/CMakeLists.txt
+@@ -33,6 +33,22 @@
+ if(MSVC)
+     target_compile_definitions(line_methods PRIVATE _USE_MATH_DEFINES NOMINMAX _CRT_SECURE_NO_WARNINGS)
+     target_compile_options(line_methods PRIVATE /utf-8 /W4 /bigobj /wd4244 /wd4267)
++endif()
++
++# Gaussian exclusion-policy regression on synthetic profiles; no captured-image analysis.
++add_executable(gaussian_retention_test tests/gaussian_retention_test.cpp src/methods_points.cpp
++    src/effective_settings.cpp src/zernike_location.cpp src/line_fit.cpp src/io_utils.cpp)
++target_include_directories(gaussian_retention_test PRIVATE include ${TP}/nlohmann_json/include)
++target_link_libraries(gaussian_retention_test PRIVATE tp_c tp_cpp ${OpenCV_LIBS})
++if(MSVC)
++    target_compile_definitions(gaussian_retention_test PRIVATE _USE_MATH_DEFINES NOMINMAX _CRT_SECURE_NO_WARNINGS)
++    target_compile_options(gaussian_retention_test PRIVATE /utf-8 /W4 /bigobj /wd4244 /wd4267)
++endif()
++if(WIN32)
++    add_custom_command(TARGET gaussian_retention_test POST_BUILD
++        COMMAND ${CMAKE_COMMAND} -E copy_if_different
++            "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll"
++            "$<TARGET_FILE_DIR:gaussian_retention_test>")
+ endif()
+ 
+ # Known geometry / configuration contract checks. Does not run native image detectors.

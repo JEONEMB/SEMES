@@ -1,0 +1,255 @@
+제공된 1/2차 기준 이미지와 1차 6개 촬영 구간의 목표 좌표 범위 비교
+
+대상: 1차 center.bmp 및 2차 center1.bmp, center2.bmp, center3.bmp.
+1차 템플릿의 동일한 QR 추적 영역 중심을 2차 기준 이미지 3장에서 ZNCC -> ECC 아핀으로 찾음.
+기존 2차 ROI 중심은 1차와 정의가 달라 그대로 비교하지 않음.
+비교 대상은 가로 좌표 1개이므로, 면적 겹침률이 아닌 포함 구간 수와 벗어난 픽셀 거리를 표시.
+6개 범위는 모두 1차 데이터에서 추정한 것. 회귀식/통계 검정을 새로 수행하거나 원본 파일을 수정하지 않음.
+기준 이미지/QR을 평균내지 않고 각각 비교. 포함 판정은 교차 데이터셋 정합의 불확실성을 추가한 통계 검정이 아님.
+
+기준 파일 | QR | x(px) | 점추정 범위 포함 구간 | 기본 불확실성 범위 포함 구간 | HAC 보조 범위 포함 구간
+first/center.bmp | L | 1642.000000000 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+first/center.bmp | C | 1900.000000000 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+first/center.bmp | R | 2159.000000000 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+second/center1.bmp | L | 1641.765417901 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+second/center1.bmp | C | 1899.782524198 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+second/center1.bmp | R | 2158.791786812 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+second/center2.bmp | L | 1641.674326054 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+second/center2.bmp | C | 1899.706255810 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+second/center2.bmp | R | 2158.729857286 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+second/center3.bmp | L | 1641.727333516 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+second/center3.bmp | C | 1899.755818782 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+second/center3.bmp | R | 2158.774313717 | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6) | [2, 3, 5, 6, 7] (5/6)
+
+구간별 상세 비교: 외부 거리의 부호 +는 범위 오른쪽, -는 왼쪽. 포함 시 0.
+파일 | QR | 방법 | 촬영 구간 | 포함 여부 | 외부 거리(px)
+center.bmp | L | point_only | 2 | True | 0.000000000
+center.bmp | L | point_only | 3 | True | 0.000000000
+center.bmp | L | point_only | 4 | False | 0.441512167
+center.bmp | L | point_only | 5 | True | 0.000000000
+center.bmp | L | point_only | 6 | True | 0.000000000
+center.bmp | L | point_only | 7 | True | 0.000000000
+center.bmp | L | OLS_iid | 2 | True | 0.000000000
+center.bmp | L | OLS_iid | 3 | True | 0.000000000
+center.bmp | L | OLS_iid | 4 | False | 0.467465113
+center.bmp | L | OLS_iid | 5 | True | 0.000000000
+center.bmp | L | OLS_iid | 6 | True | 0.000000000
+center.bmp | L | OLS_iid | 7 | True | 0.000000000
+center.bmp | L | HAC_sensitivity | 2 | True | 0.000000000
+center.bmp | L | HAC_sensitivity | 3 | True | 0.000000000
+center.bmp | L | HAC_sensitivity | 4 | False | 0.511749874
+center.bmp | L | HAC_sensitivity | 5 | True | 0.000000000
+center.bmp | L | HAC_sensitivity | 6 | True | 0.000000000
+center.bmp | L | HAC_sensitivity | 7 | True | 0.000000000
+center.bmp | C | point_only | 2 | True | 0.000000000
+center.bmp | C | point_only | 3 | True | 0.000000000
+center.bmp | C | point_only | 4 | False | 0.431719949
+center.bmp | C | point_only | 5 | True | 0.000000000
+center.bmp | C | point_only | 6 | True | 0.000000000
+center.bmp | C | point_only | 7 | True | 0.000000000
+center.bmp | C | OLS_iid | 2 | True | 0.000000000
+center.bmp | C | OLS_iid | 3 | True | 0.000000000
+center.bmp | C | OLS_iid | 4 | False | 0.459576094
+center.bmp | C | OLS_iid | 5 | True | 0.000000000
+center.bmp | C | OLS_iid | 6 | True | 0.000000000
+center.bmp | C | OLS_iid | 7 | True | 0.000000000
+center.bmp | C | HAC_sensitivity | 2 | True | 0.000000000
+center.bmp | C | HAC_sensitivity | 3 | True | 0.000000000
+center.bmp | C | HAC_sensitivity | 4 | False | 0.506929873
+center.bmp | C | HAC_sensitivity | 5 | True | 0.000000000
+center.bmp | C | HAC_sensitivity | 6 | True | 0.000000000
+center.bmp | C | HAC_sensitivity | 7 | True | 0.000000000
+center.bmp | R | point_only | 2 | True | 0.000000000
+center.bmp | R | point_only | 3 | True | 0.000000000
+center.bmp | R | point_only | 4 | False | 0.427116379
+center.bmp | R | point_only | 5 | True | 0.000000000
+center.bmp | R | point_only | 6 | True | 0.000000000
+center.bmp | R | point_only | 7 | True | 0.000000000
+center.bmp | R | OLS_iid | 2 | True | 0.000000000
+center.bmp | R | OLS_iid | 3 | True | 0.000000000
+center.bmp | R | OLS_iid | 4 | False | 0.458866158
+center.bmp | R | OLS_iid | 5 | True | 0.000000000
+center.bmp | R | OLS_iid | 6 | True | 0.000000000
+center.bmp | R | OLS_iid | 7 | True | 0.000000000
+center.bmp | R | HAC_sensitivity | 2 | True | 0.000000000
+center.bmp | R | HAC_sensitivity | 3 | True | 0.000000000
+center.bmp | R | HAC_sensitivity | 4 | False | 0.511901619
+center.bmp | R | HAC_sensitivity | 5 | True | 0.000000000
+center.bmp | R | HAC_sensitivity | 6 | True | 0.000000000
+center.bmp | R | HAC_sensitivity | 7 | True | 0.000000000
+center1.bmp | L | point_only | 2 | True | 0.000000000
+center1.bmp | L | point_only | 3 | True | 0.000000000
+center1.bmp | L | point_only | 4 | False | 0.206930069
+center1.bmp | L | point_only | 5 | True | 0.000000000
+center1.bmp | L | point_only | 6 | True | 0.000000000
+center1.bmp | L | point_only | 7 | True | 0.000000000
+center1.bmp | L | OLS_iid | 2 | True | 0.000000000
+center1.bmp | L | OLS_iid | 3 | True | 0.000000000
+center1.bmp | L | OLS_iid | 4 | False | 0.232883015
+center1.bmp | L | OLS_iid | 5 | True | 0.000000000
+center1.bmp | L | OLS_iid | 6 | True | 0.000000000
+center1.bmp | L | OLS_iid | 7 | True | 0.000000000
+center1.bmp | L | HAC_sensitivity | 2 | True | 0.000000000
+center1.bmp | L | HAC_sensitivity | 3 | True | 0.000000000
+center1.bmp | L | HAC_sensitivity | 4 | False | 0.277167775
+center1.bmp | L | HAC_sensitivity | 5 | True | 0.000000000
+center1.bmp | L | HAC_sensitivity | 6 | True | 0.000000000
+center1.bmp | L | HAC_sensitivity | 7 | True | 0.000000000
+center1.bmp | C | point_only | 2 | True | 0.000000000
+center1.bmp | C | point_only | 3 | True | 0.000000000
+center1.bmp | C | point_only | 4 | False | 0.214244147
+center1.bmp | C | point_only | 5 | True | 0.000000000
+center1.bmp | C | point_only | 6 | True | 0.000000000
+center1.bmp | C | point_only | 7 | True | 0.000000000
+center1.bmp | C | OLS_iid | 2 | True | 0.000000000
+center1.bmp | C | OLS_iid | 3 | True | 0.000000000
+center1.bmp | C | OLS_iid | 4 | False | 0.242100292
+center1.bmp | C | OLS_iid | 5 | True | 0.000000000
+center1.bmp | C | OLS_iid | 6 | True | 0.000000000
+center1.bmp | C | OLS_iid | 7 | True | 0.000000000
+center1.bmp | C | HAC_sensitivity | 2 | True | 0.000000000
+center1.bmp | C | HAC_sensitivity | 3 | True | 0.000000000
+center1.bmp | C | HAC_sensitivity | 4 | False | 0.289454072
+center1.bmp | C | HAC_sensitivity | 5 | True | 0.000000000
+center1.bmp | C | HAC_sensitivity | 6 | True | 0.000000000
+center1.bmp | C | HAC_sensitivity | 7 | True | 0.000000000
+center1.bmp | R | point_only | 2 | True | 0.000000000
+center1.bmp | R | point_only | 3 | True | 0.000000000
+center1.bmp | R | point_only | 4 | False | 0.218903190
+center1.bmp | R | point_only | 5 | True | 0.000000000
+center1.bmp | R | point_only | 6 | True | 0.000000000
+center1.bmp | R | point_only | 7 | True | 0.000000000
+center1.bmp | R | OLS_iid | 2 | True | 0.000000000
+center1.bmp | R | OLS_iid | 3 | True | 0.000000000
+center1.bmp | R | OLS_iid | 4 | False | 0.250652969
+center1.bmp | R | OLS_iid | 5 | True | 0.000000000
+center1.bmp | R | OLS_iid | 6 | True | 0.000000000
+center1.bmp | R | OLS_iid | 7 | True | 0.000000000
+center1.bmp | R | HAC_sensitivity | 2 | True | 0.000000000
+center1.bmp | R | HAC_sensitivity | 3 | True | 0.000000000
+center1.bmp | R | HAC_sensitivity | 4 | False | 0.303688431
+center1.bmp | R | HAC_sensitivity | 5 | True | 0.000000000
+center1.bmp | R | HAC_sensitivity | 6 | True | 0.000000000
+center1.bmp | R | HAC_sensitivity | 7 | True | 0.000000000
+center2.bmp | L | point_only | 2 | True | 0.000000000
+center2.bmp | L | point_only | 3 | True | 0.000000000
+center2.bmp | L | point_only | 4 | False | 0.115838221
+center2.bmp | L | point_only | 5 | True | 0.000000000
+center2.bmp | L | point_only | 6 | True | 0.000000000
+center2.bmp | L | point_only | 7 | True | 0.000000000
+center2.bmp | L | OLS_iid | 2 | True | 0.000000000
+center2.bmp | L | OLS_iid | 3 | True | 0.000000000
+center2.bmp | L | OLS_iid | 4 | False | 0.141791167
+center2.bmp | L | OLS_iid | 5 | True | 0.000000000
+center2.bmp | L | OLS_iid | 6 | True | 0.000000000
+center2.bmp | L | OLS_iid | 7 | True | 0.000000000
+center2.bmp | L | HAC_sensitivity | 2 | True | 0.000000000
+center2.bmp | L | HAC_sensitivity | 3 | True | 0.000000000
+center2.bmp | L | HAC_sensitivity | 4 | False | 0.186075928
+center2.bmp | L | HAC_sensitivity | 5 | True | 0.000000000
+center2.bmp | L | HAC_sensitivity | 6 | True | 0.000000000
+center2.bmp | L | HAC_sensitivity | 7 | True | 0.000000000
+center2.bmp | C | point_only | 2 | True | 0.000000000
+center2.bmp | C | point_only | 3 | True | 0.000000000
+center2.bmp | C | point_only | 4 | False | 0.137975759
+center2.bmp | C | point_only | 5 | True | 0.000000000
+center2.bmp | C | point_only | 6 | True | 0.000000000
+center2.bmp | C | point_only | 7 | True | 0.000000000
+center2.bmp | C | OLS_iid | 2 | True | 0.000000000
+center2.bmp | C | OLS_iid | 3 | True | 0.000000000
+center2.bmp | C | OLS_iid | 4 | False | 0.165831904
+center2.bmp | C | OLS_iid | 5 | True | 0.000000000
+center2.bmp | C | OLS_iid | 6 | True | 0.000000000
+center2.bmp | C | OLS_iid | 7 | True | 0.000000000
+center2.bmp | C | HAC_sensitivity | 2 | True | 0.000000000
+center2.bmp | C | HAC_sensitivity | 3 | True | 0.000000000
+center2.bmp | C | HAC_sensitivity | 4 | False | 0.213185684
+center2.bmp | C | HAC_sensitivity | 5 | True | 0.000000000
+center2.bmp | C | HAC_sensitivity | 6 | True | 0.000000000
+center2.bmp | C | HAC_sensitivity | 7 | True | 0.000000000
+center2.bmp | R | point_only | 2 | True | 0.000000000
+center2.bmp | R | point_only | 3 | True | 0.000000000
+center2.bmp | R | point_only | 4 | False | 0.156973664
+center2.bmp | R | point_only | 5 | True | 0.000000000
+center2.bmp | R | point_only | 6 | True | 0.000000000
+center2.bmp | R | point_only | 7 | True | 0.000000000
+center2.bmp | R | OLS_iid | 2 | True | 0.000000000
+center2.bmp | R | OLS_iid | 3 | True | 0.000000000
+center2.bmp | R | OLS_iid | 4 | False | 0.188723443
+center2.bmp | R | OLS_iid | 5 | True | 0.000000000
+center2.bmp | R | OLS_iid | 6 | True | 0.000000000
+center2.bmp | R | OLS_iid | 7 | True | 0.000000000
+center2.bmp | R | HAC_sensitivity | 2 | True | 0.000000000
+center2.bmp | R | HAC_sensitivity | 3 | True | 0.000000000
+center2.bmp | R | HAC_sensitivity | 4 | False | 0.241758905
+center2.bmp | R | HAC_sensitivity | 5 | True | 0.000000000
+center2.bmp | R | HAC_sensitivity | 6 | True | 0.000000000
+center2.bmp | R | HAC_sensitivity | 7 | True | 0.000000000
+center3.bmp | L | point_only | 2 | True | 0.000000000
+center3.bmp | L | point_only | 3 | True | 0.000000000
+center3.bmp | L | point_only | 4 | False | 0.168845684
+center3.bmp | L | point_only | 5 | True | 0.000000000
+center3.bmp | L | point_only | 6 | True | 0.000000000
+center3.bmp | L | point_only | 7 | True | 0.000000000
+center3.bmp | L | OLS_iid | 2 | True | 0.000000000
+center3.bmp | L | OLS_iid | 3 | True | 0.000000000
+center3.bmp | L | OLS_iid | 4 | False | 0.194798630
+center3.bmp | L | OLS_iid | 5 | True | 0.000000000
+center3.bmp | L | OLS_iid | 6 | True | 0.000000000
+center3.bmp | L | OLS_iid | 7 | True | 0.000000000
+center3.bmp | L | HAC_sensitivity | 2 | True | 0.000000000
+center3.bmp | L | HAC_sensitivity | 3 | True | 0.000000000
+center3.bmp | L | HAC_sensitivity | 4 | False | 0.239083390
+center3.bmp | L | HAC_sensitivity | 5 | True | 0.000000000
+center3.bmp | L | HAC_sensitivity | 6 | True | 0.000000000
+center3.bmp | L | HAC_sensitivity | 7 | True | 0.000000000
+center3.bmp | C | point_only | 2 | True | 0.000000000
+center3.bmp | C | point_only | 3 | True | 0.000000000
+center3.bmp | C | point_only | 4 | False | 0.187538731
+center3.bmp | C | point_only | 5 | True | 0.000000000
+center3.bmp | C | point_only | 6 | True | 0.000000000
+center3.bmp | C | point_only | 7 | True | 0.000000000
+center3.bmp | C | OLS_iid | 2 | True | 0.000000000
+center3.bmp | C | OLS_iid | 3 | True | 0.000000000
+center3.bmp | C | OLS_iid | 4 | False | 0.215394876
+center3.bmp | C | OLS_iid | 5 | True | 0.000000000
+center3.bmp | C | OLS_iid | 6 | True | 0.000000000
+center3.bmp | C | OLS_iid | 7 | True | 0.000000000
+center3.bmp | C | HAC_sensitivity | 2 | True | 0.000000000
+center3.bmp | C | HAC_sensitivity | 3 | True | 0.000000000
+center3.bmp | C | HAC_sensitivity | 4 | False | 0.262748656
+center3.bmp | C | HAC_sensitivity | 5 | True | 0.000000000
+center3.bmp | C | HAC_sensitivity | 6 | True | 0.000000000
+center3.bmp | C | HAC_sensitivity | 7 | True | 0.000000000
+center3.bmp | R | point_only | 2 | True | 0.000000000
+center3.bmp | R | point_only | 3 | True | 0.000000000
+center3.bmp | R | point_only | 4 | False | 0.201430095
+center3.bmp | R | point_only | 5 | True | 0.000000000
+center3.bmp | R | point_only | 6 | True | 0.000000000
+center3.bmp | R | point_only | 7 | True | 0.000000000
+center3.bmp | R | OLS_iid | 2 | True | 0.000000000
+center3.bmp | R | OLS_iid | 3 | True | 0.000000000
+center3.bmp | R | OLS_iid | 4 | False | 0.233179874
+center3.bmp | R | OLS_iid | 5 | True | 0.000000000
+center3.bmp | R | OLS_iid | 6 | True | 0.000000000
+center3.bmp | R | OLS_iid | 7 | True | 0.000000000
+center3.bmp | R | HAC_sensitivity | 2 | True | 0.000000000
+center3.bmp | R | HAC_sensitivity | 3 | True | 0.000000000
+center3.bmp | R | HAC_sensitivity | 4 | False | 0.286215336
+center3.bmp | R | HAC_sensitivity | 5 | True | 0.000000000
+center3.bmp | R | HAC_sensitivity | 6 | True | 0.000000000
+center3.bmp | R | HAC_sensitivity | 7 | True | 0.000000000
+
+등록 품질 지표 (정확도 보증 수치가 아님)
+center1.bmp | L | ZNCC=0.96784753 | ECC=0.99664957 | dx=-0.234582099 | dy=0.405952772
+center1.bmp | C | ZNCC=0.96896106 | ECC=0.99740979 | dx=-0.217475802 | dy=0.404132990
+center1.bmp | R | ZNCC=0.96928203 | ECC=0.99723316 | dx=-0.208213188 | dy=0.405680275
+center2.bmp | L | ZNCC=0.95660657 | ECC=0.99544948 | dx=-0.325673946 | dy=0.444108079
+center2.bmp | C | ZNCC=0.96020484 | ECC=0.99668701 | dx=-0.293744190 | dy=0.436645634
+center2.bmp | R | ZNCC=0.96247602 | ECC=0.99665114 | dx=-0.270142714 | dy=0.431929434
+center3.bmp | L | ZNCC=0.95572811 | ECC=0.99547326 | dx=-0.272666484 | dy=0.488334153
+center3.bmp | C | ZNCC=0.95760220 | ECC=0.99827202 | dx=-0.244181218 | dy=0.485036734
+center3.bmp | R | ZNCC=0.95863056 | ECC=0.99795426 | dx=-0.225686283 | dy=0.487153306
+
+원본 무결성: 기준 BMP 4개 모두 기존 SHA256과 대조.
+재현: python analysis/reference_vs_zero_ranges/compare_references.py

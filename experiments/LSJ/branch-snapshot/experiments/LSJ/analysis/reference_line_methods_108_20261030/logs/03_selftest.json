@@ -1,0 +1,10 @@
+{
+  "step": "03_selftest",
+  "command": [
+    "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030\\build\\Release\\line_selftest.exe"
+  ],
+  "cwd": "C:\\Users\\SSAFY\\Desktop\\LSJ_Private\\자율PJT\\analysis\\reference_line_methods_108_20261030",
+  "exit_code": 0,
+  "wall_time_s": 0.017,
+  "started": "2026-10-30T10:25:43"
+}

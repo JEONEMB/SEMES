@@ -1,0 +1,63 @@
+{
+  "fixed": {
+    "norm": "HuberT(t=1.345)",
+    "residual": "vertical",
+    "scale_est": "mad",
+    "update_scale": true,
+    "conv": "dev",
+    "start_params": "None: original OLS initialization",
+    "cov": "H1",
+    "design": "[ones, original image x]",
+    "input": "all saved integer Sobel points; no point rejection",
+    "gaussian": false
+  },
+  "comparisons": [
+    {
+      "id": "A",
+      "maxiter": 50,
+      "tol": 1e-08
+    },
+    {
+      "id": "B",
+      "maxiter": 100,
+      "tol": 1e-08
+    },
+    {
+      "id": "C",
+      "maxiter": 200,
+      "tol": 1e-08
+    },
+    {
+      "id": "D",
+      "maxiter": 200,
+      "tol": 1e-10
+    },
+    {
+      "id": "E",
+      "maxiter": 200,
+      "tol": 1e-12
+    },
+    {
+      "id": "F",
+      "maxiter": 400,
+      "tol": 1e-10
+    },
+    {
+      "id": "G",
+      "maxiter": 400,
+      "tol": 1e-12
+    },
+    {
+      "id": "H",
+      "maxiter": 800,
+      "tol": 1e-10
+    },
+    {
+      "id": "I",
+      "maxiter": 800,
+      "tol": 1e-12
+    }
+  ],
+  "extension_reason": "At 200 iterations, tol=1e-10 failed in 2 inputs and tol=1e-12 in 7. Double caps to 400/800 to examine continuing behavior; no tolerance or fitting formula changes.",
+  "acceptance": "No invented geometric pass threshold; report termination and measured differences."
+}

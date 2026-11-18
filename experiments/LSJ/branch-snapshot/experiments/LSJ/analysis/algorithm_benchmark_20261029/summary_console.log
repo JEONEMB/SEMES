@@ -1,0 +1,536 @@
+﻿{
+  "overview": [
+    {
+      "name": "1차 기준 사진",
+      "count": 1,
+      "measurement_valid": 1,
+      "nonzero_command": 0,
+      "already_in_image_target": 1,
+      "command_unavailable": 0,
+      "measurement_failed": 0,
+      "y_evaluated": 1,
+      "statuses": {
+        "aligned": 1
+      },
+      "estimate_ms": {
+        "n": 1,
+        "median": 47.8099,
+        "p95": 47.8099,
+        "max": 47.8099
+      },
+      "load_and_decode_ms": {
+        "n": 1,
+        "median": 208.8759,
+        "p95": 208.8759,
+        "max": 208.8759
+      },
+      "total_ms": {
+        "n": 1,
+        "median": 256.6858,
+        "p95": 256.6858,
+        "max": 256.6858
+      }
+    },
+    {
+      "name": "1차 Y 단독",
+      "count": 80,
+      "measurement_valid": 80,
+      "nonzero_command": 5,
+      "already_in_image_target": 0,
+      "command_unavailable": 75,
+      "measurement_failed": 0,
+      "y_evaluated": 0,
+      "statuses": {
+        "theta_no_reachable_tick": 1,
+        "theta_target_conflict": 74,
+        "move_theta": 5
+      },
+      "estimate_ms": {
+        "n": 80,
+        "median": 84.0287,
+        "p95": 96.92907,
+        "max": 104.9096
+      },
+      "load_and_decode_ms": {
+        "n": 80,
+        "median": 205.21715,
+        "p95": 225.25958,
+        "max": 227.4749
+      },
+      "total_ms": {
+        "n": 80,
+        "median": 280.15435,
+        "p95": 308.25487999999996,
+        "max": 318.0962
+      }
+    },
+    {
+      "name": "1차 θ 단독",
+      "count": 200,
+      "measurement_valid": 200,
+      "nonzero_command": 20,
+      "already_in_image_target": 0,
+      "command_unavailable": 180,
+      "measurement_failed": 0,
+      "y_evaluated": 0,
+      "statuses": {
+        "theta_no_reachable_tick": 32,
+        "theta_target_conflict": 148,
+        "move_theta": 19,
+        "move_theta_extrapolated": 1
+      },
+      "estimate_ms": {
+        "n": 200,
+        "median": 87.6455,
+        "p95": 98.28904,
+        "max": 109.0852
+      },
+      "load_and_decode_ms": {
+        "n": 200,
+        "median": 209.10399999999998,
+        "p95": 224.34714999999997,
+        "max": 239.6596
+      },
+      "total_ms": {
+        "n": 200,
+        "median": 294.87565,
+        "p95": 312.7229249999999,
+        "max": 330.6056
+      }
+    },
+    {
+      "name": "2차 기준 사진",
+      "count": 3,
+      "measurement_valid": 3,
+      "nonzero_command": 0,
+      "already_in_image_target": 0,
+      "command_unavailable": 3,
+      "measurement_failed": 0,
+      "y_evaluated": 0,
+      "statuses": {
+        "theta_target_conflict": 2,
+        "theta_no_reachable_tick": 1
+      },
+      "estimate_ms": {
+        "n": 3,
+        "median": 86.6053,
+        "p95": 103.79404,
+        "max": 105.7039
+      },
+      "load_and_decode_ms": {
+        "n": 3,
+        "median": 208.9265,
+        "p95": 210.18821,
+        "max": 210.3284
+      },
+      "total_ms": {
+        "n": 3,
+        "median": 295.5318,
+        "p95": 305.82141,
+        "max": 306.9647
+      }
+    },
+    {
+      "name": "2차 Y·θ 혼합",
+      "count": 57,
+      "measurement_valid": 57,
+      "nonzero_command": 4,
+      "already_in_image_target": 0,
+      "command_unavailable": 53,
+      "measurement_failed": 0,
+      "y_evaluated": 0,
+      "statuses": {
+        "theta_no_reachable_tick": 4,
+        "theta_target_conflict": 49,
+        "move_theta": 4
+      },
+      "estimate_ms": {
+        "n": 57,
+        "median": 87.4924,
+        "p95": 96.01086,
+        "max": 104.6467
+      },
+      "load_and_decode_ms": {
+        "n": 57,
+        "median": 203.4631,
+        "p95": 220.49758,
+        "max": 222.7984
+      },
+      "total_ms": {
+        "n": 57,
+        "median": 287.6741,
+        "p95": 314.76972,
+        "max": 315.5888
+      }
+    }
+  ],
+  "all": {
+    "name": "All",
+    "count": 341,
+    "measurement_valid": 341,
+    "nonzero_command": 29,
+    "already_in_image_target": 1,
+    "command_unavailable": 311,
+    "measurement_failed": 0,
+    "y_evaluated": 1,
+    "statuses": {
+      "aligned": 1,
+      "theta_no_reachable_tick": 38,
+      "theta_target_conflict": 273,
+      "move_theta": 28,
+      "move_theta_extrapolated": 1
+    },
+    "estimate_ms": {
+      "n": 341,
+      "median": 87.0311,
+      "p95": 98.2847,
+      "max": 109.0852
+    },
+    "load_and_decode_ms": {
+      "n": 341,
+      "median": 207.4002,
+      "p95": 223.2734,
+      "max": 239.6596
+    },
+    "total_ms": {
+      "n": 341,
+      "median": 289.6189,
+      "p95": 312.2192,
+      "max": 330.6056
+    }
+  },
+  "delta_metrics": [
+    {
+      "dataset": "first",
+      "group": "Y_positive_0.10_grid",
+      "axis": "y",
+      "metric": "adjacent issued Y correction difference plus nominal label difference (conditional, quantized, target range)",
+      "unit": "mm",
+      "eligible_pairs": 19,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "first",
+      "group": "Y_negative_0.10_grid",
+      "axis": "y",
+      "metric": "adjacent issued Y correction difference plus nominal label difference (conditional, quantized, target range)",
+      "unit": "mm",
+      "eligible_pairs": 19,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "first",
+      "group": "Theta_positive",
+      "axis": "theta",
+      "metric": "adjacent theta estimate difference minus nominal label difference",
+      "unit": "degree",
+      "eligible_pairs": 99,
+      "stats": {
+        "n": 99,
+        "mae": 0.012292469758009406,
+        "rmse": 0.015885463989657803,
+        "max_abs": 0.048887796345520255,
+        "bias": -0.0002970886701355473
+      }
+    },
+    {
+      "dataset": "first",
+      "group": "Theta_negative",
+      "axis": "theta",
+      "metric": "adjacent theta estimate difference minus nominal label difference",
+      "unit": "degree",
+      "eligible_pairs": 99,
+      "stats": {
+        "n": 99,
+        "mae": 0.010796135296214308,
+        "rmse": 0.01417296448009086,
+        "max_abs": 0.04234767496524516,
+        "bias": 5.380126054347289e-05
+      }
+    },
+    {
+      "dataset": "first",
+      "group": "Y_positive_0.05_offset_grid",
+      "axis": "y",
+      "metric": "adjacent issued Y correction difference plus nominal label difference (conditional, quantized, target range)",
+      "unit": "mm",
+      "eligible_pairs": 19,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "first",
+      "group": "Y_negative_0.05_offset_grid",
+      "axis": "y",
+      "metric": "adjacent issued Y correction difference plus nominal label difference (conditional, quantized, target range)",
+      "unit": "mm",
+      "eligible_pairs": 19,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "y=0.05",
+      "axis": "theta",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "degree",
+      "eligible_pairs": 5,
+      "stats": {
+        "n": 5,
+        "mae": 0.047686892779390685,
+        "rmse": 0.09570020876360974,
+        "max_abs": 0.21356230730888814,
+        "bias": -0.041560481207338566
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 4,
+        "mae": 0.006218039147016323,
+        "rmse": 0.0067784711383993895,
+        "max_abs": 0.009839806986859644,
+        "bias": 0.0014399753180488251
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "y=0.1",
+      "axis": "theta",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "degree",
+      "eligible_pairs": 4,
+      "stats": {
+        "n": 4,
+        "mae": 0.06342209693790934,
+        "rmse": 0.11390223511676575,
+        "max_abs": 0.22723865754882144,
+        "bias": -0.05898012327603054
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 3,
+        "mae": 0.008816576734271974,
+        "rmse": 0.009264073506282246,
+        "max_abs": 0.012266157841987702,
+        "bias": -0.002893945185100245
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "y=0.5",
+      "axis": "theta",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "degree",
+      "eligible_pairs": 3,
+      "stats": {
+        "n": 3,
+        "mae": 0.07711873748351372,
+        "rmse": 0.11560634461582571,
+        "max_abs": 0.19889813458066863,
+        "bias": -0.06503013545116151
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 2,
+        "mae": 0.01622903893493626,
+        "rmse": 0.016340330575441268,
+        "max_abs": 0.018132903048528312,
+        "bias": 0.0019038641135920506
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "y=1.0",
+      "axis": "theta",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "degree",
+      "eligible_pairs": 3,
+      "stats": {
+        "n": 3,
+        "mae": 0.06470593557942762,
+        "rmse": 0.11101814386239352,
+        "max_abs": 0.19228425187173181,
+        "bias": -0.06470593557942762
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 2,
+        "mae": 0.0009167774332755271,
+        "rmse": 0.0009621024066356962,
+        "max_abs": 0.0012085996029113089,
+        "bias": -0.0009167774332755271
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "t=0.01",
+      "axis": "y",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "mm",
+      "eligible_pairs": 3,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "t=0.02",
+      "axis": "y",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "mm",
+      "eligible_pairs": 0,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "t=0.03",
+      "axis": "y",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "mm",
+      "eligible_pairs": 0,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "t=0.1",
+      "axis": "y",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "mm",
+      "eligible_pairs": 3,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "t=0.2",
+      "axis": "y",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "mm",
+      "eligible_pairs": 0,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "t=1.0",
+      "axis": "y",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "mm",
+      "eligible_pairs": 3,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    },
+    {
+      "dataset": "second",
+      "group": "t=2.0",
+      "axis": "y",
+      "metric": "condition means; all three outputs required; adjacent nominal change comparison",
+      "unit": "mm",
+      "eligible_pairs": 3,
+      "stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      },
+      "nominal_theta_up_to_1_degree_stats": {
+        "n": 0,
+        "mae": null,
+        "rmse": null,
+        "max_abs": null,
+        "bias": null
+      }
+    }
+  ]
+}

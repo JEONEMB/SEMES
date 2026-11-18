@@ -1,0 +1,10 @@
+{
+  "metrics_independently_recomputed": true,
+  "all_254_upper_results_exactly_match_baseline": true,
+  "baseline_sources_and_executable_unchanged": true,
+  "same_train_test_split": true,
+  "lower_pixel_independence_test": "passed, 13 combined checks",
+  "paired_pass_transition_counts_verified": true,
+  "plot_visually_checked": true,
+  "report_rows": 254
+}

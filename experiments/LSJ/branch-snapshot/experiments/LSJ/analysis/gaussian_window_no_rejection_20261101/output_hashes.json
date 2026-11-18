@@ -1,0 +1,21 @@
+{
+  "experiment.cpp": "5a0e15614223a47f1e5fb8873347c06bad5595990e60b8611cc10643d69e1115",
+  "original_nelder_mead.hpp": "8ac6b3167f16f6107590cfe909fd51a6a20b7b56b6afb4152e8cad22c04c4537",
+  "CMakeLists.txt": "d34c6fd0e9ad88b1f12ac845e3d178242dc2f46dbd66ba3580f97f46c6043fa3",
+  "run_config.json": "3245aa319d2326e48533e5225333a3c564bbac813823d07a154b781a84ec9aa4",
+  "prepare.py": "ee4d8697ae1b677381974a9884c4ca25a416e703a59dea3255ec0ddd73997fed",
+  "summarize.py": "12c1a58c4e6662136d290bedfe4ddbcec0f772cd508660c31e0c67c33b952249",
+  "make_report.py": "2e808c163fc52328fad8d16c8f55fa0ba60f092db104fb26fb8839de784dd764",
+  "fits.csv": "09ca97760f62a184ee6d31aa4717116097743cd25be51392236b0ecbf58bbf59",
+  "profiles.jsonl": "697124f6e25177ea3d6199d78a9c17aef5a4f16496e0d4334cfc98fe829b3c67",
+  "runtime.json": "730eedc6582ec54515e8677972f16c8c361c954dc0e15ecb1feca9dcbfe4ad67",
+  "summary.json": "c6784f2b8ac831be947dbfa3f6b23065a22f273873c5090b113c9eb907b3eb1b",
+  "arrays.npz": "6bd6fca265cae75afc3800d68bcd6fada07ddbe3dccb8f974e0bff7aae33830d",
+  "window_comparison.csv": "999327b7f1e409a080ad04013b9122a8ab4ccb6bad379017fdfdda74b5109b86",
+  "verification.json": "dfe1f9fd8973b112812acb3de5f94caf05866b1b9ec8abd6844dcdde5b8b7700",
+  "provenance.json": "7f7d252954df72fa9dbce54949155fa88a09d298bd40675f28ef605ecb73e348",
+  "window_changes.png": "e591062584aa331ed71a9be3808a4fcccd92736b77cc8111138bda6c7bd3c19d",
+  "explorer_data.js": "c456ae91cf62d5ba30d4254618754e4017f09587d63fef79ce7b9afa04dcaf3d",
+  "report.html": "70a06dfe6098c3e86c96dd22d950a23f0666684295040bcfa481d8408a8cdb0b",
+  "report.txt": "12cd247300adbe043d99f112d13cc00d3090406081e5eabdb3db4b0904767ff3"
+}

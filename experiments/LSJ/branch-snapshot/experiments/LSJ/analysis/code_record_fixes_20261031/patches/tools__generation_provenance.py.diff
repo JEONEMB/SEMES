@@ -1,0 +1,89 @@
+--- before/tools/generation_provenance.py
++++ after/tools/generation_provenance.py
+@@ -0,0 +1,86 @@
++"""Separate append-only start/finish records for measurement, figures and report generation.
++
++Existing logs and artifacts are never rewritten by this module. Old producers cannot
++be reconstructed from current source; upstream links require an actual matching output hash.
++"""
++import hashlib
++import json
++import platform
++import sys
++import uuid
++from datetime import datetime,timezone,timedelta
++from pathlib import Path
++
++def snapshot(paths):
++    result={}
++    for path in sorted({Path(p).resolve() for p in paths},key=str):
++        if not path.is_file():raise FileNotFoundError(str(path))
++        with path.open('rb') as f:
++            digest=hashlib.file_digest(f,'sha256').hexdigest()
++        result[str(path)]={'sha256':digest,'size_bytes':path.stat().st_size}
++    return result
++
++def files_under(path):
++    return sorted(p for p in Path(path).rglob('*') if p.is_file() and '__pycache__' not in p.parts)
++
++def clock_values():
++    now=datetime.now(timezone.utc)
++    return {'utc':now.isoformat(),'asia_seoul':now.astimezone(timezone(timedelta(hours=9))).isoformat()}
++
++class GenerationRecord:
++    def __init__(self,root,stage,*,sources,inputs,metadata=None):
++        self.root=Path(root).resolve();self.stage=stage
++        self.source_paths=list(sources);self.input_paths=list(inputs)
++        self.directory=self.root/'logs/provenance'
++        self.run_id=stage+'_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')+'_'+uuid.uuid4().hex[:12]
++        self.start_path=self.directory/(self.run_id+'.started.json')
++        self.finish_path=self.directory/(self.run_id+'.finished.json')
++        self.metadata=metadata or {};self.started=False;self.finished=False
++
++    def _write(self,path,value):
++        # Exclusive creation: one execution cannot replace another execution's evidence.
++        with path.open('x',encoding='utf-8') as f:
++            json.dump(value,f,ensure_ascii=False,indent=2,allow_nan=False)
++
++    def start(self):
++        if self.started:raise RuntimeError('generation record already started')
++        self.directory.mkdir(parents=True,exist_ok=True)
++        self.sources=snapshot(self.source_paths);self.inputs=snapshot(self.input_paths)
++        upstream=[]
++        for path in self.directory.glob('*.finished.json'):
++            try:previous=json.loads(path.read_text(encoding='utf-8'))
++            except (OSError,ValueError):continue
++            if previous.get('status')!='complete':continue
++            matches=[p for p,value in self.inputs.items() if previous.get('outputs',{}).get(p)==value]
++            if matches:upstream.append({'record':str(path),'matching_inputs':matches})
++        self._write(self.start_path,{'schema_version':1,'run_id':self.run_id,'stage':self.stage,
++                    'status':'started_not_completed','time':clock_values(),'sources':self.sources,'inputs':self.inputs,
++                    'upstream_output_hash_matches':upstream,
++                    'upstream_note':'No matching record means producer unknown; current source is not attributed to legacy outputs.',
++                    'runtime':{'python':sys.version,'platform':platform.platform()},'metadata':self.metadata})
++        self.started=True
++        return self
++
++    def finish(self,outputs):
++        if not self.started or self.finished:raise RuntimeError('invalid generation record state')
++        sources=snapshot(self.source_paths);inputs=snapshot(self.input_paths);produced=snapshot(outputs)
++        if not produced:raise ValueError('no output artifacts supplied')
++        stable=sources==self.sources and inputs==self.inputs
++        self._write(self.finish_path,{'schema_version':1,'run_id':self.run_id,'stage':self.stage,
++                    'start_record':str(self.start_path),'status':'complete' if stable else 'invalidated_inputs_changed',
++                    'time':clock_values(),'sources_after':sources,'inputs_after':inputs,
++                    'sources_and_inputs_unchanged':stable,'outputs':produced})
++        self.finished=True
++        if not stable:raise RuntimeError('source or input changed during artifact generation')
++
++    def fail(self,error):
++        if self.started and not self.finished:
++            self._write(self.finish_path,{'schema_version':1,'run_id':self.run_id,'stage':self.stage,
++                        'start_record':str(self.start_path),'status':'failed','time':clock_values(),
++                        'error':str(error),'outputs':{}})
++            self.finished=True
++
++    def __enter__(self):return self.start()
++    def __exit__(self,kind,error,traceback):
++        if not self.finished:self.fail(error if kind else 'execution ended without finish()')
++        return False

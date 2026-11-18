@@ -1,0 +1,32 @@
+{
+  "ref": "R01",
+  "x": 1316,
+  "coarse_y": 1880,
+  "selection": "Same illustrative point as previous explanation, not a worst-case or best-case selection.",
+  "windows": [
+    {
+      "n": 21,
+      "mu": 1878.7138568091545,
+      "sigma": 3.6117687172463695,
+      "legacy_selected": true
+    },
+    {
+      "n": 31,
+      "mu": 1878.7255891509087,
+      "sigma": 3.560364878521608,
+      "legacy_selected": true
+    },
+    {
+      "n": 41,
+      "mu": 1878.725584658348,
+      "sigma": 3.560142715815272,
+      "legacy_selected": true
+    },
+    {
+      "n": 61,
+      "mu": 1878.7255936707752,
+      "sigma": 3.560129930371027,
+      "legacy_selected": true
+    }
+  ]
+}
