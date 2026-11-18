@@ -17,6 +17,7 @@
 //  (배경 전체 이동 = 카메라·배경이 움직임, 플레이트 창 이동 = 스테이지 반복 정밀도). 결과는 _check/
 //
 //  Ctrl-C: 지금 사진까지 저장하고 멈춘다. 같은 명령에 --resume 을 붙이면 없는 사진만 이어서 찍는다
+#include <algorithm>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 
@@ -80,6 +81,7 @@ void usage()
                  "    --no-raw  원본 저장 안 함\n"
                  "\n"
                  "  --resume   있는 사진은 건너뛰고 이어서 찍기\n"
+                 "  --reverse  촬영 순서만 반대로 (사진·이름·접근 방향은 같음. 순서 영향 확인용)\n"
                  "  --dry-run  장치 없이 계획만 출력\n");
 }
 
@@ -133,7 +135,7 @@ struct Options {
     int32_t grid_y_step = 100, grid_t_step = 50;
     int32_t approach_y = 200, approach_t = 100;
     int repeat = 3, average = 1, center_average = 4, settle_retries = 2, check_every = 100;
-    bool center_here = false, have_center = false, raw = true, resume = false, dry_run = false;
+    bool center_here = false, have_center = false, raw = true, resume = false, dry_run = false, reverse = false;
     stage::Position center;
     cv::Rect plate_roi{1901 - 450, 1068 - 200, 900, 400};
     stage_camera::CameraOptions cam;
@@ -370,6 +372,7 @@ int main(int argc, char **argv)
         else if (a == "--settle-timeout") o.cam.settle.timeout_ms = std::atoi(val().c_str());
         else if (a == "--no-raw") o.raw = false;
         else if (a == "--resume") o.resume = true;
+        else if (a == "--reverse") o.reverse = true;
         else if (a == "--dry-run") o.dry_run = true;
         else if (a == "-h" || a == "--help") { usage(); return 0; }
         else {
@@ -414,6 +417,7 @@ int main(int argc, char **argv)
         return 2;
     }
     if (o.plan != "grid") sortForTravel(shots);   // grid 는 planGrid 가 이미 'ㄹ'자 순서
+    if (o.reverse) std::reverse(shots.begin(), shots.end());
     if (o.center_name.empty()) o.center_name = o.plan == "set2" ? "center1" : "center";
 
     Rel lo{0, 0}, hi{0, 0};
