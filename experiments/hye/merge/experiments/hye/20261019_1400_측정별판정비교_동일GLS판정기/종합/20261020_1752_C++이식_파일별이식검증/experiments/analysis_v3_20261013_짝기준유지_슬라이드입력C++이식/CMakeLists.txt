@@ -1,0 +1,11 @@
+foreach(app historical_slide_data historical_slide_panels)
+  if(app STREQUAL historical_slide_data)
+    set(source src/slide_data.cpp)
+  else()
+    set(source src/slide_panels.cpp)
+  endif()
+  add_executable(${app} ${source})
+  target_link_libraries(${app} PRIVATE alignment gdi32)
+  add_custom_command(TARGET ${app} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll" "$<TARGET_FILE_DIR:${app}>")
+endforeach()

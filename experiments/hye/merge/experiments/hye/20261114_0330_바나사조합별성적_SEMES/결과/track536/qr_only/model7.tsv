@@ -1,0 +1,9 @@
+name	mean	scale	weight_Y	weight_T
+intercept	0	1	-0.056166857768200573	0.17458004359489401
+qr_dx_mean	13.154543310688421	37.398350455639992	-0.0017446495923524215	0.46693104189736101
+bar_tilt_upper	0	1	0	0
+bar_tilt_lower	0	1	0	0
+screw1_x	0	1	0	0
+screw2_x	0	1	0	0
+screw3_x	0	1	0	0
+screw4_x	0	1	0	0

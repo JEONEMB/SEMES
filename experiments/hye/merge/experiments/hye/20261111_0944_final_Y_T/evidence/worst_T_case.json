@@ -1,0 +1,34 @@
+{
+    "id": 702,
+    "round4_index": 131,
+    "path": "등비수열데이터/Y-0.8 T-0.96.bmp",
+    "sha256": "284f125f8660088c97e267652644546d09b556381e14b17f9fa0ccc1a0f791af",
+    "fold": 2,
+    "target": [
+        -8.0000000000000004e-01,
+        -9.5999999999999996e-01
+    ],
+    "oof_prediction": [
+        -8.3813853238342551e-01,
+        7.1720011522799765e-01
+    ],
+    "normalized_contributions": [
+        {
+            "axis": 0,
+            "intercept": 4.4930480608700842e-02,
+            "QR": 8.5061137952367947e+00,
+            "bar": -1.6855101325251018e-02,
+            "pins": -9.3723277069036683e+00,
+            "sum": -8.3813853238342517e-01
+        },
+        {
+            "axis": 1,
+            "intercept": 1.9524450127150603e-01,
+            "QR": -1.4158236739675545e+00,
+            "bar": -4.7535204861437190e-02,
+            "pins": 1.9853144927854836e+00,
+            "sum": 7.1720011522799787e-01
+        }
+    ],
+    "note": "Contribution split is parameterization-dependent in correlated features. No labels corrected or excluded."
+}

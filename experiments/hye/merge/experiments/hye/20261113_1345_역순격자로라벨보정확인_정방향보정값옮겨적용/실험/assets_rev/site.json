@@ -1,0 +1,50 @@
+{
+ "center_sha256": "27643972d639003d41ea6fa410c8bc2c2f5bddac2bd108d0922802c93344decc",
+ "full_crop": [
+  1345,
+  876,
+  1130,
+  530
+ ],
+ "qr": [
+  [
+   1557,
+   1045,
+   184,
+   198
+  ],
+  [
+   1815,
+   1047,
+   184,
+   198
+  ],
+  [
+   2071,
+   1049,
+   185,
+   198
+  ]
+ ],
+ "screws": [
+  [
+   960,
+   1395
+  ],
+  [
+   2794,
+   1425
+  ],
+  [
+   1008,
+   1709
+  ],
+  [
+   2741,
+   1746
+  ]
+ ],
+ "search_x": 125,
+ "search_y": 22,
+ "note": "rig_grid_rev 20261113. center.bmp = rig_grid_rev/center.bmp. Made by make_rev_assets.py from the ssafy module assets"
+}

@@ -1,0 +1,4 @@
+runtime_path	n_images	median_observation_decode_ms	p95_observation_decode_ms
+joint_v1_v2	30	90.2124	117.436
+pin_only	30	96.7954	102.857
+qr_pin_with_or_without_bars	30	127.387	153.978

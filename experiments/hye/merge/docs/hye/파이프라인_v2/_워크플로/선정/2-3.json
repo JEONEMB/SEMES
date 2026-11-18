@@ -1,0 +1,172 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-3_사이보정/논문/01_Sur2021_JMIV_변위추정편향_보간잡음",
+   "title": "On Biases in Displacement Estimation for Image Registration, with a Focus on Photomechanics",
+   "citation": "Sur F., Blaysat B., Grédiac M. J. Math. Imaging Vis. 63(7):777-806, 2021. doi:10.1007/s10851-021-01032-4",
+   "url": "https://doi.org/10.1007/s10851-021-01032-4",
+   "pdf_url": "https://hal.science/hal-03226201/document",
+   "questions": [
+    1,
+    2,
+    4
+   ],
+   "why": "변위 추정 편향을 보간 편향, 잡음이 만드는 편향, 정역 정식화 차이로 나눠 이론과 실험으로 정리. 전처리 필터의 효과와 대가로 보정의 역효과(질문 2)를 판단할 틀."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-3_사이보정/논문/02_Su2015_OE_푸리에_보간편향예측",
+   "title": "Fourier-based interpolation bias prediction in digital image correlation",
+   "citation": "Su Y., Zhang Q., Gao Z., Xu X., Wu X. Optics Express 23(15):19242, 2015. doi:10.1364/OE.23.019242",
+   "url": "https://doi.org/10.1364/OE.23.019242",
+   "pdf_url": "https://opg.optica.org/oe/fulltext.cfm?uri=oe-23-15-19242",
+   "questions": [
+    4,
+    1
+   ],
+   "why": "보간 방식과 무늬 주파수별 보간 편향을 푸리에 해석으로 미리 예측. 스플라인 GN과 ECC 보간을 실험 전에 비교할 근거. Optica 오픈액세스."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-3_사이보정/논문/03_Yifat2017_SciRep_픽셀잠김보정_SPIFF",
+   "title": "Analysis and correction of errors in nanoscale particle tracking using the Single-pixel interior filling function (SPIFF) algorithm",
+   "citation": "Yifat Y., Sule N., Lin Y., Scherer N. F. Scientific Reports 7:16553, 2017. doi:10.1038/s41598-017-14166-6 (arXiv:1705.07789)",
+   "url": "https://doi.org/10.1038/s41598-017-14166-6",
+   "pdf_url": "https://arxiv.org/pdf/1705.07789",
+   "questions": [
+    3,
+    1
+   ],
+   "why": "측정 후 부화소 위치 분포를 고르게 펴서 pixel locking을 보정하고 보정 전후 오차 감소를 수치로 제시. A5의 1px 주기 편향 보정 후보."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-3_사이보정/논문/04_Kalal2010_ICPR_정역방향오차_추적실패검출",
+   "title": "Forward-Backward Error: Automatic Detection of Tracking Failures",
+   "citation": "Kalal Z., Mikolajczyk K., Matas J. ICPR 2010, pp. 2756-2759. doi:10.1109/ICPR.2010.675",
+   "url": "https://doi.org/10.1109/ICPR.2010.675",
+   "pdf_url": "http://kahlan.eps.surrey.ac.uk/featurespace/tld/Publications/2010_icpr.pdf",
+   "questions": [
+    7,
+    8
+   ],
+   "why": "정방향 추적점을 역방향으로 되돌린 거리로 잘못 잡힌 점을 검출하는 정역 일관성 검사의 원 논문. control의 LK 추적점에 바로 적용 가능."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-3_사이보정/논문/05_Genovese2024_OLE_모델없는_렌즈왜곡보정",
+   "title": "Single-image camera calibration with model-free distortion correction",
+   "citation": "Genovese K. Optics and Lasers in Engineering 181:108348, 2024. doi:10.1016/j.optlaseng.2024.108348 (arXiv:2403.01263)",
+   "url": "https://doi.org/10.1016/j.optlaseng.2024.108348",
+   "pdf_url": "https://arxiv.org/pdf/2403.01263",
+   "questions": [
+    5,
+    2
+   ],
+   "why": "평면 격자 사진 한 장으로 정해진 모델 없이 가장자리까지 왜곡 보정. QR 판 하나만 있는 우리 상황에서 왜곡을 따로 잴 수 있는지 판단 근거. CC BY."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-3_사이보정/특허/01_US7085431_Mitutoyo_화소주기오차함수_위치보정",
+   "title": "Systems and methods for reducing position errors in image correlation systems during intra-reference-image displacements",
+   "citation": "US 7,085,431 B2, Mitutoyo Corp. (Jones B. K., Nahum M.), 출원 2001-11-13, 등록 2006-08-01",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7085431",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7085431",
+   "questions": [
+    3,
+    1
+   ],
+   "why": "화소 간격 관련 주파수의 오차 함수를 기준 자료에 맞춘 뒤 측정 위치에서 빼는 보정. 1px 주기 위상 편향을 맞춰 빼는 A5 방식과 같은 구조의 산업 구현. 공보 1쪽 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-3_사이보정/특허/02_US7885480_Mitutoyo_상관피크_창가중_부화소",
+   "title": "Correlation peak finding method for image correlation displacement sensing",
+   "citation": "US 7,885,480 B2, Mitutoyo Corp. (Bryll R. K., Jones B. K., Masreliez K. G.), 출원 2006-10-31, 등록 2011-02-08",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7885480",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7885480",
+   "questions": [
+    4,
+    9,
+    7
+   ],
+   "why": "예비 부화소 피크 위치에 맞춘 창 함수나 가중치로 곡선을 다시 맞춰 계통 오차를 줄이고, 상관 품질 평가로 나쁜 측정을 오류 처리. 측정 중 보정과 점별 신뢰 판정. 공보 1쪽 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-3_사이보정/특허/03_US7567713_Mitutoyo_밝기보간_에지위치_방향편차",
+   "title": "Method utilizing intensity interpolation for measuring edge locations in a high precision machine vision inspection system",
+   "citation": "US 7,567,713 B2, Mitutoyo Corp. (Ding Y.), 출원 2006-02-08, 등록 2009-07-28",
+   "url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7567713",
+   "pdf_url": "https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7567713",
+   "questions": [
+    4,
+    2
+   ],
+   "why": "주사선을 따라 밝기를 보간해 부화소 방향에 따른 에지 위치 편차를 줄임. 위, 아래 가로선 측정의 보간 보정 후보. 공보 1쪽 확인."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/01_Shimizu2005_IJCV_부화소추정오차상쇄/요약.md",
+   "why": "질문 3: 부화소 추정 계통 오차(피크 로킹) 상쇄 방법"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/02_Michaelis2016_MST_PIV_피크로킹저감/요약.md",
+   "why": "질문 3: PIV 피크 로킹 저감"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/04_Mallon2007_PRL_보정패턴_편향비교/요약.md",
+   "why": "질문 5: 보정 패턴과 왜곡에 따른 위치 편향"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/06_Duncan2010_MST_이웃중앙값_이상치검출/요약.md",
+   "why": "질문 8: 이웃 정규화 중앙값 이상치 제거"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/07_Pan2013_ExpMech_ICGN_고속DIC/요약.md",
+   "why": "질문 6: 이득, 오프셋에 강한 ZNSSD 기준 IC-GN"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/09_Pan2013_OLE_렌즈왜곡_2DDIC오차/요약.md",
+   "why": "질문 5: 렌즈 왜곡이 2D DIC 변위 오차에 주는 영향 (PDF 오배치 여부 확인 필요)"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/10_Pan2013_OLE_가우스전처리_편향저감/요약.md",
+   "why": "질문 4, 2: 가우스 전처리(흐림 조절)로 보간 편향 저감과 그 대가"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/11_Schreier2000_OptEng_보간_계통오차/요약.md",
+   "why": "질문 4: 보간 방식별 계통 오차"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/12_Sciacchitano2019_MST_PIV_불확도정량화/요약.md",
+   "why": "질문 9: 점별 불확도 정량화와 신뢰 가중"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/13_Heikkila2000_TPAMI_원형기준점_보정/요약.md",
+   "why": "질문 5: 카메라 보정과 왜곡 모델"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/14_vanGennip2014_arXiv_QR_블라인드디블러링/요약.md",
+   "why": "측정 전 흐림 조절: QR 블라인드 디블러링"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/03_US7352891_Canon_마크요소_정밀도선별/요약.md",
+   "why": "질문 8, 9: 마크 요소별 정밀도로 선별, 가중"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/05_US7265841_Canon_신호파형_중심오차보정/요약.md",
+   "why": "질문 3, 4: 신호 파형에서 중심 위치 오차 보정"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/01_JCGM2008_GUM_측정불확도표현지침/요약.md",
+   "why": "질문 9: 불확도 합성과 가중의 기준"
+  },
+  {
+   "path": "docs/hye/파이프라인_v2/단계/2_측정/2-3_사이보정/조사방법론.md",
+   "why": "이번에 작성한 조사방법론(목적, 질문 1~9, 검색어, 검색 기록, 선정 이유). OpenAlex는 일일 한도 초과로 Crossref로 대체, Google Patents 503과 FreePatentsOnline 403은 우회하지 않고 USPTO 공보 PDF로 번호 확인"
+  }
+ ]
+}

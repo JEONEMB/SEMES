@@ -1,0 +1,13 @@
+model	world_degree	n	stopped	true_pass	false_stop	mean_turns	max_turns
+pin_only_linear	1	571	571	271	300	2.45359	9
+pin_only_linear	2	571	571	292	279	2.45534	9
+pin_only_quadratic	1	571	571	259	312	2.47461	10
+pin_only_quadratic	2	571	571	278	293	2.47636	9
+qr_pin_linear	1	571	571	568	3	2.44308	8
+qr_pin_linear	2	571	571	568	3	2.44308	8
+qr_pin_quadratic	1	571	571	552	19	2.44308	9
+qr_pin_quadratic	2	571	571	566	5	2.44308	9
+v1_joint_GLS	1	571	571	547	24	2.45884	9
+v1_joint_GLS	2	571	571	544	27	2.45709	9
+v2_joint	1	571	571	511	60	2.4606	9
+v2_joint	2	571	571	525	46	2.45534	9

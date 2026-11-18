@@ -1,0 +1,196 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/0_기준만들기/논문/01_Matthews2004_TPAMI_템플릿갱신_드리프트",
+   "title": "The template update problem",
+   "citation": "Matthews L., Ishikawa T., Baker S. IEEE Transactions on Pattern Analysis and Machine Intelligence 26(6):810-815, 2004. doi:10.1109/TPAMI.2004.16",
+   "url": "https://doi.org/10.1109/tpami.2004.16",
+   "pdf_url": "https://www.ri.cmu.edu/pub_files/pub4/matthews_iain_2004_2/matthews_iain_2004_2.pdf",
+   "questions": [
+    1,
+    2,
+    7
+   ],
+   "why": "기준 템플릿을 새 영상으로 계속 바꾸면 드리프트가 쌓이고, 첫 템플릿에 다시 맞추는 갱신법으로 이를 막는다(초록 확인). 센터 사진을 고정할지 갱신할지의 근거. CMU 저자 공개본 PDF HTTP 200 확인."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/0_기준만들기/논문/02_Su2016_OE_잡음유발편향_보간",
+   "title": "Noise-induced bias for convolution-based interpolation in digital image correlation",
+   "citation": "Su Y., Zhang Q., Gao Z., Xu X. Optics Express 24(2):1175, 2016. doi:10.1364/OE.24.001175",
+   "url": "https://doi.org/10.1364/oe.24.001175",
+   "pdf_url": "https://opg.optica.org/viewmedia.cfm?uri=oe-24-2-1175&seq=0",
+   "questions": [
+    1,
+    2,
+    6
+   ],
+   "why": "영상 잡음이 보간을 거쳐 0이 아닌 편향을 만든다는 식(초록 확인). 센터 사진 1장의 잡음이 모든 측정에 공통 편향으로 들어가는지, 여러 장 평균으로 줄일 수 있는지의 근거. Optica 오픈 액세스, 자동 내려받기는 확인 화면(202)이라 수동 확보 필요."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/0_기준만들기/논문/03_Acher2023_SciRep_절대위치눈금_위치안정성",
+   "title": "Identifying and fixing in-plane positioning and stability issues on a microscope using machine-readable patterned position scales",
+   "citation": "Acher O., Belisario de Abreu M., Grigoriev A., de Bettignies P., Vilotta M., Nguyen T. Scientific Reports 13:19521, 2023. doi:10.1038/s41598-023-46950-y (PMC10636118)",
+   "url": "https://doi.org/10.1038/s41598-023-46950-y",
+   "pdf_url": "https://www.nature.com/articles/s41598-023-46950-y.pdf",
+   "questions": [
+    3,
+    4,
+    7
+   ],
+   "why": "절대 위치가 부호화된 눈금을 찍어 위치를 좌표로 읽고, 위치 성능이 스테이지만이 아닌 시스템 문제임과 진동, 정착 시간을 잰다(초록 확인). 센터를 좌표로 정의하는 방식과 기준 점검 절차의 근거. PDF HTTP 200 확인."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/0_기준만들기/논문/04_Lee2019_Sensors_카메라재설치_운동오차보정",
+   "title": "Stress Estimation Using Digital Image Correlation with Compensation of Camera Motion-Induced Error",
+   "citation": "Lee J., Jeong S., Lee Y.-J., Sim S.-H. Sensors 19(24):5503, 2019. doi:10.3390/s19245503 (PMC6960850)",
+   "url": "https://doi.org/10.3390/s19245503",
+   "pdf_url": "https://www.mdpi.com/1424-8220/19/24/5503/pdf?version=1576643389",
+   "questions": [
+    4,
+    5
+   ],
+   "why": "카메라를 떼었다가 다시 놓고 찍어도 카메라 이동 오차를 보정하는 방법(초록 확인). 날짜 간 카메라 이동(+0.44px) 보정과 재설치 뒤 기준 재사용의 근거. MDPI 오픈 액세스지만 자동 내려받기 403, PMC 경로로 수동 확보 필요."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/0_기준만들기/논문/05_Workman2018_ApplSpectrosc_교정전이_기기간차이",
+   "title": "A Review of Calibration Transfer Practices and Instrument Differences in Spectroscopy",
+   "citation": "Workman J. Applied Spectroscopy 72(3):340-365, 2018 (online 2017). doi:10.1177/0003702817736064",
+   "url": "https://doi.org/10.1177/0003702817736064",
+   "pdf_url": "https://journals.sagepub.com/doi/pdf/10.1177/0003702817736064",
+   "questions": [
+    5,
+    8
+   ],
+   "why": "한 기기에서 만든 교정 모델을 같은 종류의 다른 기기로 옮기는 방법과 기기 차이 정리(서지, OA 표시 확인). 다른 로봇으로 옮겨 쓰기의 방법 목록을 타 분야에서 가져온다. SAGE 자동 내려받기 403, 수동 확보 필요."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/0_기준만들기/특허/01_US10906184B2_Mujin_검증기호_기준영상_재보정",
+   "title": "Method and control system for verifying and updating camera calibration for robot control",
+   "citation": "US10906184B2, Mujin Inc. (Islam, Ye, Diankov). 우선일 2019-03-29, 출원 2020-04-30, 등록 2021-02-02. 청구항 20",
+   "url": "https://patents.google.com/patent/US10906184B2/en",
+   "pdf_url": "https://patentimages.storage.googleapis.com/d4/53/b9/c185c8ff8390f5/US10906184.pdf",
+   "questions": [
+    1,
+    4,
+    7
+   ],
+   "why": "로봇을 기준 자세로 보내 기준 영상 속 검증 기호 좌표를 저장하고, 쉬는 시간마다 같은 자세로 다시 찍어 좌표 편차가 임계값을 넘으면 재교정(초록, 청구항 1 확인). 기준 사진 1장, 주기 점검, 재교정 조건의 직접 사례. PDF HTTP 200 확인."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/0_기준만들기/특허/02_US20250293063A1_LamResearch_자동보정웨이퍼_티칭건강점검",
+   "title": "Integrated adaptive positioning systems and routines for automated wafer-handling robot teach and health check",
+   "citation": "US20250293063A1, Lam Research Corp. 우선일 2019-07-26, 출원 2025-06-02, 공개 2025-09-18. 청구항 20",
+   "url": "https://patents.google.com/patent/US20250293063A1/en",
+   "pdf_url": "",
+   "questions": [
+    3,
+    4,
+    5,
+    7
+   ],
+   "why": "카메라를 단 자동 보정 웨이퍼로 스테이션의 서로 다른 두 구조물 기준점을 찍어 여러 종류의 오프셋을 구하고, 티칭과 주기 건강 점검을 같은 수단으로 한다(초록, 청구항 확인). 스테이션별 기준 정의와 재설치 뒤 점검의 근거. 페이지에 PDF 링크가 없어 공보 PDF 확보 필요."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/0_기준만들기/특허/03_TWI812856B_KLA_저차원기준영상생성",
+   "title": "System and computer-implemented method for defect detection, non-transitory computer-readable medium, and system for generating reference image",
+   "citation": "TWI812856B, KLA Corp. (美商科磊). 우선일 2019-04-09, 출원 2020-04-06. 청구항 67. 미국 대응 공보 확인 필요",
+   "url": "https://patents.google.com/patent/TWI812856B/en",
+   "pdf_url": "https://patentimages.storage.googleapis.com/23/85/90/306909a069cd7f/TWI812856B.pdf",
+   "questions": [
+    2,
+    6
+   ],
+   "why": "기준 영상을 이웃 다이 1장 대신 여러 시험 영상에서 저차원(low-rank) 생성기로 잡음을 지워 만든다(초록 확인). 기준을 여러 장에서 만드는 산업 사례. 목적이 결함 검출이라 원리만 참고."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/01_US11984340_TEL_검사웨이퍼_반복티칭_분산갱신/요약.md",
+   "why": "Q1,Q2,Q7: 확정 뒤 같은 측정을 10~100회 반복해 편차 분산으로 확정값(기준)을 갱신. 센터 1장 대 반복 평균의 산업 사례"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/15_NIST_eHandbook_GaugeRR_측정시스템/요약.md",
+   "why": "Q1,Q2,Q6: 반복성, 일간 재현성, 런간 안정성의 중첩 분해. 기준 사진 흔들림(px)을 날짜와 세션으로 나눠 재는 평가 틀"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/01_JCGM2008_GUM_측정불확도표현지침/요약.md",
+   "why": "Q6: 기준값 자체의 불확도를 측정 불확도에 합산하는 원칙"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/12_Sciacchitano2019_MST_PIV_불확도정량화/요약.md",
+   "why": "Q6: 영상 변위 측정의 사전, 사후 불확도 정량과 편향(peak-locking) 정리"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/05_Stelldinger2025_LNCS_PuzzleBoard_위치부호화패턴/요약.md",
+   "why": "Q2,Q3: 위치 부호 패턴으로 코너마다 절대 격자 좌표를 얻고, 점 수를 늘려 평균하는 설계 원칙"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/01_US9230326_Cognex_2D코드내장_체커보드교정판/요약.md",
+   "why": "Q3: 2D 코드에 자기 좌표를 넣어 코너에 절대 ID를 주는 교정판. 센터를 좌표로 정의하는 방식"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/02_US20250018582_PI_2D코드마커_스테이지자세측정/요약.md",
+   "why": "Q3: 2D 마커 배열로 스테이지 자세를 절대값으로 측정"
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/07_US10184809_Hexagon_2D코드스케일_절대위치/요약.md",
+   "why": "Q3: 위치마다 다른 코드 워드로 절대 위치와 이상 정렬 상태로부터의 편차를 함께 구함"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/06_Kimura2007_SPIE_Hitachi_카메라파라미터없는_비전보정/요약.md",
+   "why": "Q3: 카메라 내부 파라미터 없이 영상-로봇 평면 호모그래피만으로 좌표 정의"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/특허/03_US12224191_Samsung_QR_ArUco마커_이송장치/요약.md",
+   "why": "Q3,Q5: 구조물에 붙인 QR, ArUco 마커로 설치마다 위치를 다시 구하는 자동 티칭"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/특허/06_US7248931_ASM_고정기준점_드리프트측정/요약.md",
+   "why": "Q4: 같은 영상 안 고정 기준 마크 대비 상대 거리로 측정해 영점 변동을 상쇄(QR-가로선 차감 A15와 같은 원리)"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/06_Kuric2018_MATEC_ISO9283_반복정밀도측정/요약.md",
+   "why": "Q4,Q7: 단방향 접근으로 백래시 영향을 줄이고 양방향 반복정밀도를 따로 재는 절차. 영점 백래시 β 보정과 기준 촬영 방향 규칙"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/03_LeReun2022_Robotica_열드리프트_백래시_위치성능/요약.md",
+   "why": "Q4: 열 드리프트와 백래시 보상 모델. 하루 안 영점 드리프트 예측 근거"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/04_US12211719_TEL_열변위_백래시방향_목표위치보정/요약.md",
+   "why": "Q4: 가감속 방향으로 백래시 오차 방향을 정해 목표 위치를 보정. 이동 방향으로 영점 예측"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/02_US10403539_Kawasaki_로스트모션_편차진단/요약.md",
+   "why": "Q4,Q7: 반대 방향 이동으로 로스트 모션을 진단하는 기준 점검 절차"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/08_Zhang2007_CASE_웨이퍼로봇_지그보정/요약.md",
+   "why": "Q5: 지그 기반 웨이퍼 로봇 보정으로 설치, 셋업 시간을 줄임. 다른 로봇, 재설치 시 기준 재생성 방식"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/07_US12202151_CXMT_지그웨이퍼_로봇보정/요약.md",
+   "why": "Q5,Q7: 지그 웨이퍼 데이터로 보정 필요 여부를 판정하고 보상값을 구함"
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/특허/01_US12566413_SEMES_비전카메라_2단계티칭/요약.md",
+   "why": "Q5: 설치마다 비전 카메라와 기준 마크로 2단계 티칭. 개체별 기준 재정의 사례"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/05_Varma2006_BMCBioinf_교차검증_모델선택_편향/요약.md",
+   "why": "Q8: 같은 자료로 후보를 고르고 평가하면 성능이 부풀려짐. 6후보, 11후보 선택 평가에 중첩 검증 필요"
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/08_Cawley2010_JMLR_모델선택_과적합_선택편향/요약.md",
+   "why": "Q8: 모델 선택 과적합과 선택 편향. 노출된 341장에서 고른 후보 수의 성적 해석 근거"
+  }
+ ]
+}

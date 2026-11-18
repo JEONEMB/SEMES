@@ -1,0 +1,341 @@
+0	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\center.bmp
+1	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.01.bmp
+2	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.02.bmp
+3	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.03.bmp
+4	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.04.bmp
+5	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.05.bmp
+6	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.06.bmp
+7	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.07.bmp
+8	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.08.bmp
+9	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.09.bmp
+10	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.10.bmp
+11	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.11.bmp
+12	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.12.bmp
+13	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.13.bmp
+14	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.14.bmp
+15	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.15.bmp
+16	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.16.bmp
+17	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.17.bmp
+18	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.18.bmp
+19	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.19.bmp
+20	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.20.bmp
+21	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.21.bmp
+22	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.22.bmp
+23	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.23.bmp
+24	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.24.bmp
+25	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.25.bmp
+26	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.26.bmp
+27	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.27.bmp
+28	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.28.bmp
+29	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.29.bmp
+30	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.30.bmp
+31	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.31.bmp
+32	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.32.bmp
+33	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.33.bmp
+34	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.34.bmp
+35	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.35.bmp
+36	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.36.bmp
+37	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.37.bmp
+38	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.38.bmp
+39	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.39.bmp
+40	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.40.bmp
+41	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.41.bmp
+42	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.42.bmp
+43	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.43.bmp
+44	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.44.bmp
+45	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.45.bmp
+46	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.46.bmp
+47	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.47.bmp
+48	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.48.bmp
+49	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.49.bmp
+50	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.50.bmp
+51	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.51.bmp
+52	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.52.bmp
+53	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.53.bmp
+54	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.54.bmp
+55	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.55.bmp
+56	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.56.bmp
+57	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.57.bmp
+58	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.58.bmp
+59	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.59.bmp
+60	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.60.bmp
+61	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.61.bmp
+62	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.62.bmp
+63	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.63.bmp
+64	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.64.bmp
+65	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.65.bmp
+66	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.66.bmp
+67	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.67.bmp
+68	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.68.bmp
+69	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.69.bmp
+70	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.70.bmp
+71	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.71.bmp
+72	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.72.bmp
+73	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.73.bmp
+74	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.74.bmp
+75	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.75.bmp
+76	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.76.bmp
+77	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.77.bmp
+78	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.78.bmp
+79	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.79.bmp
+80	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.80.bmp
+81	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.81.bmp
+82	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.82.bmp
+83	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.83.bmp
+84	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.84.bmp
+85	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.85.bmp
+86	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.86.bmp
+87	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.87.bmp
+88	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.88.bmp
+89	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.89.bmp
+90	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.90.bmp
+91	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.91.bmp
+92	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.92.bmp
+93	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.93.bmp
+94	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.94.bmp
+95	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.95.bmp
+96	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.96.bmp
+97	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.97.bmp
+98	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.98.bmp
+99	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+0.99.bmp
+100	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T+1.00.bmp
+101	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.01.bmp
+102	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.02.bmp
+103	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.03.bmp
+104	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.04.bmp
+105	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.05.bmp
+106	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.06.bmp
+107	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.07.bmp
+108	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.08.bmp
+109	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.09.bmp
+110	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.10.bmp
+111	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.11.bmp
+112	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.12.bmp
+113	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.13.bmp
+114	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.14.bmp
+115	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.15.bmp
+116	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.16.bmp
+117	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.17.bmp
+118	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.18.bmp
+119	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.19.bmp
+120	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.20.bmp
+121	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.21.bmp
+122	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.22.bmp
+123	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.23.bmp
+124	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.24.bmp
+125	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.25.bmp
+126	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.26.bmp
+127	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.27.bmp
+128	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.28.bmp
+129	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.29.bmp
+130	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.30.bmp
+131	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.31.bmp
+132	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.32.bmp
+133	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.33.bmp
+134	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.34.bmp
+135	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.35.bmp
+136	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.36.bmp
+137	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.37.bmp
+138	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.38.bmp
+139	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.39.bmp
+140	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.40.bmp
+141	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.41.bmp
+142	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.42.bmp
+143	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.43.bmp
+144	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.44.bmp
+145	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.45.bmp
+146	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.46.bmp
+147	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.47.bmp
+148	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.48.bmp
+149	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.49.bmp
+150	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.50.bmp
+151	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.51.bmp
+152	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.52.bmp
+153	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.53.bmp
+154	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.54.bmp
+155	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.55.bmp
+156	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.56.bmp
+157	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.57.bmp
+158	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.58.bmp
+159	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.59.bmp
+160	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.60.bmp
+161	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.61.bmp
+162	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.62.bmp
+163	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.63.bmp
+164	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.64.bmp
+165	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.65.bmp
+166	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.66.bmp
+167	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.67.bmp
+168	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.68.bmp
+169	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.69.bmp
+170	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.70.bmp
+171	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.71.bmp
+172	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.72.bmp
+173	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.73.bmp
+174	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.74.bmp
+175	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.75.bmp
+176	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.76.bmp
+177	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.77.bmp
+178	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.78.bmp
+179	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.79.bmp
+180	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.80.bmp
+181	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.81.bmp
+182	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.82.bmp
+183	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.83.bmp
+184	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.84.bmp
+185	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.85.bmp
+186	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.86.bmp
+187	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.87.bmp
+188	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.88.bmp
+189	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.89.bmp
+190	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.90.bmp
+191	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.91.bmp
+192	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.92.bmp
+193	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.93.bmp
+194	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.94.bmp
+195	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.95.bmp
+196	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.96.bmp
+197	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.97.bmp
+198	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.98.bmp
+199	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-0.99.bmp
+200	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Theta\T-1.00.bmp
+201	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.05.bmp
+202	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.10.bmp
+203	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.15.bmp
+204	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.20.bmp
+205	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.25.bmp
+206	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.30.bmp
+207	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.35.bmp
+208	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.40.bmp
+209	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.45.bmp
+210	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.50.bmp
+211	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.55.bmp
+212	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.60.bmp
+213	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.65.bmp
+214	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.70.bmp
+215	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.75.bmp
+216	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.80.bmp
+217	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.85.bmp
+218	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.90.bmp
+219	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+0.95.bmp
+220	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.00.bmp
+221	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.05.bmp
+222	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.10.bmp
+223	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.15.bmp
+224	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.20.bmp
+225	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.25.bmp
+226	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.30.bmp
+227	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.35.bmp
+228	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.40.bmp
+229	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.45.bmp
+230	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.50.bmp
+231	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.55.bmp
+232	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.60.bmp
+233	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.65.bmp
+234	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.70.bmp
+235	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.75.bmp
+236	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.80.bmp
+237	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.85.bmp
+238	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.90.bmp
+239	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+1.95.bmp
+240	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y+2.00.bmp
+241	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.05.bmp
+242	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.10.bmp
+243	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.15.bmp
+244	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.20.bmp
+245	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.25.bmp
+246	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.30.bmp
+247	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.35.bmp
+248	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.40.bmp
+249	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.45.bmp
+250	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.50.bmp
+251	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.55.bmp
+252	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.60.bmp
+253	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.65.bmp
+254	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.70.bmp
+255	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.75.bmp
+256	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.80.bmp
+257	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.85.bmp
+258	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.90.bmp
+259	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-0.95.bmp
+260	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.00.bmp
+261	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.05.bmp
+262	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.10.bmp
+263	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.15.bmp
+264	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.20.bmp
+265	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.25.bmp
+266	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.30.bmp
+267	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.35.bmp
+268	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.40.bmp
+269	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.45.bmp
+270	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.50.bmp
+271	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.55.bmp
+272	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.60.bmp
+273	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.65.bmp
+274	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.70.bmp
+275	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.75.bmp
+276	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.80.bmp
+277	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.85.bmp
+278	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.90.bmp
+279	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-1.95.bmp
+280	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261014\Y\Y-2.00.bmp
+281	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.01\Y+0.05 T+0.01 (1).bmp
+282	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.01\Y+0.05 T+0.01 (2).bmp
+283	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.01\Y+0.05 T+0.01 (3).bmp
+284	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.02\Y+0.05 T+0.02 (1).bmp
+285	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.02\Y+0.05 T+0.02 (2).bmp
+286	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.02\Y+0.05 T+0.02 (3).bmp
+287	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.03\Y+0.05 T+0.03 (1).bmp
+288	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.03\Y+0.05 T+0.03 (2).bmp
+289	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.03\Y+0.05 T+0.03 (3).bmp
+290	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.10\Y+0.05 T+0.10 (1).bmp
+291	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.10\Y+0.05 T+0.10 (2).bmp
+292	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+0.10\Y+0.05 T+0.10 (3).bmp
+293	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+1.00\Y+0.05 T+1.00 (1).bmp
+294	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+1.00\Y+0.05 T+1.00 (2).bmp
+295	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+1.00\Y+0.05 T+1.00 (3).bmp
+296	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+2.00\Y+0.05 T+2.00 (1).bmp
+297	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+2.00\Y+0.05 T+2.00 (2).bmp
+298	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.05 T+2.00\Y+0.05 T+2.00 (3).bmp
+299	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+0.01\Y+0.1 T+0.01 (1).bmp
+300	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+0.01\Y+0.1 T+0.01 (2).bmp
+301	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+0.01\Y+0.1 T+0.01 (3).bmp
+302	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+0.10\Y+0.1 T+0.1 (1).bmp
+303	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+0.10\Y+0.1 T+0.1 (2).bmp
+304	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+0.10\Y+0.1 T+0.1 (3).bmp
+305	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+0.20\Y+0.1 T+0.2 (1).bmp
+306	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+0.20\Y+0.1 T+0.2 (2).bmp
+307	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+0.20\Y+0.1 T+0.2 (3).bmp
+308	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+1.00\Y+0.1 T+1.0 (1).bmp
+309	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+1.00\Y+0.1 T+1.0 (2).bmp
+310	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+1.00\Y+0.1 T+1.0 (3).bmp
+311	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+2.00\Y+0.1 T+2.0 (1).bmp
+312	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+2.00\Y+0.1 T+2.0 (2).bmp
+313	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.10 T+2.00\Y+0.1 T+2.0 (3).bmp
+314	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+0.01\Y+0.50 T+0.01 (1).bmp
+315	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+0.01\Y+0.50 T+0.01 (2).bmp
+316	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+0.01\Y+0.50 T+0.01 (3).bmp
+317	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+0.10\Y+0.50 T+0.10 (1).bmp
+318	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+0.10\Y+0.50 T+0.10 (2).bmp
+319	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+0.10\Y+0.50 T+0.10 (3).bmp
+320	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+1.00\Y+0.50 T+1.00 (1).bmp
+321	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+1.00\Y+0.50 T+1.00 (2).bmp
+322	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+1.00\Y+0.50 T+1.00 (3).bmp
+323	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+2.00\Y+0.50 T+2.00 (1).bmp
+324	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+2.00\Y+0.50 T+2.00 (2).bmp
+325	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+0.50 T+2.00\Y+0.50 T+2.00 (3).bmp
+326	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+0.01\Y+1.00 T+0.01 (1).bmp
+327	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+0.01\Y+1.00 T+0.01 (2).bmp
+328	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+0.01\Y+1.00 T+0.01 (3).bmp
+329	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+0.10\Y+1.00 T+0.10 (1).bmp
+330	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+0.10\Y+1.00 T+0.10 (2).bmp
+331	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+0.10\Y+1.00 T+0.10 (3).bmp
+332	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+1.00\Y+1.00 T+1.00 (1).bmp
+333	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+1.00\Y+1.00 T+1.00 (2).bmp
+334	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+1.00\Y+1.00 T+1.00 (3).bmp
+335	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+2.00\Y+1.00 T+2.00 (1).bmp
+336	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+2.00\Y+1.00 T+2.00 (2).bmp
+337	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\Y+1.00 T+2.00\Y+1.00 T+2.00 (3).bmp
+338	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\기준 위치\center1.bmp
+339	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\기준 위치\center2.bmp
+340	C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\data\clean\clean_20261020\기준 위치\center3.bmp

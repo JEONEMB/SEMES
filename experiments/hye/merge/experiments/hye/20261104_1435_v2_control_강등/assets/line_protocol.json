@@ -1,0 +1,817 @@
+{
+  "scope": "Only permitted upper/lower long horizontal wall-structure edges; fixedcenter-derived profile masks",
+  "center_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+  "selected_before_current_measurement": true,
+  "regions": [
+    {
+      "name": "upper_left",
+      "line": "upper",
+      "x_range": [
+        400,
+        1168
+      ],
+      "reference_edge_search_y": [
+        703,
+        721
+      ],
+      "polarity": 1
+    },
+    {
+      "name": "upper_right",
+      "line": "upper",
+      "x_range": [
+        2700,
+        3468
+      ],
+      "reference_edge_search_y": [
+        714,
+        731
+      ],
+      "polarity": 1
+    },
+    {
+      "name": "lower_left",
+      "line": "lower",
+      "x_range": [
+        400,
+        1168
+      ],
+      "reference_edge_search_y": [
+        1775,
+        1798
+      ],
+      "polarity": -1
+    },
+    {
+      "name": "lower_right",
+      "line": "lower",
+      "x_range": [
+        2600,
+        3368
+      ],
+      "reference_edge_search_y": [
+        1784,
+        1804
+      ],
+      "polarity": -1
+    }
+  ],
+  "blocks": [
+    {
+      "id": "upper_left_00",
+      "line": "upper",
+      "side": "left",
+      "x0": 400,
+      "x1": 464,
+      "reference_y": 710,
+      "read_box": [
+        400,
+        686,
+        464,
+        735
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_01",
+      "line": "upper",
+      "side": "left",
+      "x0": 464,
+      "x1": 528,
+      "reference_y": 710,
+      "read_box": [
+        464,
+        686,
+        528,
+        735
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_02",
+      "line": "upper",
+      "side": "left",
+      "x0": 528,
+      "x1": 592,
+      "reference_y": 710,
+      "read_box": [
+        528,
+        686,
+        592,
+        735
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_03",
+      "line": "upper",
+      "side": "left",
+      "x0": 592,
+      "x1": 656,
+      "reference_y": 711,
+      "read_box": [
+        592,
+        687,
+        656,
+        736
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_04",
+      "line": "upper",
+      "side": "left",
+      "x0": 656,
+      "x1": 720,
+      "reference_y": 711,
+      "read_box": [
+        656,
+        687,
+        720,
+        736
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_05",
+      "line": "upper",
+      "side": "left",
+      "x0": 720,
+      "x1": 784,
+      "reference_y": 711,
+      "read_box": [
+        720,
+        687,
+        784,
+        736
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_06",
+      "line": "upper",
+      "side": "left",
+      "x0": 784,
+      "x1": 848,
+      "reference_y": 711,
+      "read_box": [
+        784,
+        687,
+        848,
+        736
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_07",
+      "line": "upper",
+      "side": "left",
+      "x0": 848,
+      "x1": 912,
+      "reference_y": 711,
+      "read_box": [
+        848,
+        687,
+        912,
+        736
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_08",
+      "line": "upper",
+      "side": "left",
+      "x0": 912,
+      "x1": 976,
+      "reference_y": 712,
+      "read_box": [
+        912,
+        688,
+        976,
+        737
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_09",
+      "line": "upper",
+      "side": "left",
+      "x0": 976,
+      "x1": 1040,
+      "reference_y": 712,
+      "read_box": [
+        976,
+        688,
+        1040,
+        737
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_10",
+      "line": "upper",
+      "side": "left",
+      "x0": 1040,
+      "x1": 1104,
+      "reference_y": 712,
+      "read_box": [
+        1040,
+        688,
+        1104,
+        737
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_left_11",
+      "line": "upper",
+      "side": "left",
+      "x0": 1104,
+      "x1": 1168,
+      "reference_y": 712,
+      "read_box": [
+        1104,
+        688,
+        1168,
+        737
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_00",
+      "line": "upper",
+      "side": "right",
+      "x0": 2700,
+      "x1": 2764,
+      "reference_y": 720,
+      "read_box": [
+        2700,
+        696,
+        2764,
+        745
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_01",
+      "line": "upper",
+      "side": "right",
+      "x0": 2764,
+      "x1": 2828,
+      "reference_y": 720,
+      "read_box": [
+        2764,
+        696,
+        2828,
+        745
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_02",
+      "line": "upper",
+      "side": "right",
+      "x0": 2828,
+      "x1": 2892,
+      "reference_y": 721,
+      "read_box": [
+        2828,
+        697,
+        2892,
+        746
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_03",
+      "line": "upper",
+      "side": "right",
+      "x0": 2892,
+      "x1": 2956,
+      "reference_y": 721,
+      "read_box": [
+        2892,
+        697,
+        2956,
+        746
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_04",
+      "line": "upper",
+      "side": "right",
+      "x0": 2956,
+      "x1": 3020,
+      "reference_y": 722,
+      "read_box": [
+        2956,
+        698,
+        3020,
+        747
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_05",
+      "line": "upper",
+      "side": "right",
+      "x0": 3020,
+      "x1": 3084,
+      "reference_y": 722,
+      "read_box": [
+        3020,
+        698,
+        3084,
+        747
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_06",
+      "line": "upper",
+      "side": "right",
+      "x0": 3084,
+      "x1": 3148,
+      "reference_y": 722,
+      "read_box": [
+        3084,
+        698,
+        3148,
+        747
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_07",
+      "line": "upper",
+      "side": "right",
+      "x0": 3148,
+      "x1": 3212,
+      "reference_y": 723,
+      "read_box": [
+        3148,
+        699,
+        3212,
+        748
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_08",
+      "line": "upper",
+      "side": "right",
+      "x0": 3212,
+      "x1": 3276,
+      "reference_y": 723,
+      "read_box": [
+        3212,
+        699,
+        3276,
+        748
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_09",
+      "line": "upper",
+      "side": "right",
+      "x0": 3276,
+      "x1": 3340,
+      "reference_y": 723,
+      "read_box": [
+        3276,
+        699,
+        3340,
+        748
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_10",
+      "line": "upper",
+      "side": "right",
+      "x0": 3340,
+      "x1": 3404,
+      "reference_y": 724,
+      "read_box": [
+        3340,
+        700,
+        3404,
+        749
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "upper_right_11",
+      "line": "upper",
+      "side": "right",
+      "x0": 3404,
+      "x1": 3468,
+      "reference_y": 724,
+      "read_box": [
+        3404,
+        700,
+        3468,
+        749
+      ],
+      "edge_polarity": 1
+    },
+    {
+      "id": "lower_left_00",
+      "line": "lower",
+      "side": "left",
+      "x0": 400,
+      "x1": 464,
+      "reference_y": 1785,
+      "read_box": [
+        400,
+        1761,
+        464,
+        1810
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_01",
+      "line": "lower",
+      "side": "left",
+      "x0": 464,
+      "x1": 528,
+      "reference_y": 1785,
+      "read_box": [
+        464,
+        1761,
+        528,
+        1810
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_02",
+      "line": "lower",
+      "side": "left",
+      "x0": 528,
+      "x1": 592,
+      "reference_y": 1784,
+      "read_box": [
+        528,
+        1760,
+        592,
+        1809
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_03",
+      "line": "lower",
+      "side": "left",
+      "x0": 592,
+      "x1": 656,
+      "reference_y": 1785,
+      "read_box": [
+        592,
+        1761,
+        656,
+        1810
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_04",
+      "line": "lower",
+      "side": "left",
+      "x0": 656,
+      "x1": 720,
+      "reference_y": 1783,
+      "read_box": [
+        656,
+        1759,
+        720,
+        1808
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_05",
+      "line": "lower",
+      "side": "left",
+      "x0": 720,
+      "x1": 784,
+      "reference_y": 1784,
+      "read_box": [
+        720,
+        1760,
+        784,
+        1809
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_06",
+      "line": "lower",
+      "side": "left",
+      "x0": 784,
+      "x1": 848,
+      "reference_y": 1784,
+      "read_box": [
+        784,
+        1760,
+        848,
+        1809
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_07",
+      "line": "lower",
+      "side": "left",
+      "x0": 848,
+      "x1": 912,
+      "reference_y": 1784,
+      "read_box": [
+        848,
+        1760,
+        912,
+        1809
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_08",
+      "line": "lower",
+      "side": "left",
+      "x0": 912,
+      "x1": 976,
+      "reference_y": 1784,
+      "read_box": [
+        912,
+        1760,
+        976,
+        1809
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_09",
+      "line": "lower",
+      "side": "left",
+      "x0": 976,
+      "x1": 1040,
+      "reference_y": 1784,
+      "read_box": [
+        976,
+        1760,
+        1040,
+        1809
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_10",
+      "line": "lower",
+      "side": "left",
+      "x0": 1040,
+      "x1": 1104,
+      "reference_y": 1785,
+      "read_box": [
+        1040,
+        1761,
+        1104,
+        1810
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_left_11",
+      "line": "lower",
+      "side": "left",
+      "x0": 1104,
+      "x1": 1168,
+      "reference_y": 1785,
+      "read_box": [
+        1104,
+        1761,
+        1168,
+        1810
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_00",
+      "line": "lower",
+      "side": "right",
+      "x0": 2600,
+      "x1": 2664,
+      "reference_y": 1792,
+      "read_box": [
+        2600,
+        1768,
+        2664,
+        1817
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_01",
+      "line": "lower",
+      "side": "right",
+      "x0": 2664,
+      "x1": 2728,
+      "reference_y": 1793,
+      "read_box": [
+        2664,
+        1769,
+        2728,
+        1818
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_02",
+      "line": "lower",
+      "side": "right",
+      "x0": 2728,
+      "x1": 2792,
+      "reference_y": 1792,
+      "read_box": [
+        2728,
+        1768,
+        2792,
+        1817
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_03",
+      "line": "lower",
+      "side": "right",
+      "x0": 2792,
+      "x1": 2856,
+      "reference_y": 1793,
+      "read_box": [
+        2792,
+        1769,
+        2856,
+        1818
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_04",
+      "line": "lower",
+      "side": "right",
+      "x0": 2856,
+      "x1": 2920,
+      "reference_y": 1793,
+      "read_box": [
+        2856,
+        1769,
+        2920,
+        1818
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_05",
+      "line": "lower",
+      "side": "right",
+      "x0": 2920,
+      "x1": 2984,
+      "reference_y": 1794,
+      "read_box": [
+        2920,
+        1770,
+        2984,
+        1819
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_06",
+      "line": "lower",
+      "side": "right",
+      "x0": 2984,
+      "x1": 3048,
+      "reference_y": 1794,
+      "read_box": [
+        2984,
+        1770,
+        3048,
+        1819
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_07",
+      "line": "lower",
+      "side": "right",
+      "x0": 3048,
+      "x1": 3112,
+      "reference_y": 1794,
+      "read_box": [
+        3048,
+        1770,
+        3112,
+        1819
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_08",
+      "line": "lower",
+      "side": "right",
+      "x0": 3112,
+      "x1": 3176,
+      "reference_y": 1794,
+      "read_box": [
+        3112,
+        1770,
+        3176,
+        1819
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_09",
+      "line": "lower",
+      "side": "right",
+      "x0": 3176,
+      "x1": 3240,
+      "reference_y": 1794,
+      "read_box": [
+        3176,
+        1770,
+        3240,
+        1819
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_10",
+      "line": "lower",
+      "side": "right",
+      "x0": 3240,
+      "x1": 3304,
+      "reference_y": 1796,
+      "read_box": [
+        3240,
+        1772,
+        3304,
+        1821
+      ],
+      "edge_polarity": -1
+    },
+    {
+      "id": "lower_right_11",
+      "line": "lower",
+      "side": "right",
+      "x0": 3304,
+      "x1": 3368,
+      "reference_y": 1796,
+      "read_box": [
+        3304,
+        1772,
+        3368,
+        1821
+      ],
+      "edge_polarity": -1
+    }
+  ],
+  "method": "Average64 image columns to one normal intensity profile per fixed block; sigma1 smoothing only inside49-row read box; match21-sample reference profile by continuous vertical shift and affine intensity normalization; no horizontal tracking, texture descriptor or forbidden object input.",
+  "parameters": {
+    "block_width": 64,
+    "blocks_per_segment": 12,
+    "profile_smoothing_sigma": 1.0,
+    "reference_half_width": 10,
+    "search_half_width": 12,
+    "read_half_width": 24,
+    "correlation_min": 0.9,
+    "contrast_min": 5.0,
+    "positive_gain_range": [
+      0.25,
+      4.0
+    ],
+    "max_abs_shift_for_valid": 11.5
+  },
+  "features": "24 vertical shifts per upper/lower line (left12,right12); measured coordinates and all per-block validity diagnostics retained",
+  "failure_policy": "X value is NaN for an invalid block; success_upper/lower requires all24 blocks valid. Raw measured shifts and failure reasons remain saved. No label-dependent omission or point replacement.",
+  "outside_mask_policy": "Every current image sample read by extractor is inside the union of fixed49x64 boxes. Gaussian smoothing is applied only to extracted1D profiles. No full-image blur/NCC/ECC.",
+  "prohibited_inputs": [
+    "bolts",
+    "nuts",
+    "screws",
+    "bracket",
+    "handle",
+    "general background texture",
+    "prior external5ROI measurements",
+    "current filename/date/pose label"
+  ],
+  "limits": [
+    "Long straight edges constrain displacement normal to the line; tangential/horizontal displacement has an aperture ambiguity.",
+    "Fixed-x blocks identify portions of the same geometric line, not independent persistent3D material points along it.",
+    "The measured edge includes a photometric transition on the structural ridge; lighting and shadow changes can shift its apparent position.",
+    "Search is limited to plus/minus12px and does not switch to a different edge if the selected one is lost.",
+    "All341 images remain exposed development data. No real robot-feedback sequence is being measured."
+  ]
+}

@@ -1,0 +1,11 @@
+seed 20261104
+noncenter_images 571
+source_hashes_unique true
+image_test_once true
+groups_crossing_folds 92
+random_image_split_intentionally_allows_repeated_pose_overlap true
+OOF_predictions 4568
+model_reload_parity_pass true
+scaling_train_only true
+forward_surrogate_train_only true
+real_robot_trials 0

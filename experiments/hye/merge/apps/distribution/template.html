@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Y-T 데이터 분포</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.3/plotly.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+/* apps/web/static/styles.css 의 토큰·카드·필드·세그먼트 형식을 따른다 */
+:root {
+  --ink:#0f1b33; --ink-2:#4a5568; --muted:#8a94a6; --line:#e4e8ef; --bg:#f4f6f9; --surface:#ffffff;
+  --navy:#0b2a5b; --blue:#1d4ed8; --blue-soft:#e8efff; --pass:#0f7b55; --pass-soft:#e6f4ee; --warn:#8a4b00; --warn-soft:#fff7ea;
+  --radius:14px; --font:"Pretendard","Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;
+}
+* { box-sizing:border-box; }
+html, body { margin:0; height:100%; }
+body { font-family:var(--font); color:var(--ink); background:var(--bg); font-size:14px; line-height:1.5;
+  -webkit-font-smoothing:antialiased; word-break:keep-all; font-variant-numeric:tabular-nums; }
+button, input, select { font:inherit; color:inherit; }
+.page { display:grid; grid-template-columns:340px minmax(0,1fr); gap:24px; height:100%; padding:24px 32px; }
+.col-side { display:flex; flex-direction:column; gap:20px; min-height:0; overflow:auto; padding-bottom:4px; }
+.col-main { display:flex; flex-direction:column; min-width:0; min-height:0; }
+.card { background:var(--surface); border-radius:var(--radius); padding:20px 22px; box-shadow:0 1px 2px rgba(15,27,51,.04); }
+.card-head { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:14px; }
+.card-title { margin:0; font-size:16px; font-weight:700; }
+.card-sub { margin:2px 0 0; color:var(--ink-2); font-size:13px; }
+.field { display:flex; flex-direction:column; gap:6px; margin-top:14px; font-size:12px; font-weight:700; color:var(--ink-2); }
+.card-head + .field { margin-top:0; }
+.field-note { font-weight:500; color:var(--muted); }
+.field input[type=text], .field select { font-size:13px; font-weight:500; color:var(--ink); padding:9px 12px;
+  border:1px solid var(--line); border-radius:10px; background:var(--surface); width:100%; min-width:0; }
+.field input[type=range] { width:100%; margin:2px 0 0; accent-color:var(--blue); cursor:pointer; }
+.field input:focus, .field select:focus { outline:2px solid var(--blue-soft); border-color:var(--blue); }
+.inline { display:flex; gap:8px; }
+.segmented { display:flex; background:var(--bg); border-radius:10px; padding:3px; }
+.segmented button { flex:1; border:0; background:none; padding:6px 0; border-radius:8px; font-size:13px; font-weight:600; color:var(--ink-2); cursor:pointer; white-space:nowrap; }
+.segmented button.is-on { background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(15,27,51,.12); }
+.segmented.is-off { opacity:.45; pointer-events:none; }
+.checks { display:flex; flex-direction:column; gap:6px; font-size:13px; font-weight:500; color:var(--ink); }
+.checks label { display:flex; align-items:center; gap:8px; cursor:pointer; }
+.checks input { accent-color:var(--blue); width:15px; height:15px; margin:0; }
+.btn { border:1px solid var(--line); background:var(--surface); border-radius:10px; padding:9px 14px; font-weight:700; font-size:13px; cursor:pointer; white-space:nowrap; }
+.btn:hover { background:var(--bg); }
+.btn-block { display:block; width:100%; margin-top:16px; }
+.badge { display:inline-block; font-size:11px; font-weight:700; padding:3px 8px; border-radius:6px; white-space:nowrap; }
+.badge-real { color:var(--pass); background:var(--pass-soft); }
+.badge-vis { color:var(--warn); background:var(--warn-soft); }
+.link-button { border:0; background:none; color:var(--blue); font-weight:600; font-size:13px; cursor:pointer; text-decoration:none; white-space:nowrap; }
+html.standalone .only-embedded { display:none; }
+.head-right { display:flex; align-items:center; gap:14px; flex-shrink:0; }
+.plot-card { flex:1; display:flex; flex-direction:column; min-height:0; padding-bottom:12px; }
+.plot-card .card-head { margin-bottom:8px; }
+.legend-row { display:flex; flex-wrap:wrap; align-items:center; gap:6px 18px; font-size:12px; color:var(--ink-2); margin-bottom:6px; }
+.legend-row i { display:inline-block; width:9px; height:9px; margin-right:6px; border-radius:50%; }
+.legend-row i.dia { border-radius:1px; transform:rotate(45deg); width:8px; height:8px; }
+.legend-row i.line { width:16px; height:2px; border-radius:0; vertical-align:3px; }
+.legend-row .hint { margin-left:auto; color:var(--muted); }
+.plot-area { position:relative; flex:1; min-height:360px; border-radius:10px; overflow:hidden; }
+#plot { position:absolute; inset:0; }
+/* 그래프 위에는 한 줄만 띄워 데이터를 가리지 않는다. 자세한 내용은 '선택한 라벨' 카드에 둔다 */
+#plot canvas { cursor:grab; }
+#plot.is-grabbing canvas { cursor:grabbing; }
+#selInfo { position:absolute; left:10px; top:8px; z-index:5; padding:3px 10px; border-radius:999px; font-size:12px; font-weight:600;
+  background:rgba(255,255,255,.9); box-shadow:0 1px 4px rgba(15,27,51,.12); pointer-events:none; white-space:nowrap; }
+#selInfo .muted { color:var(--muted); font-weight:500; }
+.sel-list .row { padding:6px 0; border-top:1px solid #f0f2f6; font-size:12.5px; line-height:1.5; }
+.sel-list .row:first-child { border-top:0; }
+.sel-list .row.on { font-weight:700; }
+.sel-list .muted { color:var(--muted); font-weight:500; display:block; }
+.sel-list .warn { color:#7b2ab5; }
+.table-wrap { max-height:300px; overflow:auto; margin:0 -6px; }
+.data-table { width:100%; border-collapse:collapse; font-size:12px; }
+.data-table th { position:sticky; top:0; background:var(--surface); text-align:left; font-size:11px; color:var(--muted); font-weight:700; padding:6px; border-bottom:1px solid var(--line); white-space:nowrap; }
+.data-table td { padding:6px; border-bottom:1px solid #f0f2f6; white-space:nowrap; }
+.data-table tbody tr { cursor:pointer; }
+.data-table tbody tr:hover td { background:var(--blue-soft); }
+.data-table tbody tr.is-on td { background:var(--blue-soft); font-weight:700; }
+details.notes summary { cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+details.notes summary::-webkit-details-marker { display:none; }
+details.notes summary::after { content:"펼치기"; font-size:12px; font-weight:600; color:var(--blue); }
+details.notes[open] summary::after { content:"접기"; }
+.notes h3 { font-size:13px; margin:16px 0 4px; }
+.notes ul { margin:0; padding-left:18px; }
+.notes li { margin:3px 0; font-size:12.5px; color:var(--ink-2); line-height:1.6; }
+@media (max-width: 1000px) {
+  html, body { height:auto; }
+  .page { grid-template-columns:1fr; height:auto; padding:16px; }
+  .col-side { overflow:visible; }
+  .col-main { order:-1; }
+  .plot-area { height:70vh; flex:none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <aside class="col-side">
+    <article class="card" id="selCard" hidden>
+      <header class="card-head"><div><h2 class="card-title" id="selTitle"></h2><p class="card-sub" id="selSub"></p></div><button class="link-button" id="selClear">해제</button></header>
+      <div class="sel-list" id="selList"></div>
+    </article>
+    <article class="card">
+      <header class="card-head"><div><h2 class="card-title">보기 설정</h2><p class="card-sub">끌기로 이동, 휠로 확대·축소, 우클릭 또는 Shift+끌기로 회전</p></div></header>
+      <label class="field">보기<select id="view"></select></label>
+      <div class="field">라벨 중심으로 이동
+        <div class="inline"><input type="text" id="goto" placeholder="Y, T  예: 0.05, 0.33"><button class="btn" id="gobtn">이동</button></div>
+      </div>
+      <div class="field">창 크기 <span class="field-note" id="winNote"></span>
+        <div class="segmented" id="win" data-key="win"><button data-v="1">×1</button><button data-v="2">×2</button><button data-v="4">×4</button><button data-v="8">×8</button></div>
+      </div>
+      <div class="field">봉우리 폭 배율 <span class="field-note">×1은 실제 폭, 그 외는 시각화용 확대</span>
+        <div class="segmented" id="scale" data-key="scale"><button data-v="1">×1</button><button data-v="2">×2</button><button data-v="4">×4</button><button data-v="8">×8</button><button data-v="16">×16</button></div>
+      </div>
+      <div class="field">점 크기 <span class="field-note" id="pszNote"></span>
+        <input type="range" id="psz" min="0.5" max="8" step="0.1" value="2">
+      </div>
+      <div class="field">모양 <span class="field-note">높이와 색은 같은 값이다. 평면은 색으로만 본다</span>
+        <div class="segmented" id="flat" data-key="flat"><button data-v="0">입체</button><button data-v="1">평면</button></div>
+      </div>
+      <div class="field">곡면
+        <div class="segmented" id="mode" data-key="mode"><button data-v="max">포락선 (최대)</button><button data-v="sum">합 (겹침 누적)</button></div>
+      </div>
+      <div class="field">표시
+        <div class="checks">
+          <label><input type="checkbox" id="showPts" checked>사진 예측 점</label>
+          <label><input type="checkbox" id="showLinks">모든 점의 라벨 연결선</label>
+          <label><input type="checkbox" id="showCtr">라벨 중심 표시</label>
+        </div>
+      </div>
+      <button class="btn btn-block" id="reset">시점 초기화</button>
+    </article>
+    <article class="card">
+      <header class="card-head"><div><h2 class="card-title">빨간 점 추정 방법</h2><p class="card-sub">점 하나가 사진 한 장의 예측 (Y, T)</p></div></header>
+      <div class="notes"><ul>
+        <li>라벨 주변에 뿌린 점이 아니라, 사진마다 모델이 추정한 위치다. 실제 물리 위치의 확정값은 아니다.</li>
+        <li>입력: 사진에서 잰 특징 66개. 커밋 46152fd 의 training_features.tsv 값을 그대로 쓰고 영상에서 다시 재지 않았다.</li>
+        <li>모델: 00004 Huber66 선형 모델. 학습 자료로 특징을 표준화하고, ridge(1e-7·n, 절편 제외) 최소제곱을 Huber 가중으로 6회 다시 푼다.</li>
+        <li>Huber 가중: r = max(|Y 오차|/0.045, |T 오차|/0.01), 가중 = min(1, 1/r). Y와 T가 같은 가중을 쓴다.</li>
+        <li>그룹 5-fold OOF: 사진을 그룹 단위로 5개 fold 로 나누고, 그 사진이 속한 fold 를 뺀 나머지로 학습한 모델이 그 사진을 예측한다. 자기 자신을 학습한 모델의 값이 아니다.</li>
+        <li>ID 420 라벨 정정(T 0.32)과 ID 702 제외를 반영해 다시 계산했다(apps/distribution/reoof.py).</li>
+        <li>색: 실제 Σ 마할라노비스 거리로 자기 라벨이 가장 가까우면 빨강 원, 다른 라벨이 더 가까우면 보라 마름모다.</li>
+        <li>점의 높이는 그 좌표의 곡면 높이일 뿐이고 추정값은 Y, T 두 개다.</li>
+      </ul></div>
+    </article>
+    <article class="card">
+      <header class="card-head"><div><h2 class="card-title" id="mTitle"></h2><p class="card-sub">실제 Σ 마할라노비스 거리 기준, 행을 누르면 그 라벨로 이동</p></div></header>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>ID</th><th>차수</th><th>라벨</th><th>가까운 라벨</th><th>d 자기/가까운</th></tr></thead><tbody id="mtab"></tbody></table></div>
+    </article>
+    <article class="card"><details class="notes" id="notes"></details></article>
+  </aside>
+  <section class="col-main">
+    <article class="card plot-card">
+      <header class="card-head">
+        <div><h2 class="card-title">Y-T 라벨별 OOF 예측 분포</h2><p class="card-sub" id="where"></p></div>
+        <div class="head-right"><span class="badge" id="scaleBadge"></span><a class="link-button only-embedded" href="index.html" target="_blank" rel="noopener">새 창으로 열기</a></div>
+      </header>
+      <div class="legend-row">
+        <span><i style="background:#d03b30"></i>자기 라벨이 가장 가까운 사진</span>
+        <span><i class="dia" style="background:#7b2ab5"></i>다른 라벨이 더 가까운 사진</span>
+        <span><i style="background:#e07b00;border-radius:1px"></i>원점 센터 사진 4장</span>
+        <span><b style="color:#0f1b33;margin-right:6px">×</b>1차 trial 역추정 원점 6개</span>
+        <span class="hint">봉우리나 점을 누르면 그 라벨만 남기고 나머지는 투명해집니다</span>
+      </div>
+      <div class="plot-area"><div id="plot"></div><div id="selInfo" hidden></div></div>
+    </article>
+  </section>
+</div>
+<script>
+try { if (window.self === window.top) document.documentElement.classList.add('standalone'); } catch (e) {}
+const D = /*__DATA__*/null;
+const C = D.cov;
+const sdY = Math.sqrt(C.sYY), sdT = Math.sqrt(C.sTT), rho = C.sYT / (sdY * sdT);
+const det = C.sYY * C.sTT - C.sYT * C.sYT;
+const iYY = C.sTT / det, iTT = C.sYY / det, iYT = -C.sYT / det;
+const m2 = (dy, dt) => iYY * dy * dy + 2 * iYT * dy * dt + iTT * dt * dt;   // 실제 Σ 마할라노비스²
+const key = (y, t) => y.toFixed(2) + ',' + t.toFixed(2);
+const labelSet = new Map(D.labels.map(L => [key(L.Y, L.T), L]));
+const mism = D.pts.filter(p => p.nY !== p.Y || p.nT !== p.T);
+const f3 = v => (v >= 0 ? '+' : '') + v.toFixed(3), f2 = v => (v >= 0 ? '+' : '') + v.toFixed(2);
+
+const BASE_HY = 0.15, BASE_HT = 0.035;   // 창 반폭: σY/σT ≈ 4.3 에 맞춰 봉우리가 둥글게 보이도록
+const PRESETS = [
+  { id:'full', name:'전체 좌표 (Y −2~2, T −1~1)', full:true },
+  { id:'o',   name:'원점 부근 (0.00, 0.00)', c:[0, 0] },
+  { id:'r3',  name:'T축 열과 Y=0.05 열 (0.05, 0.10)', c:[0.05, 0.10] },
+  { id:'m33', name:'이웃 라벨에 더 가까운 3차 사진 (0.05, 0.33)', c:[0.05, 0.33] },
+  { id:'yneg',name:'1차 Y축 음수 구간 (−0.65, 0.00)', c:[-0.65, 0] },
+  { id:'r4',  name:'4차 고립 라벨 (0.80, 0.48)', c:[0.80, 0.48] },
+  { id:'t2',  name:'T=+2.00 라벨, 규정 범위 밖 (0.075, 2.00)', c:[0.075, 2.00], win:2 },
+];
+function paleScale(a) {
+  return COLORSCALE.map(([v, c]) => { const n = parseInt(c.slice(1), 16), m = x => Math.round(x + (255 - x) * a);
+    return [v, `rgb(${m(n >> 16)},${m((n >> 8) & 255)},${m(n & 255)})`]; });
+}
+const COLORSCALE = [[0,'#170d72'],[0.12,'#2a3fd0'],[0.3,'#2fa6d8'],[0.45,'#47d1b8'],[0.6,'#b6e04a'],[0.75,'#f6d33a'],[0.88,'#f08a2a'],[1,'#b11e1b']];
+
+let state = { view:'full', c:[0.05,0.10], win:1, scale:1, psz:2, flat:0, mode:'max', pts:true, links:false, ctr:false, rev:0, sel:null, focus:null, cam:null };
+const scaleOf = st => st.scale;
+
+function windowOf(st) {
+  if (st.view === 'full') return { y0:-2, y1:2, t0:-1, t1:1, N:241, M:100 };
+  const hy = BASE_HY * st.win, ht = BASE_HT * st.win;
+  return { y0:st.c[0]-hy, y1:st.c[0]+hy, t0:st.c[1]-ht, t1:st.c[1]+ht, N:Math.min(281, 121 + 40 * st.win), M:Math.min(130, 30 + 30 * st.win) };
+}
+
+// 높이: 각 라벨 봉우리 = 실제 공통 Σ 를 s² 배한 이변량 정규의 상대밀도(중심 1)
+// 전체 좌표(Y 4 mm × T 2)에서는 실제 폭(σT 0.0032)이 화면에서 칼날처럼 얇아진다.
+// 그래서 전체 좌표 ×1 은 위치 표시용으로 화면에서 둥근 종 모양(σY 0.012 mm, σT 0.0095, 상관 없음)을 쓴다. 실제 폭은 지역 보기에서 본다.
+const FULL_SY = 0.012, FULL_ST = 0.0095;
+let DISP = null;
+function dispOf(st, s) {
+  if (st.view === 'full' && s === 1) {
+    return { shape:true, sy:FULL_SY, st:FULL_ST, q:(dy, dt) => (dy / FULL_SY) ** 2 + (dt / FULL_ST) ** 2 };
+  }
+  return { shape:false, sy:sdY * s, st:sdT * s, q:(dy, dt) => m2(dy, dt) / (s * s) };
+}
+function heightAt(y, t, s, mode) {
+  const ry = 5 * DISP.sy, rt = 5 * DISP.st;
+  let z = 0;
+  for (const L of D.labels) {
+    const dy = y - L.Y, dt = t - L.T;
+    if (Math.abs(dy) > ry || Math.abs(dt) > rt) continue;
+    const c = Math.exp(-0.5 * DISP.q(dy, dt));
+    z = mode === 'max' ? Math.max(z, c) : z + c;
+  }
+  return z;
+}
+
+function buildSurface(w, s, mode) {
+  const N = w.N, xs = [], ys = [];
+  for (let i = 0; i < N; i++) { xs.push(w.y0 + (w.y1 - w.y0) * i / (N - 1)); ys.push(w.t0 + (w.t1 - w.t0) * i / (N - 1)); }
+  const z = Array.from({ length:N }, () => new Float64Array(N));
+  const ry = 5 * DISP.sy, rt = 5 * DISP.st;
+  const dx = (w.y1 - w.y0) / (N - 1), dtt = (w.t1 - w.t0) / (N - 1);
+  for (const L of D.labels) {
+    if (L.Y < w.y0 - ry || L.Y > w.y1 + ry || L.T < w.t0 - rt || L.T > w.t1 + rt) continue;
+    const i0 = Math.max(0, Math.floor((L.Y - ry - w.y0) / dx)), i1 = Math.min(N - 1, Math.ceil((L.Y + ry - w.y0) / dx));
+    const j0 = Math.max(0, Math.floor((L.T - rt - w.t0) / dtt)), j1 = Math.min(N - 1, Math.ceil((L.T + rt - w.t0) / dtt));
+    for (let j = j0; j <= j1; j++) {
+      const dt = ys[j] - L.T, row = z[j];
+      for (let i = i0; i <= i1; i++) {
+        const c = Math.exp(-0.5 * DISP.q(xs[i] - L.Y, dt));
+        row[i] = mode === 'max' ? Math.max(row[i], c) : row[i] + c;
+      }
+    }
+  }
+  let zmax = 0; for (const r of z) for (const v of r) if (v > zmax) zmax = v;
+  return { xs, ys, z:z.map(r => Array.from(r)), zmax };
+}
+
+const LOCAL_ASPECT = { x:1.6, y:1.4, z:0.28 };
+const FLAT_Z = 0.001;
+const LIT = () => state.flat ? { ambient:1, diffuse:0, specular:0, roughness:1, fresnel:0 } : { ambient:0.6, diffuse:0.75, specular:0.15, roughness:0.6 };
+const defCam = st => st.flat ? { eye:{ x:0, y:-0.02, z: st.view === 'full' ? 1.9 : 1.7 }, center:{ x:0, y:0, z:0 } } : st.view === 'full' ? { eye:{ x:-0.3, y:1.55, z:1.35 }, center:{ x:0, y:0, z:-0.15 } } : { eye:{ x:-1.35, y:-1.75, z:0.9 }, center:{ x:0.03, y:0, z:-0.12 } };
+const sameLabel = (a, b) => a && b && a.Y === b.Y && a.T === b.T;
+function nearestLabel(y, t, s) {
+  let best = null, bd = Infinity;
+  for (const L of D.labels) { const d = DISP.q(y - L.Y, t - L.T); if (d < bd) { bd = d; best = L; } }
+  return bd <= 9 ? best : null;   // 표시 폭 기준 3σ 안쪽을 누른 경우만 그 봉우리로 본다
+}
+function clearFocus() { if (state.sel == null && !state.focus) return; state.sel = null; state.focus = null; render(); }
+// gl3d 의 plotly_click 이 오지 않는 환경이 있어, 마지막 hover 대상을 기억했다가 끌기가 아닌 클릭에서 처리한다
+let lastHover = null;
+function bindClick() {
+  const gd = document.getElementById('plot');
+  if (gd._selBound || !gd.on) return; gd._selBound = true;
+  gd.on('plotly_hover', ev => { lastHover = ev.points && ev.points[0] || null; });
+  gd.on('plotly_unhover', () => { lastHover = null; });
+  // plotly 자체 이동(Ctrl+끌기)으로 카메라 중심이 옮겨진 경우에도 창 중심을 따라 옮긴다
+  gd.on('plotly_relayout', ev => {
+    const cam = ev && ev['scene.camera'];
+    if (!cam || !cam.center || !cam.eye || dragging) return;
+    // Shift+끌기 회전이나 휠 확대로 바뀐 시점을 기억해 둔다. 기억하지 않으면 다음에 다시 그릴 때 예전 시점으로 돌아간다
+    const base = (state.cam || defCam(state)).center;
+    state.cam = { eye:{ ...cam.eye }, center:{ ...cam.center }, up:{ x:0, y:0, z:1 } };
+    follow(cam, base);
+  });
+}
+// 지역 보기에서 카메라 중심이 base 에서 수평으로 옮겨졌으면, 그만큼 창 중심 좌표를 옮기고 그 자리의 봉우리를 다시 그린다.
+// 장면 좌표는 aspectratio 단위라 (창 폭 / aspect) 를 곱하면 Y·T 이동량이 된다. 카메라는 옮긴 만큼 되돌려 화면이 그대로 이어지게 한다.
+let dragging = false;
+function follow(cam, base) {
+  if (state.view === 'full') return;
+  const w = windowOf(state), dx = cam.center.x - base.x, dy = cam.center.y - base.y;
+  if (Math.hypot(dx, dy) < 1e-4) return;
+  const cl = (v, a, b) => Math.min(b, Math.max(a, v));
+  state.c = [cl(state.c[0] + dx * (w.y1 - w.y0) / LOCAL_ASPECT.x, -2.2, 2.2), cl(state.c[1] + dy * (w.t1 - w.t0) / LOCAL_ASPECT.y, -1.1, 2.1)];
+  state.cam = { eye:{ x:cam.eye.x - dx, y:cam.eye.y - dy, z:cam.eye.z }, center:{ x:base.x, y:base.y, z:cam.center.z }, up:{ x:0, y:0, z:1 } };
+  state.view = 'custom'; document.getElementById('view').value = 'custom';
+  render();
+}
+function handlePick(pt) {
+  if (!pt) { clearFocus(); return; }
+  if (pt.data.name === 'peaks' || pt.data.name === 'floor') {
+    // 점이 작아 직접 집기 어려우므로, 누른 곡면 위치 가까이(표시 폭 기준 0.45σ 안)에 사진 점이 있으면 그 사진을 고른다
+    const sc = scaleOf(state);
+    let near = null, nd = 0.2;
+    if (state.pts) for (const q of D.pts) { const d = DISP.q(q.pY - pt.x, q.pT - pt.y); if (d < nd) { nd = d; near = q; } }
+    if (near) pt = { data:{ meta:'pts' }, customdata:[near.id] };
+    else {
+    const L = nearestLabel(pt.x, pt.y, sc);
+    if (!L || sameLabel(L, state.focus)) { state.focus = null; state.sel = null; }
+    else { state.focus = { Y:L.Y, T:L.T }; state.sel = null; }
+    render(); return;
+    }
+  }
+  const id = pt.customdata && pt.data.meta === 'pts' ? pt.customdata[0] : null;
+  if (typeof id !== 'number') { clearFocus(); return; }
+  const p = D.pts.find(q => q.id === id);
+  if (state.sel === id) { state.sel = null; state.focus = null; }
+  else { state.sel = id; state.focus = { Y:p.Y, T:p.T }; }
+  render();
+}
+
+function peakMesh(w, s, st) {
+  const n = 21, ry = 3.2 * DISP.sy, rt = 3.2 * DISP.st;
+  const X = [], Y = [], Z = [], I = [], J = [], K = [];
+  for (const L of D.labels) {
+    if (L.Y < w.y0 - ry || L.Y > w.y1 + ry || L.T < w.t0 - rt || L.T > w.t1 + rt) continue;
+    const b = X.length;
+    for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+      const y = L.Y - ry + 2 * ry * i / (n - 1), t = L.T - rt + 2 * rt * j / (n - 1);
+      X.push(y); Y.push(t); Z.push(Math.exp(-0.5 * DISP.q(y - L.Y, t - L.T)) + 0.002);
+    }
+    for (let j = 0; j < n - 1; j++) for (let i = 0; i < n - 1; i++) {
+      const a = b + j * n + i;
+      I.push(a, a); J.push(a + 1, a + n + 1); K.push(a + n + 1, a + n);   // 사각형 하나에 삼각형 2개
+    }
+  }
+  // 아무것도 누르지 않았으면 원래 색 그대로, 한 라벨을 누르면 나머지는 거의 투명하게 해서 가리지 않게 한다
+  const fo = !!st.focus, cs = fo ? paleScale(0.55) : COLORSCALE, floorC = cs[0][1];
+  return [
+    // 바닥은 봉우리 mesh 와 같은 조명으로 칠해 봉우리 둘레에 네모 경계가 보이지 않게 하고, 봉우리는 바닥보다 살짝 위에 둔다
+    { type:'surface', name:'peaks', x:[w.y0, w.y1], y:[w.t0, w.t1], z:[[0, 0], [0, 0]], showscale:false,
+      colorscale:[[0, floorC], [1, floorC]], cmin:0, cmax:1,
+      lighting:LIT(), lightposition:{ x:-10000, y:-6000, z:12000 },
+      hovertemplate:'Y %{x:.3f} mm, T %{y:.3f}<extra></extra>' },
+    { type:'mesh3d', name:'peaks', x:X, y:Y, z:Z, i:I, j:J, k:K, intensity:Z, colorscale:cs, cmin:0, cmax:1, showscale:false, opacity: fo ? 0.18 : 1,
+      flatshading:false, lighting:LIT(), lightposition:{ x:-10000, y:-6000, z:12000 },
+      hovertemplate:'Y %{x:.3f} mm, T %{y:.3f}<extra></extra>' }
+  ];
+}
+
+function inWin(w, y, t) { return y >= w.y0 && y <= w.y1 && t >= w.t0 && t <= w.t1; }
+
+function render() {
+  const st = state, w = windowOf(st), s = scaleOf(st);
+  DISP = dispOf(st, s);
+  const gy = (w.y1 - w.y0) / (w.N - 1), gt = (w.t1 - w.t0) / (w.N - 1);
+  const useMesh = st.mode === 'max' && (DISP.sy < 3 * gy || DISP.st < 3 * gt);
+  const S = useMesh ? { zmax:1 } : buildSurface(w, s, st.mode);
+  const zTop = st.mode === 'max' ? 1 : Math.max(1, S.zmax);
+  const eps = 0.03 * zTop;
+  // 반투명 곡면은 클릭을 받지 못하므로, 누른 상태에서는 바로 아래 불투명 바닥이 클릭을 받는다
+  const fo = !!st.focus;
+  const traces = useMesh ? peakMesh(w, s, st) : [{
+    type:'surface', name:'floor', x:[w.y0, w.y1], y:[w.t0, w.t1], z:[[-0.002 * zTop, -0.002 * zTop], [-0.002 * zTop, -0.002 * zTop]], showscale:false,
+    colorscale:[[0, paleScale(0.55)[0][1]], [1, paleScale(0.55)[0][1]]], cmin:0, cmax:1, lighting:{ ambient:1, diffuse:0 }, visible: fo,
+    hovertemplate:'Y %{x:.3f} mm, T %{y:.3f}<extra></extra>' }, {
+    type:'surface', x:S.xs, y:S.ys, z:S.z, name:'peaks', showscale:false, showlegend:false, opacity: fo ? 0.12 : 1,
+    colorscale: fo ? paleScale(0.55) : COLORSCALE, cmin:0, cmax:zTop,
+    lighting:LIT(),
+    lightposition:{ x:-10000, y:-6000, z:12000 },
+    contours:{
+      x:{ show:true, start:w.y0, end:w.y1, size:(w.y1 - w.y0) / w.M, color:'rgba(25,32,40,0.35)', width:1, highlight:false },
+      y:{ show:true, start:w.t0, end:w.t1, size:(w.t1 - w.t0) / w.M, color:'rgba(25,32,40,0.35)', width:1, highlight:false },
+      z:{ highlight:false }
+    },
+    // gl3d 는 말풍선이 있는 대상만 클릭 이벤트를 낸다. 짧은 좌표 말풍선을 두고 클릭으로 가장 가까운 봉우리를 고른다
+    hovertemplate:'Y %{x:.3f} mm, T %{y:.3f}<extra></extra>'
+  }];
+
+  // 색 막대는 진한 원래 색으로 따로 그린다 (곡면은 흐린 색일 수 있음)
+  traces.push({ type:'scatter3d', mode:'markers', x:[null], y:[null], z:[null], hoverinfo:'skip',
+    marker:{ color:[0], colorscale:COLORSCALE, cmin:0, cmax:zTop, showscale:true, size:0.1, colorbar:{ title:{ text: st.mode === 'max' ? '상대 밀도' : '상대 밀도 합', side:'top', font:{ size:12, color:'#4a5568' } }, len:0.6, thickness:12, x:0.99, y:0.5, outlinewidth:0, tickfont:{ size:11, color:'#4a5568' } } } });
+  // Y·T 원점 축선: 바닥(z≈0)의 진한 선 — 봉우리에 가려지는 부분은 MATLAB 처럼 뒤에 숨는다
+  const axLine = (fixed, along) => {
+    const X = [], Y = [], Z = [], n = 400;
+    for (let i = 0; i <= n; i++) {
+      const a = along === 'T' ? w.t0 + (w.t1 - w.t0) * i / n : w.y0 + (w.y1 - w.y0) * i / n;
+      const y = along === 'T' ? 0 : a, t = along === 'T' ? a : 0;
+      X.push(y); Y.push(t); Z.push(0.004 * zTop);
+    }
+    return { type:'scatter3d', mode:'lines', x:X, y:Y, z:Z, line:{ color:'#111', width:6 }, hoverinfo:'skip', showlegend:false };
+  };
+  if (w.y0 <= 0 && w.y1 >= 0) traces.push(Object.assign(axLine(0, 'T'), { name:'Y=0' }));
+  if (w.t0 <= 0 && w.t1 >= 0) traces.push(Object.assign(axLine(0, 'Y'), { name:'T=0' }));
+
+  const vis = D.pts.filter(p => inWin(w, p.pY, p.pT) || inWin(w, p.Y, p.T));
+  if (st.ctr) {
+    const Ls = D.labels.filter(L => inWin(w, L.Y, L.T));
+    traces.push({ type:'scatter3d', mode:'markers', name:'라벨 중심', x:Ls.map(L => L.Y), y:Ls.map(L => L.T),
+      z:Ls.map(L => heightAt(L.Y, L.T, s, st.mode) + eps), marker:{ symbol:'cross', size:4, color:'#1b1b1b' },
+      customdata:Ls.map(L => [L.n]),
+      hovertemplate:'라벨 (%{x:.2f}, %{y:.2f})<br>사진 %{customdata[0]}장<extra></extra>' });
+  }
+  // 기본은 곡면과 점을 모두 흐리게. 봉우리나 점을 누르면 그 라벨의 봉우리와 사진만 진하게 보인다
+  const sel = st.sel != null ? D.pts.find(p => p.id === st.sel) : null;
+  const F = st.focus ? D.labels.find(L => sameLabel(L, st.focus)) : null;
+  const zp = p => heightAt(p.pY, p.pT, s, st.mode) + eps;
+  const zl = (y, t) => heightAt(y, t, s, st.mode) + eps;
+  const isOk = p => p.nY === p.Y && p.nT === p.T;
+  const full = st.view === 'full';
+  const inFocus = p => F && p.Y === F.Y && p.T === F.T;
+  if (F) {
+    // 포커스 라벨 자기 봉우리만 불투명하게 다시 그린다 (자기 상대 밀도, 0.02 미만은 비움)
+    const ry = 3.2 * DISP.sy, rt = 3.2 * DISP.st, n = 61, xs = [], ys = [];
+    for (let i = 0; i < n; i++) { xs.push(F.Y - ry + 2 * ry * i / (n - 1)); ys.push(F.T - rt + 2 * rt * i / (n - 1)); }
+    const z = ys.map(t => xs.map(y => { const c = Math.exp(-0.5 * DISP.q(y - F.Y, t - F.T)); return c < 0.02 || !inWin(w, y, t) ? null : c + 0.004 * zTop; }));
+    traces.push({ type:'surface', name:'focus', x:xs, y:ys, z, showscale:false, colorscale:COLORSCALE, cmin:0, cmax:zTop,
+      lighting:LIT(), lightposition:{ x:-10000, y:-6000, z:12000 },
+      contours:{ x:{ show:true, start:xs[0], end:xs[n - 1], size:(xs[n - 1] - xs[0]) / 24, color:'rgba(20,26,34,0.6)', width:1, highlight:false },
+                 y:{ show:true, start:ys[0], end:ys[n - 1], size:(ys[n - 1] - ys[0]) / 24, color:'rgba(20,26,34,0.6)', width:1, highlight:false }, z:{ highlight:false } },
+      hoverinfo:'skip' });
+  }
+  if (st.pts) {
+    const X = [], Y = [], Z = [];
+    for (const p of vis) {
+      if (!inWin(w, p.pY, p.pT) || !inWin(w, p.Y, p.T) || inFocus(p)) continue;
+      if (!st.links && isOk(p)) continue;
+      X.push(p.pY, p.Y, null); Y.push(p.pT, p.T, null); Z.push(zp(p), zl(p.Y, p.T), null);
+    }
+    traces.push({ type:'scatter3d', mode:'lines', name:'links', x:X, y:Y, z:Z, line:{ color: F ? 'rgb(214,208,224)' : 'rgb(110,70,150)', width:1.5 }, hoverinfo:'skip' });
+    const mk = (arr, marker) => ({
+      type:'scatter3d', mode:'markers', meta:'pts', x:arr.map(p => p.pY), y:arr.map(p => p.pT), z:arr.map(zp), marker,
+      customdata:arr.map(p => [p.id, p.r, p.f, f2(p.Y), f2(p.T), f3(p.pY), p.pT.toFixed(4), p.dOwn.toFixed(2), f2(p.nY), f2(p.nT), p.dNear.toFixed(2)]),
+      hovertemplate:'<b>ID %{customdata[0]}</b>, %{customdata[1]}차<br>%{customdata[2]}' +
+        '<br>라벨 Y %{customdata[3]}, T %{customdata[4]}' +
+        '<br>OOF 예측 Y %{customdata[5]}, T %{customdata[6]}' +
+        '<br>자기 라벨까지 d %{customdata[7]}' +
+        '<br>가장 가까운 라벨 Y %{customdata[8]}, T %{customdata[9]} (d %{customdata[10]})<extra></extra>'
+    });
+    const inP = vis.filter(p => inWin(w, p.pY, p.pT));
+    let rest = inP.filter(p => !inFocus(p));
+    const base = (full ? 1.2 : 1.8) * st.psz;
+    const ctrP = rest.filter(p => p.center);
+    rest.splice(0, rest.length, ...rest.filter(p => !p.center));
+    traces.push(mk(ctrP, F ? { size:base + 0.6, symbol:'square', color:'#f1d2b0', line:{ width:0 } } : { size:base + 1, symbol:'square', color:'#e07b00', line:{ color:'#ffffff', width:0.5 } }));
+    traces.push(mk(rest.filter(isOk), F ? { size:base, color:'#ecd2cf', line:{ width:0 } } : { size:base, color:'#d03b30', line:{ color:'#ffffff', width:0.5 } }));
+    traces.push(mk(rest.filter(p => !isOk(p)), F ? { size:base + 0.6, symbol:'diamond', color:'#ddd0e8', line:{ width:0 } } : { size:base + 0.6, symbol:'diamond', color:'#7b2ab5', line:{ color:'#ffffff', width:0.5 } }));
+    if (F) {
+      const fp = D.pts.filter(inFocus);
+      const LX = [], LY = [], LZ = [];
+      for (const p of fp) {
+        LX.push(p.pY, F.Y, null); LY.push(p.pT, F.T, null); LZ.push(zp(p), zl(F.Y, F.T), null);
+        if (!isOk(p)) { LX.push(p.pY, p.nY, null); LY.push(p.pT, p.nT, null); LZ.push(zp(p), zl(p.nY, p.nT), null); }
+      }
+      traces.push({ type:'scatter3d', mode:'lines', name:'focus-links', x:LX, y:LY, z:LZ, line:{ color:'#1f2a44', width:3 }, hoverinfo:'skip' });
+      const near = fp.filter(p => !isOk(p)).map(p => D.labels.find(L => L.Y === p.nY && L.T === p.nT));
+      const marks = [F, ...near.filter((L, i) => L && near.indexOf(L) === i)];
+      traces.push({ type:'scatter3d', mode:'markers+text', name:'focus-centers', x:marks.map(L => L.Y), y:marks.map(L => L.T), z:marks.map(L => zl(L.Y, L.T) + eps),
+        text:marks.map((L, i) => `${i ? '더 가까운 라벨' : '라벨'} Y ${f2(L.Y)}, T ${f2(L.T)}`), textposition:'top center',
+        textfont:{ size:12, color:'#0f1b33' }, marker:{ symbol:'cross', size:3, color:'#0f1b33' }, hoverinfo:'skip' });
+      traces.push(mk(fp.filter(p => p.id !== st.sel), { size:base + 1.6, symbol: fp[0] && fp[0].center ? 'square' : 'circle', color: fp[0] && fp[0].center ? '#e07b00' : '#d03b30', line:{ color:'#ffffff', width:1 } }));
+      if (sel) traces.push(mk([sel], { size:base + 3, symbol: isOk(sel) ? 'circle' : 'diamond', color: isOk(sel) ? '#d03b30' : '#7b2ab5', line:{ color:'#0f1b33', width:2 } }));
+    }
+  }
+  // 1차 trial 6개의 역추정 원점 (계산값, 사진 아님)
+  const og = (D.origins || []).filter(o => inWin(w, o.pY, o.pT));
+  if (og.length) traces.push({ type:'scatter3d', mode:'markers', name:'trial 원점', x:og.map(o => o.pY), y:og.map(o => o.pT),
+    z:og.map(o => heightAt(o.pY, o.pT, s, st.mode) + eps), marker:{ symbol:'x', size: full ? 3 : 5, color:'#0f1b33' },
+    customdata:og.map(o => [o.name, o.n, f3(o.pY), o.pT.toFixed(4)]),
+    hovertemplate:'1차 %{customdata[0]} 역추정 원점 (사진 %{customdata[1]}장 직선 외삽)<br>Y %{customdata[2]}, T %{customdata[3]}<extra></extra>' });
+  const info = document.getElementById('selInfo'), card = document.getElementById('selCard');
+  if (F) {
+    const fp = D.pts.filter(inFocus);
+    const name = `${F.est ? '원점' : '라벨'} Y ${f2(F.Y)}, T ${f2(F.T)}`;
+    info.hidden = false;
+    info.innerHTML = `${name} <span class="muted">사진 ${fp.length}장</span>`;
+    card.hidden = false;
+    document.getElementById('selTitle').textContent = name;
+    document.getElementById('selSub').textContent = `사진 ${fp.length}장` + (F.est ? ', 공통 공분산을 적용한 추정 봉우리' : '') + ', 빈 곳을 누르거나 Esc로 해제';
+    document.getElementById('selList').innerHTML = fp.map(p => `<div class="row${p.id === st.sel ? ' on' : ''}">${p.r}차 ${p.f.split('/').pop()}` +
+      `<span class="muted">예측 Y ${f3(p.pY)}, T ${p.pT.toFixed(4)}, 자기 라벨 d ${p.dOwn.toFixed(2)}</span>` +
+      (isOk(p) ? '' : `<span class="muted warn">더 가까운 라벨 Y ${f2(p.nY)}, T ${f2(p.nT)} (d ${p.dNear.toFixed(2)})</span>`) + '</div>').join('') +
+      (F.est && D.origins ? '<div class="row"><b>1차 trial 역추정 원점 6개</b> (사진이 아니라 trial 마다 명령 0으로 직선 외삽한 예측)' +
+        D.origins.map(o => `<span class="muted">${o.name}: Y ${f3(o.pY)}, T ${o.pT.toFixed(4)}</span>`).join('') + '</div>' : '');
+  } else { info.hidden = true; card.hidden = true; }
+  document.querySelectorAll('#mtab tr').forEach(tr => tr.classList.toggle('is-on', sel != null && +tr.dataset.id === sel.id));
+
+  const ax = (title, r, dtick) => ({
+    title:{ text:title, font:{ size:13, color:'#4a5568' } }, range:r, dtick, showbackground:true, backgroundcolor:'#ececec',
+    gridcolor:'#c3c7cc', gridwidth:1, zeroline:true, zerolinecolor:'#222', zerolinewidth:5,
+    linecolor:'#8a9099', showline:true, tickfont:{ size:11, color:'#4a5568' }, showspikes:false, ticks:'outside', ticklen:3
+  });
+  const span = w.y1 - w.y0;
+  const yTick = st.view === 'full' ? 0.5 : (span <= 0.31 ? 0.05 : span <= 0.61 ? 0.1 : 0.2);
+  const tTick = st.view === 'full' ? 0.25 : (span <= 0.31 ? 0.01 : span <= 0.61 ? 0.02 : 0.05);
+  const layout = {
+    paper_bgcolor:'#ffffff', margin:{ l:0, r:0, t:0, b:0 }, uirevision: st.view + '|' + st.c + '|' + st.win + '|' + st.rev + '|' + st.flat,
+    showlegend:false, font:{ family:'Pretendard, Malgun Gothic, sans-serif', color:'#0f1b33' },
+    hoverlabel:{ bgcolor:'#ffffff', bordercolor:'#e4e8ef', font:{ size:12, color:'#0f1b33', family:'Pretendard, Malgun Gothic, sans-serif' } },
+    scene:{
+      bgcolor:'#ffffff',
+      xaxis:ax('Y (mm)', [w.y0, w.y1], yTick),
+      yaxis:ax('T (명령 단위)', [w.t0, w.t1], tTick),
+      zaxis:Object.assign(ax(st.mode === 'max' ? '상대 밀도' : '상대 밀도 합', [0, zTop * 1.06], null), { zeroline:false, visible: !st.flat }),
+      aspectmode:'manual', aspectratio: st.view === 'full' ? { x:1.9, y:1.2, z: st.flat ? FLAT_Z : 0.022 } : (st.flat ? { x:LOCAL_ASPECT.x, y:LOCAL_ASPECT.y, z:FLAT_Z } : LOCAL_ASPECT),
+      camera: st.cam || defCam(st),
+      dragmode:'pan'
+    }
+  };
+  Plotly.react('plot', traces, layout, { responsive:true, displaylogo:false, scrollZoom:true,
+    modeBarButtonsToRemove:['toImage'], toImageButtonOptions:{ filename:'yt_peaks' } });
+  bindClick();
+
+  const where = st.view === 'full' ? '전체 좌표, Y −2~2 mm, T −1~1' : `중심 Y ${f2(st.c[0])}, T ${f2(st.c[1])}`;
+  document.getElementById('where').textContent = `${where}, 범위 안 사진 ${vis.length}장`;
+  const bd = document.getElementById('scaleBadge');
+  if (DISP.shape) { bd.className = 'badge badge-vis'; bd.textContent = '전체 좌표는 위치 표시용 모양, 실제 폭은 지역 보기에서'; }
+  else if (s === 1) { bd.className = 'badge badge-real'; bd.textContent = '봉우리 폭 ×1, 실제 공분산'; }
+  else { bd.className = 'badge badge-vis'; bd.textContent = `봉우리 폭 ×${s}, 시각화용 확대`; }
+  syncControls();
+}
+
+function syncControls() {
+  const on = (id, v) => document.querySelectorAll(`#${id} button`).forEach(x => x.classList.toggle('is-on', x.dataset.v === String(v)));
+  on('win', state.win); on('scale', state.scale); on('flat', state.flat); on('mode', state.mode);
+  document.getElementById('pszNote').textContent = '×' + state.psz.toFixed(1);
+  document.getElementById('win').classList.toggle('is-off', state.view === 'full');
+  document.getElementById('winNote').textContent = state.view === 'full' ? '전체 좌표에서는 쓰지 않음'
+    : `Y±${(BASE_HY * state.win).toFixed(2)}, T±${(BASE_HT * state.win).toFixed(3)}`;
+}
+
+function setView(id, center, win) {
+  state.cam = null;
+  const P = PRESETS.find(p => p.id === id);
+  state.view = id === 'full' ? 'full' : id;
+  if (P && P.c) state.c = P.c.slice();
+  if (center) state.c = center;
+  state.win = win || (P && P.win) || (id === 'full' ? state.win : 1);
+  document.getElementById('view').value = PRESETS.some(p => p.id === id) ? id : 'custom';
+  render();
+}
+
+function notes() {
+  const R = D.rounds;
+  document.getElementById('mTitle').textContent = `다른 라벨에 더 가까운 사진 ${mism.length}장`  + (mism.some(p => p.center) ? ` (센터 ${mism.filter(p => p.center).length}장 포함)` : '');
+  document.getElementById('mtab').innerHTML = mism.map(p => `<tr data-id="${p.id}" data-y="${(p.Y + p.nY) / 2}" data-t="${(p.T + p.nT) / 2}"><td>${p.center ? '센터' : p.id}</td><td>${p.r}차</td>` +
+    `<td>(${f2(p.Y)}, ${f2(p.T)})</td><td>(${f2(p.nY)}, ${f2(p.nT)})</td><td>${p.dOwn.toFixed(2)} / ${p.dNear.toFixed(2)}</td></tr>`).join('');
+  const nOut = D.labels.filter(L => Math.abs(L.T) > 1.0001).length, iOut = D.pts.filter(p => Math.abs(p.T) > 1.0001).length;
+  document.getElementById('notes').innerHTML = `
+  <summary><h2 class="card-title">가정과 정의</h2></summary>
+  <h3>무엇을 그렸나</h3>
+  <ul>
+    <li>봉우리: 데이터에 있는 라벨 (Y,T) ${D.labels.length}개마다 하나. 같은 라벨의 사진은 한 봉우리에 묶었다.</li>
+    <li>점: 사진 ${C.nAll}장의 그룹 5-fold OOF 예측(Huber66, 라벨 정정, 아웃라이어 제외, 범위 밖 ${iOut}장 학습 제외 후 재계산). 그 사진을 학습에 쓰지 않은 fold 모델의 추정값이며, 라벨 주변에 생성한 점이 아니다.</li>
+    <li>예측값은 이미지 특징으로 추정한 위치이며 실제 물리 위치의 확정값이 아니다.</li>
+  </ul>
+  <h3>봉우리 폭의 출처</h3>
+  <ul>
+    <li>라벨 대부분이 1~4장이라 라벨별 분산은 추정하지 않았다. 범위 안(|T| ≤ 1) OOF 오차(예측−라벨) ${C.n}개의 표본 공분산을 모든 라벨에 공통으로 적용했다.</li>
+    <li>σY ${sdY.toFixed(4)} mm, σT ${sdT.toFixed(4)}, 상관 ρ ${rho.toFixed(2)}. Y와 T를 독립으로 두지 않아 봉우리가 기울어진 타원이다.</li>
+    <li>평균 오차 (${C.mY.toExponential(1)}, ${C.mT.toExponential(1)})는 무시하고 라벨에 중심을 두었다.</li>
+    <li>한계: 95% 타원 안 비율 ${(C.cover95 * 100).toFixed(1)}%로 정규분포(95%)보다 꼬리가 두껍다. 차수별 폭도 다르다: ${[1,2,3,4].map(k => `${k}차 σY ${R[k].sdY.toFixed(4)}`).join(', ')}.</li>
+  </ul>
+  <h3>높이와 배율</h3>
+  <ul>
+    <li>각 봉우리는 중심에서 1인 상대 밀도 exp(−d²/2) (d: 마할라노비스 거리).</li>
+    <li>포락선: 위치마다 라벨별 상대 밀도의 최댓값. 봉우리 사이 골의 높이가 겹침 정도다. 합: 라벨별 상대 밀도의 합이며 1을 넘으면 겹침이 누적된 곳이다.</li>
+    <li>점의 높이는 화면 곡면(같은 배율, 같은 합성 방식)에서 그 예측 좌표의 높이다. 누른 라벨의 진한 봉우리는 그 라벨 자기 상대 밀도만 그린다.</li>
+    <li>폭 배율 s: 기본 ×1(실제 폭). 다른 배율은 표시용 공분산을 s²Σ로 바꿔 모양은 유지하고 폭만 넓힌다. 점 좌표와 가까운 라벨 판정은 배율과 무관하게 실제 Σ를 쓴다.</li>
+    <li>넓은 창에서는 라벨마다 봉우리를 따로 조밀하게 그린다. 겹친 곳은 높은 쪽이 보여 포락선과 같은 모습이다.</li>
+    <li>전체 좌표 ×1은 위치 파악용이다. 실제 폭(σT 0.0032)은 T 2 범위에서 칼날처럼 보이므로, 화면에서 둥글게 보이는 표시용 모양(σY 0.012 mm, σT 0.0095, 상관 없음)으로 그린다. 봉우리 위치는 라벨 좌표 그대로라 간격 자체는 바꿀 수 없다. T축 라벨은 0.01 간격이고 실제 σT도 0.0032라 실제 폭에서도 이웃과 겹친다. 실제 공분산 모양은 지역 보기에서 본다.</li>
+  </ul>
+  <h3>데이터</h3>
+  <ul>
+    <li>커밋 ${D.commit}의 experiments/hye/00004_final_Y_T/evidence/training_features.tsv (1~4차 715장의 66개 특징, 그룹 fold).</li>
+    <li>아웃라이어: ID ${D.excluded.join(', ')} (4차 Y-0.8 T-0.96.bmp, 라벨 T −0.96인데 예측 T +0.72)는 학습과 평가에서 모두 뺐다.</li>
+    <li>라벨 정정: ID 420 (3차 Y+0.05 T+0.33 (3).bmp)은 원본 T+0.32 폴더에 있고 동봉 TXT·촬영 시각도 T+0.32 묶음과 맞아 라벨을 T 0.32로 고쳤다. 원본 파일은 고치지 않았다.</li>
+    <li>위 정정과 아래 T=+2.00 학습 제외를 반영해 00004 학습식(그룹 5-fold)으로 OOF를 다시 계산했다(apps/distribution/reoof.py, 원래 결과 재현 최대 차 1.4e-10).</li>
+    <li>3차 T+0.57 묶음은 동봉 TXT가 T+0.56과 같은 값이지만, 사진과 예측(T 0.569~0.571)은 T+0.57이 맞아 라벨을 그대로 두었다.</li>
+    <li>원점 (0, 0): 715장 목록에는 원점 라벨이 없다. 센터 사진 4장(1차 center.bmp, 2차 center1~3)의 예측값을 원점 라벨의 점으로 넣었다. 값은 다른 작업 세션이 00004 배포 모델로 추정해 보고한 것이고 이 페이지가 다시 계산하지 않았다. 학습에 쓰지 않은 사진이다.</li>
+    <li>원점 봉우리는 반복 촬영 분산이 없어 공통 공분산을 적용한 추정 봉우리다. 1차 trial 6개(이름에 명령 구간과 실제 이동 방향을 적었다. − 방향으로 움직이며 찍은 것은 S2와 S4뿐이다)는 지금 모델의 OOF 예측을 trial 마다 명령에 직선으로 맞춰 명령 0에서의 값을 ×로 표시했다. 예전 630점 방식 값은 Y와 T가 거의 구분되지 않아(cos 0.99999) 쓰지 않았다.</li>
+    <li>T=+2.00 라벨 ${nOut}개(${iOut}장, 2차)는 규정 범위(T ±1) 밖이라 학습에서 뺐다. 섞은 평가는 그대로인데 새 세션에서 영점 어긋남을 키웠기 때문이다(experiments/hye/20261112_1504_QR요약54개_536점대조 결과 3). 이 사진들의 점은 이 12장 없이 학습한 모델의 범위 밖 예측이고, 공분산과 차수별 폭 계산에 넣지 않았다. 전체 좌표에 보이지 않으며 보기 목록에서 따로 연다.</li>
+  </ul>`;
+  document.getElementById('mtab').addEventListener('click', e => {
+    const tr = e.target.closest('tr'); if (!tr) return;
+    const p = D.pts.find(q => q.id === +tr.dataset.id);
+    state.sel = p.id; state.focus = { Y:p.Y, T:p.T };
+    setView('custom', [+tr.dataset.y, +tr.dataset.t], 1);
+  });
+}
+
+function init() {
+  const sel = document.getElementById('view');
+  sel.innerHTML = PRESETS.map(p => `<option value="${p.id}">${p.name}</option>`).join('') + '<option value="custom">사용자 지정 중심</option>';
+  sel.onchange = () => { if (sel.value !== 'custom') setView(sel.value); };
+  document.querySelectorAll('.segmented[data-key]').forEach(g => g.addEventListener('click', e => {
+    const bt = e.target.closest('button'); if (!bt) return;
+    const k = g.dataset.key, v = bt.dataset.v; state[k] = k === 'mode' ? v : +v;
+    if (k === 'flat') state.cam = null;
+    render();
+  }));
+  // 막대를 미는 동안에는 숫자만 바꾸고, 멈추면 다시 그린다
+  let pszTimer = 0;
+  document.getElementById('psz').oninput = e => {
+    state.psz = +e.target.value; document.getElementById('pszNote').textContent = '×' + state.psz.toFixed(1);
+    clearTimeout(pszTimer); pszTimer = setTimeout(render, 120);
+  };
+  document.getElementById('showPts').onchange = e => { state.pts = e.target.checked; render(); };
+  document.getElementById('showLinks').onchange = e => { state.links = e.target.checked; render(); };
+  document.getElementById('showCtr').onchange = e => { state.ctr = e.target.checked; render(); };
+  document.getElementById('reset').onclick = () => { state.cam = null; state.rev++; render(); };
+  const go = () => {
+    const m = document.getElementById('goto').value.split(/[ ,]+/).filter(Boolean).map(Number);
+    if (m.length === 2 && m.every(Number.isFinite)) setView('custom', m, state.view === 'full' ? 1 : state.win);
+  };
+  document.getElementById('gobtn').onclick = go;
+  document.getElementById('goto').onkeydown = e => { if (e.key === 'Enter') go(); };
+  new ResizeObserver(() => { if (document.getElementById('plot').data) Plotly.Plots.resize('plot'); }).observe(document.querySelector('.plot-area'));
+  notes();
+  const gd = document.getElementById('plot');
+  // 끌기가 아닌 클릭: 마지막 hover 대상(봉우리 또는 점)을 고르고, 빈 곳이면 해제
+  let down = null;
+  // plotly 3D 가 이벤트 전파를 막으므로 capture 단계에서 받는다
+  gd.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; }, true);
+  gd.addEventListener('pointerup', e => {
+    if (e.button !== 0 || !down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 4) return;
+    if (e.target.closest('.modebar')) return;
+    handlePick(lastHover);
+  }, true);
+  // 끌기: 왼쪽 단추는 바닥(Y-T 평면)을 잡고 옮기고, 오른쪽 단추나 Shift+왼쪽 단추는 회전한다. plotly 의 기본 끌기는 capture 단계에서 막는다.
+  // 왼쪽 끌기는 카메라를 수평으로만 옮긴다. 놓으면 follow() 가 그만큼 창 중심 좌표를 옮겨 그 자리를 다시 그린다.
+  let drag = null, raf = 0;
+  const applyDrag = () => {
+    raf = 0; if (!drag) return;
+    const { eye, center } = drag.cam, H = gd.clientHeight || 1;
+    const dx = drag.cx - drag.x, dy = drag.cy - drag.y;
+    const v = [center.x - eye.x, center.y - eye.y, center.z - eye.z], dist = Math.hypot(...v), h = Math.hypot(v[0], v[1]) || 1e-9;
+    let cam;
+    if (drag.rot) {
+      const az = Math.atan2(-v[1], -v[0]) - dx * Math.PI / H, el = Math.min(1.5, Math.max(0.03, Math.asin(-v[2] / dist) + dy * Math.PI / H));
+      cam = { eye:{ x:center.x + dist * Math.cos(el) * Math.cos(az), y:center.y + dist * Math.cos(el) * Math.sin(az), z:center.z + dist * Math.sin(el) }, center:{ ...center } };
+    } else {
+      const s = dist / H, fwd = dy * s / Math.max(0.25, Math.abs(v[2]) / dist);
+      const mx = -(v[1] / h) * dx * s + (v[0] / h) * fwd, my = (v[0] / h) * dx * s + (v[1] / h) * fwd;
+      cam = { eye:{ x:eye.x + mx, y:eye.y + my, z:eye.z }, center:{ x:center.x + mx, y:center.y + my, z:center.z } };
+    }
+    cam.up = { x:0, y:0, z:1 }; drag.now = cam;
+    Plotly.relayout(gd, { 'scene.camera':cam });
+  };
+  gd.addEventListener('mousedown', e => {
+    const sc = gd._fullLayout && gd._fullLayout.scene;
+    if (!sc || e.target.tagName !== 'CANVAS' || (e.button !== 0 && e.button !== 2) || e.ctrlKey || e.altKey) return;
+    const c = sc._scene && sc._scene.getCamera ? sc._scene.getCamera() : sc.camera;   // 화면에 보이는 실제 시점
+    drag = { x:e.clientX, y:e.clientY, cx:e.clientX, cy:e.clientY, rot:e.button === 2 || e.shiftKey, now:null, cam:{ eye:{ ...c.eye }, center:{ ...c.center } } };
+    dragging = true; e.stopPropagation(); e.preventDefault();
+  }, true);
+  window.addEventListener('mousemove', e => {
+    if (!drag) return;
+    e.stopPropagation(); drag.cx = e.clientX; drag.cy = e.clientY;
+    if (Math.hypot(drag.cx - drag.x, drag.cy - drag.y) > 4) { gd.classList.add('is-grabbing'); if (!raf) raf = requestAnimationFrame(applyDrag); }
+  }, true);
+  const endDrag = () => {
+    if (!drag) return;
+    if (raf) { cancelAnimationFrame(raf); applyDrag(); }
+    const d = drag; drag = null; dragging = false; gd.classList.remove('is-grabbing');
+    if (!d.now) return;
+    state.cam = d.now;
+    if (!d.rot) follow(d.now, d.cam.center);
+  };
+  window.addEventListener('mouseup', endDrag, true);
+  window.addEventListener('blur', endDrag);
+  gd.addEventListener('contextmenu', e => e.preventDefault());
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') clearFocus(); });
+  document.getElementById('selClear').onclick = () => clearFocus();
+  setView('full');
+}
+init();
+</script>
+</body>
+</html>

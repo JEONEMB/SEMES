@@ -1,0 +1,1 @@
+Triplets 91; aggregation ms/image median 0.000722; p95 0.00295833

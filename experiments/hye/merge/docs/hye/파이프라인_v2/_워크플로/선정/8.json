@@ -1,0 +1,128 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/8_이동/논문/01_Vocetka2020_ApplSci_접근방향_반복정밀도",
+   "title": "Influence of the Approach Direction on the Repeatability of an Industrial Robot",
+   "citation": "Vocetka M., Huňady R., Hagara M., Bobovský Z., Kot T., Krys V. (2020). Applied Sciences 10(23):8714. doi:10.3390/app10238714",
+   "url": "https://doi.org/10.3390/app10238714",
+   "pdf_url": "https://www.mdpi.com/2076-3417/10/23/8714/pdf?version=1607146393",
+   "questions": [
+    2,
+    3,
+    7
+   ],
+   "why": "ABB IRB1200에서 실험해, 접근 방향이 목표점 반복정밀도를 바꾼다는 것을 보였다. 관절 리졸버 값과 고속 DIC 카메라 측정을 함께 비교한다. 카메라로 방향별 반복정밀도를 재는 B2 측정과 가장 가깝다. CC BY 4.0이다(초록 확인)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/8_이동/논문/02_Budimir2023_MSR_ISO230-2_이동방식_위치정확도",
+   "title": "The Influence of the Movement Method on the Results of Machine Tool Positioning Accuracy Analysis",
+   "citation": "Budimir A., Tabaković S., Zeljković M. (2023). Measurement Science Review 23(3):136-145. doi:10.2478/msr-2023-0018",
+   "url": "https://doi.org/10.2478/msr-2023-0018",
+   "pdf_url": null,
+   "questions": [
+    1,
+    4
+   ],
+   "why": "표준 위치 정확도 시험에서 이동 방식과 시험 변수를 어떻게 고르느냐에 따라 결과가 얼마나 바뀌는지 다룬다. 정방향, 역방향 측정 횟수, 목표점 수, 이동 방식을 정하는 근거다. ISO 230-2를 쓰는지는 본문에서 확인해야 한다(폴더 이름은 잠정). CC BY-NC-ND 오픈액세스다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/8_이동/논문/03_Ibaraki2022_PrecEng_SCARA회전축_양방향각도편차",
+   "title": "A novel error mapping of bi-directional angular positioning deviation of rotary axes in a SCARA-type robot by \"open-loop\" tracking interferometer measurement",
+   "citation": "Ibaraki S., Usui R. (2022). Precision Engineering 74:60-68. doi:10.1016/j.precisioneng.2021.11.002",
+   "url": "https://doi.org/10.1016/j.precisioneng.2021.11.002",
+   "pdf_url": null,
+   "questions": [
+    2,
+    5
+   ],
+   "why": "SCARA 회전 축의 양방향 각도 위치 편차를 지도로 만든다. 회전 명령인 T에서 방향별 각도 편차를 나눠 재는 직접 사례다. 서지만 확인했다. 원문은 유료이므로 받을 목록에 올린다. 못 받으면 Chen 2019 Appl Sci(doi:10.3390/app9163417)로 대신한다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/8_이동/논문/04_Li2020_MeasControl_반전충격_백래시온라인측정",
+   "title": "On-line measurement method of transmission backlash based on angular velocity and double-end angular position information",
+   "citation": "Li M., Liang R., Zhang Y., Peng C., Mu D., Wan Z. (2020). Measurement and Control 54(1-2):65-72. doi:10.1177/0020294020973252",
+   "url": "https://doi.org/10.1177/0020294020973252",
+   "pdf_url": null,
+   "questions": [
+    2,
+    6
+   ],
+   "why": "기어가 반전할 때 부하 쪽 각속도가 갑자기 변하는 순간(이탈과 재접촉)을 잡아, 운전 중에 백래시 틈을 잰다. 반전 순간의 관측으로 백래시를 갱신하는 생각을 반전 전후 사진 차이로 옮길 수 있는지 본다. CC BY 4.0이다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/8_이동/논문/05_Wu2016_AIPAdv_마이크로비전_스테이지변위측정",
+   "title": "Displacement measurement of the compliant positioning stage based on a computer micro-vision method",
+   "citation": "Wu H., Zhang X., Wang R., He Z. (2016). AIP Advances 6:025009. doi:10.1063/1.4941935",
+   "url": "https://doi.org/10.1063/1.4941935",
+   "pdf_url": "https://pubs.aip.org/aip/adv/article-pdf/doi/10.1063/1.4941935/12918955/025009_1_online.pdf",
+   "questions": [
+    7
+   ],
+   "why": "템플릿 정합(정수 탐색 다음 부화소 탐색)으로 스테이지 변위를 재고 레이저 간섭계와 비교했다. 잡음이 낮으면 정합 정밀도가 0.01 px라고 한다(초록 기준). 카메라를 이동 측정 기준기로 쓸 수 있는지, 우리 점 잡음 0.009~0.015 px와 비교하는 근거다. 오픈액세스다."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/8_이동/특허/01_US5102280A_ADE_로봇프리얼라이너_확인필요",
+   "title": "Robot prealigner",
+   "citation": "US5102280A, ADE Corporation (발명자 Poduje N. S., Mallory R. S.), 출원 1989-03-07, 등록 1992-04-07. 패밀리 US5332352A",
+   "url": "https://www.lens.org/lens/patent/146-496-068-009-180",
+   "pdf_url": null,
+   "questions": [
+    3,
+    5
+   ],
+   "why": "Lens.org 검색(backlash AND \"same direction\" AND wafer AND robot AND position, 223건)의 첫 결과다. 서지만 확인했다. 웨이퍼 회전 정렬에서 같은 방향 접근이나 백래시 처리를 청구하는지는 공보로 확인해야 한다. 관련이 없으면 빼고 기록한다."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/02_US10403539_Kawasaki_로스트모션_편차진단/요약.md",
+   "why": "질문 2, 6. 웨이퍼 로봇 관절을 직전과 반대 방향으로 지령만큼 돌린다. 외부 측정 이동과 지령의 차로 로스트 모션을 구한다. B2 측정의 직접 모형이다."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/06_US10020216_Kawasaki_라인센서_로스트모션/요약.md",
+   "why": "질문 2, 6. 같은 로스트 모션 진단을 라인 센서로 한다. 외부 측정기를 카메라로 바꿔도 같은 절차가 된다."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/04_US12211719_TEL_열변위_백래시방향_목표위치보정/요약.md",
+   "why": "질문 2, 3. 가감속 방향에 따라 백래시 오차 방향이 바뀌고, 이를 목표 위치 보정에 넣는다."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/06_Kuric2018_MATEC_ISO9283_반복정밀도측정/요약.md",
+   "why": "질문 3, 4, 7. ISO 9283 RP 절차를 정방향 30회, 역방향 30회로 적용한다. 측정기는 한 자릿수 더 정밀해야 한다. B2 설계 근거다."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/09_Yao2025_IEEEAccess_기어백래시_식별보상/요약.md",
+   "why": "질문 2, 3, 6. 백래시는 양방향 반복정밀도를 떨어뜨린다. 보상 방향은 목표 도착 직전의 관절 속도 방향으로 정한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/03_LeReun2022_Robotica_열드리프트_백래시_위치성능/요약.md",
+   "why": "질문 1, 2, 3. 레이저 트래커로 단방향과 양방향을 나눠 잰다. 백래시 보상으로 양방향 정확도를 1.53 mm에서 0.07 mm로 줄였다(초록 기준)."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/원인분석/논문/14_Nordin2002_Automatica_백래시제어_조사/요약.md",
+   "why": "질문 2, 3, 8. 백래시 모형(데드밴드)과 대응 방법(단방향 접근, 역모형 보상, 적응 추정)을 분류한다. 작은 이동에서 출력이 멈추는 구간을 설명한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/10_vanHulst2026_arXiv_히스테리시스보상_ILC_비전측정/요약.md",
+   "why": "질문 2, 6, 7. 히스테리시스를 보상한 뒤, 영상 측정을 기준으로 반복 오차를 학습한다(ILC)."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/15_NIST_eHandbook_GaugeRR_측정시스템/요약.md",
+   "why": "질문 4, 7. 반복성, 재현성, 안정성을 중첩 설계로 나누고 히스테리시스 편향을 다룬다. 카메라 측정계를 먼저 검증하는 틀이다."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/17_Liang2012_ICMA_XYθ정렬스테이지_정확도분석/요약.md",
+   "why": "질문 1, 5. XY-θ 스테이지에서 입력 오차가 위치 오차와 방향 오차로 전달되는 것을 분석한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/12_Lee2013_MPE_XXY스테이지_비전서보_오차분석/요약.md",
+   "why": "질문 1, 7. 비전 서보 정렬의 반복정밀도 참고값을 준다(직선 1 µm, 각도 5 arcsec)."
+  }
+ ]
+}

@@ -1,0 +1,906 @@
+                                                                        USOO963.5266B2
+
+(12) United States Patent                                             (10) Patent No.: US 9,635,266 B2
+
+   Noguchi                                                            (45) Date of Patent: Apr. 25, 2017
+
+(54) IMAGE STABILIZATION APPARATUS AND                            (56)                 References Cited
+
+      CONTROL METHOD THEREOF, AND                                       U.S. PATENT DOCUMENTS
+
+       STORAGE MEDUM
+
+(71) Applicant: CANON KABUSHIKI KAISHA,                           2011/0115929 A1* 5/2011 Noguchi .................. GO3B 5.00
+                Tokyo (JP)
+                                                                                                                                348,208.4
+
+(72) Inventor: Masaaki Noguchi, Tokyo (JP)                              FOREIGN PATENT DOCUMENTS
+(73) Assignee: CANON KABUSHIK KAISHA,
+                                                                  JP    2007-057981 A   3, 2007
+                Tokyo (JP)
+                                                                  * cited by examiner
+
+(*) Notice:    Subject to any disclaimer, the term of this        Primary Examiner -- Stephen Coleman
+               patent is extended or adjusted under 35            (74) Attorney, Agent, or Firm -- Cowan, Liebowitz &
+               U.S.C. 154(b) by 34 days.
+                                                                  Latman, P.C.
+
+(21) Appl. No.: 14/690,082
+
+(22) Filed: Apr. 17, 2015                                         (57)                 ABSTRACT
+
+(65)              Prior Publication Data                          An image stabilization apparatus comprises an image stabi
+
+      US 2015/O3O4564 A1 Oct. 22, 2015                            lization unit configured to move a correction member based
+                                                                  on a shake detected by a shake detection unit and stabilize
+(30)           Foreign Application Priority Data                  an image blur based on the shake of the apparatus; a Zoom
+                                                                  unit configured to change a focal length of the imaging
+Apr. 21, 2014 (JP) ................................. 2014-087589  optical system; a calculation unit configured to calculate a
+
+(51) Int. Cl.                                                     movement amount of the correction member to reduce at
+
+      H4N 5/262             (2006.01)                             least one of a variation in a light amount and a variation in
+                                                                  a resolution; and a control unit configured to control, when
+      H04N 5/232            (2006.01)                             changing the focal length, an actual movement amount to
+                                                                  follow a target value of a movement position of the correc
+(52) U.S. C.                                                      tion member by setting a limitation of a variation amount of
+                                                                  the movement position per unit time on the movement
+      CPC ..... H04N 5/23287 (2013.01); H04N 5/23258              amount calculated by the calculation unit.
+
+                  (2013.01); H04N 5/23296 (2013.01)
+
+(58) Field of Classification Search
+
+      None
+
+      See application file for complete search history.                 9 Claims, 8 Drawing Sheets
+
+                                           1.     CENERPOSITON                  117
+                     WDEC SIGNAL                  CACULATION UN                     CAMERASYSTEM CONTROLUNT
+                   PROCESSING IN
+                                                                        SHFENS CENTERPOSTION
+                                          101                                 DESIGNATION UN
+                       ZOOM UN                                               BYZOOMPOSTON
+
+                                            115  ANGULARWEOCY                    204
+                    OPERATION UNIT                    DETECTION
+            104                                                           CANCEAMOUNT
+                                                   AD CONVERTER          CACULATON UN
+              MAGE STABLIZATION
+             DRWING NT                                   208            SHIFTENSPCSTON
+                                                                           CONTROL UN
+                  ANGUARVELOCITY                 SHF ENS POSTON
+                     EECON UNIT                    AD CONVERTER
+
+                  SHIFTENSORWING
+                      DRIVER UN
+
+                 SHTENS POSION
+                    DETECON UNT
+U.S. Patent  US 9,635,266 B2
+U.S. Patent Apr. 25, 2017 Sheet 3 of 8  US 9,635,266 B2
+U.S. Patent Apr. 25, 2017 Sheet 4 of 8  US 9,635,266 B2
+
+           F. G. 4A
+
+                  MAXIMUM
+                  CORRECTIONAMOUNT
+
+RESOLUTION
+CORRECTION
+
+  AMOUNT
+
+   WIDE-     MIDDLE                     TELEPHOTO
+ANGLE END  ZOOMPOINT                    ANGLE END
+
+                  MAXIMUM
+                  CORRECTIONAMOUNT
+
+RESOLUTION CORRECTION
+
+CORRECTION | TARGE WALUE
+
+  AMOUNT
+
+           ZOOMDRIVING TIME
+U.S. Patent Apr. 25, 2017 Sheet S of 8  US 9,635,266 B2
+
+            F. G. 4B
+
+                  MAXIMUM
+                   CORRECTIONAMOUNT
+
+RESOLUTION
+CORRECTION
+
+  AMOUNT
+
+   WIDE-      MIDDLE                    TELEPHOTO
+ANGLE END   ZOOMPOINT                   ANGLE END
+
+            MAXIMUM
+            CORRECTIONAMOUNT
+
+RESOLUTION   CORRECTION
+CORRECTION  TARGET VALUE
+
+  AMOUNT
+
+            ZOOMDRIVING TIME
+U.S. Patent Apr. 25, 2017 Sheet 6 of 8  US 9,635,266 B2
+
+            F. G. 4C
+
+            MAXIMUM
+            CORRECTION
+            AMOUNT
+
+RESOLUTION
+CORRECTION
+
+  AMOUNT
+
+   WIDE-                  MIDDLE        TELEPHOTO
+ANGLE END               ZOOMPOINT       ANGLE END
+
+            MAXIMUM     CORRECTION
+            CORRECTION  TARGET VALUE
+
+            AMOUNT         WHENZOOM OPERATION
+
+RESOLUTION                IS PERFORMED
+
+CORRECTION                FROM Wide TO Tele
+  AMOUNT
+
+            ZOOMDRIVING TIME
+U.S. Patent Apr. 25, 2017 Sheet 7 of 8    US 9,635,266 B2
+
+    START ZOOMDRIVING                     F G. 5
+
+    CORRECTION STARTED? o
+
+           YES
+
+    Te UPDATE PERIOD? s
+
+    YES         S103
+
+          CORRECTION
+    VARATION AMOUNTAShift <
+
+      THRESHOLD AShiftmax?
+
+                           a CORRECTION VARATIONAMOUNT = AShiftmax
+                           o CORRECTION REMAINING AMOUNT
+
+                            = CORRECTION REMAINING AMOUNT+(Ashift-Ashiftmax)
+
+         CORRECTION
+    REMAINING AMOUNT > 0?
+
+                           CORRECTION VARATIONAMOUNT = AShift
+
+o CORRECTION VARATIONAMOUNT
+ = AShift + CORRECTION REMAINING AMOUNTA
+a CORRECTION REMAINING AMOUNT
+ = CORRECTION REMAINING AMOUNT
+ - CORRECTION REMAINING AMOUNTA
+
+    PERFORM CORRECTION
+
+                S107
+
+NO  CORRECTION
+
+    REMAINING AMOUNT = O2
+
+                        S110
+    END OF CORRECTION?
+U.S. Patent Apr. 25, 2017 Sheet 8 of 8  US 9,635,266 B2
+
+        F. G. 6A
+
+RESOLUTION
+
+                  WIDE ANGLESIDE
+                  MIDDLE
+
+0.5               TELEPHOTO-SIDE
+
+                  DISTANCE FROMCENTER
+
+        F. G. 6B
+
+RESOLUTION
+
+                                      WIDE ANGLESIDE
+                                       MIDDLE
+ 0.5
+                                      TELEPHOTO-SIDE
+
+                                         DISTANCE FROMCENTER
+                                                   US 9,635,266 B2
+
+                        1.                                          2
+
+IMAGE STABILIZATION APPARATUS AND                                   shift lens is used as an image stabilization member in the
+
+CONTROL METHOD THEREOF, AND                                         image stabilization mechanism will be described here.
+
+                    STORAGE MEDUM                                   It is possible to keep a decrease in a light amount (or a
+
+BACKGROUND OF THE INVENTION                                           resolution) at four corners within a predetermined level in
+                                                                    5 the entire Zoom range by adjusting the center position of a
+
+Field of the Invention                                              shift lens at a focal length where the decrease in the light
+                                                                    amount (or the resolution) is the largest (Japanese Patent
+The present invention relates to a technique of correcting Laid-Open No. 2007-57981). Such adjustment of the center
+degradation in image quality in the peripheral region of a position of the shift lens will be referred to as "shading
+screen using a stabilization mechanism which stabilizes an 10 correction' (or "resolution correction') hereinafter. The cen
+image blur.                                                         ter position adjusted by this shading correction (or this
+
+Description of the Related Art                                      resolution correction) may differ from the center of a mov
+
+There has conventionally been known an image capturing able range where the shift lens can be moved mechanically.
+apparatus having an image stabilization function of detect With the conventional technique disclosed in Japanese
+ing the shake of the image capturing apparatus and then 15 Patent Laid-OpenNo. 2007-57981, however, when perform
+driving an image stabilization lens to stabilize an image blur ing shading correction or resolution correction using the
+caused by this shake. An angular velocity sensor is generally shift lens, a variation in the angle of view is noticeable at the
+used to detect the shake of an image stabilization apparatus. time of a Zoom operation if a correction amount varies
+The angular velocity sensor vibrates a vibration material greatly between Zoom operations.
+Such as a piezoelectric element at a predetermined frequency 20
+
+and outputs a Voltage corresponding to the Coriolis force           SUMMARY OF THE INVENTION
+
+generated by a rotational movement component as angular
+
+Velocity information. The image stabilization apparatus The present invention has been made in consideration of
+
+obtains the amount and the direction of the shake by the above-described problems and makes a variation in the
+integrating the acquired angular velocity information and 25 angle of view less noticeable when using an image stabili
+outputs a stabilization position control signal which drives Zation mechanism for shading correction or resolution cor
+
+the stabilization lens to cancel the image blur. When driving rection at the time of a Zoom operation.
+the stabilization lens, feedback control is performed in According to the first aspect of the present invention,
+which the current position of the stabilization lens is fed there is provided an image stabilization apparatus compris
+back to the image stabilization apparatus as the position 30 ing: an image stabilization unit configured to move a cor
+
+signal of the stabilization lens and the image stabilization rection member which is movable in a direction different
+apparatus outputs a stabilization position control signal from an optical axis of an imaging optical system based on
+
+corresponding to the position signal of the stabilization lens. a shake detected by a shake detection unit and stabilize an
+  In general, image data obtained by the image capturing image blur based on the shake of the apparatus; a Zoom unit
+
+apparatus tends to become darker and have a lower resolu- 35 configured to change a focal length of the imaging optical
+tion in the periphery including four corners than in the system; a calculation unit configured to calculate a move
+center. In particular, a phenomenon in which the light ment amount of the correction member corresponding to the
+
+amount becomes Smaller in the periphery than in the center focal length to reduce at least one of a variation in a light
+is referred to as shading and a phenomenon in which the amount and a variation in a resolution in an imaging screen
+
+resolution becomes lower on one side than in the center is 40 which varies in accordance with the focal length and is based
+referred to as an one-sided blur, respectively. As the rate of on a characteristic of the imaging optical system; and a
+decrease in the light amount, a variation in luminance, or a control unit configured to control, when changing the focal
+
+decrease in the resolution at the four corners is larger in the length by the Zoom unit, an actual movement amount to
+peripheral region than in the center, the quality of the image follow a target value of a movement position of the correc
+
+data deteriorates.                                                  45 tion member by setting a limitation of a variation amount of
+
+The degree of decrease in the light amount or the reso the movement position per unit time on the movement
+
+lution is a characteristic that the lens originally has. There amount calculated by the calculation unit.
+fore, it can be said that the variation in luminance or the According to the second aspect of the present invention,
+
+resolution at the four corners is caused by that characteristic. there is provided a control method of an image stabilization
+The degree of decrease in this light amount or resolution also 50 apparatus including an image stabilization unit configured to
+
+varies in accordance with a focal length, that is, a Zoom ratio. move a correction member which is movable in a direction
+An example of the decrease in the resolution will be different from an optical axis of an imaging optical system
+
+described below.                                                    based on a shake detected by a shake detection unit and
+
+Each of FIGS. 6A and 6B is a graph of showing, as an stabilize an image blur based on the shake of the apparatus,
+
+example, a resolution with the abscissa plotting a distance 55 and a Zoom unit configured to change a focal length of the
+from an optical center and the ordinate plotting the rate of imaging optical system, the method comprising: a calcula
+
+the resolution (the resolution in the optical center is set to 1).  tion step ofcalculating a movement amount ofthe correction
+As shown in FIG. 6A, the resolution on one side in the              member corresponding to the focal length to reduce at least
+periphery of a lens decreases the most on the telephoto-side
+                                                                    one of a variation in a light amount and a variation in a
+
+and hardly decreases on the wide angle side. Furthermore, as 60 resolution in an imaging screen which varies in accordance
+
+shown in FIG. 6B, when the resolution in the periphery              with the focal length and is based on a characteristic of the
+                                                                    imaging optical system; and a control step of controlling,
+decreases significantly, a variation in the resolution is           when changing the focal length by the Zoom unit, an actual
+increased by, for example, the mechanical error or play of a
+
+lens barrel which bundles respective lens groups.                   movement amount to follow a target value of a movement
+
+A method of reducing a decrease in a light amount or the 65 position of the correction member by setting a limitation of
+decrease in the resolution by using the arrangement of the a variation amount of the movement position per unit time
+
+image stabilization function is available. A case in which a on the movement amount calculated in the calculation step.
+                                   US 9,635,266 B2
+
+                           3                                4
+
+  Further features of the present invention will become     111, as needed. A power supply unit 113 supplies power to
+apparent from the following description of exemplary        the entire image capturing apparatus 100 in accordance with
+embodiments with reference to the attached drawings.        an application purpose. An external input/output terminal
+
+       BRIEF DESCRIPTION OF THE DRAWINGS                    unit 114 inputs/outputs communication signals and video
+                                                            signals from/to an external apparatus. An operation unit 115
+
+                                                       includes buttons and switches used by the user to input
+FIG. 1 is a block diagram showing an image capturing instructions to the image capturing apparatus 100. A storage
+
+apparatus according to an embodiment of the present inven unit 116 stores various data such as video information. The
+                                                            camera system control unit 117 includes, for example, a
+tion;
+FIG. 2 is a block diagram showing the detailed arrange 10 CPU, a ROM, and a RAM. The camera system control unit
+ments of a camera system control unit and an image stabi 117 controls the respective units of the image capturing
+                                                            apparatus by expanding, in the RAM, a control program
+lization control unit;
+FIGS. 3A and 3B are explanatory views of shading stored in the ROM and executing it by the CPU, thereby
+correction or resolution correction according to an embodi implementing operations of the image capturing apparatus
+                                                            15 100 including various operations to be described below.
+ment,
+FIGS. 4A to 4C are graphs showing a focal length and a The operation unit 115 includes a release button config
+resolution correction amount according to an embodiment; ured to sequentially turn on a first switch (SW1) and a
+FIG. 5 is a flowchart showing correction processing second switch (SW2) in accordance with press amounts. The
+                                                            release switch SW1 is turned on when the release button is
+according to an embodiment; and
+FIGS. 6A and 6B are graphs showing an example of a pressed about halfway, and the release switch SW2 is turned
+decrease in a peripheral resolution in accordance with the on when it is pressed fully. When the release switch SW1 is
+focal length.                                               turned on, the camera system control unit 117 performs, for
+                                                            example, auto focus adjustment by controlling the focus
+
+       DESCRIPTION OF THE EMBODIMENTS                          driving unit 108 based on an AF evaluation value based on
+                                                            25 a display video signal output from the video signal process
+
+  An embodiment of the present invention will be described  ing unit 111 to the display unit 112. Furthermore, the camera
+below in detail with reference the accompanying drawings.   system control unit 117 performs AE processing to decide an
+                                                            f-number and shutter speed for obtaining an appropriate
+  FIG. 1 is a block diagram showing the arrangement of an
+
+image capturing apparatus according to an embodiment of exposure amount based on luminance information of the
+the present invention. In this embodiment, an image captur 30 Video signal and, for example, a predetermined program
+
+ing apparatus 100 is a digital still camera, which may have chart. When the release switch SW2 is turned on, the camera
+a moving image shooting function.
+                                                            system control unit 117 controls the respective units to
+
+  A Zoom unit 101 is part of a photographing lens which perform shooting at the determined f-number and shutter
+forms an imaging optical system. The Zoom unit 101 speed and store image data obtained by the image capturing
+
+includes a Zoom lens for changing the lens magnification. A 35 unit 109 in the storage unit 116. Furthermore, when display
+
+Zoom driving unit 102 controls driving of the Zoom unit 101 ing a live view image in a state in which the release Switches
+
+under the control of a camera system control unit 117. An are not pressed, the camera system control unit 117 includes
+image stabilization lens (to be also referred to as a shift lens the f-number and the shutter speed in still image shooting
+hereinafter) 103 serving as an image stabilization member is exposure at a predetermined interval based on the luminance
+movable in a direction perpendicular to the optical axis of 40 information of the video signal and the program chart
+the photographing lens. An image stabilization driving unit described above, and makes a preliminary determination.
+                                                            The operation unit 115 includes a image stabilization
+104 controls driving of the image stabilization lens 103.
+
+A stop/shutter unit 105 is a mechanical shutter having the Switch capable of selecting an image stabilization mode.
+
+stop function. A stop/shutter driving unit 106 drives the When the user selects the image stabilization mode with the
+stop/shutter unit 105 under the control of the camera system 45 image stabilization Switch, the camera system control unit
+
+control unit 117. A focus lens 107 is part of the photograph 117 instructs the image stabilization driving unit 104 to
+ing lens, and can change its position along the optical axis perform an image stabilization operation. Upon receiving
+
+of the photographing lens. A focus driving unit 108 drives the instruction, the image stabilization driving unit 104
+
+the focus lens 107 under the control of the camera system executes the image stabilization operation until it is
+
+control unit 117.                                           50 instructed to turn off image stabilization. The operation unit
+
+An image capturing unit 109 converts an optical image 115 also includes a shooting mode selection switch capable
+formed via the photographing lens into an electrical signal of of selecting either a still image shooting mode or a moving
+each pixel using an image sensor Such as a CCD image image shooting mode. In each shooting mode, the operation
+
+sensor or a CMOS image sensor. An image capturing signal condition of the image stabilization driving unit 104 can be
+processing unit 110 performs A/D conversion, correlated 55 changed.
+
+double sampling, gamma correction, white balance correc The operation unit 115 also includes a playback mode
+
+tion, color interpolation processing, and the like for the selection Switch for selecting the playback mode. In the
+electrical signal output from the image capturing unit 109, playback mode, the image Stabilization operation is stopped.
+
+and converts the electrical signal into a video signal. A video Further, the operation unit 115 includes a Zoom switch used
+signal processing unit 111 processes the video signal output 60 to input a Zooming instruction. When the Zooming instruc
+from the image capturing signal processing unit 110 in tion is input from the Zoom Switch, the Zoom driving unit
+accordance with an application purpose. More specifically, 102 receives the instruction via the camera system control
+the video signal processing unit 111 generates a display unit 117, and drives the Zoom unit 101 to move the Zoom
+Video, and performs encoding processing and data file unit 101 to the instructed Zoom position.
+processing for recording.
+                                                            65 FIG. 2 is a block diagram for explaining in more detail the
+A display unit 112 displays an image based on the display relationship between the image stabilization driving unit 104
+
+Video signal output from the video signal processing unit and the camera system control unit 117. They have the same
+                                       US 9,635,266 B2
+
+5                                                                              6
+
+arrangement in both the pitch and yaw directions, so an          (3a-3) and the image stabilization lens 103 is moved based
+arrangement for only one axis will be explained.                 on the obtained control value (3a-4). These processes of
+                                                                 (3a-1) to (3a-4) are repeated until the variation in the
+  An angular velocity detection unit (gyro) 202 detects an       peripheral resolutions falls within a predetermined range.
+angular Velocity and outputs the detected velocity as a
+voltage. An angular velocity detection A/D converter 203         The center position of the image stabilization lens 103
+converts a voltage signal output by the angular Velocity
+detection unit 202 into digital angular velocity data. A cancel  obtained as a result of these processes will be referred to as
+
+                                                                 a "center of resolution correction' hereinafter.
+
+amount calculation unit (driving amount calculation unit) A method of acquiring a mechanical center will now be
+204 integrates the angular Velocity data to generate angular described with reference to FIG. 3B. First, the image stabi
+data, sets data in the opposite direction of this angular data 10 lization lens 103 is driven to the limits in the horizontal and
+
+to data which cancels an image blur, and changes a charac        vertical directions on a mechanical driving range surface
+teristic in accordance with the driving range of the image       (3.b-1). The center point of respective limit points in the
+stabilization lens 103, thereby calculating a blur cancel
+amount (driving amount). A shift lens position control unit      driving range at this time is defined as the mechanical center
+                                                                 (3b-2). The center position of the image stabilization lens
+
+205 is notified of the blur cancel amount (driving amount) 15 103 obtained as a result of these processes will be referred
+calculated by the cancel amount calculation unit 204. A shift to as a "mechanical center hereinafter.
+lens center position designation unit 201 notifies the shift The shift lens center position designation unit 201 notifies
+
+lens position control unit 205 of a change in the center         the shift lens position control unit 205 of the center position
+position according to the focal length.
+                                                                 shift amount of the image stabilization lens 103 under
+  A shift lens position detection unit 207 detects the posi      driving control ofthe Zoom lens based on the centerposition
+tion of the image stabilization lens 103 and outputs the         obtained by the center position calculation unit 200. Note
+detected position as a Voltage. A shift lens position A/D
+converter 208 converts data output by the shift lens position    that the center position calculation unit 200 and the shift lens
+                                                                 center position designation unit 201 form a shift position
+
+detection unit 207 into digital data.                            calculation unit. A way in which the center position is shifted
+The shift lens position control unit 205 obtains the dif 25 by the shift lens center position designation unit 201 in
+
+ference between position data detected by the shift lens accordance with the focal length will be described.
+
+position A/D converter 208 and the blur cancel amount, and A case in which the decrease in the resolution is larger at
+performs feedback control so that the deviation thereof the telephoto-angle end than at the wide-angle end will be
+
+approaches 0. Finally, a shift lens drive driver unit 206 is described as an example. In this case, the center position of
+
+notified ofa driving signal (shift amount) which has an offset 30 the image stabilization lens 103 is the center of resolution
+corresponding to the center position of the image stabiliza correction at the telephoto-angle end and the mechanical
+
+tion lens 103 changed in accordance with the focal length center at the wide-angle end. At the middle point between
+notified from the shift lens center position designation unit the telephoto-angle end and the wide-angle end, the center
+
+201 and drives the image stabilization lens 103. Upon position of the image stabilization lens 103 is a position
+notified of the driving signal, the shift lens drive driver unit 35 obtained by linear interpolation, focal length interpolation,
+
+206 drives the image stabilization lens 103 by an amount         or the combination of linear interpolation and focal length
+corresponding to that driving signal.                            interpolation of the center position between the two points of
+                                                                 the telephoto-angle end and the wide-angle end.
+  A center position calculation unit 200 calculates a move
+
+ment destination position of the center (to be referred to as On the contrary, if the decrease in the resolution is larger
+a "center position hereinafter) of the image stabilization 40 at the wide-angle end than at the telephoto-angle end, the
+
+lens 103 with respect to the image capturing unit 109. A center position of the image stabilization lens 103 is the
+predetermined position may be determined in advance as mechanical center at the telephoto-angle end and the center
+
+this center position, a center position to fall within a prede of resolution correction at the wide-angle end. At the middle
+termined range in which a peripheral resolution in an point between the telephoto-angle end and the wide-angle
+imaging screen varies may be calculated, or a center position 45 end, interpolation Such as linear interpolation, focal length
+
+may be obtained by equally dividing the movable range of interpolation, or the like of the center position between the
+the image stabilization lens 103 within a predetermined error two points of the telephoto-angle end and the wide-angle
+
+range. Note that either the center position to fall within the end is performed. This makes it possible to smooth the
+predetermined range in which the peripheral resolution appearance of a live image while minimizing a shift in the
+
+varies or the center position obtained by equally dividing the 50 angle of view caused by a Zoom lens position.
+predetermined error range is used in the description below. The variation amount of resolution correction and an
+
+Furthermore, each of these values is obtained in correspon influence on an appearance condition by resolution correc
+
+dence with a Zoom ratio determined in advance at the time tion at the time of Zoom driving will now be described. Each
+of factory delivery, stored in, for example, a memory (not of FIGS. 4A and 4C shows a Zoom point (focal length) and
+
+shown) in the center position calculation unit 200, and read 55 a Zoom driving time, and a variation in a resolution correc
+out when activating the image capturing apparatus.
+                                                                 tion amount.
+
+  A method of acquiring the center of resolution correction When the correction amount varies at all Zoom positions
+will be described with reference to FIG. 3A. First, peripheral from the wide-angle end to the telephoto-angle end as shown
+resolutions at the four corners are acquired from image data in FIG. 4A, the resolution correction amount per unit time at
+output from the video signal processing unit 111 (3a-1). If 60 the time of Zoom driving is not so large and even if the shift
+the acquired resolutions at the four corners vary in the image lens is moved off the mechanical center for resolution
+
+data, the movement destination position of the center (center correction at the time of a Zoom operation, it is not so
+position) of the image stabilization lens 103 where the noticeable. However, when resolution correction is not per
+variation is reduced as compared with the center of the angle formed on the wide angle side but only performed from a
+of view is obtained (3a-2). Then, the control value of the 65 predetermined middle position to the telephoto-angle end as
+image stabilization lens 103 to cause the image stabilization shown in FIG. 4B, the resolution correction amount per unit
+lens 103 to come at the obtained center position is obtained time at the time of Zoom driving becomes large if the same
+                                             US 9,635,266 B2
+
+                 7                                                                8
+
+amount of resolution correction is needed. For this reason, a In step S103, a correction variation amount (Ashift) is first
+variation in the angle of view caused by the movement of the obtained from a current correction amount with respect to
+
+shift lens becomes noticeable even if the angle of view the correction target amount. Then, it is determined whether
+
+varies in response to a variation in the focal length during the the correction variation amount (Ashift) is Smaller than a
+
+Zoom operation.                                              5 correction upper limit threshold (Ashiftmax). If the correc
+
+  In addition, when resolution correction is not performed tion variation amount (Ashift) is Smaller than the correction
+on the wide angle side and the telephoto-side but only upper limit threshold (Ashiftmax), the process advances to
+
+performed in a middle region as shown in FIG. 4C, a step S104. It is determined in step S104 whether the cor
+
+variation in the resolution correction amount also becomes 10 rection remaining amount by which has not been completed
+large. In this case, a behavior of the angle of view which with respect to the correction target value is larger than 0. If
+
+reciprocally moves in the vertical direction or the horizontal there is the correction remaining amount, the process
+
+direction abruptly when Zoom driving is performed at once advances to step S105.
+
+from the wide-angle end to the telephoto-angle end is In step S105, a new correction variation amount is set by
+
+exhibited. Particularly, when resolution correction is per 15 adding the correction remaining amount to the correction
+formed in recording a moving image, it is not preferable to variation amount (Ashift). The maximum value of the cor
+
+record an abrupt variation in the angle of view by the Zoom rection variation amount at this time is set as the correction
+operation.
+                                                             upper limit threshold (Ashiftmax). When the remainder of
+
+In order to prevent such an abrupt variation in the angle correction is added, the added amount is subtracted from the
+
+of view as a result of correction, this embodiment performs 20 correction remaining amount and correction for the remain
+
+a method of causing an actual correction amount to follow ing amount will be performed in the next and Subsequent
+
+a proper correction target value by setting a limitation on the correction. In step S106, correction is performed from the
+
+correction amount per unit time in the shift lens center current position by the correction variation amount deter
+position designation unit 201 by the Zoom position.
+                                                             mined in step S105. If the correction remaining amount is 0
+For example, when Zoom driving is performed from the 25 in step S104, correction is performed assuming that the
+
+middle position to the telephoto-angle end as shown in FIG. correction variation amount is Ashift.
+
+4B, assume that resolution correction is performed by driv On the other hand, if the correction variation amount
+ing the shift lens by 50 Lum at the telephoto-angle end. At this (Ashift) is larger than the correction upper limit threshold
+
+time, Zoom driving from the middle position to the tele (Ashiftmax) in step S103, correction is performed by assum
+
+photo-angle end takes 1 Sec. If the resolution correction 30 ing that the correction variation amount is Ashiftmax and
+amount is updated every 20 ms, an average correction adding an amount incapable of correction to the correction
+amount is 1 um at a time. Furthermore, if the resolution remaining amount (step S108).
+correction amount is varied by focal length correction, the It is determined in step S107 whether the correction
+correction variation amount can become larger in proximity remaining amount is 0. If there is the remainder of correc
+
+to the Zoom point where the variation in the focal length is 35 tion, the process returns to step S102 and the correction
+
+large. By setting an upper limit on the correction variation processing continues. This correction remaining amount
+
+amount and the limitation on the correction amount per unit  becomes a delay time of correction. It is therefore preferable
+                                                             to set an optimal correction upper limit threshold so as not
+time in Such a case where the correction value variation     to be an excessively large.
+
+amount is larger than a predetermined value when the
+
+correction amount is updated every 20 ms, it is possible to 40 If the correction remaining amount becomes 0 in step
+
+prevent the abrupt variation in the angle of view. In this case, S107, the process advances to step S110 to determine
+correction has not been completed by a target amount of whether it is the Zoom position to end correction. If it is the
+
+correction (to be referred to as a correction target value Zoom position to end correction, the process ends. If it is not
+hereinafter) by setting the upper limit. It is possible, how the Zoom position to end correction, the process returns to
+
+ever, to perform correction to follow the correction target 45 step S102 and the correction processing continues (If the
+value by continuing correction by a correction remaining correction remaining amount is 0, a standby state is set as a
+
+amount. It is desirable to set, as the upper limit value of the correction variation amount A=0).
+correction amount, a value which reduces the abrupt varia By setting the upper limit value for the correction varia
+tion in the angle of view at the time of Zoom driving to make tion amount per unit time as in the flowchart above, it is
+it less noticeable and also makes a delay less noticeable 50 possible to reduce the shift in the angle of view by abrupt
+when following the correction target value.
+                                                             correction. The upper limit is set on the correction variation
+
+  Furthermore, in a case of correction as shown in FIG. 4C,  amount per unit time in the above-described embodiment.
+when the Zoom operation is performed at once from the        However, the upper limit may be set on the correction
+wide-angle end to the telephoto-angle end, the correction    variation amount depending on, as another example, a Zoom
+
+target value is followed with a delay, and thus a shape 55 speed (the driving speed of Zoom). If the Zoom speed is high,
+
+indicated by a dotted line in the lower graph of FIG. 4C is the upper limit value is increased because the shift in the
+
+obtained. Therefore, the method according to this embodi angle of view by correction is not noticeable by the variation
+
+ment can Suppress the variation amount of the angle of view in the angle of view in response to the variation in the focal
+and also improve the appearance condition.
+                                                             length. On the other hand, if the Zoom speed is low, the
+
+FIG. 5 is a flowchart showing correction processing. After 60 upper limit value is decreased.
+
+Zoom driving starts, it is determined in step S101 whether it Furthermore, from a similar point of view, the upper limit
+
+is the Zoom position to start correction. If it is the Zoom value of the correction variation amount may be set in
+position targeted for correction, correction is started. After accordance with the variation amount of the focal length at
+
+the correction is started, it is determined whether a time the time of Zoom driving. If the variation in the focal length
+corresponding to an update period (20 ms, here) has elapsed 65 is large, the upper limit value is increased. On the other
+(step S102). If the update period of time has been elapsed, hand, if the variation in the focal length is Small, the upper
+
+the process advances to step S103.                           limit value is decreased. This also applies to the amount of
+                         US 9,635,266 B2
+
+                                                                     10
+
+the variation in the angle of view in response to the variation      driving speed of the Zoom unit when changing the focal
+in the focal length at the time of Zoom driving.                     length is higher than a second threshold value and sets
+
+  Other Embodiments                                                    the upper limit value of the limitation of the variation
+                                                                       amount of the movement position Smaller than the first
+  Embodiment(s) of the present invention can also be                   threshold value when the driving speed of the Zoom
+realized by a computer of a system or apparatus that reads
+out and executes computer executable instructions (e.g., one           unit is lower than the second threshold value.
+or more programs) recorded on a storage medium (which
+may also be referred to more fully as a non-transitory               2. An image stabilization apparatus comprising:
+computer-readable storage medium) to perform the func                at least one processor or circuit to perform the operations
+
+                                                                       of the following units:
+
+tions of one or more of the above-described embodiment(s) 10 an image stabilization unit to move a correction member
+and/or that includes one or more circuits (e.g., application
+                                                                     which is movable in a direction different from an
+
+specific integrated circuit (ASIC)) for performing the func          optical axis of an imaging optical system based on a
+
+tions of one or more of the above-described embodiment(s),             shake detected by a shake detection unit and stabilize
+and by a method performed by the computer of the system                an image blur based on the shake of the apparatus;
+or apparatus by, for example, reading out and executing the 15       a Zoom unit to change a focal length of the imaging
+                                                                       optical system;
+computer executable instructions from the storage medium
+
+to perform the functions of one or more of the above                 a calculation unit to calculate a movement amount of the
+described embodiment(s) and/or controlling the one or more
+circuits to perform the functions of one or more of the                correction member corresponding to the focal length to
+above-described embodiment(s). The computer may com                    reduce at least one of a variation in a light amount and
+prise one or more processors (e.g., central processing unit            a variation in a resolution in an imaging screen which
+                                                                       varies in accordance with the focal length and is based
+(CPU), micro processing unit (MPU)) and may include a                  on a characteristic of the imaging optical system; and
+network of separate computers or separate processors to read         a control unit to control, when changing the focal length
+
+out and execute the computer executable instructions. The              by the Zoom unit, an actual movement amount to follow
+computer executable instructions may be provided to the 25             a target value of a movement position of the correction
+computer, for example, from a network or the storage                   member by setting a limitation of a variation amount of
+                                                                       the movement position per unit time on the movement
+medium. The storage medium may include, for example, one
+or more of a hard disk, a random-access memory (RAM), a                amount calculated by the calculation unit,
+read only memory (ROM), a storage of distributed comput              wherein the control unit sets an upper limit value of the
+ing systems, an optical disk (such as a compact disc (CD), 30
+                                                                       limitation of the variation amount of the movement
+
+digital versatile disc (DVD), or Blu-ray Disc (BD)TM), a               position larger than a third threshold value when a
+flash memory device, a memory card, and the like.                      variation amount of the focal length when changing the
+                                                                       focal length is larger than a fourth threshold value and
+  While the present invention has been described with                  sets the upper limit value of the limitation of the
+reference to exemplary embodiments, it is to be understood             variation amount of the movement position Smaller
+that the invention is not limited to the disclosed exemplary 35
+embodiments. The scope of the following claims is to be                than the third threshold value when the variation
+accorded the broadest interpretation so as to encompass all
+                                                                       amount of the focal length is smaller than the fourth
+Such modifications and equivalent structures and functions.
+  This application claims the benefit of Japanese Patent               threshold value.
+
+Application No. 2014-087589, filed Apr. 21, 2014, which is 40        3. An image stabilization apparatus comprising:
+hereby incorporated by reference herein in its entirety.             at least one processor or circuit to perform the operations
+
+                                                                       of the following units:
+
+What is claimed is:                                                  an image stabilization unit to move a correction member
+
+1. An image stabilization apparatus comprising:                        which is movable in a direction different from an
+
+at least one processor or circuit to perform the operations            optical axis of an imaging optical system based on a
+                                                                       shake detected by a shake detection unit and stabilize
+of the following units:                                          45    an image blur based on the shake of the apparatus;
+                                                                     a Zoom unit to change a focal length of the imaging
+an image stabilization unit to move a correction member                optical system;
+
+which is movable in a direction different from an
+
+optical axis of an imaging optical system based on a
+
+  shake detected by a shake detection unit and stabilize             a calculation unit to calculate a movement amount of the
+  an image blur based on the shake of the apparatus; 50
+a Zoom unit to change a focal length of the imaging                    correction member corresponding to the focal length to
+  optical system;                                                      reduce at least one of a variation in a light amount and
+                                                                       a variation in a resolution in an imaging screen which
+
+a calculation unit to calculate a movement amount of the             varies in accordance with the focal length and is based
+                                                                     on a characteristic of the imaging optical system; and
+  correction member corresponding to the focal length to
+
+  reduce at least one of a variation in a light amount and 55        a control unit to control, when changing the focal length
+  a variation in a resolution in an imaging screen which
+  varies in accordance with the focal length and is based              by the Zoom unit, an actual movement amount to follow
+  on a characteristic of the imaging optical system; and               a target value of a movement position of the correction
+a control unit to control, when changing the focal length
+                                                                       member by setting a limitation of a variation amount of
+                                                                       the movement position per unit time on the movement
+
+  by the Zoom unit, an actual movement amount to follow 60             amount calculated by the calculation unit,
+  a target value of a movement position of the correction            wherein the control unit sets an upper limit value of the
+  member by setting a limitation of a variation amount of
+  the movement position per unit time on the movement                  limitation of the variation amount of the movement
+  amount calculated by the calculation unit,
+wherein the control unit sets an upper limit value of the 65           position larger than a fifth threshold value when a
+                                                                       variation amount of an angle of view when changing
+  limitation of the variation amount of the movement                   the focal length is larger than a sixth threshold value
+                                                                       and sets the upper limit value of the limitation of the
+  position larger than a first threshold value when a                  variation amount of the movement position Smaller
+                             US 9,635,266 B2
+
+                         11                                       12
+
+than the fifth threshold value when the variation                blur based on the shake of the apparatus, and a Zoom unit to
+                                                                 change a focal length of the imaging optical system, the
+amount of the angle of view is Smaller than sixth                method comprising:
+
+threshold value.
+
+  4. A control method of an image stabilization apparatus        calculating a movement amount of the correction member
+including an image stabilization unit to move a correction         corresponding to the focal length to reduce at least one
+
+member which is movable in a direction different from an           of a variation in a light amount and a variation in a
+                                                                   resolution in an imaging screen which varies in accor
+optical axis of an imaging optical system based on a shake         dance with the focal length and is based on a charac
+detected by a shake detection unit and stabilize an image          teristic of the imaging optical system; and
+blur based on the shake of the apparatus, and a Zoom unit to 10  controlling, when changing the focal length by the Zoom
+change a focal length of the imaging optical system, the
+method comprising:                                                 unit, an actual movement amount to follow a target
+                                                                   value of a movement position of the correction member
+  calculating a movement amount of the correction member           by setting a limitation of a variation amount of the
+    corresponding to the focal length to reduce at least one       movement position per unit time on the movement
+    of a variation in a light amount and a variation in a 15       amount calculated in the calculating, wherein an upper
+    resolution in an imaging screen which varies in accor
+                                                                   limit value of the limitation of the variation amount of
+
+  dance with the focal length and is based on a charac            the movement position is set larger than a fifth thresh
+  teristic of the imaging optical system; and                     old value when a variation amount of an angle of view
+controlling, when changing the focal length by the Zoom           when changing the focal length is larger than a sixth
+
+unit, an actual movement amount to follow a target                threshold value and the upper limit value of the limi
+value of a movement position of the correction member             tation ofthe variation amount ofthe movement position
+
+by setting a limitation of a variation amount of the              is set smaller than the fifth threshold value when the
+
+movement position per unit time on the movement                    variation amount of the angle of view is Smaller than
+amount calculated in the calculating, wherein an upper
+                                                                   the sixth threshold value.
+limit value of the limitation of the variation amount of 25
+                                                                 7. A non-transitory computer readable storage medium
+
+the movement position is set larger than a first threshold storing a program for causing a computer to execute a
+
+value when a driving speed of the Zoom unit when control method of an image stabilization apparatus including
+changing the focal length is higher than a second an image stabilization unit to move a correction member
+
+threshold value and the upper limit value of the limi which is movable in a direction different from an optical axis
+tation ofthe variation amount ofthe movement position 30 of an imaging optical system based on a shake detected by
+
+is set smaller than the first threshold value when the a shake detection unit and stabilize an image blur based on
+
+  driving speed of the Zoom unit is lower than the second        the shake of the apparatus, and a Zoom unit to change a focal
+                                                                 length of the imaging optical system, the method compris
+  threshold value.                                               ing:
+
+5. A control method of an image stabilization apparatus
+
+including an image stabilization unit to move a correction 35 calculating a movement amount of the correction member
+                                                                  corresponding to the focal length to reduce at least one
+member which is movable in a direction different from an
+
+optical axis of an imaging optical system based on a shake        of a variation in a light amount and a variation in a
+
+detected by a shake detection unit and stabilize an image         resolution in an imaging screen which varies in accor
+
+blur based on the shake of the apparatus, and a Zoom unit to      dance with the focal length and is based on a charac
+change a focal length of the imaging optical system, the 40 teristic of the imaging optical system; and
+
+method comprising:                                               controlling, when changing the focal length by the Zoom
+
+calculating a movement amount of the correction member            unit, an actual movement amount to follow a target
+  corresponding to the focal length to reduce at least one        value of a movement position of the correction member
+
+of a variation in a light amount and a variation in a             by setting a limitation of a variation amount of the
+resolution in an imaging screen which varies in accor 45          movement position per unit time on the movement
+
+dance with the focal length and is based on a charac              amount calculated in the calculating, wherein an upper
+teristic of the imaging optical system; and
+                                                                  limit value of the limitation of the variation amount of
+
+controlling, when changing the focal length by the Zoom           the movement position is set larger than a first threshold
+
+unit, an actual movement amount to follow a target                value when a driving speed of the Zoom unit when
+value of a movement position of the correction member 50          changing the focal length is higher than a second
+
+by setting a limitation of a variation amount of the              threshold value and the upper limit value of the limi
+movement position per unit time on the movement                   tation ofthe variation amount ofthe movement position
+
+amount calculated in the calculating, wherein an upper            is set smaller than the first threshold value when the
+
+limit value of the limitation of the variation amount of          driving speed of the Zoom unit is lower than the second
+
+the movement position is set larger than a third thresh 55 threshold value.
+old value when a variation amount of the focal length 8. A non-transitory computer readable storage medium
+when changing the focal length is larger than a fourth storing a program for causing a computer to execute a
+
+threshold value and the upper limit value of the limi control method of an image stabilization apparatus including
+
+tation ofthe variation amount ofthe movement position an image stabilization unit to move a correction member
+
+is set smaller than the third threshold value when the 60 which is movable in a direction different from an optical axis
+variation amount of the focal length is Smaller than the of an imaging optical system based on a shake detected by
+
+fourth threshold value.                                          a shake detection unit and stabilize an image blur based on
+
+6. A control method of an image stabilization apparatus the shake ofthe apparatus, and a Zoom unit to change a focal
+including an image stabilization unit to move a correction length of the imaging optical system, the method compris
+member which is movable in a direction different from an 65 ing:
+
+optical axis of an imaging optical system based on a shake       calculating a movement amount of the correction member
+detected by a shake detection unit and stabilize an image          corresponding to the focal length to reduce at least one
+    US 9,635,266 B2
+
+13                                                              14
+
+of a variation in a light amount and a variation in a the shake ofthe apparatus, and a Zoom unit to change a focal
+resolution in an imaging screen which varies in accor length of the imaging optical system, the method compris
+
+    dance with the focal length and is based on a charac        calculating a movement amount of the correction member
+    teristic of the imaging optical system; and                   corresponding to the focal length to reduce at least one
+  controlling, when changing the focal length by the Zoom 5
+                                                                  of a variation in a light amount and a variation in a
+    unit, an actual movement amount to follow a target            resolution in an imaging screen which varies in accor
+    value of a movement position of the correction member         dance with the focal length and is based on a charac
+    by setting a limitation of a variation amount of the          teristic of the imaging optical system; and
+    movement position per unit time on the movement             controlling, when changing the focal length by the Zoom
+    amount calculated in the calculating, wherein an upper 10
+                                                                  unit, an actual movement amount to follow a target
+     limit value of the limitation of the variation amount of     value of a movement position of the correction member
+                                                                  by setting a limitation of a variation amount of the
+    the movement position is set larger than a third thresh       movement position per unit time on the movement
+    old value when a variation amount of the focal length         amount calculated in the calculating, wherein an upper
+    when changing the focal length is larger than a fourth
+                                                                  limit value of the limitation of the variation amount of
+    threshold value and the upper limit value of the limi- 15
+    tation ofthe variation amount ofthe movement position         the movement position is set larger than a fifth thresh
+                                                                  old value when a variation amount of an angle of view
+     is set smaller than the third threshold value when the       when changing the focal length is larger than a sixth
+                                                                  threshold value and the upper limit value of the limi
+    variation amount of the focal length is Smaller than the      tation ofthe variation amount ofthe movement position
+
+     fourth threshold value.                                      is set smaller than the fifth threshold value when the
+
+  9. A non-transitory computer readable storage medium 20         variation amount of the angle of view is Smaller than
+storing a program for causing a computer to execute a
+control method of an image stabilization apparatus including      the sixth threshold value.
+an image stabilization unit to move a correction member
+which is movable in a direction different from an optical axis
+of an imaging optical system based on a shake detected by 25
+
+a shake detection unit and stabilize an image blur based on     k k k k k
+

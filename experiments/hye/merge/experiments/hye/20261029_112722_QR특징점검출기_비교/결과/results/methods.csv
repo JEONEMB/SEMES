@@ -1,0 +1,9 @@
+0,QR구조점536+GN(채택측정기)
+1,QR구조점536+LK
+2,Shi-Tomasi(GFTT)+LK
+3,Harris+LK
+4,FAST+LK
+5,ORB+기술자짝짓기
+6,BRISK+기술자짝짓기
+7,AKAZE+기술자짝짓기
+8,KAZE+기술자짝짓기

@@ -1,0 +1,1 @@
+91 observed triplets: no recorded spacing; no temporal fit. At three samples there are no overlapping Allan comparisons above a one-frame window.

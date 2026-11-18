@@ -1,0 +1,3 @@
+Manifest images: 575
+A0 label differences: 0
+Center images assigned to A0 test folds: 3

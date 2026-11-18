@@ -1,0 +1,40 @@
+GLS 비교 실험 — 2026-10-14
+
+우선 GLS_비교결과.html을 여세요.
+
+기존 모델, 추론 및 측정 코드, 측정 캐시, 평가 결과는 baseline_snapshot에
+원본과 같은 상대 경로로 복사했습니다. hashes.json은 SHA-256 기록입니다.
+원본 파일은 수정하지 않았고, 실험 후보는 models에 따로 저장했습니다.
+
+결과 해석
+- full280: 전체 280장으로 학습하고 같은 280장을 다시 예측한 재대입 결과.
+- repeated5_seed0..19: 난수 시드 7000..7019, 매번 5분할 후 280장 모두 OOF 평가.
+  매 회차 224장으로 학습하여 제외한 56장을 예측하는 과정을 5회 수행합니다.
+  5600건은 같은 280장의 20회 반복이며 독립 사진 5600장이 아닙니다.
+- session_out_missing_origin: 학습에 없는 0점 분기 진단. T의 부호 분기가
+  없어지는 경우도 포함하므로 같은 시행 내 검증과 구분합니다.
+- 정답은 파일명의 명령값입니다. 별도 측정한 물리 위치 정답은 없습니다.
+- GLS는 학습 잔차로 공분산을 추정하는 FGLS입니다. 분할 밖 정답을 쓰지 않습니다.
+- 기존 광학 추적은 동일하게 고정하고 저장한 원본 이미지 측정 캐시를 사용했습니다.
+
+중요 파일
+comparison_summary.csv/json: 10가지 방법 집계
+combined_metrics.csv: 각 방법/평가별 상세 지표
+predictions.csv: 주 7가지 방법의 사진별 예측
+direct410/all_predictions.csv: 직접 410차원 실험과 독립 기준 재현
+paired_comparison.csv: 같은 사진/분할에서 기존 대비 개선 및 새 실패
+failed_image_frequency.csv: 20회 중 사진별 실패 빈도
+checks.json, audit_checks.json: 재현성 및 독립 검산
+raw_inference_checks.json: 원본 두 사진의 익명 파일 경로 추론과 캐시 일치
+figures: 비교 그림 PNG/SVG와 생성 코드
+models: 별도 실험 후보 (기존 infer.py에서 기본 사용하지 않음)
+
+재실행 (현재 프로젝트 환경)
+.\codex_experiments_20261014\gls_comparison_20261014\run.ps1 -Action compare
+
+실험 후보로 두 이미지 예측
+.\codex_experiments_20261014\gls_comparison_20261014\run.ps1 -Action predict -Center "센터경로" -Current "현재경로" -Method spatial_gls_lw
+
+실험 후보 함수는 현재 205개 점 모두의 정상 추적을 요구합니다.
+새 센터/새 카메라/새 0점/동시 Y+T 이동은 검증하지 않았습니다.
+어떤 후보도 기존 배포 모델을 자동으로 대체하지 않습니다.

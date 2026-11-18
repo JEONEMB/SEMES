@@ -1,0 +1,951 @@
+United States Patent (19)                                                  11) Patent Number:           4,669,867
+                                                                           (45) Date of Patent:
+Uda et al.                                                                                             Jun. 2, 1987
+
+(54) ALIGNMENT AND EXPOSURE APPARATUS                                  Attorney, Agent, or Firm-Fitzpatrick, Cella, Harper &
+
+75) Inventors: Koji Uda; Kazuyuki Oda, both of                         Scinto
+
+                Yokohama; Naoki Ayata, Machida,                        57                    ABSTRACT
+               all of Japan
+                                                                       An alignment and exposure apparatus in which sequen
+73 Assignee: Canon Kabushiki Kaisha, Tokyo,                            tial operations of pattern projection for projecting a
+
+               Japan                                                   pattern of a first object, at a reduced ratio, onto a sec
+                                                                       ond object through an optical system, stepwise move
+21) Appl. No.: 701,623
+                                                                       ment for moving the second object stepwise relative to
+22 Filed: Feb. 14, 1985                                                the first object, detection for detecting any positional
+                                                                       deviation between the first and second objects at a posi
+(30) Foreign Application Priority Data                                 tion at which the stepwise movement of the second
+                                                                       object is terminated, and correction for correcting the
+Feb. 20, 1984 JP    Japan .................................. 59-28794  positional relation between the first and second objects
+Feb. 21, 1984 (JP)                                                     on the basis of the detected positional deviation, are
+Apr. 23, 1984 JP    Japan ....             ... 59-295.11               repeated relative to the second object to thereby print
+
+                    Japan .................................. 59-80064  the patterns onto the second object in a reduced scale.
+                                                                       Upon correction of the positional relation between the
+51 Int. Cl. .............................................. G03B 27/42  first and second objects, at least one of the first and
+52 U.S. Cl. ........................................ 355/53; 355/77;   second objects is displaced in accordance with the mag
+                                                                       nitude of the detected positional deviation and/or, upon
+                                                 356/400               stepwise movement of the second object, the amount of
+                                                                       stepwise movement to be made is corrected in accor
+58 Field of Search ....................... 355/53, 43, 45, 54,         dance with the detected positional deviation with re
+               355/77, 86, 95; 356/400, 401; 352/349                   spect to the position at which the preceding stepwise
+
+56)                 References Cited                                   movement of the second object is terminated. By this,
+                                                                       the time required for repetitions of exposures is re
+     U.S. PATENT DOCUMENTS
+                                                                       duced.
+     4,057,347 1 1/1977 Moriyama et al. .
+
+     4,110,762 8/1978 Tigreat .............................. 355/53 X
+
+     4,153,371 5/1979 Koizumi et al. .................... 356/400
+
+     4,362,385 12/1982 Lobach ...........  ... 355/53 X
+
+     4,553,834 11/1985 Ayata et al. .......................... 355/53
+
+Primary Examiner-L. T. Hix                                                 10 Claims, 16 Drawing Figures
+Assistant Examiner-D. Rutledge
+
+                                                     START OF
+                                                 AUO-ALIGNMENT
+
+                                                   CACULATE
+                                                   DEWAON
+
+                                           S-3 -
+
+                                                      e-Riwe
+
+                                                 5EourED
+
+                                                   ORIVE WAFER
+                                                STAGE OR RECLE
+
+                                           DRIVE WAFER                             309
+                                           STAGE
+                                                                           ORIVE RECE
+                                                                           STAGE
+
+                                                                                     END OF
+
+                                                                               AUTO-AGNMENT
+U.S. Patent Jun 2, 1987 Sheet 1 of 13 4,669,867
+
+                        F G.
+U.S. Patent Jun 2, 1987 Sheet 2 of 13 4,669,867
+
+SET OR REPLACE     O
+
+WAFER
+
+MOVE STAGE TO
+IST SHOT POSITION
+
+TTL ALGNMENT
+
+     EXPOSURE
+
+        FINAL
+      EXPOSURE
+
+  COMPETED
+
+                          6
+
+                                  O7
+
+MOVE TO NEXT
+ SHOT POST ON
+
+MOVE STAGE TO
+WAFER LOAD/UNLOAD O9
+
+POSITION
+
+       F G. 2A
+U.S. Patent Jun. 2, 1987 Sheet 3 of 13 4,669,867
+
+STEP STAGE 2O
+
+TAKE UP
+A.A. SIGNAL 2O2
+
+CALCULATE
+
+DEVATION     2O3
+
+A X, AY, 46
+
+MOVE STAGE                   2O6
+MINUTELY
+               EXPOSURE
+
+                             2O8
+
+             MOVE TO NEXT
+             SHOT POSITION
+
+F G. 2B
+U.S. Patent Jun. 2, 1987 Sheet 4 of 13 4,669,867
+
+                   28 3O  22
+
+   29       3. 23
+
+                   32
+
+47 46 45 44 43 |3.3 43' 44' 45' 46' 47'
+(                             FROM 47
+H-s5t8 V57                57 HH
+            42 42         58
+
+                                2 g
+
+                              6
+U.S. Patent Jun. 2, 1987           Sheet 5 of 13 4,669,867
+
+                        START OF   3O
+                   AUTO-ALIGNMENT
+                                   3O2
+                        TAKE UP
+                                   3O3
+                    A. A. SIGNAL
+
+                     CALCULATE
+                     DEVAT ON
+
+    4X, AY
+
+PERMISSIBLE
+
+            12
+
+  DRIVE WAFER
+STAGE OR RETICLE
+
+  STAGE
+
+DRIVE WAFER                                            3O9
+STAGE
+                                        DRIVE RETICLE
+          F                             STAGE
+
+                                                               3O
+
+                                                    END OF
+
+                                            AUTO-ALGNMENT
+
+                                   G. 4
+U.S. Patent Jun. 2, 1987 Sheet 6 of 13 4,669,867
+
+         28
+
+    C        3O  22
+
+29       31 23
+
+         32
+
+47 46 45 44 43 33 43' 44' 45' 46' 47'
+
+Oss0s T         Usti U
+
+                                       g 6O
+U.S. Patent Jun. 2, 1987 Sheet 7 of 13 4,669,867
+
+        L}BOVE}/TdSOB}}
+U.S. Patent Jun. 2, 1987 Sheet9 of 13 4,669,867
+U.S. Patent Jun 2, 1987 Sheet 10 of 13 4,669,867
+
+                                  O9
+
+                | 9
+U.S. Patent Jun 2, 1987 Sheet 11 of 13 4,669,867
+
+  6O        LOAD WAFER
+ 6O2   MOVE WAFER STAGE
+ 6O3   TO ST SHOT POSITION
+       MEASURE DEVATION
+6O4 O  OF WAFER STAGE
+
+ 6O5    DRIVE DETERMINE
+
+                       RETICLE
+
+       RSETTAIGCELE REFERENCE h-6O4b
+
+                       POST ON
+
+                        RETURN
+
+                        RETICLE
+
+                       STAGE TO
+                        REFERENCE
+       CORRECTION) POSITION
+
+            MEASURE DEVATION
+
+6O7 Y OF WAFER STAGE
+
+6O8 - DRIVE RETICLE STAGE
+
+6O9    EXPOSURE
+
+6 O    WAFER
+
+       REPLACEMENT
+
+       1.
+
+           YES
+
+6      TAKE OUT WAFER
+
+       F G. O
+U.S. Patent Jun. 2, 1987 Sheet 12 of 13 4,669,867
+U.S. Patent Jun. 2, 1987 Sheet 13 of 13 4,669,867
+
+                                                                    -`||C!9|)
+                           1.           4,669,867              2
+
+    ALIGNMENT AND EXPOSURE APPARATUS                         ment operations corresponding to the repetitions of
+                                                             exposures are required. It is therefore a significant prob
+
+      BACKGROUND OF THE INVENTION                            lem to improve the throughput, in an exposure appara
+                                                             tus employing the alignment process as described
+
+  This invention relates to an exposure apparatus in         above.
+which projection of a pattern of a first object onto a                SUMMARY OF THE INVENTION
+second object through an optical system and subsequent
+
+stepwise movement of the second object relative to the It is accordingly a primary object of the present in
+first object are repeated to thereby repeatedly print the 10 vention to provide an improved exposure apparatus in
+pattern on the second object. More particularly, the which an increased throughput is attainable.
+invention relates to an exposure apparatus to be used in It is a second object of the present invention to pro
+the manufacture of semiconductor devices such as inte vide an improved exposure apparatus in which the time
+grated circuits (ICs), large scaled integrated circuits required for the alignment operation is reduced.
+(LSIs), very large scaled integrated circuits (VLSIs),
+                                                         15  It is a third object of the present invention to provide
+etc.In the field of manufacture of semiconductor devices an improved exposure apparatus suitable for the manu facture of semiconductor devices.
+
+as mentioned above, exposure apparatuses for project Briefly, according to the present invention, there is
+ing, at a reduced magnification ratio, a circuit pattern of provided an alignment and exposure apparatus in which
+a reticle onto a wafer through an optical system to 20 sequential operations of pattern projection for project
+thereby print the reductively projected circuit pattern ing a pattern of a first object, at a reduced ratio, onto a
+onto the wafer are known. An example is a step-and           second object through an optical system, stepwise
+repeat type exposure apparatus, called a stepper.
+In such exposure apparatus, the circuit pattern movement for moving the second object stepwise rela
+printed onto the wafer through one exposure usually tive to the first object, detection for detecting any posi
+occupies only a small area on the wafer corresponding 25 tional deviation between the first and second objects at
+to one or more chips of the semiconductor devices. a position at which the stepwise movement of the sec
+Therefore, in order to print the circuit pattern of the ond object is terminated, and correction for correcting
+reticle onto all the sections of the wafer surface, it re the positional relation between the first and second
+quires repetition of exposure accompanied with step objects on the basis of the detected positional deviation,
+wise movement of the wafer relative to the reticle along 30 are repeated relative to the second object to thereby
+a plane orthogonal to the optical axis of a projection print the patterns onto the second object in a reduced
+optical system. Frequently, for each reticle, ten or more scale. Upon correction of the positional relation be
+repetitions of exposure are necessary.
+                                                             tween the first and second objects, at least one of the
+When, after a first exposure step comprising repeti first and second objects is displaced in accordance with
+tions of exposure with a first reticle has been made 35 the magnitude of the detected positional deviation and
+relative to a wafer, a second exposure step with a sec /or, upon stepwise movement of the second object, the
+ond reticle is to be made to the same wafer, the circuit amount of stepwise movement to be made is corrected
+pattern formed on the second reticle must be accurately in accordance with the detected positional deviation
+projected onto or overlaid on each of the circuit pat with respect to the position at which the preceding
+terms which have already been printed on the wafer. In 40 stepwise movement of the second object is terminated.
+order to achieve this, it is desired to effect, for each of By this, the time required for repetitions of exposures is
+the exposures, alignment between the already-printed reduced.
+circuit pattern and the circuit pattern which is currently These and other objects, features and advantages of
+to be projected onto the wafer, namely alignment be the present invention will become more apparent upon
+tween the second reticle and the wafer. As an example 45 a consideration of the following description of the pre
+of the technique for such alignment, a TTL (through ferred embodiments of the present invention taken in
+the-lens) type die-by-die alignment system is known. conjunction with the accompanying drawings.
+According to this alignment system, relative positional
+
+deviation between the reticle and wafer is detected          BRIEF DESCRIPTION OF THE DRAWINGS
+through the projection optical system every time the 50 stepwise movement ofthe wafer relative to the reticle is FIG. 1 is a perspective view showing an exposure
+completed. When the relative positional deviation is apparatus for the manufacture of semiconductor de
+detected, the positional relation between the reticle and vices, to which apparatus the present invention is appli
+wafer is corrected in accordance with the detected cable.
+positional deviation and, thereafter, the exposure is 55 FIGS. 2A and 2B are flow charts, respectively, show
+effected. Such alignment process assures very precise ing general operation of the exposure apparatus of FIG.
+alignment for each of the exposure operations. There 1.
+fore, a higher overlay accuracy for the circuit patterns FIG. 3 is a schematic and diagrammatic view show
+of different reticles is advantageously attainable over ing an exposure apparatus according to a first embodi
+the entire wafer surface.                                    ment of the present invention.
+
+Such alignment process however involves inconve FIG. 4 is a flow chart showing the operation of the
+niences as follows:                                          exposure apparatus of FIG. 3.
+
+ That is, according to such alignment process, plural FIG. 5 is a schematic and diagrammatic view show
+alignment operations are required throughout the expo ing an exposure apparatus according to another embodi
+
+sures of the entire wafer surface relative to the circuit 65 ment of the present invention.
+pattern of one reticle. This results in a corresponding FIG. 6 shows how FIGS. 6A and 6B are assembled to
+decrease in the throughput of the apparatus. Particu form a flow chart showing the operation of the expo
+larly, in the case of die-by-die alignment, plural align sure apparatus of FIG. 5.
+           3                            4,669,867                                  4.
+
+  FIG. 7 is a perspective view showing one of the  common to the exposure apparatuses such as shown in
+major elements of the scanning optical system.     FIG. 1. More specifically, FIG. 2A shows the general
+                                                   flow of the alignment and exposure operation, while
+  FIG. 8 is a plan view schematically showing the
+
+stepwise movement of the wafer.                    FIG. 2B shows details of the step 103 of FIG. 2A.
+FIG. 9 is a schematic and diagrammatic view show 5 In this type of exposure apparatus, as it will be seen
+ing an exposure apparatus according to a further em from FIG. 2A, the alignment operation (step 103) and
+
+bodiment of the present invention.                 the stepwise movement (step 106) are effected for each
+FIG. 10 is a flow chart showing the operation of the exposure operation (which will hereinafter be referred
+exposure apparatus of FIG. 9.
+                                                   to as "shot") at the step 104. On the other hand, from
+FIGS. 11A-11C illustrate a significant difference O the viewpoint of throughput which is one of the impor
+between the operation which is in accordance with the tant features of a manufacturing apparatus, reduction in
+FIG. 9 embodiment and the operation which is not in the time required for the alignment operation is a criti
+                                                   cal problem because the number of shots for one wafer
+accordance with the FIG. 9 embodiment.
+
+DESCRIPTION OF THE PREFERRED                       is increasing with further miniaturization of the inte
+                                                   15 grated circuit and with the enlargement of the size of
+           EMBODIMENT
+                                                      wafer.
+
+  In the following, the invention will be described with As is shown in FIG. 2B, the alignment operation (step
+reference to exposure apparatuses for the manufacture 103) usually involves the following process:
+of semiconductor devices. However, the invention is First, the wafer stage 5 is moved stepwise (step 201).
+not limited thereto. Also, in the following description, Subsequently, the relative positional deviation between
+two orthogonal directions contained in a plane orthogo the reticle and wafer is detected (steps 202 and 203).
+nal to the optical axis of the reduction projection lens Then, whether or not the detected positional deviation
+will be referred to as "X" and "Y", respectively, and the is within an allowable tolerance is discriminated (step
+direction of the optical axis of the reduction projection 204) and, if not within the tolerance, the wafer stage is
+lens will be referred to as "Z', while the direction of 25 moved minutely (step 205). These steps are repeated
+rotation about the direction Z will be referred to as "6'. through a loop 207 until the relative positional deviation
+
+  Referring first to FIG. 1 showing an exposure appara between the reticle and wafer comes into the tolerance.
+tus to be used for the manufacture of semiconductor An exposure apparatus according to a first embodi
+
+devices, a reticle 1 is carried on a reticle stage 2 which ment of the present invention will now be described
+is movable in the directions of X, Y and 6. Disposed 30 with reference to FIG. 3.
+beneath the reticle stage 2 is a wafer 4 onto which the As is shown in FIG. 3, a reticle 1 having formed
+circuit pattern formed on the reticle 1 is to be projected thereon an integrated circuit pattern (not shown) and
+by a reduction projection lens 3 at a reduced ratio. The alignment marks 20 and 20' is held by a reticle stage 2 by
+wafer 4 is carried on a wafer stage 5 which is movable vacuum suction. Denoted by reference numeral 3 is a
+in the directions of X, Y and 8. A housing member 6 35 reduction projection lens for projecting the circuit pat
+houses alignment scopes for the TTL alignment and for tern of a reticle onto a wafer 4 having a photosensitive
+observation. An objective lens 7 for television (TV) layer and alignment marks 21 and 21'. The wafer 4 is
+alignment is provided so that an image pickup tube 8 carried by a wafer stage 5 which holds the wafer 4 by
+picks up an image for TV prealignment. The exposure vacuum suction. Both the reticle stage 2 and the wafer
+apparatus further includes an image pickup tube 9 for stage 5 are adapted to be driven by a reticle stage driv
+observation of the wafer 4 through the reduction pro ing unit 6 and a wafer stage driving unit 62, respec
+jection lens 3, a light source 10 for providing exposure tively, in the directions of X, Y and 8. The wafer stage
+light to illuminate the reticle 1, wafer supplying carriers 5 is necessarily heavy because it has to carry thereon a
+11a and 11b, wafer collecting carriers 12a and 12b, a heavy wafer chuck and also it must be provided with a
+monitoring TV 13 for selectively displaying images 45 mechanism for effecting the stepwise movement of the
+picked up by the image pickup tubes 8 and 9, an opera wafer. As compared therewith, the reticle stage 2 can
+tion panel 14 having joysticks and switches, etc., a con be light in weight and small in inertia. Therefore, pre
+sole 15 operationally associated with a cathode ray tube cise positioning of the reticle stage 2 is easy.
+to control the entire apparatus.                   Only for the sake of convenience, one set of align
+The joysticks provided on the operation panel 14 50 ment marks 21 and 21' are illustrated for the wafer 4. In
+have various functions. For example, they are adapted the case of die-by-die alignment, however, the align
+to control movement of the reticle stage 2 and wafer ment operation is effected for each of the chip areas on
+stage 5 in the directions of X, Y and 6, and the move the wafer 4, so that plural sets of such alignment marks
+ment of the alignment scopes 6a and 6b in the directions as at 21 and 21' corresponding to the number of shots
+of X and Y, focusing movement thereof (movement in 55 are actually formed on the wafer 4, particularly on the
+the Z direction) as well as zooming movement thereof. scribe lines on the wafer.
+In order to control such operations, a sequence has been In the present embodiment, the dimensional relation
+preparatively programmed so that an appropriate func between each of the alignment marks 20 and 20' on the
+tion is automatically selected at a particular point in the reticle 1 and each of the alignment marks 2 and 21 on
+sequence. More specifically, they are adapted to control 60 the wafer 4 is such that the size of the alignment mark 20
+the movement of the reticle stage 2 and the alignment or 20' on the reticle 1 divided by the size of the align
+scopes 6a and 6b, in the stand-by state, while they are ment mark 21 and 21 on the wafer 4 becomes equal to
+adapted to control the movement of the wafer stage 5, the reduction ratio of the projection lens 3.
+after the prealignment or automatic alignment. Corre Denoted by a reference numeral 28 is a polygonal
+sponding functions are appropriately and automatically 65 mirror which is rotatable about a rotational shaft 29. A
+
+selected.                                          laser source 22 emits a laser beam 30 which is focused
+
+  FIGS. 2A and 2B are flow charts, respectively, show by a lens 23 onto a point 31 on the surface of the polygo
+ing the alignment and exposure operation which will be nal mirror 28.
+                       5 4,669,867 6
+The exposure apparatus further includes relay lenses detection can be achieved for any cases, e.g. a case
+32, 33 and 34, and a triangular prism 35 having its apex where separate reticles have their alignment marks lo
+coincident with the common optial axis of the lenses 32 cated at different position, or a case where some reticle
+and 33. Thus, the prism 35 is effective to divide each is provided with reticle setting marks in addition to the
+scanning operation by the laser beam 30 scanningly alignment marks.
+deflected by the polygonal mirror 28 into the first and In operation, the laser beam 30 emitted from the laser
+second halves, i.e. the right-hand side half and the left source 22 is scanningly deflected in the X direction by
+hand side half. A prism block 39 is provided to convert the rotating polygonal mirror 28 and is divided by the
+the X direction scanning of the laser beam 30 into the Y prism 35 into two, i.e. the first and second halves. Each
+direction scanning and has a construction such as illus O of the divided laser beans is incident on the prism block
+trated in FIG. 7. A half mirror 42 is provided to define 39 or 39' so that the X direction scan is converted into
+a photoelectric detecting system comprising a mirror the Y direction scan. Each of the laser beams emerging
+43, a lens 44, a spatial filter 45, a condenser lens 46 and from the prism block 39 and 39 is incident on the align
+a photodetector 47. The output of the photodetector 47 ment mark 20 (or 20') of the reticle 1 and on the align
+is supplied to a processing unit 60 for effecting a prede 15 ment mark 21 (or 21') of the wafer 4 so that they are
+termined operation which will be described later. In this scanned by the scanning laser beam. Before such laser
+processing unit 60, a threshold T adapted to minimize beam scanning, the reticle 1 and wafer 4 are prealigned
+the time required for the alignment is stored. The with each other so that the alignment marks 20 and 21
+threshold T is determined while taking into account the are approximately aligned with the alignment marks 20'
+reduction ratio of the projection lens 3 and the peculiar 20 and 21", respectively.
+ities of the stages 2 and 5 themselves.
+                                          The scatteringly reflected light from the alignment
+Disposed behind the prism block 39 and along the marks 20 and 21 and from the alignment marks 20' and
+optical axis are total reflection mirrors 48, 49, 50 and 51, 21' are transmitted through the half mirrors 42 and 42",
+a prism 52 and an f-8 objective lens 53.  respectively, and reflected by the mirrors 43 and 43',
+
+The exposure apparatus further includes a condenser 25 respectively, so that they are incident on the photode
+lens 57 and a photodetector 58 for detecting a synchro tectors 47 and 47", respectively. The processing unit 60
+nization signal. A portion of the laser beam incident on includes a memory and is adapted to effect a predeter
+the half mirror 42 passes therethrough and enters into mined operation on the basis of the outputs of the pho
+the condenser lens 57. By the condenser lens 57, the todetectors 47 and 47' stored in the memory.
+portion of the laser beam is converged and is incident on 30 In an ordinary exposure apparatus, correction of the
+the photodetector 58. Thus, the photodetector 58 is relative positional deviation between the reticle 1 and
+effective to detect the originating point and terminating wafer 4 at the step 205 shown in FIG. 2B is usually
+point of the laser beam scanning.         achieved by moving only one of the reticle stage 2 and
+
+It will be seen from the drawing that the signal de the wafer stage 5. For example, U.S. Pat. No. 4,057,347
+tecting device of the present embodiment comprises 35 issued Nov. 8, 1977 discloses that the positional devia
+left-hand side and right-hand side signal detecting sys tion between the mask and wafer after completion of
+tems which are fully symmetric with each other. Here the stepwise movement of the wafer stage is corrected
+inafter the signal detecting system including elements by moving the mask stage. This involves however sig
+designated by reference numerals with primes will be nificant inconveniences such as follows:
+referred to as "right-hand side signal detecting system', That is, if the amount of positional deviation is
+while the signal detecting system including elements smaller than the minimum displaceable length of the
+denoted by reference numerals without prime will be reticle stage or wafer stage, it requires an increasing
+referred to as "left-hand side signal detecting system'. number of repetitions of loop 107 (FIG. 2A) for reduc
+In the right-hand side signal detecting system, elements ing the positional deviation to a level within an allow
+corresponding to those in the left-hand side signal de 45 able range, whereby the time required for the alignment
+tecting system are denoted by corresponding reference is prolonged. If, on the other hand, the minimum dis
+numerals with primes.                     placeable length of each stage is made small, a longer
+
+The relay lenses 32-34 form a deflection origin of the time is required to move the stage to correct a relatively
+polygonal mirror 28 at a position of a pupil 56 of a stop large amount of positional deviation, resulting in in
+55 for the objective lens 53. As a result, the reticle 1 50 creased time for the alignment. In both the cases, the
+surface and the wafer 4 surface are scanned by the laser throughput of the apparatus disadvantageously de
+beam of sheet-like shape or spot like shape with the Ce2SeS.
+rotation of the polygonal mirror 28.
+                                          Such inconveniences as described above are removed
+In this objective lens system, all the objective lens 53, by an exposure apparatus according to the embodiment
+stop 55, mirror 51 and prism 52 are adapted to be moved 55 shown in FIGS. 3 and 4. In a reduction projection type
+by an unshown driving mechanism in the directions of exposure apparatus such as shown in FIG. 3, the rela
+X and Y, so that the measuring points on the reticle 1 tive positional deviation between the reticle 1 and wafer
+and wafer 4 can be changed intentionally. For example, 4 which can be observed on the reticle 1 side differs in
+the displacement in the X direction can be achieved by magnitude from that which can be observed on the
+the movement of the mirror 51, objective lens 53 and 60 wafer 4 side, by such a degree that corresponds to the
+stop 55 in the direction of arrow A accompanied with reduction ratio of the projection lens 3. The present
+the movement of the prism 52 in the same direction of invention with reference to the FIG. 3 embodiment
+arrow A but through a distance which is equal to half of aims at introducing such feature into the alignment
+the amount of movement of the mirror 51, for maintain operation. More specifically, the exposure apparatus
+ing the optical path length constant. On the other hand, 65 according to the FIG. 3 embodiment is arranged such
+the displacement in the Y direction is achieved by dis that, if the relative positional deviation between the
+placing the whole of the position detecting optical reticle 1 and wafer 4 is greater than a predetermined
+sytem in the Y direction. By this, the alignment mark amount, at least the wafer stage 5 is moved to correct
+                   7                       4,669,867                        8
+
+the positional deviation, while if, on the other hand, the tion lens, the arrangement of displacing the reticle stage
+relative positional deviation is smaller than the prede 2 enables adjustment which is relatively fine as com
+termined amount, only the reticle stage 2 is driven. By pared with the adjustment by displacing the wafer stage
+this, reduction in the time for the alignment operation is 5, by a degree corresponding to the reduction ratio.
+assured with high accuracies in the alignment being Further, when the deviation is detected on the reticle
+
+maintained.                                            surface side and if the detected deviation is corrected or
+
+Details of the operation of FIG. 3 embodiment will compensated for by displacing the wafer stage 5, the
+now be described.
+                                                       amount of displacement is reduced. Since the deviation
+After completion of one shot relative to one of the A6 is not related to the reduction ratio, either one of the
+areas on the wafer 4, the wafer stage 5 is moved step O reticle stage 2 and wafer stage 5 may be driven at the
+wise so that the next area to be exposed on the wafer 4 steps 305 and 306.
+is positioned in the projection field of the projection If, at the step 307, any one of the deviations AX and
+lens 3. Subsequently, the auto-alignment operation is AY is higher than the threshold T, the sequence pro
+initiated (step 301). Then, the laser beam 30 is scan ceeds to step 308 whereat the wafer stage 5 is driven by
+ningly deflected by the polygonal mirror 28 and the 15 the wafer stage driving unit 62 to effect relatively
+scattered light from the alignment marks 20, 20' on the coarse adjustment between the reticle 1 and wafer 4. If,
+reticle 1 and the alignment marks 21, 21' on the wafer 4 on the other hand, each of the deviations AX and AY is
+is received by each of the photodetectors 47 and 47", lower than the threshold T, the sequence proceeds to
+whereby an auto-alignment signal (which will hereinaf step 309 whereat the reticle stage 2 is driven by the
+ter be referred to as "A.A. signal') is taken up or re 20 reticle stage driving unit 61, whereby a relatively fine
+ceived (step 302). The A.A. signal contains information adjustment between the reticle 1 and wafer 4 is effected.
+on the deviations AXL and AYL, on the reticle 1 sur In any case of relatively coarse adjustment and rela
+face, between the alignment marks 20 and 21 with re tively fine adjustment, the sequence returns via a loop
+spect to the directions of X and Y, respectively, and
+information on the deviations AXR and AYR between 25 311 to the steps 302 and 303 for detecting the relative
+the alignment marks 20' and 21' with respect to the positional deviation between the reticle 1 and wafer 4.
+directions of X and Y. Subsequently, the relative posi In this manner, the loop 311 proceeding from step 302
+tional deviations AX, AY and A6 between the reticle 1 to step 309 is repeated until the relative positional devia
+and wafer 4 with respect to the directions of X, Y and tion comes into the allowable range. When the posi
+0 is calculated (step 303). Each of the deviations AX, 30 tional deviation comes into the allowable range, the
+AY and A6 can be obtained by the following equations: sequence follows a branch from the step 304 whereby
+                                                       the alignment is completed (step 310).
+
+AX=(AXL--AXR)/2                            (1) While in the present embodiment a selected one of
+
+AY=(AYL--AYR)/2                                        the reticle stage 2 and wafer stage 5 is driven to correct
+                                           (2) 35 the positional deviation, both the stages may be simulta
+                                           (3) neously driven until the threshold T is reached. In such
+A0=(AYR-AYL)/(XR-XL)                                   case, only the reticle stage is driven after the positional
+
+wherein XL and XR are the positions of the left-hand deviation comes into the relatively fine adjustment
+side mark 20 and right-hand side mark 20' with respect range (the range not greater than the threshold). Such
+to the center of the reticle 1, and (XR-XL) is the dis 40 arrangement enables further reduction in the alignment
+...tance between these marks.                          time.
+
+Subsequently, whether or hot both the deviations AX In accordance with the present embodiment, the
+and AY are within predetermined allowable ranges, reticle stage 2 and wafer stage 5 are selectively driven.
+respectively, is discriminated (step 304) and, if not This maintains high accuracies without making the
+within the permissible ranges, the sequence proceeds to 45 minimum displaceable length of each stage smaller and
+step 305. At the step 305, whether or not the deviation assures reduction in the time for the alignment opera
+A6 is within a predetermined allowable range is dis tion, which advantageously improves the throughput of
+criminated. If the deviation A8 is not within the allow the apparatus.
+able range, the reticle stage 2 or wafer stage 5 is driven An exposure apparatus according to another embodi
+by the reticle stage driving unit 61 or wafer stage driv 50 ment of the present invention will now be described
+ing unit 62 (step 306). Thus the sequence proceeds to with reference to FIGS. 5 and 6.
+step 307. If the above deviation A0 is within the permis In summary, the present embodiment is based on such
+sible range, the step 306 is passed by so that the se finding that the amount of deviation with respect to one
+quence proceeds directly to the step 307.              of the chip areas is substantially or approximately equal
+
+At the step 307, the deviations AX and AY are com 55 to those with respect to the adjacent chip areas. In
+pared with the threshold T which has preparatively accordance with such finding, the exposure apparatus
+stored in the processing unit 60. As described in the according to the present embodiment is arranged such
+foregoing, the threshold T has been determined to mini that, on the basis of the amount of deviation detected
+mize the time required for the alignment operation, during the alignment operation for one of the shots, the
+while taking into account the peculiarities, on the move 60 amount of stepwise movement for the succeeding shot
+ment, of the reticle stage 2 and wafer stage 5themselves is controlled, to thereby minimize the amount of initial
+(e.g. dynamic and static characteristics of the stage, positional deviation at the succeeding shot and thus
+characteristics of the driving system, resolution in the minimize the time required for the alignment operation
+feeding, etc.). Since, in the exposure apparatus of reduc for the succeeding shot. In FIG. 5, the same reference
+tion projection type, the pattern projected onto the 65 numerals as in the foregoing embodiment are assigned
+wafer 4 is reduced both in the directions of X and Y as to corresponding elements.
+compared with the original (the pattern of the reticle 1) As is shown in FIG. 5, the exposure apparatus in
+in correspondence to the reduction ratio of the projec cludes a reticle stage 2 for holding a reticle 1 by vacuum
+            9 4,669,867 10
+suction, and a wafer stage 5 for holding a wafer 4 by has been however found that, if, for example, the expo
+vacuum suction. The wafer stage 5 is adapted to be sure of the wafer 4 is effected in the order as denoted by
+moved by a wafer stage driving unit 61 in the directions arrows in FIG. 8, the positional deviation with respect
+of X, Y and 0. After completion of each shot, the wafer to an area 4b is substantially or approximately equal to
+stage 5 is moved stepwise so that different areas on the that of each of the adjacent areas, e.g. such as 4a and 4c.
+wafer 4 are sequentially positioned in the projection On the basis of such finding, the exposure apparatus
+field of a projection lens 3 having an equal or reduced according to the present embodiment is arranged such
+magnification. The wafer stage 5 is also adapted to be that, if for example the exposure of the area 4b has just
+moved in the directions of X, Y and 6 by the wafer stage been finished, the stepwise movement of the stage 5 for
+driving unit 61 in accordance with the amount of posi 10 the succeeding shot of the area 4c is controlled on the
+tional deviation detected by a processing unit 60 upon basis of the deviations AX and AY detected during the
+the aligment operation for the reticle 1 and wafer 4 after alignment with respect to the area 4b. Particularly, in
+the stepwise movement of the wafer stage 5. At the time accordance with the present embodiment, the first
+of position correction, the reticle 1 is maintained at its detected values AX0 and AYo are selected to control the
+initial position, in the present embodiment. However, as 15 amount of subsequent stepwise movement. This is be
+in the foregoing embodiment, the reticle 1 may be cause these first-detected values will appear, substan
+moved through the reticle stage 2 during the alignment tially as they are, in the succeeding exposure due to the
+operation. Since the other portion of the structure of the above-described factors (1)-(3).
+present embodiment is essentially the same as that in the Thus, after completion of exposure (step 510), only
+foregoing embodiment, the description thereof will be 20 the first-detected positional deviations AXo and AYo
+omitted here only for the sake of simplicity.    obtained during the alignment with respect to the pre
+The operation of the present embodiment on the basis ceding shot and stored by the step 507 are read out (step
+of the output of the processing unit 60 will now be 511). Subsequently, the deviations AX0 and AYo are
+described with reference to FIG. 6.              added to a predetermined amount of stepwise move
+
+When the wafer stage 5 is loaded with the wafer 4 25 ment X0, Yo which is in accordance with the area on the
+(step 501), the wafer stage 5 is moved so that the first wafer 4 to be exposed by the succeeding shot, whereby
+area to be exposed on the wafer 4 is positioned in the the amount of stepwise movement for the shot of the
+projection field of the projection lens 3 (step 502). Sub succeeding area is calculated. This calculation may of
+sequently, an A.A. signal for the auto-alignment is taken course be effected during the current shot of exposure.
+up by means of photodetectors 47 and 47" (step 503) and 30 In accordance with the calculated amount of move
+thereafter the positional deviations AX, AY and A6 ment, the wafer stage 5 is moved stepwise (step 514) and
+between the reticle 1 and wafer 4 are calculated by the the alignment operation for the succeeding shot of ex
+processing unit 60 on the basis of the detected A.A. posure is effected (step 503). During this alignment
+signal (step 504). The calculation is essentially the same operation, the first-detected deviations are stored (step
+as that in the foregoing embodiment.             35 507). In this mahner, alignment, exposure and corrected
+
+Then, whether or not each of the deviations AX, AY stepwise movement are effected for each of the areas to
+and A6 is within an allowable range is discriminated be exposed: By this, the positional deviation at the initia
+(step 505) and, if not, the sequence proceeds to step 508 tion of the alignment operation for each of the areas to
+through step 506 or steps 506 and 507 whereat the pro be exposed is significantly decreased so that the time
+cessing unit 60 supplies an instruction signal to the required for the alignment is reduced.
+wafer stage driving unit 61 to move the wafer stage 5 When the completion of exposure relative to the
+minutely to correct the deviations. This minute move whole surface of the wafer is detected (step 513), the
+ment of the wafer stage 5 is repeated via a loop 509 until wafer 4 is taken out (step 515) and another wafer is
+the deviation comes into the permissible range.  supplied. Thus, the operation is re-started with the step
+On the other hand, step 506 is provided to discrimi 45 501.
+nate whether or not the deviations AX and AY detected In accordance with the present embodiment, the
+by the step 504 are the first-detected deviations with stepwise movement for each shot is corrected or con
+respect to each of the areas, to be exposed on the wafer trolled, whereby the positional deviation between the
+4 and only the first-detected deviations AXo and AYoare reticle 1 and wafer 4 with respect to each of the areas to
+stored (step 507). Namely, only the first-detected values 50 be exposed on the wafer 4 is minimized after the wafer
+AXo and AYo are stored, while the subsequently 4 is moved stepwise. As a result, the time required for
+detected values AX1, AY1; AX2, AY2; . . . AXn, AYn are the aligment is reduced and, therefore, the throughput
+neglected.                                       of the apparatus is improved.
+
+When the completion of alignment is detected at the An exposure apparatus according to a further em
+step 505, the exposure operation is effected (step 510). 55 bodiment of the present invention will now be de
+After the exposure, the wafer stage 5 is moved stepwise scribed with reference to FIGS. 9 and 10. Briefly, the
+so that the succeeding shot area is positioned in the present embodiment provides further improvements
+projection field of the projection lens 3. The amount of over the foregoing embodiments. In other words, the
+this stepwise movement will now be described in detail. present embodiment depends on the foregoing embodi
+Major factors for the relative positional deviation 60 ments in that the alignment between the reticle 1 and
+between the reticle 1 and wafer 4 are:           wafer 4 with respect to each of the areas to be exposed
+
+(1) Accuracies in the wafer stage movement;      on the wafer 4 is achieved by moving, as required, at
+(2) Magnification error and distortion in the pattern least one of the reticle stage 2 and wafer stage 5 and in
+projection during the preceding exposure step using that the amount of stepwise movement of the wafer
+the preceding reticle; and
+                                                 65 stage 5 is corrected or controlled in accordance with
+(3) Expansion or contraction of wafer and/or reticle. the positional deviation between the reticle 1 and wafer
+The positional deviation is not constant with respect 4 which has been detected during the alignment opera
+to different areas, to be exposed, on the same wafer. It tion for the preceding shot of exposure.
+                        11                         4,669,867  12
+
+In summary, the invention with reference to the pres shot position (step 602). When the wafer stage 5 reaches
+ent embodiment is based on the following finding:        the first shot position, the positional deviation of the
+
+  If, in such exposure apparatus as described above and wafer stage 5 is measured by the laser interferometers
+when the wafer stage is moved stepwise, the reticle is 72a-72c shown in FIG. 9 (step 603). Alternatively, the
+held at a position whereat it is in correct alignment with 5 measurement may be effected by using the alignment
+the wafer with reference to the preceding shot, the marks on the reticle 1 and wafer 4 as in the foregoing
+initial positional deviation between the reticle and the embodiments.
+wafer when the stepwise movement of the wafer stage Subsequently, the reticle stage 2 is moved by a reticle
+is just completed will be probably larger. This is illus stage driving unit 61 (step 604a) to correct the posi
+
+trated in FIG. 11C. As will be seen from this Figure, if, O tional deviation measured at the step 603, whereby the
+upon the first stepwise movement of the wafer stage 5 auto-alignment with respect to the first shot is com
+for a particular idealistic displacement 1 (small letter of pleted. Simultaneously therewith, the position of the
+L), the actual displacement of the wafer stage 5 is L(1) reticle stage 2 at this time is stored into a memory (step
+so that an error Ali is caused, the reticle stage 2 is 604b). By this, the reference position Po of the reticle
+moved from the reference position Poto a position P1 to 15 stage 2 is determined. Thereafter, the exposure is ef.
+correct the error Ali. Upon the succeeding stepwise fected (step 605) and the first shot is finished.
+movement, an instruction signal is applied to the driving The exposure of the first shot is followed by align
+
+unit to cause the wafer stage 5 to move through a dis ment and exposure relative to the second shot. At step
+tance (1 - Ali). If, however, the actual displacement of 606a, the wafer stage 5 is moved stepwise to the second
+the wafer stage 5 in response to this instruction signal is 20 shot position. It is to be noted that, for the stepwise
+
+L(1 - All) so that an error A12 is caused, the reticle stage movement with respect to the second shot, correction
+2 has to be moved from the position P1 to a position P2 at step 606a is not effected. It is also to be noted that, at
+in order to achieve alignment between the reticle and the time of stepwise movement of the wafer stage 5 for
+wafer. In other words, the error A11--Al2 must be cor the second shot, the reticle stage 2 is at the alignment
+rected. Since the terminating point of the stepwise 25 completion position, i.e. the reference position Po, so
+movement of the wafer stage 5 fluctuates in accordance that operation for returning the reticle stage 2 to the
+with the normal or Gaussian distribution with respect to reference position Po at step 606b is not effected. When
+the reference position Po, this is an inevitable problem. the wafer stage 5 reaches the second shot position, the
+On the basis of such finding, the exposure apparatus positional deviation with respect to the second shot
+according to the present embodiment is arranged such position is measured by the laser interferometers
+that the reticle 1 is returned to the reference position Po 22a-22b or by using the alignment marks on the reticle
+for each stepwise movement of the wafer stage 5, to 1 and wafer 4 (step 607). Subsequently, the reticle stage
+thereby further reduce the aligment time and further 2 is moved to correct the positional deviation (step 608),
+improve the throughput of the apparatus. This will now whereby the alignment with respect to the second shot
+                                                         35 is completed. Thereafter, the exposure of the second
+be described in more detail.
+
+  In FIG. 9, the wafer stage 5 is moved stepwise, for shot is effected (step 609).
+each shot of exposure, to a predetermined position by a Subsequently, whether or not a predetermined num
+
+wafer stage driving unit 62. When the wafer stage 5 has ber of shots of exposures are finished is discriminated
+stopped moving, the position thereof is detected by (step 610) and, if so, the wafer 4 is taken out (step 611)
+laser interferometers 72a, 72b and 72c. That is, the laser 40 and another wafer 4 is supplied (step 601).
+interferometers 72a, 72b and 72c measure the movement If the predetermined number of shots are not yet
+of the wafer stage 5 in X and Y co-ordinates and rotas finished, the sequence returns to steps 606a and 606b
+tional deviation in 8 direction, in co-operation with a whereby alignment and exposure for the succeeding
+reflection mirror 71 having mirror surfaces disposed at shots are continued. That is, the wafer stage 4 is moved
+a right angle relative to each other. Denoted by refer 45 stepwise through a distance for compensating for the
+ence numeral 74 is a laser head for emitting a laser positional deviation which has been measured at step
+beam. The laser beam emitted from the laser head 74 is 607 with respect to the preceding shot (step 606a). Si
+deflected by a beam bender 76 and is then split by beam multaneously therewith, the reticle stage 2 is returned
+splitters 75a and 75b.                                   to the reference position Po (step 606b). The subsequent
+The operation of the present embodiment particu 50 operation follows in the manner as described above.
+larly on the basis of the output of a processing unit 60 The time required for the alignment operation ac
+will now be described with reference to the flow chart cording to the present embodiment will now be de
+
+shown in FIG. 10. As described in the foregoing, the scribed in more detail with reference to FIGS.
+wafer exposure for the manufacture of semiconductor 11A-1C. FIG. 11A illustrates movement of the reticle
+devices includes ten or more repetitions of pattern su 55 stage 2 and wafer stage 5 for the first shot. With respect
+perposition with the use of corresponding number of to the distance to the first shot position from the posi
+separate reticles. This requires alignment, for each of tion whereat the wafer 4 has actually been loaded on the
+the shots for the same wafer, between the reticle pattern wafer stage 5, the actual displacement or amount of
+which is to be currently printed on a particular area of movement D(d) of the wafer stage 5 fluctuates across
+the wafer with the pattern which has already been 60 the terminal point of the intended and idealistic dis
+printed on the particular area of the wafer by the pre placement (amount of movement) d of the wafer stage
+ceding shot using the preceding reticle. In other words, 5, so that a normal distribution N denoted by a broken
+on the first reticle pattern which has already been line in FIG. 11A is obtainable. In accordance with the
+printed on the wafer during the first exposure process, present embodiment, the position Po' of the reticle stage
+the subsequent reticle patterns must be accurately over 65 2 upon completion of the alignment for the first shot is
+
+laid.                                                    selected as the reference position Po of the reticle stage
+                                                         2 for each of the shots after the first shot, particularly
+  First, a wafer 4 is supplied to a wafer stage 5 (step
+601) and, then, the wafer stage 5 is moved to the first  after the second shot.
+                       13 4,669,867 14
+
+FIG. 11B illustrates movement of the reticle stage 2 means responsive to said discriminating means, for
+and wafer stage 5 for each of the shots after the first    correcting the positional deviation of said one por
+shot. In this FIG., 1 (small letter of L), designates the
+idealistic displacement of the wafer stage 5 for each      tion of the second object with respect to the first
+                                                           object;
+shot; each of L(l), L(1 - All), L(l-Al2), . . . designates 5 said deviation-correcting means operating to move at
+the actual displacement of the wafer stage 5; and each of
+All, Al2, Al3 . . . designates the amount of positional    least the second object when the positional devia
+
+deviation.                                                 tion detected by said detecting means is greater
+
+According to the present embodiment, the reticle           than the predetermined amount and operating to
+
+                                                           move only the first object where the positional
+stage 2 is returned to the reference position Po for each O deviation detected by said detecting means is not
+stepwise movement of the wafer stage 5. Therefore, as      greater than the predetermined amount, whereby
+will been seen from FIG. 11B, even if the actual dis
+                                                           said one portion of the second object is aligned
+placement of the wafer stage 5 fluctuates with respect to
+the reference position Po, only the movement of the        with respect to the first object; and said deviation
+                                                           correcting means operating to correct the posi
+reticle stage 2 for correcting the error Al 1, Al2, Al3 . . . 5 tional deviation of said one portion of the second
+or Aln is required. It is no more necessary to move the    object prior the initiation of the stepwise move
+reticle stage 2 through a distance corresponding to the
+                                                           ment of the second object for exposure of the sub
+error All--Al2. The movement of the reticle stage 2        sequent one of the plurality of different portions of
+back to the reference position Po is effected simulta
+                                                           second object.
+neously with the stepwise movement of the wafer stage 20 2. An apparatus according to claim 1, wherein said
+5. Thus, it does not adversely affect the time required    detecting means detects the positional deviation of said
+for the alignment operation.
+The error caused by the stepwise movement of the one portion of the second object with respect to the first
+wafer stage 5 may be measured by a laser interferome object, by way of said projection means.
+ter, magnetic scale in which information on the length is 25 3. An apparatus according to claim 1, further com
+recorded on a magnetic tape, or an optical scale in prising means for producing a scanning beam and
+which interference fringes formed by a slit is read out. wherein said detecting means operates to detect the
+As a further alternative, the positional deviation may be positional deviation using the scanning beam passing
+measured by using the alignment marks on the reticle 2 through said projection means.
+and wafer 4. In the last-mentioned case, a TTL align 30 4. An apparatus according to claim 1, wherein said
+ment system are preferable.                                detecting means is operated each time the second object
+In the foregoing embodiments, the term "reticle' is moved stepwise thereby to detect the positional devi
+comprehensively means a reticle or a mask. Further, the ation with respect to the first object of each of the plu
+present invention is also applicable to an exposure appa rality of different portions of the second object as se
+ratus of one-to-one magnification projection.              35 quentially positioned by stepwise movement by said
+While the invention has been described with refer driving means.
+ence to the structures disclosed herein, it is not confined 5. An apparatus for printing an image of a pattern of
+to the details set forth and this application is intended to a first object onto each of a plurality of different por
+cover such modifications or changes as may come tions of a second object, said apparatus comprising:
+within the purposes of the improvements or the scope of 40 projection means for projecting the image of the
+the following claims.                                      pattern of the first object onto the second object;
+                                                           means providing an exposure beam for irradiating the
+What is claimed is:                                        first object to transfer the image of the pattern of
+
+1. An apparatus for printing an image of a pattern of      the first object by way of said projection means
+a first object onto each of a plurality of different por
+tions of a second object, said apparatus comprising: 45 onto the second object;
+projection means for projecting the image of the driving means for moving stepwise the second object
+pattern of the first object onto the second object in      to sequentially position each of the plurality of
+
+a reduced scale;                                           different portions of the second object with respect
+means providing an exposure beam for irradiating the       to the first object for transfer of the image of the
+first object to transfer the image of the pattern of 50 pattern of the first object onto each of the plurality
+the first object by way of said projection means           of different portions of the second object by said
+onto the second object;                                    irradiating means;
+
+driving means for moving stepwise the second object means for detecting positional deviation of one of the
+to sequentially position each of the plurality of          plurality different portions of the second object
+
+different portions of the second object with respect 55 with respect to the first object, said one of the
+to the first object for transfer of the image of the       portions being that just positioned by the stepwise
+pattern of the first object onto each of the plurality
+of different portions of the second object by said         movement to be exposed to the image of the pat
+                                                           tern of the first object;
+irradiating means;                                         first adjusting means responsive to the detection by
+
+means for detecting positional deviation of one of the     said detecting means to move at least one of the
+plurality of different portions of the second object
+                                                           first and second objects to align the said one of the
+with respect to the first object, said one of said         plurality of portions of the second object with
+portions being that just positioned by the stepwise
+                                                           respect to the first object; and
+movement to be exposed to the image of the pat second adjusting means responsive to the detection
+tern of the first object;                                  65 by said detecting means and controlling said driv
+means for discriminating whether or not the posi
+                                                           ing means to change the amount of stepwise move
+tional deviation detected by said detecting means is       ment of the second object to be subsequently made
+greater than a predetermined amount; and
+                                                           by said driving means by an amount corresponding
+                             15  4,669,867                                        16
+
+to said positional deviation detected by said detect driving means for moving stepwise the second object
+                                                               to sequentially position each of the plurality of
+ing means.
+6. An apparatus according to claim 5, wherein said             different portions of the second object with respect
+                                                               to the first object for transfer of the image of the
+projection means projects the image of the pattern of
+the first object onto the second object in a reduced 5 pattern of the first object onto each of the plurality
+                                                               of different portions of the second object;
+scale.
+7. An apparatus according to claim 5, wherein said means for detecting positional deviation of one of the
+                                                               plurality of different portions of the second object
+detecting means detects the positional deviation of said       with respect to the first object, said one of portions
+
+one of the plurality of portions of the second object 10 being that just positioned by the stepwise move
+with respect to the first object, by way of said projec
+                                                               ment to be exposed to the image of the pattern of
+tion means.
+                                                               the first object;
+8. An apparatus according to claim 5, wherein detec first adjusting means responsive to the detection by
+tion by said detecting means and adjustment by said first
+                                                               said detecting means to move at least one of the
+adjusting means are repeated in an alternating order 15 first and second objects to align said one of the
+until the positional deviation detected by said detecting      plurality of portions of the second object with
+
+means reaches a value not greater than a predetermined         respect to the first object; and
+                                                               second adjusting means responsive to the detection
+value.                                                         by said detecting means and controlling said driv
+
+9. An apparatus according to claim 8, wherein said
+second adjusting means operates to change the amount 20 ing means to change the amount of stepwise move
+                                                               ment of the second object to be subsequently made
+of stepwise movement of the second object to be made           by said driving means by an amount corresponding
+
+by said driving means in accordance with the positional        to said positional deviation detected by said detect
+
+deviation which is first detected by said detecting              ing means;
+means with respect to said one of the plurality of por 25      said first adjusting means moving the first object from
+tions of the second object.
+10. An apparatus for printing an image of a pattern of         its initial position when said first adjusting means
+                                                               moves the first object to align said one of the plu
+a first object onto each of a plurality of different por       rality of portions of the second object with respect
+tions of a second object, said apparatus comprising:
+                                                               to the first object; and said first adjusting means
+projection means for projecting the image of the 30 moving the first object back to said initial position
+pattern of the first object onto the second object;            during the stepwise movement of the second object
+means providing an exposure beam for irradiating the
+                                                               to be subsequently made by said driving means for
+first object to transfer the image of the pattern of           the exposure of the subsequent one of the plurality
+
+the first object by way of said projection means               of portions of the second object.
+
+onto the second object;                                    35                     k sk k  sk
+
+                                                           45
+                                                           50
+                                                           55
+                                                           60
+                                                           65
+           UNITED STATES PATENT AND TRADEMARK OFFICE
+
+             CERTIFICATE OF CORRECTION
+
+PATENT NO. : 4, 669,867                    Page l of 2
+
+DATED          June 2, 1987
+
+INVENTOR(S) : KOJI UDA, ET AL,
+
+    it is certified that error appears in the above-identified patent and that said Letters Patent is hereby
+
+corrected as shown below:
+
+COLUMN
+
+Line l3, "large scaled" should read --large-scale--
+Line l4, "large scaled" should read -large-scale--
+
+COLUMN 3
+
+Line l5, "EMBODIMENT" should read --EMBODIMENTS--.
+
+COLUMN 5       "f-8" should read -f-0--.
+
+     Line 24,  "Spot like" should read --spot-like--.
+               "sytem" should read -system--.
+    Line 52,
+    Line 68,
+
+COLUMN 6       "position," should read --positions, --,
+
+    Line
+
+COLUMN 7
+
+Line           "Of FIG. 3" should read --of the FIG. 3.--
+
+Line           "hot" should read --not--.
+
+COLUMN 9       "aligment" should read -alignment--.
+
+    Line
+
+COLUMN LO
+
+Line 35, "Inahner," should read --manner, --,
+           UNITED STATES PATENT AND TRADEMARK OFFICE
+
+              CERTIFICATE OF CORRECTION
+
+PATENT NO. : 4, 669,867             Page 2 of 2
+
+DATED : June 2, 1987
+
+INVENTOR(S) : KOJI UDA, ET AL,
+
+    It is certified that error appears in the above-identified patent and that said Letters Patent is hereby
+
+Corrected as shown below:
+
+COLUMN .
+
+Line 33, "aligment" should read --alignment--.
+
+COLUMN 13
+
+Line 26, "is" should read --are--.
+Line 3l, "are" should read --is--.
+
+COLUMN 16     "of portions" should read --of said portions--.
+
+     Line 9,
+
+              Attest:                Signed and Sealed this
+                                 Thirteenth Day of October, 1987
+              Attesting Officer
+                                                      DONALD J. QUIGG
+
+                                           Commissioner of Patents and Trademarks
+

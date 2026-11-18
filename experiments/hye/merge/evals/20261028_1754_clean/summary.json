@@ -1,0 +1,13 @@
+{
+  "tool": "03_benchmark",
+  "created": "2026-10-28 18:00",
+  "dataset": "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean",
+  "photos": 341,
+  "tolerance": 0.09,
+  "note": "Same-photo scoring. Photos already used in development give a resubstitution score, not an independent one.",
+  "modules": {"joint": {"name": "00000_final_Y_T_joint", "assets": "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/experiments/hye/00000_final_Y_T_joint/assets"}, "control": {"name": "00000_final_Y_T control", "assets": "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/experiments/hye/00000_final_Y_T control/assets"}},
+  "results": {
+    "joint": {"photos": 341, "measured": 341, "labeled": 341, "pass": 341, "error_y": {"mean": 0.01698340147, "max": 0.07438845524, "p95": 0.04345267504}, "error_t": {"mean": 0.00300805369, "max": 0.01401214387, "p95": 0.007737438348}, "ms_median": 823.7379, "by_condition": {"T": {"photos": 200, "pass": 200}, "Y": {"photos": 80, "pass": 80}, "center": {"photos": 4, "pass": 4}, "mixed": {"photos": 57, "pass": 57}}},
+    "control": {"photos": 341, "measured": 341, "labeled": 341, "pass": 302, "error_y": {"mean": 0.1031247149, "max": 1.721643928, "p95": 1}, "error_t": {"mean": 0.07923889791, "max": 2, "p95": 0.1777941196}, "ms_median": 43.6245, "by_condition": {"T": {"photos": 200, "pass": 200}, "Y": {"photos": 80, "pass": 80}, "center": {"photos": 4, "pass": 4}, "mixed": {"photos": 57, "pass": 18}}}
+  }
+}

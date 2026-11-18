@@ -1,0 +1,7 @@
+photos 702 dev 560 final 142
+main_cv_fails 0 0 0 0 1 0 1 0 0 0 mean 0.20 worst 1 rmsY 0.01315 rmsT 0.00288 max|eY| 0.04239 max|eT| 0.01010
+half_fails 0 0 0 2 1 0 1 1 0 0 mean 0.50
+leave_one_session 20261014 98.7% 20261020 100.0% 20261029 100.0% 20261109_round4 93.9% all 98.2%
+final_check fails 0/142 max|eY| 0.03769 max|eT| 0.00886
+all_photos_resubstitution fails 0/702
+label_range Y -2.037200 1.962800 T -1.000230 1.012520

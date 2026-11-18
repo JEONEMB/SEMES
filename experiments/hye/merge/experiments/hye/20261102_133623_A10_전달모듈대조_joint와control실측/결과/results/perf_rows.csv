@@ -1,0 +1,5 @@
+experiment,method,split,n,mean_y,max_y,mean_t,max_t,pass_0045,pass_009
+A10,joint() delivered (QR+bars),in-range refit/OOF,563,0.0170,0.0731,0.0033,0.0150,0.9698,1.0000
+A10,"control() delivered (QR only, Y-or-T)",in-range refit/OOF,563,0.2524,2.3406,0.0464,0.4300,0.5258,0.7673
+A10,baseline 66d refit-all,in-range refit/OOF,563,0.0145,0.0923,0.0027,0.0185,0.9822,0.9982
+A10,baseline 66d OOF mixed4,in-range refit/OOF,563,0.0170,0.1927,0.0033,0.0427,0.9574,0.9929

@@ -1,0 +1,817 @@
+{
+ "scope": "Only permitted upper/lower long horizontal wall-structure edges; fixedcenter-derived profile masks (rig 20261112: same x ranges as SEMES, rows re-located on the rig center) (rig_grid_rev 20261113: rows re-located on the rev center)",
+ "center_sha256": "27643972d639003d41ea6fa410c8bc2c2f5bddac2bd108d0922802c93344decc",
+ "selected_before_current_measurement": true,
+ "regions": [
+  {
+   "name": "upper_left",
+   "line": "upper",
+   "x_range": [
+    400,
+    1168
+   ],
+   "reference_edge_search_y": [
+    963,
+    976
+   ],
+   "polarity": 1
+  },
+  {
+   "name": "upper_right",
+   "line": "upper",
+   "x_range": [
+    2700,
+    3468
+   ],
+   "reference_edge_search_y": [
+    994,
+    1004
+   ],
+   "polarity": 1
+  },
+  {
+   "name": "lower_left",
+   "line": "lower",
+   "x_range": [
+    400,
+    1168
+   ],
+   "reference_edge_search_y": [
+    1947,
+    1952
+   ],
+   "polarity": -1
+  },
+  {
+   "name": "lower_right",
+   "line": "lower",
+   "x_range": [
+    2600,
+    3368
+   ],
+   "reference_edge_search_y": [
+    1966,
+    1979
+   ],
+   "polarity": -1
+  }
+ ],
+ "blocks": [
+  {
+   "id": "upper_left_00",
+   "line": "upper",
+   "side": "left",
+   "x0": 400,
+   "x1": 464,
+   "reference_y": 966,
+   "read_box": [
+    400,
+    942,
+    464,
+    991
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_01",
+   "line": "upper",
+   "side": "left",
+   "x0": 464,
+   "x1": 528,
+   "reference_y": 963,
+   "read_box": [
+    464,
+    939,
+    528,
+    988
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_02",
+   "line": "upper",
+   "side": "left",
+   "x0": 528,
+   "x1": 592,
+   "reference_y": 967,
+   "read_box": [
+    528,
+    943,
+    592,
+    992
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_03",
+   "line": "upper",
+   "side": "left",
+   "x0": 592,
+   "x1": 656,
+   "reference_y": 969,
+   "read_box": [
+    592,
+    945,
+    656,
+    994
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_04",
+   "line": "upper",
+   "side": "left",
+   "x0": 656,
+   "x1": 720,
+   "reference_y": 968,
+   "read_box": [
+    656,
+    944,
+    720,
+    993
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_05",
+   "line": "upper",
+   "side": "left",
+   "x0": 720,
+   "x1": 784,
+   "reference_y": 969,
+   "read_box": [
+    720,
+    945,
+    784,
+    994
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_06",
+   "line": "upper",
+   "side": "left",
+   "x0": 784,
+   "x1": 848,
+   "reference_y": 972,
+   "read_box": [
+    784,
+    948,
+    848,
+    997
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_07",
+   "line": "upper",
+   "side": "left",
+   "x0": 848,
+   "x1": 912,
+   "reference_y": 971,
+   "read_box": [
+    848,
+    947,
+    912,
+    996
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_08",
+   "line": "upper",
+   "side": "left",
+   "x0": 912,
+   "x1": 976,
+   "reference_y": 973,
+   "read_box": [
+    912,
+    949,
+    976,
+    998
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_09",
+   "line": "upper",
+   "side": "left",
+   "x0": 976,
+   "x1": 1040,
+   "reference_y": 973,
+   "read_box": [
+    976,
+    949,
+    1040,
+    998
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_10",
+   "line": "upper",
+   "side": "left",
+   "x0": 1040,
+   "x1": 1104,
+   "reference_y": 974,
+   "read_box": [
+    1040,
+    950,
+    1104,
+    999
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_left_11",
+   "line": "upper",
+   "side": "left",
+   "x0": 1104,
+   "x1": 1168,
+   "reference_y": 976,
+   "read_box": [
+    1104,
+    952,
+    1168,
+    1001
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_00",
+   "line": "upper",
+   "side": "right",
+   "x0": 2700,
+   "x1": 2764,
+   "reference_y": 997,
+   "read_box": [
+    2700,
+    973,
+    2764,
+    1022
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_01",
+   "line": "upper",
+   "side": "right",
+   "x0": 2764,
+   "x1": 2828,
+   "reference_y": 994,
+   "read_box": [
+    2764,
+    970,
+    2828,
+    1019
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_02",
+   "line": "upper",
+   "side": "right",
+   "x0": 2828,
+   "x1": 2892,
+   "reference_y": 998,
+   "read_box": [
+    2828,
+    974,
+    2892,
+    1023
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_03",
+   "line": "upper",
+   "side": "right",
+   "x0": 2892,
+   "x1": 2956,
+   "reference_y": 1000,
+   "read_box": [
+    2892,
+    976,
+    2956,
+    1025
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_04",
+   "line": "upper",
+   "side": "right",
+   "x0": 2956,
+   "x1": 3020,
+   "reference_y": 1000,
+   "read_box": [
+    2956,
+    976,
+    3020,
+    1025
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_05",
+   "line": "upper",
+   "side": "right",
+   "x0": 3020,
+   "x1": 3084,
+   "reference_y": 1001,
+   "read_box": [
+    3020,
+    977,
+    3084,
+    1026
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_06",
+   "line": "upper",
+   "side": "right",
+   "x0": 3084,
+   "x1": 3148,
+   "reference_y": 1001,
+   "read_box": [
+    3084,
+    977,
+    3148,
+    1026
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_07",
+   "line": "upper",
+   "side": "right",
+   "x0": 3148,
+   "x1": 3212,
+   "reference_y": 1001,
+   "read_box": [
+    3148,
+    977,
+    3212,
+    1026
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_08",
+   "line": "upper",
+   "side": "right",
+   "x0": 3212,
+   "x1": 3276,
+   "reference_y": 1003,
+   "read_box": [
+    3212,
+    979,
+    3276,
+    1028
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_09",
+   "line": "upper",
+   "side": "right",
+   "x0": 3276,
+   "x1": 3340,
+   "reference_y": 1004,
+   "read_box": [
+    3276,
+    980,
+    3340,
+    1029
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_10",
+   "line": "upper",
+   "side": "right",
+   "x0": 3340,
+   "x1": 3404,
+   "reference_y": 1004,
+   "read_box": [
+    3340,
+    980,
+    3404,
+    1029
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "upper_right_11",
+   "line": "upper",
+   "side": "right",
+   "x0": 3404,
+   "x1": 3468,
+   "reference_y": 1004,
+   "read_box": [
+    3404,
+    980,
+    3468,
+    1029
+   ],
+   "edge_polarity": 1
+  },
+  {
+   "id": "lower_left_00",
+   "line": "lower",
+   "side": "left",
+   "x0": 400,
+   "x1": 464,
+   "reference_y": 1947,
+   "read_box": [
+    400,
+    1923,
+    464,
+    1972
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_01",
+   "line": "lower",
+   "side": "left",
+   "x0": 464,
+   "x1": 528,
+   "reference_y": 1948,
+   "read_box": [
+    464,
+    1924,
+    528,
+    1973
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_02",
+   "line": "lower",
+   "side": "left",
+   "x0": 528,
+   "x1": 592,
+   "reference_y": 1950,
+   "read_box": [
+    528,
+    1926,
+    592,
+    1975
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_03",
+   "line": "lower",
+   "side": "left",
+   "x0": 592,
+   "x1": 656,
+   "reference_y": 1950,
+   "read_box": [
+    592,
+    1926,
+    656,
+    1975
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_04",
+   "line": "lower",
+   "side": "left",
+   "x0": 656,
+   "x1": 720,
+   "reference_y": 1948,
+   "read_box": [
+    656,
+    1924,
+    720,
+    1973
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_05",
+   "line": "lower",
+   "side": "left",
+   "x0": 720,
+   "x1": 784,
+   "reference_y": 1950,
+   "read_box": [
+    720,
+    1926,
+    784,
+    1975
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_06",
+   "line": "lower",
+   "side": "left",
+   "x0": 784,
+   "x1": 848,
+   "reference_y": 1949,
+   "read_box": [
+    784,
+    1925,
+    848,
+    1974
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_07",
+   "line": "lower",
+   "side": "left",
+   "x0": 848,
+   "x1": 912,
+   "reference_y": 1949,
+   "read_box": [
+    848,
+    1925,
+    912,
+    1974
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_08",
+   "line": "lower",
+   "side": "left",
+   "x0": 912,
+   "x1": 976,
+   "reference_y": 1950,
+   "read_box": [
+    912,
+    1926,
+    976,
+    1975
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_09",
+   "line": "lower",
+   "side": "left",
+   "x0": 976,
+   "x1": 1040,
+   "reference_y": 1951,
+   "read_box": [
+    976,
+    1927,
+    1040,
+    1976
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_10",
+   "line": "lower",
+   "side": "left",
+   "x0": 1040,
+   "x1": 1104,
+   "reference_y": 1951,
+   "read_box": [
+    1040,
+    1927,
+    1104,
+    1976
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_left_11",
+   "line": "lower",
+   "side": "left",
+   "x0": 1104,
+   "x1": 1168,
+   "reference_y": 1952,
+   "read_box": [
+    1104,
+    1928,
+    1168,
+    1977
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_00",
+   "line": "lower",
+   "side": "right",
+   "x0": 2600,
+   "x1": 2664,
+   "reference_y": 1966,
+   "read_box": [
+    2600,
+    1942,
+    2664,
+    1991
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_01",
+   "line": "lower",
+   "side": "right",
+   "x0": 2664,
+   "x1": 2728,
+   "reference_y": 1968,
+   "read_box": [
+    2664,
+    1944,
+    2728,
+    1993
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_02",
+   "line": "lower",
+   "side": "right",
+   "x0": 2728,
+   "x1": 2792,
+   "reference_y": 1969,
+   "read_box": [
+    2728,
+    1945,
+    2792,
+    1994
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_03",
+   "line": "lower",
+   "side": "right",
+   "x0": 2792,
+   "x1": 2856,
+   "reference_y": 1969,
+   "read_box": [
+    2792,
+    1945,
+    2856,
+    1994
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_04",
+   "line": "lower",
+   "side": "right",
+   "x0": 2856,
+   "x1": 2920,
+   "reference_y": 1971,
+   "read_box": [
+    2856,
+    1947,
+    2920,
+    1996
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_05",
+   "line": "lower",
+   "side": "right",
+   "x0": 2920,
+   "x1": 2984,
+   "reference_y": 1972,
+   "read_box": [
+    2920,
+    1948,
+    2984,
+    1997
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_06",
+   "line": "lower",
+   "side": "right",
+   "x0": 2984,
+   "x1": 3048,
+   "reference_y": 1973,
+   "read_box": [
+    2984,
+    1949,
+    3048,
+    1998
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_07",
+   "line": "lower",
+   "side": "right",
+   "x0": 3048,
+   "x1": 3112,
+   "reference_y": 1974,
+   "read_box": [
+    3048,
+    1950,
+    3112,
+    1999
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_08",
+   "line": "lower",
+   "side": "right",
+   "x0": 3112,
+   "x1": 3176,
+   "reference_y": 1976,
+   "read_box": [
+    3112,
+    1952,
+    3176,
+    2001
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_09",
+   "line": "lower",
+   "side": "right",
+   "x0": 3176,
+   "x1": 3240,
+   "reference_y": 1976,
+   "read_box": [
+    3176,
+    1952,
+    3240,
+    2001
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_10",
+   "line": "lower",
+   "side": "right",
+   "x0": 3240,
+   "x1": 3304,
+   "reference_y": 1978,
+   "read_box": [
+    3240,
+    1954,
+    3304,
+    2003
+   ],
+   "edge_polarity": -1
+  },
+  {
+   "id": "lower_right_11",
+   "line": "lower",
+   "side": "right",
+   "x0": 3304,
+   "x1": 3368,
+   "reference_y": 1979,
+   "read_box": [
+    3304,
+    1955,
+    3368,
+    2004
+   ],
+   "edge_polarity": -1
+  }
+ ],
+ "method": "Average64 image columns to one normal intensity profile per fixed block; sigma1 smoothing only inside49-row read box; match21-sample reference profile by continuous vertical shift and affine intensity normalization; no horizontal tracking, texture descriptor or forbidden object input.",
+ "parameters": {
+  "block_width": 64,
+  "blocks_per_segment": 12,
+  "profile_smoothing_sigma": 1.0,
+  "reference_half_width": 10,
+  "search_half_width": 12,
+  "read_half_width": 24,
+  "correlation_min": 0.9,
+  "contrast_min": 5.0,
+  "positive_gain_range": [
+   0.25,
+   4.0
+  ],
+  "max_abs_shift_for_valid": 11.5
+ },
+ "features": "24 vertical shifts per upper/lower line (left12,right12); measured coordinates and all per-block validity diagnostics retained",
+ "failure_policy": "X value is NaN for an invalid block; success_upper/lower requires all24 blocks valid. Raw measured shifts and failure reasons remain saved. No label-dependent omission or point replacement.",
+ "outside_mask_policy": "Every current image sample read by extractor is inside the union of fixed49x64 boxes. Gaussian smoothing is applied only to extracted1D profiles. No full-image blur/NCC/ECC.",
+ "prohibited_inputs": [
+  "bolts",
+  "nuts",
+  "screws",
+  "bracket",
+  "handle",
+  "general background texture",
+  "prior external5ROI measurements",
+  "current filename/date/pose label"
+ ],
+ "limits": [
+  "Long straight edges constrain displacement normal to the line; tangential/horizontal displacement has an aperture ambiguity.",
+  "Fixed-x blocks identify portions of the same geometric line, not independent persistent3D material points along it.",
+  "The measured edge includes a photometric transition on the structural ridge; lighting and shadow changes can shift its apparent position.",
+  "Search is limited to plus/minus12px and does not switch to a different edge if the selected one is lost.",
+  "All341 images remain exposed development data. No real robot-feedback sequence is being measured."
+ ]
+}

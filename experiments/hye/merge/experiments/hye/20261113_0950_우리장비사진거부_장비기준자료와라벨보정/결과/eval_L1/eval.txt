@@ -1,0 +1,7 @@
+photos 1959 dev 1567 final 392
+main_cv_fails 262 266 260 264 265 259 265 259 262 264 mean 262.60 worst 266 rmsY 0.01247 rmsT 0.00704 max|eY| 0.05931 max|eT| 0.02102
+half_fails 262 268 261 268 266 261 266 256 269 259 mean 263.60
+leave_one_session rig_1st 58.5% rig_grid 37.4% all 40.4%
+final_check fails 54/392 max|eY| 0.04719 max|eT| 0.01717
+all_photos_resubstitution fails 308/1959
+label_range Y -1.999300 2.019280 T -1.026610 0.977180

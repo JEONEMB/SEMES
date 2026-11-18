@@ -1,0 +1,12 @@
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261014/Theta/T-0.37.bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261014/Theta/T+0.64.bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261014/Y/Y-1.05.bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261014/Theta/T-0.20.bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261029/Y+0.05 T+0.60/Y+0.05 T+0.60 (2).bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261029/Y+0.05 T+0.44/Y+0.05 T+0.44 (3).bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261029/Y+0.05 T+0.52/Y+0.05 T+0.52 (2).bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261029/Y+0.05 T+0.20/Y+0.05 T+0.20 (3).bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261014/Y/Y+0.70.bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261014/Theta/T+0.96.bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261029/Y+0.05 T+0.57/Y+0.05 T+0.57 (3).bmp
+C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261014/Theta/T+0.29.bmp

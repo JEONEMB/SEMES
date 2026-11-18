@@ -1,0 +1,149 @@
+{
+  "date": "2026-10-28",
+  "topic": "20261028_01_joint_QR_상하선_Cpp이식",
+  "status": "기준 joint 모델의 C++ 이식 개발 기록",
+  "operation": "Verified copy snapshot. Existing delivery paths and build wiring retained; no runtime behavior changed.",
+  "source_module": "experiments/00000_final_Y_T_joint",
+  "files_checked": 23,
+  "all_copies_sha256_equal": true,
+  "files": [
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/CMakeLists.txt",
+      "snapshot_relative": "snapshot/module/CMakeLists.txt",
+      "sha256": "fcac28d195322159f316f0adf57d4d2cf0305b4655ffeb0634f641ce25d18c3e",
+      "bytes": 1977
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/README.md",
+      "snapshot_relative": "snapshot/module/README.md",
+      "sha256": "fe413f53dd6d04235c43c265c771956c0938c3e1682f4064a76e8ef75a852c54",
+      "bytes": 5581
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/assets/both_model.json",
+      "snapshot_relative": "snapshot/module/assets/both_model.json",
+      "sha256": "53a459861ecadc5e4d6491143b73d6b651ba166fd3a3099c186803b27e279a7d",
+      "bytes": 42895
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/assets/center.bmp",
+      "snapshot_relative": "snapshot/module/assets/center.bmp",
+      "sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "bytes": 24883254
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/assets/geometry.json",
+      "snapshot_relative": "snapshot/module/assets/geometry.json",
+      "sha256": "25d635a7b239b7891954aa0b0381380709167ab2c44ed8bc0ec7b80269bf83ac",
+      "bytes": 127597
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/assets/line_protocol.json",
+      "snapshot_relative": "snapshot/module/assets/line_protocol.json",
+      "sha256": "526f34ec495941759efd7564351aed4227160258495448bb7b63683a1a241caa",
+      "bytes": 16348
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/assets/provenance.json",
+      "snapshot_relative": "snapshot/module/assets/provenance.json",
+      "sha256": "7b19046933a281e9898e657d0a3661766607ff52381b232e32648808682d2687",
+      "bytes": 2119
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/include/ecc_compat.hpp",
+      "snapshot_relative": "snapshot/module/include/ecc_compat.hpp",
+      "sha256": "6c653eb805f6d2b50cf6368be988e48235c166b2c278f87100be9c85a33c7afb",
+      "bytes": 298
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/include/observer_internal.hpp",
+      "snapshot_relative": "snapshot/module/include/observer_internal.hpp",
+      "sha256": "f01c5f8c3d5e837d27d0b7d02b70551c14e6413656e993acb3ad72e9a3001c0c",
+      "bytes": 1529
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/results/native_20261028_001/predictions.csv",
+      "snapshot_relative": "snapshot/module/results/native_20261028_001/predictions.csv",
+      "sha256": "a0f83d9600455f8e13b60c8417c84f2863578697e27a5bc2933e2a0b2de09b55",
+      "bytes": 42098
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/results/native_20261028_001/python_full_model_comparison.csv",
+      "snapshot_relative": "snapshot/module/results/native_20261028_001/python_full_model_comparison.csv",
+      "sha256": "26e167e7136d3684bcf122ad8ac0266ffcef6bc7f86e79173f8fbe903948fb3b",
+      "bytes": 48896
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/results/native_20261028_001/README.md",
+      "snapshot_relative": "snapshot/module/results/native_20261028_001/README.md",
+      "sha256": "18abb35ea8231e337141fc5bb8a142d4d4f3a627f888c214e148c341b8fa2ca3",
+      "bytes": 2644
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/results/native_20261028_001/verification.json",
+      "snapshot_relative": "snapshot/module/results/native_20261028_001/verification.json",
+      "sha256": "4cc638bbacfb6ffff2fee4cff41340f4dad2cf8521ca1f7bb3f0f367d3027166",
+      "bytes": 1226
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/src/joint.cpp",
+      "snapshot_relative": "snapshot/module/src/joint.cpp",
+      "sha256": "f4ff580a02be0009a9e8c5c1d083bddaed9bae1e63c2b200c628a7a125b9ebfd",
+      "bytes": 3538
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/src/line_profile.cpp",
+      "snapshot_relative": "snapshot/module/src/line_profile.cpp",
+      "sha256": "00ac5ab2ebd9daac87cbb6291b7277406615a95fcf1e95576abbdd69cc17d436",
+      "bytes": 3373
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/src/observer.cpp",
+      "snapshot_relative": "snapshot/module/src/observer.cpp",
+      "sha256": "f7baac239116cc155d9208ee8409ce94298dc1ae55ca77bc7016db2e534f8083",
+      "bytes": 7245
+    },
+    {
+      "source_repository_relative": "experiments/00000_final_Y_T_joint/third_party/ecc_compat.cpp",
+      "snapshot_relative": "snapshot/module/third_party/ecc_compat.cpp",
+      "sha256": "c32c913bb2c2d7a055e4a00061ecce1f71f8738bc9a07003a139546e5f82b515",
+      "bytes": 22335
+    },
+    {
+      "source_repository_relative": "include/alignment.hpp",
+      "snapshot_relative": "snapshot/repository_context/include/alignment.hpp",
+      "sha256": "74a12d77266a4b96e09c5029b7f51719f90b83516d452db259ded5fe88b33df4",
+      "bytes": 1263
+    },
+    {
+      "source_repository_relative": "src/alignment.cpp",
+      "snapshot_relative": "snapshot/repository_context/src/alignment.cpp",
+      "sha256": "dc65cd1a0a03715ecb3929ddd25c8643de456e4ed77a559021144f406a1336a3",
+      "bytes": 175
+    },
+    {
+      "source_repository_relative": "src/main.cpp",
+      "snapshot_relative": "snapshot/repository_context/src/main.cpp",
+      "sha256": "5e88fb51bc2aade6ea658e979d1bd37efecec030a2f7f82783a391592bdceae8",
+      "bytes": 1526
+    },
+    {
+      "source_repository_relative": "CMakeLists.txt",
+      "snapshot_relative": "snapshot/repository_context/CMakeLists.txt",
+      "sha256": "fe29cb7062348fcbae2a29cc0f276a2a9dbf52bd96474ea634424f18e61bf143",
+      "bytes": 858
+    },
+    {
+      "source_repository_relative": "tests/alignment_checks.cpp",
+      "snapshot_relative": "snapshot/repository_context/tests/alignment_checks.cpp",
+      "sha256": "3f2987cfb044432c5992ccc4257750d091ed32f14a5cb1a9bb69a7c2fb426e94",
+      "bytes": 2086
+    },
+    {
+      "source_repository_relative": "tool/02_evaluate_alignment.cpp",
+      "snapshot_relative": "snapshot/repository_context/tool/02_evaluate_alignment.cpp",
+      "sha256": "319e9272fe62790efccfab7921e13184c13e369bf9dfd54467d38a70d783f23d",
+      "bytes": 2442
+    }
+  ]
+}

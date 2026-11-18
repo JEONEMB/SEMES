@@ -1,0 +1,6 @@
+Canvas SHA-256 9d948fa5b4bc49df0386befe4026a471906851f40551ab07a0cecf2736aed635
+56 answers match 17 canvas sections
+14368 calibration runs checked; no target calibration/test pose-group overlap in 30 split manifests
+All aggregate denominators valid; all 1029 two-axis local fits rejected as rank deficient
+56 planned experiments accounted for
+C++ replay verified byte-identical estimates and checks; timing columns excluded from comparisons.

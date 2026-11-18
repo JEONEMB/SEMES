@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.15)
+project(trial_origins LANGUAGES C CXX)
+include("${CMAKE_CURRENT_SOURCE_DIR}/../../00001_common/hye_experiment.cmake")
+# 원본 zip 안의 파일 시각을 읽기 위한 inflate. OpenCV 소스에 들어 있는 zlib 를 그대로 컴파일한다.
+set(ZLIB_SRC "C:/opencv/sources/3rdparty/zlib" CACHE PATH "zlib source folder")
+add_library(zlib_inflate STATIC ${ZLIB_SRC}/adler32.c ${ZLIB_SRC}/crc32.c ${ZLIB_SRC}/inflate.c ${ZLIB_SRC}/inftrees.c ${ZLIB_SRC}/inffast.c ${ZLIB_SRC}/zutil.c)
+target_include_directories(zlib_inflate PUBLIC ${ZLIB_SRC})
+target_compile_definitions(zlib_inflate PRIVATE _CRT_SECURE_NO_WARNINGS)
+hye_experiment(trial_origins src/main.cpp)
+target_include_directories(trial_origins PRIVATE src)
+target_link_libraries(trial_origins PRIVATE zlib_inflate)

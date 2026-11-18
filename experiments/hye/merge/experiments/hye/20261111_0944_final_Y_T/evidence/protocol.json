@@ -1,0 +1,61 @@
+{
+  "created_utc": "2026-11-09T12:37:58.343949+00:00",
+  "data": "Same715 exposed originals; development follow-up",
+  "splits": "same image and date+pose group 5outer folds seed20261109; inner3 seed20261109+fold*31",
+  "baseline": "QR-H54+barLS4+pinGN8; shared-Huber ridge1e-7,6IRLS; no aug",
+  "diagnostics": [
+    "analytic pin coefficient and signed perturbation curves",
+    "worstT id702 round4index131 archive identity, independent QR intensity centroid, peer photos, label-blind nearest-feature comparisons"
+  ],
+  "shape_models": {
+    "full_no_pin58": [
+      1,
+      2
+    ],
+    "affine_no_pin22": [
+      1,
+      2
+    ],
+    "ridge": [
+      1e-07,
+      0.0001,
+      0.01
+    ],
+    "Huber_iterations": 6,
+    "quadratic_note": "full58 quadratic is not fit; only22 affine features expanded to276 coefficients"
+  },
+  "sensitivity_penalty_px": [
+    0,
+    0.02,
+    0.05,
+    0.1,
+    0.2,
+    0.5
+  ],
+  "fusion": {
+    "single_screw_experts": 4,
+    "aggregate": "coordinate median of four experts",
+    "gate_threshold_normalized": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "gate_inputs": "difference between observed-image-only main/median estimate and no-pin estimate; no labels"
+  },
+  "selection": "innerclean within1 percentage point of best, then max minimum(clean, common+0.35x, common-0.35y, one screw+1.5x) pass, then worst p95; report all clean/stress results",
+  "outer_stress": [
+    "clean",
+    "common+0.5x",
+    "common-0.5x",
+    "common+0.5y",
+    "common-0.5y",
+    "common+2x",
+    "one_pin+3x",
+    "one_pin+3y",
+    "independent_noise_sd0.5",
+    "alternating_pin_x0.5"
+  ],
+  "outer_seed": 640197,
+  "limits": "numeric perturbations, not actual temporal vibration; preserve originallabels and denominator; no machine or5shot claims"
+}

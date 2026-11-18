@@ -1,0 +1,16 @@
+{
+  "model_id": "ssafy_wide_ncc_combinations_L2_1959_20261116",
+  "training_images": 1959,
+  "training_labels": "original SSAFY L2 corrected labels, 20261112",
+  "excluded_from_training": "20261113 reverse capture",
+  "features": "wide QR NCC mean dx + four screw edge shifts",
+  "coefficient_sets": 16,
+  "agreement_sets": 11,
+  "units": {
+    "y": "mm",
+    "t": "deg"
+  },
+  "zero_policy": "mandatory for operational measurement; failed setup invalidates zero",
+  "range_policy": "warning only; outside training range alone does not block measurement or correction",
+  "legacy": "../../legacy/data/model"
+}

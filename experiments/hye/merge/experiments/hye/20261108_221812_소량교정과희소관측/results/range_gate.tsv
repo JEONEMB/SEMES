@@ -1,0 +1,4 @@
+gate	threshold	test_in_range	in_range_flagged	out_of_range	out_of_range_flagged
+valid536	536	279	0	12	12
+min_ncc	0.96028	279	183	12	12
+valid536_or_min_ncc	0.96028	279	183	12	12

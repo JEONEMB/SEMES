@@ -1,0 +1,12 @@
+[
+  {
+    "protocol": "full_model_resub",
+    "total": 280,
+    "sign_correct": 280
+  },
+  {
+    "protocol": "frozen_oof4",
+    "total": 280,
+    "sign_correct": 280
+  }
+]
