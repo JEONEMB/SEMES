@@ -6,7 +6,9 @@
 <title>A507 SSAMES</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="/static/verify.css">
+<link rel="stylesheet" href="/static/viewer3d.css">
 <script src="/static/verify.js" defer></script>
+<script src="/static/viewer3d.js" defer></script>
 </head>
 <body>
 <header class="top">
@@ -21,11 +23,16 @@
   <div class="left">
     <section class="panel camera-panel">
       <div class="panel-head">
-        <span id="cam-info">카메라</span>
-        <div class="seg" role="group" aria-label="확대">
-          <button data-zoom="1" class="on">1×</button><button data-zoom="2">2×</button><button data-zoom="4">4×</button>
+        <div class="cam-tabs" role="tablist" aria-label="카메라 화면">
+          <button type="button" role="tab" data-camtab="cam" class="on" aria-selected="true">장비 카메라</button><button type="button" role="tab" data-camtab="sim" aria-selected="false">3D 시뮬레이터</button>
         </div>
-        <div class="seg" role="group" aria-label="영상 종류">
+        <span id="cam-info" class="cam-only">카메라</span>
+        <span class="sim-only sim-note" hidden>3D 장비 안의 가상 카메라 (SEMES 화각) · 위치 = 스테이지 STATUS · 장비 조작 없음</span>
+        <button class="toggle sim-only" id="sim-exag" type="button" aria-pressed="false" title="센터 대비 움직임을 10배로 그림 (실제 크기 아님)" hidden>과장 ×10</button>
+        <div class="seg cam-only" role="group" aria-label="확대">
+          <button data-zoom="1" class="on">1×</button><button data-zoom="1.7" data-center="screws" title="QR과 나사 4개가 다 보이는 가장 큰 확대">1.7×</button><button data-zoom="4">4×</button>
+        </div>
+        <div class="seg cam-only" role="group" aria-label="영상 종류">
           <button data-mode="normal" class="on">일반</button><button data-mode="diff" title="지금 영상 − 센터 기준 사진. 정렬되면 판이 회색으로 사라짐">차이</button>
         </div>
       </div>
@@ -36,8 +43,9 @@
           <em class="axis" id="ax-y" data-on="false">Y</em><em class="axis" id="ax-t" data-on="false">Θ</em></div>
         <div class="center-badge" id="center-badge" hidden></div>
         <div class="video-empty" id="video-empty" hidden><strong>영상 없음</strong><span id="video-empty-msg"></span></div>
+        <div class="sim-view" id="sim-view" hidden><iframe id="sim-frame" title="3D 시뮬레이터 (가상 카메라와 3D 장비 전체)"></iframe></div>
       </div></div>
-      <div class="legend">
+      <div class="legend cam-only">
         <span><i class="l-target"></i>목표</span>
         <span><i class="l-now"></i>지금</span>
       </div>

@@ -11,7 +11,11 @@ from .runner import RunError
 
 ROOT = Path(__file__).resolve().parent
 FONTS = ROOT.parent / 'demo_web' / 'static' / 'fonts'      # 데모 웹 글꼴을 읽기만 함
+VIEWER = ROOT / 'viewer'          # 3D 시뮬레이터 탭 (Unity 웹 빌드, 승제님 verify_web_3d). /api/events 로 위치만 받아 그림
 PLATE_CENTER = (1906.3, 1130.8)   # A507 센터 사진의 가운데 QR (알고리즘 좌표, SEMES 는 1907, 1065)
+# QR 3개 + 나사 4개를 감싸는 네모의 가운데 (2026-11-17 센터 사진, LHW·KSH 가 찾은 위치: x 873~2895, y 1044~1819).
+# 이 점을 가운데에 두면 1.7배까지 나사 4개가 여유 있게 다 보인다 (가로 폭이 한계, 1.8배부터 왼쪽 나사가 화면 끝에 붙음)
+SCREWS_CENTER = (1884.0, 1431.5)
 NO_FRAME_GIVE_UP_S = 3            # 카메라 프레임이 이만큼(초) 없으면 영상 응답을 끝낸다
 
 
@@ -100,6 +104,14 @@ def create_app(runner, devices, demo):
     def fonts(name):
         return send_from_directory(FONTS, name, max_age=86400)
 
+    # 3D 시뮬레이터 파일. 빌드 파일 이름에 해시가 붙어 있어 오래 캐시해도 되고, index.html 만 매번 새로 받는다
+    @app.get('/viewer/')
+    @app.get('/viewer/<path:name>')
+    def viewer(name='index.html'):
+        if not (VIEWER / 'index.html').exists():
+            return '3D 화면 파일(verify_web/viewer/)이 없습니다.', 404
+        return send_from_directory(VIEWER, name, max_age=0 if name.endswith('.html') else 86400)
+
     @app.get('/api/state')
     def api_state():
         return jsonify(state())
@@ -150,7 +162,7 @@ def create_app(runner, devices, demo):
         zoom = float(b.get('zoom', 1.0))
         if not 1.0 <= zoom <= 8.0:
             raise ValueError('확대는 1~8 배')
-        center = PLATE_CENTER if b.get('center') == 'plate' else None
+        center = {'plate': PLATE_CENTER, 'screws': SCREWS_CENTER}.get(b.get('center'))
         if devices.camera:
             devices.camera.set_view(zoom, center)
             if 'mode' in b:

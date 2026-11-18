@@ -547,6 +547,19 @@ class CenterViewTest(unittest.TestCase):
             self.assertEqual(len(ov['now']['dots']), 5)
             self.assertEqual(client.post('/api/view', json={'zoom': 1, 'mode': 'diff'}).status_code, 200)
             self.assertEqual(cam.view_mode, 'diff')
+            # 1.7× 는 QR+나사 전체의 가운데를 중심으로 (나사 4개가 다 보이게)
+            from verify_web.app import SCREWS_CENTER
+            self.assertEqual(client.post('/api/view', json={'zoom': 1.7, 'center': 'screws'}).status_code, 200)
+            self.assertEqual(cam._view_req, (1.7, SCREWS_CENTER))
+            # 3D 시뮬레이터 탭: Unity 빌드 index.html 은 캐시 없이, 빌드 파일은 길게
+            r = client.get('/viewer/')
+            self.assertEqual(r.status_code, 200)
+            self.assertIn(b'unity', r.data.lower())
+            self.assertEqual(r.cache_control.max_age, 0)
+            r.close()
+            page = client.get('/').data.decode()
+            self.assertIn('data-camtab="sim"', page)
+            self.assertIn('/static/viewer3d.js', page)
 
 
 class HandoffTest(unittest.TestCase):
