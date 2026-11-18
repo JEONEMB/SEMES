@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.15)
+project(far_pose_methods LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+add_executable(compare_far_pose_methods compare_far_pose_methods.cpp)
+if(MSVC)
+    target_compile_options(compare_far_pose_methods PRIVATE /utf-8 /EHsc)
+endif()

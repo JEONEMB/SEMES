@@ -1,0 +1,26 @@
+{
+ "model_id": "final00_huber7_rig20261112_1959_irls6_r1e-7",
+ "features": 7,
+ "feature_order": "qr_dx_mean,bar_tilt_upper,bar_tilt_lower,screw1_x,screw2_x,screw3_x,screw4_x",
+ "training_images": 1959,
+ "training_min": [
+  -2.02214,
+  -1.02257
+ ],
+ "training_max": [
+  2.04031,
+  0.98128
+ ],
+ "label_definition": "absolute zero: (Y mm, T deg) relative to the pose whose image equals center.bmp (rig_1st/center.bmp); labels are stage commands corrected by vision pose (L2, label_correction.py). Sign follows the rig stage command (opposite to SEMES).",
+ "training_recipe": "shared normalized Huber IRLS6, ridge1e-7, no augmentation",
+ "scope": "All 1959 measured rig photos (rig_1st 280, rig_grid 1679) fitted. Experiment asset, not a delivery model. Reference re-made on the rig_grid_rev center (experiment 20261113_1345); coefficients unchanged.",
+ "observation_environment": "Windows x64, MSVC v141, OpenCV 3.4.15",
+ "input_contract": "single 3840x2160 uint8 image; no labels, date or filename in inference",
+ "created_date": "2026-11-13",
+ "known_limits": "corrected labels come from the same image values, so scores are not against an independent truth; one set of two captures on one day; closed-loop return not validated",
+ "center.bmp_sha256": "27643972d639003d41ea6fa410c8bc2c2f5bddac2bd108d0922802c93344decc",
+ "points.json_sha256": "a83ca0416bd7d9b9b2e970cd779f1ee56f8129bef49f5226d47738a908854c78",
+ "geometry.json_sha256": "4d101b354566870e3744ab39b4f20cd191dd56004e75e0525ad707f2a29268a4",
+ "line_protocol.json_sha256": "68723cff5b65c1d98989be401aa258ca2c7a4263f7e7bb43a26cdbf9e0c50413",
+ "model7.tsv_sha256": "27acbcf21850e9b2a6649820adde722203f263c20bde5a1ccc4e12838e3d7d6f"
+}

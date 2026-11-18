@@ -1,0 +1,45 @@
+{
+  "created_date": "2026-11-04",
+  "runtime_requires_only_repository_assets": true,
+  "assets": [
+    {
+      "source_provenance": "tool/joint_v2_tool fit, features results/v2_validation_20261104/features.csv (assets/training_list.csv, |T|<=1, 563 images of 20261014/20261020/20261029)",
+      "runtime_relative_path": "assets/joint_v2_model.json",
+      "runtime_sha256": "59f58209377fcbee88855ae5704174bea66585f192a7cc276a0c7a5994c8613c"
+    },
+    {
+      "source_provenance": "S15P31A507/data/clean/clean_20261014/center.bmp",
+      "source_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+      "runtime_relative_path": "assets/center.bmp",
+      "runtime_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685"
+    },
+    {
+      "source_provenance": "codex_experiments_20261014/joint_yt_visual_feedback_20261023/lines/protocol.json",
+      "source_sha256": "526f34ec495941759efd7564351aed4227160258495448bb7b63683a1a241caa",
+      "runtime_relative_path": "assets/line_protocol.json",
+      "runtime_sha256": "526f34ec495941759efd7564351aed4227160258495448bb7b63683a1a241caa"
+    },
+    {
+      "source_provenance": "joint_center_630_20261022/assets/corners.json",
+      "source_sha256": "de1921b7640c7cec04c11e76723a609aec087a3c8e126d2a4f197039f6440a18",
+      "runtime_relative_path": "assets/geometry.json",
+      "runtime_sha256": "25d635a7b239b7891954aa0b0381380709167ab2c44ed8bc0ec7b80269bf83ac"
+    },
+    {
+      "source_provenance": "final/third_party/ecc5/ecc_compat.cpp",
+      "source_sha256": "c32c913bb2c2d7a055e4a00061ecce1f71f8738bc9a07003a139546e5f82b515",
+      "runtime_relative_path": "third_party/ecc_compat.cpp",
+      "runtime_sha256": "c32c913bb2c2d7a055e4a00061ecce1f71f8738bc9a07003a139546e5f82b515"
+    },
+    {
+      "source_provenance": "experiments/hye/20261102_124309_A0_분할측정고정_계층분할과점측정캐시/결과/cache/shots.csv (set, rel, command Y/T, group, condition)",
+      "runtime_relative_path": "assets/training_list.csv",
+      "runtime_sha256": "a20297e4db2bb1d7dd28035eaa06105747208c53d1cb89babfb217663fc0c1da",
+      "runtime_required": false
+    }
+  ],
+  "geometry_conversion": "Wrapped original JSON array in corners object without changing numeric text",
+  "reference_model": "Original full341 joint frozen model. This is not an OOF341 score.",
+  "control_model": "New native C++ conditional-Y fit using81 T0 photos. Independent accuracy not verified.",
+  "derived_from": "experiments/hye/00000_final_Y_T_joint (measurement unchanged, model replaced)"
+}

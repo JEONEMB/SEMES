@@ -1,0 +1,35 @@
+Start testing: Oct 28 13:52 대한민국 표준시
+----------------------------------------------------------
+1/2 Testing: alignment_module_checks
+1/2 Test: alignment_module_checks
+Command: "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/build-restored-control-20261028/experiments/00000_final_Y_T_joint/Release/alignment_checks.exe" "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/experiments/00000_final_Y_T_joint/assets" "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/experiments/00000_final_Y_T_joint/../00000_final_Y_T control/assets" "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261014"
+Directory: C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/build-restored-control-20261028/experiments/00000_final_Y_T_joint
+"alignment_module_checks" start time: Oct 28 13:52 대한민국 표준시
+Output:
+----------------------------------------------------------
+PASS initialization, compatibility, QR536, immutable input, invalid images, original T branch
+<end of output>
+Test time =   1.18 sec
+----------------------------------------------------------
+Test Passed.
+"alignment_module_checks" end time: Oct 28 13:52 대한민국 표준시
+"alignment_module_checks" time elapsed: 00:00:01
+----------------------------------------------------------
+
+2/2 Testing: control_contract
+2/2 Test: control_contract
+Command: "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/build-restored-control-20261028/experiments/00000_final_Y_T_joint/control/Release/validate_control.exe" "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/experiments/00000_final_Y_T control" "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/data/clean/clean_20261014" "C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/build-restored-control-20261028/experiments/00000_final_Y_T_joint/control/contract_results" "contract"
+Directory: C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/build-restored-control-20261028/experiments/00000_final_Y_T_joint/control
+"control_contract" start time: Oct 28 13:52 대한민국 표준시
+Output:
+----------------------------------------------------------
+Contract checks passed; control links independently of joint.
+<end of output>
+Test time =   0.65 sec
+----------------------------------------------------------
+Test Passed.
+"control_contract" end time: Oct 28 13:52 대한민국 표준시
+"control_contract" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 28 13:52 대한민국 표준시

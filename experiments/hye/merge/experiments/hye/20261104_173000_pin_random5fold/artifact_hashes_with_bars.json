@@ -1,0 +1,467 @@
+{
+  "format": "SHA256 of canonical Git index bytes; checkout line endings may differ",
+  "baseline_commit": "8ce5ea65dc926e681d10646f6df38f1f91a56338",
+  "original_manifest": "artifact_hashes.json belongs to baseline commit",
+  "files": [
+    {
+      "path": "ALGORITHM_RULES.md",
+      "sha256": "b77385ab1acfa509f10546fd869f5395b00f548a1e7af1cf120d693227dc9799"
+    },
+    {
+      "path": "HANDOFF_20261104.md",
+      "sha256": "3a974e969d841425c43fe599a0e1589e40ba16e18db9c519bc697682e47a6ab5"
+    },
+    {
+      "path": "data/fivefold_seed20261104/_metadata/images.csv",
+      "sha256": "f39dcca8a8a29ef64e4d2a15cb12ad30d2b06b382b4509a3fbcca56e101a7c05"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/.gitignore",
+      "sha256": "f4a0f95738ec8d9c7224cb87b3cf3c86ce50f67015205b879f5d9e23b9e22456"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/CMakeLists.txt",
+      "sha256": "980e1b713f2720fb37645696749e7e9e8e544e1edc4014ec76f8f057e381026a"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/README.md",
+      "sha256": "1fa9ab59a68c66bc81787f749561e01b5edde144a498dda7c9f2e1c383e31021"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/REPORT.md",
+      "sha256": "f04dbefc08d801c2a291fbdb407399b60ed3634817b5094933c2b55bc281e3bf"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/REPORT_WITH_BARS.md",
+      "sha256": "a64e805782179174d9966a9f96400eff35ea755a690e655c6cdfc6bd13c961a9"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/aggregate.tsv",
+      "sha256": "fa631aa005b3a0814a88bb894ff04fbbf66dfaafb075943decb084fbbc9bdb82"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/development_all_qr_pin_linear.yml",
+      "sha256": "ed5dad035b4ee0898a081be2fbe4f2ff11e80338ccb8ccfb153521a0f7a5b0f8"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/development_all_qr_pin_quadratic.yml",
+      "sha256": "38c5d6019fc94c7639685b976c32e912b439ac60c7b12504b5d769731ff06ef4"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/environment.txt",
+      "sha256": "cf48d9293aa1392e915aea272a99b41b229dbe0f838751664efa48e66e04a6f1"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/features.tsv",
+      "sha256": "eb50259232386b63b5c1f77c4f1610dad0f783a2a8c86ff7e5e12f0310bc9a9d"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/integrity.txt",
+      "sha256": "57cd38eb729162c1b714cf854cef2a7dbc64411461085eef9f6abdf6f0a4fce7"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/measured_results.md",
+      "sha256": "ad262520201a2f37774b9864ca462f579e061695e10ee2ca45608436e5a3ebb7"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_linear_fold1.yml",
+      "sha256": "6eb18b1014916ad73122b45a328a177650d4992d0e808b01b7110911ef0caae6"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_linear_fold2.yml",
+      "sha256": "c90bd5796e7fac946b8ddb7363a8c16c6e039fe97ac368e23f0ba92f7da38bdf"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_linear_fold3.yml",
+      "sha256": "d55e062b3ec30052776d75a84c494a4fba72c875cd3e526f41122f036d5d17be"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_linear_fold4.yml",
+      "sha256": "beb1f41ebaac50cf46461383b85bcc24c203d40def506d857cc14d88d3a7572a"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_linear_fold5.yml",
+      "sha256": "9fbf7c11fea9a3ca49dda70b77c722da9498c3cb90ad586e1f50068241f0b5a2"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_quadratic_fold1.yml",
+      "sha256": "614bea2bfbadb99de1e3c348b6d485d4b0eed400fcbc2f3b9b54edc828360f9c"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_quadratic_fold2.yml",
+      "sha256": "b8118044cf4cef446d02989c0abf1a5641d51f12f127f8a8f2cb0a07d7a182e6"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_quadratic_fold3.yml",
+      "sha256": "6311eb8b1eab8b527d21aeaa28df1f58fa40fba8723b1637fc023fef7ce2bbfb"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_quadratic_fold4.yml",
+      "sha256": "b87150d64699fd744f9297ae0c307407d2b49b5cb48a1dcda19b2db53984d670"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/pin_only_quadratic_fold5.yml",
+      "sha256": "67338845d6793fafd4698f38180e34a076fecaa41aed7ed0f4f3925c6a3bc492"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/predictions.tsv",
+      "sha256": "3b17dbe5b62d4f9770e945acd66c83dcc940ef556ac10d2c33cb75b998b78175"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_linear_fold1.yml",
+      "sha256": "07bebe7e285c23c38b35cbd3bd101ad635d45a2676d768ef41112d40e3726e41"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_linear_fold2.yml",
+      "sha256": "13ae605aabdf6f961c4d02f96040b87954e527ffdae3cdf93505083793b69be2"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_linear_fold3.yml",
+      "sha256": "299ce29b6bbf642a32941f75e646e598a7d09f6d52dd5b6dbe81353bb8da5850"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_linear_fold4.yml",
+      "sha256": "17e20f7a51e2aad5dcf3dc8a32a232b21147cf8b9c665b34dae176374b4ae855"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_linear_fold5.yml",
+      "sha256": "9830fb71e9c659e92618e77262d015e9a25f5ecf41a050e50e7870ee7e2d7ebc"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_quadratic_fold1.yml",
+      "sha256": "e83419419b5e2a66e80d7a0f2a20a9b14542807c544f5af39b239226d5ecc1bc"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_quadratic_fold2.yml",
+      "sha256": "939057b55d2ee526ce43b9e35f76a5fa667ff26ce7342715ec59e1ddcac0677c"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_quadratic_fold3.yml",
+      "sha256": "7e9ef7d9ed9d559ca1ddca3d98417bb74eec383c9435d382a0faed7fc39c34c5"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_quadratic_fold4.yml",
+      "sha256": "d2a5cd71abde0453333ffe04cf89debcae1aaedfe1a1b0200114c5bd0f498abc"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/qr_pin_quadratic_fold5.yml",
+      "sha256": "6a697ead196661204767ed4da16704f17cc976dd810116b383cf15499c520fef"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/repeat_spread.tsv",
+      "sha256": "82908c73652b3e0db630602b95bdf37fd3979545f9961ad01cc7926eaab77af2"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/reproducibility.json",
+      "sha256": "8fb160bcc7feef07c67dfeab5183c42b573bcaa8a160f8507d408b009260a361"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/selftest.txt",
+      "sha256": "964a26e59864cb63aeec206ec607384eddf2d17a7bdd366d6483c08d8f352bce"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/simulation.tsv",
+      "sha256": "811c2c6b5b01484081d1212307fc910bbe0ac962d810a8ec88db938bab051948"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/simulation_summary.tsv",
+      "sha256": "486036890cd89b2cf0d3198a86bd3073caeae522211bf9854ac9de7113d2fd49"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/summary.tsv",
+      "sha256": "227cbb61577ac18407e14fe5426da8de44b6ad9a908462d52892cc186214eb0b"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v1_joint_GLS_fold1.yml",
+      "sha256": "96fb12beaa4e9a120570cce2b257b56305e1f1deedda8ab34c7867882707cab4"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v1_joint_GLS_fold2.yml",
+      "sha256": "166c350801997a643190d5397696ba3a9be568a2810b43731e57c0df07227255"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v1_joint_GLS_fold3.yml",
+      "sha256": "801d19cde786502aa782ddbac35930fa85cb3b631f397cd4b1b530ff331f6492"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v1_joint_GLS_fold4.yml",
+      "sha256": "7846ff55aa2d8e88378fa34ac7a8d70755bf88b1992604c013d316cf8d9f2553"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v1_joint_GLS_fold5.yml",
+      "sha256": "510de745fb96fd475b5d71217c2a533756857294ab75b90b708eccd45ce52b20"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v2_joint_fold1.yml",
+      "sha256": "74bae78970ba577e8083d1250684ac13204982f749abbb71afc245fbbc2d9adc"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v2_joint_fold2.yml",
+      "sha256": "e1bce1a5a09026c509ef87c26bdd639a6ac6c27320d913afb5af9836bd84c60a"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v2_joint_fold3.yml",
+      "sha256": "c28eb105a03b3ec745b114178dd9d93d0ea3952e49d034fb5c6318188acdbd78"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v2_joint_fold4.yml",
+      "sha256": "3ce6b554ca6abde22b2fad7375628c6b6e8c5c6272a38dba8e2e0f037003503c"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results/v2_joint_fold5.yml",
+      "sha256": "579923930b71b68764708ce1fd17e687e6fe144dd22da24ab31f6fdde8101474"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/aggregate.tsv",
+      "sha256": "5f452245d94d2f251a8318395f67f0ff9642136fc73b2a5e7853f683090e773f"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/development_all_qr_pin_bars_linear.yml",
+      "sha256": "bfa3269a15ed55f742c0197d13373114062a6c369a03b3b539035374609502a0"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/development_all_qr_pin_bars_quadratic.yml",
+      "sha256": "57d875cd8ac6f87ccc082a3053f4a7a84be18594ca77c728ae77b1266efa53e5"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/development_all_qr_pin_linear.yml",
+      "sha256": "ed5dad035b4ee0898a081be2fbe4f2ff11e80338ccb8ccfb153521a0f7a5b0f8"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/development_all_qr_pin_quadratic.yml",
+      "sha256": "38c5d6019fc94c7639685b976c32e912b439ac60c7b12504b5d769731ff06ef4"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/environment.txt",
+      "sha256": "cf48d9293aa1392e915aea272a99b41b229dbe0f838751664efa48e66e04a6f1"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/features.tsv",
+      "sha256": "eb50259232386b63b5c1f77c4f1610dad0f783a2a8c86ff7e5e12f0310bc9a9d"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/integrity.txt",
+      "sha256": "5669be723deacea992e1abb57e346409021da9e028e60a79b8f29926062c5c8d"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/measured_results.md",
+      "sha256": "de8d3d80aac3669ac802903f09a707ab67a5d43b7715fe8962e7ee4c1c2e7c96"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_linear_fold1.yml",
+      "sha256": "6eb18b1014916ad73122b45a328a177650d4992d0e808b01b7110911ef0caae6"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_linear_fold2.yml",
+      "sha256": "c90bd5796e7fac946b8ddb7363a8c16c6e039fe97ac368e23f0ba92f7da38bdf"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_linear_fold3.yml",
+      "sha256": "d55e062b3ec30052776d75a84c494a4fba72c875cd3e526f41122f036d5d17be"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_linear_fold4.yml",
+      "sha256": "beb1f41ebaac50cf46461383b85bcc24c203d40def506d857cc14d88d3a7572a"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_linear_fold5.yml",
+      "sha256": "9fbf7c11fea9a3ca49dda70b77c722da9498c3cb90ad586e1f50068241f0b5a2"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_quadratic_fold1.yml",
+      "sha256": "614bea2bfbadb99de1e3c348b6d485d4b0eed400fcbc2f3b9b54edc828360f9c"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_quadratic_fold2.yml",
+      "sha256": "b8118044cf4cef446d02989c0abf1a5641d51f12f127f8a8f2cb0a07d7a182e6"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_quadratic_fold3.yml",
+      "sha256": "6311eb8b1eab8b527d21aeaa28df1f58fa40fba8723b1637fc023fef7ce2bbfb"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_quadratic_fold4.yml",
+      "sha256": "b87150d64699fd744f9297ae0c307407d2b49b5cb48a1dcda19b2db53984d670"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/pin_only_quadratic_fold5.yml",
+      "sha256": "67338845d6793fafd4698f38180e34a076fecaa41aed7ed0f4f3925c6a3bc492"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/predictions.tsv",
+      "sha256": "d941bc59dd09bb30573b1125ff3b96bd9f1e52e11988b80b8ac18e43555314d8"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_linear_fold1.yml",
+      "sha256": "34de5d39f255a23eca188dbe1900eafac0aebaabed6999a5dfdea3025eaa887b"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_linear_fold2.yml",
+      "sha256": "bbbbe5cfae5783a22deae8c18ed586ab393f2835bc08f5f11557ad083b2ca2e9"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_linear_fold3.yml",
+      "sha256": "a361ea8127ec6521f27f2c9dfc61eff51a39eb076a22bf6bfd642e18da78a3be"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_linear_fold4.yml",
+      "sha256": "04dfd8f45193933ad95298969816c81736174c0982de342f8800345851217461"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_linear_fold5.yml",
+      "sha256": "3ad80a013635d2464c9a3a3028d0ebd689a0433b98d5176e66df19b9aab4e071"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_quadratic_fold1.yml",
+      "sha256": "63e546aff1914d51f29b611e85fa6072f959a5e622955a40ec09012f4fe37551"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_quadratic_fold2.yml",
+      "sha256": "651824d610d5070ec76e8b1cccdfc216fb5b15a9bd419149e296fbc172bf880d"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_quadratic_fold3.yml",
+      "sha256": "7d8881d754f463fff82907bd81bddcb33d798d0a82549c918c3305e6f0fee032"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_quadratic_fold4.yml",
+      "sha256": "a7e636a8ee79a61706263b73ee940b0e70df3ccb3aca86cbc1e48bacd98b49b9"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_bars_quadratic_fold5.yml",
+      "sha256": "252b0bfde59c8a8ad408c105dba5be5f957c76cbd4c08752a013f1f59db9ad85"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_linear_fold1.yml",
+      "sha256": "07bebe7e285c23c38b35cbd3bd101ad635d45a2676d768ef41112d40e3726e41"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_linear_fold2.yml",
+      "sha256": "13ae605aabdf6f961c4d02f96040b87954e527ffdae3cdf93505083793b69be2"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_linear_fold3.yml",
+      "sha256": "299ce29b6bbf642a32941f75e646e598a7d09f6d52dd5b6dbe81353bb8da5850"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_linear_fold4.yml",
+      "sha256": "17e20f7a51e2aad5dcf3dc8a32a232b21147cf8b9c665b34dae176374b4ae855"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_linear_fold5.yml",
+      "sha256": "9830fb71e9c659e92618e77262d015e9a25f5ecf41a050e50e7870ee7e2d7ebc"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_quadratic_fold1.yml",
+      "sha256": "e83419419b5e2a66e80d7a0f2a20a9b14542807c544f5af39b239226d5ecc1bc"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_quadratic_fold2.yml",
+      "sha256": "939057b55d2ee526ce43b9e35f76a5fa667ff26ce7342715ec59e1ddcac0677c"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_quadratic_fold3.yml",
+      "sha256": "7e9ef7d9ed9d559ca1ddca3d98417bb74eec383c9435d382a0faed7fc39c34c5"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_quadratic_fold4.yml",
+      "sha256": "d2a5cd71abde0453333ffe04cf89debcae1aaedfe1a1b0200114c5bd0f498abc"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/qr_pin_quadratic_fold5.yml",
+      "sha256": "6a697ead196661204767ed4da16704f17cc976dd810116b383cf15499c520fef"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/repeat_spread.tsv",
+      "sha256": "b34ab222a8941798dba14e91c8c1766b12f09614bf7cdc47c209f815a8026021"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/reproducibility.json",
+      "sha256": "d77c8ef57d7b20587165515d9f31ab5be9e9a455c0d7d6a11b32f4aedf7eac0d"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/selftest.txt",
+      "sha256": "19f681e2eb076057b29290c26bf51d083e747018a2e85be6d09a3470ac5e58ec"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/simulation.tsv",
+      "sha256": "4815d21f1e5b8c26f273dc39f14c85e71d1d0ba40f4727738fa1d39d3b925482"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/simulation_summary.tsv",
+      "sha256": "2e258fe2538ca7845161487b2ab273ab6d6b14d1f37b26561bdf5868b5cc069b"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/summary.tsv",
+      "sha256": "8baf96a58ec29d500f256dc4cda16253290aee507dbe71a113f348ddd9fb2fc4"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v1_joint_GLS_fold1.yml",
+      "sha256": "96fb12beaa4e9a120570cce2b257b56305e1f1deedda8ab34c7867882707cab4"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v1_joint_GLS_fold2.yml",
+      "sha256": "166c350801997a643190d5397696ba3a9be568a2810b43731e57c0df07227255"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v1_joint_GLS_fold3.yml",
+      "sha256": "801d19cde786502aa782ddbac35930fa85cb3b631f397cd4b1b530ff331f6492"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v1_joint_GLS_fold4.yml",
+      "sha256": "7846ff55aa2d8e88378fa34ac7a8d70755bf88b1992604c013d316cf8d9f2553"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v1_joint_GLS_fold5.yml",
+      "sha256": "510de745fb96fd475b5d71217c2a533756857294ab75b90b708eccd45ce52b20"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v2_joint_fold1.yml",
+      "sha256": "74bae78970ba577e8083d1250684ac13204982f749abbb71afc245fbbc2d9adc"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v2_joint_fold2.yml",
+      "sha256": "e1bce1a5a09026c509ef87c26bdd639a6ac6c27320d913afb5af9836bd84c60a"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v2_joint_fold3.yml",
+      "sha256": "c28eb105a03b3ec745b114178dd9d93d0ea3952e49d034fb5c6318188acdbd78"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v2_joint_fold4.yml",
+      "sha256": "3ce6b554ca6abde22b2fad7375628c6b6e8c5c6272a38dba8e2e0f037003503c"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/results_with_bars/v2_joint_fold5.yml",
+      "sha256": "579923930b71b68764708ce1fd17e687e6fe144dd22da24ab31f6fdde8101474"
+    },
+    {
+      "path": "experiments/hye/20261104_173000_pin_random5fold/src/main.cpp",
+      "sha256": "034e3447e4a57bfb2cb66df0641647893afde5e60e48c04ef11545607fbe4e82"
+    },
+    {
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/CMakeLists.txt",
+      "sha256": "ddcc8744ad9922fb41d5b78652a2c98e1ec2add848995298d5544a78cf1d13cc"
+    },
+    {
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/README.md",
+      "sha256": "f2c21785844fd2afabb2038d9cdd2df554e62b8b671ae5227818c91fecae1698"
+    },
+    {
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/include/final_pin.hpp",
+      "sha256": "70aa4789db4ac7052e13df7e316ed2ab75412f9f32e89ae651ba4fdae0d251d8"
+    },
+    {
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/src/estimator.cpp",
+      "sha256": "39060c1c77648ff610c4d42c72ecb60193f61fafb5a4734bc6c274eccf17bb4a"
+    },
+    {
+      "path": "experiments/hye/20261104_1750_나사관측_YT동시추정후보/src/final_pin.cpp",
+      "sha256": "fc5c3cde0546d892ace7cf10ad44a9085d39c3945a0e5b4130299a806cce26d8"
+    },
+    {
+      "path": "experiments/hye/20261104_1435_v2_joint_강등/assets/line_protocol.json",
+      "sha256": "526f34ec495941759efd7564351aed4227160258495448bb7b63683a1a241caa"
+    }
+  ]
+}

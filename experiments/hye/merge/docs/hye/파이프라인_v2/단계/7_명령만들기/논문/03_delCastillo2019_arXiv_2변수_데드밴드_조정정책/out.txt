@@ -1,0 +1,1229 @@
+arXiv:1912.08337v1 [stat.ME] 18 Dec 2019  A Bivariate Dead Band Process Adjustment Policy
+
+                                                                                        Enrique Del Castillo
+                                            Department of Industrial and Manufacturing Engineering and Department of Statistics,
+
+                                                                               The Pennsylvania State University,
+                                                                                University Park, PA 16802, USA
+
+                                                                                                   and
+
+                                                                                              Rainer G¨ob
+                                                    Institut fu¨r Angewandte Mathematik und Statistik, Universit¨at Wu¨rzburg,
+
+                                                                         Sanderring 2, D-97070 Wu¨rzburg, Germany
+
+                                                                                            December 2019
+
+                                                                                               Abstract
+                                                  A bivariate extension to Box and Jenkins (1963) feedback adjustment problem is
+                                             presented in this paper. The model balances the fixed cost of making an adjustment,
+                                             which is assumed independent of the magnitude of the adjustments, with the cost of
+                                             running the process off-target, which is assumed quadratic. It is also assumed that
+                                             two controllable factors are available to compensate for the deviations from target of
+                                             two responses in the presence of a bivariate IMA(1,1) disturbance. The optimal policy
+                                             has the form of a "dead band", in which adjustments are justified only when the pre-
+                                             dicted process responses exceed some boundary in R2. This boundary indicates when
+                                             the responses are predicted to be far enough from their targets that an additional ad-
+                                             justment or intervention in the process is justified. Although originally developed to
+                                             control a machine tool, dead band control policies have application in other areas. For
+                                             example, they could be used to control a disease through the application of a drug to
+                                             a patient depending on the level of a substance in the body (e.g., diabetes control).
+                                             This paper presents analytical formulae for the computation of the loss function that
+                                             combines off-target and adjustment costs per time unit. Expressions are derived for
+                                             the average adjustment interval and for the scaled mean square deviations from target.
+                                             The minimization of the loss function and the practical use of the resulting dead band
+                                             adjustment strategy is illustrated with an application to a semiconductor manufactur-
+                                             ing process.
+
+                                                                                                1
+    Keywords: Time Series Control, Feedback Adjustment, Fixed Adjustment Cost, Bivari-
+ate IMA model.
+
+1 Introduction.
+
+In a landmark paper, Box and Jenkins (1963) contrasted adjustment policies for a "chemical"
+process with those of a "machine tool" process. The latter kind of process usually involves a
+large adjustment cost that is independent of the magnitude of the adjustments, in contrast
+to the former where off-target costs typically dominate. Assuming quadratic off-target costs,
+Box and Jenkins showed that the sum of off-target and fixed adjustment costs per time
+unit is minimized by a policy that has the form of what we will refer to in this paper as a
+dead band adjustment policy. In the univariate version of this type of policy, the process is
+not adjusted as long as the one step ahead minimum mean square error (MMSE) forecast,
+if no adjustment is made, falls inside two "control lines" placed symmetrically around the
+process target that define a band or region (the dead band) within which the process is
+let uncontrolled. The process if uncontrolled is assumed to drift off-target according to an
+IMA(1,1) process. The optimal policy resembles a Shewhart control chart applied to the
+forecasts, but the width of the control (or adjustment) limits is based on balancing the costs
+of running the process off-target and adjusting the process. For a description of the origins
+of this type of control problem and its relation to other types of process control problems,
+see Del Castillo (2002, 2006) and Woodall and Del Castillo (2014).
+
+    By far, the interest in dead band control exceeds the originally considered machine tool
+problem. Similar problems exist in other areas, e.g., in biosciences, business administration,
+or financial engineering. For instance, a dead band control policy has the same form as
+certain drug delivery policies where a drug is supplied to the patient depending on the
+level of one or more substances in the body (e.g., glucose monitoring and insulin supply in
+intensive diabetes control, see, e.g., Magni et al. (2009)). Another area of interest is the
+control of cash flows, e.g., investment flows, or transfers between departments or different
+branches of a corporation. In the latter cases, adjustments often require relatively expensive
+interventions into the administration or organizational structure, i.e., adjustment costs are
+high.
+
+    Properties of univariate dead band adjustment policies have been studied by other au-
+thors. Crowder (1992) solves Box and Jenkins's univariate machine tool problem using
+dynamic programming techniques when there is a finite number of periods in the planning
+horizon for the process. This is in contrast to Box and Jenkins (1963), who use a renewal
+reward process to minimize the long-run average cost per time unit. Crowder shows how the
+optimal dead band control limits funnel out as the end of the production run approaches,
+when a renewal of the process is assumed to occur. For the initial periods, the dead band
+limit width approaches the long-run solution obtained by Box-Jenkins as the planning hori-
+
+                                                          2
+zon increases. Box and Kramer (1992) added a sampling cost component to the univariate
+machine tool model and discuss dead band policies when samples are not taken at every
+period. Jensen and Varderman (1993) studied the finite-horizon model in Crowder (1992)
+but considered the possibility that adjustment errors occur when setting the controllable
+factor. They show that even when there is no fixed adjustment cost (only quadratic off-
+target costs are present), a dead band-like policy is the optimal policy in the presence of
+adjustment errors. Srivastava and Wu (1991) consider the machine tool problem under the
+presence of inspection costs which were not included in the original model by Box and Jenk-
+ins. A related type of control problem where an optimal deadband policy results are setup
+adjustment problems where, under i.i.d noise (i.e., no drift) there is a fixed adjustment cost
+to compensate for sudden upsets, including at starting up a process, see Zilong and Del
+Castillo (2006), and for a multivariate generalization Liu et al. (2013).
+
+    In the present paper, we extend the Box-Jenkins univariate dead band model to the case
+there are two responses of interest, possibly cross-correlated, and there are two controllable
+factors available to adjusting the process. Multivariate extensions of the univariate dead
+band control models are evidently of practical interest, given that most real-life processes
+have multiple responses to control and multiple controllable factors. The present paper is
+a first attempt in a particular case which is relatively tractable yet considerably useful in
+practice, when only two responses are influenced by two controllable factors. A recent paper
+by Govind et al. (2018) presents an approach for multivariate dead band control where
+the optimal threshold that balances the frequency of adjustments with the off-target cost is
+obtained from simulating the process for different threshold values. In the present paper,
+in contrast, we follow an analytical treatment of the problem that naturally generalizes the
+original Box-Jenkins derivations to the bivariate case. The paper is organized in several
+sections. Sections 2 and 3 present the assumptions behind the process and the assumptions
+behind the control policy (or "controller"). Sections 4 and 5 discuss the loss function to be
+minimized and the cost assumptions involved. Section 6 gives the form of the optimal (dead
+band) bivariate policy. The optimal solution depends on knowing the second and fourth
+moments of a standardized bivariate time series, and these are derived in sections 7 and
+8. With the moment formulae derived, an approximation to the loss function is given in
+section 9, and the accuracy of the approximation is studied in section 10. The numerical
+minimization of the loss function is addressed in section 11. This section contains a realistic
+scenario taken from the manufacturing of semiconductors where two responses are typically
+of interest.
+
+                                                          3
+2 The Process Model.
+
+By extension to the univariate Box-Jenkins machine tool model, pairs of disturbances zt =
+(zt,1, zt,2) are assumed to follow a bivariate IMA(1,1) process, i.e.,
+
+zt - zt-1 = t - t-1.            (1)
+
+Here,  = (ij)1i,j2 is a known 2 × 2 matrix, and the pairs t = (t,1, t,2) consti-
+tute a bivariate cross correlated Gaussian white noise, i.e., normally distributed pairs with
+stationary variance-covariance matrix
+
+C =                   21,  
+                           22,
+
+for each time t and without serial correlation, i.e., Cov[t,l, s,m] = 0 for s = t, l, m  {1, 2}.
+The components of the variance-covariance matrix are assumed to be known. For purposes of
+the control policy described in Section 3, below, it is necessary to forecast the disturbances.
+The minimum mean square error (MMSE) one step ahead forecast z^t+1 computed at time t
+for the disturbance vector zt+1 follows the EWMA recursion
+
+z^t+1 = Lzt,l + (I - L)z^t      (2)
+
+where L = I - . The vector of the one step ahead forecast errors for time t + 1 is just the
+white noise vector at time t + 1, i.e.
+
+zt+1 - z^t+1 = t+1.             (3)
+
+3 The Control Model.
+
+It is assumed that the process can be controlled via two control factors Xs+1,1, Xs+1,2 which
+are set at the adjustment time (intervention time) s, i.e., there is a delay of one time unit
+until the adjustment takes effect. X = (Xs+1,1, Xs+1,2) is the control vector. The control
+variables are supposed to compensate for the disturbances zt,1, zt,2 acting on the two process
+components at times t = s + 1, s + 2, .... The vector of deviations from target under the effect
+of the control variables is dt = zt - Xs+1, if no adjustments are made at times s + 1, ..., t.
+This model implies that a unit change on each control factor Xs+1,l causes a unit change
+in the response, the deviations from target dt,l. In other words, the "gain" matrix G in
+dt = zt - GXs+1 equals the identity. There is no loss of generality with this, since if G
+is not the identity we simply use Xi = GXi(0) in what follows, where Xi(0) is the vector of
+original control factors.
+
+    An intervention into the process (or an adjustment) at time s amounts to adjusting both
+control variables to values Xs+1,1, Xs+1,2. In a manufacturing application, interventions
+
+                                                          4
+provoke costs due to factors like labor, material, process downtime and loss of production
+volume. In the control of a disease though the supply of a drug to a patient, the adjustment
+cost models the physical and emotional problems the patient may encounter that can be
+attributed to repeated applications of the drug. As will be shown in section 11, it is possible
+to determine a practical bivariate dead band policy without explicitly defining either the
+off-target or the adjustment costs (this has been emphasized by Box and Lucen~o, 1997, for
+the univariate case). Let C > 0 be the cost of an intervention. This is a fixed adjustment
+cost regardless of the magnitude of the adjustment made. To reduce intervention costs it is
+reasonable not to intervene permanently but only at selected intervention times s.
+
+    On the other hand, omitted adjustment leads to an increasing impact of the disturbances,
+and consequently to increasing deviations from target and increasing off target costs. In many
+cases the off target cost can be measured as a linear function of the square deviation from
+target. We assume costs al > 0 per unit of the square deviation from target in the lth
+production component, i.e., at times t = s + 1, s + 2, ... the off target cost from component
+l is al(zt,l - Xs+1,l)2.
+
+    In view of the off target cost it is reasonable to use the predicted amount of deviation
+from target as an intervention criterion. Let the last adjustment be made at time s with a
+resulting adjustment vector Xs+1 at time s + 1. At times s + k, k = 1, 2, ... no intervention
+occurs as long as the vector of predicted deviations from target
+
+                           ds+k+1 = z^s+k+1 - Xs+1,  (4)
+
+is inside a noncritical region D  R2 of the plane, which we will refer to as a dead area. At
+
+the first time s + n with
+
+                           d^s+n+1 / D or n  n0      (5)
+
+an alarm is given, and the control variables are adjusted so as to compensate the predicted
+disturbance at time s + n + 1, i.e., Xs+n+1 = z^s+n+1. The upper limit n0 for the length of
+periods without adjustment is prescribed for technical or security reasons, or it is a trivial
+upper limit, e.g., the lifetime of machinery or production equipment. In any case n0 is a
+large upper limit, and alarms will generally result from the first condition in formula (5).
+The random time of the next intervention after the last recorded intervention time s is
+
+N = ND = min min{n  N | d^s+n+1 / D , n0 .           (6)
+
+Over the period s + 1, s + 2, ..., s + N the control vectors remain constant at Xs+1 and the
+vectors of the deviations from target are
+
+zs+1 - Xs+1, zs+2 - Xs+1, . . ., zs+N - Xs+1.        (7)
+
+The dead area D  R2 in the bivariate case corresponds to the univariate dead interval
+considered by Box and Jenkins (1963). Shifted along the time axis the dead interval induces
+
+a dead band. The appropriate shape of the dead area D in the bivariate case will be discussed
+
+in Section 5, below.
+
+                           5
+4 The Loss Function.
+
+A good control policy has to establish a balance between the adjustment cost and the off
+target cost. Rare alarms reduce adjustment costs, but increase off target costs, and vice
+versa. From an economic point of view, the best policy is the one which minimizes the
+overall loss per time unit resulting from adjustments and from being off target. Under the
+assumptions of Section 3, a specific control policy is determined by the dead area D  R2.
+Hence we have to evaluate the loss incurred from running a process under the policy described
+in Section 3 as a function L(D) of the dead area D  R2.
+
+    Consider a process run starting at time 0, controlled according to the policy described
+in Section 3. Adjustments are made at the end of periods 1,2,3,... of random length
+N1, N2, N3, ... at times S1 = N1, S2 = N1 + N2, S3 = N1 + N2 + N3 and so on. For
+each time unit Sk + 1, ..., Sk + Nk+1 in a period between two successive adjustments at times
+Sk and Sk+1 = Sk + Nk+1 the off target cost is evaluated by the quadratic cost function
+al(zSk+i,l - XSk+1,l)2. Hence the overall loss per time unit in the kth period is
+
+                2     Nk+1
+
+       Vk = al (zSk+i,l - XSk+1,l)2 + C. (8)
+
+                l=1 i=1
+
+For time t, let K(t) be the number of periods elapsed until time t. Then the loss per time unit
+until time t is V (t) = t k=1 1 K(t) Vk. The process is assumed to run over a long time. Hence it
+is reasonable to evaluate the expected overall loss per time unit by the limit limt E[V (t)].
+To calculate the latter quantity we observe that the pairs (Nk, Vk), k = 1, 2, ... are serially
+independent and identically distributed, i.e., they constitute a renewal reward process, see
+
+the proof in appendix A. Hence an application of the renewal reward theorem, see Ross
+(1970), provides the limit limt E[V (t)] = E[N] E[V ] . The expected hitting time E[N ] is what
+Box and Lucen~o (1997) call the average adjustment interval, or AAI. Calculating E[V ] from
+
+equation (8) we obtain the following loss function
+
+       E[V ]       12 N            2          C
+L(D) = E[N ] = E[N ] al E (zi,l - X1,l) + E[N ] =
+       l=1 i=1 2 N (9)
+1 al E (z^i,l - X1,l)2 + C + a11, 2 + a22, 2
+E[N ]                       E[N ]
+       l=1 i=1
+
+as a function of the dead area D  R2. For the sake of convenience, in formula (9) and in
+subsequent calculations we use the first period starting at time 1 after adjustment at time
+
+s = 0 to express the expectation E[V ]. L depends on D through the time N = ND between
+successive interventions, where ND is defined by formula (6).
+
+                            6
+5 The Standardized Loss Function.
+
+Using the loss function (9), we might define the optimum control policy, i.e., the optimum
+dead area D = D , as the one which minimizes L(D) over D  R2. However, determining
+an optimal solution without restrictions on admissible shapes of the dead area D  R2 will
+be cumbersome. By considering an appropriately standardized version of the loss function
+L(D) we get a more definite idea about reasonable shapes of D. This will lead to a concise
+restriction on D which is appropriate for determining specific optimum control policies.
+
+    The random variables z^i,l - X1,l, l = 1, 2, which are necessary for calculating the loss
+function L(D) in formula (9), are the components of the vectors z^i - X1. From formulae
+(2), (3) and from X1 = z^1 we obtain
+
+            i-1
+
+z^i - X1 =       Lj.                                  (10)
+
+            j=1
+
+The components of the random vectors j = Lj = (j,1, j,2) have the variance-covariance
+matrix
+
+                                    12,  = C = LCL (11)
+                                      22,
+
+and are serially uncorrelated. With respect to their cross-covariance C, two cases have to
+be distinguished.
+
+    First, consider the case det C = 0. Then, a linear relation holds between j,1 and j,2
+with probability 1, i.e., there exist reals c1, c2, c3 such that P(c1j,1 + c2j,2 = c3) = 1, see
+Schmetterer (2012). In this case, we are dealing essentially with a single univariate problem
+which can be solved with the results of Box and Jenkins (1963).
+
+    In the sequel we assume det C = 0. Then each random vector j = Lj = (j,1, j,2)
+has a bivariate normal distribution with variance-covariance matrix C, see Schmetterer
+(2012). The vectors uj = (uj,1, uj,2) with uj,l = l, 1 j,l constitute a bivariate cross correlated
+(but serially uncorrelated) Gaussian unit white noise, i.e., normally distributed pairs with
+stationary variance-covariance matrix
+
+Cu =        1
+            1
+
+for each time t, where  =  = 1,2,  , and without serial correlation, i.e., Cov[ut,l, us,m] =
+0 for s = t, l, m  {1, 2}. Note that assuming det C = 0 is equivalent to assuming || < 1.
+
+    Letting U i = u1 + ... + ui we obtain from formula (10)
+
+z^i,l - X1,l = l,Ui-1,l for i = 1, 2, ..., l = 1, 2.  (12)
+
+      7
+Hence we can express the loss function L(D) in the form
+
+       L(D) = a11, 2 + a22, 2 + a11, 2 G1(D) + a22, 2 G2(D) + C ,  (13)
+                                                         E[N ]
+
+where                 ND
+
+                E U 2j-1,l
+
+       Gl(D) =  j=1         for l = 1, 2                           (14)
+
+                E[ND]
+
+will be referred to as the scaled mean square deviation (or MSD). The predicted deviations
+from target d^k+1,l = z^k+1,l - X1,l (see equation 4), can be expressed as d^k+1,l = l,Uk,l.
+
+Hence, equivalently to in (5), the time N of the next intervention is given by
+
+       N = ND = min min{n  N | U n / D , n0                        (15)
+
+where
+                                D = x1 , x2 | (x1, x2)  D . (16)
+                                                  1, 2,
+
+Now we are able to impose reasonable restrictions on the shape of the dead area D. Re-
+call that an alarm signal U n / D entails adjustments in both compensating variables.
+Accordingly, neither of the two components should have a more prominent inclination to
+provoke an alarm. Hence, since the bivariate distribution of the vectors U k = (Uk,1, Uk,2)
+is symmetric, symmetricity should also hold for the dead area D :
+
+(DA) D  R2 should be invariant under permutations (x1, x2)  (x2, x1) of the coordi-
+           nates.
+
+To make the resulting control scheme practical for implementation in an industrial setting
+(the same could be argued for the control of some disease in a patient), a further reasonable
+requirement is that D should be a convex area of a simple geometric nature on the plane.
+Three simple approaches to select D are shown in figure 1: a circle, a square, and a rotated
+square. Each of these areas conforms to the above requirements, and each is a reasonable
+adaptation of the univariate dead interval considered by Box and Jenkins (1963) to the
+bivariate case. From an economic point of view the best choice among these three approaches
+is the one which guarantees a maximum dead area, i.e., a minimum of interventions, at a
+prescribed level c = L(D) = L(D ) of the loss function. We conjecture that in this sense
+the optimum shape is a circle. However, determining the values L(D ) for circles D will be
+difficult from a mathematical point of view. To provide a practical solution for application of
+the resulting control policy, we use a square shaped dead area D . In the following Section 6
+we shall see that a rotated square D as on the right-hand side of Figure 1 is most convenient
+for calculations.
+
+                     8
+       Figure 1: Some possible forms of "dead areas" on the plane.
+
+6 The Standardized Dead Area and the Optimum Con-
+     trol Policy.
+
+As the dead area with respect to the standardized predicted deviations from target (Uk,1, Uk,2),
+k = 1, 2, ... we consider the interior
+
+       D = (U1, U2) | -  < U1 + U2 < , - < U1 - U2 <                   (17)
+
+of a rotated square with vertices (0, ), (, 0), (0, -), (-, 0) as illustrated by the right-
+
+hand side of Figure 1. Hence the formula (15) for the time N = N = ND of the next
+intervention amounts to
+
+       N = N =
+
+                                                                       (18)
+       min min{n  N | |Wn,1|  2(1 + ) or |Wn,2|  2(1 - ) , n0
+
+where  Wk,1 = Uk,1 + Uk,2 = w1,1 + ... + wk,1, wi,1 = ui,1 + ui,2 ,
+
+       2(1 + )                                            2(1 + )      (19)
+
+       Wk,2 = Uk,1 - Uk,2 = w1,2 + ... + wk,w,  wi,2 =  ui,1 - ui,2 ,  (20)
+                       2(1 - )                            2(1 - )
+
+                  9
+Figure 2: Dead rectangle with respect to (Wk,1, Wk,2) on the plane.
+
+It is easy to verify that the pairs (wt,1, wt,2) constitute a bivariate uncorrelated Gaussian unit
+white noise, i.e., normally distributed pairs with stationary variance-covariance matrix
+
+                          Cw =      10
+                                    01
+
+for each time t and without serial correlation, i.e., Cov[wt,l, ws,l] = 0 for s = t, l = 1, 2,
+
+Cov[wt,1, ws,2] = 0 for s = t. By formula (18), the time N = N of the next intervention is
+
+expressed as the first exit time of the cross-independent bivariate random walk (Wk,1, Wk,2)
+
+from the open rectangle (-1; 1) × (-2; 2), where 1 =   , 2 =   , as
+                                                             2(1+)   2(1-)
+
+illustrated by figure 2.
+
+Hence we have two equivalent descriptions of the dead area:
+
+· The dead area with respect to the standardized observations (Uk,1, Uk,2), k = 1, 2, ...,
+    is the interior D of a rotated rectangle as defined by formula (17).
+
+· The dead area with respect to the uncorrelated pairs (Wk,1, Wk,2), k = 1, 2, ..., defined
+    by formulae (19) and (20) is the interior
+
+                                                             
+D = (y1, y2) | |y1| < 2(1 + ) , |y2| < 2(1 - ) (21)
+
+                                10
+       of a rectangle parallel to the axes.
+
+The loss function can be expressed as a function
+
+                                        L() = L(D) = L(D)
+
+of the parameter  ranging over (0; +). Hence the optimum control policy can be defined
+by a value  which minimizes L() for all  > 0. In analogy to the univariate case, the
+dead areas D (rotated square centered in the origin) and D (rectangle parallel to the axes,
+centered in the origin), when shifted along the time axis induce dead bars. From a practical
+point of view, displaying Ut,1 + Ut,2 and Ut,1 - Ut,2 on "adjustment" charts with limits at ±
+is probably preferred, as we illustrate in Section 11. We first consider the moments needed
+to compute the standardized loss function.
+
+7 Relations among Moments of UN,l and WN,m.
+
+To evaluate the loss function L(D) = L() we need the moments E[UN2 ,l], E[UN4 ,l] of the
+standardized accumulated deviations from target, which we use for this purpose in Section
+
+9. By the choice of the dead area D, UN,1 and UN,2 have the same distribution. Hence
+
+E[UN,1 q ] = E[UN,2 q ] for q  N0. (22)
+
+From the symmetry of the underlying bivariate normal distribution and from the symmetry
+of the dead area it is clear that
+
+E[UN,1 q ] = 0 = E[UN,2 q ] for q = 1, 3, 5, .... (23)
+
+Because of the correlation among the variables Uk,1, Uk,2, direct calculation of the moments
+E[UN,l q ], q = 2, 4, ..., is rather involved. It is more convenient to calculate the moments
+E[WN,m q ], see Section 8, and then to derive E[UN2 ,l] and E[UN4 ,l]. For this purpose, we establish
+relations among the moments of UN,l and the moments of WN,m. From formulae (19) and
+
+(20) we obtain
+
+E[UN,l 2 ] = 1 (1 + )E[WN,1 2 ] + (1 - )E[WN,2 2 ] , (24)
+                   2
+
+E[UN4 ,l] + 3E[UN,1 2 UN,2 2 ] = (1 + )2E[WN,1 4 ] + (1 - )2E[WN4 ,2],  (25)
+         E[UN,l 4 ] - E[UN,1 2 UN,2 2 ] = 2(1 - 2)E[WN,1 2 WN,2 2 ].    (26)
+
+Combining equations (25) and (26) we obtain
+
+E[UN,l 4 ] = 1 (1 + )2E[WN,1 4 ] + 6(1 - 2)E[WN,1 2 WN,2 2 ] + (1 - )2E[WN,2 4 ] . (27)
+                   4
+
+11
+8 Moments of WN,m.
+
+Because of the independence of the variables Wk,1, Wk,2 we can adapt a method used by Box
+and Jenkins (1963) for the univariate case to determine an approximation of the moments
+E[WN,m q ] and of E[WN,1 p WN,2 r ]. In this derivation, we ignore the upper limit n0 for the length
+of periods without adjustment. See the explanation on n0 in Section 3.
+
+    From the symmetry of the dead area and of the underlying normal distribution it is clear
+that
+
+                           E[WN,1 q ] = 0 = E[WN,2 q ] for q = 1, 3, 5, .... (28)
+
+As in Section 6 we use the abbreviating notation 1 =   2(1+) , 2 =   2(1-) . For k  N,
+let hk: R  R be the joint density of W1,m, ..., Wk,m, and let gk,m: R  R be defined by
+
+gk,m(y)  =                       hk(y1, ..., yk-1, y) dy1...dyk-1.    (29)
+
+            |y1|<m,...,|yk-1|<m
+
+Since Wk,m = wk,m + Wk-1,m with wk,m distributed according to N (0, 1), the functions gk,m
+follow the recursion
+
+gk,m(xm) =           gk-1,1(ym)(xm - ym) dym,                         (30)
+
+            |ym|<m
+
+where (z) = 12 exp -z2 2 is the density function of the normal distribution N (0, 1).
+gk,m is a density of Wk,m in the event {|W1,m| < m, ..., |Wk-1,m| < m}, i.e.,
+
+P(Wk,m  B, |W1,m| < m, ..., |Wk-1,m| < m) =             gk,m(xm) dxm  (31)
+
+                                                     B
+
+for Borel sets B. From formula (31) it follows that
+
+            gn-1,1 · gn-1,2 · 1I(-1;1)×(-2;2)
+                          P(N  n)
+
+is a joint conditional density of Wn-1,1 and Wn-1,2 under the condition N  n, where 1IB is
+the indicator function of a set B. We follow the intuitively reasonable approach used by Box
+and Jenkins (1963) for the univariate case: We approximate the joint conditional distribution
+of Wn-1,1 and Wn-1,2 under the condition N  n by a bivariate uniform distribution over
+the dead rectangle (-1; 1) × (-2; 2), i.e., we assume
+
+gn-1,1 · gn-1,2 · 1I(-1;1)×(-2;2)                    1                (32)
+            P(N  n)                                        .
+                                                     4 1 2
+
+                     12
+The accuracy of this approximation is studied in Section 10.
+    Under this approximation we obtain for p, r  N0
+
+                              E[WN,1 p WN,2 r |N = n] P(N = n) =(18), (31)
+
+                              x1px2rgn,1(x1)gn,2(x2) dx1dx2  =(30)
+
+                 {|x1|1}
+                 {|x2|2}
+
+         x1px2r           gn-1,1(y1)gn-1,2(y2)(x1 -y1)(x2 -y2) dy2dy1 dx1dx2               (32)
+
+{|x1|1}  |y1|<1 |y2|<2
+{|x2|2}
+
+P(N  n)                            1-x1                      2-x2
+ 4 1 2
+                          x1p (y1)dy1 dx1 ·          x2r                    (y2)dy2 dx2 +
+
+                 |x1|1    -1-x1              x2R             -2-x2
+
+                                   1-x1                      2-x2
+
+                          x1p (y1)dy1 dx1 ·          x2r                    (y2)dy2 dx2 =
+
+                 |x1|<1   -1-x1      |x2|2                   -2-x2
+
+                 P(N  n)  I(1, p) I(2, r) + J(2, r)  + J(1, p)I(2, r) ,
+                   4 1 2
+where for   0, q  N0
+
+                 I(, q) =        xq (x + ) - (x - ) dx,                                    (33)
+
+                           |x|
+
+                 J(, q) =        xq (x + ) - (x - ) dx.                                    (34)
+
+                           |x|<
+
+The integrals I(, q) and J(, q) are evaluated by proposition B.1 in the appendix B. In
+particular,
+
+I(, 0) = 2 (0) - (2) + 2 1 - (2) , J(, 0) = 2 - I(, 0). (35)
+
+Letting p = 0 = r into the above derivation we obtain from (35)
+                                  P(N  n)
+
+           P(N = n)  4 1 2 22I(1, 0) + 21 - I(1, 0) I(2, 0) .
+
+                                 13
+Finally for p, r  N0
+
+                      
+
+E[WN,1 p WN,2 r ] =                    E[WN,1 p WN,2 r |N = n] P(N = n) 
+
+                      n=1
+
+I(1, p) I(2, r) + J(2, r) + J(1, p)I(2, r)                                                (36)
+
+                                                                    .
+
+22I(1, 0) + 21 - I(1, 0) I(2, 0)
+
+In particular for q  N0
+                    E[WN,1 q ]  I(1, q)22 + J(1, q)I(2, 0) . (37)
+                                         22I(1, 0) + 21 - I(1, 0) I(2, 0)
+
+9 An Approximation of the Loss Function L().
+
+The standardized accumulated deviations from target j=1 ND Uj-1,1 2 and j=1 ND Uj-1,2 2 have the
+same distribution. Hence from formula (14) G1(D) = G2(D). Consider the martingales
+(Rn,l)nN, (Yn,l)nN, (Zn,l)nN defined by formulae (52) and (53) in Appendix C. Obviously,
+ND is a stopping time for these martingales, uniformly bounded by ND  n0. Hence the
+
+optional stopping theorem, see Rogers and Williams (1994), provides
+
+E[N ] = E[UN2 ,l],                            ND   =  E[UN4 ,l] E[N ]
+                                                                       -     .            (38)
+                                       E Uj-1,l 2             6           2
+
+                                             j=1
+
+We point out that these expressions are exact and not approximations, as suggested by Box
+and Jenkins (1963).
+
+    Inserting into formula (14) we obtain the scaled MSD:
+
+                                                   E[UN4 ,l]           1
+                      G1(D) = G2(D) = 6E[UN,l 2 ] - 2 . (39)
+
+Hence, from formula (13) we have that
+
+L() = L(D) =                               E[UN4 ,l]             1               C        (40)
+a11, 2 + a22, 2 + (a11, 2 + a22, 2 )                                      + E[UN,l 2 ] .
+                                           6E[UN,l 2 ] - 2
+
+To obtain an approximation of the loss function L() = L(D), we insert into formula (40)
+the approximations for the moments E[UN2 ,l] and E[UN4 ,l] determined from formulae (24),
+
+(27), (36), (37).
+
+                                       14
+10 Accuracy of the approximations
+
+The expressions for the moments (24) and (27) are based on the approximation (32). Simi-
+
+larly as what Box and Jenkins (1963) reported for the univariate case, the assumption of a
+
+uniform distribution for the standardized bivariate process W n-1 before the process falls out
+of the dead area was found to be inaccurate, particularly for large values of . The geometri-
+
+cal reason for this problem is that, for large , the points (Wn-1,1, Wn-1,2) will gather closer
+to the boundaries of the dead area than to the center of the region. Therefore, a correction
+
+regression equation was developed empirically by computing, through simulation, the "real"
+moments Er[UN2 ,l] and Er[UN4 ,l] and computing the differences D2 = E[UN2 ,l] - Er[UN2 ,l] and
+D4 = E[UN4 ,l] - Er[UN4 ,l]. Here, Er[UN2 ,l] and Er[UN4 ,l] were estimated by simulating 50,000
+renewals for ||  {0.1, 0.25, 0.5, 0.75, 0.85, 0.95} and   {1, 2, ..., 15}. The moments E[UN2 ,l]
+and E[UN4 ,l] were computed as in (24) and (27). Note from (18-20) that the moments are
+invariant with respect to the sign of the cross-correlation coefficient .
+
+    The following correction model was fitted to the errors in the second order moment data:
+
+D20.337 = 0.385 + 0.133 - 0.840|| - 0.001722 + 0.902 + 0.0375||  (41)
+
+that is, a quadratic polynomial model in  and  was fitted after a Box-Cox power transfor-
+mation was applied to the data (hence the exponent in the left hand side). This model was
+fitted for  > 2 since for small values of  the analytic formula provides a good approxima-
+tion to the real moment. Fortunately, model (41) provides an excellent fit, with R2 = 0.997
+and the p-values associated with the tests for the significance of each regressor equal to zero
+up to three decimal places in all cases.
+
+    For the errors in the fourth order moments, the corresponding fitted model was:
+
+D40.224 = 0.515 + 0.386 - 1.25|| + 0.001182 + 1.442 + 0.0768||   (42)
+
+where similarly as before, a full quadratic polynomial in  and  was fitted after a Box-Cox
+transformation was applied to the errors. Values   2 were excluded from the regression,
+similarly as before. The fit again is excellent, giving R2 = 0.999 and all p-values of the
+individual tests of significance for each model parameter smaller or equal to 0.001.
+
+    In order to minimize the standardized cost function, the correction formulae (41 - 42)
+were used for   2. For  < 2, no correction was used and the analytical formulae (24),
+(27) were directly utilized instead.
+
+11 Minimization of the standardized loss function
+
+From (40), it is evident that the optimal solution  depends on the relative cost parameter
+                                                             C
+
+                                             C = a11, 2 + a22, 2 .
+                                                         15
+The only other parameter that the optimal solution depends on is the value of ||, the
+cross-correlation of the bivariate series j = Lj. To find , the cost function
+
+L()  a112, + a222, E[UN4 ,l] 1  C
+L () = a11, 2 + a22, 2 - a11, 2 + a22, 2 = 6E[UN,l 2 ] - 2 + E[UN,l 2 ]
+
+was minimized using Matlab's fminbnd function, which minimizes a non-linear function
+subject to bounds (bounds of 0.1 and 20 were used in all cases in the table below). For
+ > 2, the two moments were corrected using (41-42). The solutions reported in this section
+were confirmed to provide the unique minimizer of the function within the interval (the
+Matlab code used in this section is available from the first author upon request).
+
+    Table 1 shows the optimal solution , the corresponding value of the loss function L (),
+the scaled MSD value (Gl(D)), and the Average Adjustment Interval (AAI= E[N ]) for
+a variety of values of || and C . From it, a potential user can select a solution by finding
+acceptable MSD and AAI values, without having to define an explicit cost C . In general
+terms, the optimal limit  increases with increasing relative fixed adjustment cost (C ) and
+with increasing correlation (||). The cost function was observed to be fairly flat around the
+minimum point, so small departures of  from the optimum value  will not be of practical
+importance.
+
+     16
+       Table 1. Some optimal solutions.
+
+  C    ||   L () Scaled MSD               AAI
+    1                                     1.91
+    1  0.0 1.01  0.63   0.10              1.91
+    1                                     2.11
+    1  0.3 1.02  0.63   0.11              2.69
+    4                                     4.10
+    4  0.6 1.21  0.63   0.16              4.06
+    4                                     4.12
+    4  0.9 1.39  0.54   0.22              4.57
+    7                                     5.35
+    7  0.0 2.85  1.66   0.69              5.33
+    7                                     5.47
+    7  0.3 2.73  1.69   0.71              6.01
+                                          6.35
+   10  0.6 2.73  1.65   0.68              6.35
+   10                                     6.51
+   10  0.9 2.99  1.44   0.56              7.14
+   10                                     8.88
+   20  0.0 3.40  2.30   0.99              8.93
+   20                                     9.17
+   20  0.3 3.29  2.33   1.02             10.02
+   20                                    13.91
+   50  0.6 3.33  2.28   1.00             14.06
+   50                                    14.47
+   50  0.9 3.61  2.00   0.84             15.75
+   50                                    17.54
+   80  0.0 3.79  2.81   1.24             17.76
+   80                                    18.30
+   80  0.3 3.69  2.85   1.27             19.90
+   80                                    19.58
+ 100   0.6 3.74  2.78   1.24             19.85
+ 100                                     20.47
+ 100   0.9 4.04  2.46   1.06             22.24
+ 100                                     39.04
+ 400   0.0 4.66  4.12   1.87             39.74
+ 400                                     41.13
+ 400   0.3 4.58  4.15   1.92             44.75
+ 400                                     51.71
+ 700   0.6 4.64  4.05   1.87             52.70
+ 700                                     54.64
+ 700   0.9 5.00  3.63   1.63             59.57
+ 700                                     61.91
+1000   0.0 6.06  6.76   3.16             63.15
+1000                                     65.55
+1000   0.3 6.00  6.76   3.21             71.58
+1000
+       0.6 6.11  6.59   3.14
+
+       0.9 6.56  5.95   2.78
+
+       0.0 6.91  8.66   4.10
+
+       0.3 6.86  8.65   4.14
+
+       0.6 7.01  8.42   4.05
+
+       0.9 7.52  7.64   3.62
+
+       0.0 7.35  9.74   4.63
+
+       0.3 7.31  9.71   4.67
+
+       0.6 7.47  9.45   4.57
+
+       0.9 8.02  8.59   4.09
+
+       0.0 10.71 19.98  9.73
+
+       0.3 10.74 19.79  9.72
+
+       0.6 11.04 19.21  9.48
+
+       0.9 11.89 17.56  8.62
+
+       0.0 12.44 26.59  13.06
+
+       0.3 12.52 26.28  13.00
+
+       0.6 12.89 25.47  12.66
+
+       0.9 13.90 23.31  11.56
+
+       0.0 13.67 31.87  15.72
+
+       0.3 13.79 31.46  15.62
+
+       0.6 14.22 30.47  15.21
+
+       0.9 15.36 27.89  13.92
+
+                 17
+Relation with Box and Jenkins' univariate optimal solution
+
+    Clearly, our formulation reduces to solving two separate univariate problems using Box
+
+and Jenkins (1963) formulation, one for each response and each controllable factor l, when
+
+ = 0 (which implies  = 0) and both  and G are diagonal matrices. In such case the two
+responses are said to be decoupled. To see further relations between the bivariate and the
+
+univariate models, we could try to solve a single univariate problem with the procedure in
+
+this paper. Suppose we want to solve for the best Box-Jenkins (1963) univariate dead band
+rule when the white noise is 2 , the IMA(1,1) parameter is , the off target cost is a and the
+adjustment cost C. Then we would set in our code a1 = a2 = a and 21, = 22, = (1 - )2 ,
+apart from setting  = 0. The solution thus obtained from minimizing L () will be related
+to the optimal solution found by Box and Jenkins, BJ , by the relation BJ = / 2. The
+reason of this is the rotated nature of our dead area (Figure 1): BJ is the width of the
+square but we are solving for , half the length of the diagonal. We now illustrate the
+
+bivariate procedure with a practical example.
+
+Example.- As a practical application of the adjustment method developed and the optimal
+solutions obtained, consider a chemical mechanical planarization (CMP) process which is
+of critical importance in the manufacture of semiconductors. This is a polishing process in
+which there are typically two responses of interest (see, e.g., Moyne et al, 2000): the removal
+rate of silicon oxide (hereafter, zt,1) which we suppose here to have a target equal to 2700, and
+the non-uniformity of the wafer (hereafter, zt,2) with target equal to 500. Two controllable
+factors, down force (Xt,1 (0)) and table speed (Xt,2 (0)) can be adjusted to provide better control
+to target. The factors are in coded units. Here, the time index t denotes the wafer number,
+assuming a single-wafer CMP machine is in use. To illustrate the methodology, we simulate
+this process from a somewhat modified model obtained from real experiments as reported
+in Del Castillo and Yeh (1998). Simulating the behavior of the process will allow us to see
+what would have occurred in the absence of any adjustments.
+
+    The model that is simulated for this illustration has a gain matrix equal to
+
+G = 547.6 616.3
+          -62.3 -128.6
+
+and an IMA parameter matrix equal to
+
+ = 0.4 0.1
+          0.3 0.5
+
+The covariance matrix of the bivariate normal white noise sequence is
+
+C =                                    3600 -1500
+                                      -1500 900
+
+                                      18
+In practice, estimates of the previous parameters could be obtained using multivariate time
+series techniques, see Reinsel (1993).
+
+    From the aforementioned data, we have that
+
+C = (I - )C(I - ) =   1501 -1268
+                     -1268 1399
+
+thus  =  = -0.8750. Let us assume it costs a1 = 0.1 dollars to have a removal rate that de-
+viates one unit (Amstrongs per time unit, in this case) from the desired target of 2700 during
+the processing of one wafer. Similarly, assume it costs a2 = 0.1 dollars to have a wafer with a
+non-uniformity that deviates one unit (Amstrongs, in this case) from its desired target of 500.
+Assume the cost of making an adjustment in the "recipe" used in processing each wafer equals
+C = 1000 dollars, and includes the cost of re-starting the machine (sometimes test wafers are
+introduced after adjustments), machine downtime, and operator time. With the given cost
+structure and process information, we have that C = C/(a112, + a222,) = 3.448. Minimiz-
+ing L () with respect to  we obtain the optimal limit  = 2.78 with loss L (2.78) = 1.3451
+and AAI= E[N ] = 4.1589 (wafers between adjustments), or approximately 24 adjustment
+will be made on average every 100 wafers are produced.
+
+    The resulting process adjustment procedure is as follows. A vector EWMA with pa-
+rameter matrix L = I -  provides one step ahead forecasts zk+1,1, zk+1,2 based on the
+measurements of the two responses. At each time instant k, the standardized bivariate
+series U k is computed as
+
+Uk,1                 zk+1,1 -Xs,1
+                          1,
+U k = Uk,2 = zk+1,2-Xs,2
+                     2,
+
+where s < k is the last period an adjustment was made and where we use Xk = GXk(0) with
+Xk(0) a vector containing the down force and table speed controllable factors as components.
+Whenever |Uk,1 + Uk,2| > 2.78 =  or |Uk,1 - Uk,2| > 2.78, the controllable factors are
+changed such that Xk+1 = zk+1, or, in terms of the original controllable factors, the new
+settings are Xk+1 (0) = G-1zk+1.
+
+    Figure 3 shows the uncontrolled and controlled processes. Figure 4 shows the standard-
+ized quantities Uk,1+Uk,2 and Uk,1-Uk,2 on a "adjustment chart" with limits at ± = ±2.78.
+Finally, Figure 5 shows the corresponding values of the controllable factors. Horizontal seg-
+
+ments imply no adjustments are made during such periods. In the particular simulation
+
+depicted, 30 adjustments were made. As it can be seen for the simulated data shown, the
+
+down force is reduced throughout the control session while the table speed was increased
+
+during the last few runs.
+
+      19
+Figure 3: Realizations of the uncontrolled (left) vs. controlled (right) quality characteristics
+(dt,l + Tl, l = 1, 2) for the semiconductor example. Targets Tl equal 2700 and 500 units for
+l = 1, 2, respectively.
+
+References.              Introduction to Stochastic Control Theory.  Academic Press, San
+
+°Astro¨m, K.J., (1970).
+Diego, CA.
+
+Box, G.E.P., and Jenkins, G., (1963). "Further Contributions to Adaptive Quality Control:
+Simultaneous Estimation of Dynamics: Nonzero Costs", Bulletin of the International Sta-
+tistical Institute, 34, pp. 943-974.
+
+Box G.E.P., G.M. Jenkins, and Reinsel, G. (1994). Time Series Analysis, Forecasting, and
+Control 3rd. ed., Englewood Cliffs: Prentice Hall.
+
+Box, G.E.P., and Kramer, T., (1992). "Statistical Process Monitoring and Feedback Adjustment-
+a Discussion", Technometrics, 34, 3, pp. 251-267.
+
+Box, G.E.P., Lucen~o, A. (1997). Statistical Control by Monitoring and Feedback Adjustment.
+John Wiley & Sons, New York, NY.
+
+Crowder, S.V., (1992). "An SPC Model for Short Production Runs: Minimizing Expected
+Cost," Technometrics, 34, pp. 64-73.
+
+Del Castillo, E., (2002). Statistical Process Adjustment for Quality Control, New York: John
+Wiley & Sons (Probability and Statistics Series).
+
+                         20
+Figure 4: Standardized series Ut,1 + Ut,2 and Ut,1 - Ut,2 used to determine the time of the
+adjustments in the example. Adjustment limit  = 2.78.
+
+Del Castillo, E. (2006), "Statistical Process Adjustment: a brief retrospective, current status
+and future research", Statistica Neerlandica, 60(3), pp. 309-326.
+
+Del Castillo, E., and Yeh, J.Y., (1998). "An Adaptive Run-to-Run Optimizing Controller
+for Linear and Nonlinear Semiconductor Processes" IEEE Transactions on Semiconductor
+Manufacturing, 11, 2, pp. 285-295.
+
+Govind, N., Del Castillo, E., Runger, G., and Janakiram, M., (2018). "Multivariate Bounded
+Adjustment Schemes", Qual. Technology and Quant. Management, 15(2), pp. 253-273.
+
+Jensen, K.L., and Vardeman, S.B., (1993). "Optimal Adjustment in the Presence of Deter-
+ministic Process Drift and Random Adjustment Error". Technometrics, 35, pp. 376-389.
+
+Magni, L., Forgione, M., Toffanin, C., Dalla Man, C., Kovatchev, B., De Nicolao, G. and
+Cobelli, C., (2009). "Run-to-run tuning of model predictive control for type 1 diabetes sub-
+jects: in silico trial". J. of Diabetes Science and Technology, 3 (5), pp. 1091-1098.
+
+Moyne, J., Del Castillo, E., and Hurwitz, A., eds. (2000). Run to run control in semicon-
+ductor manufacturing, CRC press, Boca Raton, FL.
+
+Liu, L., Ma, Y. and Tu, Y., (2013). "Multivariate setup adjustment with fixed adjustment
+cost". International Journal of Production Research, 51(5), pp.1392-1404.
+
+Reinsel, G.C., (1993). Elements of Multivariate Time Series Analysis. Springer-Verlag, New
+
+                                                         21
+Figure 5: Levels for the controllable factors Xt,1 and Xt,2 for the example. Thirty adjustments
+were made.
+
+York, Berlin.
+Rogers, L.C.G., and Williams, D. (1994) Diffusions, Markov Processes, and Martingales.
+2nd Edition. John Wiley & Sons, Chichester, New York.
+Ross, S.M., (1970). Applied Probability Models with Optimization Applications. Holden-Day,
+San Francisco, Cambridge, London, Amsterdam.
+Schmetterer, L., (1974). Introduction to mathematical statistics (Vol. 202). Springer Science
+& Business Media.
+Srivastava, M. S., and Wu, Y. (1991). "A Second Order Approximation to Taguchi's Online
+Control Procedure". Communications in Statistics - Theory and Methods, 20, 7, pp. 2149-
+2168.
+Woodall, W.H., and Del Castillo, E. (2014). "An overview of George Box's contributions to
+process monitoring and feedback adjustment", Applied Stochastic Models in Business and
+Industry, 30(1), pp. 53-61.
+
+A The Renewal Reward Process Property.
+
+Consider an adjustment at time s. From the EWMA recursion (2) for the one step ahead
+predictors and from the adjustment formula Xs+1,l = z^s+1,l we obtain by induction for
+
+                                                         22
+k = 1, 2, ..
+
+                                                                                      k-1  (43)
+
+                 ds+k =(4) z^s+k - z^s+1 = L s+j.
+
+                                                                                      j=1
+
+From equation (43) and from the alarm rule (5) it is obvious that the lengths N1, N2, N3, ...
+of periods between adjustments are independent and identically distributed. From equation
+(1) we obtain for i = 1, 2, ...
+
+                                         i-1
+
+                 zs+i,l = zs+1,l +              (s+m+1,l - ls+m,l)
+
+                                         m=1
+
+and hence                                         i-1
+
+                 zs+i,l - z^s+1,l  =(3)  s+1,l +       (s+m+1,l - ls+m,l).                 (44)
+
+                                                  m=1
+
+From the assumptions on the white noise variables t,l and from equation (44) it follows that
+for s1 < s2, 1  i  s2 - s1, j  1, the differences zs1+i,l - z^s+1,l and zs2+j,l - z^s2+1,l are
+independent and normally distributed. Taking into account that the adjustment formula is
+
+Xs+1,l = z^s+1,l, we can demonstrate that the vectors (zSk+1,l -XSk+1,l, ..., zSk+Nk+1,l -XSk+1,l)
+of the deviations from target, indexed in k  N, are independent. Hence by definition (8), the
+overall losses Vk, k = 1, 2, ..., in the periods between interventions are independent. Since the
+lengths N1, N2, N3, ... of periods between adjustments are identically distributed, the losses
+Vk, k = 1, 2, ..., are also identically distributed.
+
+    Hence the pairs (Nk, Vk), k = 1, 2, ... are serially independent and identically distributed,
+i.e., they constitute a renewal reward process, see Ross (1970).
+
+B Integrals of the Normal Distribution Function.
+
+The incomplete gamma integral is defined by
+
+                                      +
+
+                 (y, a) =                uy-1 exp(-u) du for a  [0; +).                    (45)
+
+                                   a
+
+For a = 0 we obtain the customary gamma function (y) = (y, 0). Integrals of the
+
+normal probability density function      (y) = 1 exp          -y2  can be expressed by means of
+                                                                2
+                                                           2
+
+the incomplete gamma integral:
+
+                 + 2 2j -1 j + 1 b2
+                 xj(x) dx =                  ,                for b  [0; +), j  N0. (46)
+                                         22
+              b
+
+                                         23
+To prove formula (46), substitute u = 2x2 . Integration by parts provides the formula
+
+     + yj 1 - (y) dy = -Aj+1 1 - (A) + 1 + yj+1(y) dy (47)
+                                    j+1                      j+1 A
+A
+
+for j  N0, A  0, and in particular
+
+             + 1 +
+               yj 1 - (y) dy =                yj+1(y) dy for j  N0.                    (48)
+                                    j+1 0
+     0
+
+From formulae (46), (47), (48) we obtain formulae for integrals of the normal distribution
+
+                                     x
+
+function (x) = - (y) dy.
+
+B.1 Proposition. For   0, q  N0, let
+
+I1,1(, q) =      +                        I1,2(, q) =          +
+
+                    xq 1 - (x - ) dx,                             xq 1 - (x + ) dx, (49)
+
+                                                             
+
+                     -                                       -
+
+I2,1(, q) =             xq(x + ) dx, I2,2(, q) =                xq(x - ) dx, (50)
+
+                  -                                          -
+
+                                          2
+
+                     J0(, q) =               (x - )q(x) dx,                            (51)
+
+                                       0
+
+and let I(, q), J(, q) be defined by formulae (33), (34). Then we have:
+
+(a) (-1)qI2,1(, q) = I1,1(, q) =    q q q-j j                         j-1
+                                               +1
+                                          j j+1 2                  22
+                                    j=0                            .
+
+                                                                      
+
+(b) (-1)qI2,2(, q) = I1,2(, q) =
+
+q q (-) j+1 q-j                                                     j-1
+                                              j              2 22
+                  -(2) 1 - (2) +  + 1, 2  .
+j=0 j j + 1                                   2                     
+
+(c) J0(, q) =
+
+q+1  (2) +     (-1)q
+
+q+1               2
+
+                     1 q+1 q + 1              q+1-j 2 2j -1  j+1           j+1 2
+               -                       (-)                            -       , 2 .
+                  q + 1 j=0 j                                   2          2
+
+(d) I(, q) =   1 + (-1)q I1,1(, q) - I1,2(, q) , where I(, q) is defined by formula
+       (33).
+
+                                          24
+(e) J(, q) =      1 + (-1)q                   q+1
+       (34).                  J0(, q) - q + 1 , where J(, q) is defined by formula
+
+Proof of assertion (a) of proposition B.1. Substituting y = -x we obtain
+
+       -                           -
+
+(-1)q     xq(x + ) dx = - (-1)(-x)q 1 - (-x - ) dx = I1,1(, q).
+
+       -                         -
+
+Substituting z = y -  we obtain
+
+                           +
+
+       I1,1(, q) =            (z + )q 1 - (z) dz    =(48)
+                                                   q q-j
+        q q q-j         0
+       j=0 j j + 1                                            
+                        +                       q  j j+1        j            j-1
+                                                                  +1
+                           yj+1(y) dy =(46)                               22
+                                                                2         .
+                     0                       j=0
+                                                                             
+
+Assertion (b) of proposition B.1 is proved analogously: the first identity is obtained by
+substituting y = -x; the second identity is obtained by substituting z = y + , and then
+using formulae (46) and (47).
+
+Proof of assertion (c) of proposition B.1. Integration by parts provides
+
+                  (x - )q+1        2         1     2
+
+       J0(, q) =     q+1      (x)     -   q+1 0      (x - )q+1(x) dx =
+
+                                   0
+
+       q+1    (2) +  (-1)q    - 1 q+1 q + 1 (-)q+1-j xj 2 (x) dx.
+                                   q + 1 j=0 j 0
+       q+1              2
+
+By formulae (45) and (46) we obtain the assertion on J0(, q).
+
+Proof of assertion (d) of proposition B.1. The symmetry relation (-y) = 1 - (y) for the
+distribution function of the standard normal distribution provides
+
+I(, q) =(33), (49), (50) I1,1(, q) - I1,2(, q) + I2,1(, q) - I2,2(, q) =(a),(b)
+
+                        1 + (-1)q I1,1(, q) - I1,2(, q) .
+
+Proof of assertion (e) of proposition B.1. The substitution u = -z provides
+
+          0                                  2
+
+              (z + )q(z) dz = (-1)q (u - )q 1 - (u) du =
+
+          -2                              0
+
+                    (-1)q     q+1 1 - (-1)q+1      - J0(, q) .
+                              q+1
+
+                                      25
+Using this result and substituting y = x +  and, respectively, z = x -  in the definition
+of J(, q) in formula (51), we obtain
+
+             2                                   0
+
+J(, q) =        (y - )q(y) dy -                      (z + )q(z) dz =
+
+          0                                      -2
+
+J0(, q) - (-1)q     q+1     1 - (-1)q+1 - J0(, q) =
+
+                    q+1
+
+             1 + (-1)q                      q+1
+                            J0(, q) - q + 1 .
+
+                                                                                         ·
+
+C Three Martingales.
+
+Let the family (un,1, un,2) of variables introduced in Section 5 be adapted to its nat-
+
+                                                       N
+
+ural filtration (An)N, i.e., let (An)N be the sequence of smallest -algebras with A1 
+A2  ... where (un,1, un,2) is Borel-measurable with respect to An for n  N. Then
+Un,l = u1,l + ... + un,l is Borel-measurable with respect to An for n  N, l = 1, 2. The
+martingale property with respect to the filtration (An)N is determined by the conditional
+expectations E[ · |An] = E[ · |un,1, un,2, ..., u1,1, u1,2]. In this sense, the following sequences
+
+(Rn,l)nN, (Yn,l)nN, (Zn,l)nN with
+
+                             n-1 n(n + 1)
+Rn,l = Un,l 2 - n,  Yn,l =                       Uk,l 2 - nUn,l 2 +        ,             (52)
+                                                                     2
+                             k=1
+
+                         14                      2 n2                                    (53)
+             Zn,l = Un,l - nUn,l + ,
+                         6                           2
+
+are martingales. For the proof, we observe that
+
+                                                     
+                                                      0,             if q is odd,
+
+E[uk+1,l q Uk,l r |Ak] = Uk,l r E[uk+1,l q ] = Uk,l r ·                                  (54)
+                                                               q q/2 q! , if q is even,
+                                                        ( 2 )!2
+
+since U rk,l is measurable with respect to Ak and uk+1,l q is independent of Ak. Hence
+
+E[Rn+1,l|An] = E[Rn,l + 2un+1,lUn,l + un+1,l 2 - 1|An] =(54) Rn,l,
+
+E[Yn+1,l|An] = E[Yn,l - (n + 1)un+1,l 2 - 2un+1,lUn,l + n + 1|An] =(54) Yn,l,
+
+                            26
+Zn+1,l =
+
+Zn,l + 2 un+1,lUn,l 3 + un+1,l 2 Un,l 2 2 un+1,l 3 Un,l +
+          3                                 3
+
+1 un+1,l 3 - Un,l 2 - 2(n + 1)un+1,lUn,l - (n + 1)un+1,l 2 + n + 1  (55)
+6                                                          2
+
+and hence by (54) E[Zn+1,l|An] = Zn,l.
+
+                                        27
+

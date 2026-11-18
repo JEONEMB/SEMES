@@ -1,0 +1,14 @@
+{
+"pictures":280,
+"feature_max_difference":1.4268894510394148e-08,
+"prediction_max_difference":2.668689713658523e-10,
+"model_only_max_difference":8.8817841970012523e-16,
+"parity_tolerance":0.0001,
+"parity_failures":0,
+"minimum_valid_selected":536,
+"results":[
+{"protocol":"full_model_resub","passed":280,"axis_correct":280,"y_mae":0.000464750750992809,"y_max":0.03637277887297885,"t_mae":0.00025781040098011855,"t_max":0.0028980781838325136},
+{"protocol":"frozen_oof4","passed":280,"axis_correct":280,"y_mae":0.00052197024234277201,"y_max":0.036550228959015829,"t_mae":0.00026877409092050241,"t_max":0.0029934030914713274}
+],
+"scope":"Previously exposed development data; original frozen fold models, no retraining; not independent or physical robot evaluation"
+}

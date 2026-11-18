@@ -1,0 +1,5 @@
+{
+  "GN(채택측정기)": {"method_index": 6, "train_error": "", "measure_ms_median_1014": 43.1046, "measure_ms_p95_1014": 65.1191, "frozen_fold_max_difference": 3.32955885085e-13, "frozen_fold_axis_mismatch": 0},
+  "ECC": {"method_index": 7, "train_error": "", "measure_ms_median_1014": 190.3361, "measure_ms_p95_1014": 286.5196},
+  "LK(1단)": {"method_index": 4, "train_error": "", "measure_ms_median_1014": 18.6778, "measure_ms_p95_1014": 28.5787}
+}

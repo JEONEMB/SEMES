@@ -1,0 +1,516 @@
+ Robustness of image-based visual servoing with respect to
+                        depth distribution errors
+
+                                     Ezio Malis, P. Rives
+
+ To cite this version:
+
+Ezio Malis, P. Rives. Robustness of image-based visual servoing with respect to depth distribution errors. IEEE
+International Conference on Robotics and Automation. IEEE ICRA 2003, Sep 2003, Taipei, Taiwan. pp.1056-
+1061, 10.1109/ROBOT.2003.1241732. hal-04647494
+
+        HAL Id: hal-04647494
+https://hal.science/hal-04647494v1
+
+               Submitted on 14 Jul 2024
+
+    HAL is a multi-disciplinary open access archive           L'archive ouverte pluridisciplinaire HAL, est des-
+for the deposit and dissemination of scientific re-       tinée au dépôt et à la diffusion de documents scien-
+search documents, whether they are published or not.      tifiques de niveau recherche, publiés ou non, émanant
+The documents may come from teaching and research         des établissements d'enseignement et de recherche
+institutions in France or abroad, or from public or pri-  français ou étrangers, des laboratoires publics ou
+vate research centers.                                    privés.
+
+HAL Authorization
+Robustness of Image-Based Visual Servoing
+with Respect to Depth Distribution Errors
+
+             Ezio Malis                                                        Patrick Rives
+   I.N.R.I.A. Sophia Antipolis                                        I.N.R.I.A. Sophia Antipolis
+2004, route des Lucioles, France                                   2004, route des Lucioles, France
+
+   Abstract-- This paper concerns the stability analysis of        of the depth of point [7]. On the contrary, other hybrid
+image-based visual servoing methods with respect to un-            approaches [6] and [5] use all available information in
+certainties on the depths of the observed object. In the           the image and thus they need the estimation of the depth
+recent past, research on image-based visual servoing has           distribution. More recently, a partitioned approach [8] has
+been concentrated on potential problems of stability and on        been proposed in order to avoid the camera displacement
+robustness with respect to camera calibration errors. Only         reconstruction but the approach is also strongly dependent
+little attention, if any, has been devoted to the robustness of    on the depth distribution estimation. For this reason, the
+image-based visual servoing to depth estimation errors. It is      stability analysis of hybrid (except for [7]) and partitioned
+generally believed that a rough approximation of the depth         approaches is as difficult as the stability analysis of the
+distribution is sufficient to ensure the stability of the control  standard image-based visual servoing. Another solution to
+law. In this paper, we prove that the robustness domain is         potential stability problem of the image-based approach
+not so wide and that an extreme care must be taken when            is provided by interpolation approaches. These methods
+approximating the depth distribution.                              define a path in the image by interpolating initial and
+                                                                   reference image features [9] [10]. Thus, the error in the
+                       I. INTRODUCTION                             image is maintained small at each iteration of the control
+                                                                   law. Even if interpolation approaches are an elegant so-
+   Visual servoing is a very flexible method for the control       lution to potential convergence problems of the standard
+of uncalibrated dynamic systems evolving in an unknown             image-based visual servoing, a fundamental theoretical
+environment. Typical applications of visual servoing are           question stands: how is the image-based visual servoing
+the positioning of a robot and the tracking of objects using       robust with respect to calibration errors ? Due to the
+the information provided by an in-hand camera. Several             complexity of the problem, only few theoretical results
+vision-based control laws have been proposed in the                have been obtained concerning the stability analysis of
+literature [1]. Contrarily to model-based visual servoing          image-based visual servoing in the presence of calibration
+methods, image-based visual servoing does not need the             errors. The theoretical analysis has been carried out only
+knowledge of the full model of the target [2]. On the other        in very simple cases [11] [12] [13], often considering a
+hand, it is necessary to provide some information about            simplified model for the camera intrinsic parameters but
+the depths of the object in the camera frame. It is generally      always supposing that the depth distribution was perfectly
+believed that a rough approximation of the depth distribu-         estimated. In this paper, we investigate the robustness of
+tion is sufficient to ensure the stability of the control law.     the image-based visual servoing method with respect to
+However, if the environment is completely unknown and              errors on the depth distribution. The analysis proposed
+the robot is uncalibrated the stability of the visual servoing     in this paper is not limited to purely image-based visual
+in the presence of depth estimation errors, can become a           servoing methods but it could also be extended to recent
+serious issue. In the recent past, research on the stability of    hybrid and partitioned methods which use several image-
+image-based visual servoing has been concentrated on the           based features in their control law [6], [5], [8].
+solution of convergence problems [3]. Indeed, image based
+is a local method which, even in the absence of calibration                      II. THEORETICAL BACKGROUND
+errors, can fail if the initial camera displacement is too
+big [3]. In order to avoid these potential convergence             A. Perspective projection
+problems several possible approaches have been proposed.
+In hybrid approaches, some global information is intro-               Let F0 be a frame attached to an object represented
+duced by estimating the camera displacement between the            by the homogeneous coordinates of a discrete set of n
+current and reference views [4] [5] [6]. The rotation of           3D points X i = (Xi,Yi, Zi, 1) (i = {1, 2, ..., n}). Let F be
+the camera is thus controlled directly in the Cartesian            the current camera frame and let the origin of the frame
+space while some image-based information is used to                coincide with the center of projection. Let the plane of
+control the translation. The image-based information used          projection be parallel to the plane (-x , -y ). Without loss
+in [4] consists of only one image point. Thus, the method          of generality we can suppose that the distance between the
+does not need the estimation of the depths of all other
+points and it is stable for any positive approximation
+two planes is 1. A 3D point X i  P3 is projected to the      where L+ is the pseudo-inverse of an approximation of
+point mi  P2 with normalized homogeneous coordinates:        the true (2n×6) interaction matrix. In [2], the matrix L+
+                                                             is supposed to be constant while in this paper we consider
+mi =  1   R0 t0 X i = (xi, yi, 1)  (1)
+                                                             the most general case when the matrix is not constant. In
+      Zi
+                                                             that case, the derivative of the task function is:
+
+where R0 and t0 are respectively the rotation and the            e = dL+ (s - s) + L+s = (O(s - s) + L+L) v (5)
+translation between frame F0 and F . Pinhole cameras                    dt
+
+perform a perspective projection of a 3D point. The             where O(s - s) is a 6 × 6 matrix such that O(s -
+                                                             s)|s=s = 0. Consider the following control law:
+information measured by the camera is an image point:
+
+      pi = K mi = (ui, vi, 1)      (2)
+
+where the upper triangular matrix K contains the camera      v = - e                                (6)
+
+intrinsic parameters. Using an approximation K of the        In order to compute the control law it is necessary to
+                                                             provide the approximated interaction matrix L.
+camera intrinsic parameters K and a measured image point
+                                                             III. STABILITY ANALYSIS
+pi it is possible to compute the corresponding normalized
+point from equation (2): mi = K-1pi. Obviously, if the          Plugging equation (6) into equation (5), we obtain the
+camera intrinsic parameters are perfectly known K = K        following closed-loop equation:
+then the normal coordinates are perfectly estimated mi =
+mi.                                                          e = - (O(s - s) + L+L)e                (7)
+
+B. Image-based visual servoing                               It is well know from control theory that the non-linear sys-
+
+   Consider the (2n×1) vector s = (s1, s2, ..., sn), where   tem (7) is locally asymptotically stable in a neighborhood
+si = (xi, yi) is the (2×1) vector containing the normalized  of s = s if and only if the linearized system is stable:
+coordinates extracted from mi. The derivative of si with
+respect to time is:                                          e =  Qe                                (8)
+
+                          si = Li(Zi, si) v                  where Q = -L+L|s=s . The linear system (8) is asymptot-
+                                                             ically stable if and only if Q has eigenvalues with negative
+where v is the velocity of the camera and Li is the (2×6)
+interaction matrix [2] which can be decomposed into two      real part:
+(2×3) sub-matrices Li = Ai Bi :
+                                                             real(eig(Q)) = real(eig(-L+L)) < 0
+               Ai(Zi, si) = 1 -1 0 xi (3)
+                              Zi 0 -1 yi                     The matrix depends Q = Q(K, K, z, z) on two set of
+                                                             unknown parameters. Obviously, if K = K and z = z then
+          B x i(si) = iyi -(1 + x 2 i2) yi (4)               Q = I and the system is stable. The objective of the
+                        (1 + yi ) -xiyi -xi                  robustness analysis is to known if the system is stable
+                                                             in the presence of unavoidable calibration errors. Note
+If we consider the derivative of vector s we have:           that, an adaptive estimation of the depth distribution is
+                                                             possible only supposing that the robot is calibrated and in
+          s = L(z, s) v                                      the presence of enough disparity in the image.
+
+where L = (L1, L2, ..., Ln) is the (2n×6) interaction ma-    A. Known camera intrinsic parameters
+trix. Again, L can be decomposed into two (2n×3) sub-
+matrices:                                                       Let us suppose that the camera parameters are perfectly
+                                                             known (i.e. K = K). Thus, the normalized points are
+                  L(z, s) = A(z, s) B(s)                     perfectly estimated s = s and the uncertainties on the
+                                                             estimated interaction matrix only depends on the depth
+where A = (A1, A2, ..., An) and B = (B1, B2, ..., Bn). Due   distribution z:
+to the form of matrix A(z, s) we also have:
+
+          A(z, s) = D(z) C(s)                                L(z, s) = A(z, s) B(s)
+
+where:                                                       It is easy to verify that the estimated sub-matrix A(z, s)
+         D(z) = diag 1 , 1 , 1 , 1 , ..., 1 , 1              can be written as a function of the true sub-matrix A(z, s):
+                           Z1 Z1 Z2 Z2 Zn Zn
+                                                             A(z, s) = D(z) C(s) = -1(z, z)A(z, s)  (9)
+is a (2n×2n) diagonal matrix containing the depth distri-
+bution z. Consider the following task function [2]:          where, setting i = Zi/Zi the ratio between the estimated
+                                                             and true depths, the diagonal matrix  is:
+                          e = L+(s - s)
+                                                                     = D(z)D-1(z) = diag 1, 1, 2, 2, ..., n, n
+From equation (9) one can deduce that:                             1) Necessary and sufficient conditions: The eigenval-
+                 L(z, s) = A(z, s) B(s)                         ues of F are the roots of the characteristic polynomial:
+
+Setting  =  - I one can deduce that:                                  3 - tr(F) 2 + 1 (tr(F)2 - tr(F2)) - det(F) = 0
+                   L = L +  A(z, s) 0                                                    2
+
+Setting A = A(z, s), the matrix Q is:                           where tr and det are respectively the trace and the determi-
+              Q = -L+L = -I - L+A 0                             nant of a matrix. The necessary and sufficient conditions
+                                                                for the roots of the polynomial to have negative real part
+If L is full rank, the pseudo-inverse of the matrix can be      are obtained from the Routh-Hurwitz Theorem:
+written as:
+                                                                                                            tr(F) < 0
+                          L+ = A                                                                tr(F2) - tr(F)2 < 0
+                                     B
+                                                                                                          det(F) < 0
+where A is a generalized inverse of A (i.e. A A = I) and                   tr(F)(tr(F)2 - tr(F2)) - 2det(F) < 0
+B is a generalized inverse of B (i.e. B B = I). Note also
+that A B = 0 and B A = 0. Matrix Q can be rewritten as:         The necessary and sufficient conditions can be used
+                                                                to test the stability of the servoing and to obtain the
+Q = -I - A         A 0 = - I + A A 0                            robustness domain (see for example the simulations in
+                B                         B A I                 section IV-A). However, for a large number of parameters
+                                                                the computation time can be high. In some cases, it is
+Setting again  =  - I:                                          preferable to have a simple test in order to know, given
+                                                                a bound on the precision of depths estimates |i|  i,
+Q = Q11 Q12 = -A A 0                                            if the eigenvalues are negative. In the next section, we
+                                                                present simple sufficient conditions in order to obtain an
+                                                                approximation of the robustness domain.
+
+Q21 Q22                 -B A -I                                   2) Sufficient conditions: Since  j = 1, we can rewrite
+                                                                the (3×3) matrix F as:
+Thus, the closed-loop matrix is block lower triangular. In
+this case, it is well known that the eigenvalues of Q are                                                            n
+the eigenvalues of the two (3 × 3) matrices Q11 and Q22.
+Since Q22 = -I its eigenvalues are negative for any choice                  F = -A jA j -  iAi Ai
+of the depth distribution. The analysis is limited to the
+eigenvalues of the following matrix:                                                                            i=1,i= j
+
+                                                        n       from equation A jA j = I - ni=1,i= j Ai Ai, thus:
+
+             Q11 = -A A =  iAi Ai                                                                     n
+
+                                                      i=1                F = -I -  iAi Ai = -I + E( )
+
+                                                                                                  i=1,i= j
+
+where Ai are sub-matrices of matrix A. Note that:               where  = (1, 2, ..., m) and i = i - 1. Matrix F can be
+                                                                regarded as a perturbation of the matrix -I, where E( )
+                                             n
+                                                                is the perturbation matrix. Let us define the SPECTRAL
+                A A =  Ai Ai = I                                VARIATION of a matrix M~ with respect to a matrix M as
+
+                                            i=1                 [14]:
+
+The first important results of the analysis is that the depth          svM(M~ ) = max min |~ i -  j|
+distribution can be estimated up to a positive scalar factor.
+The scalar factor only influence the performance of the                                     ij
+servoing but not its stability since it does not change the
+sign of the eigenvalues. Thus, without loss of generality       The Bauer-Fike theorem [14] states that:
+we can factor  j > 0 from the sum:
+                                                                       svM(M~ )  M~ - M
+                                            n
+                                                                In our case, applying the Bauer-Fike theorem to the
+            Q11 = - j  iAi Ai =  jF                             spectral variation F with respect to -I we obtain:
+
+                                           i=1                         sv(F) = max |~ i + 1|  E( )
+
+where i = i/ j and, obviously,  j = 1. We will see in                                   i
+section III-A.2 how it is possible to select the best j. Since
+ j > 0, Q11 is stable if and only if F is stable. Therefore,    Thus, a simple sufficient condition for the stability of F
+we can focus on the stability of F.                             is E( ) < 1. Indeed, if E( ) < 1 then:
+
+                                                                       max |~ i + 1| < 1i                          (10)
+which implies ~ i < 0. From the definition of spectral             A. Planar objects
+variation, all others eigenvalues k k are such that |~ k +
+1|  |~ i + 1|. Thus, |~ k + 1| < 1 which means ~ k < 0 k.             When the object is planar, the depths are related to the
+Now, since E( ) = - in=1,i= j iAi Ai :                             normal n to the plane and proportional to the distance d
+                                                                   of the plane from the center of projection:
+                                            n
+                                                                          Zi = d/n m
+               E   |i| Ai Ai
+                                                                   where n is a unit vector which is a function of two param-
+                                       i=1,i= j                    eters n( ,  ) = (cos( ) sin( ), sin( ) sin( ), cos( )). The
+                                                                   estimated depth Zi can be obtained using an approximation
+setting µi = Ai Ai > 0, the condition (10) can be im-              of n( ,  ) and d:
+posed by bounding the previous inequality:
+                                                                                              Zi = d/n m
+             n
+
+              µi|i| < 1                              (11)          then:
+
+             i=1,i= j
+
+In the inequality, each error |i| is weighted by the scalars       i = Zi = d n mi and i = i = n mi n mi
+µi. The smaller is µi the larger can be |i|. Thus, the best               Zi d n mi    j n mi n mi
+choice for the point  j is µ j = maxk µk. Inequality (11)
+define a polygonal region whose axis are weighted by the           As expected, the stability of the visual servoing does
+                                                                   not depends on d but only on n. Figure 1 show the
+scalars µi. The volume of the region V = in=1,i= j µi gives        stability regions as a function of ( ,  ) for an increasing
+a measure of the robustness domain. If we suppose that             number of points on the same plane. The true normal
+                                                                   is n = (0.5, 0, 0.866) (i.e.  = 0 and  = /6). In the
+the precision of measurement is the same for all points            green region all the eigenvalues are negatives, the system
+                                                                   is locally asymptotically stable. In the red region at least
+|i|   then:                                                        one eigenvalue is positive, and the system is locally
+                                                                   unstable. Finally, the normals obtained in the blue region
+                       n                                           are discarded since we obtain at least a negative depth,
+                                                                   which is impossible. When considering 3 image points
+              < 1/  µi                               (12)          (see Figure 1(a)), the corresponding stable region is not
+                                                                   so wide. Note that, adding a point inside the triangle
+                       i=1,i= j                                    defined by the others points (see Figure 1(c)) only slightly
+                                                                   modifies the stability region (compare Figure 1(b) and (d)).
+This is a very simple test for the local stability.                Thus, when learning the reference image, one can think
+                                                                   that it is probably better to chose points spread in the
+B. Unknown camera intrinsic parameters                             image. Unfortunately, the stability analysis shows that it
+                                                                   is not always true. Indeed, if we add 4 more points as in
+   If the camera intrinsics parameters are unknown the             Figure 1(e), the stability region in green is even reduced
+analysis is not simplified as in the previous case. The            (see Figure 1(f)). Note that, if we have absolutely no idea
+matrix Q is not upper triangular any more and depends on           on the 3D position of the plane, a simple guess n = (0, 0, 1)
+the estimated camera intrinsics parameters K [11]. Thus,           makes the visual servoing unstable. On the other hand, if
+to test the stability of the system one must consider all          many points are well distributed in all the image as in
+six eigenvalues of the matrix. Consequently, the stability         Figure 1(g) the stability region considerably increase (see
+regions are reduced and a bigger precision in the depth            Figure 1(h)). However, even in this very favorable case,
+estimation is required.                                            there exist an important red instability region.
+
+                  IV. SIMULATION RESULTS                           B. Non-planar objects
+
+   The stability results obtained in the previous section             When the target is non-planar, it is easier to use
+have been tested with simulations. Three set of tests have         the sufficient condition. In the simulation, we show the
+been carried out. In the first set, the target is planar. In this  stability regions for 3 and 4 points since they can be
+case, whatever is the number of points on the plane, the           represented in a plot. In the first case, we find µ1 = 0.1861
+stability analysis only depends on the estimated normal            and µ2 = 0.2188 see Figure 2(a)). After adding a point
+to the plane. Thus, from the necessary and sufficient              not on the plane, we find µ1 = 0.1861, µ2 = 0.2188 and
+conditions we obtain the exact robustness domain. In the           µ3 = 0.2235 see Figure 2(b)). For higher dimensional
+second set, we consider a 3D object. In that case, the             problems, the volume of the convex polyhedron gives an
+sufficient conditions provide an approximate robustness
+domain. Finally, in the last simulations we show the
+influence of the errors of the depth distribution on the
+visual servoing.
+idea of the precision required in the measurement of the                                                                   all examples, the initial camera displacement is very
+depth distribution.                                                                                                        small: t = - 0, 001 0, 001 0, 001 meters and
+                                                                                                                           r = 0, 48 0, 96 1, 44 degrees. Firstly, we verified
+   0                                                             90                                                        that the visual servoing is locally stable when the sufficient
+ 50                                                                                                                        conditions are satisfied. From equation (12) we find that
+100                                                                                     60                                 if |i| <  = 0.06 then the visual servoing is stable. The
+150    1                                                                                                                   true depths are z = (0.91, 0.83, 0.87, 0.86, 0.91, 0.89) m
+200                                                                                                                        while the estimated depth is an average of the true
+250                                     2                                                                                  depths z = (0.88, 0.88, 0.88, 0.88, 0.88, 0.88) m. Note
+300                                                                                     30                                 that the maximum error is 6 % of the true depth. From
+350                                                                                                                        the data given above, we find 1 = 0.047, 2 = 0.052,
+400         3 0                                                                                                            4 = 0.017, 5 = 0.039 and 6 = 0.021. Thus, the
+450                                                                               -30                                      sufficient condition is verified and the visual servoing
+500                                                                                                                        is stable. However, it must be noticed that if an error
+                                                               -60                                                         of 10 % on the intrinsic parameters is added, the visual
+    0                                                                                                                      servoing is not stable any more. This prove that, in
+                                                               -90                          -60       0            60      the presence of camera calibration errors the stability
+                                                                 -90                             -30     30            90  region is reduced. In the first simulation, we show
+                                                                                                                           that if the necessary and sufficient conditions are not
+       100      200            300              400       500                                                              verified the visual servoing is unstable. The true depth
+                                                                                                                           distribution is z = (0.94, 0.85, 0.94, 0.85, 0.95, 0.94) m,
+       (a) 3 image points                                                                   (b) stability regions          while the estimated depth distribution is z =
+                                                                                                                           (0.91, 0.91, 0.91, 0.91, 0.91, 0.91) m. Despite the maximal
+   0                                                             90                                                        error on the estimated depths is only 8% of the true depth,
+ 50                                                                                                                        one eigenvalue is positive. Thus, even starting very close
+100                                                                                     60                                 to the reference position, after iteration 200 the translation
+150    1                                                                                                                   and rotation errors start to grow (see Figures 3(c) and
+200                                                                                                                        3(d)). In the beginning, the control law seems to be stable
+250                                     2                                                                                  since the others dominant eigenvalues have negative
+300                                                                                                                        real part. Note that, in this case the sufficient condition
+350             4                                                30                                                        is also not satisfied and we know in advance that the
+400                                                                                                                        servoing will be unstable. Thus, it is useful to know if
+450         3 0                                                                                                            the precision on the depth distribution is good enough
+500                                                                               -30                                      before starting the servoing.
+
+    0                                                          -60
+
+                                                               -90                          -60  -30  0  30        60  90
+                                                                 -90
+
+       100      200            300              400       500                                         
+
+       (c) 4 image points                                                                   (d) stability regions
+
+   0   1                                                                90
+ 50                                     2            6
+100
+150                  4                                                  60
+200
+250                                                                     30
+300
+350                             5 0                            
+400         3
+450
+500                                                                            -30
+                                           8
+    0
+                                                                               -60
+
+                                                     7
+
+                                                               -90                          -60
+                                                                 -90                             -30  0  30        60  90
+
+       100      200            300              400       500                                         
+
+       (e) 8 image points                                                                   (f) stability regions
+
+   0                                                             90
+ 50
+100                                                               6
+150                                                                                     60
+200
+250    1
+300                                     2
+350
+400             4 11                            12               30
+450
+500         16
+
+    0                           5 0                            
+            3
+
+                        13                      15
+            14                                                             -30
+
+                10 8                                                                                                       1.5                                                 80
+                                                                                                                                         x                                                   x
+       9                                                       -60                                                                       y
+                                                                                                                                         z                                     60 y
+                                                     7                                                                                                                                       z
+                                                                                                                             1
+                                                               -90                          -60  -30               60  90                                                      40
+                                                                 -90                                  0  30
+
+       100      200            300              400       500                                         
+
+       (g) 16 image points                                                                  (h) stability regions                                                              20
+
+                                                                                                                           0.5                                                 0
+
+            Fig. 1. Stability regions for a planar object.                                                                                                                     -20
+
+                                                                                                                           0                                                   -40
+
+0.25
+
+                                                                                                                                                                               -60
+
+0.2
+
+0.15                                                                                                                       -0.5  100         200  300  400           500  600  -80  100          200  300  400           500  600
+
+                                                                                                                                                  iterations number                                   iterations number
+
+0.1
+
+0.05                                                                                                                             (a) Translation velocity                           (b) Rotation velocity
+
+0
+
+-0.05                                                                                                                      0.6                                                 40
+                                                                                                                                         tx                                                 ux 
+-0.1                                                                                                                                     ty
+                                                                                                                                         tz                                    30 uy 
+-0.15                                                                                                                                                                                       uz 
+                                                                                                                           0.4
+                                                                                                                                                                               20
+
+-0.2                                                                                                                                                                           10
+
+-0.25                                                0.4
+-0.5 -0.4 -0.3 -0.2 -0.1    0  0.1         0.2  0.3       0.5                                                                                                                  0
+                                                                                                                           0.2
+
+       (a) 3 image points                                                                   (b) 4 image points                                                                 -10
+
+            Fig. 2. Stability regions for a non planar object.                                                             0                                                   -20
+
+                                                                                                                                                                               -30
+
+C. Visual servoing                                                                                                         -0.2  100         200  300  400           500  600  -40  100          200  300  400           500  600
+
+   We simulated several examples to show the usefulness                                                                                           iterations number                                   iterations number
+of the theoretical analysis proposed in the paper. For
+                                                                                                                                             (c) Translation error                               (d) Rotation error
+
+                                                                                                                                             Fig. 3. Unstable image-based visual servoing.
+   The second simulation is similar to the first one but                       [3] F. Chaumette, "Potential problems of stability and
+with the addition of a Gaussian noise ( = 1 pixel) in the                           convergence in image-based and position-based vi-
+image. The noise in the image accelerate the divergence                             sual servoing," in The confluence of vision and
+of the servoing (see Figure 4).                                                     control, D. Kriegman, G. Hager and A. Morse Edi-
+                                                                                    tors, vol. 237 of LNCIS Series, pp. 66-78. Springer
+    4                               300                                  x          Verlag, 1998.
+ 3.5                               x                                     y
+                                   y                                     z     [4] E. Malis, F. Chaumette, and S. Boudet, "2 1/2 d
+    3                              z                                                visual servoing," IEEE Transaction on Robotics and
+ 2.5                                   200                                          Automation, vol. 15, no. 2, pp. 234-246, April 1999.
+
+    2                                  100                                     [5] G. Morel, J. Szewczyk, S. Boudet, and J. Pot, "Ex-
+ 1.5                                                                                plicit incorporation of 2d constraints in vision based
+                                       0                                            control of robot manipulators," in Proc. ISER'99 :
+    1                                                                               Experimental Robotics IV, Sidney, Australia, April
+ 0.5                                   -100                                         1999, pp. 99-108.
+
+    0                                  -200                                    [6] K. Deguchi, "Optimal motion control for image-
+-0.5                                                                                based visual servoing by decoupling translation and
+       50  100  150           200      -300  50  100  150           200             rotation," in IEEE International Conference on
+                                                                                    Intelligent Robots and Systems, October 1998, vol. 2,
+           iterations number                     iterations number                  pp. 705-711.
+
+       (a) Translation velocity              (b) Rotation velocity             [7] E. Malis and F. Chaumette, "Theoretical improve-
+                                                                                    ments in the stability analysis of a new class of
+1.5 t 80 ux                        x                                                model-free visual servoing methods," IEEE Trans-
+                                                                         uy         action on Robotics and Automation, vol. 18, no. 2,
+                                   ty  60                                           pp. 176-186, April 2002.
+                                   tz uz 
+                                                                               [8] P. Corke and S. Hutchinson, "A new partitioned
+1                                      40                                           approach to image-based visual servo control," IEEE
+                                                                                    Transaction on Robotics and Automation, vol. 14, no.
+                                       20                                           4, pp. 507-515, Aug. 2001.
+
+0.5                                    0                                       [9] K. Hashimoto and T. Noritsugu, "Enlargement of
+                                                                                    stable region in visual servo," in IEEE Conference on
+                                       -20                                          Decision and Control, Sydney, Australia, December
+                                                                                    2000, pp. 3927-3932.
+0                                      -40
+                                                                              [10] Y. Mezouar and F. Chaumette, "Design and track-
+                                       -60                                          ing of desirable trajectories in the image space by
+                                                                                    integrating mechanical and visibility constraints,"
+-0.5   50  100  150           200      -80   50  100  150           200             in IEEE International Conference on Robotics and
+                                                                                    Automation, Seoul, South Korea, May 2001.
+           iterations number                     iterations number
+                                                                              [11] B. Espiau, "Effect of camera calibration errors on
+       (c) Translation error                 (d) Rotation error                     visual servoing in robotics," in 3rd International
+                                                                                    Symposium on Experimental Robotics, Kyoto, Japan,
+       Fig. 4. Unstable image-based visual servoing with noise.                     October 1993.
+
+                        V. CONCLUSION                                         [12] C. C. Cheah, S. Kawamura, and S. Arimoto, "Feed-
+                                                                                    back control for robotic manipulator with uncertain
+   In this paper, we have shown that extreme care must                              kinematics and dynamics," in IEEE International
+be taken when approximating the depth distribution of                               Conference on Robotics and Automation, Belgium,
+a target for image-based visual servoing. Indeed, the                               May 1998, vol. 4, pp. 3607-3612.
+stability region in the presence of errors on the depth
+distribution is not very large. As a consequence, if the                      [13] L. Deng, F. Janabi-Sharifi, and W. J. Wilson, "Sta-
+target geometry is completely unknown it is necessary to                            bility and robustness of visual servoing methods,"
+accurately estimate the depth. Future work will be devoted                          in IEEE International Conference on Robotics and
+to the off-line estimation of the depth distribution with a                         Automation, Washington D.C., May 2002, vol. 2, pp.
+precision bounded by those obtained from the sufficient                             1605-1609.
+condition proposed in this paper.
+                                                                              [14] G. W. Stewart and Ji-guang Sun, Matrix perturbation
+                     ACKNOWLEDGMENTS                                                theory, Computer Science and Science Computing.
+                                                                                    Harcourt Brace Jovanovich, 1990.
+   This work has been funded by the project AEROB of
+ROBEA:"Robotique et Entite´s Artificielles".
+
+                       VI. REFERENCES
+
+ [1] S. Hutchinson, G. D. Hager, and P. I. Corke, "A
+      tutorial on visual servo control," IEEE Transaction
+      on Robotics and Automation, vol. 12, no. 5, pp. 651-
+      670, October 1996.
+
+ [2] B. Espiau, F. Chaumette, and P. Rives, "A new
+      approach to visual servoing in robotics," IEEE
+      Transaction on Robotics and Automation, vol. 8, no.
+      3, pp. 313-326, June 1992.
+

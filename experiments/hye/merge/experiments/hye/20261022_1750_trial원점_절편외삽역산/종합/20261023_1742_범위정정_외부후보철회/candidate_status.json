@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-23",
+  "status": "external_observation_candidates_withdrawn",
+  "excluded_candidates": [
+    "external",
+    "qr_external"
+  ],
+  "reason": "User reconfirmed that features outside the three QR regions must not be used. Restarting algorithm design did not waive the observation constraint.",
+  "withdrawn_claim": "341/341 as achievement of the requested QR-only task",
+  "historical_numeric_results": "retained unchanged; excluded from compliant results",
+  "current_scope_rule": "../../ALGORITHM_RULES.md",
+  "independent_new_photos_available": false
+}

@@ -1,0 +1,8 @@
+photos 702 used qr_dx_mean bar_tilt_upper bar_tilt_lower screw1_x screw2_x screw3_x screw4_x
+scale px 0.047854 0.0076536 0.024471 0.096187 0.06107 0.096839 0.055913
+fit photos (resubstitution)
+photos 702 threshold 8.29
+  no recentre: H median 1.37 p99 3.31 max 5.96 over 0/702
+  recentre near-centre mean (62 photos): H median 1.40 p99 3.30 max 5.99 over 0/702
+  recentre on photo id 200: H median 2.19 p99 4.33 max 5.58 over 0/702
+sha256 53afaa3614c0a69ffe32f0eac033c81aa0b81ff9f8eb18f1283cbbf3ffeba473

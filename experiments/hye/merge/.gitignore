@@ -1,0 +1,50 @@
+# CMake build output
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+
+# Visual Studio / MSVC local and generated files
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.VC.opendb
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.pch
+*.tlog/
+
+# Personal VS Code settings (shared configuration can be committed)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+CMakeUserPresets.json
+
+# Windows / editor temporary files
+Thumbs.db
+Desktop.ini
+~$*
+*.swp
+*.swo
+*~
+
+# 실험 결과의 옛 ppt·그림·영상 원본 사본 (00000.legacies 에 원본 보관, 용량 때문에 커밋하지 않음)
+experiments/hye/**/원본자료/
+__pycache__/
+
+# 데이터 변환 도구의 입력 및 생성 폴더
+/data/raw/
+/data/bmp/
+/data/png/
+/data/tmp_*/

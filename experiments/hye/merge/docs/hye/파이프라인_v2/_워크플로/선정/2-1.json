@@ -1,0 +1,153 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-1_대략위치/논문/01_Briechle2001_SPIE_고속NCC_템플릿정합",
+   "title": "Template matching using fast normalized cross correlation",
+   "citation": "Briechle, K., Hanebeck, U. D. (2001). Proc. SPIE 4387, 95-102. doi:10.1117/12.421129",
+   "url": "https://doi.org/10.1117/12.421129",
+   "pdf_url": "https://publikationen.bibliothek.kit.edu/1000123150/176937256",
+   "questions": [
+    2,
+    5
+   ],
+   "why": "현재 QR 단위 NCC의 기본형이다. 적분 영상과 템플릿 분해로 NCC를 빠르게 하는 방법이라, 탐색 범위를 넓힐 때 계산이 얼마나 느는지 따지는 근거가 된다. KITopen 공개본 PDF가 있다(HTTP 200, application/pdf 확인)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-1_대략위치/논문/02_Baker2004_IJCV_LK통합_수렴범위",
+   "title": "Lucas-Kanade 20 Years On: A Unifying Framework",
+   "citation": "Baker, S., Matthews, I. (2004). International Journal of Computer Vision 56(3), 221-255. doi:10.1023/B:VISI.0000011205.11775.fd",
+   "url": "https://doi.org/10.1023/B:VISI.0000011205.11775.fd",
+   "pdf_url": "https://www.ri.cmu.edu/pub_files/pub3/baker_simon_2002_3/baker_simon_2002_3.pdf",
+   "questions": [
+    4,
+    5
+   ],
+   "why": "정렬 반복법이 초기 오차 몇 px까지 수렴하는지 실험으로 잰 대표 문헌이다. 우리 LK15, ECC, 스플라인 GN의 수렴 범위, 곧 대략 위치에 필요한 정확도를 정하는 기준이 된다. CMU RI 기술보고서 PDF(HTTP 200 확인)와 figshare 사본이 있다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-1_대략위치/논문/03_Tzimiropoulos2010_TPAMI_기울기FFT_위상상관",
+   "title": "Robust FFT-Based Scale-Invariant Image Registration with Image Gradients",
+   "citation": "Tzimiropoulos, G., Argyriou, V., Zafeiriou, S., Stathaki, T. (2010). IEEE TPAMI 32(10), 1899-1906. doi:10.1109/TPAMI.2010.107",
+   "url": "https://doi.org/10.1109/TPAMI.2010.107",
+   "pdf_url": "https://figshare.com/articles/journal_contribution/Robust_fft-based_scale-invariant_image_registration_with_image_gradients/24404677",
+   "questions": [
+    3,
+    7
+   ],
+   "why": "기울기 영상으로 위상상관을 강건하게 만들고, 이동과 함께 회전, 배율까지 찾는다. 탐색 범위 없이 영상 전체에서 큰 이동을 찾는 대안이며, T 회전 내성 질문에 답한다. figshare와 Kingston eprints에 공개본이 있다(OpenAlex 위치 정보로 확인. figshare는 202 응답이라 다운로드는 다음 단계에서 확인해야 한다)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-1_대략위치/논문/04_So2024_TIIS_웨이퍼정렬_피라미드정합_FPGA",
+   "title": "Implementation of a High-speed Template Matching System for Wafer-vision Alignment Using FPGA",
+   "citation": "So, J.-H., Kim, M. (2024). KSII Transactions on Internet and Information Systems 18(8). doi:10.3837/tiis.2024.08.017",
+   "url": "https://doi.org/10.3837/tiis.2024.08.017",
+   "pdf_url": "https://itiis.org/digital-library/manuscript/file/101105/TIIS%20Vol%2018,%20No%208-17.pdf",
+   "questions": [
+    5,
+    2
+   ],
+   "why": "반도체 웨이퍼 비전 정렬 장비에서 고해상도 영상의 마크를 피라미드 블록과 정합 블록으로 찾는 실무 사례다. 초록에 따르면 처리 시간을 약 30% 줄였고, 정확도는 기준 소프트웨어와 비슷하다. 오픈액세스 PDF를 확인했다(HTTP 200)."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-1_대략위치/논문/05_Hrazdira2020_ApJS_반복위상상관_부화소",
+   "title": "Iterative Phase Correlation Algorithm for High-precision Subpixel Image Registration",
+   "citation": "Hrazdira, Z., Druckmuller, M., Habbal, S. R. (2020). The Astrophysical Journal Supplement Series 247(1), 8. doi:10.3847/1538-4365/ab63d7",
+   "url": "https://doi.org/10.3847/1538-4365/ab63d7",
+   "pdf_url": "https://iopscience.iop.org/article/10.3847/1538-4365/ab63d7/pdf",
+   "questions": [
+    1,
+    3,
+    6
+   ],
+   "why": "위상상관으로 정수 px 위치를 찾은 뒤 반복으로 부화소까지 좁힌다. 대략 위치와 정밀 위치를 한 방법으로 잇는 후보이고, 상관 봉우리로 신뢰도를 판단하는 근거가 된다. 오픈액세스 PDF를 확인했다(HTTP 200)."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-1_대략위치/특허/01_US7016539_Cognex_거친탐색_다차원패턴인식",
+   "title": "Method for fast, robust, multi-dimensional pattern recognition",
+   "citation": "US7016539B1, Cognex Corporation, 발명자 William M. Silver 외, 등록 2006-03-21",
+   "url": "https://patents.google.com/patent/US7016539B1/en",
+   "pdf_url": "https://patentimages.storage.googleapis.com/98/06/1e/0a9b675d0746a6/US7016539.pdf",
+   "questions": [
+    2,
+    5,
+    6
+   ],
+   "why": "프로브 모델로 여러 자세에서 점수 면을 만들고, 문턱으로 후보를 고른 뒤 정밀화한다. 본문에 거친 간격(granularity, coarse steps)이 자주 나온다. 탐색 간격, 점수 문턱, 후보 수를 정하는 실무 규칙의 근거다. 공보 PDF 첫 장에서 서지를 확인했다."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-1_대략위치/특허/02_US6856698_Cognex_대략위치_정밀화_포착범위",
+   "title": "Fast high-accuracy multi-dimensional pattern localization",
+   "citation": "US6856698B1, Cognex Corporation, 발명자 William Silver, Aaron Wallack, Adam Wagman, 등록 2005-02-15",
+   "url": "https://patents.google.com/patent/US6856698B1/en",
+   "pdf_url": "https://patentimages.storage.googleapis.com/ea/e8/9b/5ccfb2ba303e05/US6856698.pdf",
+   "questions": [
+    4,
+    7
+   ],
+   "why": "coarse-fine 체계의 정밀 단계를 대신하는 발명으로, 대략 위치를 정밀화한다. 시작 자세가 패턴의 capture range 안에 있어야 하며, 그 범위가 특징 검출 해상도에 따라 달라진다고 본문에 적었다. 질문 4(수렴 범위)의 직접 근거다. 공보 PDF에서 서지를 확인했다."
+  },
+  {
+   "kind": "특허",
+   "folder": "docs/hye/파이프라인_v2/단계/2_측정/2-1_대략위치/특허/03_US7062093_MVTec_피라미드_계층탐색",
+   "title": "System and method for object recognition",
+   "citation": "US7062093B2, MVTec Software GmbH, 발명자 Carsten Steger, 출원 2001-09-26, 등록 2006-06-13",
+   "url": "https://patents.google.com/patent/US7062093B2/en",
+   "pdf_url": "https://patentimages.storage.googleapis.com/1a/66/fb/153f4e06b8331c/US7062093.pdf",
+   "questions": [
+    3,
+    5,
+    7
+   ],
+   "why": "영상 피라미드의 가장 거친 층에서 가능한 자세를 전수 탐색하고, 찾은 후보를 아래 층으로 따라 내려가며 좁힌 뒤 가장 고운 층에서 정밀화한다. 회전을 포함하며 조명 변화와 가림에도 버틴다. 피라미드 계층 탐색과 범위 확장의 근거다. 공보 PDF에서 서지를 확인했다."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/15_Matrox_MIL_GeometricModelFinder_문서/요약.md",
+   "why": "명세서가 요구하는 MIL로 QR 초기 위치(지금은 OpenCV NCC)를 찾을 때의 비교 대상이다. 탐색 속도를 올리면 강건성과 부화소 정확도가 떨어진다는 교환 관계와 certainty 점수를 다룬다. 질문 5, 6에 답한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/01_US9230326_Cognex_2D코드내장_체커보드교정판/요약.md",
+   "why": "코드 디코딩으로 대응을 정한다. 코드 위치와 교차점이 반 타일 거리 안이면 대응이 맞다는 초기값 허용 범위를 명시했다. 질문 4, 6(코드 디코딩 기반 대응)에 답한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/05_Stelldinger2025_LNCS_PuzzleBoard_위치부호화패턴/요약.md",
+   "why": "각 점에 부호로 절대 ID를 주어 반복 무늬의 대응 혼동을 구조적으로 없앤다. 대략 위치가 엉뚱한 곳에 붙는 오류를 막는 근거다. 질문 6에 답한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/02_US20250018582_PI_2D코드마커_스테이지자세측정/요약.md",
+   "why": "2D 코드 마커로 대응 모호성을 없애고 스테이지 자세를 잰다. 반복 수치해법이 초기값에 좌우된다는 문제 제기가 있다. 질문 4, 6에 답한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/07_US10184809_Hexagon_2D코드스케일_절대위치/요약.md",
+   "why": "국소 패턴에 부호를 넣어 절대 위치를 얻는다. 디코딩 기반 대략 위치의 원리다. 질문 3(범위가 커도 찾기), 6에 답한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/06_US7774100_Honda_QR위치자세_로봇제어/요약.md",
+   "why": "QR 파인더 패턴 3개와 얼라인먼트 패턴 1개의 중심으로 위치와 자세를 구한다. QR 디코딩 위치를 대략 위치 후보로 쓰는 근거다. 질문 3, 8에 답한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/07_Pan2013_ExpMech_ICGN_고속DIC/요약.md",
+   "why": "IC-GN 정밀 단계에 신뢰도 순서로 이웃 점의 초기값을 넘긴다(reliability-guided). 정밀 단계의 초기값 전달 방식이다. 질문 4, 8에 답한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/논문/14_RomeroRamirez2018_IVC_ArUco3_고속검출/요약.md",
+   "why": "4K 같은 고해상도 영상에서 마커 검출이 느려지는 문제를 다루는 ArUco3 논문이다. 질문 5(속도)에 답한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/01_주제_관련/유사연구/특허/01_US12566413_SEMES_비전카메라_2단계티칭/요약.md",
+   "why": "먼 위치에서 대략 위치(coarse)를 잡고, 다가가 정밀 측정(fine)하는 2단계 티칭이다. 큰 오차에서 대략 검출 후 다시 재는 구조의 근거다. 질문 3에 답한다."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/03_US9424646_Omron_2단계_비전위치결정/요약.md",
+   "why": "지령 이동량과 영상으로 잰 위치의 차이 최댓값을 실험으로 재서 여유 거리를 정한다. 도착 편차를 재서 탐색 범위를 정하는 방식이다. 질문 1, 2에 답한다."
+  }
+ ]
+}

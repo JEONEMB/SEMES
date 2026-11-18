@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.15)
+project(a0_split_measure LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(OpenCV 3.4 REQUIRED)
+get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
+set(CONTROL "${REPO}/experiments/hye/20261028_1327_final_Y_T control")
+set(JOINT   "${REPO}/experiments/hye/20261028_1258_final_Y_T_joint")
+set(COMMON  "${REPO}/experiments/hye/00001_common")
+# 측정은 채택 모듈의 소스를 그대로 링크한다 (새 측정기를 만들지 않는다).
+add_executable(a0 src/main.cpp
+  "${CONTROL}/src/tracker.cpp" "${CONTROL}/src/spline.cpp"
+  "${JOINT}/src/line_profile.cpp")
+target_include_directories(a0 PRIVATE src "${REPO}/include" "${CONTROL}/include" "${JOINT}/include" "${COMMON}/include" ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(a0 PRIVATE ${OpenCV_LIBS} bcrypt)
+target_compile_definitions(a0 PRIVATE REPO_DIR="${REPO}" EXPERIMENT_DIR="${CMAKE_CURRENT_SOURCE_DIR}/../결과")
+if(MSVC)
+ target_compile_options(a0 PRIVATE /utf-8 /EHsc /O2 /openmp)
+ target_compile_definitions(a0 PRIVATE NOMINMAX _CRT_SECURE_NO_WARNINGS _USE_MATH_DEFINES)
+endif()
+add_custom_command(TARGET a0 POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll" "$<TARGET_FILE_DIR:a0>")

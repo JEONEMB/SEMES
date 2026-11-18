@@ -1,0 +1,130 @@
+{
+ "docs": [
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/6_판정/논문/01_Angelopoulos2023_FnTML_컨포멀예측_입문",
+   "title": "Conformal Prediction: A Gentle Introduction (arXiv: A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification)",
+   "citation": "Angelopoulos, A. N., Bates, S. Foundations and Trends in Machine Learning 16(4):494-591, 2023. doi:10.1561/2200000101. arXiv 2107.07511 (Crossref, arXiv API 확인)",
+   "url": "https://arxiv.org/abs/2107.07511",
+   "pdf_url": "https://arxiv.org/pdf/2107.07511",
+   "questions": [
+    1,
+    4,
+    5,
+    6
+   ],
+   "why": "교정 자료의 점수 분위수로 모델과 무관한 예측 구간을 만들고 정한 확률로 정답을 덮는다. 사진별 폭 조절, 분포 이동, 위험 제어까지 정리한다. A8에서 이론 σ가 실제 오차 SD의 1/6.4로 낙관적이었던 문제를 자료로 교정하는 기본 틀이다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/6_판정/논문/02_Lei2018_JASA_분할컨포멀_예측구간",
+   "title": "Distribution-Free Predictive Inference for Regression",
+   "citation": "Lei, J., G'Sell, M., Rinaldo, A., Tibshirani, R. J., Wasserman, L. Journal of the American Statistical Association 113(523):1094-1111, 2018. doi:10.1080/01621459.2017.1307116. arXiv 1604.04173 (Crossref, arXiv API 확인)",
+   "url": "https://arxiv.org/abs/1604.04173",
+   "pdf_url": "https://arxiv.org/pdf/1604.04173",
+   "questions": [
+    1,
+    4,
+    8
+   ],
+   "why": "회귀 분할 컨포멀의 원전이다. 학습과 교정 자료를 나눠 유한 표본 보장을 준다. 잔차를 국소 산포로 나누는 국소 가중 방식이 A8 예측 σ를 점수 분모로 쓰는 근거다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/6_판정/논문/03_Gibbs2021_arXiv_적응컨포멀_분포이동",
+   "title": "Adaptive Conformal Inference Under Distribution Shift",
+   "citation": "Gibbs, I., Candès, E. arXiv 2106.00170, 2021 (arXiv API 확인. 학회 게재처는 확인 필요)",
+   "url": "https://arxiv.org/abs/2106.00170",
+   "pdf_url": "https://arxiv.org/pdf/2106.00170",
+   "questions": [
+    5,
+    6
+   ],
+   "why": "분포가 시간에 따라 바뀌어도 실제 덮음 여부로 분위수 수준을 온라인으로 고친다. 날짜 간 카메라 이동과 하루 안 영점 드리프트가 있는 운용에서 매 턴 범위를 갱신하는 방법이다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/6_판정/논문/04_Denis2020_NeurIPS_거부선택회귀_조건부분산",
+   "title": "Regression with reject option and application to kNN",
+   "citation": "Denis, C., Hebiri, M., Zaoui, A. NeurIPS 2020 (34th Conference on Neural Information Processing Systems). arXiv 2006.16597 (arXiv journal_ref로 확인)",
+   "url": "https://arxiv.org/abs/2006.16597",
+   "pdf_url": "https://arxiv.org/pdf/2006.16597",
+   "questions": [
+    1,
+    6
+   ],
+   "why": "회귀에서 예측을 보류할 수 있을 때 거부 비율을 고정하면 최적 규칙은 조건부 분산 임계값 거부임을 보이고, 임계값은 정답 없는 자료로 맞춘다. 재촬영 비율을 미리 정하는 규칙의 근거다."
+  },
+  {
+   "kind": "논문",
+   "folder": "docs/hye/파이프라인_v2/단계/6_판정/논문/05_Lee2018_arXiv_마할라노비스_분포밖탐지",
+   "title": "A Simple Unified Framework for Detecting Out-of-Distribution Samples and Adversarial Attacks",
+   "citation": "Lee, K., Lee, K., Lee, H., Shin, J. arXiv 1807.03888, 2018 (arXiv API 확인. NeurIPS 2018 게재는 확인 필요)",
+   "url": "https://arxiv.org/abs/1807.03888",
+   "pdf_url": "https://arxiv.org/pdf/1807.03888",
+   "questions": [
+    3,
+    7
+   ],
+   "why": "학습 특징의 평균과 공분산으로 마할라노비스 거리를 재서 학습 범위 밖 입력을 찾는다. 204차원 GLS 특징과 536점 변위는 이미 공분산 모형이 있어 같은 거리를 바로 계산할 수 있다."
+  }
+ ],
+ "existing": [
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/01_JCGM2008_GUM_측정불확도표현지침/요약.md",
+   "why": "Q1,Q2,Q4: 확장불확도 U=k·u_c, A형 반복 측정 통계. 평균 장수와 신뢰 범위의 기본 형식."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/15_NIST_eHandbook_GaugeRR_측정시스템/요약.md",
+   "why": "Q2: 반복성, 재현성, 안정성 분해. 평균으로 줄어드는 성분과 줄지 않는 드리프트를 나눠 몇 장 평균할지 정하는 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/13_Kyrki2004_ICRA_시각서보_측정오차전파/요약.md",
+   "why": "Q1,Q4: 영상 오차가 자세 추정과 제어로 전파되는 1차 오차 전파. 이론 예측 σ의 근거와 한계."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/12_Sciacchitano2019_MST_PIV_불확도정량화/요약.md",
+   "why": "Q1,Q7: 자료별 사후 불확도 지표(피크 비, 잔차). 편향은 사후 지표로 안 잡힌다는 점이 A8 결과와 맞음."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/06_Duncan2010_MST_이웃중앙값_이상치검출/요약.md",
+   "why": "Q7: 536점 격자에 이웃 중앙값 이상치 검정을 적용해 측정 품질 판정을 판정 단계에 넣는 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/논문/15_Matrox_MIL_GeometricModelFinder_문서/요약.md",
+   "why": "Q7: score/certainty 검출 신뢰도 판정의 실무 사례."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/논문/13_Xu2021_ICLR_신경망외삽/요약.md",
+   "why": "Q3: 학습 범위 밖 외삽 실패의 이론 배경. 범위 밖 사진 탐지가 필요한 이유."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/05_Varma2006_BMCBioinf_교차검증_모델선택_편향/요약.md",
+   "why": "Q8: 개발 자료로 판정 임계값을 고를 때 생기는 선택 편향."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/논문/08_Cawley2010_JMLR_모델선택_과적합_선택편향/요약.md",
+   "why": "Q8: 선택에 쓴 자료로 성능을 보고하면 부풀려짐. 중첩 CV 근거."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/03_US9424646_Omron_2단계_비전위치결정/요약.md",
+   "why": "Q1,Q6: 측정 불가 판정 조건(미검출, 이전 대비 큰 점프, 인코더와 차이, 시간 초과)과 허용값 판정 후 재측정 루프."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/01_US11984340_TEL_검사웨이퍼_반복티칭_분산갱신/요약.md",
+   "why": "Q2,Q6: 허용 범위 판정까지 측정, 보정 반복. 반복 측정 분산을 품질 지표로 사용."
+  },
+  {
+   "path": "docs/hye/문헌연구/02_QR_분석/특허/03_US7352891_Canon_마크요소_정밀도선별/요약.md",
+   "why": "Q7: 요소 간격과 설계 간격 비교로 틀린 요소를 찾아 측정 신뢰도를 판정, 기각, 재측정."
+  },
+  {
+   "path": "docs/hye/문헌연구/04_Y_T_오차_보정/특허/07_US12202151_CXMT_지그웨이퍼_로봇보정/요약.md",
+   "why": "Q6: 보정 필요 여부를 먼저 판정하고 필요할 때만 보정하는 2단 구조."
+  },
+  {
+   "path": "docs/hye/문헌연구/03_Y_T_분리/특허/07_US20190096083_Omron_위치검출_조정지원/요약.md",
+   "why": "Q2: 반복 이동 시 검출 위치의 평균, 최대, 최소를 기준으로 평가."
+  }
+ ]
+}

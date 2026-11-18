@@ -1,0 +1,3 @@
+Old and new C++ modes reproduced their checked output files byte for byte.
+Single-axis training has no nonzero T and no calibration/test pose group overlap.
+Gate nesting, split counts and score denominators verified.

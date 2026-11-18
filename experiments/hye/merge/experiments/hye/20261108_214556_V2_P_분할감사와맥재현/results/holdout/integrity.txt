@@ -1,0 +1,11 @@
+feature_sha256 eb50259232386b63b5c1f77c4f1610dad0f783a2a8c86ff7e5e12f0310bc9a9d
+images 571
+split_20261104 grouped_5fold
+split_20261001 leave_date_out
+train_budgets all
+fits 64
+test_evaluations 9136
+train_test_intersection 0
+train_only_standardization true
+train_only_world_model true
+real_robot_trials 0

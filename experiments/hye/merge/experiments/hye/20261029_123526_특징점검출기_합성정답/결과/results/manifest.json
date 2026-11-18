@@ -1,0 +1,13 @@
+{
+  "center_sha256": "01a69df6771b840d2fcf9cf727760592b5fb199c12277bfc173af514e26fd685",
+  "points_sha256": "3d951e071a982a2c2e0411c3601b1ce5f71183336d05c91e77b7a9251ccf8482",
+  "conditions": "1단계(20261029_122323)와 같은 72개, quick=false",
+  "noise_sigma": 1.04836,
+  "repeat_px": 1.5,
+  "wrong_match_px": 3,
+  "ratio_test": 0.8,
+  "synth_search": ["110", "22"],
+  "opencv": "3.4.15",
+  "threads": 1,
+  "not_evaluated": {"SIFT": "팀 기준 OpenCV 3.4.15 opencv_world에 xfeatures2d(contrib) 없음", "SURF": "같은 이유 + nonfree"}
+}

@@ -1,0 +1,683 @@
+archive,file,scope,true_Y,true_T,model,status,pred_Y,pred_T,eY,eT,both_within09,min_ncc
+20261014,center.bmp,center,0.00,0.00,improved_nonlinear,ok,0.000000,0.000000,0.000000,0.000000,True,1.0000
+20261014,center.bmp,center,0.00,0.00,coordinate_linear,ok,0.000000,0.000000,0.000000,0.000000,True,1.0000
+20261014,Theta/T+0.01.bmp,single,0.00,0.01,improved_nonlinear,ok,0.000000,0.010000,0.000000,0.000000,True,0.9936
+20261014,Theta/T+0.01.bmp,single,0.00,0.01,coordinate_linear,ok,-0.001340,0.010190,0.001340,0.000190,True,0.9936
+20261014,Theta/T+0.02.bmp,single,0.00,0.02,improved_nonlinear,ok,0.000000,0.020000,0.000000,0.000000,True,0.9904
+20261014,Theta/T+0.02.bmp,single,0.00,0.02,coordinate_linear,ok,0.002691,0.019339,0.002691,0.000661,True,0.9904
+20261014,Theta/T+0.03.bmp,single,0.00,0.03,improved_nonlinear,ok,0.000000,0.030000,0.000000,0.000000,True,0.9810
+20261014,Theta/T+0.03.bmp,single,0.00,0.03,coordinate_linear,ok,-0.002257,0.030308,0.002257,0.000308,True,0.9810
+20261014,Theta/T+0.04.bmp,single,0.00,0.04,improved_nonlinear,ok,0.000000,0.040000,0.000000,0.000000,True,0.9668
+20261014,Theta/T+0.04.bmp,single,0.00,0.04,coordinate_linear,ok,0.000847,0.039859,0.000847,0.000141,True,0.9668
+20261014,Theta/T+0.05.bmp,single,0.00,0.05,improved_nonlinear,ok,0.000000,0.050000,0.000000,0.000000,True,0.9849
+20261014,Theta/T+0.05.bmp,single,0.00,0.05,coordinate_linear,ok,-0.004747,0.050737,0.004747,0.000737,True,0.9849
+20261014,Theta/T+0.06.bmp,single,0.00,0.06,improved_nonlinear,ok,0.000000,0.060000,0.000000,0.000000,True,0.9962
+20261014,Theta/T+0.06.bmp,single,0.00,0.06,coordinate_linear,ok,0.002693,0.059399,0.002693,0.000601,True,0.9962
+20261014,Theta/T+0.07.bmp,single,0.00,0.07,improved_nonlinear,ok,0.000000,0.070000,0.000000,0.000000,True,0.9862
+20261014,Theta/T+0.07.bmp,single,0.00,0.07,coordinate_linear,ok,-0.006172,0.071134,0.006172,0.001134,True,0.9862
+20261014,Theta/T+0.08.bmp,single,0.00,0.08,improved_nonlinear,ok,0.000000,0.080000,0.000000,0.000000,True,0.9767
+20261014,Theta/T+0.08.bmp,single,0.00,0.08,coordinate_linear,ok,0.006756,0.078643,0.006756,0.001357,True,0.9767
+20261014,Theta/T+0.09.bmp,single,0.00,0.09,improved_nonlinear,ok,0.000000,0.090000,0.000000,0.000000,True,0.9707
+20261014,Theta/T+0.09.bmp,single,0.00,0.09,coordinate_linear,ok,-0.002200,0.090296,0.002200,0.000296,True,0.9707
+20261014,Theta/T+0.10.bmp,single,0.00,0.10,improved_nonlinear,ok,0.000000,0.100000,0.000000,0.000000,True,0.9885
+20261014,Theta/T+0.10.bmp,single,0.00,0.10,coordinate_linear,ok,-0.002321,0.100369,0.002321,0.000369,True,0.9885
+20261014,Theta/T+0.11.bmp,single,0.00,0.11,improved_nonlinear,ok,0.000000,0.110000,0.000000,0.000000,True,0.9940
+20261014,Theta/T+0.11.bmp,single,0.00,0.11,coordinate_linear,ok,-0.002279,0.110249,0.002279,0.000249,True,0.9940
+20261014,Theta/T+0.12.bmp,single,0.00,0.12,improved_nonlinear,ok,0.000000,0.120000,0.000000,0.000000,True,0.9854
+20261014,Theta/T+0.12.bmp,single,0.00,0.12,coordinate_linear,ok,-0.001725,0.120187,0.001725,0.000187,True,0.9854
+20261014,Theta/T+0.13.bmp,single,0.00,0.13,improved_nonlinear,ok,0.000000,0.130000,0.000000,0.000000,True,0.9705
+20261014,Theta/T+0.13.bmp,single,0.00,0.13,coordinate_linear,ok,-0.001952,0.130246,0.001952,0.000246,True,0.9705
+20261014,Theta/T+0.14.bmp,single,0.00,0.14,improved_nonlinear,ok,0.000000,0.140000,0.000000,0.000000,True,0.9728
+20261014,Theta/T+0.14.bmp,single,0.00,0.14,coordinate_linear,ok,-0.003783,0.140630,0.003783,0.000630,True,0.9728
+20261014,Theta/T+0.15.bmp,single,0.00,0.15,improved_nonlinear,ok,0.000000,0.150000,0.000000,0.000000,True,0.9934
+20261014,Theta/T+0.15.bmp,single,0.00,0.15,coordinate_linear,ok,0.003912,0.149034,0.003912,0.000966,True,0.9934
+20261014,Theta/T+0.16.bmp,single,0.00,0.16,improved_nonlinear,ok,0.000000,0.160000,0.000000,0.000000,True,0.9919
+20261014,Theta/T+0.16.bmp,single,0.00,0.16,coordinate_linear,ok,-0.000592,0.160006,0.000592,0.000006,True,0.9919
+20261014,Theta/T+0.17.bmp,single,0.00,0.17,improved_nonlinear,ok,0.000000,0.170000,0.000000,0.000000,True,0.9873
+20261014,Theta/T+0.17.bmp,single,0.00,0.17,coordinate_linear,ok,0.003993,0.169204,0.003993,0.000796,True,0.9873
+20261014,Theta/T+0.18.bmp,single,0.00,0.18,improved_nonlinear,ok,0.000000,0.180000,0.000000,0.000000,True,0.9697
+20261014,Theta/T+0.18.bmp,single,0.00,0.18,coordinate_linear,ok,0.004896,0.179096,0.004896,0.000904,True,0.9697
+20261014,Theta/T+0.19.bmp,single,0.00,0.19,improved_nonlinear,ok,0.000000,0.190000,0.000000,0.000000,True,0.9715
+20261014,Theta/T+0.19.bmp,single,0.00,0.19,coordinate_linear,ok,0.002672,0.189419,0.002672,0.000581,True,0.9715
+20261014,Theta/T+0.20.bmp,single,0.00,0.20,improved_nonlinear,ok,0.000000,0.200000,0.000000,0.000000,True,0.9890
+20261014,Theta/T+0.20.bmp,single,0.00,0.20,coordinate_linear,ok,-0.002326,0.200344,0.002326,0.000344,True,0.9890
+20261014,Theta/T+0.21.bmp,single,0.00,0.21,improved_nonlinear,ok,0.000000,0.210000,0.000000,0.000000,True,0.9915
+20261014,Theta/T+0.21.bmp,single,0.00,0.21,coordinate_linear,ok,0.003132,0.209389,0.003132,0.000611,True,0.9915
+20261014,Theta/T+0.22.bmp,single,0.00,0.22,improved_nonlinear,ok,0.000000,0.220000,0.000000,0.000000,True,0.9923
+20261014,Theta/T+0.22.bmp,single,0.00,0.22,coordinate_linear,ok,0.000684,0.219830,0.000684,0.000170,True,0.9923
+20261014,Theta/T+0.23.bmp,single,0.00,0.23,improved_nonlinear,ok,0.000000,0.230000,0.000000,0.000000,True,0.9729
+20261014,Theta/T+0.23.bmp,single,0.00,0.23,coordinate_linear,ok,-0.001707,0.230215,0.001707,0.000215,True,0.9729
+20261014,Theta/T+0.24.bmp,single,0.00,0.24,improved_nonlinear,ok,0.000000,0.240000,0.000000,0.000000,True,0.9650
+20261014,Theta/T+0.24.bmp,single,0.00,0.24,coordinate_linear,ok,0.001860,0.239648,0.001860,0.000352,True,0.9650
+20261014,Theta/T+0.25.bmp,single,0.00,0.25,improved_nonlinear,ok,0.000000,0.250000,0.000000,0.000000,True,0.9843
+20261014,Theta/T+0.25.bmp,single,0.00,0.25,coordinate_linear,ok,0.000548,0.249907,0.000548,0.000093,True,0.9843
+20261014,Theta/T+0.26.bmp,single,0.00,0.26,improved_nonlinear,ok,0.000000,0.260000,0.000000,0.000000,True,0.9925
+20261014,Theta/T+0.26.bmp,single,0.00,0.26,coordinate_linear,ok,-0.000679,0.260023,0.000679,0.000023,True,0.9925
+20261014,Theta/T+0.27.bmp,single,0.00,0.27,improved_nonlinear,ok,0.000000,0.270000,0.000000,0.000000,True,0.9899
+20261014,Theta/T+0.27.bmp,single,0.00,0.27,coordinate_linear,ok,0.003202,0.269384,0.003202,0.000616,True,0.9899
+20261014,Theta/T+0.28.bmp,single,0.00,0.28,improved_nonlinear,ok,0.000000,0.280000,0.000000,0.000000,True,0.9713
+20261014,Theta/T+0.28.bmp,single,0.00,0.28,coordinate_linear,ok,-0.003505,0.280605,0.003505,0.000605,True,0.9713
+20261014,Theta/T+0.29.bmp,single,0.00,0.29,improved_nonlinear,ok,0.000000,0.290000,0.000000,0.000000,True,0.9662
+20261014,Theta/T+0.29.bmp,single,0.00,0.29,coordinate_linear,ok,0.000008,0.289950,0.000008,0.000050,True,0.9662
+20261014,Theta/T+0.30.bmp,single,0.00,0.30,improved_nonlinear,ok,0.000000,0.300000,0.000000,0.000000,True,0.9814
+20261014,Theta/T+0.30.bmp,single,0.00,0.30,coordinate_linear,ok,0.002845,0.299442,0.002845,0.000558,True,0.9814
+20261014,Theta/T+0.31.bmp,single,0.00,0.31,improved_nonlinear,ok,0.000000,0.310000,0.000000,0.000000,True,0.9931
+20261014,Theta/T+0.31.bmp,single,0.00,0.31,coordinate_linear,ok,0.002449,0.309581,0.002449,0.000419,True,0.9931
+20261014,Theta/T+0.32.bmp,single,0.00,0.32,improved_nonlinear,ok,0.000000,0.320000,0.000000,0.000000,True,0.9866
+20261014,Theta/T+0.32.bmp,single,0.00,0.32,coordinate_linear,ok,-0.000485,0.319991,0.000485,0.000009,True,0.9866
+20261014,Theta/T+0.33.bmp,single,0.00,0.33,improved_nonlinear,ok,0.000000,0.330000,0.000000,0.000000,True,0.9722
+20261014,Theta/T+0.33.bmp,single,0.00,0.33,coordinate_linear,ok,0.004725,0.329158,0.004725,0.000842,True,0.9722
+20261014,Theta/T+0.34.bmp,single,0.00,0.34,improved_nonlinear,ok,0.000000,0.340000,0.000000,0.000000,True,0.9631
+20261014,Theta/T+0.34.bmp,single,0.00,0.34,coordinate_linear,ok,0.005322,0.339027,0.005322,0.000973,True,0.9631
+20261014,Theta/T+0.35.bmp,single,0.00,0.35,improved_nonlinear,ok,0.000000,0.350000,0.000000,0.000000,True,0.9798
+20261014,Theta/T+0.35.bmp,single,0.00,0.35,coordinate_linear,ok,0.002417,0.349447,0.002417,0.000553,True,0.9798
+20261014,Theta/T+0.36.bmp,single,0.00,0.36,improved_nonlinear,ok,0.000000,0.360000,0.000000,0.000000,True,0.9943
+20261014,Theta/T+0.36.bmp,single,0.00,0.36,coordinate_linear,ok,-0.000094,0.360030,0.000094,0.000030,True,0.9943
+20261014,Theta/T+0.37.bmp,single,0.00,0.37,improved_nonlinear,ok,0.000000,0.370000,0.000000,0.000000,True,0.9846
+20261014,Theta/T+0.37.bmp,single,0.00,0.37,coordinate_linear,ok,0.000262,0.369903,0.000262,0.000097,True,0.9846
+20261014,Theta/T+0.38.bmp,single,0.00,0.38,improved_nonlinear,ok,0.000000,0.380000,0.000000,0.000000,True,0.9693
+20261014,Theta/T+0.38.bmp,single,0.00,0.38,coordinate_linear,ok,-0.002401,0.380315,0.002401,0.000315,True,0.9693
+20261014,Theta/T+0.39.bmp,single,0.00,0.39,improved_nonlinear,ok,0.000000,0.390000,0.000000,0.000000,True,0.9624
+20261014,Theta/T+0.39.bmp,single,0.00,0.39,coordinate_linear,ok,-0.000397,0.389988,0.000397,0.000012,True,0.9624
+20261014,Theta/T+0.40.bmp,single,0.00,0.40,improved_nonlinear,ok,0.000000,0.400000,0.000000,0.000000,True,0.9796
+20261014,Theta/T+0.40.bmp,single,0.00,0.40,coordinate_linear,ok,0.003650,0.399275,0.003650,0.000725,True,0.9796
+20261014,Theta/T+0.41.bmp,single,0.00,0.41,improved_nonlinear,ok,0.000000,0.410000,0.000000,0.000000,True,0.9947
+20261014,Theta/T+0.41.bmp,single,0.00,0.41,coordinate_linear,ok,-0.000249,0.409953,0.000249,0.000047,True,0.9947
+20261014,Theta/T+0.42.bmp,single,0.00,0.42,improved_nonlinear,ok,0.000000,0.420000,0.000000,0.000000,True,0.9845
+20261014,Theta/T+0.42.bmp,single,0.00,0.42,coordinate_linear,ok,0.001782,0.419667,0.001782,0.000333,True,0.9845
+20261014,Theta/T+0.43.bmp,single,0.00,0.43,improved_nonlinear,ok,0.000000,0.430000,0.000000,0.000000,True,0.9711
+20261014,Theta/T+0.43.bmp,single,0.00,0.43,coordinate_linear,ok,0.001132,0.429691,0.001132,0.000309,True,0.9711
+20261014,Theta/T+0.44.bmp,single,0.00,0.44,improved_nonlinear,ok,0.000000,0.440000,0.000000,0.000000,True,0.9594
+20261014,Theta/T+0.44.bmp,single,0.00,0.44,coordinate_linear,ok,-0.002935,0.440456,0.002935,0.000456,True,0.9594
+20261014,Theta/T+0.45.bmp,single,0.00,0.45,improved_nonlinear,ok,0.000000,0.450000,0.000000,0.000000,True,0.9790
+20261014,Theta/T+0.45.bmp,single,0.00,0.45,coordinate_linear,ok,0.003967,0.449307,0.003967,0.000693,True,0.9790
+20261014,Theta/T+0.46.bmp,single,0.00,0.46,improved_nonlinear,ok,0.000000,0.460000,0.000000,0.000000,True,0.9893
+20261014,Theta/T+0.46.bmp,single,0.00,0.46,coordinate_linear,ok,-0.001461,0.460266,0.001461,0.000266,True,0.9893
+20261014,Theta/T+0.47.bmp,single,0.00,0.47,improved_nonlinear,ok,0.000000,0.470000,0.000000,0.000000,True,0.9880
+20261014,Theta/T+0.47.bmp,single,0.00,0.47,coordinate_linear,ok,0.002324,0.469537,0.002324,0.000463,True,0.9880
+20261014,Theta/T+0.48.bmp,single,0.00,0.48,improved_nonlinear,ok,0.000000,0.480000,0.000000,0.000000,True,0.9751
+20261014,Theta/T+0.48.bmp,single,0.00,0.48,coordinate_linear,ok,-0.005682,0.481050,0.005682,0.001050,True,0.9751
+20261014,Theta/T+0.49.bmp,single,0.00,0.49,improved_nonlinear,ok,0.000000,0.490000,0.000000,0.000000,True,0.9596
+20261014,Theta/T+0.49.bmp,single,0.00,0.49,coordinate_linear,ok,-0.002640,0.490424,0.002640,0.000424,True,0.9596
+20261014,Theta/T+0.50.bmp,single,0.00,0.50,improved_nonlinear,ok,0.000000,0.500000,0.000000,0.000000,True,0.9753
+20261014,Theta/T+0.50.bmp,single,0.00,0.50,coordinate_linear,ok,0.005756,0.498993,0.005756,0.001007,True,0.9753
+20261014,Theta/T+0.51.bmp,single,0.00,0.51,improved_nonlinear,ok,0.000000,0.510000,0.000000,0.000000,True,0.9852
+20261014,Theta/T+0.51.bmp,single,0.00,0.51,coordinate_linear,ok,0.002594,0.509524,0.002594,0.000476,True,0.9852
+20261014,Theta/T+0.52.bmp,single,0.00,0.52,improved_nonlinear,ok,0.000000,0.520000,0.000000,0.000000,True,0.9901
+20261014,Theta/T+0.52.bmp,single,0.00,0.52,coordinate_linear,ok,-0.003468,0.520585,0.003468,0.000585,True,0.9901
+20261014,Theta/T+0.53.bmp,single,0.00,0.53,improved_nonlinear,ok,0.000000,0.530000,0.000000,0.000000,True,0.9782
+20261014,Theta/T+0.53.bmp,single,0.00,0.53,coordinate_linear,ok,0.007604,0.528675,0.007604,0.001325,True,0.9782
+20261014,Theta/T+0.54.bmp,single,0.00,0.54,improved_nonlinear,ok,0.000000,0.540000,0.000000,0.000000,True,0.9627
+20261014,Theta/T+0.54.bmp,single,0.00,0.54,coordinate_linear,ok,-0.000660,0.540157,0.000660,0.000157,True,0.9627
+20261014,Theta/T+0.55.bmp,single,0.00,0.55,improved_nonlinear,ok,0.000000,0.550000,0.000000,0.000000,True,0.9710
+20261014,Theta/T+0.55.bmp,single,0.00,0.55,coordinate_linear,ok,-0.002622,0.550469,0.002622,0.000469,True,0.9710
+20261014,Theta/T+0.56.bmp,single,0.00,0.56,improved_nonlinear,ok,0.000000,0.560000,0.000000,0.000000,True,0.9829
+20261014,Theta/T+0.56.bmp,single,0.00,0.56,coordinate_linear,ok,0.000898,0.559916,0.000898,0.000084,True,0.9829
+20261014,Theta/T+0.57.bmp,single,0.00,0.57,improved_nonlinear,ok,0.000000,0.570000,0.000000,0.000000,True,0.9915
+20261014,Theta/T+0.57.bmp,single,0.00,0.57,coordinate_linear,ok,0.000307,0.570038,0.000307,0.000038,True,0.9915
+20261014,Theta/T+0.58.bmp,single,0.00,0.58,improved_nonlinear,ok,0.000000,0.580000,0.000000,0.000000,True,0.9746
+20261014,Theta/T+0.58.bmp,single,0.00,0.58,coordinate_linear,ok,-0.003208,0.580561,0.003208,0.000561,True,0.9746
+20261014,Theta/T+0.59.bmp,single,0.00,0.59,improved_nonlinear,ok,0.000000,0.590000,0.000000,0.000000,True,0.9604
+20261014,Theta/T+0.59.bmp,single,0.00,0.59,coordinate_linear,ok,-0.006541,0.591189,0.006541,0.001189,True,0.9604
+20261014,Theta/T+0.60.bmp,single,0.00,0.60,improved_nonlinear,ok,0.000000,0.600000,0.000000,0.000000,True,0.9677
+20261014,Theta/T+0.60.bmp,single,0.00,0.60,coordinate_linear,ok,-0.001517,0.600206,0.001517,0.000206,True,0.9677
+20261014,Theta/T+0.61.bmp,single,0.00,0.61,improved_nonlinear,ok,0.000000,0.610000,0.000000,0.000000,True,0.9817
+20261014,Theta/T+0.61.bmp,single,0.00,0.61,coordinate_linear,ok,-0.006217,0.611050,0.006217,0.001050,True,0.9817
+20261014,Theta/T+0.62.bmp,single,0.00,0.62,improved_nonlinear,ok,0.000000,0.620000,0.000000,0.000000,True,0.9893
+20261014,Theta/T+0.62.bmp,single,0.00,0.62,coordinate_linear,ok,0.005533,0.619074,0.005533,0.000926,True,0.9893
+20261014,Theta/T+0.63.bmp,single,0.00,0.63,improved_nonlinear,ok,0.000000,0.630000,0.000000,0.000000,True,0.9724
+20261014,Theta/T+0.63.bmp,single,0.00,0.63,coordinate_linear,ok,0.002148,0.629596,0.002148,0.000404,True,0.9724
+20261014,Theta/T+0.64.bmp,single,0.00,0.64,improved_nonlinear,ok,0.000000,0.640000,0.000000,0.000000,True,0.9641
+20261014,Theta/T+0.64.bmp,single,0.00,0.64,coordinate_linear,ok,0.002654,0.639603,0.002654,0.000397,True,0.9641
+20261014,Theta/T+0.65.bmp,single,0.00,0.65,improved_nonlinear,ok,0.000000,0.650000,0.000000,0.000000,True,0.9692
+20261014,Theta/T+0.65.bmp,single,0.00,0.65,coordinate_linear,ok,0.001189,0.649744,0.001189,0.000256,True,0.9692
+20261014,Theta/T+0.66.bmp,single,0.00,0.66,improved_nonlinear,ok,0.000000,0.660000,0.000000,0.000000,True,0.9844
+20261014,Theta/T+0.66.bmp,single,0.00,0.66,coordinate_linear,ok,-0.001090,0.660191,0.001090,0.000191,True,0.9844
+20261014,Theta/T+0.67.bmp,single,0.00,0.67,improved_nonlinear,ok,0.000000,0.670000,0.000000,0.000000,True,0.9864
+20261014,Theta/T+0.67.bmp,single,0.00,0.67,coordinate_linear,ok,-0.000605,0.670064,0.000605,0.000064,True,0.9864
+20261014,Theta/T+0.68.bmp,single,0.00,0.68,improved_nonlinear,ok,0.000000,0.680000,0.000000,0.000000,True,0.9702
+20261014,Theta/T+0.68.bmp,single,0.00,0.68,coordinate_linear,ok,-0.002891,0.680487,0.002891,0.000487,True,0.9702
+20261014,Theta/T+0.69.bmp,single,0.00,0.69,improved_nonlinear,ok,0.000000,0.690000,0.000000,0.000000,True,0.9618
+20261014,Theta/T+0.69.bmp,single,0.00,0.69,coordinate_linear,ok,-0.005624,0.691022,0.005624,0.001022,True,0.9618
+20261014,Theta/T+0.70.bmp,single,0.00,0.70,improved_nonlinear,ok,0.000000,0.700000,0.000000,0.000000,True,0.9653
+20261014,Theta/T+0.70.bmp,single,0.00,0.70,coordinate_linear,ok,0.003475,0.699292,0.003475,0.000708,True,0.9653
+20261014,Theta/T+0.71.bmp,single,0.00,0.71,improved_nonlinear,ok,0.000000,0.710000,0.000000,0.000000,True,0.9820
+20261014,Theta/T+0.71.bmp,single,0.00,0.71,coordinate_linear,ok,0.000949,0.709829,0.000949,0.000171,True,0.9820
+20261014,Theta/T+0.72.bmp,single,0.00,0.72,improved_nonlinear,ok,0.000000,0.720000,0.000000,0.000000,True,0.9848
+20261014,Theta/T+0.72.bmp,single,0.00,0.72,coordinate_linear,ok,-0.005386,0.720913,0.005386,0.000913,True,0.9848
+20261014,Theta/T+0.73.bmp,single,0.00,0.73,improved_nonlinear,ok,0.000000,0.730000,0.000000,0.000000,True,0.9780
+20261014,Theta/T+0.73.bmp,single,0.00,0.73,coordinate_linear,ok,0.002276,0.729616,0.002276,0.000384,True,0.9780
+20261014,Theta/T+0.74.bmp,single,0.00,0.74,improved_nonlinear,ok,0.000000,0.740000,0.000000,0.000000,True,0.9595
+20261014,Theta/T+0.74.bmp,single,0.00,0.74,coordinate_linear,ok,0.004708,0.739123,0.004708,0.000877,True,0.9595
+20261014,Theta/T+0.75.bmp,single,0.00,0.75,improved_nonlinear,ok,0.000000,0.750000,0.000000,0.000000,True,0.9586
+20261014,Theta/T+0.75.bmp,single,0.00,0.75,coordinate_linear,ok,0.004100,0.749312,0.004100,0.000688,True,0.9586
+20261014,Theta/T+0.76.bmp,single,0.00,0.76,improved_nonlinear,ok,0.000000,0.760000,0.000000,0.000000,True,0.9776
+20261014,Theta/T+0.76.bmp,single,0.00,0.76,coordinate_linear,ok,-0.004930,0.760943,0.004930,0.000943,True,0.9776
+20261014,Theta/T+0.77.bmp,single,0.00,0.77,improved_nonlinear,ok,0.000000,0.770000,0.000000,0.000000,True,0.9846
+20261014,Theta/T+0.77.bmp,single,0.00,0.77,coordinate_linear,ok,0.000074,0.770036,0.000074,0.000036,True,0.9846
+20261014,Theta/T+0.78.bmp,single,0.00,0.78,improved_nonlinear,ok,0.000000,0.780000,0.000000,0.000000,True,0.9796
+20261014,Theta/T+0.78.bmp,single,0.00,0.78,coordinate_linear,ok,-0.005028,0.780963,0.005028,0.000963,True,0.9796
+20261014,Theta/T+0.79.bmp,single,0.00,0.79,improved_nonlinear,ok,0.000000,0.790000,0.000000,0.000000,True,0.9603
+20261014,Theta/T+0.79.bmp,single,0.00,0.79,coordinate_linear,ok,0.000511,0.789969,0.000511,0.000031,True,0.9603
+20261014,Theta/T+0.80.bmp,single,0.00,0.80,improved_nonlinear,ok,0.000000,0.800000,0.000000,0.000000,True,0.9598
+20261014,Theta/T+0.80.bmp,single,0.00,0.80,coordinate_linear,ok,0.002239,0.799658,0.002239,0.000342,True,0.9598
+20261014,Theta/T+0.81.bmp,single,0.00,0.81,improved_nonlinear,ok,0.000000,0.810000,0.000000,0.000000,True,0.9743
+20261014,Theta/T+0.81.bmp,single,0.00,0.81,coordinate_linear,ok,0.000980,0.809772,0.000980,0.000228,True,0.9743
+20261014,Theta/T+0.82.bmp,single,0.00,0.82,improved_nonlinear,ok,0.000000,0.820000,0.000000,0.000000,True,0.9838
+20261014,Theta/T+0.82.bmp,single,0.00,0.82,coordinate_linear,ok,0.005147,0.819073,0.005147,0.000927,True,0.9838
+20261014,Theta/T+0.83.bmp,single,0.00,0.83,improved_nonlinear,ok,0.000000,0.830000,0.000000,0.000000,True,0.9722
+20261014,Theta/T+0.83.bmp,single,0.00,0.83,coordinate_linear,ok,0.002895,0.829508,0.002895,0.000492,True,0.9722
+20261014,Theta/T+0.84.bmp,single,0.00,0.84,improved_nonlinear,ok,0.000000,0.840000,0.000000,0.000000,True,0.9579
+20261014,Theta/T+0.84.bmp,single,0.00,0.84,coordinate_linear,ok,0.005209,0.839099,0.005209,0.000901,True,0.9579
+20261014,Theta/T+0.85.bmp,single,0.00,0.85,improved_nonlinear,ok,0.000000,0.850000,0.000000,0.000000,True,0.9619
+20261014,Theta/T+0.85.bmp,single,0.00,0.85,coordinate_linear,ok,0.002829,0.849447,0.002829,0.000553,True,0.9619
+20261014,Theta/T+0.86.bmp,single,0.00,0.86,improved_nonlinear,ok,0.000000,0.860000,0.000000,0.000000,True,0.9691
+20261014,Theta/T+0.86.bmp,single,0.00,0.86,coordinate_linear,ok,-0.002961,0.860551,0.002961,0.000551,True,0.9691
+20261014,Theta/T+0.87.bmp,single,0.00,0.87,improved_nonlinear,ok,0.000000,0.870000,0.000000,0.000000,True,0.9828
+20261014,Theta/T+0.87.bmp,single,0.00,0.87,coordinate_linear,ok,-0.001721,0.870252,0.001721,0.000252,True,0.9828
+20261014,Theta/T+0.88.bmp,single,0.00,0.88,improved_nonlinear,ok,0.000000,0.880000,0.000000,0.000000,True,0.9780
+20261014,Theta/T+0.88.bmp,single,0.00,0.88,coordinate_linear,ok,0.000612,0.879881,0.000612,0.000119,True,0.9780
+20261014,Theta/T+0.89.bmp,single,0.00,0.89,improved_nonlinear,ok,0.000000,0.890000,0.000000,0.000000,True,0.9599
+20261014,Theta/T+0.89.bmp,single,0.00,0.89,coordinate_linear,ok,-0.003083,0.890593,0.003083,0.000593,True,0.9599
+20261014,Theta/T+0.90.bmp,single,0.00,0.90,improved_nonlinear,ok,0.000000,0.900000,0.000000,0.000000,True,0.9620
+20261014,Theta/T+0.90.bmp,single,0.00,0.90,coordinate_linear,ok,0.001217,0.899746,0.001217,0.000254,True,0.9620
+20261014,Theta/T+0.91.bmp,single,0.00,0.91,improved_nonlinear,ok,0.000000,0.910000,0.000000,0.000000,True,0.9644
+20261014,Theta/T+0.91.bmp,single,0.00,0.91,coordinate_linear,ok,-0.005720,0.911114,0.005720,0.001114,True,0.9644
+20261014,Theta/T+0.92.bmp,single,0.00,0.92,improved_nonlinear,ok,0.000000,0.920000,0.000000,0.000000,True,0.9805
+20261014,Theta/T+0.92.bmp,single,0.00,0.92,coordinate_linear,ok,0.001214,0.919727,0.001214,0.000273,True,0.9805
+20261014,Theta/T+0.93.bmp,single,0.00,0.93,improved_nonlinear,ok,0.000000,0.930000,0.000000,0.000000,True,0.9741
+20261014,Theta/T+0.93.bmp,single,0.00,0.93,coordinate_linear,ok,-0.000567,0.930098,0.000567,0.000098,True,0.9741
+20261014,Theta/T+0.94.bmp,single,0.00,0.94,improved_nonlinear,ok,0.000000,0.940000,0.000000,0.000000,True,0.9583
+20261014,Theta/T+0.94.bmp,single,0.00,0.94,coordinate_linear,ok,0.000062,0.940040,0.000062,0.000040,True,0.9583
+20261014,Theta/T+0.95.bmp,single,0.00,0.95,improved_nonlinear,ok,0.000000,0.950000,0.000000,0.000000,True,0.9591
+20261014,Theta/T+0.95.bmp,single,0.00,0.95,coordinate_linear,ok,0.000704,0.949896,0.000704,0.000104,True,0.9591
+20261014,Theta/T+0.96.bmp,single,0.00,0.96,improved_nonlinear,ok,0.000000,0.960000,0.000000,0.000000,True,0.9586
+20261014,Theta/T+0.96.bmp,single,0.00,0.96,coordinate_linear,ok,-0.003989,0.960707,0.003989,0.000707,True,0.9586
+20261014,Theta/T+0.97.bmp,single,0.00,0.97,improved_nonlinear,ok,0.000000,0.970000,0.000000,0.000000,True,0.9774
+20261014,Theta/T+0.97.bmp,single,0.00,0.97,coordinate_linear,ok,-0.001031,0.970324,0.001031,0.000324,True,0.9774
+20261014,Theta/T+0.98.bmp,single,0.00,0.98,improved_nonlinear,ok,0.000000,0.980000,0.000000,0.000000,True,0.9732
+20261014,Theta/T+0.98.bmp,single,0.00,0.98,coordinate_linear,ok,0.001411,0.979724,0.001411,0.000276,True,0.9732
+20261014,Theta/T+0.99.bmp,single,0.00,0.99,improved_nonlinear,ok,0.000000,0.990000,0.000000,0.000000,True,0.9592
+20261014,Theta/T+0.99.bmp,single,0.00,0.99,coordinate_linear,ok,-0.001062,0.990142,0.001062,0.000142,True,0.9592
+20261014,Theta/T+1.00.bmp,single,0.00,1.00,improved_nonlinear,ok,0.000000,1.000000,0.000000,0.000000,True,0.9572
+20261014,Theta/T+1.00.bmp,single,0.00,1.00,coordinate_linear,ok,0.000828,0.999866,0.000828,0.000134,True,0.9572
+20261014,Theta/T-0.01.bmp,single,0.00,-0.01,improved_nonlinear,ok,0.000000,-0.010000,0.000000,0.000000,True,0.9907
+20261014,Theta/T-0.01.bmp,single,0.00,-0.01,coordinate_linear,ok,-0.001491,-0.009595,0.001491,0.000405,True,0.9907
+20261014,Theta/T-0.02.bmp,single,0.00,-0.02,improved_nonlinear,ok,0.000000,-0.020000,0.000000,0.000000,True,0.9938
+20261014,Theta/T-0.02.bmp,single,0.00,-0.02,coordinate_linear,ok,-0.001443,-0.019662,0.001443,0.000338,True,0.9938
+20261014,Theta/T-0.03.bmp,single,0.00,-0.03,improved_nonlinear,ok,0.000000,-0.030000,0.000000,0.000000,True,0.9731
+20261014,Theta/T-0.03.bmp,single,0.00,-0.03,coordinate_linear,ok,0.001069,-0.030118,0.001069,0.000118,True,0.9731
+20261014,Theta/T-0.04.bmp,single,0.00,-0.04,improved_nonlinear,ok,0.000000,-0.040000,0.000000,0.000000,True,0.9676
+20261014,Theta/T-0.04.bmp,single,0.00,-0.04,coordinate_linear,ok,-0.003228,-0.039369,0.003228,0.000631,True,0.9676
+20261014,Theta/T-0.05.bmp,single,0.00,-0.05,improved_nonlinear,ok,0.000000,-0.050000,0.000000,0.000000,True,0.9840
+20261014,Theta/T-0.05.bmp,single,0.00,-0.05,coordinate_linear,ok,-0.004331,-0.049212,0.004331,0.000788,True,0.9840
+20261014,Theta/T-0.06.bmp,single,0.00,-0.06,improved_nonlinear,ok,0.000000,-0.060000,0.000000,0.000000,True,0.9922
+20261014,Theta/T-0.06.bmp,single,0.00,-0.06,coordinate_linear,ok,0.002884,-0.060364,0.002884,0.000364,True,0.9922
+20261014,Theta/T-0.07.bmp,single,0.00,-0.07,improved_nonlinear,ok,0.000000,-0.070000,0.000000,0.000000,True,0.9909
+20261014,Theta/T-0.07.bmp,single,0.00,-0.07,coordinate_linear,ok,-0.005574,-0.068936,0.005574,0.001064,True,0.9909
+20261014,Theta/T-0.08.bmp,single,0.00,-0.08,improved_nonlinear,ok,0.000000,-0.080000,0.000000,0.000000,True,0.9724
+20261014,Theta/T-0.08.bmp,single,0.00,-0.08,coordinate_linear,ok,-0.000231,-0.079760,0.000231,0.000240,True,0.9724
+20261014,Theta/T-0.09.bmp,single,0.00,-0.09,improved_nonlinear,ok,0.000000,-0.090000,0.000000,0.000000,True,0.9732
+20261014,Theta/T-0.09.bmp,single,0.00,-0.09,coordinate_linear,ok,0.001423,-0.090079,0.001423,0.000079,True,0.9732
+20261014,Theta/T-0.10.bmp,single,0.00,-0.10,improved_nonlinear,ok,0.000000,-0.100000,0.000000,0.000000,True,0.9828
+20261014,Theta/T-0.10.bmp,single,0.00,-0.10,coordinate_linear,ok,0.001371,-0.100055,0.001371,0.000055,True,0.9828
+20261014,Theta/T-0.11.bmp,single,0.00,-0.11,improved_nonlinear,ok,0.000000,-0.110000,0.000000,0.000000,True,0.9946
+20261014,Theta/T-0.11.bmp,single,0.00,-0.11,coordinate_linear,ok,-0.000753,-0.109804,0.000753,0.000196,True,0.9946
+20261014,Theta/T-0.12.bmp,single,0.00,-0.12,improved_nonlinear,ok,0.000000,-0.120000,0.000000,0.000000,True,0.9912
+20261014,Theta/T-0.12.bmp,single,0.00,-0.12,coordinate_linear,ok,0.001959,-0.120293,0.001959,0.000293,True,0.9912
+20261014,Theta/T-0.13.bmp,single,0.00,-0.13,improved_nonlinear,ok,0.000000,-0.130000,0.000000,0.000000,True,0.9801
+20261014,Theta/T-0.13.bmp,single,0.00,-0.13,coordinate_linear,ok,0.006742,-0.131162,0.006742,0.001162,True,0.9801
+20261014,Theta/T-0.14.bmp,single,0.00,-0.14,improved_nonlinear,ok,0.000000,-0.140000,0.000000,0.000000,True,0.9667
+20261014,Theta/T-0.14.bmp,single,0.00,-0.14,coordinate_linear,ok,-0.000160,-0.139974,0.000160,0.000026,True,0.9667
+20261014,Theta/T-0.15.bmp,single,0.00,-0.15,improved_nonlinear,ok,0.000000,-0.150000,0.000000,0.000000,True,0.9746
+20261014,Theta/T-0.15.bmp,single,0.00,-0.15,coordinate_linear,ok,-0.006918,-0.148753,0.006918,0.001247,True,0.9746
+20261014,Theta/T-0.16.bmp,single,0.00,-0.16,improved_nonlinear,ok,0.000000,-0.160000,0.000000,0.000000,True,0.9925
+20261014,Theta/T-0.16.bmp,single,0.00,-0.16,coordinate_linear,ok,0.001082,-0.160082,0.001082,0.000082,True,0.9925
+20261014,Theta/T-0.17.bmp,single,0.00,-0.17,improved_nonlinear,ok,0.000000,-0.170000,0.000000,0.000000,True,0.9923
+20261014,Theta/T-0.17.bmp,single,0.00,-0.17,coordinate_linear,ok,-0.002648,-0.169459,0.002648,0.000541,True,0.9923
+20261014,Theta/T-0.18.bmp,single,0.00,-0.18,improved_nonlinear,ok,0.000000,-0.180000,0.000000,0.000000,True,0.9884
+20261014,Theta/T-0.18.bmp,single,0.00,-0.18,coordinate_linear,ok,-0.002626,-0.179465,0.002626,0.000535,True,0.9884
+20261014,Theta/T-0.19.bmp,single,0.00,-0.19,improved_nonlinear,ok,0.000000,-0.190000,0.000000,0.000000,True,0.9648
+20261014,Theta/T-0.19.bmp,single,0.00,-0.19,coordinate_linear,ok,0.002146,-0.190389,0.002146,0.000389,True,0.9648
+20261014,Theta/T-0.20.bmp,single,0.00,-0.20,improved_nonlinear,ok,0.000000,-0.200000,0.000000,0.000000,True,0.9726
+20261014,Theta/T-0.20.bmp,single,0.00,-0.20,coordinate_linear,ok,0.003587,-0.200543,0.003587,0.000543,True,0.9726
+20261014,Theta/T-0.21.bmp,single,0.00,-0.21,improved_nonlinear,ok,0.000000,-0.210000,0.000000,0.000000,True,0.9903
+20261014,Theta/T-0.21.bmp,single,0.00,-0.21,coordinate_linear,ok,-0.000044,-0.209930,0.000044,0.000070,True,0.9903
+20261014,Theta/T-0.22.bmp,single,0.00,-0.22,improved_nonlinear,ok,0.000000,-0.220000,0.000000,0.000000,True,0.9920
+20261014,Theta/T-0.22.bmp,single,0.00,-0.22,coordinate_linear,ok,0.006727,-0.221107,0.006727,0.001107,True,0.9920
+20261014,Theta/T-0.23.bmp,single,0.00,-0.23,improved_nonlinear,ok,0.000000,-0.230000,0.000000,0.000000,True,0.9890
+20261014,Theta/T-0.23.bmp,single,0.00,-0.23,coordinate_linear,ok,-0.004620,-0.229055,0.004620,0.000945,True,0.9890
+20261014,Theta/T-0.24.bmp,single,0.00,-0.24,improved_nonlinear,ok,0.000000,-0.240000,0.000000,0.000000,True,0.9688
+20261014,Theta/T-0.24.bmp,single,0.00,-0.24,coordinate_linear,ok,0.000199,-0.240166,0.000199,0.000166,True,0.9688
+20261014,Theta/T-0.25.bmp,single,0.00,-0.25,improved_nonlinear,ok,0.000000,-0.250000,0.000000,0.000000,True,0.9698
+20261014,Theta/T-0.25.bmp,single,0.00,-0.25,coordinate_linear,ok,0.001911,-0.250299,0.001911,0.000299,True,0.9698
+20261014,Theta/T-0.26.bmp,single,0.00,-0.26,improved_nonlinear,ok,0.000000,-0.260000,0.000000,0.000000,True,0.9853
+20261014,Theta/T-0.26.bmp,single,0.00,-0.26,coordinate_linear,ok,0.001995,-0.260345,0.001995,0.000345,True,0.9853
+20261014,Theta/T-0.27.bmp,single,0.00,-0.27,improved_nonlinear,ok,0.000000,-0.270000,0.000000,0.000000,True,0.9939
+20261014,Theta/T-0.27.bmp,single,0.00,-0.27,coordinate_linear,ok,0.003108,-0.270591,0.003108,0.000591,True,0.9939
+20261014,Theta/T-0.28.bmp,single,0.00,-0.28,improved_nonlinear,ok,0.000000,-0.280000,0.000000,0.000000,True,0.9886
+20261014,Theta/T-0.28.bmp,single,0.00,-0.28,coordinate_linear,ok,-0.000243,-0.279960,0.000243,0.000040,True,0.9886
+20261014,Theta/T-0.29.bmp,single,0.00,-0.29,improved_nonlinear,ok,0.000000,-0.290000,0.000000,0.000000,True,0.9667
+20261014,Theta/T-0.29.bmp,single,0.00,-0.29,coordinate_linear,ok,-0.001813,-0.289599,0.001813,0.000401,True,0.9667
+20261014,Theta/T-0.30.bmp,single,0.00,-0.30,improved_nonlinear,ok,0.000000,-0.300000,0.000000,0.000000,True,0.9738
+20261014,Theta/T-0.30.bmp,single,0.00,-0.30,coordinate_linear,ok,-0.001825,-0.299611,0.001825,0.000389,True,0.9738
+20261014,Theta/T-0.31.bmp,single,0.00,-0.31,improved_nonlinear,ok,0.000000,-0.310000,0.000000,0.000000,True,0.9822
+20261014,Theta/T-0.31.bmp,single,0.00,-0.31,coordinate_linear,ok,0.003395,-0.310485,0.003395,0.000485,True,0.9822
+20261014,Theta/T-0.32.bmp,single,0.00,-0.32,improved_nonlinear,ok,0.000000,-0.320000,0.000000,0.000000,True,0.9963
+20261014,Theta/T-0.32.bmp,single,0.00,-0.32,coordinate_linear,ok,-0.004982,-0.319064,0.004982,0.000936,True,0.9963
+20261014,Theta/T-0.33.bmp,single,0.00,-0.33,improved_nonlinear,ok,0.000000,-0.330000,0.000000,0.000000,True,0.9857
+20261014,Theta/T-0.33.bmp,single,0.00,-0.33,coordinate_linear,ok,-0.003742,-0.329245,0.003742,0.000755,True,0.9857
+20261014,Theta/T-0.34.bmp,single,0.00,-0.34,improved_nonlinear,ok,0.000000,-0.340000,0.000000,0.000000,True,0.9656
+20261014,Theta/T-0.34.bmp,single,0.00,-0.34,coordinate_linear,ok,-0.001199,-0.339679,0.001199,0.000321,True,0.9656
+20261014,Theta/T-0.35.bmp,single,0.00,-0.35,improved_nonlinear,ok,0.000000,-0.350000,0.000000,0.000000,True,0.9667
+20261014,Theta/T-0.35.bmp,single,0.00,-0.35,coordinate_linear,ok,0.002324,-0.350342,0.002324,0.000342,True,0.9667
+20261014,Theta/T-0.36.bmp,single,0.00,-0.36,improved_nonlinear,ok,0.000000,-0.360000,0.000000,0.000000,True,0.9761
+20261014,Theta/T-0.36.bmp,single,0.00,-0.36,coordinate_linear,ok,0.003788,-0.360722,0.003788,0.000722,True,0.9761
+20261014,Theta/T-0.37.bmp,single,0.00,-0.37,improved_nonlinear,ok,0.000000,-0.370000,0.000000,0.000000,True,0.9944
+20261014,Theta/T-0.37.bmp,single,0.00,-0.37,coordinate_linear,ok,0.001476,-0.370286,0.001476,0.000286,True,0.9944
+20261014,Theta/T-0.38.bmp,single,0.00,-0.38,improved_nonlinear,ok,0.000000,-0.380000,0.000000,0.000000,True,0.9906
+20261014,Theta/T-0.38.bmp,single,0.00,-0.38,coordinate_linear,ok,0.001892,-0.380404,0.001892,0.000404,True,0.9906
+20261014,Theta/T-0.39.bmp,single,0.00,-0.39,improved_nonlinear,ok,0.000000,-0.390000,0.000000,0.000000,True,0.9785
+20261014,Theta/T-0.39.bmp,single,0.00,-0.39,coordinate_linear,ok,0.004855,-0.390976,0.004855,0.000976,True,0.9785
+20261014,Theta/T-0.40.bmp,single,0.00,-0.40,improved_nonlinear,ok,0.000000,-0.400000,0.000000,0.000000,True,0.9640
+20261014,Theta/T-0.40.bmp,single,0.00,-0.40,coordinate_linear,ok,0.001994,-0.400200,0.001994,0.000200,True,0.9640
+20261014,Theta/T-0.41.bmp,single,0.00,-0.41,improved_nonlinear,ok,0.000000,-0.410000,0.000000,0.000000,True,0.9723
+20261014,Theta/T-0.41.bmp,single,0.00,-0.41,coordinate_linear,ok,-0.004511,-0.409258,0.004511,0.000742,True,0.9723
+20261014,Theta/T-0.42.bmp,single,0.00,-0.42,improved_nonlinear,ok,0.000000,-0.420000,0.000000,0.000000,True,0.9895
+20261014,Theta/T-0.42.bmp,single,0.00,-0.42,coordinate_linear,ok,-0.001943,-0.419586,0.001943,0.000414,True,0.9895
+20261014,Theta/T-0.43.bmp,single,0.00,-0.43,improved_nonlinear,ok,0.000000,-0.430000,0.000000,0.000000,True,0.9908
+20261014,Theta/T-0.43.bmp,single,0.00,-0.43,coordinate_linear,ok,-0.005384,-0.429034,0.005384,0.000966,True,0.9908
+20261014,Theta/T-0.44.bmp,single,0.00,-0.44,improved_nonlinear,ok,0.000000,-0.440000,0.000000,0.000000,True,0.9849
+20261014,Theta/T-0.44.bmp,single,0.00,-0.44,coordinate_linear,ok,0.001192,-0.440148,0.001192,0.000148,True,0.9849
+20261014,Theta/T-0.45.bmp,single,0.00,-0.45,improved_nonlinear,ok,0.000000,-0.450000,0.000000,0.000000,True,0.9644
+20261014,Theta/T-0.45.bmp,single,0.00,-0.45,coordinate_linear,ok,-0.002428,-0.449557,0.002428,0.000443,True,0.9644
+20261014,Theta/T-0.46.bmp,single,0.00,-0.46,improved_nonlinear,ok,0.000000,-0.460000,0.000000,0.000000,True,0.9702
+20261014,Theta/T-0.46.bmp,single,0.00,-0.46,coordinate_linear,ok,-0.005431,-0.459141,0.005431,0.000859,True,0.9702
+20261014,Theta/T-0.47.bmp,single,0.00,-0.47,improved_nonlinear,ok,0.000000,-0.470000,0.000000,0.000000,True,0.9828
+20261014,Theta/T-0.47.bmp,single,0.00,-0.47,coordinate_linear,ok,-0.002279,-0.469559,0.002279,0.000441,True,0.9828
+20261014,Theta/T-0.48.bmp,single,0.00,-0.48,improved_nonlinear,ok,0.000000,-0.480000,0.000000,0.000000,True,0.9934
+20261014,Theta/T-0.48.bmp,single,0.00,-0.48,coordinate_linear,ok,-0.006018,-0.479038,0.006018,0.000962,True,0.9934
+20261014,Theta/T-0.49.bmp,single,0.00,-0.49,improved_nonlinear,ok,0.000000,-0.490000,0.000000,0.000000,True,0.9832
+20261014,Theta/T-0.49.bmp,single,0.00,-0.49,coordinate_linear,ok,-0.000057,-0.490003,0.000057,0.000003,True,0.9832
+20261014,Theta/T-0.50.bmp,single,0.00,-0.50,improved_nonlinear,ok,0.000000,-0.500000,0.000000,0.000000,True,0.9633
+20261014,Theta/T-0.50.bmp,single,0.00,-0.50,coordinate_linear,ok,0.003941,-0.500720,0.003941,0.000720,True,0.9633
+20261014,Theta/T-0.51.bmp,single,0.00,-0.51,improved_nonlinear,ok,0.000000,-0.510000,0.000000,0.000000,True,0.9648
+20261014,Theta/T-0.51.bmp,single,0.00,-0.51,coordinate_linear,ok,-0.000443,-0.509999,0.000443,0.000001,True,0.9648
+20261014,Theta/T-0.52.bmp,single,0.00,-0.52,improved_nonlinear,ok,0.000000,-0.520000,0.000000,0.000000,True,0.9749
+20261014,Theta/T-0.52.bmp,single,0.00,-0.52,coordinate_linear,ok,-0.001925,-0.519815,0.001925,0.000185,True,0.9749
+20261014,Theta/T-0.53.bmp,single,0.00,-0.53,improved_nonlinear,ok,0.000000,-0.530000,0.000000,0.000000,True,0.9959
+20261014,Theta/T-0.53.bmp,single,0.00,-0.53,coordinate_linear,ok,0.003089,-0.530569,0.003089,0.000569,True,0.9959
+20261014,Theta/T-0.54.bmp,single,0.00,-0.54,improved_nonlinear,ok,0.000000,-0.540000,0.000000,0.000000,True,0.9882
+20261014,Theta/T-0.54.bmp,single,0.00,-0.54,coordinate_linear,ok,-0.007224,-0.538784,0.007224,0.001216,True,0.9882
+20261014,Theta/T-0.55.bmp,single,0.00,-0.55,improved_nonlinear,ok,0.000000,-0.550000,0.000000,0.000000,True,0.9710
+20261014,Theta/T-0.55.bmp,single,0.00,-0.55,coordinate_linear,ok,0.002340,-0.550528,0.002340,0.000528,True,0.9710
+20261014,Theta/T-0.56.bmp,single,0.00,-0.56,improved_nonlinear,ok,0.000000,-0.560000,0.000000,0.000000,True,0.9660
+20261014,Theta/T-0.56.bmp,single,0.00,-0.56,coordinate_linear,ok,-0.000475,-0.560022,0.000475,0.000022,True,0.9660
+20261014,Theta/T-0.57.bmp,single,0.00,-0.57,improved_nonlinear,ok,0.000000,-0.570000,0.000000,0.000000,True,0.9745
+20261014,Theta/T-0.57.bmp,single,0.00,-0.57,coordinate_linear,ok,0.001697,-0.570377,0.001697,0.000377,True,0.9745
+20261014,Theta/T-0.58.bmp,single,0.00,-0.58,improved_nonlinear,ok,0.000000,-0.580000,0.000000,0.000000,True,0.9935
+20261014,Theta/T-0.58.bmp,single,0.00,-0.58,coordinate_linear,ok,0.001641,-0.580308,0.001641,0.000308,True,0.9935
+20261014,Theta/T-0.59.bmp,single,0.00,-0.59,improved_nonlinear,ok,0.000000,-0.590000,0.000000,0.000000,True,0.9857
+20261014,Theta/T-0.59.bmp,single,0.00,-0.59,coordinate_linear,ok,0.000276,-0.590054,0.000276,0.000054,True,0.9857
+20261014,Theta/T-0.60.bmp,single,0.00,-0.60,improved_nonlinear,ok,0.000000,-0.600000,0.000000,0.000000,True,0.9730
+20261014,Theta/T-0.60.bmp,single,0.00,-0.60,coordinate_linear,ok,0.000092,-0.600071,0.000092,0.000071,True,0.9730
+20261014,Theta/T-0.61.bmp,single,0.00,-0.61,improved_nonlinear,ok,0.000000,-0.610000,0.000000,0.000000,True,0.9665
+20261014,Theta/T-0.61.bmp,single,0.00,-0.61,coordinate_linear,ok,-0.000174,-0.610011,0.000174,0.000011,True,0.9665
+20261014,Theta/T-0.62.bmp,single,0.00,-0.62,improved_nonlinear,ok,0.000000,-0.620000,0.000000,0.000000,True,0.9737
+20261014,Theta/T-0.62.bmp,single,0.00,-0.62,coordinate_linear,ok,0.001508,-0.620164,0.001508,0.000164,True,0.9737
+20261014,Theta/T-0.63.bmp,single,0.00,-0.63,improved_nonlinear,ok,0.000000,-0.630000,0.000000,0.000000,True,0.9858
+20261014,Theta/T-0.63.bmp,single,0.00,-0.63,coordinate_linear,ok,-0.001850,-0.629695,0.001850,0.000305,True,0.9858
+20261014,Theta/T-0.64.bmp,single,0.00,-0.64,improved_nonlinear,ok,0.000000,-0.640000,0.000000,0.000000,True,0.9852
+20261014,Theta/T-0.64.bmp,single,0.00,-0.64,coordinate_linear,ok,-0.001997,-0.639593,0.001997,0.000407,True,0.9852
+20261014,Theta/T-0.65.bmp,single,0.00,-0.65,improved_nonlinear,ok,0.000000,-0.650000,0.000000,0.000000,True,0.9768
+20261014,Theta/T-0.65.bmp,single,0.00,-0.65,coordinate_linear,ok,-0.000258,-0.649991,0.000258,0.000009,True,0.9768
+20261014,Theta/T-0.66.bmp,single,0.00,-0.66,improved_nonlinear,ok,0.000000,-0.660000,0.000000,0.000000,True,0.9679
+20261014,Theta/T-0.66.bmp,single,0.00,-0.66,coordinate_linear,ok,0.003306,-0.660635,0.003306,0.000635,True,0.9679
+20261014,Theta/T-0.67.bmp,single,0.00,-0.67,improved_nonlinear,ok,0.000000,-0.670000,0.000000,0.000000,True,0.9715
+20261014,Theta/T-0.67.bmp,single,0.00,-0.67,coordinate_linear,ok,0.000797,-0.670106,0.000797,0.000106,True,0.9715
+20261014,Theta/T-0.68.bmp,single,0.00,-0.68,improved_nonlinear,ok,0.000000,-0.680000,0.000000,0.000000,True,0.9819
+20261014,Theta/T-0.68.bmp,single,0.00,-0.68,coordinate_linear,ok,0.001925,-0.680406,0.001925,0.000406,True,0.9819
+20261014,Theta/T-0.69.bmp,single,0.00,-0.69,improved_nonlinear,ok,0.000000,-0.690000,0.000000,0.000000,True,0.9873
+20261014,Theta/T-0.69.bmp,single,0.00,-0.69,coordinate_linear,ok,-0.001660,-0.689730,0.001660,0.000270,True,0.9873
+20261014,Theta/T-0.70.bmp,single,0.00,-0.70,improved_nonlinear,ok,0.000000,-0.700000,0.000000,0.000000,True,0.9720
+20261014,Theta/T-0.70.bmp,single,0.00,-0.70,coordinate_linear,ok,-0.000260,-0.699937,0.000260,0.000063,True,0.9720
+20261014,Theta/T-0.71.bmp,single,0.00,-0.71,improved_nonlinear,ok,0.000000,-0.710000,0.000000,0.000000,True,0.9615
+20261014,Theta/T-0.71.bmp,single,0.00,-0.71,coordinate_linear,ok,0.000667,-0.710131,0.000667,0.000131,True,0.9615
+20261014,Theta/T-0.72.bmp,single,0.00,-0.72,improved_nonlinear,ok,0.000000,-0.720000,0.000000,0.000000,True,0.9656
+20261014,Theta/T-0.72.bmp,single,0.00,-0.72,coordinate_linear,ok,0.005263,-0.720934,0.005263,0.000934,True,0.9656
+20261014,Theta/T-0.73.bmp,single,0.00,-0.73,improved_nonlinear,ok,0.000000,-0.730000,0.000000,0.000000,True,0.9802
+20261014,Theta/T-0.73.bmp,single,0.00,-0.73,coordinate_linear,ok,0.002854,-0.730535,0.002854,0.000535,True,0.9802
+20261014,Theta/T-0.74.bmp,single,0.00,-0.74,improved_nonlinear,ok,0.000000,-0.740000,0.000000,0.000000,True,0.9925
+20261014,Theta/T-0.74.bmp,single,0.00,-0.74,coordinate_linear,ok,0.001645,-0.740311,0.001645,0.000311,True,0.9925
+20261014,Theta/T-0.75.bmp,single,0.00,-0.75,improved_nonlinear,ok,0.000000,-0.750000,0.000000,0.000000,True,0.9766
+20261014,Theta/T-0.75.bmp,single,0.00,-0.75,coordinate_linear,ok,0.001638,-0.750273,0.001638,0.000273,True,0.9766
+20261014,Theta/T-0.76.bmp,single,0.00,-0.76,improved_nonlinear,ok,0.000000,-0.760000,0.000000,0.000000,True,0.9629
+20261014,Theta/T-0.76.bmp,single,0.00,-0.76,coordinate_linear,ok,0.000691,-0.760175,0.000691,0.000175,True,0.9629
+20261014,Theta/T-0.77.bmp,single,0.00,-0.77,improved_nonlinear,ok,0.000000,-0.770000,0.000000,0.000000,True,0.9627
+20261014,Theta/T-0.77.bmp,single,0.00,-0.77,coordinate_linear,ok,-0.000196,-0.769977,0.000196,0.000023,True,0.9627
+20261014,Theta/T-0.78.bmp,single,0.00,-0.78,improved_nonlinear,ok,0.000000,-0.780000,0.000000,0.000000,True,0.9769
+20261014,Theta/T-0.78.bmp,single,0.00,-0.78,coordinate_linear,ok,0.001059,-0.780263,0.001059,0.000263,True,0.9769
+20261014,Theta/T-0.79.bmp,single,0.00,-0.79,improved_nonlinear,ok,0.000000,-0.790000,0.000000,0.000000,True,0.9888
+20261014,Theta/T-0.79.bmp,single,0.00,-0.79,coordinate_linear,ok,0.004659,-0.790891,0.004659,0.000891,True,0.9888
+20261014,Theta/T-0.80.bmp,single,0.00,-0.80,improved_nonlinear,ok,0.000000,-0.800000,0.000000,0.000000,True,0.9781
+20261014,Theta/T-0.80.bmp,single,0.00,-0.80,coordinate_linear,ok,-0.000953,-0.799862,0.000953,0.000138,True,0.9781
+20261014,Theta/T-0.81.bmp,single,0.00,-0.81,improved_nonlinear,ok,0.000000,-0.810000,0.000000,0.000000,True,0.9660
+20261014,Theta/T-0.81.bmp,single,0.00,-0.81,coordinate_linear,ok,-0.003582,-0.809386,0.003582,0.000614,True,0.9660
+20261014,Theta/T-0.82.bmp,single,0.00,-0.82,improved_nonlinear,ok,0.000000,-0.820000,0.000000,0.000000,True,0.9665
+20261014,Theta/T-0.82.bmp,single,0.00,-0.82,coordinate_linear,ok,-0.000438,-0.819941,0.000438,0.000059,True,0.9665
+20261014,Theta/T-0.83.bmp,single,0.00,-0.83,improved_nonlinear,ok,0.000000,-0.830000,0.000000,0.000000,True,0.9799
+20261014,Theta/T-0.83.bmp,single,0.00,-0.83,coordinate_linear,ok,-0.001091,-0.829815,0.001091,0.000185,True,0.9799
+20261014,Theta/T-0.84.bmp,single,0.00,-0.84,improved_nonlinear,ok,0.000000,-0.840000,0.000000,0.000000,True,0.9867
+20261014,Theta/T-0.84.bmp,single,0.00,-0.84,coordinate_linear,ok,0.002889,-0.840535,0.002889,0.000535,True,0.9867
+20261014,Theta/T-0.85.bmp,single,0.00,-0.85,improved_nonlinear,ok,0.000000,-0.850000,0.000000,0.000000,True,0.9817
+20261014,Theta/T-0.85.bmp,single,0.00,-0.85,coordinate_linear,ok,0.001727,-0.850271,0.001727,0.000271,True,0.9817
+20261014,Theta/T-0.86.bmp,single,0.00,-0.86,improved_nonlinear,ok,0.000000,-0.860000,0.000000,0.000000,True,0.9663
+20261014,Theta/T-0.86.bmp,single,0.00,-0.86,coordinate_linear,ok,0.000811,-0.860116,0.000811,0.000116,True,0.9663
+20261014,Theta/T-0.87.bmp,single,0.00,-0.87,improved_nonlinear,ok,0.000000,-0.870000,0.000000,0.000000,True,0.9644
+20261014,Theta/T-0.87.bmp,single,0.00,-0.87,coordinate_linear,ok,0.000414,-0.870065,0.000414,0.000065,True,0.9644
+20261014,Theta/T-0.88.bmp,single,0.00,-0.88,improved_nonlinear,ok,0.000000,-0.880000,0.000000,0.000000,True,0.9715
+20261014,Theta/T-0.88.bmp,single,0.00,-0.88,coordinate_linear,ok,0.001125,-0.880136,0.001125,0.000136,True,0.9715
+20261014,Theta/T-0.89.bmp,single,0.00,-0.89,improved_nonlinear,ok,0.000000,-0.890000,0.000000,0.000000,True,0.9825
+20261014,Theta/T-0.89.bmp,single,0.00,-0.89,coordinate_linear,ok,0.001614,-0.890325,0.001614,0.000325,True,0.9825
+20261014,Theta/T-0.90.bmp,single,0.00,-0.90,improved_nonlinear,ok,0.000000,-0.900000,0.000000,0.000000,True,0.9884
+20261014,Theta/T-0.90.bmp,single,0.00,-0.90,coordinate_linear,ok,0.003090,-0.900589,0.003090,0.000589,True,0.9884
+20261014,Theta/T-0.91.bmp,single,0.00,-0.91,improved_nonlinear,ok,0.000000,-0.910000,0.000000,0.000000,True,0.9698
+20261014,Theta/T-0.91.bmp,single,0.00,-0.91,coordinate_linear,ok,0.000396,-0.910039,0.000396,0.000039,True,0.9698
+20261014,Theta/T-0.92.bmp,single,0.00,-0.92,improved_nonlinear,ok,0.000000,-0.920000,0.000000,0.000000,True,0.9646
+20261014,Theta/T-0.92.bmp,single,0.00,-0.92,coordinate_linear,ok,-0.001229,-0.919701,0.001229,0.000299,True,0.9646
+20261014,Theta/T-0.93.bmp,single,0.00,-0.93,improved_nonlinear,ok,0.000000,-0.930000,0.000000,0.000000,True,0.9623
+20261014,Theta/T-0.93.bmp,single,0.00,-0.93,coordinate_linear,ok,-0.003430,-0.929471,0.003430,0.000529,True,0.9623
+20261014,Theta/T-0.94.bmp,single,0.00,-0.94,improved_nonlinear,ok,0.000000,-0.940000,0.000000,0.000000,True,0.9747
+20261014,Theta/T-0.94.bmp,single,0.00,-0.94,coordinate_linear,ok,-0.006234,-0.938877,0.006234,0.001123,True,0.9747
+20261014,Theta/T-0.95.bmp,single,0.00,-0.95,improved_nonlinear,ok,0.000000,-0.950000,0.000000,0.000000,True,0.9899
+20261014,Theta/T-0.95.bmp,single,0.00,-0.95,coordinate_linear,ok,-0.001184,-0.949766,0.001184,0.000234,True,0.9899
+20261014,Theta/T-0.96.bmp,single,0.00,-0.96,improved_nonlinear,ok,0.000000,-0.960000,0.000000,0.000000,True,0.9706
+20261014,Theta/T-0.96.bmp,single,0.00,-0.96,coordinate_linear,ok,0.001229,-0.960300,0.001229,0.000300,True,0.9706
+20261014,Theta/T-0.97.bmp,single,0.00,-0.97,improved_nonlinear,ok,0.000000,-0.970000,0.000000,0.000000,True,0.9638
+20261014,Theta/T-0.97.bmp,single,0.00,-0.97,coordinate_linear,ok,-0.000956,-0.969833,0.000956,0.000167,True,0.9638
+20261014,Theta/T-0.98.bmp,single,0.00,-0.98,improved_nonlinear,ok,0.000000,-0.980000,0.000000,0.000000,True,0.9585
+20261014,Theta/T-0.98.bmp,single,0.00,-0.98,coordinate_linear,ok,0.002178,-0.980390,0.002178,0.000390,True,0.9585
+20261014,Theta/T-0.99.bmp,single,0.00,-0.99,improved_nonlinear,ok,0.000000,-0.990000,0.000000,0.000000,True,0.9716
+20261014,Theta/T-0.99.bmp,single,0.00,-0.99,coordinate_linear,ok,0.002196,-0.990394,0.002196,0.000394,True,0.9716
+20261014,Theta/T-1.00.bmp,single,0.00,-1.00,improved_nonlinear,ok,0.000000,-1.000000,0.000000,0.000000,True,0.9839
+20261014,Theta/T-1.00.bmp,single,0.00,-1.00,coordinate_linear,ok,-0.004147,-0.999246,0.004147,0.000754,True,0.9839
+20261014,Y/Y+0.05.bmp,single,0.05,0.00,improved_nonlinear,ok,0.050000,0.000000,0.000000,0.000000,True,0.9829
+20261014,Y/Y+0.05.bmp,single,0.05,0.00,coordinate_linear,ok,0.050677,-0.000070,0.000677,0.000070,True,0.9829
+20261014,Y/Y+0.10.bmp,single,0.10,0.00,improved_nonlinear,ok,0.100000,0.000000,0.000000,0.000000,True,0.9917
+20261014,Y/Y+0.10.bmp,single,0.10,0.00,coordinate_linear,ok,0.101042,-0.000058,0.001042,0.000058,True,0.9917
+20261014,Y/Y+0.15.bmp,single,0.15,0.00,improved_nonlinear,ok,0.150000,0.000000,0.000000,0.000000,True,0.9865
+20261014,Y/Y+0.15.bmp,single,0.15,0.00,coordinate_linear,ok,0.145717,0.000803,0.004283,0.000803,True,0.9865
+20261014,Y/Y+0.20.bmp,single,0.20,0.00,improved_nonlinear,ok,0.200000,0.000000,0.000000,0.000000,True,0.9808
+20261014,Y/Y+0.20.bmp,single,0.20,0.00,coordinate_linear,ok,0.197227,0.000530,0.002773,0.000530,True,0.9808
+20261014,Y/Y+0.25.bmp,single,0.25,0.00,improved_nonlinear,ok,0.250000,0.000000,0.000000,0.000000,True,0.9891
+20261014,Y/Y+0.25.bmp,single,0.25,0.00,coordinate_linear,ok,0.252570,-0.000366,0.002570,0.000366,True,0.9891
+20261014,Y/Y+0.30.bmp,single,0.30,0.00,improved_nonlinear,ok,0.300000,0.000000,0.000000,0.000000,True,0.9888
+20261014,Y/Y+0.30.bmp,single,0.30,0.00,coordinate_linear,ok,0.298306,0.000315,0.001694,0.000315,True,0.9888
+20261014,Y/Y+0.35.bmp,single,0.35,0.00,improved_nonlinear,ok,0.350000,0.000000,0.000000,0.000000,True,0.9642
+20261014,Y/Y+0.35.bmp,single,0.35,0.00,coordinate_linear,ok,0.345732,0.000929,0.004268,0.000929,True,0.9642
+20261014,Y/Y+0.40.bmp,single,0.40,0.00,improved_nonlinear,ok,0.400000,0.000000,0.000000,0.000000,True,0.9881
+20261014,Y/Y+0.40.bmp,single,0.40,0.00,coordinate_linear,ok,0.397698,0.000452,0.002302,0.000452,True,0.9881
+20261014,Y/Y+0.45.bmp,single,0.45,0.00,improved_nonlinear,ok,0.450000,0.000000,0.000000,0.000000,True,0.9941
+20261014,Y/Y+0.45.bmp,single,0.45,0.00,coordinate_linear,ok,0.448335,0.000332,0.001665,0.000332,True,0.9941
+20261014,Y/Y+0.50.bmp,single,0.50,0.00,improved_nonlinear,ok,0.500000,0.000000,0.000000,0.000000,True,0.9716
+20261014,Y/Y+0.50.bmp,single,0.50,0.00,coordinate_linear,ok,0.500585,-0.000217,0.000585,0.000217,True,0.9716
+20261014,Y/Y+0.55.bmp,single,0.55,0.00,improved_nonlinear,ok,0.550000,0.000000,0.000000,0.000000,True,0.9656
+20261014,Y/Y+0.55.bmp,single,0.55,0.00,coordinate_linear,ok,0.547996,0.000363,0.002004,0.000363,True,0.9656
+20261014,Y/Y+0.60.bmp,single,0.60,0.00,improved_nonlinear,ok,0.600000,0.000000,0.000000,0.000000,True,0.9931
+20261014,Y/Y+0.60.bmp,single,0.60,0.00,coordinate_linear,ok,0.604927,-0.000839,0.004927,0.000839,True,0.9931
+20261014,Y/Y+0.65.bmp,single,0.65,0.00,improved_nonlinear,ok,0.650000,0.000000,0.000000,0.000000,True,0.9888
+20261014,Y/Y+0.65.bmp,single,0.65,0.00,coordinate_linear,ok,0.654201,-0.000676,0.004201,0.000676,True,0.9888
+20261014,Y/Y+0.70.bmp,single,0.70,0.00,improved_nonlinear,ok,0.700000,0.000000,0.000000,0.000000,True,0.9654
+20261014,Y/Y+0.70.bmp,single,0.70,0.00,coordinate_linear,ok,0.700575,-0.000013,0.000575,0.000013,True,0.9654
+20261014,Y/Y+0.75.bmp,single,0.75,0.00,improved_nonlinear,ok,0.750000,0.000000,0.000000,0.000000,True,0.9762
+20261014,Y/Y+0.75.bmp,single,0.75,0.00,coordinate_linear,ok,0.751202,-0.000193,0.001202,0.000193,True,0.9762
+20261014,Y/Y+0.80.bmp,single,0.80,0.00,improved_nonlinear,ok,0.800000,0.000000,0.000000,0.000000,True,0.9944
+20261014,Y/Y+0.80.bmp,single,0.80,0.00,coordinate_linear,ok,0.797186,0.000506,0.002814,0.000506,True,0.9944
+20261014,Y/Y+0.85.bmp,single,0.85,0.00,improved_nonlinear,ok,0.850000,0.000000,0.000000,0.000000,True,0.9813
+20261014,Y/Y+0.85.bmp,single,0.85,0.00,coordinate_linear,ok,0.847914,0.000433,0.002086,0.000433,True,0.9813
+20261014,Y/Y+0.90.bmp,single,0.90,0.00,improved_nonlinear,ok,0.900000,0.000000,0.000000,0.000000,True,0.9752
+20261014,Y/Y+0.90.bmp,single,0.90,0.00,coordinate_linear,ok,0.901725,-0.000382,0.001725,0.000382,True,0.9752
+20261014,Y/Y+0.95.bmp,single,0.95,0.00,improved_nonlinear,ok,0.950000,0.000000,0.000000,0.000000,True,0.9883
+20261014,Y/Y+0.95.bmp,single,0.95,0.00,coordinate_linear,ok,0.955057,-0.000847,0.005057,0.000847,True,0.9883
+20261014,Y/Y+1.00.bmp,single,1.00,0.00,improved_nonlinear,ok,1.000000,0.000000,0.000000,0.000000,True,0.9867
+20261014,Y/Y+1.00.bmp,single,1.00,0.00,coordinate_linear,ok,1.001546,-0.000331,0.001546,0.000331,True,0.9867
+20261014,Y/Y+1.05.bmp,single,1.05,0.00,improved_nonlinear,ok,1.050000,0.000000,0.000000,0.000000,True,0.9760
+20261014,Y/Y+1.05.bmp,single,1.05,0.00,coordinate_linear,ok,1.050828,-0.000095,0.000828,0.000095,True,0.9760
+20261014,Y/Y+1.10.bmp,single,1.10,0.00,improved_nonlinear,ok,1.100000,0.000000,0.000000,0.000000,True,0.9869
+20261014,Y/Y+1.10.bmp,single,1.10,0.00,coordinate_linear,ok,1.100116,0.000029,0.000116,0.000029,True,0.9869
+20261014,Y/Y+1.15.bmp,single,1.15,0.00,improved_nonlinear,ok,1.150000,0.000000,0.000000,0.000000,True,0.9886
+20261014,Y/Y+1.15.bmp,single,1.15,0.00,coordinate_linear,ok,1.151511,-0.000298,0.001511,0.000298,True,0.9886
+20261014,Y/Y+1.20.bmp,single,1.20,0.00,improved_nonlinear,ok,1.200000,0.000000,0.000000,0.000000,True,0.9835
+20261014,Y/Y+1.20.bmp,single,1.20,0.00,coordinate_linear,ok,1.198421,0.000235,0.001579,0.000235,True,0.9835
+20261014,Y/Y+1.25.bmp,single,1.25,0.00,improved_nonlinear,ok,1.250000,0.000000,0.000000,0.000000,True,0.9595
+20261014,Y/Y+1.25.bmp,single,1.25,0.00,coordinate_linear,ok,1.252618,-0.000480,0.002618,0.000480,True,0.9595
+20261014,Y/Y+1.30.bmp,single,1.30,0.00,improved_nonlinear,ok,1.300000,0.000000,0.000000,0.000000,True,0.9903
+20261014,Y/Y+1.30.bmp,single,1.30,0.00,coordinate_linear,ok,1.298415,0.000301,0.001585,0.000301,True,0.9903
+20261014,Y/Y+1.35.bmp,single,1.35,0.00,improved_nonlinear,ok,1.350000,0.000000,0.000000,0.000000,True,0.9935
+20261014,Y/Y+1.35.bmp,single,1.35,0.00,coordinate_linear,ok,1.347882,0.000379,0.002118,0.000379,True,0.9935
+20261014,Y/Y+1.40.bmp,single,1.40,0.00,improved_nonlinear,ok,1.400000,0.000000,0.000000,0.000000,True,0.9618
+20261014,Y/Y+1.40.bmp,single,1.40,0.00,coordinate_linear,ok,1.401747,-0.000320,0.001747,0.000320,True,0.9618
+20261014,Y/Y+1.45.bmp,single,1.45,0.00,improved_nonlinear,ok,1.450000,0.000000,0.000000,0.000000,True,0.9692
+20261014,Y/Y+1.45.bmp,single,1.45,0.00,coordinate_linear,ok,1.449207,0.000162,0.000793,0.000162,True,0.9692
+20261014,Y/Y+1.50.bmp,single,1.50,0.00,improved_nonlinear,ok,1.500000,0.000000,0.000000,0.000000,True,0.9940
+20261014,Y/Y+1.50.bmp,single,1.50,0.00,coordinate_linear,ok,1.504709,-0.000808,0.004709,0.000808,True,0.9940
+20261014,Y/Y+1.55.bmp,single,1.55,0.00,improved_nonlinear,ok,1.550000,0.000000,0.000000,0.000000,True,0.9851
+20261014,Y/Y+1.55.bmp,single,1.55,0.00,coordinate_linear,ok,1.551586,-0.000197,0.001586,0.000197,True,0.9851
+20261014,Y/Y+1.60.bmp,single,1.60,0.00,improved_nonlinear,ok,1.600000,0.000000,0.000000,0.000000,True,0.9684
+20261014,Y/Y+1.60.bmp,single,1.60,0.00,coordinate_linear,ok,1.601167,-0.000315,0.001167,0.000315,True,0.9684
+20261014,Y/Y+1.65.bmp,single,1.65,0.00,improved_nonlinear,ok,1.650000,0.000000,0.000000,0.000000,True,0.9773
+20261014,Y/Y+1.65.bmp,single,1.65,0.00,coordinate_linear,ok,1.652449,-0.000324,0.002449,0.000324,True,0.9773
+20261014,Y/Y+1.70.bmp,single,1.70,0.00,improved_nonlinear,ok,1.700000,0.000000,0.000000,0.000000,True,0.9897
+20261014,Y/Y+1.70.bmp,single,1.70,0.00,coordinate_linear,ok,1.698477,0.000136,0.001523,0.000136,True,0.9897
+20261014,Y/Y+1.75.bmp,single,1.75,0.00,improved_nonlinear,ok,1.750000,0.000000,0.000000,0.000000,True,0.9789
+20261014,Y/Y+1.75.bmp,single,1.75,0.00,coordinate_linear,ok,1.749615,0.000091,0.000385,0.000091,True,0.9789
+20261014,Y/Y+1.80.bmp,single,1.80,0.00,improved_nonlinear,ok,1.800000,0.000000,0.000000,0.000000,True,0.9775
+20261014,Y/Y+1.80.bmp,single,1.80,0.00,coordinate_linear,ok,1.793307,0.001178,0.006693,0.001178,True,0.9775
+20261014,Y/Y+1.85.bmp,single,1.85,0.00,improved_nonlinear,ok,1.850000,0.000000,0.000000,0.000000,True,0.9892
+20261014,Y/Y+1.85.bmp,single,1.85,0.00,coordinate_linear,ok,1.849141,0.000198,0.000859,0.000198,True,0.9892
+20261014,Y/Y+1.90.bmp,single,1.90,0.00,improved_nonlinear,ok,1.900000,0.000000,0.000000,0.000000,True,0.9816
+20261014,Y/Y+1.90.bmp,single,1.90,0.00,coordinate_linear,ok,1.897696,0.000451,0.002304,0.000451,True,0.9816
+20261014,Y/Y+1.95.bmp,single,1.95,0.00,improved_nonlinear,ok,1.950000,0.000000,0.000000,0.000000,True,0.9660
+20261014,Y/Y+1.95.bmp,single,1.95,0.00,coordinate_linear,ok,1.949851,0.000038,0.000149,0.000038,True,0.9660
+20261014,Y/Y+2.00.bmp,single,2.00,0.00,improved_nonlinear,ok,2.000000,0.000000,0.000000,0.000000,True,0.9917
+20261014,Y/Y+2.00.bmp,single,2.00,0.00,coordinate_linear,ok,2.000380,-0.000110,0.000380,0.000110,True,0.9917
+20261014,Y/Y-0.05.bmp,single,-0.05,0.00,improved_nonlinear,ok,-0.050000,0.000000,0.000000,0.000000,True,0.9889
+20261014,Y/Y-0.05.bmp,single,-0.05,0.00,coordinate_linear,ok,-0.058047,0.001402,0.008047,0.001402,True,0.9889
+20261014,Y/Y-0.10.bmp,single,-0.10,0.00,improved_nonlinear,ok,-0.100000,0.000000,0.000000,0.000000,True,0.9765
+20261014,Y/Y-0.10.bmp,single,-0.10,0.00,coordinate_linear,ok,-0.106471,0.001370,0.006471,0.001370,True,0.9765
+20261014,Y/Y-0.15.bmp,single,-0.15,0.00,improved_nonlinear,ok,-0.150000,0.000000,0.000000,0.000000,True,0.9666
+20261014,Y/Y-0.15.bmp,single,-0.15,0.00,coordinate_linear,ok,-0.150188,0.000067,0.000188,0.000067,True,0.9666
+20261014,Y/Y-0.20.bmp,single,-0.20,0.00,improved_nonlinear,ok,-0.200000,0.000000,0.000000,0.000000,True,0.9859
+20261014,Y/Y-0.20.bmp,single,-0.20,0.00,coordinate_linear,ok,-0.196625,-0.000465,0.003375,0.000465,True,0.9859
+20261014,Y/Y-0.25.bmp,single,-0.25,0.00,improved_nonlinear,ok,-0.250000,0.000000,0.000000,0.000000,True,0.9960
+20261014,Y/Y-0.25.bmp,single,-0.25,0.00,coordinate_linear,ok,-0.246464,-0.000697,0.003536,0.000697,True,0.9960
+20261014,Y/Y-0.30.bmp,single,-0.30,0.00,improved_nonlinear,ok,-0.300000,0.000000,0.000000,0.000000,True,0.9865
+20261014,Y/Y-0.30.bmp,single,-0.30,0.00,coordinate_linear,ok,-0.300284,0.000188,0.000284,0.000188,True,0.9865
+20261014,Y/Y-0.35.bmp,single,-0.35,0.00,improved_nonlinear,ok,-0.350000,0.000000,0.000000,0.000000,True,0.9667
+20261014,Y/Y-0.35.bmp,single,-0.35,0.00,coordinate_linear,ok,-0.352747,0.000439,0.002747,0.000439,True,0.9667
+20261014,Y/Y-0.40.bmp,single,-0.40,0.00,improved_nonlinear,ok,-0.400000,0.000000,0.000000,0.000000,True,0.9833
+20261014,Y/Y-0.40.bmp,single,-0.40,0.00,coordinate_linear,ok,-0.399376,-0.000003,0.000624,0.000003,True,0.9833
+20261014,Y/Y-0.45.bmp,single,-0.45,0.00,improved_nonlinear,ok,-0.450000,0.000000,0.000000,0.000000,True,0.9912
+20261014,Y/Y-0.45.bmp,single,-0.45,0.00,coordinate_linear,ok,-0.450188,-0.000001,0.000188,0.000001,True,0.9912
+20261014,Y/Y-0.50.bmp,single,-0.50,0.00,improved_nonlinear,ok,-0.500000,0.000000,0.000000,0.000000,True,0.9933
+20261014,Y/Y-0.50.bmp,single,-0.50,0.00,coordinate_linear,ok,-0.497132,-0.000337,0.002868,0.000337,True,0.9933
+20261014,Y/Y-0.55.bmp,single,-0.55,0.00,improved_nonlinear,ok,-0.550000,0.000000,0.000000,0.000000,True,0.9760
+20261014,Y/Y-0.55.bmp,single,-0.55,0.00,coordinate_linear,ok,-0.550322,-0.000051,0.000322,0.000051,True,0.9760
+20261014,Y/Y-0.60.bmp,single,-0.60,0.00,improved_nonlinear,ok,-0.600000,0.000000,0.000000,0.000000,True,0.9638
+20261014,Y/Y-0.60.bmp,single,-0.60,0.00,coordinate_linear,ok,-0.595499,-0.000697,0.004501,0.000697,True,0.9638
+20261014,Y/Y-0.65.bmp,single,-0.65,0.00,improved_nonlinear,ok,-0.650000,0.000000,0.000000,0.000000,True,0.9873
+20261014,Y/Y-0.65.bmp,single,-0.65,0.00,coordinate_linear,ok,-0.649664,-0.000158,0.000336,0.000158,True,0.9873
+20261014,Y/Y-0.70.bmp,single,-0.70,0.00,improved_nonlinear,ok,-0.700000,0.000000,0.000000,0.000000,True,0.9927
+20261014,Y/Y-0.70.bmp,single,-0.70,0.00,coordinate_linear,ok,-0.698749,0.000020,0.001251,0.000020,True,0.9927
+20261014,Y/Y-0.75.bmp,single,-0.75,0.00,improved_nonlinear,ok,-0.750000,0.000000,0.000000,0.000000,True,0.9882
+20261014,Y/Y-0.75.bmp,single,-0.75,0.00,coordinate_linear,ok,-0.748217,-0.000403,0.001783,0.000403,True,0.9882
+20261014,Y/Y-0.80.bmp,single,-0.80,0.00,improved_nonlinear,ok,-0.800000,0.000000,0.000000,0.000000,True,0.9747
+20261014,Y/Y-0.80.bmp,single,-0.80,0.00,coordinate_linear,ok,-0.802930,0.000771,0.002930,0.000771,True,0.9747
+20261014,Y/Y-0.85.bmp,single,-0.85,0.00,improved_nonlinear,ok,-0.850000,0.000000,0.000000,0.000000,True,0.9797
+20261014,Y/Y-0.85.bmp,single,-0.85,0.00,coordinate_linear,ok,-0.856578,0.001043,0.006578,0.001043,True,0.9797
+20261014,Y/Y-0.90.bmp,single,-0.90,0.00,improved_nonlinear,ok,-0.900000,0.000000,0.000000,0.000000,True,0.9920
+20261014,Y/Y-0.90.bmp,single,-0.90,0.00,coordinate_linear,ok,-0.898727,-0.000110,0.001273,0.000110,True,0.9920
+20261014,Y/Y-0.95.bmp,single,-0.95,0.00,improved_nonlinear,ok,-0.950000,0.000000,0.000000,0.000000,True,0.9901
+20261014,Y/Y-0.95.bmp,single,-0.95,0.00,coordinate_linear,ok,-0.949273,-0.000200,0.000727,0.000200,True,0.9901
+20261014,Y/Y-1.00.bmp,single,-1.00,0.00,improved_nonlinear,ok,-1.000000,0.000000,0.000000,0.000000,True,0.9819
+20261014,Y/Y-1.00.bmp,single,-1.00,0.00,coordinate_linear,ok,-1.000065,0.000140,0.000065,0.000140,True,0.9819
+20261014,Y/Y-1.05.bmp,single,-1.05,0.00,improved_nonlinear,ok,-1.050000,0.000000,0.000000,0.000000,True,0.9635
+20261014,Y/Y-1.05.bmp,single,-1.05,0.00,coordinate_linear,ok,-1.053696,0.000507,0.003696,0.000507,True,0.9635
+20261014,Y/Y-1.10.bmp,single,-1.10,0.00,improved_nonlinear,ok,-1.100000,0.000000,0.000000,0.000000,True,0.9799
+20261014,Y/Y-1.10.bmp,single,-1.10,0.00,coordinate_linear,ok,-1.101963,0.000432,0.001963,0.000432,True,0.9799
+20261014,Y/Y-1.15.bmp,single,-1.15,0.00,improved_nonlinear,ok,-1.150000,0.000000,0.000000,0.000000,True,0.9965
+20261014,Y/Y-1.15.bmp,single,-1.15,0.00,coordinate_linear,ok,-1.151505,0.000196,0.001505,0.000196,True,0.9965
+20261014,Y/Y-1.20.bmp,single,-1.20,0.00,improved_nonlinear,ok,-1.200000,0.000000,0.000000,0.000000,True,0.9939
+20261014,Y/Y-1.20.bmp,single,-1.20,0.00,coordinate_linear,ok,-1.202278,0.000524,0.002278,0.000524,True,0.9939
+20261014,Y/Y-1.25.bmp,single,-1.25,0.00,improved_nonlinear,ok,-1.250000,0.000000,0.000000,0.000000,True,0.9731
+20261014,Y/Y-1.25.bmp,single,-1.25,0.00,coordinate_linear,ok,-1.246220,-0.000801,0.003780,0.000801,True,0.9731
+20261014,Y/Y-1.30.bmp,single,-1.30,0.00,improved_nonlinear,ok,-1.300000,0.000000,0.000000,0.000000,True,0.9717
+20261014,Y/Y-1.30.bmp,single,-1.30,0.00,coordinate_linear,ok,-1.302003,0.000471,0.002003,0.000471,True,0.9717
+20261014,Y/Y-1.35.bmp,single,-1.35,0.00,improved_nonlinear,ok,-1.350000,0.000000,0.000000,0.000000,True,0.9888
+20261014,Y/Y-1.35.bmp,single,-1.35,0.00,coordinate_linear,ok,-1.351462,0.000213,0.001462,0.000213,True,0.9888
+20261014,Y/Y-1.40.bmp,single,-1.40,0.00,improved_nonlinear,ok,-1.400000,0.000000,0.000000,0.000000,True,0.9923
+20261014,Y/Y-1.40.bmp,single,-1.40,0.00,coordinate_linear,ok,-1.402179,0.000461,0.002179,0.000461,True,0.9923
+20261014,Y/Y-1.45.bmp,single,-1.45,0.00,improved_nonlinear,ok,-1.450000,0.000000,0.000000,0.000000,True,0.9837
+20261014,Y/Y-1.45.bmp,single,-1.45,0.00,coordinate_linear,ok,-1.453079,0.000446,0.003079,0.000446,True,0.9837
+20261014,Y/Y-1.50.bmp,single,-1.50,0.00,improved_nonlinear,ok,-1.500000,0.000000,0.000000,0.000000,True,0.9636
+20261014,Y/Y-1.50.bmp,single,-1.50,0.00,coordinate_linear,ok,-1.499871,0.000041,0.000129,0.000041,True,0.9636
+20261014,Y/Y-1.55.bmp,single,-1.55,0.00,improved_nonlinear,ok,-1.550000,0.000000,0.000000,0.000000,True,0.9840
+20261014,Y/Y-1.55.bmp,single,-1.55,0.00,coordinate_linear,ok,-1.547893,-0.000453,0.002107,0.000453,True,0.9840
+20261014,Y/Y-1.60.bmp,single,-1.60,0.00,improved_nonlinear,ok,-1.600000,0.000000,0.000000,0.000000,True,0.9929
+20261014,Y/Y-1.60.bmp,single,-1.60,0.00,coordinate_linear,ok,-1.601520,0.000334,0.001520,0.000334,True,0.9929
+20261014,Y/Y-1.65.bmp,single,-1.65,0.00,improved_nonlinear,ok,-1.650000,0.000000,0.000000,0.000000,True,0.9914
+20261014,Y/Y-1.65.bmp,single,-1.65,0.00,coordinate_linear,ok,-1.655381,0.000736,0.005381,0.000736,True,0.9914
+20261014,Y/Y-1.70.bmp,single,-1.70,0.00,improved_nonlinear,ok,-1.700000,0.000000,0.000000,0.000000,True,0.9787
+20261014,Y/Y-1.70.bmp,single,-1.70,0.00,coordinate_linear,ok,-1.698712,-0.000083,0.001288,0.000083,True,0.9787
+20261014,Y/Y-1.75.bmp,single,-1.75,0.00,improved_nonlinear,ok,-1.750000,0.000000,0.000000,0.000000,True,0.9682
+20261014,Y/Y-1.75.bmp,single,-1.75,0.00,coordinate_linear,ok,-1.752793,0.000377,0.002793,0.000377,True,0.9682
+20261014,Y/Y-1.80.bmp,single,-1.80,0.00,improved_nonlinear,ok,-1.800000,0.000000,0.000000,0.000000,True,0.9894
+20261014,Y/Y-1.80.bmp,single,-1.80,0.00,coordinate_linear,ok,-1.797017,-0.000479,0.002983,0.000479,True,0.9894
+20261014,Y/Y-1.85.bmp,single,-1.85,0.00,improved_nonlinear,ok,-1.850000,0.000000,0.000000,0.000000,True,0.9915
+20261014,Y/Y-1.85.bmp,single,-1.85,0.00,coordinate_linear,ok,-1.848987,-0.000233,0.001013,0.000233,True,0.9915
+20261014,Y/Y-1.90.bmp,single,-1.90,0.00,improved_nonlinear,ok,-1.900000,0.000000,0.000000,0.000000,True,0.9826
+20261014,Y/Y-1.90.bmp,single,-1.90,0.00,coordinate_linear,ok,-1.897896,-0.000270,0.002104,0.000270,True,0.9826
+20261014,Y/Y-1.95.bmp,single,-1.95,0.00,improved_nonlinear,ok,-1.950000,0.000000,0.000000,0.000000,True,0.9814
+20261014,Y/Y-1.95.bmp,single,-1.95,0.00,coordinate_linear,ok,-1.943918,-0.001134,0.006082,0.001134,True,0.9814
+20261014,Y/Y-2.00.bmp,single,-2.00,0.00,improved_nonlinear,ok,-2.000000,0.000000,0.000000,0.000000,True,0.9811
+20261014,Y/Y-2.00.bmp,single,-2.00,0.00,coordinate_linear,ok,-1.996713,-0.000504,0.003287,0.000504,True,0.9811
+20261020,Y+0.05 T+0.01/Y+0.05 T+0.01 (1).bmp,mixed,0.05,0.01,improved_nonlinear,ok,0.208750,0.014375,0.158750,0.004375,False,0.9379
+20261020,Y+0.05 T+0.01/Y+0.05 T+0.01 (1).bmp,mixed,0.05,0.01,coordinate_linear,ok,0.037131,-0.006196,0.012869,0.016196,True,0.9379
+20261020,Y+0.05 T+0.01/Y+0.05 T+0.01 (2).bmp,mixed,0.05,0.01,improved_nonlinear,ok,0.225625,0.014750,0.175625,0.004750,False,0.9378
+20261020,Y+0.05 T+0.01/Y+0.05 T+0.01 (2).bmp,mixed,0.05,0.01,coordinate_linear,ok,-0.093879,0.018404,0.143879,0.008404,False,0.9378
+20261020,Y+0.05 T+0.01/Y+0.05 T+0.01 (3).bmp,mixed,0.05,0.01,improved_nonlinear,ok,0.221250,0.010625,0.171250,0.000625,False,0.9347
+20261020,Y+0.05 T+0.01/Y+0.05 T+0.01 (3).bmp,mixed,0.05,0.01,coordinate_linear,ok,0.025421,-0.005539,0.024579,0.015539,True,0.9347
+20261020,Y+0.05 T+0.02/Y+0.05 T+0.02 (1).bmp,mixed,0.05,0.02,improved_nonlinear,ok,0.201250,0.021875,0.151250,0.001875,False,0.9513
+20261020,Y+0.05 T+0.02/Y+0.05 T+0.02 (1).bmp,mixed,0.05,0.02,coordinate_linear,ok,-0.012447,0.010720,0.062447,0.009280,True,0.9513
+20261020,Y+0.05 T+0.02/Y+0.05 T+0.02 (2).bmp,mixed,0.05,0.02,improved_nonlinear,ok,0.190000,0.024625,0.140000,0.004625,False,0.9492
+20261020,Y+0.05 T+0.02/Y+0.05 T+0.02 (2).bmp,mixed,0.05,0.02,coordinate_linear,ok,-0.157458,0.035487,0.207458,0.015487,False,0.9492
+20261020,Y+0.05 T+0.02/Y+0.05 T+0.02 (3).bmp,mixed,0.05,0.02,improved_nonlinear,ok,0.198750,0.023875,0.148750,0.003875,False,0.9496
+20261020,Y+0.05 T+0.02/Y+0.05 T+0.02 (3).bmp,mixed,0.05,0.02,coordinate_linear,ok,-0.144192,0.034206,0.194192,0.014206,False,0.9496
+20261020,Y+0.05 T+0.03/Y+0.05 T+0.03 (1).bmp,mixed,0.05,0.03,improved_nonlinear,ok,0.248125,0.023625,0.198125,0.006375,False,0.9659
+20261020,Y+0.05 T+0.03/Y+0.05 T+0.03 (1).bmp,mixed,0.05,0.03,coordinate_linear,ok,0.240249,-0.024461,0.190249,0.054461,False,0.9659
+20261020,Y+0.05 T+0.03/Y+0.05 T+0.03 (2).bmp,mixed,0.05,0.03,improved_nonlinear,ok,0.230000,0.025250,0.180000,0.004750,False,0.9645
+20261020,Y+0.05 T+0.03/Y+0.05 T+0.03 (2).bmp,mixed,0.05,0.03,coordinate_linear,ok,0.198974,-0.014196,0.148974,0.044196,False,0.9645
+20261020,Y+0.05 T+0.03/Y+0.05 T+0.03 (3).bmp,mixed,0.05,0.03,improved_nonlinear,ok,0.235625,0.021500,0.185625,0.008500,False,0.9629
+20261020,Y+0.05 T+0.03/Y+0.05 T+0.03 (3).bmp,mixed,0.05,0.03,coordinate_linear,ok,0.269364,-0.028878,0.219364,0.058878,False,0.9629
+20261020,Y+0.05 T+0.10/Y+0.05 T+0.10 (1).bmp,mixed,0.05,0.10,improved_nonlinear,ok,0.323125,0.084750,0.273125,0.015250,False,0.9446
+20261020,Y+0.05 T+0.10/Y+0.05 T+0.10 (1).bmp,mixed,0.05,0.10,coordinate_linear,ok,0.119773,0.065362,0.069773,0.034638,True,0.9446
+20261020,Y+0.05 T+0.10/Y+0.05 T+0.10 (2).bmp,mixed,0.05,0.10,improved_nonlinear,ok,0.411250,0.069250,0.361250,0.030750,False,0.9570
+20261020,Y+0.05 T+0.10/Y+0.05 T+0.10 (2).bmp,mixed,0.05,0.10,coordinate_linear,ok,0.346726,0.029902,0.296726,0.070098,False,0.9570
+20261020,Y+0.05 T+0.10/Y+0.05 T+0.10 (3).bmp,mixed,0.05,0.10,improved_nonlinear,ok,0.312500,0.101000,0.262500,0.001000,False,0.9528
+20261020,Y+0.05 T+0.10/Y+0.05 T+0.10 (3).bmp,mixed,0.05,0.10,coordinate_linear,ok,0.138884,0.061615,0.088884,0.038385,True,0.9528
+20261020,Y+0.05 T+1.00/Y+0.05 T+1.00 (1).bmp,mixed,0.05,1.00,improved_nonlinear,ok,0.000000,0.992875,0.050000,0.007125,True,0.9696
+20261020,Y+0.05 T+1.00/Y+0.05 T+1.00 (1).bmp,mixed,0.05,1.00,coordinate_linear,ok,0.370786,0.927483,0.320786,0.072517,False,0.9696
+20261020,Y+0.05 T+1.00/Y+0.05 T+1.00 (2).bmp,mixed,0.05,1.00,improved_nonlinear,ok,0.000000,0.991625,0.050000,0.008375,True,0.9689
+20261020,Y+0.05 T+1.00/Y+0.05 T+1.00 (2).bmp,mixed,0.05,1.00,coordinate_linear,ok,0.417404,0.919105,0.367404,0.080895,False,0.9689
+20261020,Y+0.05 T+1.00/Y+0.05 T+1.00 (3).bmp,mixed,0.05,1.00,improved_nonlinear,ok,0.000000,0.985000,0.050000,0.015000,True,0.9608
+20261020,Y+0.05 T+1.00/Y+0.05 T+1.00 (3).bmp,mixed,0.05,1.00,coordinate_linear,ok,0.610275,0.887305,0.560275,0.112695,False,0.9608
+20261020,Y+0.05 T+2.00/Y+0.05 T+2.00 (1).bmp,mixed,0.05,2.00,improved_nonlinear,measurement_failed,,,,,False,0.2679
+20261020,Y+0.05 T+2.00/Y+0.05 T+2.00 (1).bmp,mixed,0.05,2.00,coordinate_linear,measurement_failed,,,,,False,0.2679
+20261020,Y+0.05 T+2.00/Y+0.05 T+2.00 (2).bmp,mixed,0.05,2.00,improved_nonlinear,measurement_failed,,,,,False,0.2722
+20261020,Y+0.05 T+2.00/Y+0.05 T+2.00 (2).bmp,mixed,0.05,2.00,coordinate_linear,measurement_failed,,,,,False,0.2722
+20261020,Y+0.05 T+2.00/Y+0.05 T+2.00 (3).bmp,mixed,0.05,2.00,improved_nonlinear,measurement_failed,,,,,False,0.2685
+20261020,Y+0.05 T+2.00/Y+0.05 T+2.00 (3).bmp,mixed,0.05,2.00,coordinate_linear,measurement_failed,,,,,False,0.2685
+20261020,Y+0.10 T+0.01/Y+0.1 T+0.01 (1).bmp,mixed,0.10,0.01,improved_nonlinear,ok,0.188125,0.025750,0.088125,0.015750,True,0.9576
+20261020,Y+0.10 T+0.01/Y+0.1 T+0.01 (1).bmp,mixed,0.10,0.01,coordinate_linear,ok,0.015638,0.005197,0.084362,0.004803,True,0.9576
+20261020,Y+0.10 T+0.01/Y+0.1 T+0.01 (2).bmp,mixed,0.10,0.01,improved_nonlinear,ok,0.216875,0.023875,0.116875,0.013875,False,0.9501
+20261020,Y+0.10 T+0.01/Y+0.1 T+0.01 (2).bmp,mixed,0.10,0.01,coordinate_linear,ok,0.074527,-0.003551,0.025473,0.013551,True,0.9501
+20261020,Y+0.10 T+0.01/Y+0.1 T+0.01 (3).bmp,mixed,0.10,0.01,improved_nonlinear,ok,0.206250,0.024375,0.106250,0.014375,False,0.9546
+20261020,Y+0.10 T+0.01/Y+0.1 T+0.01 (3).bmp,mixed,0.10,0.01,coordinate_linear,ok,0.187001,-0.028503,0.087001,0.038503,True,0.9546
+20261020,Y+0.10 T+0.10/Y+0.1 T+0.1 (1).bmp,mixed,0.10,0.10,improved_nonlinear,ok,0.451875,0.071500,0.351875,0.028500,False,0.9514
+20261020,Y+0.10 T+0.10/Y+0.1 T+0.1 (1).bmp,mixed,0.10,0.10,coordinate_linear,ok,-0.062764,0.105456,0.162764,0.005456,False,0.9514
+20261020,Y+0.10 T+0.10/Y+0.1 T+0.1 (2).bmp,mixed,0.10,0.10,improved_nonlinear,ok,0.288125,0.124500,0.188125,0.024500,False,0.9595
+20261020,Y+0.10 T+0.10/Y+0.1 T+0.1 (2).bmp,mixed,0.10,0.10,coordinate_linear,ok,0.003461,0.102172,0.096539,0.002172,False,0.9595
+20261020,Y+0.10 T+0.10/Y+0.1 T+0.1 (3).bmp,mixed,0.10,0.10,improved_nonlinear,ok,0.429375,0.074000,0.329375,0.026000,False,0.9504
+20261020,Y+0.10 T+0.10/Y+0.1 T+0.1 (3).bmp,mixed,0.10,0.10,coordinate_linear,ok,-0.117862,0.115501,0.217862,0.015501,False,0.9504
+20261020,Y+0.10 T+0.20/Y+0.1 T+0.2 (1).bmp,mixed,0.10,0.20,improved_nonlinear,ok,0.148125,0.236500,0.048125,0.036500,True,0.9449
+20261020,Y+0.10 T+0.20/Y+0.1 T+0.2 (1).bmp,mixed,0.10,0.20,coordinate_linear,ok,-0.020957,0.202204,0.120957,0.002204,False,0.9449
+20261020,Y+0.10 T+0.20/Y+0.1 T+0.2 (2).bmp,mixed,0.10,0.20,improved_nonlinear,ok,0.151250,0.227000,0.051250,0.027000,True,0.9406
+20261020,Y+0.10 T+0.20/Y+0.1 T+0.2 (2).bmp,mixed,0.10,0.20,coordinate_linear,ok,-0.045767,0.208625,0.145767,0.008625,False,0.9406
+20261020,Y+0.10 T+0.20/Y+0.1 T+0.2 (3).bmp,mixed,0.10,0.20,improved_nonlinear,ok,0.136875,0.236125,0.036875,0.036125,True,0.9338
+20261020,Y+0.10 T+0.20/Y+0.1 T+0.2 (3).bmp,mixed,0.10,0.20,coordinate_linear,ok,-0.093427,0.214410,0.193427,0.014410,False,0.9338
+20261020,Y+0.10 T+1.00/Y+0.1 T+1.0 (1).bmp,mixed,0.10,1.00,improved_nonlinear,ok,0.000000,0.988000,0.100000,0.012000,False,0.9482
+20261020,Y+0.10 T+1.00/Y+0.1 T+1.0 (1).bmp,mixed,0.10,1.00,coordinate_linear,ok,0.601561,0.889266,0.501561,0.110734,False,0.9482
+20261020,Y+0.10 T+1.00/Y+0.1 T+1.0 (2).bmp,mixed,0.10,1.00,improved_nonlinear,ok,0.000000,0.984375,0.100000,0.015625,False,0.9741
+20261020,Y+0.10 T+1.00/Y+0.1 T+1.0 (2).bmp,mixed,0.10,1.00,coordinate_linear,ok,0.624452,0.893006,0.524452,0.106994,False,0.9741
+20261020,Y+0.10 T+1.00/Y+0.1 T+1.0 (3).bmp,mixed,0.10,1.00,improved_nonlinear,ok,0.000000,0.992875,0.100000,0.007125,False,0.9513
+20261020,Y+0.10 T+1.00/Y+0.1 T+1.0 (3).bmp,mixed,0.10,1.00,coordinate_linear,ok,0.439317,0.920827,0.339317,0.079173,False,0.9513
+20261020,Y+0.10 T+2.00/Y+0.1 T+2.0 (1).bmp,mixed,0.10,2.00,improved_nonlinear,measurement_failed,,,,,False,0.2707
+20261020,Y+0.10 T+2.00/Y+0.1 T+2.0 (1).bmp,mixed,0.10,2.00,coordinate_linear,measurement_failed,,,,,False,0.2707
+20261020,Y+0.10 T+2.00/Y+0.1 T+2.0 (2).bmp,mixed,0.10,2.00,improved_nonlinear,measurement_failed,,,,,False,0.2685
+20261020,Y+0.10 T+2.00/Y+0.1 T+2.0 (2).bmp,mixed,0.10,2.00,coordinate_linear,measurement_failed,,,,,False,0.2685
+20261020,Y+0.10 T+2.00/Y+0.1 T+2.0 (3).bmp,mixed,0.10,2.00,improved_nonlinear,measurement_failed,,,,,False,0.2709
+20261020,Y+0.10 T+2.00/Y+0.1 T+2.0 (3).bmp,mixed,0.10,2.00,coordinate_linear,measurement_failed,,,,,False,0.2709
+20261020,Y+0.50 T+0.01/Y+0.50 T+0.01 (1).bmp,mixed,0.50,0.01,improved_nonlinear,ok,0.519375,0.027250,0.019375,0.017250,True,0.9622
+20261020,Y+0.50 T+0.01/Y+0.50 T+0.01 (1).bmp,mixed,0.50,0.01,coordinate_linear,ok,0.318947,0.023312,0.181053,0.013312,False,0.9622
+20261020,Y+0.50 T+0.01/Y+0.50 T+0.01 (2).bmp,mixed,0.50,0.01,improved_nonlinear,ok,0.545625,0.026000,0.045625,0.016000,True,0.9583
+20261020,Y+0.50 T+0.01/Y+0.50 T+0.01 (2).bmp,mixed,0.50,0.01,coordinate_linear,ok,0.447373,0.006087,0.052627,0.003913,True,0.9583
+20261020,Y+0.50 T+0.01/Y+0.50 T+0.01 (3).bmp,mixed,0.50,0.01,improved_nonlinear,ok,0.555625,0.024625,0.055625,0.014625,True,0.9620
+20261020,Y+0.50 T+0.01/Y+0.50 T+0.01 (3).bmp,mixed,0.50,0.01,coordinate_linear,ok,0.475426,-0.001648,0.024574,0.011648,True,0.9620
+20261020,Y+0.50 T+0.10/Y+0.50 T+0.10 (1).bmp,mixed,0.50,0.10,improved_nonlinear,ok,0.741250,0.068500,0.241250,0.031500,False,0.9478
+20261020,Y+0.50 T+0.10/Y+0.50 T+0.10 (1).bmp,mixed,0.50,0.10,coordinate_linear,ok,0.444951,0.090638,0.055049,0.009362,True,0.9478
+20261020,Y+0.50 T+0.10/Y+0.50 T+0.10 (2).bmp,mixed,0.50,0.10,improved_nonlinear,ok,0.568750,0.099125,0.068750,0.000875,True,0.9416
+20261020,Y+0.50 T+0.10/Y+0.50 T+0.10 (2).bmp,mixed,0.50,0.10,coordinate_linear,ok,0.337195,0.111520,0.162805,0.011520,False,0.9416
+20261020,Y+0.50 T+0.10/Y+0.50 T+0.10 (3).bmp,mixed,0.50,0.10,improved_nonlinear,ok,0.515625,0.109250,0.015625,0.009250,True,0.9367
+20261020,Y+0.50 T+0.10/Y+0.50 T+0.10 (3).bmp,mixed,0.50,0.10,coordinate_linear,ok,0.298653,0.116685,0.201347,0.016685,False,0.9367
+20261020,Y+0.50 T+1.00/Y+0.50 T+1.00 (1).bmp,mixed,0.50,1.00,improved_nonlinear,ok,0.000000,0.988875,0.500000,0.011125,False,0.9568
+20261020,Y+0.50 T+1.00/Y+0.50 T+1.00 (1).bmp,mixed,0.50,1.00,coordinate_linear,ok,0.905319,0.909449,0.405319,0.090551,False,0.9568
+20261020,Y+0.50 T+1.00/Y+0.50 T+1.00 (2).bmp,mixed,0.50,1.00,improved_nonlinear,ok,0.000000,0.987000,0.500000,0.013000,False,0.9735
+20261020,Y+0.50 T+1.00/Y+0.50 T+1.00 (2).bmp,mixed,0.50,1.00,coordinate_linear,ok,0.961712,0.907345,0.461712,0.092655,False,0.9735
+20261020,Y+0.50 T+1.00/Y+0.50 T+1.00 (3).bmp,mixed,0.50,1.00,improved_nonlinear,ok,0.000000,0.993750,0.500000,0.006250,False,0.9624
+20261020,Y+0.50 T+1.00/Y+0.50 T+1.00 (3).bmp,mixed,0.50,1.00,coordinate_linear,ok,0.964704,0.899522,0.464704,0.100478,False,0.9624
+20261020,Y+0.50 T+2.00/Y+0.50 T+2.00 (1).bmp,mixed,0.50,2.00,improved_nonlinear,measurement_failed,,,,,False,0.1971
+20261020,Y+0.50 T+2.00/Y+0.50 T+2.00 (1).bmp,mixed,0.50,2.00,coordinate_linear,measurement_failed,,,,,False,0.1971
+20261020,Y+0.50 T+2.00/Y+0.50 T+2.00 (2).bmp,mixed,0.50,2.00,improved_nonlinear,measurement_failed,,,,,False,0.2043
+20261020,Y+0.50 T+2.00/Y+0.50 T+2.00 (2).bmp,mixed,0.50,2.00,coordinate_linear,measurement_failed,,,,,False,0.2043
+20261020,Y+0.50 T+2.00/Y+0.50 T+2.00 (3).bmp,mixed,0.50,2.00,improved_nonlinear,measurement_failed,,,,,False,0.1985
+20261020,Y+0.50 T+2.00/Y+0.50 T+2.00 (3).bmp,mixed,0.50,2.00,coordinate_linear,measurement_failed,,,,,False,0.1985
+20261020,Y+1.00 T+0.01/Y+1.00 T+0.01 (1).bmp,mixed,1.00,0.01,improved_nonlinear,ok,1.001250,0.015375,0.001250,0.005375,True,0.9569
+20261020,Y+1.00 T+0.01/Y+1.00 T+0.01 (1).bmp,mixed,1.00,0.01,coordinate_linear,ok,0.992541,-0.008997,0.007459,0.018997,True,0.9569
+20261020,Y+1.00 T+0.01/Y+1.00 T+0.01 (2).bmp,mixed,1.00,0.01,improved_nonlinear,ok,1.035625,0.016875,0.035625,0.006875,True,0.9462
+20261020,Y+1.00 T+0.01/Y+1.00 T+0.01 (2).bmp,mixed,1.00,0.01,coordinate_linear,ok,0.940621,0.000364,0.059379,0.009636,True,0.9462
+20261020,Y+1.00 T+0.01/Y+1.00 T+0.01 (3).bmp,mixed,1.00,0.01,improved_nonlinear,ok,1.026250,0.017000,0.026250,0.007000,True,0.9500
+20261020,Y+1.00 T+0.01/Y+1.00 T+0.01 (3).bmp,mixed,1.00,0.01,coordinate_linear,ok,0.930277,0.000129,0.069723,0.009871,True,0.9500
+20261020,Y+1.00 T+0.10/Y+1.00 T+0.10 (1).bmp,mixed,1.00,0.10,improved_nonlinear,ok,1.356250,0.029625,0.356250,0.070375,False,0.9395
+20261020,Y+1.00 T+0.10/Y+1.00 T+0.10 (1).bmp,mixed,1.00,0.10,coordinate_linear,ok,0.858747,0.107436,0.141253,0.007436,False,0.9395
+20261020,Y+1.00 T+0.10/Y+1.00 T+0.10 (2).bmp,mixed,1.00,0.10,improved_nonlinear,ok,1.058125,0.079500,0.058125,0.020500,True,0.9526
+20261020,Y+1.00 T+0.10/Y+1.00 T+0.10 (2).bmp,mixed,1.00,0.10,coordinate_linear,ok,0.824717,0.116622,0.175283,0.016622,False,0.9526
+20261020,Y+1.00 T+0.10/Y+1.00 T+0.10 (3).bmp,mixed,1.00,0.10,improved_nonlinear,ok,1.422500,0.023625,0.422500,0.076375,False,0.9360
+20261020,Y+1.00 T+0.10/Y+1.00 T+0.10 (3).bmp,mixed,1.00,0.10,coordinate_linear,ok,0.829439,0.112710,0.170561,0.012710,False,0.9360
+20261020,Y+1.00 T+1.00/Y+1.00 T+1.00 (1).bmp,mixed,1.00,1.00,improved_nonlinear,ok,0.000000,0.984125,1.000000,0.015875,False,0.9674
+20261020,Y+1.00 T+1.00/Y+1.00 T+1.00 (1).bmp,mixed,1.00,1.00,coordinate_linear,ok,1.403685,0.908489,0.403685,0.091511,False,0.9674
+20261020,Y+1.00 T+1.00/Y+1.00 T+1.00 (2).bmp,mixed,1.00,1.00,improved_nonlinear,ok,0.000000,0.985125,1.000000,0.014875,False,0.9654
+20261020,Y+1.00 T+1.00/Y+1.00 T+1.00 (2).bmp,mixed,1.00,1.00,coordinate_linear,ok,1.438862,0.908866,0.438862,0.091134,False,0.9654
+20261020,Y+1.00 T+1.00/Y+1.00 T+1.00 (3).bmp,mixed,1.00,1.00,improved_nonlinear,ok,0.000000,0.989375,1.000000,0.010625,False,0.9687
+20261020,Y+1.00 T+1.00/Y+1.00 T+1.00 (3).bmp,mixed,1.00,1.00,coordinate_linear,ok,1.170593,0.952184,0.170593,0.047816,False,0.9687
+20261020,Y+1.00 T+2.00/Y+1.00 T+2.00 (1).bmp,mixed,1.00,2.00,improved_nonlinear,measurement_failed,,,,,False,0.1984
+20261020,Y+1.00 T+2.00/Y+1.00 T+2.00 (1).bmp,mixed,1.00,2.00,coordinate_linear,measurement_failed,,,,,False,0.1984
+20261020,Y+1.00 T+2.00/Y+1.00 T+2.00 (2).bmp,mixed,1.00,2.00,improved_nonlinear,measurement_failed,,,,,False,0.2037
+20261020,Y+1.00 T+2.00/Y+1.00 T+2.00 (2).bmp,mixed,1.00,2.00,coordinate_linear,measurement_failed,,,,,False,0.2037
+20261020,Y+1.00 T+2.00/Y+1.00 T+2.00 (3).bmp,mixed,1.00,2.00,improved_nonlinear,measurement_failed,,,,,False,0.2000
+20261020,Y+1.00 T+2.00/Y+1.00 T+2.00 (3).bmp,mixed,1.00,2.00,coordinate_linear,measurement_failed,,,,,False,0.2000
+20261020,기준 위치/center1.bmp,center,0.00,0.00,improved_nonlinear,ok,0.120000,0.015000,0.120000,0.015000,False,0.9676
+20261020,기준 위치/center1.bmp,center,0.00,0.00,coordinate_linear,ok,-0.239146,0.031557,0.239146,0.031557,False,0.9676
+20261020,기준 위치/center2.bmp,center,0.00,0.00,improved_nonlinear,ok,0.135000,0.014625,0.135000,0.014625,False,0.9566
+20261020,기준 위치/center2.bmp,center,0.00,0.00,coordinate_linear,ok,-0.184032,0.021121,0.184032,0.021121,False,0.9566
+20261020,기준 위치/center3.bmp,center,0.00,0.00,improved_nonlinear,ok,0.125625,0.015875,0.125625,0.015875,False,0.9558
+20261020,기준 위치/center3.bmp,center,0.00,0.00,coordinate_linear,ok,-0.096985,0.005564,0.096985,0.005564,False,0.9558

@@ -1,0 +1,23 @@
+B_struct1260_only fold0 cfg1 {'n': 89, 'failures': 0, 'passed': 71, 'Y_MAE': 0.06003117798184841, 'Y_max': 0.2515453259527346, 'T_MAE': 0.01083028033025429, 'T_max': 0.04811405186751426} 21s
+B_struct1260_only fold1 cfg3 {'n': 85, 'failures': 0, 'passed': 61, 'Y_MAE': 0.06684171090789033, 'Y_max': 0.24613287326666633, 'T_MAE': 0.011838736594067124, 'T_max': 0.04299136693918716} 27s
+B_struct1260_only fold2 cfg2 {'n': 85, 'failures': 0, 'passed': 56, 'Y_MAE': 0.0768088969520777, 'Y_max': 0.2189037292400858, 'T_MAE': 0.013772954924349858, 'T_max': 0.04084849831673157} 17s
+B_struct1260_only fold3 cfg1 {'n': 82, 'failures': 0, 'passed': 56, 'Y_MAE': 0.0696890295569978, 'Y_max': 0.2510952136062864, 'T_MAE': 0.012541965948352869, 'T_max': 0.04439140066970593} 21s
+B_struct1260_only fold4 cfg0 {'n': 341, 'failures': 0, 'passed': 335, 'Y_MAE': 0.02756663246233455, 'Y_max': 0.1462914431645118, 'T_MAE': 0.0048837624008918465, 'T_max': 0.027377381412539696} 26s
+B_struct1260_lines48 fold0 cfg6 {'n': 89, 'failures': 0, 'passed': 85, 'Y_MAE': 0.022595372646925554, 'Y_max': 0.10867625477100125, 'T_MAE': 0.004025502400418124, 'T_max': 0.0222058741894674} 17s
+B_struct1260_lines48 fold1 cfg13 {'n': 85, 'failures': 0, 'passed': 84, 'Y_MAE': 0.01813840532320403, 'Y_max': 0.1497774865404713, 'T_MAE': 0.0032582444875101273, 'T_max': 0.0277176777366146} 16s
+B_struct1260_lines48 fold2 cfg14 {'n': 85, 'failures': 0, 'passed': 83, 'Y_MAE': 0.02052544657049676, 'Y_max': 0.15583598498598572, 'T_MAE': 0.0035646644575617926, 'T_max': 0.025415673263869093} 18s
+B_struct1260_lines48 fold3 cfg8 {'n': 82, 'failures': 0, 'passed': 76, 'Y_MAE': 0.022831808682259917, 'Y_max': 0.1542534539664191, 'T_MAE': 0.004132976921298519, 'T_max': 0.027246373256315848} 18s
+B_struct1260_lines48 fold4 cfg9 {'n': 341, 'failures': 0, 'passed': 341, 'Y_MAE': 0.004731012261571066, 'Y_max': 0.01866571939393982, 'T_MAE': 0.0007956233589645524, 'T_max': 0.004593286728049789} 25s
+      condition_name               protocol  dataset   n  failures  passed    Y_MAE    Y_max    T_MAE    T_max
+   B_struct1260_only        development_oof      all 341         0     244 0.068233 0.251545 0.012227 0.048114
+   B_struct1260_only        development_oof 20261014 281         0     191 0.072185 0.251545 0.012956 0.048114
+   B_struct1260_only        development_oof 20261020  60         0      53 0.049727 0.251095 0.008813 0.044391
+   B_struct1260_only training_reapplication      all 341         0     335 0.027567 0.146291 0.004884 0.027377
+   B_struct1260_only training_reapplication 20261014 281         0     275 0.032141 0.146291 0.005699 0.027377
+   B_struct1260_only training_reapplication 20261020  60         0      60 0.006141 0.030798 0.001065 0.005314
+B_struct1260_lines48        development_oof      all 341         0     328 0.021025 0.155836 0.003745 0.027718
+B_struct1260_lines48        development_oof 20261014 281         0     281 0.015799 0.052303 0.002855 0.011164
+B_struct1260_lines48        development_oof 20261020  60         0      47 0.045504 0.155836 0.007914 0.027718
+B_struct1260_lines48 training_reapplication      all 341         0     341 0.004731 0.018666 0.000796 0.004593
+B_struct1260_lines48 training_reapplication 20261014 281         0     281 0.005182 0.018666 0.000858 0.004593
+B_struct1260_lines48 training_reapplication 20261020  60         0      60 0.002621 0.012027 0.000504 0.001941

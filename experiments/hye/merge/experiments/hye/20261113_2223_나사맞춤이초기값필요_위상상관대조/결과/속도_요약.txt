@@ -1,0 +1,9 @@
+pc_bench (C++17, MSVC v141, OpenCV 3.4.15, Release, cv::setNumThreads(1), 노트북, 사진 읽기 제외, 나사 4개 합)
+pin_hint	median 5.6555 ms	mean 6.1868 ms	p95 8.5363 ms
+pin_full	median 32.8447 ms	mean 35.1741 ms	p95 47.2075 ms
+ecc	median 6.6648 ms	mean 7.16274 ms	p95 10.5322 ms
+pc141	median 2.1123 ms	mean 2.17755 ms	p95 3.2422 ms
+pc257	median 9.2262 ms	mean 9.76431 ms	p95 13.4258 ms
+ecc_pc	median 6.751 ms	mean 7.28721 ms	p95 10.601 ms
+photos 702	max |ecc - ecc_pc| 0.000606111 px	NaN 0
+정수 시작 위치가 핀 관측과 같은 사진: 365 / 702 (나머지는 1 px 안팎 다름. ECC 결과 차이는 최대 0.0006 px)

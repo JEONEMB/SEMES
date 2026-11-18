@@ -1,0 +1,6 @@
+## feature/hw-eda
+ M .gitignore
+?? docs/hw/
+?? tool/hw/
+ .gitignore | 3 +++
+ 1 file changed, 3 insertions(+)

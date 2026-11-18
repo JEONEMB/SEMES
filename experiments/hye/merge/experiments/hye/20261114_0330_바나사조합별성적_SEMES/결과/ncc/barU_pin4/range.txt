@@ -1,0 +1,8 @@
+train inner |Y|<=1 |T|<=0.5 : 403 photos, test outer : 299 photos (7 values)
+inner_5fold n 403 fails 0 rmsY 0.01274 rmsT 0.00254 max|eY| 0.04106 max|eT| 0.00880
+outer n 299 fails 15 rmsY 0.01477 rmsT 0.00449 max|eY| 0.03923 max|eT| 0.01612
+outer dist<1.5 n 144 fails 0 rmsY 0.01069 rmsT 0.00251 max|eY| 0.03696 max|eT| 0.00656
+outer dist1.5-2 n 134 fails 11 rmsY 0.01733 rmsT 0.00549 max|eY| 0.03765 max|eT| 0.01612
+outer dist>=2 n 21 fails 4 rmsY 0.02013 rmsT 0.00717 max|eY| 0.03923 max|eT| 0.01449
+outer proportional error: slope eY/Y 0.00334 (0.33%), slope eT/T 0.00502 (0.50%)
+qr_correlation min by |T| bin [0,.25) [.25,.5) [.5,.75) [.75,1]: 0.9855 0.9862 0.9878 0.9892 | linear fit corr = 0.9947 + -0.0017·|T| -> at |T|=2: 0.9912

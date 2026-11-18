@@ -1,0 +1,70 @@
+[
+  {
+    "relative": "CMakeLists.txt",
+    "sha256": "fe29cb7062348fcbae2a29cc0f276a2a9dbf52bd96474ea634424f18e61bf143"
+  },
+  {
+    "relative": "README.md",
+    "sha256": "10a4242a460be363676c863ce57a79e5d3933073b74f0ff88319391cc6bed8fb"
+  },
+  {
+    "relative": "AGENTS.md",
+    "sha256": "45e64f8e683bc20494e60bab851ca2de93b60a9f4219e9c6b7c40e1b07e35eb7"
+  },
+  {
+    "relative": "include/alignment.hpp",
+    "sha256": "74a12d77266a4b96e09c5029b7f51719f90b83516d452db259ded5fe88b33df4"
+  },
+  {
+    "relative": "src/alignment.cpp",
+    "sha256": "dc65cd1a0a03715ecb3929ddd25c8643de456e4ed77a559021144f406a1336a3"
+  },
+  {
+    "relative": "src/main.cpp",
+    "sha256": "5e88fb51bc2aade6ea658e979d1bd37efecec030a2f7f82783a391592bdceae8"
+  },
+  {
+    "relative": "docs/team-module-layout.md",
+    "sha256": "42e6587f0dae4a4c691da85d59c723c8e1a45337ff7e321121ae426df3861983"
+  },
+  {
+    "relative": "tests/alignment_checks.cpp",
+    "sha256": "3f2987cfb044432c5992ccc4257750d091ed32f14a5cb1a9bb69a7c2fb426e94"
+  },
+  {
+    "relative": "tool/02_evaluate_alignment.cpp",
+    "sha256": "319e9272fe62790efccfab7921e13184c13e369bf9dfd54467d38a70d783f23d"
+  },
+  {
+    "relative": "experiments/00000_final_Y_T_joint/CMakeLists.txt",
+    "sha256": "fcac28d195322159f316f0adf57d4d2cf0305b4655ffeb0634f641ce25d18c3e"
+  },
+  {
+    "relative": "experiments/00000_final_Y_T_joint/src/joint.cpp",
+    "sha256": "f4ff580a02be0009a9e8c5c1d083bddaed9bae1e63c2b200c628a7a125b9ebfd"
+  },
+  {
+    "relative": "experiments/00000_final_Y_T_joint/include/observer_internal.hpp",
+    "sha256": "f01c5f8c3d5e837d27d0b7d02b70551c14e6413656e993acb3ad72e9a3001c0c"
+  },
+  {
+    "relative": "experiments/00000_final_Y_T_joint/README.md",
+    "sha256": "fe413f53dd6d04235c43c265c771956c0938c3e1682f4064a76e8ef75a852c54"
+  },
+  {
+    "relative": "experiments/00000_final_Y_T control/CMakeLists.txt",
+    "sha256": "02db5b3b4f321a398bd5c96ab8c6242521ad5c5e7c0b9bcf241905214d3fe994"
+  },
+  {
+    "relative": "experiments/00000_final_Y_T control/src/control.cpp",
+    "sha256": "c7ad4c7787cf5eae7e2b4e335e85fd4dd2a067b4de69b3443ddaa5bdb69bfd99"
+  },
+  {
+    "relative": "experiments/00000_final_Y_T control/tool/train_control.cpp",
+    "sha256": "cbeb9caa158c7740a7a89204262595d4ca5fb1f98f1a50a1a9fb3f8b928605a1"
+  },
+  {
+    "relative": "experiments/00000_final_Y_T control/README.md",
+    "sha256": "233aeeab4ff1aee1a84140b3a96e25c3e87dee6328873e242086890af942a692"
+  }
+]

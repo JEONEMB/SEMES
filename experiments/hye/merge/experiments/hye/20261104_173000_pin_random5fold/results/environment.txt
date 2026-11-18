@@ -1,0 +1,4 @@
+OpenCV 3.4.15
+C++17
+OpenCV threads 1; image workers 4
+MSVC 1916

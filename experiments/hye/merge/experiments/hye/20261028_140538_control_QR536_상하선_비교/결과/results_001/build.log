@@ -1,0 +1,12 @@
+msbuild 버전 18.11.0-1.26475.11+3cde5c8ec(.NET Framework용)
+
+  1>Checking Build System
+  Building Custom Rule C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/experiments/20261028_140538_control_QR536_상하선_비교/CMakeLists.txt
+  experiment.cpp
+  tracker.cpp
+  spline.cpp
+  model.cpp
+  line_profile.cpp
+  코드를 생성하고 있습니다...
+  control_line_ablation.vcxproj -> C:\Users\SSAFY\Desktop\hwlee\projects\2026-10_SEMES\S15P31A507\build-control-line-ablation-20261028-140538\Release\control_line_ablation.exe
+  Building Custom Rule C:/Users/SSAFY/Desktop/hwlee/projects/2026-10_SEMES/S15P31A507/experiments/20261028_140538_control_QR536_상하선_비교/CMakeLists.txt

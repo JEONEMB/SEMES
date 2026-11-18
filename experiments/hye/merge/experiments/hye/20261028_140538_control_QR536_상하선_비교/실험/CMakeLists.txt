@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.15)
+project(control_line_ablation LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(OpenCV 3.4 REQUIRED)
+get_filename_component(REPO "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
+set(CONTROL "${REPO}/experiments/hye/20261028_1327_final_Y_T control")
+set(JOINT "${REPO}/experiments/hye/20261028_1258_final_Y_T_joint")
+add_executable(control_line_ablation src/experiment.cpp
+ "${CONTROL}/src/tracker.cpp" "${CONTROL}/src/spline.cpp" "${CONTROL}/src/model.cpp"
+ "${JOINT}/src/line_profile.cpp")
+target_include_directories(control_line_ablation PRIVATE "${REPO}/include" "${CONTROL}/include" "${JOINT}/include" ${OpenCV_INCLUDE_DIRS})
+target_link_libraries(control_line_ablation PRIVATE ${OpenCV_LIBS} bcrypt)
+if(MSVC)
+ target_compile_options(control_line_ablation PRIVATE /utf-8 /EHsc)
+ target_compile_definitions(control_line_ablation PRIVATE NOMINMAX _CRT_SECURE_NO_WARNINGS)
+endif()
+add_custom_command(TARGET control_line_ablation POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${OpenCV_DIR}/x64/vc15/bin/opencv_world3415$<$<CONFIG:Debug>:d>.dll" "$<TARGET_FILE_DIR:control_line_ablation>")

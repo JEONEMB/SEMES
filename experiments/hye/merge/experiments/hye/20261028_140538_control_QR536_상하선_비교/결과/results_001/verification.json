@@ -1,0 +1,18 @@
+{
+  "condition_features": [
+    12,
+    36,
+    36,
+    60
+  ],
+  "qr_only_oof_max_difference_from_original_python": 2.667783771670429E-10,
+  "settings_fixed_before_evaluation": true,
+  "preserved_final_files": 19,
+  "physical_stage2_sequence_test": false,
+  "oof_unique_images": 280,
+  "model_test_rows_per_fold": 70,
+  "model_train_rows_per_fold": 210,
+  "conditions": 4,
+  "independent_new_capture": false,
+  "final_files_changed": 0
+}

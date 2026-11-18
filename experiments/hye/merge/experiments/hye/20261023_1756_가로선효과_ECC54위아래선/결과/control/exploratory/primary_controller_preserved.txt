@@ -1,0 +1,144 @@
+"""Experimental image-feature feedback. This module never issues robot commands.
+
+Offline fit may use training commands; online API receives only visual features,
+the fixed visual goal, and previously executed relative command increments.
+Command units are those of the archive, not verified metric/angle units.
+"""
+from dataclasses import dataclass
+import numpy as np
+
+POLICIES=('fixed_jacobian','probe2_broyden','probe3_broyden')
+PARAMETERS=dict(probe=[.05,.01],max_step=[.25,.25],feedback_gain=.7,
+                broyden_rate=.25,probe_prior_strength=.25,max_turns=20,
+                stop_command=.03,stop_feature_rms=2.5,stop_confirmations=2,
+                basis_maximum=12,noise_shrink=.1)
+
+def polynomial(q):
+    q=np.atleast_2d(np.asarray(q,float));a,b=q.T
+    return np.c_[np.ones(len(q)),a,b,a*a,a*b,b*b]
+
+def grouped_rows(X,q,dates):
+    keys=np.c_[np.asarray(dates),q];unique,inverse=np.unique(keys,axis=0,return_inverse=True)
+    means=np.array([X[inverse==i].mean(0) for i in range(len(unique))])
+    residual=np.concatenate([X[inverse==i]-means[i] for i in range(len(unique)) if np.sum(inverse==i)>1],axis=0)
+    return means,unique[:,1:],residual
+
+@dataclass
+class Calibration:
+    projection:np.ndarray
+    jacobian:np.ndarray
+    noise_rms:float
+    training_indices:np.ndarray
+    diagnostics:dict
+
+    @classmethod
+    def fit(cls,X,q,dates,indices):
+        X=np.asarray(X,float);q=np.asarray(q,float)
+        if not np.isfinite(X).all():raise ValueError('Calibration requires finite training observations.')
+        means,commands,residual=grouped_rows(X,q,dates)
+        # Signal directions include the two linear and three quadratic responses.
+        # Additional repeat-noise directions retain non-control mismatch signals.
+        coefficients=np.linalg.lstsq(polynomial(commands),means,rcond=None)[0]
+        signal=coefficients[1:].T
+        signal/=np.maximum(np.linalg.norm(signal,axis=0,keepdims=True),1e-12)
+        _,_,vt=np.linalg.svd(residual,full_matrices=False)
+        stacked=np.c_[signal,vt[:7].T]
+        U,S,_=np.linalg.svd(stacked,full_matrices=False)
+        Q=U[:,S>max(float(S[0])*1e-10,1e-12)][:,:PARAMETERS['basis_maximum']]
+        projected_noise=residual@Q
+        C=projected_noise.T@projected_noise/max(len(residual)-1,1)
+        floor=max(float(np.trace(C))/max(len(C),1)*1e-4,1e-8)
+        C=.9*C+.1*np.diag(np.diag(C))+np.eye(len(C))*floor
+        eigen,vectors=np.linalg.eigh(C)
+        P=Q@(vectors/np.sqrt(np.maximum(eigen,floor)))@vectors.T
+        linear=np.linalg.lstsq(np.c_[np.ones(len(commands)),commands],means@P,rcond=None)[0]
+        J=linear[1:].T
+        noise=residual@P;noise_rms=float(np.sqrt(np.mean(noise**2)))
+        singular=np.linalg.svd(J,compute_uv=False)
+        probe=np.asarray(PARAMETERS['probe'])
+        signal_probe=np.linalg.norm(J*probe[None],axis=0)
+        orthogonal_probe=[]
+        for axis in range(2):
+            other=J[:,1-axis];v=J[:,axis]-other*(other@J[:,axis])/max(other@other,1e-20)
+            orthogonal_probe.append(float(np.linalg.norm(v)*probe[axis]/max(np.sqrt(2)*noise_rms*np.sqrt(len(J)),1e-12)))
+        diagnostics=dict(raw_features=X.shape[1],projected_features=P.shape[1],
+                         train_images=len(X),train_conditions=len(means),noise_residual_rows=len(residual),
+                         whitened_repeat_noise_rms=noise_rms,jacobian_singular_values=singular.tolist(),
+                         jacobian_condition=float(singular[0]/max(singular[-1],1e-20)),
+                         probe_feature_norms=signal_probe.tolist(),
+                         probe_total_signal_to_difference_noise=(signal_probe/max(np.sqrt(2)*noise_rms*np.sqrt(len(J)),1e-12)).tolist(),
+                         probe_axis_distinguishing_signal_to_difference_noise=orthogonal_probe,
+                         projection_source='TRAIN only: five forward response directions plus seven repeat-noise singular vectors')
+        return cls(P,J,noise_rms,np.array(indices),diagnostics)
+
+    def project(self,raw_features):return np.asarray(raw_features,float)@self.projection
+
+    def controller(self,policy):return FeedbackController(self.jacobian,policy)
+
+class FeedbackController:
+    """Receives train-projected visual s; no absolute pose or target labels.
+
+    start(s,s0), then alternate next_action() and observe(s,executed_u).
+    A returned zero increment requests another image for goal confirmation and
+    consumes a turn conservatively. Returned increments are suggestions only.
+    """
+    def __init__(self,jacobian,policy='probe2_broyden'):
+        if policy not in POLICIES:raise ValueError(policy)
+        self.prior=np.array(jacobian,float,copy=True);self.J=self.prior.copy();self.policy=policy
+        self.turn=0;self.status='not_started';self.trust=1.;self.streak=0
+        self.probes=0 if policy=='fixed_jacobian' else (2 if policy=='probe2_broyden' else 3)
+        d=np.asarray(PARAMETERS['probe']);self.probe_actions=[np.array([d[0],0.]),np.array([0.,d[1]]),-d]
+        self.deltas=[];self.inputs=[];self.last_kind=None
+
+    def start(self,s,s0):
+        self.s=np.array(s,float);self.s0=np.array(s0,float)
+        if self.s.shape!=self.s0.shape or self.s.shape!=(self.J.shape[0],):raise ValueError('Visual feature shape mismatch')
+        self.status='running';self._assess();return self
+
+    def _correction(self):
+        error=self.s-self.s0
+        # Damping caps near-null directions; its value does not see true pose.
+        G=self.J.T@self.J;damping=max(float(np.trace(G))*1e-9,1e-8)
+        return -np.linalg.solve(G+damping*np.eye(2),self.J.T@error)
+
+    def _assess(self):
+        if not np.isfinite(self.s).all():self.status='measurement_failed';self.feature_rms=float('inf');self.correction=np.full(2,np.nan);return
+        self.feature_rms=float(np.sqrt(np.mean((self.s-self.s0)**2)));self.correction=self._correction()
+        candidate=self.feature_rms<=PARAMETERS['stop_feature_rms'] and np.max(abs(self.correction))<=PARAMETERS['stop_command']
+        self.streak=self.streak+1 if candidate else 0
+        if self.turn>=self.probes and self.streak>=PARAMETERS['stop_confirmations']:self.status='visual_goal_confirmed'
+        elif self.turn>=PARAMETERS['max_turns']:self.status='turn_limit'
+
+    def next_action(self):
+        if self.status!='running':return None
+        if self.turn<self.probes:
+            self.last_kind='probe';return self.probe_actions[self.turn].copy()
+        if self.streak:
+            self.last_kind='confirm';return np.zeros(2)
+        action=PARAMETERS['feedback_gain']*self.correction
+        cap=np.asarray(PARAMETERS['max_step'])*self.trust
+        scale=max(float(np.max(abs(action)/cap)),1.)
+        self.last_kind='feedback';return action/scale
+
+    def observe(self,s,executed_u):
+        if self.status!='running':raise ValueError('Controller is not awaiting an observation')
+        s=np.array(s,float);u=np.array(executed_u,float)
+        if u.shape!=(2,) or s.shape!=self.s.shape:raise ValueError('Feedback input shape mismatch')
+        old=self.s;delta=s-old;old_norm=float(np.linalg.norm(old-self.s0));self.turn+=1
+        if np.isfinite(s).all() and self.policy!='fixed_jacobian':
+            if self.last_kind=='probe':
+                self.inputs.append(u.copy());self.deltas.append(delta.copy())
+                if self.turn==self.probes:
+                    U=np.array(self.inputs).T;S=np.array(self.deltas).T
+                    ridge=PARAMETERS['probe_prior_strength']*np.diag(np.asarray(PARAMETERS['probe'])**2)
+                    self.J=(S@U.T+self.prior@ridge)@np.linalg.inv(U@U.T+ridge)
+            elif self.last_kind=='feedback' and np.linalg.norm(u)>=.0025:
+                update=np.outer(delta-self.J@u,u)/(u@u+1e-8)
+                scale=min(1.,.5*np.linalg.norm(self.J)/max(np.linalg.norm(update),1e-12))
+                self.J+=PARAMETERS['broyden_rate']*scale*update
+        if self.last_kind=='feedback' and np.isfinite(s).all():
+            ratio=float(np.linalg.norm(s-self.s0))/max(old_norm,1e-12)
+            if ratio>1.05:self.trust=max(.1,self.trust*.5)
+            elif ratio<.8:self.trust=min(1.,self.trust*1.2)
+        self.s=s;self._assess()
+

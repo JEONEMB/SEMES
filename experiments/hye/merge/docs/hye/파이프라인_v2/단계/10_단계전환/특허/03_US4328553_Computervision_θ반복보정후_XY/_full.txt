@@ -1,0 +1,512 @@
+United States Patent (19)                                                                            11  4,328,553
+
+Fredriksen et al.                                                                                    45) May 4, 1982
+
+54 METHOD AND APPARATUS FOR                                                    3,988,535 10/1976 Hickman et al. ................... 358/101
+
+     TARGETILESS WAFER ALIGNMENT                                               FOREIGN PATENT DOCUMENTS
+
+(75) Inventors: Thorbjoern R. Fredriksen, Santa                                61062 4/1968 German Democratic
+               Clara, Calif.; Philippe Villers,
+                                                                                             Rep. .................................... 364/559
+                  Concord, Mass.
+                                                                                  OTHER PUBLICATIONS
+(73) Assignee: Computervision Corporation,
+                                                                           Khoury: Analog Automatic Wafer Alignment for Fine
+                 Bedford, Mass.                                            Positioning, IBM Technical Disclosure Bulletin, p. 2895,
+
+21 Appl. No.: 184,690                                                      vol. 17, No. 10, Mar. 1975.
+
+22 Filed: Sep. 8, 1980                                                     Primary Examiner-Felix D. Gruber
+
+          Related U.S. Application Data                                    Attorney, Agent, or Firm-Richard J. Birch
+
+63) Continuation of Ser. No. 748,310, Dec. 7, 1976, aban                   57          ABSTRACT
+
+       doned.                                                              A method and apparatus for targetless X, Y and 6 align
+                                                                           ment of a semiconductor wafer having thereon a large
+51 Int. Cl. ......................... G06F 15/46; H04N 7/18
+52) U.S. Cl. .................................... 364/559; 356/152;        number of identical microcircuits or dies that are ar
+
+                       356/400; 358/101; 364/167                           ranged in a pattern to form rows and columns separated
+(58) Field of Search ............... 364/107, 117, 559, 475;               by scribe lines or "streets.' The orientation of the wafer
+                                                                           is defined by the location of the wafer flat. Each one of
+        358/101; 318/626, 627, 678,646; 33/174L, 7                         the scribe lines or "streets' has a known angular rela
+                               A; 356/152, 375-400                         tionship with the wafer flat. The alignment method and
+                                                                           apparatus utilizes the wafer "street' pattern for identifi
+56)             References Cited                                           cation instead of special targets located on the wafer.
+                                                                           Coarse alignment of the wafer is achieved by locating
+     U.S. PATENT DOCUMENTS                                                 the wafer flat and then rotating the wafer into approxi
+                                                                           mately correct orientation. Fine alignment of the wafer
+     3,207,904  9/1965   Heinz .................................. 356/400  is performed by opto-electrically locating the edge of a
+     3,335,281  8/1967
+                         Willits .......      ... 356/400                  "street' and then rotating the wafer until the "street'
+     3,551,052  12/1970                                                    edge is parallel to either the X or Yprincipal axis. In the
+     3,598,978  8/1971   Reiber .......       ... 356/380                  preferred embodiment independent Z-axis compensa
+                         Rempert ........     ... 364/107                  tion is provided to compensate for dimensional surface
+     3,628,002  12/1971
+     3,670,153  6/1972   Meese et al. ......  ... 364/117
+     3,764,218  10/1973
+                         Rempert et al. ..    ... 364/107
+     3,809,488  5/1974
+                         Schedewie ........   ... 356/152
+     3,814,845   6/1974  Sonderegger .....    ... 318/646
+
+     3,836,834   9/1974  Hurlbrink et al. .... ... 358/101                 variations in the wafer.
+     3,899,634   8/1975
+     3,907,439   9/1975  Abbatiello et al. ... ... 364/475
+
+                         Montone et al....... ... 358/101                         8 Claims, 12 Drawing Figures
+
+                         Zanoni................................ 356/375
+
+                                  5O                                       56         54
+                                                  A/D                         52
+                                                                                   MAGE
+                  MICRO                                                           SENSOR
+                COMPUTER
+
+                                                                               HEIGHT
+                                                                               SENSOR
+
+                Z-AXIS MOTOR
+                   CONTROL
+U.S. Patent May 4, 1982      Sheet 1 of 3  4,328,553
+
+          MCRO           56  54
+       COMPUTER
+U.S. Patent May 4, 1982 Sheet 2 of 3 4,328,553
+
+                    64
+58
+
+             A 58
+
+H.        6O
+
+|
+
+Fig. 2A.
+
+          SOC
+
+          6Ob           62  58
+
+                                   N 62
+
+                            Fig. 4C.
+U.S. Patent May 4, 1982 Sheet 3 of 3 4,328,553
+
+OPTICAL      OPTICAL          SiGNAL
+                           CONVERSION
+IMAGE MIXER SIGNAL FILTER
+
+12 \ WAFFER
+
+  GAIN                           A TOD
+CONTROL
+                              CONVERTER
+    Fig. 5.
+                           COMPUTER
+                           INTERFACE
+
+88                         Z-MOTOR
+                           CONTROL
+     PRESSURE
+   TRANSDUCER
+
+S QS YZ H HY 2
+S. -90
+                                         8
+
+                                    Fig. 8.
+
+             84d.          84
+                       1.                             4,328,553                       2
+
+METHOD AND APPARATUS FOR TARGETILESS                          It is still another object of the invention to provide
+                WAFER ALIGNMENT                             targetless three axis alignment together with Z-axis
+                                                            compensation.
+
+                                                            It is a further detailed object of the invention to pro
+This is a continuation, of application Ser. No. 748,310 vide a simple and relatively inexpensive method and
+filed Dec. 7, 1976 and now abandoned.                       apparatus for Z-axis compensation in semiconductor
+
+       BACKGROUND OF THE INVENTION                          processing equipment, such as, probers.
+
+                                                            It is a feature of the invention that the method and
+This invention relates to pattern recognition tech apparatus does not require any special targets on the
+niques in general and, more particularly, to a method 10 semiconductor wafer and utilizes the die pattern itself
+and apparatus for aligning a thin flat disc or square with for orientation.
+respect to a repeatable pattern formed or implemented It is another feature of the invention that the requisite
+on the surface of the disc. In the preferred embodiment, degree of alignment accuracy is achieved through a
+the method and apparatus is employed to provide tar readily implemented interactive process.
+getless alignment of a semiconductor wafer by utilizing 15 These objects and other objects and features of the
+the "street" pattern formed by the dies for identifica invention will best be understood from a detailed de
+
+In many semiconductor processing operations, the scription of a preferred embodiment thereof selected fortion.---- -- --
+
+wafer must be accurately positioned so that the circuit purposes of illustration and shown in the accompanying
+patterns are aligned in X, Y and theta with respect to a 20 drawings in which:
+predetermined object, such as, a photomask, prior pho FIG. 1 is a diagrammatic view in perspective and
+toresist patterns, probe tips, markers, bonders and the partial block diagram form of a targetless wafer aligner
+like.                                                       constructed in accordance with the present invention;
+Historically, the alignment function has been per FIG. 2A is a plan view of a semiconductor wafer
+formed by human operators through microscope view 25 having a plurality of microcircuits formed thereon;
+ing and manual equipment manipulation. The manual FIG. 2B is an enlarged view of a portion of the semi
+technique suffers from disadvantages in handling dam conductor wafer of FIG. 2A;
+age, operator error and inconsistent performance.           FIG. 3 is another enlarged view of a portion of the
+In recent years, automatic alignment has been semiconductor wafer illustrating a plurality of "streets'
+achieved in the photomask/wafer alignment field. Here, 30 between the microcircuits;
+purposely designed target patterns were introduced in FIGS. 4A and 4B are enlarged views of a portion of
+certain die positions of the wafer to facilitate automatic the semiconductor wafer illustrating two different pad
+machine alignment. The so-called "target' technique patterns in the "street' between the microcircuits;
+has been implemented in volume production. One rep FIG. 4C is similar to FIGS. 4A and 4B, but illustrates
+resentative automatic aligner is the Cobilt AF-2800 35 uneven edges for the pads;
+automatic aligner sold by the Cobalt Division of The FIG. 4D is again similar to FIGS. 4A and 4B, but
+Computervision Corporation under the trademark AU illustrates corner designs at the corners of the microcir
+TOLGN.                                                      cuits and special circuits within the "street;'
+Another alignment method that has been described in FIG. 5 is a simplified block diagram of the aligner;
+the literature utilizes the wafer circuit pattern in con FIG. 6 is an enlarged view of a street between two
+junction with an artificial boundary type target. The microcircuits showing the line scans of the street and
+artificial target is superimposed on a TV camera image microcircuits;
+of the wafer. Representative examples of this technique FIG. 7 is a view similar to FIG. 6, but illustrating the
+are described in U.S. Pat. Nos. 3,814,845 and 3,899,634. scan lines for another pair of microcircuits on the same
+Both the special target type automatic aligners and 45 sheet and the associated AX, AY and A6 displacements
+the automatic aligners that use an artificial boundary of the upper pair of microcircuits with respect to the
+type target are dependent on means for locating the lower pair; and,
+circuit pattern substructure i.e., the alignment tech FIG. 8 is a view in partial section and block diagram
+niques are mainly die oriented as opposed to wafer form illustrating a low-contact force Z-sensor for the
+oriented. In the case of the aligners that operate with 50 targetless aligner.
+special targets, the targets take up valuable wafer geom Turning now to the drawings and particularly to
+etry and preclude aligning wafers without such targets. FIG. 1 thereof, there is shown in perspective view and
+Although the artificial boundary type target aligners partial block diagram form a targetless aligner con
+permit full utilization of wafer geometry, the boundary structed in accordance with the present invention and
+type aligners suffer from lack of global alignment ability 55 indicated generally by the reference numeral 10. The
+and pattern dimension flexibility with respect to resolu aligner 10 provides four axis movement for a work
+tion.                                                       piece such as, a semiconductor wafer or disc 12. The
+
+It is accordingly a general object of the present inven four axis motions of the semiconductor disc 12 are refer
+tion to provide a method and apparatus for targetless enced to a fixed or "ground' object such as, an aligner
+alignment of a semiconductor wafer which eliminates 60 base 14.
+the problems associated with the prior art aligners.
+                                                            The four axis motions of the semiconductor disc 12
+It is a specific object of the invention to provide a are controlled through the structure illustrated dia
+method and apparatus for aligning a semiconductor grammatically in FIG. 1. A Y-axis movable table 16 is
+wafer which utilize the die pattern itself rather than any slidably mounted on the aligner base 14. The Y-axis
+special targets.                                            65 table provides a slidable support for an X-axis movable
+
+It is another object of the invention to provide a table 18 upon which is mounted a work piece support
+method and apparatus for three axis alignment of a indicated generally by the reference numeral 20. The
+disoriented disc or wafer in a targetless mode.             work piece support 20 includes a rotatable platform or
+                        3 4,328,553 4.
+chuck 22 that is rotatably about the theta axis and mov addition, the dies 58 may have corner designs 66 as
+able along the Z-axis.                                shown in FIG. 4D and/or special circuits 68 positioned
+All four axis motions are controlled individually within the area of the streets 60. In this case, the corner
+through separate motors and associated control cir designs and special circuits can be considered as "clut
+cuitry. Movement of the Y-axis table 16 is provided by ter' in the streets. The targetless alignment method and
+means of a Y-axis motor 24 and its associated lead screw apparatus of the present invention can accommodate
+26. Similarly, movement of the X-axis table is achieved the wafer geometries and street conditions illustrated in
+by means of an X-axis motor 28 and its associated lead FIGS. 2 through 4.
+screw 30. Rotation of the wafer support platform 22 The following discussion of the implementation of
+about the theta axis is provided by theta axis motor 32 10 the targetless alignment technique of the present inven
+and its associated pulley drive belt system indicated tion can best be understood by referring to FIGS. 1 and
+generally by the reference numeral 34. Z-axis move 5 through 7. The alignment technique is based on the
+ment of the wafer support platform 22 is obtained from following concepts:
+
+a Z-axis motor 36. The rotational motion of the Z-axis (a) locate the wafer flat 64 and rotate the wafer 12
+motor is translated to a Z-axis movement of the wafer 15 into an appropriate orientation (e.g. maximum theta
+support platform 22 through an appropriate mechanical error --5);
+system that is illustrated representationally in FIG. 1 by (b) locate a central street 60 by recognizing its special
+a cam and cam follower 38 and 40, respectively.       reflective characteristics as opposed to the circuit pat
+Preferably, the four axis motors 24, 28, 32 and 36 are terns 58.
+DC stepper motors that are individually controlled by 20 (c) locate the same street one die length away, calcu
+the corresponding, X, Y, theta and Z motor control late theta error and correct;
+circuits, 42, 44, 46 and 48, respectively. For wafer align (d) successive iteration of locating the same street
+ment, the motion resolution is typically 0.0001 inch in along a principal axis followed by theta correction to a
+X, Y and Z and 8 seconds of arc in rotation (theta).
+                                                      final theta orientation within a minimum theta incre
+A microcomputer 50 is employed to initiate all mo 25 ment; and,
+tions by transferring an appropriate set(s) of control and (e) locate central cross street and calculate all whole
+sense instructions to the motor controllers 42-48. The die positions.
+informational inputs to the microcomputer 50 are ob In the case of an automatic wafer probe, the purpose
+tained from a height sensor 52 and an image sensor 54, of the targetless alignment system is to place each mi
+the output of which is converted to digital form by 30 crocircuit or die on the wafer in precise contact with a
+A/D 56. The operation of the height and image sensors set of test probers (not shown) and to implement this,
+will be described in greater detail below after a discus four types of motion i.e. X, Y, theta and Z are utilized.
+sion of the characteristics of the semiconductor wafer The four wafer movement mechanisms are driven by
+12.                                                   the previously mentioned stepper motors 24, 28, 32 and
+
+Referring to FIGS. 2 through 4, the semiconductor 35 36 with control thereof provided by the microstepping
+wafer 12 contains a large number of identical microcir controllers 42-48, respectively. It should be observed
+cuits or dies 58 that are arranged in a pattern of rows that the wafer 12 can be moved in Z or theta indepen
+and columns separated by scribe lines or "streets' 60. dently of its X, Y position.
+Contact pads 62 are located around the circumference The height and image sensors 52 and 54, respectively,
+of each die 58 providing input-output connections for 40 are located in a plane parallel to, but spaced from the
+testing and later packaging leads. The die-to-die dimen plane of the wafer 12. The plane of the wafer 12 itself is
+sions are known quantities and the die positions are parallel to and spaced from the ground plane containing
+symmetrically arranged. Thus, by accurately locating a the X and Y principal axes. Alternatively, the X and Y
+street corner, all circuits can be reached by known axes can be considered as lying in the plane of the wafer.
+displacements of the wafer.                           45 A variety of conventional equipment can be em
+
+It has already been mentioned that one of the applica ployed to obtain an electric indication of the Z-axis
+tions for the target aligner of the present invention is in position of the disc 12 with respect to the X-Y reference
+an automatic wafer prober. The normal procedure for a plane. In the preferred embodiment, the height sensor
+wafer prober is to sequentially test individual die in a 52 includes a capacitance probe 70. When the wafer
+row or column. The wafer rows and columns are 50 surface is positioned at a predetermined distance from
+aligned parallel to the principal X and Y axes of me the surface of the capacitance probe 70, the height sen
+chanical motion. Thus, when probing a series of die in sor 52 produces an output signal having a known char
+one column, the movable stage mechanism holding the acteristic e.g. a known voltage level. Variations from
+wafer is only required to move in the Y direction.    this reference output are detected by the microcom
+
+Orientation of the wafer 12 is defined by the location 55 puter 50 which outputs a Z-axis correction signal to the
+of a wafer flat 64 shown in FIG. 2A. The circular out Z-axis motor controller 48. The motor controller oper
+line of the wafer is broken by a straight cord cut which ates the Z-axis motor 36 to maintain a predetermined
+defines the wafer flat 64. In some instances, more than spacing between the capacitance probe 70 and the sur
+one flat can exist on the wafer, but always one is larger face of the wafer 12.
+and has a specific angular relationship with the scribe 60 FIG. 5 illustrates in simplified form the pattern recog
+lines or "streets' 60 on the wafer.                   nition system employed in the targetless aligner of the
+
+It will be appreciated that various geometries can be present invention. This figure expands upon the image
+employed in defining the circuit patterns on the wafer sensor and A/D blocks shown in FIG. 1. A neon
+or disc 12. Looking at FIG. 3, there are shown a plural helium laser 72 provides the light source for the pattern
+ity of streets identified as 60a, 60b and 60c. The area 65 recognition system shown in block form in FIG. 5. The
+within the street may be occupied by circuit pads 62 as microcomputer 50 (FIG. 1) controls the image conver
+shown in FIGS. 4A and 4B and the edges of these cir sion parameters and the digital data stream through a
+cuit pads may be uneven as depicted in FIG. 4C. In computer interface 74. The data stream is filtered by a
+                           5 4,328,553 6
+sequential algorithm with each step of the algorithm Y-axis and incrementally spaced along and normal to
+containing a multiple choice pattern comparison with the X-axis.
+iteration simplification.
+                                                        For purposes of illustration, the numerical score is
+The hardware applies adaptive control to eliminate based on the combined effect of the total value of all
+wafer-to-wafer differences as well as normal circuit 5 points along the scan line and the number of changes.
+aging effects. The simplified system shown in FIG. 5 As shown in FIG. 6, each scan line is divided into
+illustrates the conversion from instantaneous optical twenty equally spaced points 80. Assuming for the mo
+image to parallel digital data output.
+                                                        ment that the intensity is black and white with respect
+The computer interface 74 controls the gain of main to the "On' and Off' street conditions i.e. a score of one
+amplifier 76, initiates a sampling (converting the insta 10 represents "On' the street and a zero represents "Off
+naneous analogue value of the image to a digital num the street, then if the scan is performed as shown in
+ber) and reads the sample in digital form. In the pre FIG. 6, lines Nos. 1, 2, 10 and 11 will score a sum of
+ferred embodiment, the laser spot size on wafer 12 is zero each while lines Nos. 5, 6 and 7 will score a full
+approximately 0.5 mils in diameter and the maximum twenty. The remaining scan lines will score between ten
+sampling rate is 25 Hkc. Hence, at a maximum speed of 15 and twenty and an edge of the street can be defined as,
+5 inches per second, the image number can be read once for example, a score of ten.
+every 0.2 mils of motion. The data is controlled directly Each scan line corresponds to a distinct X coordinate
+by the computer and correlated precisely with the (assuming the scan lines to be parallel to the Y principal
+wafer position. Although a laser has been described 20 axis). From inspection of FIG. 6, it can be seen that the
+herein, it will be appreciated that a video camera or a left hand edge of the street 60 appears to be between
+flying spot scanner and detector can be employed to lines 3 and 4. If the scan is moved down a fixed number
+generate the desired signals.
+ The alignment process is performed in two major        of die lengths as shown in FIG. 7, the second left edge
+steps; an initial, course alignment of the wafer and then will be displaced by AX in X. From this, the corrective
+a fine alignment of the wafer. During the initial set-up 25 angle A6 is calculated by the microcomputer 50. Cor
+procedure, the first wafer is used as a height reference rective theta rotational signals from microcomputer 50
+to establish the desired Z-axis position of the wafer. At are then applied to the theta axis motor control 46 to
+this position the height sensor 52 output signal has a cause rotation of the wafer 12. As the angle A6 becomes
+                                                        smaller, the change from street to non-street becomes
+known characteristic as previously discussed. Subse     crisper.
+quent wafers are aligned to this reference position 30
+through the operation of the height sensor 52, Z-axis After theta correction, the scan procedure is repeated
+                                                        as an iterative process until it is possible to scan the
+motor control 48 and Z-axis motor 36.
+The prealignment of the semiconductor wafer 12 is entire length of a street from one end of the wafer to
+predicted on the wafer flat 64 being located in a fixed another. At this point, the street is scanned at two points
+orientation with respect to the pattern of microcircuits 35 spaced substantially at opposite ends of a wafer diame
+58 on the wafer. In the preferred embodiment, the ter until the center differences is less than one minimum
+height sensor 58 is utilized to locate the wafer flat. With theta increment (e.g. less than 8 seconds).
+the wafer 12 located on the chuck or platform 22, the The next operation in the fine alignment procedure is
+edge of the wafer is determined by detecting the change to locate the cross street in the X direction. The wafer
+in the output signal from the height sensor 52 when the is first positioned to center and then scanned in X until
+height sensor traverses the edge of the wafer. Then by a street is found. Since the theta is already in perfect
+using the image sensor in conjunction with the com alignment, the center of the X street is readily deter
+bined rotation of the wafer with X-Y motion, the edge mined.
+of the wafer is tracked. The wafer flat 64 shows a num Having described the course and fine alignment oper
+ber of edge points to approximate a straight line as 45 ations, it will be appreciated that the fine alignment
+opposed to the regular wafer curvature. While the light scans of the semiconductor wafer are made parallel to
+field embodiment has been described herein as an illus one of the principal axes (X or Y and preferably Y) and
+trative embodiment, conceptually a dark field approach in a direction that is substantially along the scribe line or
+is equally applicable, in which case the signals are pro "street.' Given the initial course alignment operation,
+duced by the transitions from an "off" street to an "on' 50 which produced a theta alignment within a predeter
+street condition and vice versa.                        mined angular range e.g. --5, the subsequent fine align
+
+  Having found the wafer flat, the computer 50 calcu    ment scans will be within 5 of being parallel to the
+lates the angle and through appropriate signals to the
+                                                        scanned scribe line or street.
+theta axis motor control 46 the wafer is rotated into
+                                                          This technique is in distinct contrast to the prior art
+
+correct orientation. After rotation, the wafer diameters 55 systems in which the scan is transverse to the street i.e.,
+are measured by scanning the image sensor 54 across scanning across the street to locate both edges of the
+the wafer. Given the knowledge of the location of the street. In the present invention, the scan direction is
+major wafer flat 64, the precise wafer center can be "substantially along' the street or scribe line. The term
+determined. With the wafer now coursely aligned, the "substantially along' has been chosen to describe the
+targetless aligner now performs the fine alignment pro 60 direction of the scan line with respect to the scanned
+cedure.                                                 street because the present invention utilizes an iterative
+
+Looking specifically at FIGS. 6 and 7, the subsequent process to reduce the theta error. Each set of scribe line
+fine alignment operation is based on a numerical score scans e.g. lines 1-11 in FIG. 6, is used to generate a theta
+given to each scan line 78 of image sensor 54. As shown correction signal for theta adjustment of the wafer.
+in FIG. 6, eleven scan lines are made each parallel to 65 After a given number of such adjustments, the wafer
+one of the principal axes i.e. the X or Y axis and incre scribe, lines are positioned within a minimum theta
+mentally spaced and normal to the other axis. In the increment of the selected principal axis i.e. "parallel' to
+preferred embodiment, the scan lines are parallel to the the axis.
+                     7                         4,328,553                         8
+
+Therefore, as used herein, the term "substantially a single trigger point, or a high/low level trigger point
+along' shall refer to a scan that is within five degrees of "bang-bang' servo. In either of these cases, a standard
+being parallel to the scribe line. However, since the servo positioning technique using either a simple posi
+process is iterative and the initial course theta alignment tion servo or for more accuracy a position servo with
+range can vary, one or more sets of fine alignment scans velocity feedback produces "Z" control within the
+can be beyond the 5 range, but at least one set of scans desired limits.
+will be within 5 of parallelism with the scanned scribe However, it should be noted that it is not necessary to
+line or street.                                            have an active servo loop in the prober embodiment in
+
+It has already been mentioned that the targetless which variations in "Z" height occur slowly. Thus, a
+alignment method and apparatus of the present inven 10 correction to a memory stored desired "Z' can be initi
+tion is particularly suited for use with automatic semi ated by coming into contact at the beginning of the
+conductor wafer probers. When the article to be posi wafer and then using the reading at each die to correct
+tioned is as delicate and expensive as a semiconductor for the subsequent die i.e. step-adjustments and an open
+wafer, unnecessary physical contact with the concomi loop. In either instance the controlling and controlled
+tant dangers of contamination and damage should be 15 phenomenon become one i.e. force sensed on probe tip
+strenuously avoided. However, in the special case of a 84A.
+"probing' operation for purposes of conducting electri Having described the preferred embodiment of the
+cal tests, physical contact of the wafer with electrical targetless alignment method and apparatus of the pres
+"fingers' i.e. "probe tip" is necessary and therefore is an ent invention, it will now be apparent to those skilled in
+accepted practice in the semiconductor industry. The 20 the art that numerous modifications can be made therein
+"probe tips' typically are thin metal wires which make without departing from the scope of the invention as
+light contact with the surface of the wafer.               defined in the appended claims. For example, in the
+In order to maintain contact pressure within the rela preferred embodiment, the "edge' of a street or scribe
+tively narrow limits of a few grams, control of the "Z" line is located parallel to a principal axis. However, the
+relation between the wafer and the probe tip within a 25 "edge' concept can be utilized other ways. Thus, the
+few thousandths of an inch is required. It is a character "edge' can be equally well a row of pads or interleaved
+istic of wafers due to their processing that they are beams leads as shown in FIGS. 4A and 4.B. In these
+generally neither flat nor rapidly changing in elevation cases the scan line score has three components: magni
+(undulation). Typically, significant elevational changes tude, pulse width, and frequency. The "best edge' is
+occur in distances corresponding to 5 to 10% or more of 30 selected from the component change that is the crispest.
+the wafer diameter.
+                                                           What we claim and desire to secure by Letters Patent
+Although the previously mentioned height sensor 52 of the United States:
+provides a 'Z' axis reference position it is preferable in 1. An apparatus for X, Y, and 0 axis aligning a semi
+a prober to make the Z-axis sensing mechanism identical conductor wafer having a plurality of microcircuits
+to the actual variable that should be controlled, which is 35 formed on the wafer in a pattern of rows and columns
+not the gap, per se, but the "contact' pressure between separated by scribe lines, said apparatus comprising:
+the probe and wafer. FIG. 8 illustrates diagrammati A. electro-optical means for scanning at least a por
+cally in partial section and block diagram form, a "Z'
+                                                           tion of each of said microcircuits and of said scribe
+axis sensor for use with the semiconductor wafer align
+                                                           lines abutting said microcircuits along a plurality of
+ment apparatus depicted in FIG. 1 in a prober embodi 40 scan lines that are parallel to one of said X and Y
+ment. Referring to FIG. 8, a plurality of semiconductor    principal axes in a direction substantially along the
+wafer probes 82 each having a probe tip 84 are mounted
+on a conventional probe card 86. Contact pressure be       scribe line to locate a straight line edge in said
+                                                           micocircuit pattern;
+tween the probe tips and the semiconductor wafer is B. means for determining from the location of said
+sensed by the contact pressure on either an auxiliary 45 straight line edge the 6 axis error of the edge with
+probe tip 84 positioned at a convenient location or pref   respect to one of said X and Y principal axes; and
+erably on one of the actual probe tips 84 themselves. C. means for rotating said wafer about the 6 axis to
+The probe tip contact force is transmitted to a trans      reduce said 6 axis error.
+ducer 88 through a rigid, electrically non-conductive 2. An apparatus for X, Y, and 6 axis aligning a semi
+member 90. The transducer 88 is a conventional device 50 conductor wafer having a plurality of microcircuits
+and can be any convenient sensor such as, a strain gage formed on the wafer in a pattern of rows and columns
+or force sensitive semiconductor. One such suitable separated by scribe lines, said apparatus comprising:
+device is sold by Stowe Laboratories, Kane Industrial A. electro-optical means for scanning at least a por
+Drive, Hudson, Mass. under the name "Pitran.'
+                                                           tion of each of said microcircuits and of said scribe
+When the probe tip comes into contact with the wa 55 lines abutting said microcircuits along a plurality of
+fer, pressure sensor feedback can be used to stop the      scan lines that are parallel to one of said X and Y
+motion initially when a minimum "Z" force level has
+been exceeded by a predetermined amount. In other          principal axes in a direction substantially along the
+
+words, the output from transducer 88 can be used as an     scribe line to locate one edge of a scribe line along
+                                                           one of said microcircuits;
+input to the Z motor control 48 to control the operation 60 B. electro-optical means for scanning at least a por
+of the Z-axis motor 36 and thereby the contact pressure
+on the wafer by the probe tips. In the subsequent prob     tion of each of said microcircuits and of said scribe
+
+ing operation, the "Z" wafer position is adjusted by       lines abutting said microcircuits along a plurality of
+                                                           scan lines that are parallel to one of said X and Y
+means of feedback from the transducer 88.                  principal axes in a direction substantially along the
+
+The transducer 88, depending upon the particular 65 scribe line to locate the same edge of the scribe line
+application, can be used as a part of an active "Z" servo  along another microcircuit;
+positioning loop using either a signal proportional to C. means for determining from the location of said
+pressure or by means of a thresholding technique, with     two microcircuit scribe line edges the 6 axis error
+                              4,328,553
+
+                                                               O
+
+of the scribe line edges with respect to one of said E. means for moving the semiconductor wafer along
+                                                             the Z axis into pressure contact with said pressure
+X and Y principal axes; and,
+                                                             Sensor; and,
+D. means for rotating said wafer about the 6 axis to
+                                                             F. means for terminating the movement of the semi
+reduce said 6 axis error.
+3. An apparatus for X, Y and 6 axis aligning a semi 5 conductor wafer along the Z axis when the pres
+                                                             sure sensor senses a predetermined contact pres
+conductor wafer having a wafer flat and a plurality of
+                                                             Sue.
+microcircuits formed on the wafer in a pattern of rows 5. The apparatus of claim 4 further comprising means
+and columns separated by scribe lines that have a spe responsive to the sensed contact pressure for moving
+cific angular relationship with the wafer flat, said appa 10 the semiconductor wafer in one direction to increase
+ratus comprising:
+                                                             contact pressure and in the opposite direction to de
+A. means for rotating the wafer about the 6 axis until crease contact pressure in order to maintain said prede
+the wafer flat is within a predetermined orientation termined contact pressure whereby undulations in
+range with respect to the X and Y principal axes; wafer height can be accommodate.
+B. electro-optical means for scanning at least a por 6. The apparatus of claim 4 wherein said pressure
+tion of each of said microcircuits and of said scribe sensor includes means for physically contacting the
+lines abutting said microcircuits along a plurality of semiconductor wafer, said wafer contacting means
+scan lines that are parallel to one of said X and Y being electrically insulated from said pressure sensor. 7. A method for X,Y and 6 axis aligning a semicon
+principal axes in a direction substantially along the ductor wafer having a wafer flat and a plurality of mi
+scribe line to locate one edge of a scribe line along crocircuits formed on the wafer in a pattern of rows and
+one of said microcircuits;                                   coluns separated by scribe lines that have a specific
+C. electro-optical means for scanning at least a por angular relationship with the wafer flat, and different
+tion of each of said microcircuits and of said scribe electro-magnetic radiation reflection characteristics
+
+lines abutting said microcircuits along a plurality of 25 from the microcircuits, said method comprising the
+scan lines that are parallel to one of said X and Y steps of:
+principal axes in a direction substantially along the A. course aligning the wafer by rotating the wafer
+                                                             about the 6 axis until the wafer flat is within a
+scribe line to locate the same edge of the scribe line
+                                                             predetermined orientation range with respect to
+along another microcircuit; D. means for determining from the location of said 30 the X and Y principal axes; and,
+                                                             B. fine aligning the wafer by:
+two microcircuit scribe line edges the 6 axis error          (i) locating one edge of a scribe line along one of
+
+of the scribe line edges with respect to one of said         said microcircuits;
+
+X and Y principal axes; and,                                 (ii) locating the same edge of the scribe line along
+
+E. means for rotating said wafer about the 6 axis to 35      another microcircuit by opto-electrically scan
+
+reduce the 6 axis error.                                     ning at least a portion of each of said microcir
+
+  4. An apparatus for X, Y, and Z axis aligning a semi         cuits and of said scribe lines abutting said micro
+conductor wafer having a plurality of microcircuits            circuits along a plurality of scan lines that are
+formed on the wafer in a pattern of rows and columns 40        parallel to one of said X and Y principal axes in
+separated by scribe lines, said apparatus comprising:          a direction substantially along the scribe line;
+                                                             (iii) determining from the location of said two mi
+  A. means for locating a straight line edge in said           crocircuit scribe line edges the 6 axis error of the
+    microcircuit pattern;                                      scribe line edges with respect to one of said X
+                                                               and Y principal axes; and,
+  B. means for determining from the location of said
+    straight line edge the 0 axis error of the edge with 45  (iv) rotating said wafer about the 6 axis to reduce
+    respect to one of said X and Y principal axes;
+                                                               said 6 axis error.
+
+C. means for rotating said wafer about the 6 axis to           8. The method of claim 7 further comprising the step
+                                                             of repeating step (B) at least once.
+  reduce said axis error;
+D. a pressure sensor;                                                      k ck              e
+
+                                                        50
+
+                                                        55
+
+                                                        60
+
+                                                        65
+
