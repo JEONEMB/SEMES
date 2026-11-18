@@ -1,0 +1,18 @@
+%YAML:1.0
+---
+trained_at: "2026-11-16"
+note: "텍스트 ROI(절대좌표) 특징: QR 4변 직선 + 배경 홀 4개 radial symmetry, 1차+4차, 영점=같은날 센터 측정값"
+n_samples: 423
+theta_order_s: 1
+theta_order_d: 2
+model:
+   s:
+      c_px: -5.4035343762152888e-01
+      a_px_per_mm: 1.4296458508102900e+01
+      theta_px_per_deg_k: [ 8.0182154302432707e+01 ]
+      sigma_px: 2.7870541726385123e-01
+   d:
+      c_px: -7.6885672530091598e-02
+      a_px_per_mm: 3.0160719253674548e+00
+      theta_px_per_deg_k: [ -1.2433075509590341e+00, -3.2564749406002874e-02 ]
+      sigma_px: 6.7292143428816203e-02

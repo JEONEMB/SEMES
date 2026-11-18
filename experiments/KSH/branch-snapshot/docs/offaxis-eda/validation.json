@@ -1,0 +1,9 @@
+{
+  "341_images_all_resolved": true,
+  "630_fixed_ids_every_frame": true,
+  "all_xy_finite": true,
+  "all_1023_ecc_success": true,
+  "input_sha256_unchanged_since_first_commit": true,
+  "no_duplicate_feature_id": true,
+  "extractor_source_matches_execution": true
+}

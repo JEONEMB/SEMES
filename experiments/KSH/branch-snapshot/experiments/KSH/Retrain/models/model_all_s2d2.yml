@@ -1,0 +1,18 @@
+%YAML:1.0
+---
+trained_at: "2026-11-10"
+note: "retrain 2026-11-10 : S1~S4 all (714), sameday ref, s2d2"
+n_samples: 714
+theta_order_s: 2
+theta_order_d: 2
+model:
+   s:
+      c_px: -6.5283891295002994e-01
+      a_px_per_mm: 1.4293789546204941e+01
+      theta_px_per_deg_k: [ 8.0104175116310628e+01, 8.0555975641092709e-02 ]
+      sigma_px: 2.6010023633612223e-01
+   d:
+      c_px: -1.3040821367253247e-01
+      a_px_per_mm: 3.1239350174545741e+00
+      theta_px_per_deg_k: [ -1.2447403515244784e+00, -3.6657527788639926e-02 ]
+      sigma_px: 5.8255174255315872e-02

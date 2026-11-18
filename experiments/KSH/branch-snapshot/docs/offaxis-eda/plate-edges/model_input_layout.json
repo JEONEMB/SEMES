@@ -1,0 +1,48 @@
+{
+  "QR6": [
+    "L_dx",
+    "L_dy",
+    "C_dx",
+    "C_dy",
+    "R_dx",
+    "R_dy"
+  ],
+  "edges8": [
+    "top_position",
+    "top_slope",
+    "bottom_position",
+    "bottom_slope",
+    "left_position",
+    "left_slope",
+    "right_position",
+    "right_slope"
+  ],
+  "edge_reference_center1": {
+    "top_position": 398.61466394229615,
+    "top_slope": 1.4984411450176596,
+    "bottom_position": 1735.245313999648,
+    "bottom_slope": 1.647242234989979,
+    "left_position": 1405.7563871379723,
+    "left_slope": -0.6825531293992495,
+    "right_position": 2400.880648775926,
+    "right_slope": -0.1720129216294886
+  },
+  "edge_scales": {
+    "top": 450.0,
+    "bottom": 450.0,
+    "left": 250.0,
+    "right": 250.0
+  },
+  "output_ticks": {
+    "Y_mm": 0.05,
+    "yaw_deg": 0.01
+  },
+  "models": {
+    "QR6_OLS": "QR6",
+    "QR6_nested": "QR6",
+    "edges8_nested": "edges8",
+    "QR6_edges8_nested": "QR6 + edges8",
+    "QR6_vertical4_nested": "QR6 + edges8[4:]",
+    "QR6_horizontal4_nested": "QR6 + edges8[:4]"
+  }
+}

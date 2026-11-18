@@ -1,0 +1,19 @@
+%YAML:1.0
+---
+trained_at: "2026-11-13 00:55"
+note: "align_train : grid set1 (1960장), s = QR 중심 x, d = s − 나사 x 평균, Θ 차수 s1 d2"
+n_samples: 1960
+theta_order_s: 1
+theta_order_d: 2
+model:
+   s:
+      c_px: 1.9081773615153086e+03
+      a_px_per_mm: -1.4494194147759957e+01
+      theta_px_per_deg_k: [ -8.6144082539404394e+01 ]
+      sigma_px: 6.3976956111751948e-01
+   d:
+      c_px: 9.8696070018867808e+00
+      a_px_per_mm: -3.5814672879550074e+00
+      theta_px_per_deg_k: [ -1.0027329738422126e-01,
+          7.5759323346715313e-02 ]
+      sigma_px: 7.2072791223290952e-02

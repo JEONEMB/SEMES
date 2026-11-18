@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="화면 (MFC)"><UniqueIdentifier>{0a67b4f4-9bea-4f6b-a941-1c32fdf8089c}</UniqueIdentifier></Filter>
+    <Filter Include="시뮬레이터 공용 (core)"><UniqueIdentifier>{7b95c1e6-138f-45e5-bc44-24be9b6c8e46}</UniqueIdentifier></Filter>
+    <Filter Include="모델 (Alignment)"><UniqueIdentifier>{26f496c8-de79-4fd8-83ab-c1d1fdf9629e}</UniqueIdentifier></Filter>
+    <Filter Include="리소스"><UniqueIdentifier>{fef0a52f-ba8a-4848-8d62-82625076c0ed}</UniqueIdentifier></Filter>
+    <Filter Include="설정"><UniqueIdentifier>{86fa8e2e-820d-4e31-b1cb-8940d4b5079d}</UniqueIdentifier></Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cv_inc.h"><Filter>화면 (MFC)</Filter></ClInclude>
+    <ClInclude Include="framework.h"><Filter>화면 (MFC)</Filter></ClInclude>
+    <ClInclude Include="MatView.h"><Filter>화면 (MFC)</Filter></ClInclude>
+    <ClInclude Include="pch.h"><Filter>화면 (MFC)</Filter></ClInclude>
+    <ClInclude Include="SimulatorApp.h"><Filter>화면 (MFC)</Filter></ClInclude>
+    <ClInclude Include="SimulatorDlg.h"><Filter>화면 (MFC)</Filter></ClInclude>
+    <ClInclude Include="Resource.h"><Filter>화면 (MFC)</Filter></ClInclude>
+    <ClInclude Include="targetver.h"><Filter>화면 (MFC)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_config.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_world.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_runner.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_draw.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_paths.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\core\sim_estimator.hpp"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\sdk\sim_plugin.h"><Filter>시뮬레이터 공용 (core)</Filter></ClInclude>
+    <ClInclude Include="..\..\..\include\alignment.hpp"><Filter>모델 (Alignment)</Filter></ClInclude>
+    <ClCompile Include="pch.cpp"><Filter>화면 (MFC)</Filter></ClCompile>
+    <ClCompile Include="MatView.cpp"><Filter>화면 (MFC)</Filter></ClCompile>
+    <ClCompile Include="SimulatorApp.cpp"><Filter>화면 (MFC)</Filter></ClCompile>
+    <ClCompile Include="SimulatorDlg.cpp"><Filter>화면 (MFC)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_config.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_world.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_runner.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_draw.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_paths.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\core\sim_estimator.cpp"><Filter>시뮬레이터 공용 (core)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\alignment.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\align_config.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\batch.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\coarse_align.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\dataset.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\estimator.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\evaluation.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\features.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\fine_align.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\image_util.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\interp_kernel.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\pose_model.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ClCompile Include="..\..\..\src\modules\relocate.cpp"><Filter>모델 (Alignment)</Filter></ClCompile>
+    <ResourceCompile Include="SimulatorMFC.rc"><Filter>리소스</Filter></ResourceCompile>
+    <None Include="res\SimulatorMFC.rc2"><Filter>리소스</Filter></None>
+    <Image Include="res\SimulatorMFC.ico"><Filter>리소스</Filter></Image>
+    <None Include="..\config\simulator.yml"><Filter>설정</Filter></None>
+    <None Include="..\README.md"><Filter>설정</Filter></None>
+  </ItemGroup>
+</Project>

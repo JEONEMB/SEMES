@@ -1,0 +1,9 @@
+group,varying,fixed_value,intercept_after_other_axis_removal_px
+new_T=0.01,y_mm,0.01,-0.7641769913723396
+new_T=0.1,y_mm,0.1,-0.792817655472807
+new_T=1,y_mm,1.0,-0.8006233731146182
+new_T=2,y_mm,2.0,-0.7289769426953967
+new_Y=0.05,theta_deg,0.05,-0.8199248198497492
+new_Y=0.1,theta_deg,0.1,-0.8193545571540304
+new_Y=0.5,theta_deg,0.5,-0.6705241491489673
+new_Y=1,theta_deg,1.0,-0.7876601668527137

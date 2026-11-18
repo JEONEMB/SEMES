@@ -1,0 +1,13 @@
+{
+  "frames": 8,
+  "embeddedPoints": 17120,
+  "frameSelection": true,
+  "methodSelection": true,
+  "kindSelection": true,
+  "projectionSelection": true,
+  "zoom": true,
+  "hover": true,
+  "canvasRedraws": 7,
+  "browserRenderingVerified": false,
+  "note": "DOM/canvas test double; browser loopback preview was unavailable."
+}

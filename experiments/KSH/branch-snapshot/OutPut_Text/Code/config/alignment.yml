@@ -1,0 +1,97 @@
+%YAML:1.0
+---
+# alignment() 설정 (교보재, 텍스트 설정판) — 값은 모두 여기서 바꾼다 (코드 수정 불필요)
+# 폴더 구성 : Code/config/alignment.yml (이 파일), Code/config/model_s1d1.yml (보정식). 실행에 사진 파일은 쓰지 않음
+# 상대 경로는 실행 폴더 → 이 설정 파일 폴더(config/) 순으로 찾음
+#
+# 기존 교보재 제출판(OutPut, 기준 사진 대비 이동)과 다른 점
+#  - center.bmp · roi_template.bmp 없이, 사진 한 장 안의 절대 위치로 잰다 (relocation 불필요)
+#  - ① Coarse(위상 상관) → ①-1 QR 사이 틈으로 대략 위치,  ② Fine(IC-GN) → ①-2 QR 4변 직선 + ② 뒷벽 홀 방사 대칭 중심
+#  - s = QR 3개 중심 가로 위치, d = s − 홀 4곳 가로 위치 평균 (기존 : 기준 사진 대비 이동)
+#  - 부호 : +Y, +Θ 에서 플레이트가 화면 오른쪽 (기존과 같음)
+
+image_width_px: 3840
+image_height_px: 2160
+
+# ① QR 3개 — 박스 = 사진 절대 좌표 (센터 자세 기준), 정사각형 중심 ± hw
+#   초기 세팅(alignment --setup <센터 사진>)이 cx_px · cy_px 를 센터 사진에서 찾은 중심으로 다시 적는다
+qr_rois:
+   - { name: QR_L, cx_px: 1643, cy_px: 1068, hw_px: 110 }
+   - { name: QR_C, cx_px: 1901, cy_px: 1069, hw_px: 110 }
+   - { name: QR_R, cx_px: 2159, cy_px: 1070, hw_px: 110 }
+qr:
+   coarse_range_px: 350       # ①-1 대략 위치 탐색 범위 (±px). 플레이트 이동 = 14.3 px/mm·Y + 80.2 px/°·Θ
+   coarse_max_spread_px: 15   # 찾은 틈이 설정 간격과 이보다 어긋나면 실패
+   close_kernel_px: 21        # QR 모듈을 메우는 닫힘 연산 (QR 사이 틈 약 37 px 보다 작게)
+   gap_dark_frac: 0.6         # 틈 = 띠 밝기 중앙값 × 0.6 보다 어두운 구간
+   gap_min_px: 12
+   gap_max_px: 80
+   search_px: 40              # ①-2 박스 바깥 여유
+   edge_inset_px: 8           # 변 양 끝(모서리) 제외 폭
+   edge_half_window_px: 6     # 대략 변 ± 6 px 에서 서브픽셀 변
+   edge_subpixel: "gauss"     # 서브픽셀 보간 : gauss = 로그 포물선 (치우침 작음, 기본) / parabola = 포물선 (2026-11-16 Python 검토판과 같은 계산)
+   blur_sigma_px: 1.0
+
+# ② 뒷벽 홀 4곳 (QR 판보다 카메라에서 멀다 → 시차). 좌우·상하 대칭으로 골라 원근 휨이 서로 지워짐
+#   박스는 ①의 가로 이동만큼 함께 옮겨서 찾는다. 홀을 바꾸면 보정식을 다시 학습해야 함
+background_rois:
+   - { name: W1, cx_px: 966, cy_px: 1358, hw_px: 60 }
+   - { name: W2, cx_px: 2865, cy_px: 1359, hw_px: 60 }
+   - { name: W3, cx_px: 1009, cy_px: 1684, hw_px: 60 }
+   - { name: W4, cx_px: 2821, cy_px: 1685, hw_px: 60 }
+background:
+   search_px: 40              # 박스 바깥 여유
+   window_half_px: 34         # 방사 대칭 창 반폭 (홀 지름 약 45 px 보다 크게)
+   blur_sigma_px: 1.0
+   locate_sigma_px: 6.0       # 대략 위치용 큰 흐림
+   min_contrast: 10           # 테두리 − 홀 밝기 차 하한 (가림·조명 이상 → 실패)
+   max_center_gap_px: 12.0    # 방사 대칭 중심 − 어두운 부분 무게중심 거리 상한 (실측 최대 7.9 px, W3 는 그림자로 늘 7.7 px)
+   max_spread_px: 5.0         # 홀 4곳의 (측정 − 박스) 가로 차이 폭 상한 (실측 최대 3.4 px @ Θ 2°. 한 곳만 엉뚱 → 실패)
+
+# ④ 보정식 (s·d ↔ Y·Θ 계수, 이 설정 파일 폴더 기준). align_train 이 만든다
+#    model_s1d1.yml : s·d 모두 Θ 1차 (계수 6개). 1차 + 4차 사진으로 학습 (세트별 상수, 세트 균형 가중)
+model_file: "model_s1d1.yml"
+
+# 판정 기준 = 모터 엔코더 (Y_Actual −1.300 mm, T_Actual −1.670° 가 영점)
+#   center_to_encoder : 센터 사진(center1) 자세 − 엔코더 영점. center1 과 같은 날 엔코더 라벨 사진 291장(2·3차)의 평균 치우침
+#     (Y −35.3 µm, Θ −0.0030°). 같은 날 세트끼리 교차 확인 : Y ±0.7 µm, Θ ±0.0033° (Θ 쪽 불확실성이 큼)
+#   zero : 보정식 결과에서 뺄 값 = center1 측정값(y −0.04885 mm, t +0.01288°) + center_to_encoder
+#     alignment --setup / --zero 를 다시 하면 zero = 새 센터 측정값 + center_to_encoder 로 기록된다 (엔코더 기준 유지)
+#     → 이 설정으로 center1.bmp 를 넣으면 (+0.0353 mm, +0.0030°) 로 읽힘 (center1 이 엔코더 영점에서 그만큼 떨어져 찍힘)
+center_to_encoder:
+   y_mm: -0.035276017
+   t_deg: -0.003029797
+zero:
+   y_mm: -0.084129838
+   t_deg: 0.009848825
+
+# 허용 범위 (참고값 — alignment() 는 쓰지 않음. 장비 쪽 멈춤 판정 기준)
+tolerance:                 # 권장 멈춤 기준 : 명세의 절반
+   y_um: 45.0
+   t_deg: 0.005
+spec_tolerance:            # 과제 명세
+   y_um: 90.0
+   t_deg: 0.01
+
+# ---------------------------------------------------------------- align_train (학습·검증 도구)
+#   feature_csv 가 있으면 그 파일을 쓰고(사진 불필요), 없거나 지우면 image_dir 의 사진을 다시 잰다
+#   image_dir 은 Code 폴더 기준 (교보재 사진 원본 배치 : 1st/Y, 1st/Theta, 2nd/<Y+a T+b>, 3rd/<..>, 4th)
+#   zero_ref : 그 세트를 채점할 때 영점으로 쓸 센터 사진 이름 (모든 세트의 센터 사진에서 찾음)
+training:
+   train:
+      - { name: "1st", image_dir: "data/img/1st", feature_csv: "data/features_1st.csv", zero_ref: "center" }
+      - { name: "4th", image_dir: "data/img/4th", feature_csv: "data/features_4th.csv", exclude: [ "Y-0.8 T-0.96" ] }
+   test:
+      - { name: "2nd", image_dir: "data/img/2nd", feature_csv: "data/features_2nd.csv", zero_ref: "center1" }
+      - { name: "3rd", image_dir: "data/img/3rd", feature_csv: "data/features_3rd.csv", zero_ref: "center1" }
+   theta_order_s: 1
+   theta_order_d: 1
+   balance_sets: 1
+   threads: 0
+   output: "config/model_s1d1.yml"
+   result_dir: "results"
+
+# ---------------------------------------------------------------- main.cpp (예제)
+demo:
+   image: "img/center1.bmp"     # 인자 없이 실행할 때 쓰는 사진 (설치 점검용, 실행 폴더 기준) — 알고리즘은 사진 파일을 쓰지 않음
+   display_width_px: 1600

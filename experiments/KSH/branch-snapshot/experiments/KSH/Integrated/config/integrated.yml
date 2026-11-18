@@ -1,0 +1,79 @@
+%YAML:1.0
+---
+# 통합 정렬 설정 — ksh 형식 키 + integrated: 묶음. 상대 경로는 실행 폴더 → 이 파일 폴더 순으로 찾음
+# 근거 : src/KSH/Alignment/docs/doe_20261030 (실험계획), docs/integrated_comparison.html (두 분석 비교)
+
+# 기준(center) 사진 — 측정 직전에 다시 찍은 사진을 쓴다 (Center 정의 2026-10-30).
+# 새 center 를 찍으면 integrated_main --center-check 로 채택 검사 후 이 경로를 바꾼다
+reference_path: "../../../data/img/2nd/기준 위치/center1.bmp"
+image_width_px: 3840
+image_height_px: 2160
+
+# ① Coarse Alignment : 플레이트 주변 창 위상 상관
+coarse:
+   center_x_px: 1901
+   center_y_px: 1068
+   width_px: 900
+   height_px: 400
+
+# ② Fine Alignment : IC-GN (ZNSSD) + 3차 O-MOMS 보간 (실험계획 2)
+wide_window_scale: 2
+qr_max_dev_px: 15.0
+fine:
+   method: "icgn"
+   kernel: "omoms3"
+   gauss_sigma_px: 0.0
+   max_iter: 60
+   eps_px: 1.0e-05
+   search_margin_px: 28
+
+# ③ 특징 ROI (기준 사진 좌표). hh_px 를 주면 직사각형 (가로 2·hw × 세로 2·hh)
+qr_rois:
+   - { name: QR_L, cx_px: 1650, cy_px: 1065, hw_px: 110 }
+   - { name: QR_C, cx_px: 1907, cy_px: 1065, hw_px: 110 }
+   - { name: QR_R, cx_px: 2165, cy_px: 1065, hw_px: 110 }
+# 하단 문 홀 W2·W3 : QR(187×200 px) 의 −70 % = 56×60 px, 중심은 홀 실측 중심 (실험계획 2026-10-30)
+background_rois:
+   - { name: W2, cx_px: 2867, cy_px: 1360, hw_px: 28, hh_px: 30 }
+   - { name: W3, cx_px: 1011, cy_px: 1683, hw_px: 28, hh_px: 30 }
+
+# ④ 보정식 (위 ROI 로 1차 단독축 240장 학습, s·d 모두 Θ 1차)
+model_file: "model_integrated_s1d1.yml"
+
+tolerance:                 # 프로젝트 기본 (과제의 절반)
+   y_um: 45.0
+   t_deg: 0.005
+spec_tolerance:            # 과제 명세 (구두 확인)
+   y_um: 90.0
+   t_deg: 0.01
+
+# ---------------------------------------------------------------- 통합 전용
+integrated:
+   verify_plate: 1         # 신윤석 판 검출·QR 해독 검증 (사진당 약 0.5 s). 0 이면 ksh 추정만
+   reject_on_guard: 1      # 검증 모순(판·QR 은 찾았는데 값이 다름) 시 Y·Θ 를 NaN 으로
+   reject_unverified: 0    # 판을 못 찾아 검증 자체를 못 했을 때 NaN 으로 할지 (575장 중 4장, 그 4장도 추정은 허용 안이었음)
+   plate_guard_px: 30.0    # |판 중심 이동 − Coarse 이동| 한계 — 567장 실측 최대 10.6 px 의 약 3배
+   corner_check_px: 0.10   # |Fourier 코너 QR 이동 − IC-GN QR 이동| 한계 — 527장 실측 최대 0.026 px 의 약 4배
+   min_corner_points: 8    # QR 하나당 기준 사진과 공통인 코너 최소 개수
+   center_gate_y_um: 21.0  # 새 center 채택 : 1.96·√2·로봇 반복 σ 7.5 µm
+   center_gate_t_deg: 0.0055
+
+# ---------------------------------------------------------------- 학습·평가 (ksh 도구와 같은 형식)
+training:
+   image_dir: "../../../data/img/1st"
+   reference: "center"
+   set: 1
+   y_grid_mm: 0.1
+   theta_order_s: 1
+   theta_order_d: 1
+   output: "model_integrated_s1d1.yml"
+evaluation:
+   image_dir: "../../../data/img"
+   reference_set1: "center"
+   reference_set2: "center1"
+   result_dir: "results"
+   near_target_t_deg: 0.2
+   cv_near_y_mm: 0.5
+   cv_blocks_y: 8          # 블록 교차검증 Y 8 + Θ 8 (잔차 자기상관 범위 규칙, 실험계획 2026-10-30)
+   cv_blocks_t: 8
+   score_cap: 100.0

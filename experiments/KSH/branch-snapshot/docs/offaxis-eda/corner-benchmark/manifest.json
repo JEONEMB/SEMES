@@ -1,0 +1,32 @@
+{
+  "seconds": 198.55279517173767,
+  "checks": {
+    "project_inverse_max_error": 1e-12,
+    "direct_3d_projection_agreement": 1e-12
+  },
+  "original_frames": 341,
+  "synthetic_views_per_regime": 24,
+  "synthetic_seed": 7300,
+  "seed_jitter_seed": 9300,
+  "raw_preprocessing": "none; gradients/profile sampling are estimator operations",
+  "real_truth_available": false,
+  "camera_calibration_available": false,
+  "teflon": "User reports coating; correlated texture is illustrative, not measured BRDF",
+  "synthetic_pixel_supersampling": 6,
+  "synthetic_pattern_samples_per_module": 64,
+  "versions": {
+    "numpy": "2.3.5",
+    "opencv": "5.0.0",
+    "pandas": "3.0.1",
+    "matplotlib": "3.11.2"
+  },
+  "source_sha256": {
+    "docs\\offaxis-eda\\raw\\reference.json": "2abba90aad828d79202847aac282416ff9e754f33776f28a4748e9b6372c8c21",
+    "docs\\offaxis-eda\\ppt-method-v2\\reference.json": "a8a08a2ce2b05ea18aef578fc93af8dfe88aa015be9557b280083cff63dab396",
+    "docs\\offaxis-eda\\raw\\ecc.csv": "79863a21925b92e318164b7e3a3952327ca48aa653befd9fa4013def6fa92b1c",
+    "docs\\offaxis-eda\\ppt-method-v2\\points.csv.gz": "219cad2b8f6ea5b52f5492c1aacafa57f9cbf9140299df3f98ab033fd88a3c28",
+    "docs\\offaxis-eda\\ppt-method-v2\\frames.csv": "e4392e07801671b6e8530c4363dddfb81f6599c0bfebf03ca41fc27722d9d8c3",
+    "tool\\offaxis\\corner_benchmark.py": "2652ddcef413ecb607adbb524f78363e63b74f5a2b6b10631fa31aaceb6530d6",
+    "tool\\offaxis\\extract.py": "e3633394d672bf4b31410cb31d34b6c656964f76ef72a64cb92d9d70bdd3af31"
+  }
+}

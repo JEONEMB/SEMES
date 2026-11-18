@@ -1,0 +1,116 @@
+%YAML:1.0
+---
+note: "ROI in center.bmp pixels. group = plate / station / wall_upper / wall_lower. use = 1 to include in the model"
+landmarks:
+   -
+      name: QR_L
+      group: plate
+      cx: 1650
+      cy: 1065
+      hw: 110
+      hh: 110
+      use: 1
+   -
+      name: QR_C
+      group: plate
+      cx: 1907
+      cy: 1065
+      hw: 110
+      hh: 110
+      use: 1
+   -
+      name: QR_R
+      group: plate
+      cx: 2165
+      cy: 1065
+      hw: 110
+      hh: 110
+      use: 1
+   -
+      name: label
+      group: plate
+      cx: 1900
+      cy: 1283
+      hw: 150
+      hh: 70
+      use: 1
+   -
+      name: nut_L
+      group: station
+      cx: 1547
+      cy: 707
+      hw: 60
+      hh: 60
+      use: 0
+   -
+      name: nut_R
+      group: station
+      cx: 2240
+      cy: 707
+      hw: 60
+      hh: 60
+      use: 0
+   -
+      name: bracket_scr_L
+      group: station
+      cx: 1627
+      cy: 550
+      hw: 70
+      hh: 70
+      use: 0
+   -
+      name: bracket_scr_R
+      group: station
+      cx: 2167
+      cy: 550
+      hw: 70
+      hh: 70
+      use: 0
+   -
+      name: wall_U1
+      group: wall_upper
+      cx: 2483
+      cy: 367
+      hw: 60
+      hh: 60
+      use: 1
+   -
+      name: wall_U2
+      group: wall_upper
+      cx: 2483
+      cy: 617
+      hw: 60
+      hh: 60
+      use: 1
+   -
+      name: wall_W1
+      group: wall_lower
+      cx: 967
+      cy: 1357
+      hw: 60
+      hh: 60
+      use: 1
+   -
+      name: wall_W2
+      group: wall_lower
+      cx: 2867
+      cy: 1357
+      hw: 60
+      hh: 60
+      use: 1
+   -
+      name: wall_W3
+      group: wall_lower
+      cx: 1010
+      cy: 1677
+      hw: 60
+      hh: 60
+      use: 1
+   -
+      name: wall_W4
+      group: wall_lower
+      cx: 2820
+      cy: 1683
+      hw: 60
+      hh: 60
+      use: 1

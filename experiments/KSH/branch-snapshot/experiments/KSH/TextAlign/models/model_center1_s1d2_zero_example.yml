@@ -1,0 +1,18 @@
+%YAML:1.0
+---
+trained_at: "2026-11-16"
+note: "zero-calibrated from semes_table_new_model.csv: bias Y +44.1 um, T -0.0110 deg (base model_center1_s1d2.yml)"
+n_samples: 34
+theta_order_s: 1
+theta_order_d: 2
+model:
+   s:
+      c_px: -7.9828892121001038e-01
+      a_px_per_mm: 1.4298201518725016e+01
+      theta_px_per_deg_k: [ 8.0162503857079614e+01 ]
+      sigma_px: 2.7798707597526168e-01
+   d:
+      c_px: 4.5551933725789764e-02
+      a_px_per_mm: 3.1276289735687226e+00
+      theta_px_per_deg_k: [ -1.2672576972966545e+00, -2.5926189123494980e-02 ]
+      sigma_px: 5.1690680435752930e-02

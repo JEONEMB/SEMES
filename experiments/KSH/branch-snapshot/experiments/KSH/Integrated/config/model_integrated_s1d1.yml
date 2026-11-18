@@ -1,0 +1,18 @@
+%YAML:1.0
+---
+trained_at: "2026-11-01 12:43"
+note: "align_train : 세트 1 단독 축 사진 (Y 0.1 mm 배수), 기준 center, Fine = icgn/omoms3, σ 0"
+n_samples: 240
+theta_order_s: 1
+theta_order_d: 1
+model:
+   s:
+      c_px: -5.6743957314485749e-01
+      a_px_per_mm: 1.4137348279241085e+01
+      theta_px_per_deg_k: [ 8.0058461092152768e+01 ]
+      sigma_px: 2.3016556121393086e-01
+   d:
+      c_px: -1.0872131407146299e-01
+      a_px_per_mm: 3.0910741793115242e+00
+      theta_px_per_deg_k: [ -1.2323148138265105e+00 ]
+      sigma_px: 3.5550506143080599e-02

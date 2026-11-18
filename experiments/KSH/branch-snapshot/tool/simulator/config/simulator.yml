@@ -1,0 +1,84 @@
+%YAML:1.0
+---
+# 영점 맞춤 시뮬레이터 설정
+#  경로는 모두 '시뮬레이터 루트'(이 config 폴더가 있는 폴더) 기준. 목록은 앞에서부터 처음 존재하는 것을 사용
+#  루트는 실행할 때 자동으로 찾음 (작업 폴더 → exe 폴더 → exe 상위 폴더)
+paths:
+   data_dirs:                                    # 실제 사진 — 하위 폴더까지 탐색 (1st / 2nd / 3rd = 세트)
+      - "data/img"                               # 배포 키트 (키트 안의 data/img)
+      - "../../data/img"                         # 팀 저장소 (PJT/tool/simulator → PJT/data/img)
+      - "../QR_Image/img"                        # 예전 개발 폴더 (QR_Image 솔루션)
+   alignment_configs:                            # 내장 추정기(ksh) 설정
+      - "config/alignment.yml"                   # 배포 키트
+      - "../../config/alignment.yml"             # 팀 저장소 (PJT/tool/simulator → PJT/config)
+      - "../Alignment/config/alignment.yml"      # 예전 개발 폴더 (QR_Image/Simulator)
+   reference_photo: "center"   # 영점 사진 — 참 자세 (0, 0) = 이 사진 (바꾸면 가상 장면 다시 만들기)
+                                                 #   바꾸면 가상 장면을 다시 만들어야 적용됨 (MFC [영점 사진] 상자는 자동으로 다시 만듦)
+   world_dir: "world"                            # 가상 장면 (panorama.png, field.yml) — 키트에는 미리 만들어 넣음
+   result_dir: "results"
+
+# 추정기 : 사진 한 장 → 어긋남 (Y, Θ)
+estimator:
+   type: "ksh"             # ksh = 내장 (Alignment 모듈) / plugin = 플러그인 DLL (팀원 알고리즘)
+   plugin: ""              # plugin 일 때 : DLL 경로 또는 이름 (예 "plugins/hye.dll", "hye" → plugins/hye.dll)
+   plugin_config: ""       # 플러그인 초기화에 넘길 설정 파일 (선택)
+   zero_calibration: 2     # 영점 맞춤 : 기준(티칭) 직후 참 자세 (0, 0) 사진의 추정값을 영점 차이로 보고 이후 추정에서 뺌
+                           #   0 = 안 함, 1 = 항상, 2 = 자동 (추정기가 기준 사진 교체를 지원하지 않을 때만)
+                           #   예 : 자체 기준 사진(2차 center1)을 쓰는 추정기는 시뮬레이터 영점(1차 center)과 Θ 약 0.03° 차이
+
+# 운동장(motion field) : 격자마다 dx, dy = c + aY·Y + bT·Θ + qT·Θ² 를 실제 사진으로 맞춤
+field:
+   step_px: 80             # 격자 간격 (3840, 2160 의 공약수)
+   window_px: 128          # 격자 정합 창
+   theta_step_deg: 0.05    # Θ 스윕에서 이 간격 사진만 사용 (±1° 끝 포함)
+   min_ok_ratio: 0.8       # 측정 성공 비율이 이보다 낮은 격자 = 질감 없음 → 이웃 값으로 채움
+   max_resid_px: 0.15      # 맞춤 잔차 RMS 가 이보다 크면 채움
+   min_cc: 0.7             # ECC 상관 최소
+   min_texture: 4.0        # 질감 점수가 촬영 잡음의 이 배수보다 낮은 창(민무늬)은 재지 않고 채움
+   edge_min_energy: 8.0    # 직선 모서리 창(벽 구조 가로선 등) 후보 : 기울기 에너지가 촬영 잡음의 이 배수 이상,
+   edge_min_ratio: 0.65    #   한 방향 기울기 비율이 이 값 이상 → 선에 수직인 성분만 1차원으로 잼 (채택은 상관 min_cc · 잔차 max_resid_px 로 거름)
+   edge_search_px: 48      #   수직 방향 검색 범위 (Θ 1° 에서 화면 끝 이동 약 30 px)
+
+# 파노라마 : 기준 사진(center) + 바깥 여유 (격자 간격의 배수)
+canvas:
+   margin_x_px: 160
+   margin_y_px: 80
+
+# 합성 사진
+render:
+   noise_sigma: 0.71       # 촬영 잡음 σ (같은 자세 두 장 차의 σ/√2, EDA 실측)
+   gain: 1.0               # 밝기 배율 (조명 변화 시험)
+   reference_offset: 1     # 1 = 기준 사진과 스윕 원점의 실측 차이(격자별 상수항)를 넣음 (학습 데이터와 같은 조건)
+   teach_center_photo: 1   # 기준(티칭) 사진 : 1 = 실제 center 사진 + 새 잡음 (모델 학습과 같은 조건), 0 = 자세 (0,0) 합성 사진
+
+# 로봇 : 실제 이동 = 명령 × (1 + 배율 오차) + 반복 정밀도 잡음 (정규 분포)
+robot:
+   max_step_y_mm: 2.0      # 한 번 최대 이동 — 장비 제원 : Y 2 mm, Θ 1°
+   max_step_t_deg: 1.0     #   (보정 명령이 이보다 크면 잘라서 여러 번에 나눠 이동)
+   gain_error: 0.002       # 이동 배율 오차 σ (0.2 %) — 가정값, 측정되면 바꿀 것
+   repeat_y_um: 7.53       # 반복 정밀도 σ — 실측 (2026-11-01 실험계획 단계 C)
+   repeat_t_deg: 0.00198   #   같은 지령 3장 97묶음(2·3차, 자유도 194)의 흩어짐에서 추정 잡음(0.61 µm)을 뺀 로봇 몫
+                           #   95 % 구간 : Y 6.84 ~ 8.36 µm, Θ 0.00180 ~ 0.00220°
+
+# 제어
+control:
+   max_moves: 20           # 이동 횟수 한도 (과제 조건)
+   tol_y_um: 45.0          # 허용 범위 : 과제 ±90 µm 의 절반을 기본으로 사용 (2026-10-29)
+   tol_t_deg: 0.005        # 과제 ±0.01° 의 절반
+   stop_ratio: 0.5         # 추정값이 허용 × 이 비율 안이면 멈춤 (추정 잡음 여유)
+
+# 시험
+trial:
+   start_range_y_mm: 2.0   # 시작 자세 : 균일 분포 ± (학습 사진 범위)
+   start_range_t_deg: 1.0
+   monte_carlo_trials: 50
+   seed: 20261028
+
+# 합성 검증 (실제 사진 vs 같은 라벨 합성 사진)
+validation:
+   include_set3: 0         # 1 = 3차 사진(234장)도 포함 (기준 사진 center1, 시간 약 2배)
+
+# 화면
+display:
+   plot_font_scale: 1.6    # 그림 안 글자 배율 (1 = 이전 크기)
+   ui_font_pt: 12          # 화면(MFC) 글자 크기 pt (이전 9)

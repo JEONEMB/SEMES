@@ -1,0 +1,106 @@
+{
+  "frames": 281,
+  "all_three_success": 281,
+  "all_three_rate": 1.0,
+  "plate_success": 281,
+  "failure_slots": {
+    "ok": 843
+  },
+  "per_slot": {
+    "C": {
+      "valid": 281,
+      "total": 281,
+      "median_accepted": 32.0,
+      "p05_accepted": 28.0,
+      "min_accepted": 26
+    },
+    "L": {
+      "valid": 281,
+      "total": 281,
+      "median_accepted": 42.0,
+      "p05_accepted": 37.0,
+      "min_accepted": 35
+    },
+    "R": {
+      "valid": 281,
+      "total": 281,
+      "median_accepted": 38.0,
+      "p05_accepted": 33.0,
+      "min_accepted": 30
+    }
+  },
+  "per_axis": {
+    "T": {
+      "n": 200,
+      "all_three_success": 200
+    },
+    "Y": {
+      "n": 80,
+      "all_three_success": 80
+    },
+    "center": {
+      "n": 1,
+      "all_three_success": 1
+    }
+  },
+  "reference_features": 111,
+  "common_features_all3": {
+    "count": 281.0,
+    "mean": 102.69039145907473,
+    "std": 3.882223247858436,
+    "min": 89.0,
+    "25%": 101.0,
+    "50%": 103.0,
+    "75%": 105.0,
+    "max": 111.0
+  },
+  "id_retention": {
+    "T": {
+      "median": 0.97,
+      "at_least_90pct": 79,
+      "at_least_80pct": 99
+    },
+    "Y": {
+      "median": 0.975,
+      "at_least_90pct": 84,
+      "at_least_80pct": 96
+    }
+  },
+  "accepted_quality": {
+    "shift": {
+      "0.5": 0.70366727235,
+      "0.95": 1.46207714525,
+      "0.99": 1.8442067144500014
+    },
+    "heldout_residual": {
+      "0.5": 0.3662941595,
+      "0.95": 0.791477174375,
+      "0.99": 0.9604219591250002
+    },
+    "eigenvalue": {
+      "0.5": 0.01656536292,
+      "0.95": 0.034254265945,
+      "0.99": 0.043842133879500055
+    },
+    "contrast": {
+      "0.5": 126.0,
+      "0.95": 136.5,
+      "0.99": 140.0
+    }
+  },
+  "relative_noise_proxy": {
+    "T": {
+      "count": 196,
+      "median": 0.27906981304680556,
+      "mean": 0.28419645686237527,
+      "max": 0.686269194184437
+    },
+    "Y": {
+      "count": 76,
+      "median": 0.22041172646173962,
+      "mean": 0.2265729716397067,
+      "max": 0.29111645893587634
+    }
+  },
+  "vector_comparison_common_points": 76
+}
