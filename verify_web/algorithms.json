@@ -1,0 +1,28 @@
+{
+ "_설명": "확인 앱에서 고를 알고리즘 목록. 경로는 저장소 기준 상대경로. 실행기는 bash verify_web/native/build_all.sh 로 빌드. 이 Pi 만 다르게 쓰려면 verify_web/instance/algorithms.json 에 같은 형식으로 두면 그쪽을 먼저 읽는다",
+ "algorithms": [
+  {
+   "id": "ksh",
+   "label": "KSH",
+   "path": "verify_web/native/build/ksh/align_worker",
+   "config": "experiments/KSH/branch-snapshot/OutPut_A507/Code/config/alignment.yml",
+   "desc": "QR 3개 + 나사 2개"
+  },
+  {
+   "id": "hye",
+   "label": "LHW",
+   "path": "verify_web/native/build/hye/align_worker",
+   "config": "experiments/hye/ssafy/data/model",
+   "gray": true,
+   "desc": "QR + 나사 4개"
+  },
+  {
+   "id": "shin",
+   "label": "SHIN",
+   "path": "verify_web/native/build/shin/align_worker",
+   "config": "experiments/shin/branch-snapshot/experiments/shin/qr_only_multiple_exe/native/models/rig-reverse-fixed.xml.gz",
+   "gray": true,
+   "desc": "QR 3개만"
+  }
+ ]
+}
