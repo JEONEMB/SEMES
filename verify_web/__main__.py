@@ -31,20 +31,23 @@ def main():
     p.add_argument('--gain', type=float, default=3.0, help='데이터셋 촬영(2026-11-12)과 같게 3.0')
     p.add_argument('--fps', type=float, default=10.0)
     p.add_argument('--algo', choices=['worker', 'mock'], default='worker')
-    p.add_argument('--algo-path', type=Path, default=ROOT / 'native' / 'build' / 'align_worker')
+    p.add_argument('--algo-path', type=Path, default=None, help='실행기 하나만 쓸 때 (기본 native/build/align_worker)')
     p.add_argument('--algo-output', choices=['offset', 'command'], default='offset',
                    help='알고리즘 반환값: offset(센터 대비 위치, 명령 = 부호 반대) / command(보낼 명령)')
     p.add_argument('--algo-gray', action='store_true', help='알고리즘에 흑백 1채널로 넘김 (기본 BGR 3채널)')
     p.add_argument('--algo-config', type=Path, default=None,
-                   help='알고리즘 설정 파일 (예: ~/KSH_Algorithm/Code/config/alignment.yml). 영점 등록을 쓰는 알고리즘만')
+                   help='알고리즘 설정 파일 (예: experiments/KSH/branch-snapshot/OutPut_A507/Code/config/alignment.yml). 영점 등록을 쓰는 알고리즘만')
     p.add_argument('--algos', type=Path, default=None,
-                   help='고를 수 있는 알고리즘 목록 JSON (기본: <data-dir>/algorithms.json 이 있으면 그것). '
-                        '없으면 --algo-path/--algo-config 하나만 씀. 형식은 verify_web/algorithms.example.json')
+                   help='고를 수 있는 알고리즘 목록 JSON (기본: <data-dir>/algorithms.json 이 있으면 그것, '
+                        '없으면 저장소의 verify_web/algorithms.json). --algo-path 를 주면 그 하나만 씀')
     p.add_argument('--demo-port', type=int, default=8080)
     p.add_argument('--demo-args', default='--mode hardware',
                    help='데모 웹으로 버튼으로 띄울 데모 웹 serve 추가 인자 (--host/--port 는 자동)')
     p.add_argument('--data-dir', type=Path, default=ROOT / 'instance')
     args = p.parse_args()
+    args.algo_path_given = args.algo_path is not None
+    if args.algo_path is None:
+        args.algo_path = ROOT / 'native' / 'build' / 'align_worker'
 
     import cv2
     cv2.setNumThreads(2)       # 영상·HTTP 처리에 코어를 남긴다
@@ -78,6 +81,8 @@ def main():
     settings = Settings(args.data_dir / 'settings.json')
     choices = None
     algos_file = args.algos or (args.data_dir / 'algorithms.json')
+    if not args.algos and not algos_file.exists() and not args.algo_path_given:
+        algos_file = ROOT / 'algorithms.json'        # 저장소 기본 목록 (experiments/ 의 세 알고리즘)
     try:
         if args.algo == 'mock':
             algorithm = MockAlgorithm()
