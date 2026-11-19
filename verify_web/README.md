@@ -13,21 +13,14 @@
 ## 실행 (저장소 루트)
 
 ```bash
-# 1) 알고리즘 실행기 빌드 (OpenCV 3.4, 저장소 src/alignment.cpp)
-cmake -S verify_web/native -B verify_web/native/build -G Ninja
-cmake --build verify_web/native/build
-
-# 1-1) 김성현 A507 알고리즘으로 빌드 (영점 등록 포함). Code 폴더 = src/ include/ config/
-cmake -S verify_web/native -B verify_web/native/build_ksh -G Ninja -DALGO_DIR=/home/pi/KSH_Algorithm/Code
-cmake --build verify_web/native/build_ksh
+# 1) 알고리즘 실행기 3개 빌드 (OpenCV 3.4). 소스는 저장소 experiments/ 안 (KSH·LHW·SHIN)
+bash verify_web/native/build_all.sh          # → verify_web/native/build/{ksh,hye,shin}/align_worker
 
 # 2) 장치 없이 화면·흐름 시험
 demo_web/.venv/bin/python -m verify_web serve --mode mock --camera off --algo mock
 
-# 3) 실물 (robot_stage 드라이버 + 카메라 + 김성현 알고리즘)
-demo_web/.venv/bin/python -m verify_web serve --mode hardware --host 0.0.0.0 \
-    --algo-path verify_web/native/build_ksh/align_worker \
-    --algo-config /home/pi/KSH_Algorithm/Code/config/alignment.yml
+# 3) 실물 (robot_stage 드라이버 + 카메라). 알고리즘 목록은 verify_web/algorithms.json
+demo_web/.venv/bin/python -m verify_web serve --mode hardware --host 0.0.0.0
 ```
 
 - 화면: `http://<파이 IP>:8090` (기본은 파이 안에서만 `127.0.0.1`). `--host 0.0.0.0` 이면 같은 망 누구나 조작할 수 있다.
@@ -50,27 +43,21 @@ demo_web/.venv/bin/python -m verify_web serve --mode hardware --host 0.0.0.0 \
 
 화면의 **설정**에서 허용 오차(기본 Y ±0.045 mm, Θ ±0.01°), 최대 보정 이동 횟수, 한 번 이동 한도(넘으면 움직이지 않고 멈춤), 랜덤 시작 범위, 접근 거리, 평균 장수, 안정 판정, Θ 명령 전송, 센터 좌표를 바꾼다. `verify_web/instance/settings.json` 에 저장된다.
 
-## 알고리즘 고르기 (성현 / 혜원 / 윤석)
+## 알고리즘 고르기 (KSH / LHW / SHIN)
 
-`verify_web/instance/algorithms.json` 이 있으면 화면 위쪽에서 알고리즘을 고를 수 있다 (형식: `algorithms.example.json`).
+화면 위쪽에서 알고리즘을 고른다. 목록은 저장소의 `verify_web/algorithms.json` (경로는 저장소 기준 상대경로).
+이 Pi 만 다르게 쓰려면 같은 형식으로 `verify_web/instance/algorithms.json` 을 두면 그것을 먼저 읽는다.
 바꾸면 실행기를 다시 띄우고 센터 기준·지난 기록을 지운다 (영점이 알고리즘마다 달라서). 고른 것은 설정에 남는다.
 
-```bash
-# 성현님 (영점 등록 가능, ALGR)
-cmake -S verify_web/native -B verify_web/native/build_ksh -G Ninja -DALGO_DIR=$HOME/KSH_Algorithm/Code
-# 혜원님 SSAFY 패키지 (chore/hye/merge-ssafy 2390aed~, 학습 범위 밖 보정 허용). --config = data/model
-#   ALGR: set_zero_from_photos, 영점 사진 점검에 실패하면 set_reference_from_photos 로 기준을 다시 등록한 뒤 다시 영점
-cmake -S verify_web/native -B verify_web/native/build_hye2 -G Ninja -DHYE2_DIR=$HOME/HYE_Algorithm
-# (예전) 혜원님 모듈 (initialize_joint, 기본은 assets 의 절대 영점, set_joint_zero 로 그날 센터를 영점). HYE_DIR = 저장소 형태 폴더, HYE_MODULE = 모듈 폴더
-cmake -S verify_web/native -B verify_web/native/build_hye -G Ninja -DHYE_DIR=$HOME/HYE_Algorithm \
-      -DHYE_MODULE=$HOME/HYE_Algorithm/experiments/hye/00000_final_Y_T_ssafy
-# 신윤석님 QR 전용 Rig 모델 (feature/shin/QRonlyMultipleExe). 센터 기준 사진(ALGR) 대비 Y·Θ.
-#   --config = models/rig-reverse-fixed.xml.gz (kind qr_affine_joint, 979c1d75~ 비전 상대 보정: QR 아핀 값 18개)
-#           또는 models/rig-cancellation.xml.gz (qr::Cancellation, 값 4개)
-cmake -S verify_web/native -B verify_web/native/build_shin_rig -G Ninja -DQR_RIG_DIR=$HOME/SHIN_Algorithm/experiments/shin/qr_only_multiple_exe/native
-# (예전) 신윤석님 단일 프레임 qr_pose::estimate: -DQR_POSE_DIR=$HOME/SHIN_Algorithm/experiments/shin/ssafy_qr_pose
-cmake --build verify_web/native/build_ksh && cmake --build verify_web/native/build_hye && cmake --build verify_web/native/build_shin_rig
-```
+| id | 화면 | 소스 (저장소) | 설정·모델 (`--config`) | 빌드 옵션 |
+| --- | --- | --- | --- | --- |
+| `ksh` | KSH | `experiments/KSH/branch-snapshot/OutPut_A507/Code` | `…/Code/config/alignment.yml` | `-DALGO_DIR` (영점 등록 `alignment_set_reference`) |
+| `hye` | LHW | `experiments/hye/ssafy` | `experiments/hye/ssafy/data/model` | `-DHYE2_DIR` (ALGR = `set_zero_from_photos`, 실패하면 `set_reference_from_photos` 뒤 다시) |
+| `shin` | SHIN | `experiments/shin/branch-snapshot/experiments/shin/qr_only_multiple_exe/native` | `…/native/models/rig-reverse-fixed.xml.gz` | `-DQR_RIG_DIR` (센터 기준 사진 대비, QR 아핀 값 18개) |
+
+- 세 소스는 2026-11-18 시연 때 Pi 로컬 복사본(KSH 11-13, HYE bf4e7a70, SHIN 37df5723)과 같다.
+- 하나만 다시 빌드: `bash verify_web/native/build_all.sh hye`. 다른 소스로 시험하려면 `cmake -S verify_web/native -B <폴더> -D<옵션>=<경로>` 후 instance 목록에서 그 실행기를 가리킨다.
+- (예전 방식) 혜원님 모듈 `-DHYE_DIR`/`-DHYE_MODULE`, 신윤석님 단일 프레임 `-DQR_POSE_DIR` 도 `native/CMakeLists.txt` 에 남아 있다.
 
 - 실행기는 시작할 때 `READY ref roi` (영점 등록·위치 돌려줌) 또는 `READY` 를 알린다.
 - 영점 등록이 없는 알고리즘은 '센터 기준' 때 화면 윤곽·차이 영상용 사진만 찍고 알고리즘의 고정 영점을 그대로 쓴다.

@@ -471,8 +471,19 @@ class VideoStreamTest(unittest.TestCase):
         r.close()
 
 
-KSH = Path('/home/pi/KSH_Algorithm/Code')
-KSH_WORKER = ROOT / 'verify_web' / 'native' / 'build_ksh' / 'align_worker'
+KSH = ROOT / 'experiments' / 'KSH' / 'branch-snapshot' / 'OutPut_A507' / 'Code'
+KSH_WORKER = ROOT / 'verify_web' / 'native' / 'build' / 'ksh' / 'align_worker'
+
+
+class AlgorithmListTest(unittest.TestCase):
+    """저장소 기본 알고리즘 목록(verify_web/algorithms.json)의 설정·모델 경로가 저장소 안에 있다."""
+
+    def test_repo_list_points_inside_repo(self):
+        choices = AlgorithmChoices.load(ROOT / 'verify_web' / 'algorithms.json', ROOT)
+        self.assertEqual([e['id'] for e in choices.entries], ['ksh', 'hye', 'shin'])
+        for e in choices.entries:
+            self.assertFalse(e['config'].startswith(('/', '~')), e['config'])
+            self.assertTrue(choices._path(e['config']).exists(), e['config'])
 
 
 @unittest.skipUnless(os.access(KSH_WORKER, os.X_OK) and (KSH / 'config' / 'alignment.yml').exists()
